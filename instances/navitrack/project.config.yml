@@ -24,3 +24,6 @@ guardians:
   stack_adapters:
     - FRONTEND_DEV
     - RUST_DEV
+    - WEBGL
+    - WGPU
+    - SLANG

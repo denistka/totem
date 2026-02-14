@@ -1,8 +1,0 @@
-status:DEPRECATED-v3.0
-merged-into:CTO.ti
-reason:consolidation-11-to-6-roles
-
-# Original role (archived):
-# role: Tech Vision, Protocol Design, Human-AI Interface
-# focus: human-AI-interface, MRPP, compression
-# Rules now in CTO.ti under visionary-rules section.

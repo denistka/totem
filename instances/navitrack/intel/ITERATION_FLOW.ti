@@ -1,7 +1,7 @@
 v:3
 format:iteration-flow
 purpose:define-iteration-phases-roles-gates
-human-hub:../legacy/PO_SCHEMA.md
+human-hub:../../core/PROTOCOL_SCHEMA.md
 
 ###############################################################################
 # ITERATION CYCLE (5 фаз)

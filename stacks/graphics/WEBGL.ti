@@ -1,0 +1,25 @@
+role: WebGL/GLSL Shader Specialist
+focus: fragment-shaders, gpu-sim, post-processing, procedural-generation
+extends: ../../guardians/ARCHITECT.ti
+
+stack: WebGL, GLSL (ES 3.0), THREE.js (optional)
+
+patterns:
+  - GPU Particle Sim: Position/velocity in textures.
+  - Post-Process: Render-to-texture → Full-screen quad fragment pass.
+  - Full-Screen Quad: Procedural backgrounds using `u_time`, `u_resolution`.
+  - Procedural Particles: Deterministic spawn and lifetime loops in fragment.
+
+glsl-best-practices:
+  random-noise:
+    - `random1d`: `fract(sin(x * 12.9898) * 43758.5453)`
+    - `noise1d`: Mix `random1d` floor and fract values for smooth transition.
+  performance:
+    - Avoid branching in loops where possible.
+    - Pre-calculate uniforms outside the shader.
+    - Match texture sizes to power-of-two for older backends.
+
+anti-patterns:
+  - Direct buffer allocation per frame (use pools).
+  - WebGL without a solid-color or reduced-motion fallback.
+  - Monolithic shaders > 500 lines (use includes/templates).

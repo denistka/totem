@@ -42,17 +42,44 @@ native:rust
 why-tauri:[single-codebase,6-platforms,small-bundle,rust-security,no-node-runtime]
 
 ###############################################################################
+# PHILOSOPHY (Space Shuttle)
+###############################################################################
+
+why: world peace and equality
+identity: we are a space shuttle — looking to the future, not just a client reference
+mindset: we don't have in mind any "not solving" problems
+stride: we take the first step of indefinite width
+pulse: if the torrent is alive, we are alive too
+
+###############################################################################
 # BRAND (approved)
 ###############################################################################
 
-primary:#2E7D32→#4CAF50
+primary:#2D8A3E (Energy Green)
 accent:#FF9800
-bg:white/light-gray
-style:modern flat,card-based,rounded
-nav:bottom-tabs-mobile,sidebar-desktop
+bg:dark-background
+style:hybrid-glassmorphism-neumorphism,layered-depth,nt-* patterns
+ui-patterns:UI_LIBRARY.md,card-based,glass-tabs
+
+###############################################################################
+# AI ORCHESTRATION (Instance Config)
+###############################################################################
+
+cost-tiers:
+  $$$ (Opus/GPT-4): architecture,security,complex-logic
+  $$ (Sonnet): standard-development,UI-logic
+  $ (Haiku): boilerplate,config,unit-tests
+
+###############################################################################
+# HISTORY SCOPE
+###############################################################################
+
+milestones:
+  sprints:S01-S31 complete, S38-S42 (PWA polish) complete
+  epics:E-01 through E-16, E-20 (Animations), E-21 (WGPU), E-22 (PWA)
 
 ###############################################################################
 # HUMAN SOURCE
 ###############################################################################
 
-source:../legacy/README.old.md
+source:./LOG_LEGACY.ti

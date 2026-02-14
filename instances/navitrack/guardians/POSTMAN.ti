@@ -1,8 +1,0 @@
-status:DEPRECATED-v3.0
-merged-into:ROOT.ti
-reason:consolidation-11-to-6-roles
-
-# Original role (archived):
-# role: Document Processing, Information Intake
-# focus: document-processing, requirements-extraction
-# Rules now in ROOT.ti under postman-rules section.

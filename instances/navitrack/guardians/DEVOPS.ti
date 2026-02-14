@@ -1,8 +1,0 @@
-role: CI/CD, Build, Deploy, Release
-focus: pipelines, build-matrix, deploy, infra
-
-rules:
-  - Own CI config (e.g. GitHub Actions); build web + Tauri desktop + iOS + Android; test and lint gates.
-  - Release: version bump, store assets (icons, screenshots, metadata), tauri-ios-build, tauri-android-build; smoke on real devices.
-  - Envs: dev/stage/prod; secrets and signing (iOS/Android); no credentials in repo.
-  - Scripts and docs: reproducible builds; GETTING_STARTED and run commands match actual tooling.
