@@ -1,0 +1,41 @@
+v:1
+c:$ m:sn4t
+mode:agent
+role:dev
+sprint:S34
+task:T1-component-audit
+summary:List all Vue components with line count; mark those >150 lines as refactor targets.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  scope:navitrack-app/src
+  include:"*.vue"
+  output:sprints/34/component-audit.md and optionally navitrack-app/src/components-audit.csv
+  columns:[path,lines,status]
+  status:ok if lines < 150, refactor if >= 150
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - "Find all .vue files under navitrack-app/src"
+  - "Count lines per file (e.g. wc -l or script)"
+  - "Sort by line count descending"
+  - "Write markdown table: path, lines, status (ok | refactor)"
+  - "Critical list: LoginView, SouthernLightsBg, TrackRequestForm, ReportForm, VehicleInfoWindow, SettingsView — ensure they are in refactor list"
+
+out:
+  - totem/instances/navitrack/sprints/34/component-audit.md
+  - (optional) navitrack-app/src/components-audit.csv
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - component-audit.md exists with path, lines, status for every .vue in src
+  - All 6 critical/high components (LoginView, SouthernLightsBg, TrackRequestForm, ReportForm, VehicleInfoWindow, SettingsView) listed with line counts
+
+verify:
+  - "Review component-audit.md for completeness"

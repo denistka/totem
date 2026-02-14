@@ -1,0 +1,46 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S40-Tech-Debt-Cleanup
+objective:Tech debt: wgpu/rust update; static/mut refactor in Rust where needed; M-002 iOS clustering zoom level. Backlog refs: M-002.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P3
+dep:S39
+backlog:wgpu-update, static-mut-refactor, M-002 (iOS clustering zoom)
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-debt-list]
+  gate:scope-approved
+
+phase-develop:
+  tasks:[T2-wgpu-update,T3-rust-refactor,T4-ios-clustering]
+  gate:build-passes
+
+phase-verify:
+  verify:[pnpm run build, cargo build, iOS build]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH (brief)
+###############################################################################
+T1:List tech debt: wgpu/rust versions, static/mut refactor targets, M-002.
+T2:Update wgpu (and deps) in navitrack-app; fix breakages.
+T3:Rust static/mut refactor where identified; keep behavior.
+T4:M-002 iOS clustering zoom level — align with Android if applicable.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - wgpu/rust deps updated; build passes
+  - Rust refactor done where scoped
+  - M-002 addressed or documented for follow-up
+  - pnpm run build and cargo build pass

@@ -1,0 +1,49 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S34
+task:T2-login-view-refactor
+summary:Refactor LoginView.vue to under 150 lines; extract CSS to feature styles; split into subcomponents if needed.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  component:navitrack-app/src/features/auth/views/LoginView.vue
+  target-lines:150
+  actions:
+    - Extract <style> to navitrack-app/src/features/auth/styles/login.css (or scoped module)
+    - Split logical blocks into child components (e.g. LoginForm, LoginHeader, LoginError) under features/auth/components/
+    - Keep LoginView.vue as thin composition: template + script under 150 lines total
+  preserve:All behavior and accessibility; form submit, validation, error display, deep links.
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - "Read LoginView.vue and list logical sections"
+  - "Create subcomponents for each section (or reuse existing NtInput, NtButton)"
+  - "Move styles to login.css; import in LoginView or use scoped module"
+  - "Refactor LoginView to import and use subcomponents; ensure <150 lines"
+  - "Run tests and build"
+
+out:
+  - navitrack-app/src/features/auth/views/LoginView.vue
+  - navitrack-app/src/features/auth/styles/login.css (or equivalent)
+  - (optional) navitrack-app/src/features/auth/components/LoginForm.vue, LoginHeader.vue, etc.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - LoginView.vue is under 150 lines
+  - CSS lives in feature styles folder
+  - pnpm run test passes
+  - pnpm run build passes
+  - No visual/behavioral regression on login flow
+
+verify:
+  - "wc -l navitrack-app/src/features/auth/views/LoginView.vue"
+  - "pnpm run test"
+  - "pnpm run build"

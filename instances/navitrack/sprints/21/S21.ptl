@@ -1,0 +1,43 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S21-Rebrand-Login-WOW
+objective:First-impression rebrand: login screen WOW (visual, copy, optional Slint/WGPU). Optional Epic 1 item.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+scope:optional
+ref:intel/TOTEM_SPRINTS.ti
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-rebrand-spec]
+  gate:scope-approved
+
+phase-develop:
+  tasks:[T2-visual,T3-copy,T4-optional-slint-wgpu]
+  gate:build-passes
+
+phase-verify:
+  verify:[pnpm run build, visual review]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH (brief)
+###############################################################################
+T1:Spec rebrand: login visuals (background, typography, spacing), copy (tagline, CTA), optional Slint/WGPU polish.
+T2:Implement visual updates on login view.
+T3:Update copy (tagline, buttons, errors).
+T4:Optional: Slint login form or WGPU background polish if not already done.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Login screen reflects rebrand; WOW factor per spec
+  - pnpm run build passes

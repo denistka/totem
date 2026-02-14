@@ -1,0 +1,40 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S35
+task:T1-fallback-design
+summary:Document graphics fallback design: priority 0 (WGPU), 1 (WebGL), 2 (HTML); detection flow and renderer registry API.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  output:sprints/35/fallback-design.md
+  content:
+    - Priority chain: 0 = WebGPU (wgpu/wasm), 1 = WebGL (current TS/WebGL path), 2 = HTML/canvas or static
+    - Detection: how to probe WebGPU/WebGL (feature detection, not user agent)
+    - API: getRenderer(): 'wgpu'|'webgl'|'html'; or useGraphicsRenderer() composable
+    - Where to plug: login background, map, any consumer of WGPU/WebGL
+  ref:navitrack-app existing WebGL fallback and WGPU usage
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - "Review navitrack-app for current WGPU and WebGL usage"
+  - "Write fallback-design.md with priority chain, detection, and API sketch"
+  - "Ensure design allows incremental adoption (existing components keep working)"
+
+out:
+  - totem/instances/navitrack/sprints/35/fallback-design.md
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - fallback-design.md exists and describes 0/1/2 priority and detection
+  - API shape (function or composable) defined for consumer use
+
+verify:
+  - "Review fallback-design.md for clarity and consistency with codebase"

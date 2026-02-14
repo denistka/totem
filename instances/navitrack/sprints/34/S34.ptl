@@ -1,0 +1,92 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S34-Vue-Component-Refactoring
+objective:Refactor Vue components to <150 lines each; extract CSS to styles/; split oversized components. All tests pass.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P0
+ref:intel/TOTEM_REFACTORING.ti
+code:../../navitrack-app
+
+Critical (refactor first): LoginView ~637 lines, SouthernLightsBg ~602, TrackRequestForm ~588.
+High: ReportForm ~461, VehicleInfoWindow ~361, SettingsView ~335.
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-component-audit]
+  gate:audit-list-approved
+
+phase-design:
+  tasks:[T2-extract-css-pattern]
+  gate:styles-folder-and-conventions-defined
+
+phase-develop:
+  tasks:[T2-login-view-refactor,T3-southern-lights-refactor,T4-remaining-critical,T5-high-priority]
+  dur:est-2-3d
+  gate:all-target-components-<150-lines
+
+phase-verify:
+  verify:[pnpm run test,pnpm run build,lint-pass]
+  gate:tests-pass
+
+phase-close:
+  verify:[docs-update,changelog]
+  gate:iteration-complete
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-component-audit:
+    pd:S34-T1-component-audit.pd
+    model:$$
+    critical:y
+    exec-order:1
+    output:[sprints/34/component-audit.md,navitrack-app/src/components-audit.csv]
+    verify:[wc -l on listed components]
+
+  T2-login-view-refactor:
+    pd:S34-T2-login-view-refactor.pd
+    model:$$
+    critical:y
+    exec-order:2
+    dep-wait:T1
+    output:[navitrack-app/src/features/auth/views/LoginView.vue,navitrack-app/src/features/auth/styles/login.css]
+    verify:[lines < 150 per file,pnpm run test]
+
+  T3-southern-lights-refactor:
+    pd:S34-T3-southern-lights-refactor.pd
+    model:$$
+    critical:y
+    exec-order:3
+    dep-wait:T1
+    output:[navitrack-app/src/components/.../SouthernLightsBg*,navitrack-app/src/styles/southern-lights.css]
+    verify:[lines < 150,pnpm run build:wasm]
+
+  T4-remaining-critical:
+    spec:TrackRequestForm and other critical list from T1 — split into subcomponents, extract CSS.
+    exec-order:4
+    dep-wait:T2,T3
+    verify:[each component < 150 lines]
+
+  T5-high-priority:
+    spec:ReportForm, VehicleInfoWindow, SettingsView — same treatment.
+    exec-order:5
+    dep-wait:T4
+    verify:[each component < 150 lines]
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+done:
+  - all target components under 150 lines
+  - CSS extracted to navitrack-app/src/styles/ or feature-specific styles/
+  - pnpm run test passes
+  - pnpm run build passes

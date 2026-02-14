@@ -1,0 +1,77 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S35-Graphics-Fallback-System
+objective:Implement unified graphics fallback: WGPU (priority 0) → WebGL (1) → HTML (2). Single capability detection and renderer registry.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P1
+ref:intel/TOTEM_REFACTORING.ti
+code:../../navitrack-app
+dep:S34 (recommended: component refactor first)
+
+Components to introduce or extend: CapabilityDetector, FallbackManager, RendererRegistry.
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-fallback-design]
+  gate:design-approved
+
+phase-design:
+  tasks:[T2-capability-detector,T2-renderer-registry]
+  gate:API-and-priority-chain-defined
+
+phase-develop:
+  tasks:[T3-wgpu-path,T4-webgl-path,T5-html-path,T6-integration]
+  dur:est-2d
+  gate:fallback-chain-works
+
+phase-verify:
+  verify:[test on WebGPU-only, WebGL-only, no-WebGL; pnpm run build]
+  gate:tests-pass
+
+phase-close:
+  gate:iteration-complete
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-fallback-design:
+    pd:S35-T1-fallback-design.pd
+    model:$$
+    critical:y
+    exec-order:1
+    output:[sprints/35/fallback-design.md]
+    verify:[design doc describes priority 0,1,2 and detection flow]
+
+  T2-capability-detector:
+    pd:S35-T2-capability-detector.pd
+    model:$$
+    critical:y
+    exec-order:2
+    dep-wait:T1
+    output:[navitrack-app/src/services/capabilityDetector.ts or composables/useGraphicsCapability.ts]
+    verify:[detects WebGPU, WebGL, or neither]
+
+  T3-integration:
+    spec:Wire CapabilityDetector + FallbackManager into app: login background, map, any WGPU/WebGL consumer. Priority 0 → 1 → 2.
+    exec-order:3
+    dep-wait:T2
+    verify:[fallback chain works in browser]
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+done:
+  - WGPU used when available (priority 0)
+  - WebGL used when WebGPU unavailable (priority 1)
+  - HTML/canvas or static fallback when both unavailable (priority 2)
+  - Single entry point (e.g. useGraphicsRenderer() or getRenderer()) returns current backend
+  - pnpm run build passes

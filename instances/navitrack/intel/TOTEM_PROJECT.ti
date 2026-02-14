@@ -11,10 +11,10 @@ app:navitrack-app
 stack:[tauri2,vue3.5,ts5.6,rust,vite,pinia,tailwind4,leaflet]
 scope:frontend
 platforms:[ios,android,web,macos,windows,linux]
-status:✅ S01-S19 complete
-next:[release,S20,S21,S22,S23]
-points:~381-386
-progress:19/19 core complete
+status:✅ Epic 0 (E-00) complete
+next:Epic 1 (E-01-TO-DO)
+epic0:E-00
+epic1:E-01-TO-DO
 
 ###############################################################################
 # BUSINESS
@@ -71,15 +71,7 @@ cost-tiers:
   $ (Haiku): boilerplate,config,unit-tests
 
 ###############################################################################
-# HISTORY SCOPE
-###############################################################################
-
-milestones:
-  sprints:S01-S31 complete, S38-S42 (PWA polish) complete
-  epics:E-01 through E-16, E-20 (Animations), E-21 (WGPU), E-22 (PWA)
-
-###############################################################################
 # HUMAN SOURCE
 ###############################################################################
 
-source:./LOG_LEGACY.ti
+source:./LOG.ti

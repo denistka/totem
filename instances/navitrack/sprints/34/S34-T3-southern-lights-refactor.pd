@@ -1,0 +1,47 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S34
+task:T3-southern-lights-refactor
+summary:Refactor SouthernLightsBg (or equivalent WGPU/WebGL background component) to under 150 lines; extract CSS and split logic.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  component:Locate SouthernLightsBg / WgpuPolarBeamsBg / WebGL background Vue component in navitrack-app/src
+  target-lines:150
+  actions:
+    - Extract styles to navitrack-app/src/styles/southern-lights.css (or component-specific styles)
+    - Split: canvas/setup logic in one composable or child, Vue wrapper thin (template + minimal script)
+    - Keep WASM/TS renderer invocation; move heavy logic to composable (e.g. useSouthernLightsFpsLimit) or separate file
+  preserve:Same visual and FPS behavior; fallback WebGL when WebGPU unavailable.
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - "Find SouthernLightsBg / WGPU background component"
+  - "Extract inline styles to CSS file"
+  - "Move render loop / init logic to composable or useSouthernLights*.ts"
+  - "Leave Vue component as thin wrapper: template + script < 150 lines"
+  - "pnpm run build (and build:wasm if applicable)"
+
+out:
+  - Refactored Vue component(s) under navitrack-app/src
+  - navitrack-app/src/styles/southern-lights.css (or equivalent)
+  - (optional) composable useSouthernLights*.ts if new extractions
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - SouthernLightsBg (or main background component) Vue file is under 150 lines
+  - CSS extracted; composable or child holds heavy logic
+  - pnpm run build passes; build:wasm if applicable
+  - No visual/behavioral regression
+
+verify:
+  - "wc -l on component file(s)"
+  - "pnpm run build"

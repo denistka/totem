@@ -1,0 +1,41 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S35
+task:T2-capability-detector
+summary:Implement capability detection: WebGPU available → 0; else WebGL → 1; else HTML → 2. Expose via composable or service.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  output:navitrack-app/src/services/capabilityDetector.ts or composables/useGraphicsCapability.ts
+  behavior:
+    - Probe WebGPU: navigator.gpu?.requestAdapter (or equivalent)
+    - Probe WebGL: canvas.getContext('webgl2') or 'webgl'
+    - Return priority 0, 1, or 2; cache result per session
+  API: getGraphicsPriority(): 0|1|2 or useGraphicsCapability(): { priority, backend: 'wgpu'|'webgl'|'html' }
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - "Create capability detector module or composable"
+  - "Implement WebGPU then WebGL detection; fallback to 2"
+  - "Export getGraphicsPriority() or useGraphicsCapability()"
+  - "Wire into app (e.g. main or layout) so consumers can read current backend"
+
+out:
+  - navitrack-app/src/services/capabilityDetector.ts (or navitrack-app/src/composables/useGraphicsCapability.ts)
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Detection runs once (or on demand) and returns 0, 1, or 2
+  - No throw in normal flow; fallback to 2 when both WebGPU and WebGL fail
+  - pnpm run build passes
+
+verify:
+  - "Call getGraphicsPriority() in dev; confirm 0 or 1 in supported browsers"

@@ -43,7 +43,7 @@ phases:
     gate:build-passes
     actions:
       - TEAM_LEAD dispatches tasks (exec-order, model, timeout)
-      - DEV implements per .po files
+      - DEV implements per .pd (task) files
       - verify after each task
       - resolve blockers; escalate if needed
 

@@ -1,0 +1,46 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S39-Feature-Pack
+objective:Deliver feature pack: F-001 Engine Block, F-002 Event Journal last 3 days, F-005 Vehicle search/filter, M-007 event sound, F-007 new push format (scope or implement).
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P2
+dep:S38
+backlog:F-001,F-002,F-005,M-007,F-007
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-prioritize-features]
+  gate:scope-approved
+
+phase-develop:
+  tasks:[T2-engine-block,T3-event-journal,T4-vehicle-search,T5-event-sound,T6-push-format]
+  gate:build-passes
+
+phase-verify:
+  verify:[tests, manual feature checks]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH (brief)
+###############################################################################
+T1:Prioritize F-001,F-002,F-005,M-007,F-007; split into tasks.
+T2:F-001 Engine Block (Safe/Emergency modes) — UI + API if needed.
+T3:F-002 Event Journal last 3 days — expandable date range.
+T4:F-005 Vehicle search in Tracking/Reports — filter by name.
+T5:M-007 Event sound on both platforms.
+T6:F-007 New push format (larger/richer) — scope or implement.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Selected features implemented per priority
+  - pnpm run build passes; tests pass

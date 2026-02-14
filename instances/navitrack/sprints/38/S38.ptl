@@ -1,0 +1,46 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S38-Async-Reports-2FA
+objective:Implement async Reports API (long-running reports, progress); 2FA via Google Sign-In. Backlog refs: H-002, H-003, F-004.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P1
+dep:S37
+backlog:H-002 (2FA Google), H-003 (async Reports API), F-004 (Report sharing)
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-async-reports-spec,T2-2FA-spec]
+  gate:scope-approved
+
+phase-develop:
+  tasks:[T3-async-reports-impl,T4-2FA-impl,T5-report-sharing]
+  gate:build-passes
+
+phase-verify:
+  verify:[tests, manual 2FA flow, report download/progress]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH (brief)
+###############################################################################
+T1:Spec async Reports API (polling or SSE for progress); align with backend.
+T2:Spec 2FA flow with Google Sign-In (backend + frontend).
+T3:Implement async report request + progress UI; handle download/cancel.
+T4:Implement 2FA enrollment and login with Google Sign-In.
+T5:Report sharing (Email/Telegram/Viber/WhatsApp) per F-004.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Async reports: user can request report, see progress, download when ready
+  - 2FA: user can enable 2FA with Google; login requires 2FA when enabled
+  - Report sharing option (F-004) implemented or scoped for next iteration

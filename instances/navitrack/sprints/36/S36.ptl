@@ -1,0 +1,74 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S36-Slint-HTML-Switch-System
+objective:Make HTML the default UI path; Slint optional via dev/build toggle. Generic switch (ViewModeService or env) so login and other screens can choose HTML vs Slint.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P2
+ref:intel/TOTEM_REFACTORING.ti
+code:../../navitrack-app
+dep:S35 (graphics fallback recommended first)
+
+Components: ViewModeService (or env), SwitchRegistry, SwitchableView HOC or wrapper.
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-switch-design]
+  gate:design-approved
+
+phase-design:
+  tasks:[T2-switch-implementation]
+  gate:API-defined
+
+phase-develop:
+  tasks:[T3-login-html-default,T4-slint-optional-toggle]
+  dur:est-1-2d
+  gate:html-default-works-slint-optional
+
+phase-verify:
+  verify:[default build uses HTML; Slint loads when toggle/env set; pnpm run build]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-switch-design:
+    pd:S36-T1-switch-design.pd
+    model:$$
+    critical:y
+    exec-order:1
+    output:[sprints/36/switch-design.md]
+    verify:[design doc describes HTML default, Slint optional, env/toggle]
+
+  T2-switch-implementation:
+    spec:Implement switch: env (e.g. VITE_S31_LOGIN_UI=html|slint) or runtime config; component that renders HTML or Slint wrapper based on value.
+    exec-order:2
+    dep-wait:T1
+    output:[navitrack-app service or composable + wrapper component]
+    verify:[toggle switches UI path]
+
+  T3-verify-default:
+    spec:Ensure production build defaults to HTML; Slint only when explicitly enabled.
+    exec-order:3
+    verify:[pnpm run build; default = HTML]
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+done:
+  - HTML is default for login (and other switched views)
+  - Slint loads only when env/toggle set (e.g. VITE_S31_LOGIN_UI=slint)
+  - Single switch point (service or env); no duplicated conditionals
+  - pnpm run build passes with default HTML
+
+verify:
+  - "Build without Slint env → HTML login"
+  - "Build with Slint env → Slint login (if implemented)"

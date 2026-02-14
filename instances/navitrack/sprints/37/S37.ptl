@@ -1,0 +1,75 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S37-Architecture-Consolidation
+objective:Platform abstraction (PWA vs native); PWA fallbacks and capability flags; minimal BrowserApiHelpers; update docs.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P3
+ref:intel/TOTEM_REFACTORING.ti
+code:../../navitrack-app
+dep:S36
+
+Components: PlatformService (or equivalent), CapabilityFlags, BrowserApiHelpers (minimal).
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-platform-audit]
+  gate:gaps-listed
+
+phase-design:
+  tasks:[T2-abstraction-api]
+  gate:API-defined
+
+phase-develop:
+  tasks:[T3-pwa-fallbacks,T4-docs]
+  dur:est-1-2d
+  gate:pwa-works-docs-updated
+
+phase-verify:
+  verify:[run in PWA mode; run in Tauri; docs reflect current structure]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-platform-audit:
+    spec:List places that assume browser vs Tauri; list PWA gaps (offline, install, etc.). Output sprints/37/platform-audit.md.
+    exec-order:1
+    output:[sprints/37/platform-audit.md]
+
+  T2-abstraction-api:
+    spec:Define minimal PlatformService or CapabilityFlags: isPWA(), isTauri(), hasStorage(), etc. Single module or composable.
+    exec-order:2
+    dep-wait:T1
+    output:[navitrack-app/src/services/platform.ts or composables/usePlatform.ts]
+
+  T3-pwa-fallbacks:
+    spec:Where needed, use platform abstraction; add PWA fallbacks (e.g. offline message, install prompt) without duplicating logic.
+    exec-order:3
+    dep-wait:T2
+    verify:[PWA run works; Tauri run unchanged]
+
+  T4-docs:
+    spec:Update navitrack-app/docs or README with current architecture: platform abstraction, graphics fallback, Slint/HTML switch.
+    exec-order:4
+    output:[navitrack-app/docs/ARCHITECTURE.md or README section]
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+done:
+  - Single platform abstraction (isPWA, isTauri, capabilities) used where needed
+  - PWA mode works with fallbacks; native (Tauri) unchanged
+  - Docs describe architecture and how to run PWA vs native
+  - pnpm run build passes
+
+verify:
+  - "Review platform module and docs for consistency"

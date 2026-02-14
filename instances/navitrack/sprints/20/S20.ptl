@@ -1,0 +1,44 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S20-Universal-UI-Template
+objective:Define and adopt universal frontend template: layout, routing, theming, Nt components baseline. Optional Epic 1 item.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+scope:optional
+ref:intel/TOTEM_SPRINTS.ti
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-template-spec]
+  gate:scope-approved
+
+phase-develop:
+  tasks:[T2-layout-routing,T3-theming,T4-nt-baseline]
+  gate:build-passes
+
+phase-verify:
+  verify:[pnpm run build, consistency across views]
+  gate:tests-pass
+
+###############################################################################
+# DISPATCH (brief)
+###############################################################################
+T1:Document universal template: layout (sidebar/bottom nav), routing, theme tokens, Nt component set.
+T2:Apply layout and routing conventions across app.
+T3:Theming: ensure Tailwind/brand tokens used consistently.
+T4:Nt components baseline: NtButton, NtInput, NtFormField, cards, glass — used in key views.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Template doc exists; layout/routing/theming applied
+  - Nt components used consistently where applicable
+  - pnpm run build passes

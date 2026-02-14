@@ -1,0 +1,40 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S36
+task:T1-switch-design
+summary:Document Slint/HTML switch: HTML default, Slint optional; env var or runtime toggle; single switch point for login and future views.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  output:sprints/36/switch-design.md
+  content:
+    - Default: HTML (Vue components) for login and any dual-path view
+    - Optional: Slint (WASM) when env set (e.g. VITE_S31_LOGIN_UI=slint)
+    - Switch point: one place (composable, ViewModeService, or env read at startup)
+    - Consumers: LoginView and any other view that can render HTML or Slint
+  ref:navitrack-app .env VITE_S31_LOGIN_UI and existing login HTML vs Slint logic
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - "Review current login HTML vs Slint switch in navitrack-app"
+  - "Write switch-design.md: default=HTML, optional=Slint, env/toggle, single switch"
+  - "Ensure design avoids scattered conditionals; one source of truth"
+
+out:
+  - totem/instances/navitrack/sprints/36/switch-design.md
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - switch-design.md exists
+  - Default and optional path clearly defined; switch API or env documented
+
+verify:
+  - "Review switch-design.md for consistency with codebase"

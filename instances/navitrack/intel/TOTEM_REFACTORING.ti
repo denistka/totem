@@ -3,10 +3,11 @@ format:totem-refactoring
 purpose:machine-only refactoring context
 
 ###############################################################################
-# REFACTORING EPIC E-REFACTOR
+# REFACTORING (Epic 1 — E-01-TO-DO)
 ###############################################################################
 
 epic:
+  in-epic:E-01-TO-DO
   id:E-REFACTOR
   name:Codebase-Refactoring
   created:2026-02-06
@@ -117,17 +118,17 @@ mitigation:
 ###############################################################################
 
 files:
-  - sprints/34/S34.po
-  - sprints/34/S34-T1-component-audit.po
-  - sprints/34/S34-T2-login-view-refactor.po
-  - sprints/34/S34-T3-southern-lights-refactor.po
-  - sprints/35/S35.po
-  - sprints/35/S35-T1-fallback-design.po
-  - sprints/35/S35-T2-capability-detector.po
-  - sprints/36/S36.po
-  - sprints/36/S36-T1-switch-design.po
-  - sprints/37/S37.po
-  - sprints/EPIC-REFACTORING.md
+  - sprints/34/S34.ptl
+  - sprints/34/S34-T1-component-audit.pd
+  - sprints/34/S34-T2-login-view-refactor.pd
+  - sprints/34/S34-T3-southern-lights-refactor.pd
+  - sprints/35/S35.ptl
+  - sprints/35/S35-T1-fallback-design.pd
+  - sprints/35/S35-T2-capability-detector.pd
+  - sprints/36/S36.ptl
+  - sprints/36/S36-T1-switch-design.pd
+  - sprints/37/S37.ptl
+  - sprints/EPIC1-TO-DO.pi
 
 ###############################################################################
 # NOTES

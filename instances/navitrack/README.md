@@ -16,11 +16,10 @@
 
 ---
 
-## Sprints
+## Epics
 
-- **Epic E-22**: PWA Views & Styles Polish (S38–S42) — ✅ Completed
-- **Epic E-21**: Login Page WGPU + Slint (S31) — ✅ Completed
-- **Epic E-20**: Slang Templates & WGPU Animations (S30) — ✅ Completed
+- **Epic 0 (E-00)**: Done — all completed work. See `intel/TOTEM_EPICS.ti`.
+- **Epic 1 (E-01-TO-DO)**: To-Do — refactoring (S34–S37), optional (S20, S21), release (S27), backlog (S38–S40). See `intel/TOTEM_EPICS.ti`, `intel/TOTEM_SPRINTS.ti`.
 
 ---
 
@@ -29,7 +28,6 @@
 | Doc           | Location                |
 | ------------- | ----------------------- |
 | Protocol Core | `totem/core/`           |
-| Totem Model   | `legacy/TOTEM_MODEL.md` |
 | Intel Index   | `intel/TOTEM_INDEX.ti`  |
 | Config        | `project.config.yml`    |
 

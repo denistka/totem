@@ -1,0 +1,48 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S27-Release-Go-Live
+objective:Release readiness: CI/CD pipeline, build matrix (iOS/Android/Web), store assets, runbook. DevOps focus.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+scope:release
+ref:intel/TOTEM_SPRINTS.ti
+guardians:DEVOPS,QA,PM
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-plan:
+  tasks:[T1-release-checklist]
+  gate:scope-approved
+
+phase-develop:
+  tasks:[T2-ci-cd,T3-build-matrix,T4-store-assets,T5-runbook]
+  gate:builds-pass
+
+phase-verify:
+  verify:[CI green, iOS/Android/Web builds, store asset checklist]
+  gate:release-ready
+
+###############################################################################
+# DISPATCH (brief)
+###############################################################################
+T1:Release checklist: version bump, critical bugs, store metadata, builds.
+T2:CI/CD: test on push, build on tag or main; artifacts.
+T3:Build matrix: tauri iOS, tauri Android, web (Vite); document commands.
+T4:Store assets: icons, screenshots, description, privacy, support URL, age rating (iOS/Android).
+T5:Runbook: how to cut release, upload to App Store / Google Play, web deploy.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - CI runs tests and builds
+  - iOS, Android, Web build successfully
+  - Store assets ready per checklist
+  - Runbook documented
+  - Release-ready sign-off (PM/QA/DEVOPS)

@@ -42,8 +42,12 @@ project:
   app:navitrack-app
   stack:[tauri2,vue3,ts,rust,vite,pinia,tailwind,leaflet]
   scope:frontend
-  status:✅ S01-S31 complete
-  next:[S34-S37-REFACTORING,S38-S42-PWA]
+  status:✅ Epic 0 complete
+  next:Epic 1
+  epic0:E-00
+  epic1:E-01-TO-DO
+  done-ref:TOTEM_EPICS.ti#E-00
+  to-do-ref:TOTEM_EPICS.ti#E-01-TO-DO
 
 ###############################################################################
 # DOCS
@@ -51,7 +55,6 @@ project:
 
 docs:
   totem-existing:[../../README.md,../../core/PROTOCOL_SCHEMA.md]
-  removed:totem/legacy
 
 ###############################################################################
 # SPRINTS
@@ -68,7 +71,6 @@ sprints:
 guardians:
   index:project.config.yml
   rules-dir:../guardians/
-  removed:instance/guardians
 
 ###############################################################################
 # PROMPT-MACHINE
@@ -90,7 +92,7 @@ prompt-machine:
 content:
     iteration-flow:./ITERATION_FLOW.ti
     refactoring:./TOTEM_REFACTORING.ti
-    legacy-log:./LOG_LEGACY.ti
+    log:./LOG.ti
   project:./TOTEM_PROJECT.ti
   epics:./TOTEM_EPICS.ti
   sprints:./TOTEM_SPRINTS.ti
