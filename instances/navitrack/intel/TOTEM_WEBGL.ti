@@ -1,0 +1,171 @@
+v:2
+format:totem-webgl-knowledge
+purpose:machine-only WebGL and shader knowledge for S24 and background animation
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+source:learned-from-examples-gravity-postprocess-quad-rain-galaxy-distortion-S29-Southern-Lights-WebGL-fallback
+app-context:navitrack-app/src/components/common/southern-lights
+sprint:S24-WebGL-BG-Animation
+ref:totem/docs/BRAND_ASSETS.md,totem/docs/VISUAL_STYLE_GUIDE.md
+
+###############################################################################
+# PATTERNS (high-level)
+###############################################################################
+
+patterns:
+  gpu-particle-sim:position-and-velocity-in-textures-two-fragment-passes-position-plus-velocity-then-render-points-from-position-texture
+  post-process:render-to-texture-then-full-screen-quad-fragment-shader-reads-texture-plus-u_time-u_resolution-u_mouse
+  full-screen-quad:orthographic-camera-NDC-1-to-1-plane-geometry-2x2-one-mesh-one-fragment-shader-no-input-texture
+  procedural-particles-in-fragment:single-quad-loop-over-N-particles-in-fragment-position-f-of-time-i-seed-sum-contributions-per-pixel
+  few-attractors:first-N-texels-in-position-texture-are-attractors-velocity-shader-loops-only-over-N-not-all-particles
+  halo-mass:massAtPosition-equals-mass-times-min-distance-haloSize-divided-by-haloSize-soft-center-stable-orbits
+
+###############################################################################
+# GPU PARTICLE SIM (gravity / galaxy style)
+###############################################################################
+
+gpu-sim:
+  stack:THREE.js-plus-GPUComputationRenderer-or-raw-WebGL-framebuffers
+  state:position-texture-velocity-texture-one-texel-per-particle
+  passes:
+    position-shader:fragment-uv-equals-gl_FragCoord-xy-divided-by-resolution-read-position-velocity-write-position-plus-u_dt-times-velocity
+    velocity-shader:fragment-read-position-velocity-loop-over-all-particles-or-only-attractors-compute-force-accumulate-write-velocity-plus-u_dt-times-force
+  render:vertex-a_index-to-UV-sample-position-texture-modelView-projection-gl_Position-gl_PointSize-from-depth-fragment-sample-particle-profile-texture-gl_PointCoord
+  init:fill-position-and-velocity-textures-once-spawn-region-circular-or-structured
+  multi-step:run-sim-compute-N-times-per-frame-for-stability-with-larger-dt
+  navitrack-optional:adopt-for-southern-lights-only-with-CTO-approval-raw-WebGL-render-targets-no-THREE
+
+###############################################################################
+# POST-PROCESS (scene or canvas → texture → full-screen pass)
+###############################################################################
+
+post-process:
+  pipeline:RenderPass-scene-or-canvas-to-texture-then-ShaderPass-full-screen-quad-fragment-reads-u_texture
+  uniforms:u_time-u_frame-u_resolution-u_mouse-u_texture
+  vertex:v_uv-equals-uv-gl_Position-equals-position-1
+  effects:
+    chromatic:sample-u_texture-at-three-offset-UVs-red-green-blue-directions-rotate-with-u_time-scale-with-distance-and-mouse
+    distortion-grain:uv-plus-noise1d-based-offset-step-floor-for-jump-add-random2d-minus-0.5-times-strength-for-grain
+  navitrack-optional:render-southern-lights-to-framebuffer-then-full-screen-quad-with-u_time-u_resolution-for-subtle-effect
+
+###############################################################################
+# FULL-SCREEN QUAD (no input texture)
+###############################################################################
+
+full-screen-quad:
+  camera:OrthographicCamera-minus-1-1-1-minus-1-0-1
+  geometry:PlaneBufferGeometry-2-2
+  vertex:gl_Position-equals-position-1
+  fragment:procedural-from-gl_FragCoord-u_resolution-u_mouse-u_time
+  use:shadertoy-style-backgrounds-procedural-grids-value-noise
+
+###############################################################################
+# PROCEDURAL PARTICLES IN FRAGMENT (rain example)
+###############################################################################
+
+procedural-fragment-particles:
+  idea:no-point-geometry-loop-over-n_drops-in-fragment-position-equals-initial-plus-ellapsed-time-times-velocity
+  lifetime:staggered-time-equals-u_time-plus-life_time-times-i-plus-i-over-n_drops-ellapsed-equals-mod-time-life_time
+  spawn:random_drop_pos-seed-screen_dim-velocity-deterministic-top-of-screen
+  trail:project-pixel-onto-velocity-line-perpendicular-width-dashed-pattern-smoothstep-fade-along-trail
+  wave:expanding-ring-at-impact-elliptical-distance-inner-outer-radius-grow-with-time-fade-over-time
+  navitrack-reuse:staggered-lifetime-and-deterministic-spawn-for-respawn-timing-trail-and-wave-math-for-streak-and-arc
+
+###############################################################################
+# RANDOM AND NOISE (GLSL)
+###############################################################################
+
+random-noise:
+  random1d:float-seed-mod-dt-3.14-fract-sin-sn-times-43758.5453
+  random2d:vec2-seed-dot-co-vec2-a-b-mod-dt-3.14-fract-sin-sn-times-c
+  noise1d:value-noise-mix-random1d-floor-value-random1d-floor-value-plus-1-smoothstep-0-1-fract-value
+  use:deterministic-spawn-per-cell-variation-grain-uv-distortion
+
+###############################################################################
+# MATH MODEL (UNIVERSE of CONTROL)
+###############################################################################
+
+math-model:
+  grid:30-by-40-ROWS-COLS-BOUND-0.88-NDC-nodeX-nodeY
+  particles:
+    car:type-1-moves-along-roadmap-edges-1px-dot-water-circle-glow-100x-smaller
+    signal:type-0-emitted-from-car-bullet-track-streak-gravity-plus-attractor-force
+    glow:type-2-trail-at-car-position-water-circle-fade-to-opacity-0-sized-to-grid
+  signal-physics:
+    constant-gravity:GRAVITY-minus-180-px-per-s²-downward
+    drag:vx-times-DRAG-vy-times-DRAG-DRAG-equals-0.996
+    attractor-force:per-car-accel-equals-strength-times-400000-over-distSq-plus-softening-dv-equals-accel-times-dt-add-direction-times-dv-to-velocity
+    attractor-formula:distSq-equals-dx²-plus-dy²-plus-softening-direction-equals-dx-dy-over-sqrt-distSq
+    integration:vx-vy-update-then-constant-gravity-then-drag-then-position-plus-velocity-times-dt
+  attractor-config:
+    enabled:boolean
+    attractorStrength:default-0.4
+    softening:default-800-avoid-singularity-near-car
+    maxAttractors:default-24-sampled-per-signal-performance
+  glow-trail:
+    cellSize:min-width-height-over-GRID_ROWS-40
+    glowSize:cellSize-times-2.2
+    fadeProgress:0-to-1-over-time-rate-0.55-per-second
+    opacity:multiply-by-1-minus-fadeProgress
+  car-grid:information-cells-around-cars-radius-rings-focus-falloff-ringOpacity
+  car-zone:round-circle-per-car-radius-pixels-collision-highlight-getCarZones-zonesOverlap
+
+###############################################################################
+# SOUTHERN LIGHTS WEBGL (S29 — fallback when WebGPU unavailable)
+###############################################################################
+
+southern-lights-webgl:
+  location:navitrack-app/src/components/common/southern-lights
+  stack:raw-WebGL-no-THREE
+  component:SouthernLightsWebGL-vue
+  shader:shaders-ts-vertexSource-fragmentSource-createProgram
+  math:polar-beams-same-as-Slang-WGSL-uv-atan2-length-xCol-horColour-beamFactor-beamWidth
+  source:Shadertoy-XdlSDs-dynamite-CC-BY-NC-SA-3.0
+  fallback:prefers-reduced-motion-solid-background-WebGL-unsupported-no-canvas
+
+###############################################################################
+# WGPU-WASM (S29 — Southern Lights compute, WebGPU in browser)
+###############################################################################
+
+wgpu-wasm:
+  epic:E-19
+  sprint:S29
+  location:navitrack-app/src-rust/wgpu
+  stack:rust-wgpu-wasm-bindgen-wasm-pack-target-web
+  backend:wgpu-WebGPU-backend-browser
+  behavior:Southern-Lights-polar-beams-Slang-compute-shader
+  fallback:WASM-unavailable-use-TS-WebGPU-or-SouthernLightsWebGL
+  ref:./TOTEM_WGPU.ti
+
+###############################################################################
+# WEBGL-FLOWER (removed S29 — was webgl-flower, replaced by Southern Lights)
+###############################################################################
+
+webgl-flower:removed-S29-southern-lights-replaced
+
+###############################################################################
+# S24 GOALS (from sprint)
+###############################################################################
+
+s24-goals:
+  - diagonal-flow-bottom-left-to-top-right-clearly-visible
+  - cars-and-signals-feeling-radio-dots-car-streaks-arc-waves
+  - math-model-documented-gravity-on-particle-system-signals-attracted-to-cars
+  - 30x40-grid-glow-trails-sized-to-grid-gravityConfig-for-tuning
+  - car-grid-information-cells-focus-falloff-car-zone-round-collision-highlight
+  - blend-layer-post-process-color-blending-totem-updated
+  - fallbacks-and-prefers-reduced-motion-preserved
+  - design-and-QA-sign-off
+
+###############################################################################
+# ANTI-PATTERNS (CTO)
+###############################################################################
+
+anti-patterns:
+  - add-THREE-or-GPUComputationRenderer-without-CTO-approval
+  - WebGL-without-fallback-or-reduced-motion
+  - per-frame-allocate-many-small-buffers-reuse-or-pool
+  - skip-documentation-when-GPU-sim-or-post-pass-deferred

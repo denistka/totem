@@ -1,0 +1,119 @@
+v:2
+format:totem-wgpu
+purpose:machine-only wgpu-WASM context for Southern Lights (S29/S30) and future modules
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+source:wgpu-WASM-effects-modular-Southern-Lights-S29-S30
+app-context:navitrack-app/src/components/common/southern-lights
+sprint:S30-Slang-Connect-Southern-Lights
+epic:E-20
+ref:./TOTEM_WEBGL.ti,navitrack-app/src-rust/wgpu/ref/beams_compute_playground.slang,navitrack-app/src-rust/wgpu/README.md
+
+###############################################################################
+# STRATEGY
+###############################################################################
+
+strategy:
+  vue-tauri:Vue-for-UI-Tauri2-shell-wgpu-WASM-in-WebView-for-heavy-parts-bg
+  where:wgpu-runs-in-browser-as-WASM-WebGPU-backend-not-in-Tauri-Rust-process
+  why:frame-transfer-from-native-wgpu-to-WebView-expensive-WASM-in-WebView-direct-canvas-better
+
+###############################################################################
+# CRATE STRUCTURE (modular for future effects)
+###############################################################################
+
+crate:navitrack-wgpu
+  path:navitrack-app/src-rust/wgpu
+layout:
+  common:instance-surface-device-helpers-request_device-adapter-limits
+  southern_lights:init_southern_lights-render_southern_lights-compute-pipeline
+  future:add-modules-same-pattern-init_X-render_X
+
+###############################################################################
+# STACK
+###############################################################################
+
+stack:
+  rust:wgpu-crate-wasm-bindgen
+  target:wasm32-unknown-unknown
+  backend:wgpu-WebGPU-backend-browser
+  build:wasm-pack-build-target-web-or-equivalent
+  vue:component-mounts-canvas-loads-WASM-requestAnimationFrame-render-dt
+  vite:integrate-wasm-build-npm-script-vite-config
+
+###############################################################################
+# SOUTHERN LIGHTS (S29/S30)
+###############################################################################
+
+southern-lights:
+  behavior:polar-beams-shadertoy-XdlSDs-Slang-derived-compute-shader
+  shader:gen/beams_compute_playground.wgsl-from-ref/beams_compute_playground.slang-Shadertoy-XdlSDs-port-via-build-rs-slangc-or-ref-fallback
+  slang-sources:ref/beams_compute_playground.slang-runtime-ref/beams_compute.slang-alternate
+  pipeline:compute-16x16-workgroup-storage-2d-rgba8unorm-write-entry-beamsMain
+  api:init_southern_lights-canvas_id-Promise-render_southern_lights-dt-Result
+  fallback:WASM→TS-WebGPU-vertex-fragment→WebGL-SouthernLightsWebGL
+  vue:SouthernLightsBg-vue-tries-WASM-then-TS-WebGPU-then-slot-fallback
+  radar-mix:TS-WebGPU-fragment-includes-Southern-Lights-plus-sci-fi-radar-gmunk-Oblivion-WGSL-mod_f32-for-mod
+  radar-env:VITE_S31_RADAR_MIX-true-skips-WASM-forces-TS-WebGPU-path-so-radar-visible
+
+slang-wgsl-flow:
+  source:ref/*.slang-beams_compute_playground-slang-used-by-southern_lights-beams_compute-slang-alternate
+  build:build.rs-compiles-both-to-gen-slangc-target-wgsl-stage-entry-o-or-copies-ref-WGSL-to-gen
+  consume:include_str-gen/beams_compute_playground.wgsl-in-southern_lights-mod-rs
+  new-effect:add-ref-X.slang-build-step-gen-X.wgsl-src-X-mod-rs-init_X-render_X-lib-rs-wasm_bindgen-vue-canvas
+  ref:navitrack-app/src-rust/wgpu/README.md-Adding-a-new-WGPU-animation-from-Slang
+
+###############################################################################
+# API (Rust WASM)
+###############################################################################
+
+api:
+  init_southern_lights:canvas_id-returns-Promise
+  render_southern_lights:delta_time_secs-f64-returns-Result
+  future:add-init_X-render_X-per-module
+
+###############################################################################
+# ANTI-PATTERNS (CTO)
+###############################################################################
+
+anti-patterns:
+  - wgpu-in-Tauri-Rust-process-streaming-frames-to-WebView
+  - WebGPU-path-without-fallback
+  - Per-frame-large-allocations-in-WASM
+  - Monolithic-lib-rs-instead-of-modular-per-effect
+
+###############################################################################
+# S29/S30 CONTRACT
+###############################################################################
+
+s29-contract:
+  present-mode:prefer-Mailbox-then-FifoRelaxed-from-surface-caps
+  device-limits:request_device-required_limits-use-adapter-limits-clone
+  reason:maxInterStageShaderComponents-deprecated-browsers-reject
+  vue:init-logging-SouthernLights-Loading-WASM-WASM-loaded-Initializing-Southern-Lights-WASM-inited-or-fallback
+  vue-zero-canvas:defer-tryInitWebGPU-until-canvas-width-height-non-zero-resize-plus-rAF-then-retry
+
+###############################################################################
+# S31 LOGIN (WGPU + Slint UI)
+###############################################################################
+
+s31-login:
+  scope:login-page-full-wgpu-background-optional-slint-form
+  wgpu-background:LoginView-uses-SouthernLightsBg-directly-when-VITE_S31_LOGIN_WGPU-not-false-no-Background-vue-on-login
+  slint-form:slint-runtime-WASM-crate-Slint-LoginForm-slint-bindings-to-authService
+  switch:VITE_S31_LOGIN_UI-html-default-fallback-prototyping-or-slint-fast-UI-on-wgpu
+  env:navitrack-app/.env-VITE_S31_LOGIN_UI-VITE_S31_LOGIN_WGPU
+  build:pnpm-run-build-wasm-src-rust-wgpu-pnpm-run-build-slint-src-rust-slint-runtime
+  wasm-output:public/navitrack-wgpu/wgpu.js-wgpu.wasm-public/slint-runtime/slint.js-slint.wasm
+  vue:LoginView-SlintLoginForm-vue-loads-WASM-set_login_callback-auth-wire-fallback-emit-use-HTML
+  ref:navitrack-app/src-slint/login/LoginForm.slint,navitrack-app/src-rust/slint-runtime,prompt-machine/sprints/31/S31-brief.md
+
+radar-mix-detail:
+  where:SouthernLightsBg-vue-WGSL_FRAGMENT-TS-WebGPU-path-only
+  source:gmunk-Oblivion-sci-fi-radar-GLSL-converted-to-WGSL
+  blend:southernLights-plus-radarColor-times-mixFactor-0.45
+  wgsl:no-mod-use-mod_f32-x-minus-y-floor-x-y
+  env:VITE_S31_RADAR_MIX-true-in-navitrack-app-.env

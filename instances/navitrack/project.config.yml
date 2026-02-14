@@ -1,0 +1,26 @@
+project:
+  name: NaviTrack
+  version: 1.0.0
+  stack:
+    - vue3
+    - typescript
+    - tauri2
+    - rust
+    - wgpu
+
+paths:
+  code: ../navitrack-app
+  history: ../prompt-machine
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - RUST_DEV

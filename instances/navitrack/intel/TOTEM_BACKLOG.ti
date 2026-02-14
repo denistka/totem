@@ -1,0 +1,73 @@
+v:2
+format:totem-backlog
+purpose:machine-only backlog (critical,high,medium,features,nice)
+
+###############################################################################
+# CRITICAL (Must Fix)
+###############################################################################
+
+critical:
+  C-001:[✅,pointId-int32→int64,S-12-parseJsonWithBigInt-bigint]
+  C-002:[✅,distance-decimal,S-12-number-type-API-float]
+  C-003:[✅,address-null,S-02-nullable-types]
+  C-004:[✅,Basic-Auth→JWT,S-03-JWT+Basic-fallback]
+  C-005:[✅,Android-Target-SDK-34+,gen-android-app-build-gradle-kts-targetSdk-36]
+  C-006:[✅,Android-OpenStreetMap,S-08-new-Leaflet]
+  C-007:[✅,iOS-credentials-Keychain,S32-keystore]
+
+###############################################################################
+# HIGH
+###############################################################################
+
+high:
+  H-001:[✅,OTP-support,S04-complete]
+  H-002:[⬜,2FA-via-Google,Google-Sign-In-done-flow-TBD]
+  H-003:[⬜,async-Reports-API,build-status-download-cancel]
+  H-004:[✅,push-after-logout,S-15-unregister-token]
+  H-005:[✅,parking-duration-display,S33-time-utils]
+  H-006:[✅,401-crash,S02-S03-error-handler-login-UX]
+  H-007:[✅,HTTPS-migration,S32-constants-env]
+
+###############################################################################
+# MEDIUM
+###############################################################################
+
+medium:
+  M-001:[✅,iOS-keyboard-dismiss-after-search,S33-useKeyboardDismiss]
+  M-002:[⬜,iOS-clustering-zoom-level]
+  M-003:[⬜,iOS-track-arrows,like-Android]
+  M-004:[✅,Android-Ukrainian-language,S33-detectLocale]
+  M-005:[✅,UI-small-screens,S33-responsive]
+  M-006:[✅,report-no-data-message,S33-nt-empty-state]
+  M-007:[⬜,event-sound,both-platforms]
+  M-008:[✅,login-error-invalid-creds,S33-login-form]
+
+###############################################################################
+# FEATURES
+###############################################################################
+
+features:
+  F-001:[⬜,Engine-Block,Safe+Emergency-modes]
+  F-002:[⬜,Event-Journal-last-3-days,expandable-date-range]
+  F-003:[⬜,Technical-Maintenance-alerts,TC-highlighting]
+  F-004:[⬜,Report-sharing,Email-Telegram-Viber-WhatsApp]
+  F-005:[⬜,Vehicle-search-Tracking-Reports,filter-by-name]
+  F-006:[✅,Vehicle-label-color,S-08-settings-store-labelColor]
+  F-007:[⬜,new-push-format,larger-richer]
+
+###############################################################################
+# NICE TO HAVE
+###############################################################################
+
+nice:
+  N-001:[✅,Dark-mode,S-19-useTheme-Settings-toggle]
+  N-002:[⬜,Widgets-Android-iOS]
+  N-003:[⬜,Apple-Watch-Wear-OS]
+  N-004:[⬜,Offline-maps]
+  N-005:[⬜,Messages-Chat,future]
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md#backlog

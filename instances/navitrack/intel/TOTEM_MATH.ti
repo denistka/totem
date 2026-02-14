@@ -1,0 +1,37 @@
+v:2
+format:totem-math
+purpose:math-model per step (owner BA_OWNER); template and pilot paths; rule for tasks
+
+###############################################################################
+# OWNER REQUIREMENT (S25)
+###############################################################################
+owner-requirement:strong-math-model-per-step
+  each-task:deliver-math-model-artifact-or-math-model-N-A-with-rationale
+  gate:math-model-present-or-N-A-before-phase-sign-off
+
+###############################################################################
+# PATHS
+###############################################################################
+template:./MATH_MODEL_TEMPLATE.md
+pilot:./MATH_WEBGL_FLOWER.md
+sprint:S25-Strong-Math-Model-per-Step
+brief:prompt-machine/sprints/25/S25-brief.md
+
+###############################################################################
+# RULE
+###############################################################################
+rule:per-task-math-model-or-N-A
+  tasks-with-measurable-behavior:deliver math-model doc (inputs, outputs, state, invariants, formulas, refs) or ref to existing
+  tasks-without-dynamics:math-model N/A with one-line rationale (e.g. UI-only, copy change)
+  verify:QA checks math-model present and consistent with code/totem where applicable
+
+###############################################################################
+# SECTIONS (template)
+###############################################################################
+sections:[inputs, outputs, state, invariants, formulas, refs]
+notation:t-Delta-t-x-y-v-x-v-y-a-units-s-px-px-slash-s-NDC-minus-1-to-1
+
+###############################################################################
+# SOURCE
+###############################################################################
+source:S25-T1-math-format S25-T2-math-pilot S25-T3-math-process

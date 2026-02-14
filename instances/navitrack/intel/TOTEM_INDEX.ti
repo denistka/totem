@@ -1,0 +1,139 @@
+v:3
+format:totem-index
+purpose:machine-only reading
+human-hub:[../legacy/README.old.md,../legacy/PO_SCHEMA.md,../legacy/TOTEM_MODEL.md]
+totem-folder:only-3-files-README-PO_SCHEMA-TOTEM_MODEL
+all-content:in-instances-navitrack-intel
+
+###############################################################################
+# MRPP 3.0 — CONTEXT CONTROL
+###############################################################################
+
+context-control:
+  max-active:8
+  ttl-days:14
+  
+  always-load:
+    - TOTEM_INDEX.ti
+    - TOTEM_PROJECT.ti
+    - ITERATION_FLOW.ti
+  
+  load-for-planning:[TOTEM_BACKLOG.ti,TOTEM_NEXT_STEPS.ti]
+  load-for-development:[TOTEM_SPRINTS.ti,TOTEM_DECISIONS.ti]
+  load-for-tech:[TOTEM_WEBGL.ti,TOTEM_WGPU.ti,TOTEM_MATH.ti]
+  load-for-qa:[TOTEM_TESTING.ti,TOTEM_REPORTS.ti]
+  
+  pruning:
+    - archive-completed-sprints-after:7d
+    - remove-resolved-blockers:on-iteration-close
+
+###############################################################################
+# ITERATION FLOW (v3.0)
+###############################################################################
+
+iteration-flow:./ITERATION_FLOW.ti
+phases:[plan,design,develop,verify,close]
+roles-active:[ROOT,TEAM_LEAD,CTO,QA,PM,DEVOPS]
+
+###############################################################################
+# PROJECT
+###############################################################################
+
+project:
+  name:Navitrack-Totem
+  app:navitrack-app
+  stack:[tauri2,vue3,ts,rust,vite,pinia,tailwind,leaflet]
+  scope:frontend
+  status:✅ S01-S33 complete
+  next:[S34-S37-REFACTORING,S38-S40-legacy]
+
+###############################################################################
+# DOCS (totem folder = 3 files only; rest in .ti)
+###############################################################################
+
+docs:
+  totem-existing:[../legacy/PO_SCHEMA.md,../legacy/README.old.md,../legacy/TOTEM_MODEL.md]
+  content:./TOTEM_DOCS.ti
+  store-content:./TOTEM_STORE.ti
+  removed:totem/docs-totem/store-totem/EPICS
+
+###############################################################################
+# SPRINTS (content in .ti; mrpp prompts in sprints/)
+###############################################################################
+
+sprints:
+  mrpp-root:../../../../prompt-machine/sprints/
+  content:./TOTEM_SPRINTS.ti
+  reports-content:./TOTEM_REPORTS.ti
+  removed:totem/sprints-totem/PROTOCOL_INDEX.pi
+
+###############################################################################
+# GUARDIANS (content in .ti)
+###############################################################################
+
+guardians:
+  index:./TOTEM_GUARDIANS_CONTEXT.ti
+  rules-dir:../guardians/
+  removed:totem/guardians
+
+###############################################################################
+# PROMPT-MACHINE
+###############################################################################
+
+prompt-machine:
+  root:../../../../prompt-machine/
+  readme:../../../../prompt-machine/README.md
+  totem-index:./TOTEM_INDEX.ti
+  
+  scripts:
+    universal-runner:prompt-machine/run-sprint-flow.sh
+    composite-prompt:prompt-machine/generate-sprint-prompt.sh
+    cursor-wrapper:prompt-machine/run-cursor-prompt.sh
+    node-runner:prompt-machine/run-prompt.js
+    legacy-s21:prompt-machine/run-s21-flow.sh
+  
+  usage:
+    dry-run:./run-sprint-flow.sh <N>
+    cursor:./generate-sprint-prompt.sh <N> | pbcopy
+    auto:RUNNER="./run-cursor-prompt.sh" ./run-sprint-flow.sh <N>
+
+###############################################################################
+# MACHINE-ONLY CONTENT (load these for full totem context)
+###############################################################################
+
+content:
+    audit:./SPRINT_CODEBASE_AUDIT.ti
+    sprint-planning:./SPRINT_PLANNING_v3.ti
+    iteration-flow:./ITERATION_FLOW.ti
+    refactoring:./TOTEM_REFACTORING.ti
+  project:./TOTEM_PROJECT.ti
+  epics:./TOTEM_EPICS.ti
+  sprints:./TOTEM_SPRINTS.ti
+  store:./TOTEM_STORE.ti
+  guardians:./TOTEM_GUARDIANS_CONTEXT.ti
+  backlog:./TOTEM_BACKLOG.ti
+  decisions:./TOTEM_DECISIONS.ti
+  breaking-fixes:./TOTEM_BREAKING_FIXES.ti
+  contacts:./TOTEM_CONTACTS.ti
+  health:./TOTEM_HEALTH.ti
+  next-steps:./TOTEM_NEXT_STEPS.ti
+  testing:./TOTEM_TESTING.ti
+  docs:./TOTEM_DOCS.ti
+  reports:./TOTEM_REPORTS.ti
+  getting-started:./TOTEM_GETTING_STARTED.ti
+  webgl-knowledge:./TOTEM_WEBGL.ti
+  wgpu-knowledge:./TOTEM_WGPU.ti
+  math:./TOTEM_MATH.ti
+  mission:./TOTEM_MISSION.ti
+
+###############################################################################
+# MACHINE-ONLY REFS (MRPP 3.0)
+###############################################################################
+
+machine-only:
+  spec:../legacy/PO_SCHEMA.md
+  section:MRPP 3.0 — Iteration Flow + Context Control
+  human-hub:[../legacy/README.old.md,../legacy/PO_SCHEMA.md,../legacy/TOTEM_MODEL.md]
+  audience:prompt-machine,agents
+  load-order:[TOTEM_INDEX.ti→then-any-content-file-as-needed]
+  full-totem:[TOTEM_PROJECT,TOTEM_MISSION,TOTEM_EPICS,TOTEM_SPRINTS,TOTEM_STORE,TOTEM_GUARDIANS_CONTEXT,TOTEM_BACKLOG,TOTEM_DECISIONS,TOTEM_BREAKING_FIXES,TOTEM_CONTACTS,TOTEM_HEALTH,TOTEM_NEXT_STEPS,TOTEM_TESTING,TOTEM_DOCS,TOTEM_REPORTS,TOTEM_GETTING_STARTED,TOTEM_WEBGL,TOTEM_WGPU,TOTEM_MATH,TOTEM_REFACTORING]

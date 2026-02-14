@@ -1,0 +1,372 @@
+v:2
+format:totem-sprints
+purpose:machine-only sprint index
+
+###############################################################################
+# SPRINTS
+###############################################################################
+
+S01:
+  name:Foundation
+  epic:E-01
+  points:18
+  path:sprints/1/
+  lead:sprints/1/S01.po
+  status:✅ complete
+
+S02:
+  name:API-Client-Design
+  epic:E-01
+  points:16
+  path:sprints/2/
+  lead:sprints/2/S02.po
+  status:✅ complete
+
+S03:
+  name:Auth-Core
+  epic:E-02
+  points:18
+  path:sprints/3/
+  lead:sprints/3/S03.po
+  status:✅ complete
+
+S04:
+  name:Auth-Complete
+  epic:E-02
+  points:17
+  path:sprints/4/
+  lead:sprints/4/S04.po
+  status:✅ complete
+
+S05:
+  name:Vehicles-Core
+  epic:E-03
+  points:15
+  path:sprints/5/
+  lead:sprints/5/S05.po
+  status:✅ complete
+
+S06:
+  name:Vehicles-Actions
+  epic:E-03
+  points:14
+  path:sprints/6/
+  lead:sprints/6/S06.po
+  status:✅ complete
+
+S07:
+  name:Map-Google
+  epic:E-04
+  points:18
+  path:sprints/7/
+  lead:sprints/7/S07.po
+  status:✅ complete
+
+S08:
+  name:Map-OSM
+  epic:E-04
+  points:17
+  path:sprints/8/
+  lead:sprints/8/S08.po
+  status:✅ complete
+
+S09:
+  name:Map-Clustering
+  epic:E-04
+  points:12
+  path:sprints/9/
+  lead:sprints/9/S09.po
+  status:✅ complete
+
+S10:
+  name:History
+  epic:E-05
+  points:16
+  path:sprints/10/
+  lead:sprints/10/S10.po
+  status:✅ complete
+
+S11:
+  name:Playback
+  epic:E-05
+  points:20
+  path:sprints/11/
+  lead:sprints/11/S11.po
+  status:✅ complete
+
+S12:
+  name:Tracking-Complete
+  epic:E-05
+  points:16
+  path:sprints/12/
+  lead:sprints/12/S12.po
+  status:✅ complete
+
+S13:
+  name:Reports-UI
+  epic:E-06
+  points:18
+  path:sprints/13/
+  lead:sprints/13/S13.po
+  status:✅ complete
+
+S14:
+  name:Reports-Export
+  epic:E-06
+  points:18
+  path:sprints/14/
+  lead:sprints/14/S14.po
+  status:✅ complete
+
+S15:
+  name:Events-Push
+  epic:E-07
+  points:20
+  path:sprints/15/
+  lead:sprints/15/S15.po
+  status:✅ complete
+
+S16:
+  name:Settings
+  epic:E-08
+  points:18
+  path:sprints/16/
+  lead:sprints/16/S16.po
+  status:✅ complete
+
+S17:
+  name:Platform
+  epic:E-09
+  points:16
+  path:sprints/17/
+  lead:sprints/17/S17.po
+  status:✅ complete
+
+S18:
+  name:Polish-Release
+  epic:E-10
+  points:20
+  path:sprints/18/
+  lead:sprints/18/S18.po
+  status:✅ complete
+
+S19:
+  name:Glass-UI
+  epic:E-11
+  points:20
+  path:sprints/19/
+  lead:sprints/19/S19.po
+  status:✅ complete
+
+S20:
+  name:Universal-UI-Template
+  epic:E-13
+  points:21-26
+  path:sprints/20/
+  lead:sprints/20/S20.po
+  status:🟢 ready
+
+S21:
+  name:Rebrand-Login-WOW
+  epic:E-14
+  points:31
+  path:sprints/21/
+  lead:sprints/21/S21.po
+  status:🟢 ready
+
+S22:
+  name:Refs-Glass-Icons-Layout
+  epic:E-15
+  points:16
+  path:sprints/22/
+  lead:sprints/22/S22.po
+  status:✅ complete
+
+S23:
+  name:Refs-Realtime-Tech-QA
+  epic:E-15
+  points:12
+  path:sprints/23/
+  lead:sprints/23/S23.po
+  status:✅ complete
+
+S24:
+  name:WebGL-BG-Animation
+  epic:E-15
+  points:12
+  path:sprints/24/
+  lead:sprints/24/S24.po
+  status:✅ complete
+
+S25:
+  name:Strong-Math-Model-per-Step
+  epic:E-16
+  points:10
+  path:sprints/25/
+  lead:sprints/25/S25.po
+  status:✅ complete
+
+S26:
+  name:WGPU-WASM-Background
+  epic:E-17
+  points:18
+  path:sprints/26/
+  lead:sprints/26/S26.po
+  status:✅ complete
+
+S27:
+  name:DevOps-Release-Readiness
+  epic:E-12
+  points:14
+  path:sprints/27/
+  lead:sprints/27/S27.po
+  status:🟢 planned
+
+S28:
+  name:Login-Form-Style-App-Wide
+  epic:E-18
+  points:16
+  path:sprints/28/
+  lead:sprints/28/S28.po
+  status:✅ complete
+
+S29:
+  name:Southern-Lights-Slang-WebGPU-WebGL
+  epic:E-19
+  points:22
+  path:sprints/29/
+  lead:sprints/29/S29.po
+  status:✅ complete
+
+S30:
+  name:Slang-Connect-Southern-Lights
+  epic:E-20
+  scope:src-rust/wgpu-Slang-pipeline-compile-or-runtime-better-efficiency
+  path:sprints/30/
+  status:✅ complete
+
+S31:
+  name:Login-WGPU-Slint-UI
+  epic:E-21
+  scope:login-page-full-wgpu-background-slint-ui-for-inputs-buttons-form-html-slint-switch-env
+  path:sprints/31/
+  status:✅ complete
+
+###############################################################################
+# MRPP 3.0 SPRINTS (new planning)
+###############################################################################
+
+S32:
+  name:Release-Ready
+  epic:E-22
+  points:16
+  path:sprints/32/
+  lead:sprints/32/S32.po
+  status:✅ complete
+  priority:P0
+  scope:CI/CD-pipeline,HTTPS-migration,iOS-Keychain
+  closes:[H-007,C-007]
+
+S33:
+  name:Client-Feedback-Fixes
+  epic:E-23
+  points:14
+  path:sprints/33/
+  lead:sprints/33/S33.po
+  status:✅ complete
+  priority:P1
+  scope:M-001,M-004,M-005,M-006,M-008,H-005,src-rust,useGraphicsLoader
+  dep:S32
+
+S34:
+  name:Vue-Component-Refactoring
+  epic:E-REFACTOR
+  points:21
+  path:sprints/34/
+  lead:sprints/34/S34.po
+  status:🟢 ready
+  priority:P0
+  scope:vue-components-<150-lines,css-extraction,component-split
+  notes:replaces-async-reports-2FA
+
+S35:
+  name:Graphics-Fallback-System
+  epic:E-REFACTOR
+  points:18
+  path:sprints/35/
+  lead:sprints/35/S35.po
+  status:🟢 ready
+  priority:P1
+  scope:wgpu-webgl-html-priority-0-1-2
+  notes:replaces-feature-pack
+
+S36:
+  name:Slint-HTML-Switch-System
+  epic:E-REFACTOR
+  points:15
+  path:sprints/36/
+  lead:sprints/36/S36.po
+  status:🟢 ready
+  priority:P2
+  scope:html-default-slint-optional-dev-toggle
+  notes:replaces-tech-debt-cleanup
+
+S37:
+  name:Architecture-Consolidation
+  epic:E-REFACTOR
+  points:12
+  path:sprints/37/
+  lead:sprints/37/S37.po
+  status:🟢 ready
+  priority:P3
+  scope:platform-abstraction,pwa-fallbacks,docs
+
+S38:
+  name:Async-Reports-2FA
+  epic:E-24
+  points:18
+  path:sprints/38/
+  status:⬜ planned
+  priority:P1
+  scope:H-002,H-003,F-004
+  dep:S37
+
+S39:
+  name:Feature-Pack
+  epic:E-25
+  points:20
+  path:sprints/39/
+  status:⬜ planned
+  priority:P2
+  scope:F-001,F-002,F-005,M-007,F-007
+  dep:S38
+
+S40:
+  name:Tech-Debt-Cleanup
+  epic:E-26
+  points:12
+  path:sprints/40/
+  status:⬜ planned
+  priority:P3
+  scope:wgpu-update,static-mut-refactor,M-002
+  dep:S39
+
+###############################################################################
+# DEPENDENCIES (order)
+###############################################################################
+
+order:[S01→S02→S03→S04→S05,S06→S07,S08,S09→S10,S11,S12→S13,S14→S15,S16→S17→S18→S19→S20→S21→S22,S23,S24→S25,S26→S27→S28→S29→S30→S31→S32→S33→S34→S35→S36→S37→S38→S39→S40]
+
+###############################################################################
+# MRPP
+###############################################################################
+
+protocol-entry:removed
+reports-content:./TOTEM_REPORTS.ti
+definitions-catalog:in-TOTEM_TESTING.ti
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+source:removed-content-in-this-ti

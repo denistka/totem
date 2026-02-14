@@ -1,0 +1,90 @@
+v:2
+format:totem-reports
+purpose:machine-only sprint reports catalog (original files removed)
+
+###############################################################################
+# NOTE
+###############################################################################
+
+original-reports:removed
+content-converted-to-ti:n
+catalog-only:y
+
+###############################################################################
+# QA REPORTS (catalog: sprint → report name)
+###############################################################################
+
+qa:
+  S01:S01-QA-REPORT
+  S02:S02-QA-REPORT
+  S03:S03-QA-REPORT
+  S04:S04-QA-REPORT
+  S05:S05-QA-REPORT
+  S06:S06-QA-REPORT
+  S07:S07-QA-REPORT
+  S08:S08-QA-REPORT
+  S09:S09-QA-REPORT
+  S10:S10-QA-REPORT
+  S11:S11-QA-REPORT
+  S12:S12-QA-REPORT
+  S13:S13-QA-REPORT
+  S14:S14-QA-REPORT
+  S15:S15-QA-REPORT
+  S16:S16-QA-REPORT
+  S17:S17-QA-REPORT
+  S18:S18-QA-REPORT
+  S19:S19-QA-REPORT
+  S20:S20-QA-REPORT
+  S21:S21-QA-REPORT
+  S23:S23-QA-REPORT
+
+###############################################################################
+# PM STATUS (catalog)
+###############################################################################
+
+pm:
+  S01:S01-PM-STATUS
+  S02:S02-PM-STATUS
+  S03:S03-PM-STATUS
+  S04:S04-PM-STATUS
+  S05:S05-PM-STATUS
+  S06:S06-PM-STATUS
+  S07:S07-PM-STATUS
+  S08:S08-PM-STATUS
+  S09:S09-PM-STATUS
+  S10:S10-PM-STATUS
+  S11:S11-PM-STATUS
+  S12:S12-PM-STATUS
+  S13:S13-PM-STATUS
+  S14:S14-PM-STATUS
+  S15:S15-PM-STATUS
+  S16:S16-PM-STATUS
+  S17:S17-PM-STATUS
+  S18:S18-PM-STATUS
+  S19:S19-PM-STATUS
+
+###############################################################################
+# CTO REPORTS (catalog)
+###############################################################################
+
+cto:
+  S02:S02-CTO-REPORT
+  S05:S05-CTO-REPORT
+  S06:S06-CTO-REPORT
+  S19:S19-CTO-REVIEW
+
+###############################################################################
+# DESIGN / OTHER (catalog)
+###############################################################################
+
+design-signoff:
+  S21:S21-design-signoff
+
+testing:
+  S19-T4:S19-T4-TESTING-REPORT
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+source:removed-totem/sprints/reports

@@ -1,0 +1,36 @@
+role: Vue 3 / TypeScript / Tauri 2 Development Specialist
+focus: composition-api, script-setup, pinia-state, tauri-commands, rust-bridging
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Vue 3.x, Vite, TypeScript, Pinia, Tauri 2.0 (Rust)
+
+implementation-rules:
+  components:
+    - Use `<script setup lang="ts">` syntax.
+    - Components should be modular; extract logic to composables.
+    - Props MUST be defined with `defineProps<{ ... }>()`.
+    - Emits MUST be defined with `defineEmits<{ ... }>()`.
+    - Keep templates clean: use computed properties for complex logic.
+  composables:
+    - Pure logic in `src/composables/` (useSearch, useTheme).
+    - Must follow the `use*` naming convention.
+    - Return reactive state and methods to the component.
+  state:
+    - Use Pinia for global state; avoid state mutation outside actions.
+    - Use `storeToRefs` when destructuring state for reactivity.
+    - Keep stores focused (auth.ts, vehicle.ts, map.ts).
+  tauri-bridge:
+    - Wrap Tauri `invoke` calls in dedicated service functions.
+    - Always type the response from Rust commands.
+    - Handle async errors gracefully (try/catch + toast/notification).
+
+typescript-rules:
+  - Strict mode: no `any`, no `@ts-ignore`.
+  - Prefer `interface` for API responses and component props.
+  - Use `ReadOnly` or `deepReadonly` for shared configuration objects.
+
+anti-patterns:
+  - Direct DOM manipulation (use `ref` or `v-model` instead).
+  - Heavy logic in templates.
+  - Global `window` pollution (use Tauri state or Pinia).
+  - Mixing Options API with Composition API.

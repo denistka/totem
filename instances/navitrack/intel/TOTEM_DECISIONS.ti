@@ -1,0 +1,57 @@
+v:2
+format:totem-decisions
+purpose:machine-only key decisions
+
+###############################################################################
+# KEY DECISIONS (date:decision:rationale)
+###############################################################################
+
+2026-01-28:
+  - [Tauri-2-cross-platform,single-codebase-6-platforms-modern-stack]
+  - [Frontend-only,backend-API-stable]
+  - [JWT-over-Basic-Auth,backend-requirement-better-security]
+  - [Async-reports-API,long-running-reports-need-progress]
+  - [Redesign-brand-colors,client-approved-green-orange]
+  - [MRPP-Protocol,70-90%-token-reduction-role-separation]
+  - [Desktop-first,mobile-targets-Rust-fallback-applied]
+  - [Clean-architecture,feature-based-scalability]
+  - [Tailwind-CSS-4,utility-first-brand-tokens]
+  - [Tauri-HTTP-Plugin,native-HTTP-no-CORS-secure]
+  - [Bigint-pointId,int64-handling-prevents-overflow]
+  - [Vue-Router-4,lazy-loading-guards]
+  - [Responsive-mobile-first,BottomNav-mobile-Sidebar-desktop]
+  - [Tauri-Store-Plugin,Keychain-Keystore-secure-token]
+  - [JWT-Basic-fallback,migration-ready-auth]
+  - [Legacy-verified,99%-coverage-deep-analysis]
+  - [Alignment-verified,mission-requirements-legacy-aligned]
+
+2026-02-02:
+  - [App-docs-getting-started-only,navitrack-app-docs-single-file-GETTING_STARTED-no-API-ARCHITECTURE-sprint-QA-WebGL-specs]
+
+2026-02-04:
+  - [WGPU-WASM-background-E-17-S26,same-behavior-as-webgl-flower-WebGPU-in-browser-fallback-to-WebGL-when-unavailable]
+  - [S22-S26-implemented,refs-glass-icons-layout-REFS_ADOPTION-real-time-doc-WebGL-qa-math-template-pilot-PO-integration-wgpu-flower-stub-WgpuFlower-vue-build-wasm]
+  - [S29-Southern-Lights-E-19,replaced-flower-with-Southern-Lights-modular-navitrack-wgpu-Slang-compute-WebGL-fallback]
+
+2026-02-05:
+  - [Repo-gitignore,root-gitignore-and-navitrack-app-gitignore-target-env-ignore-Rust-target-and-env-keep-env-local-example-reduces-untracked-from-thousands-to-real-changes-only]
+  - [Beams-FPS-Mailbox-present-mode,prefer-Mailbox-from-surface-caps-in-navitrack-wgpu-beams-for-higher-FPS-when-supported]
+  - [Beams-FPS-shader-branchless,safe-div-and-step-based-color-in-WGSL-fragment-avoid-NaN-better-GPU-occupancy]
+  - [Beams-FPS-Page-Visibility,Vue-WgpuPolarBeamsBg-pause-requestAnimationFrame-when-tab-hidden-resume-on-visibilitychange]
+  - [Beams-WebGPU-device-limits,request_device-use-adapter-limits-clone-not-Limits-downlevel_webgl2_defaults-browser-rejects-deprecated-maxInterStageShaderComponents]
+  - [Beams-Vue-init-logging,WgpuPolarBeamsBg-console-log-Loading-WASM-WASM-loaded-Initializing-beams-WASM-inited-or-fallback-reason-in-DEV]
+  - [Beams-Vue-zero-canvas,WgpuPolarBeamsBg-defer-init-until-canvas-non-zero-size-resize-and-rAF-then-retry-avoid-WASM-init-beams-fail-fallback]
+  - [S28-Login-Form-Style-App-Wide,NtInput-NtButton-nt-glass-card-spacing-error-app-wide-TrackRequestForm-ReportForm-VehicleSearch-SettingsView-FORM_STYLE_REF-doc]
+  - [S29-Southern-Lights,E-19-replaced-webgl-flower-wgpu-flower-with-southern-lights-Slang-compute-modular-navitrack-wgpu-common-southern_lights-WebGL-fallback-SouthernLightsBg-SouthernLightsWebGL]
+  - [S30-Slang-connect,E-20-Slang-pipeline-for-Southern-Lights-ref/beams_compute_playground.slang-Shadertoy-XdlSDs-port-build-rs-slangc-or-ref-fallback-gen-beams_compute_playground.wgsl]
+
+2026-02-05-S32:
+  - [D-032-01,CI-runner,ubuntu-latest-for-CI-matrix-for-release-cost-effective]
+  - [D-032-02,HTTPS-env,VITE_BASE_ONLINE-VITE_BASE_API-env-variable-per-environment]
+  - [D-032-03,iOS-Keychain-key,single-key-navitrack_tokens-JSON-blob-simpler-atomic]
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md#key-decisions

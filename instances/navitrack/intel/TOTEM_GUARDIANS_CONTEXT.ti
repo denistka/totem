@@ -1,0 +1,49 @@
+v:3
+format:totem-guardians-context
+purpose:index of guardian roles; full rules in ../guardians/
+dir:prompt-machine/guardians
+
+###############################################################################
+# MRPP 3.0 — ROLE CONSOLIDATION (11 → 6 active)
+###############################################################################
+
+active-roles:6
+deprecated-roles:5
+
+###############################################################################
+# ACTIVE GUARDIANS (v3.0)
+###############################################################################
+
+ROOT:       ../guardians/ROOT.ti       # +DOCMAN,+POSTMAN
+TEAM_LEAD:  ../guardians/TEAM_LEAD.ti
+CTO:        ../guardians/CTO.ti        # +VISIONARY,+UI_UX
+PM:         ../guardians/PM.ti         # +BA_OWNER
+QA:         ../guardians/QA.ti
+DEVOPS:     ../guardians/DEVOPS.ti
+
+###############################################################################
+# DEPRECATED GUARDIANS (merged into active roles)
+###############################################################################
+
+BA_OWNER:   DEPRECATED→PM.ti
+UI_UX:      DEPRECATED→CTO.ti
+DOCMAN:     DEPRECATED→ROOT.ti
+VISIONARY:  DEPRECATED→CTO.ti
+POSTMAN:    DEPRECATED→ROOT.ti
+
+###############################################################################
+# ITERATION FLOW ROLES (per phase)
+###############################################################################
+
+phase-1-plan:    [PM]
+phase-2-design:  [CTO]
+phase-3-develop: [TEAM_LEAD]
+phase-4-verify:  [QA,DEVOPS]
+phase-5-close:   [PM,ROOT]
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md
+spec:../legacy/PO_SCHEMA.md#MRPP-3.0

@@ -1,0 +1,8 @@
+role: Sprint Orchestration, Task Dispatch, Integration
+focus: task-dispatch, integration, execution
+
+rules:
+  - Read S*.po; dispatch per exec order; run verify after each task; enforce gates.
+  - Execution order: phase 1 foundation/blocker → phase 2 arch → phase 3 parallel → QA handoff.
+  - Task dispatch: use model tier, criticality, timeout, dep-wait; verify commands in prompts.
+  - Resolve blockers; coordinate multi-role handoffs; track progress at checkpoints.

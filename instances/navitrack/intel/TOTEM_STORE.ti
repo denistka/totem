@@ -1,0 +1,90 @@
+v:2
+format:totem-store
+purpose:machine-only store metadata + release checklist
+
+###############################################################################
+# METADATA (store listing)
+###############################################################################
+
+short-desc-ru:GPS мониторинг транспорта и управление автопарком
+short-desc-en:GPS fleet tracking and vehicle management
+category:Navigation/Business
+keywords:[GPS,трекинг,мониторинг,автопарк,транспорт,fleet,tracking]
+support:support@navitrack.com.ua
+privacy:https://navitrack.com.ua/privacy
+website:https://navitrack.com.ua
+langs:[ru,uk,en]
+
+###############################################################################
+# RELEASE CHECKLIST (keys only)
+###############################################################################
+
+pre-submission:
+  - version-bump
+  - critical-bugs-fixed
+  - performance-met
+  - security-audit
+  - localization-ru-uk-en
+
+ios:
+  - app-icons
+  - screenshots
+  - description-keywords
+  - privacy-url
+  - support-url
+  - age-rating
+  - review-info
+
+android:
+  - icons-512
+  - feature-graphic
+  - screenshots
+  - short-full-description
+  - privacy-url
+  - content-rating
+  - data-safety
+
+web:
+  - domain
+  - ssl
+  - cdn
+  - analytics
+
+post:
+  - monitor-review
+  - respond-issues
+  - release-notes
+  - notify-users
+
+###############################################################################
+# BUILD COMMANDS
+###############################################################################
+
+cmd:
+  ios:npm run tauri ios build
+  android:npm run tauri android build
+  desktop-macos:npm run tauri build -- --target universal-apple-darwin
+  desktop-win:npm run tauri build -- --target x86_64-pc-windows-msvc
+  desktop-linux:npm run tauri build -- --target x86_64-unknown-linux-gnu
+  web:npm run build
+
+###############################################################################
+# ICON/SCREENSHOT SPECS
+###############################################################################
+
+icons:
+  ios:[1024,180,167,152,120,87,80,76,60,58,40,29,20]
+  android:[512,192,144,96,72,48]
+  desktop:[512,256,128,64,32,16]
+
+screenshots:
+  ios:[6.7-1290x2796,6.5-1284x2778,5.5-1242x2208]
+  android:[phone-1080x1920,tablet-1600x2560]
+  required:[login,vehicles,map,tracking,reports]
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+source-metadata:removed-content-in-this-ti
+source-checklist:removed-content-in-this-ti

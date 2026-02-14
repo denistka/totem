@@ -1,0 +1,143 @@
+v:3
+format:sprint-codebase-audit
+purpose:correlation-sprints-vs-implementation
+created:2026-02-XX
+
+###############################################################################
+# SPRINT STATUS SUMMARY
+###############################################################################
+
+total-sprints:31
+complete:28
+ready:2 (S20,S21)
+planned:1 (S27)
+
+###############################################################################
+# CODEBASE STRUCTURE (verified)
+###############################################################################
+
+features:
+  auth:       [LoginView,OtpView,BlockedView,SplashView,LoginForm,BiometricPrompt,GoogleSignInButton,SlintLoginForm]
+  vehicles:   [VehiclesView]
+  map:        [MapView]
+  tracking:   [TrackingView,HistoryView]
+  reports:    [ReportsView,ReportView]
+  events:     [EventsView]
+  settings:   [SettingsView]
+
+stores:
+  - auth.ts         # S03-S04
+  - vehicles.ts     # S05-S06
+  - map.ts          # S07-S09
+  - history.ts      # S10
+  - tracks.ts       # S11-S12
+  - reports.ts      # S13-S14
+  - events.ts       # S15
+  - settings.ts     # S16
+  - geofences.ts    # S12
+
+api-endpoints:
+  - auth.ts         # S03-S04
+  - vehicles.ts     # S05-S06
+  - tracks.ts       # S11-S12
+  - reports.ts      # S13-S14
+  - events.ts       # S15
+
+services:
+  - authService.ts
+  - biometricService.ts
+  - cacheService.ts
+  - deepLinkService.ts      # S16
+  - googleAuthService.ts
+  - notificationService.ts  # S15
+  - phoneService.ts
+  - shareService.ts         # S14
+
+ui-components:
+  - Button,Card,Input,Modal,Skeleton,Spinner,Toast
+  - NtButton,NtGlass,NtInput  # S19 Glass-UI
+  - LogoEzkiz,NavitrackLogotype  # S21
+  - SouthernLightsBg,SouthernLightsWebGL  # S24,S26,S29
+
+###############################################################################
+# SPRINT-CODEBASE CORRELATION
+###############################################################################
+
+S01-Foundation:        ✅ project structure exists
+S02-API-Client:        ✅ api/client.ts, interceptors
+S03-Auth-Core:         ✅ authService, auth store, LoginView
+S04-Auth-Complete:     ✅ OTP, biometric, Google sign-in
+S05-Vehicles-Core:     ✅ vehicles store, VehiclesView
+S06-Vehicles-Actions:  ✅ vehicle details, actions
+S07-Map-Google:        ✅ map store, MapView (note: using Leaflet not Google)
+S08-Map-OSM:           ✅ Leaflet/OSM integration
+S09-Map-Clustering:    ✅ clustering in map
+S10-History:           ✅ history store, HistoryView
+S11-Playback:          ✅ tracks store, TrackingView
+S12-Tracking-Complete: ✅ multi-track, point details
+S13-Reports-UI:        ✅ reports store, ReportsView
+S14-Reports-Export:    ✅ shareService, ReportView
+S15-Events-Push:       ✅ events store, notificationService, EventsView
+S16-Settings:          ✅ settings store, deepLinkService, SettingsView
+S17-Platform:          ✅ platformFetch, Tauri integration
+S18-Polish-Release:    ✅ error handling, loading states
+S19-Glass-UI:          ✅ NtButton, NtGlass, NtInput
+S20-Universal-UI:      🟢 READY - not started
+S21-Rebrand-Login:     🟢 READY - not started (LogoEzkiz exists but full rebrand pending)
+S22-Refs-Glass:        ✅ complete
+S23-Refs-Realtime:     ✅ complete
+S24-WebGL-BG:          ✅ SouthernLightsWebGL
+S25-Math-Model:        ✅ MATH_MODEL_TEMPLATE exists
+S26-WGPU-WASM:         ✅ src-rust/wgpu (navitrack-wgpu crate), wgpu.js/wgpu.wasm
+S27-DevOps:            🟢 PLANNED - CI/CD pending
+S28-Login-Style:       ✅ complete
+S29-Southern-Lights:   ✅ SouthernLightsBg with WebGPU/WebGL
+S30-Slang-Connect:     ✅ Slang→WGSL pipeline
+S31-Login-WGPU-Slint:  ✅ src-rust/slint-runtime, src-slint/login, SlintLoginForm.vue, slint.js/slint.wasm
+
+###############################################################################
+# GAPS IDENTIFIED
+###############################################################################
+
+priority-P0:none
+
+priority-P1:
+  - S27-DevOps: CI/CD pipeline not configured
+    action:create-github-actions-workflow
+    files-needed:[.github/workflows/ci.yml,.github/workflows/release.yml]
+
+priority-P2:
+  - S20-Universal-UI: Template refactoring not done
+    action:run-S20-tasks
+    scope:theme-consolidation,glass-patterns,responsive-audit
+  - S21-Rebrand-Login: Full rebrand pending
+    action:run-S21-tasks
+    scope:logo-integration,logotype,login-form-match-ref
+
+priority-P3:
+  - wgpu-version: using 0.19 with patch, should update to 0.21+
+    action:update-wgpu-remove-patch
+  - static-mut: southern_lights uses unsafe globals
+    action:refactor-to-thread-local
+
+###############################################################################
+# RECOMMENDED NEXT ACTIONS
+###############################################################################
+
+immediate:
+  1. S27-DevOps (CI/CD) - блокер для релиза
+  2. wgpu update 0.19→0.21+ - техдолг
+
+post-mvp:
+  3. S20-Universal-UI - рефакторинг
+  4. S21-Rebrand-Login - визуальное обновление
+  5. static-mut refactor - код качество
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+audited-from:
+  - prompt-machine/sprints/*/
+  - navitrack-app/src/
+  - TOTEM_SPRINTS.ti

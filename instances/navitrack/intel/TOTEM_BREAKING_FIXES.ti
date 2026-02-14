@@ -1,0 +1,43 @@
+v:2
+format:totem-breaking-fixes
+purpose:machine-only breaking fixes + critical fixes addressed
+
+###############################################################################
+# BREAKING FIXES (documented)
+###############################################################################
+
+LOGIN_FIX:
+  date:2026-01-28
+  sprint:S-03
+  status:✅ Fixed
+  desc:Basic-Auth-endpoint-/allvehicles→/settings-compat-old-apps
+  path:breaking-fixes/LOGIN_FIX.md
+
+HTTP_SCOPE_FIX:
+  date:2026-01-28
+  sprint:—
+  status:✅ Fixed
+  desc:Tauri-HTTP-plugin-registered-URL-scope-NaviTrack-API
+  path:breaking-fixes/HTTP_SCOPE_FIX.md
+
+###############################################################################
+# CRITICAL FIXES ADDRESSED (bug:fix:sprint:status)
+###############################################################################
+
+addressed:
+  pointId-int32-overflow:[parseJsonWithBigInt-bigint,S-12,✅]
+  distance-decimal:[number-type-JSON-float,S-12,✅]
+  address-null-crash:[nullable-string,S-02,✅]
+  Basic-Auth→JWT:[JWT+Basic-fallback-refresh,S-03,✅]
+  Basic-Auth-endpoint:[/settings-instead-of-allvehicles,S-03,✅-LOGIN_FIX]
+  HTTP-plugin-scope:[plugin+URL-scope-configured,—,✅-HTTP_SCOPE_FIX]
+  push-after-logout:[unregister-token-logout,S-15,✅]
+  401-crash:[global-error-handler-logout-redirect,S-02-S03-S04,✅]
+  OSM-Android:[new-Leaflet-implementation,S-08,✅]
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md#breaking-fixes
+source-dir:breaking-fixes/

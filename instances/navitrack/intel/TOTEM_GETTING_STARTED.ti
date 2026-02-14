@@ -1,0 +1,63 @@
+v:2
+format:totem-getting-started
+purpose:machine-only dev setup + project structure
+
+###############################################################################
+# PREREQUISITES
+###############################################################################
+
+prereq:
+  node:20+
+  rust:1.77+
+  ios:[Xcode-15+,CocoaPods,pod-install-src-tauri-gen-apple,xcworkspace]
+  android:[Android-Studio,JDK-17+,SDK,ANDROID_HOME,NDK-source-properties]
+
+###############################################################################
+# COMMANDS (navitrack-app)
+###############################################################################
+
+cmd:
+  install:npm install
+  dev:npm run dev
+  tauri-dev:npm run tauri dev
+  tauri-ios-dev:npm run tauri ios dev
+  tauri-android-dev:npm run tauri android dev
+  lint:npm run lint
+  lint-fix:npm run lint:fix
+  format:npm run format
+  format-check:npm run format:check
+  test:npm run test
+  test-ui:npm run test:ui
+  build:npm run build
+  build-wasm:pnpm run build:wasm
+  tauri-build:npm run tauri build
+  tauri-ios-build:npm run tauri ios build
+  tauri-android-build:npm run tauri android build
+
+###############################################################################
+# CONFIG (optional)
+###############################################################################
+
+config:
+  VITE_GOOGLE_CLIENT_ID:Google-Sign-In-S04-backend-POST-auth-google-idToken
+
+###############################################################################
+# PROJECT STRUCTURE (key paths)
+###############################################################################
+
+structure:
+  totem:[sprints/,docs/,guardians/,pics/,PROTOCOL_INDEX.pi,PO_SCHEMA.md,README.md]
+  sprints:MRPP-prompt-files-sprints/1..23/
+  breaking-fixes:[README.md,LOGIN_FIX.md,HTTP_SCOPE_FIX.md]
+  navitrack-app:[src/,src-tauri/,docs/]
+  app-src:[api/,components/,composables/,features/,stores/,services/,router/,types/,utils/,i18n/,styles/]
+  app-api:[client-dual-host,constants,endpoints-vehicles-tracks-reports]
+  app-features:[auth,vehicles,map,...]
+  app-stores:[auth,vehicles,map,geofences,settings-Pinia]
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md#getting-started
+app-readme:navitrack-app/README.md

@@ -1,0 +1,58 @@
+v:2
+format:totem-project
+purpose:machine-only project context
+
+###############################################################################
+# PROJECT
+###############################################################################
+
+name:Navitrack-Totem
+app:navitrack-app
+stack:[tauri2,vue3.5,ts5.6,rust,vite,pinia,tailwind4,leaflet]
+scope:frontend
+platforms:[ios,android,web,macos,windows,linux]
+status:✅ S01-S19 complete
+next:[release,S20,S21,S22,S23]
+points:~381-386
+progress:19/19 core complete
+
+###############################################################################
+# BUSINESS
+###############################################################################
+
+company:ООО НАВИТРЕК
+tagline:NaviTrack — ВСЕГДА ВЫИГРЫШНОЕ РЕШЕНИЕ
+mission:universal solutions,satellite tech,monitoring,remote control
+website:https://navitrack.com.ua
+support:support@navitrack.com.ua
+location:Odessa,Ukraine
+
+###############################################################################
+# TECH
+###############################################################################
+
+framework:tauri2
+frontend:[vue3,ts,pinia]
+styling:tailwind4
+maps:leaflet
+build:vite
+test:[vitest,playwright]
+native:rust
+
+why-tauri:[single-codebase,6-platforms,small-bundle,rust-security,no-node-runtime]
+
+###############################################################################
+# BRAND (approved)
+###############################################################################
+
+primary:#2E7D32→#4CAF50
+accent:#FF9800
+bg:white/light-gray
+style:modern flat,card-based,rounded
+nav:bottom-tabs-mobile,sidebar-desktop
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md

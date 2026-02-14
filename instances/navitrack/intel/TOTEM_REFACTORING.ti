@@ -1,0 +1,140 @@
+v:2
+format:totem-refactoring
+purpose:machine-only refactoring context
+
+###############################################################################
+# REFACTORING EPIC E-REFACTOR
+###############################################################################
+
+epic:
+  id:E-REFACTOR
+  name:Codebase-Refactoring
+  created:2026-02-06
+  status:🟢 ready
+  points:66
+  duration:4w
+  owner:Dev+CTO
+
+###############################################################################
+# DRIVERS
+###############################################################################
+
+drivers:
+  - vue-components-oversized:22-components-150-637-lines
+  - graphics-fallback-missing:unified-priority-system-needed
+  - slint-html-switch-incomplete:generic-switch-missing
+  - architecture-gaps:pwa-fallbacks-platform-abstraction
+
+###############################################################################
+# SPRINTS
+###############################################################################
+
+sprints:
+  S34:
+    name:Vue-Component-Refactoring
+    points:21
+    priority:P0
+    scope:components-<150-lines,css-extraction
+    critical:[LoginView-637,SouthernLightsBg-602,TrackRequestForm-588]
+    high:[ReportForm-461,VehicleInfoWindow-361,SettingsView-335]
+    
+  S35:
+    name:Graphics-Fallback-System
+    points:18
+    priority:P1
+    scope:wgpu-webgl-html-priority-0-1-2
+    components:[CapabilityDetector,FallbackManager,RendererRegistry]
+    
+  S36:
+    name:Slint-HTML-Switch-System
+    points:15
+    priority:P2
+    scope:html-default-slint-optional-dev-toggle
+    components:[ViewModeService,SwitchRegistry,SwitchableView-HOC]
+    
+  S37:
+    name:Architecture-Consolidation
+    points:12
+    priority:P3
+    scope:platform-abstraction,pwa-fallbacks,docs
+    components:[PlatformService,CapabilityFlags,BrowserApiHelpers]
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+
+success-criteria:
+  S34:
+    - all-components-<150-lines
+    - css-extracted-to-styles/
+    - tests-pass
+  S35:
+    - fallback-chain-works
+    - wgpu-priority-0
+    - webgl-priority-1
+    - html-priority-2
+  S36:
+    - html-default-works
+    - slint-optional-loads
+    - dev-toggle-works
+  S37:
+    - pwa-mode-works
+    - native-mode-works
+    - docs-complete
+
+###############################################################################
+# DEPENDENCIES
+###############################################################################
+
+dependencies:
+  S34:standalone
+  S35:depends-S34-T3
+  S36:depends-S35
+  S37:depends-S36
+
+###############################################################################
+# RISKS
+###############################################################################
+
+risks:
+  - component-refactor-breaks-ui
+  - fallback-system-performance
+  - slint-wasm-load-fails
+  - platform-abstraction-complex
+
+###############################################################################
+# MITIGATION
+###############################################################################
+
+mitigation:
+  - incremental-refactor
+  - fallback-testing-on-devices
+  - html-always-fallback
+  - minimal-platform-layer
+
+###############################################################################
+# FILES CREATED
+###############################################################################
+
+files:
+  - sprints/34/S34.po
+  - sprints/34/S34-T1-component-audit.po
+  - sprints/34/S34-T2-login-view-refactor.po
+  - sprints/34/S34-T3-southern-lights-refactor.po
+  - sprints/35/S35.po
+  - sprints/35/S35-T1-fallback-design.po
+  - sprints/35/S35-T2-capability-detector.po
+  - sprints/36/S36.po
+  - sprints/36/S36-T1-switch-design.po
+  - sprints/37/S37.po
+  - sprints/EPIC-REFACTORING.md
+
+###############################################################################
+# NOTES
+###############################################################################
+
+notes:
+  - addresses-4-areas-identified-2026-02-06
+  - foundation-for-future-development
+  - required-before-new-features
+  - improves-maintainability-performance

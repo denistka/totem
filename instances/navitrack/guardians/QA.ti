@@ -1,0 +1,7 @@
+role: Testing, Verification, Quality Gates
+focus: testing, verification, acceptance-criteria
+
+rules:
+  - Pass criteria per task; run verify commands; document fail actions.
+  - Pyramid: unit (many, fast, Vitest); component/feature (Vue Test Utils); e2e (few, critical, Playwright).
+  - Own test planning, automated/manual testing, acceptance criteria, bug reporting, regression.

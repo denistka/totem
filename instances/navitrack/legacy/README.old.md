@@ -1,0 +1,63 @@
+# Totem — NaviTrack Universal App
+
+**Project**: NaviTrack Fleet Management — universal app (Tauri 2 + Vue 3 + TypeScript + Rust).  
+**Scope**: Frontend only (existing API). **Platforms**: iOS, Android, Web, macOS, Windows, Linux.  
+**Status**: See [prompt-machine/totem/TOTEM_INDEX.ti](../prompt-machine/totem/TOTEM_INDEX.ti) (or log below) for current status and next steps.
+
+**For humans**: This README is the **human log** — dated entries below. For protocol and structure see [PO_SCHEMA.md](./PO_SCHEMA.md) and [TOTEM_MODEL.md](./TOTEM_MODEL.md). All other totem content is machine-only under [prompt-machine/totem/](../prompt-machine/totem/).
+
+---
+
+## Mission
+
+- **Why**: World peace and equality
+- **Identity**: We are a space shuttle — not just a client reference; we look to the future
+- **Mindset**: We don't have in mind any not-solving problems
+- **Stride**: We take the first step of indefinite width
+- **Pulse**: If the torrent is alive, we are alive too
+
+_(Full machine-readable: prompt-machine/totem/TOTEM_MISSION.ti)_
+
+---
+
+## Log (human)
+
+_Add new entries at the top; keep date and short description._
+
+- **2026-02-13** — Epic E-22 (PWA-Views-Styles-Polish) S38–S42 completed. **S38:** useTimeAgo, NtDateTimeRange, NtSelect, NtFormField, NtButton adoption, form-card style in components.css. **S39:** LoginView styles → login.css, forms use NtFormField/NtSelect, VehicleInfoWindow panel, settings mapProviders i18n. **S40:** i18n keys (auth blocked/notFound, errors, reports.defaultName), stores use i18n.t(), BlockedView/NotFoundView translated. **S41:** VehiclesView/EventsView/SettingsView polish (skeletons, empty/error states, safe-area, dark background). **S42:** PWA — manifest NaviTrack icons (logo-navitrack.png 192/512 any+maskable), apple-touch-icon, theme #2d8a3e; sw.js app-shell + offline fallback (offline.html), cache navitrack-app-v3; build:web script, base '/', vercel.json SPA rewrites; prompt-machine/sprints/42/S42-deploy.md (Vercel/Netlify + Lighthouse checklist). Ready for deploy and Lighthouse run.
+- **2026-02-13** — Epic E-22 (PWA-Views-Styles-Polish) and S38–S42 planned. Codebase audit: component reuse, big component refactoring, i18n gaps, PWA readiness. See prompt-machine/sprints/EPIC-PWA-VIEWS-POLISH.md.
+- **2026-02-10** — Rust layout and WASM output names. **Rust:** `rust-apps/` → `src-rust/`; `navitrack-wgpu/` → `wgpu/` (folder), `navitrack-slint-login/` → `slint-runtime/`. **Slint sources:** `src-slint/` (e.g. `src-slint/login/LoginForm.slint`). **WASM:** build outputs renamed to `wgpu.js`/`wgpu.wasm` (public/navitrack-wgpu) and `slint.js`/`slint.wasm` (public/slint-runtime) via `scripts/rename-wasm-output.mjs`. Build: `pnpm run build:wasm`, `pnpm run build:slint`. Totem updated: TOTEM_NEXT_STEPS, TOTEM_WGPU, TOTEM_SPRINTS, TOTEM_WEBGL, SPRINT_CODEBASE_AUDIT.
+- **2026-02-05** — Repo gitignore. Root `.gitignore` added (target/, .env, OS/IDE); `navitrack-app/.gitignore` updated with Rust `target/` and `.env` (keep `.env.local.example`). Untracked count dropped from ~7800 (Cargo target + .env) to ~47 real changes. TOTEM updated (this log, TOTEM_DECISIONS, TOTEM_NEXT_STEPS ref).
+- **2026-02-05** — Totem update. S30 (Slang Connect Southern Lights) marked complete in TOTEM_SPRINTS.ti and TOTEM_EPICS.ti; E-20 ✅. TOTEM_INDEX.ti next list: removed S30 (release, S27, S20, S21 only).
+- **2026-02-05** — Totem sync. Machine totem aligned with README: S01–S31 complete; E-21/S31 (Login WGPU + Slint) ✅; S30 (Slang connect) planned. TOTEM_EPICS, TOTEM_SPRINTS, TOTEM_INDEX, TOTEM_WGPU, TOTEM_NEXT_STEPS consistent. slint-login/LoginForm.slint and navitrack-slint-login WASM in place.
+- **2026-02-05** — Southern Lights + sci-fi radar mix. TS WebGPU fragment (SouthernLightsBg.vue) now blends polar beams with gmunk/Oblivion-style radar (circles, sweep, bips). WGSL has no `mod` — use `mod_f32(x,y)=x-y*floor(x/y)`. Env `VITE_S31_RADAR_MIX=true` skips WASM so TS path runs and radar is visible. TOTEM_WGPU.ti updated (radar-mix, radar-env, radar-mix-detail).
+- **2026-02-05** — S31 complete. Login page: WGPU full-screen background (SouthernLightsBg); optional Slint form (navitrack-slint-login WASM). Switch via `VITE_S31_LOGIN_UI=html` (default) or `slint` in navitrack-app/.env; `VITE_S31_LOGIN_WGPU` for background. Build: `pnpm run build:wasm`, `pnpm run build:slint`. Totem updated: TOTEM_INDEX, TOTEM_WGPU, TOTEM_SPRINTS, TOTEM_NEXT_STEPS, TOTEM_EPICS (E-21, S31 ✅).
+- **2026-02-05** — Epic E-21 (Login-Page-WGPU-Slint-UI) and S31 prompts. Login page fully on WGPU (background) + Slint UI for inputs/form; ref [slint-ui/slint](https://github.com/slint-ui/slint). New epic E-21, S31; full prompt set: prompt-machine/sprints/31/ (S31.po, S31-T1..T5.po, .ppm, .pqa, .pcto, S31-brief.md). TOTEM_EPICS, TOTEM_SPRINTS, TOTEM_INDEX updated.
+- **2026-02-05** — Epic E-20 (Slang-Templates-WGPU-Animations) and S30 prompts. New epic E-20, S30 assigned to E-20; full S30 prompt set created: prompt-machine/sprints/30/ (S30.po, S30-T1..T4.po, S30.ppm, S30.pqa, S30.pcto, S30-brief.md). TOTEM_EPICS, TOTEM_SPRINTS updated.
+- **2026-02-05** — Southern Lights (S29): currently uses WGSL (Slang-derived, hand-converted); Slang pipeline (compile/use Slang for better efficiency) planned for next sprint. Totem and prompt-machine updated: TOTEM_WGPU.ti, TOTEM_NEXT_STEPS.ti, TOTEM_SPRINTS.ti.
+- **2026-02-04** — DevOps role and S27; Login form style (E-18, S28). DEVOPS guardian added (prompt-machine/guardians/DEVOPS.ti, TOTEM_GUARDIANS_CONTEXT). E-12 Release-Go-Live: S27 DevOps-Release-Readiness (CI, build matrix, store assets, runbook) — prompt-machine/sprints/27/. E-18 Login-Form-Style-App-Wide, S28: adopt login page form look (NtInput, NtButton, nt-glass) across TrackRequestForm, ReportForm, VehicleSearch, Settings — prompt-machine/sprints/28/ (S28.po, S28-T1..T4.po, .ppm, .pqa, .pcto, S28-brief.md). TOTEM_EPICS, TOTEM_SPRINTS, TOTEM_INDEX updated.
+- **2026-02-04** — WGPU-WASM epic and sprint added. E-17 (WGPU-WASM-Component), S26 (WGPU-WASM-Background): Rust wgpu crate targeting wasm32 + WebGPU, Vue canvas binding, Vite integration; same behavior as webgl-flower; fallback to WebGL when WebGPU unavailable. New: prompt-machine/totem/TOTEM_WGPU.ti, prompt-machine/sprints/26/ (S26.po, S26-T1/T2/T3.po, .ppm, .pqa, .pcto, S26-brief.md). TOTEM_EPICS, TOTEM_SPRINTS, TOTEM_INDEX, TOTEM_WEBGL, TOTEM_DECISIONS updated. S25 added to TOTEM_SPRINTS for consistency.
+- **2026-02-02** — App docs: getting started only, no tech specs. navitrack-app/docs reduced to GETTING_STARTED.md (install, run, build). Policy recorded in TOTEM_DOCS.ti and TOTEM_DECISIONS.ti.
+- **2026-02-01** — Mission added to totem (TOTEM_MISSION.ti + README) — why, identity, mindset, stride, pulse.
+- **2026-02-01** — Integrity check: PO_SCHEMA guardians section updated (index, rules-dir). prompt-machine README and run-s21-flow.sh updated for removed totem/sprints/reports; flow skips missing design-signoff file; Paths + note on legacy totem/sprints refs in .po files.
+- **2026-02-01** — Totem restructured for MRPP 2.0. Human-facing totem reduced to three files: this README (log), PO_SCHEMA.md (protocol), TOTEM_MODEL.md (machine “brain” structure). All other totem content (epics, sprints, backlog, guardians, store, health, docs index, reports, getting started) moved to machine-only `.ti` files under `prompt-machine/totem/`. Entry point for agents: `TOTEM_INDEX.ti`. Original totem docs/guardians/sprints/store/pics and root files removed from repo; summaries live in `.ti`; full text recoverable from git history.
+- **2026-02-01** — MRPP 2.0 defined in PO_SCHEMA.md: totem machine-only format (reading-only). `.ti` (Totem Index) files introduced; TOTEM_INDEX.ti + 15 content files form the machine totem. PO_SCHEMA trimmed to core conversion rules (v1.1 sprint/task prompts + v2.0 totem format).
+
+---
+
+## Quick refs
+
+| What                                 | Where                                                                                                                                     |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **This log**                         | This file (README.md).                                                                                                                    |
+| **Protocol (MRPP v1.1 + v2.0)**      | [PO_SCHEMA.md](./PO_SCHEMA.md).                                                                                                           |
+| **Totem structure for machines**     | [TOTEM_MODEL.md](./TOTEM_MODEL.md).                                                                                                       |
+| **Mission (vision)**                 | This file (above) + [TOTEM_MISSION.ti](../prompt-machine/totem/TOTEM_MISSION.ti).                                                         |
+| **Machine totem (all content)**      | [prompt-machine/totem/](../prompt-machine/totem/) — entry: [TOTEM_INDEX.ti](../prompt-machine/totem/TOTEM_INDEX.ti).                      |
+| **WGPU-WASM (S26)**                  | [TOTEM_WGPU.ti](../prompt-machine/totem/TOTEM_WGPU.ti), [sprints/26/](../prompt-machine/sprints/26/).                                     |
+| **DevOps (S27)**                     | [DEVOPS.ti](../prompt-machine/guardians/DEVOPS.ti), [sprints/27/](../prompt-machine/sprints/27/).                                         |
+| **Login form style (S28)**           | [sprints/28/](../prompt-machine/sprints/28/).                                                                                             |
+| **Slang templates WGPU (E-20, S30)** | [TOTEM_EPICS.ti](../prompt-machine/totem/TOTEM_EPICS.ti), [sprints/30/](../prompt-machine/sprints/30/).                                   |
+| **Login WGPU + Slint (E-21, S31)**   | [sprints/31/](../prompt-machine/sprints/31/), [Slint](https://github.com/slint-ui/slint).                                                 |
+| **PWA & Views Polish (E-22, S38–S42)** | [sprints/38/](../prompt-machine/sprints/38/) … [sprints/42/](../prompt-machine/sprints/42/), [S42-deploy.md](../prompt-machine/sprints/42/S42-deploy.md), [EPIC-PWA-VIEWS-POLISH.md](../prompt-machine/sprints/EPIC-PWA-VIEWS-POLISH.md). |
+| **App (run, getting started)**       | [navitrack-app/README.md](../navitrack-app/README.md), [navitrack-app/docs/GETTING_STARTED.md](../navitrack-app/docs/GETTING_STARTED.md). |

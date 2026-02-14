@@ -1,0 +1,182 @@
+v:2
+format:totem-epics
+purpose:machine-only epics index
+
+###############################################################################
+# EPICS
+###############################################################################
+
+E-01:
+  name:Foundation
+  sprints:[S01,S02]
+  status:✅ complete
+  points:34
+
+E-02:
+  name:Authentication
+  sprints:[S03,S04]
+  status:✅ complete
+  points:34
+
+E-03:
+  name:Vehicle-Management
+  sprints:[S05,S06]
+  status:✅ complete
+  points:28
+
+E-04:
+  name:Map-Visualization
+  sprints:[S07,S08,S09]
+  status:✅ complete
+  points:47
+
+E-05:
+  name:History-Tracking
+  sprints:[S10,S11,S12]
+  status:✅ complete
+  points:52
+
+E-06:
+  name:Reports
+  sprints:[S13,S14]
+  status:✅ complete
+  points:36
+
+E-07:
+  name:Events-Notifications
+  sprints:[S15]
+  status:✅ complete
+  points:20
+
+E-08:
+  name:Settings
+  sprints:[S16]
+  status:✅ complete
+  points:18
+
+E-09:
+  name:Platform-Adaptations
+  sprints:[S17]
+  status:✅ complete
+  points:16
+
+E-10:
+  name:Polish-Release
+  sprints:[S18]
+  status:✅ complete
+  points:20
+
+E-11:
+  name:UI-Improvements
+  sprints:[S19]
+  status:✅ complete
+  points:20
+
+E-21:
+  name:Login-Page-WGPU-Slint-UI
+  sprints:[S31]
+  status:✅ complete
+  points:22
+
+E-22:
+  name:Release-Ready
+  sprints:[S32]
+  status:✅ complete
+  points:16
+
+E-23:
+  name:Client-Feedback-Fixes
+  sprints:[S33]
+  status:✅ complete
+  points:14
+
+E-24:
+  name:Async-Reports-2FA
+  sprints:[S34]
+  status:⬜ planned
+  points:18
+
+E-25:
+  name:Feature-Pack
+  sprints:[S35]
+  status:⬜ planned
+  points:20
+
+E-26:
+  name:Tech-Debt-Cleanup
+  sprints:[S36]
+  status:⬜ planned
+  points:12
+
+E-REFACTOR:
+  name:Codebase-Refactoring
+  sprints:[S34,S35,S36,S37]
+  status:🟢 ready
+  points:66
+  scope:vue-components,graphics-fallback,slint-switch,architecture-consolidation
+
+E-27:
+  name:Release-Go-Live
+  sprints:[S27]
+  status:🟢 next
+  points:14
+
+E-13:
+  name:Universal-Frontend-Template
+  sprints:[S20]
+  status:🟢 ready
+  points:21-26
+
+E-14:
+  name:Rebrand-First-Impression
+  sprints:[S21]
+  status:🟢 ready
+  points:31
+
+E-15:
+  name:Reference-App-Adoption
+  sprints:[S22,S23,S24]
+  status:✅ complete
+  points:28
+
+E-16:
+  name:Process-Math-Model
+  sprints:[S25]
+  status:✅ complete
+  points:10
+
+E-17:
+  name:WGPU-WASM-Component
+  sprints:[S26]
+  status:✅ complete
+  points:18
+
+E-18:
+  name:Login-Form-Style-App-Wide
+  sprints:[S28]
+  status:✅ complete
+  points:16
+
+E-19:
+  name:Southern-Lights-Optimization
+  sprints:[S29]
+  status:✅ complete
+  points:22
+
+E-20:
+  name:Slang-Templates-WGPU-Animations
+  sprints:[S30]
+  status:✅ complete
+  points:TBD
+
+E-21:
+  name:Login-Page-WGPU-Slint-UI
+  sprints:[S31]
+  status:✅ complete
+  points:22
+
+###############################################################################
+# SOURCE
+###############################################################################
+
+source:removed-content-in-this-ti

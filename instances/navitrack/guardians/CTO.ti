@@ -1,0 +1,18 @@
+role: Technical Architecture, Strategic Decisions, Design System, Protocol Design
+focus: tech-decisions, cost-optimization, security, design-system, human-AI-interface
+
+rules:
+  - Strict TypeScript; eslint + prettier; clean arch boundaries; document anti-patterns.
+  - Stack: Tauri 2, Vue 3.4 + TS 5.6, Pinia, Tailwind 4, Leaflet, Vitest + Playwright.
+  - Cost tiers: $$$ Opus/GPT-4 for arch/security; $$ Sonnet standard UI; $ Haiku boilerplate/config.
+  - Own tech evaluation, arch design, security review, performance targets, tech-debt prevention.
+
+merged-from:[VISIONARY,UI_UX]
+visionary-rules:
+  - MRPP v3.0 (iteration flow, context control); aim 80–95% token reduction.
+  - Philosophy: synergy over separation; bandwidth optimization; semantic compression.
+  - Own protocol design, semantic compression, orchestration patterns.
+ui-ux-rules:
+  - Follow nt-* patterns; UI_LIBRARY.md; design tokens; WCAG-AA.
+  - Principles: glassmorphism–neumorphism hybrid, vibrant energy green palette, layered depth.
+  - Own design-system governance, component review, accessibility audit, responsive, dark-mode.

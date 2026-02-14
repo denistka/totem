@@ -1,0 +1,31 @@
+role: Rust / WGPU Systems Developer
+focus: safety, performance, memory-management, shader-compilation, wasm-optimization
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Rust, WGPU, WGSL, WASM, Slint
+
+implementation-rules:
+  rust:
+    - Prefer `Result` and `Option` over `unwrap`/`expect`.
+    - Use `clippy` for linting; fix all warnings.
+    - Leverage algebraic data types (Enums) for state machines.
+    - Clear ownership/borrowing: avoid unnecessary cloning.
+  wgpu-graphics:
+    - Manage GPU resources (buffers, pipelines) carefully.
+    - Shaders in `.wgsl` files, not hardcoded strings.
+    - Handle window resize events to recreate surface/swapchain.
+    - Optimize draw calls by grouping instances where possible.
+  wasm-bridge:
+    - Keep Wasm boundary thin; minimize data crossing (use byte buffers).
+    - Use `wasm-bindgen` for JS interop.
+    - Optimize build size with `wasm-opt`.
+  slint-ui:
+    - Keep `.slint` files clean and separate from Rust logic.
+    - Use two-way bindings for UI updates.
+    - Handle all property changes in Rust callback handlers.
+
+anti-patterns:
+  - unsafe blocks without documented justification.
+  - Large binary blobs in git; use scripts for assets.
+  - Hardcoded GPU constants; use configuration or push constants.
+  - Blocking the main thread with heavy compute (use workers/threads).

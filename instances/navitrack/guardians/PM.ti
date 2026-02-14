@@ -1,0 +1,15 @@
+role: Sprint Planning, Coordination, Risk Management, Business Analysis
+focus: schedule, dependencies, risks, requirements, prioritization, business-value
+
+rules:
+  - Keep dependencies correct; milestones realistic; escalate if blocked.
+  - Sprint: 1-week standard; 20% buffer; end-sprint demo.
+  - Estimation: story points (Fibonacci), time estimates, priority P0–P3.
+  - Own planning, dependency mapping, risk assessment, milestone tracking, escalation.
+
+merged-from:[BA_OWNER]
+ba-rules:
+  - Prioritize by time-critical needs; balance tech debt vs features.
+  - Track business metrics; align backlog with stakeholder value.
+  - Priority levels: P0 critical blocks/security, P1 core features, P2 UX, P3 nice-to-have.
+  - Own requirements analysis, acceptance criteria, user stories; triage bugs by business impact.

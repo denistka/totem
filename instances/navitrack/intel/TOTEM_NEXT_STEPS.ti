@@ -1,0 +1,88 @@
+v:2
+format:totem-next-steps
+purpose:machine-only proposed next steps
+
+###############################################################################
+# PHASE 0: S-19 ✅ DONE
+###############################################################################
+
+phase-0:
+  status:✅ Done
+  scope:[T1-glass,T2-ui-migration,T3-dark-mode,T4-testing,web-dev,Auth-Vehicles-glass]
+  optional:[remaining-surfaces-glass-incremental,performance-monitoring,visual-regression-Playwright]
+
+###############################################################################
+# PHASE A: Release preparation
+###############################################################################
+
+phase-A:
+  name:Release-preparation
+  owner:Dev+QA
+  pre-submission:[version-bump,critical-bugs-decide-C-005-C-006-C-007,performance-security,localization-RU-UK-EN]
+  store-assets:[iOS-icons-screenshots-description-privacy-support-age,Android-icons-feature-graphic-screenshots-description-privacy-rating-data-safety,metadata-copy-from-store-metadata]
+  builds:[tauri-ios-build,tauri-android-build,install-real-devices-smoke-login-map-vehicles-tracking-reports-settings]
+
+###############################################################################
+# PHASE B: Submission & UAT
+###############################################################################
+
+phase-B:
+  name:Submission-UAT
+  owner:PM-Product+Client
+  store-submit:[App-Store,Google-Play,checklist]
+  web:[domain-SSL-PWA-if-targeting]
+  uat:[internal-client-UAT-iOS-Android-Web,collect-feedback-log-defects]
+
+###############################################################################
+# PHASE C: Post-launch backlog
+###############################################################################
+
+phase-C:
+  name:Post-launch
+  owner:Product-BA-prioritization+Dev-implementation
+  critical-high:[C-005-Android-SDK-34,C-006-OSM-if-repro,C-007-iOS-Keychain,H-004-push,H-007-HTTPS]
+  medium-features:[M-001-M-008,F-001-F-007-priority-e.g-M-008-M-006-F-004]
+  nice:[N-002-widgets,N-003-watch,N-004-offline-maps,N-005-messages]
+
+###############################################################################
+# PHASE D: S-20,S-21 (optional) — S-22..S-28 ✅ complete
+###############################################################################
+
+phase-D:
+  S-20:[E-13,Universal-UI-Template,sprints/20/]
+  S-21:[E-14,Rebrand-Login-WOW,sprints/21/]
+  S-22-S-30:✅ complete
+  S-28:Login-Form-Style-App-Wide-TrackRequestForm-ReportForm-VehicleSearch-SettingsView-NtInput-NtButton-nt-glass-FORM_STYLE_REF
+  S-29:Southern-Lights-Slang-WebGPU-WebGL-modular-navitrack-wgpu-southern_lights-common-WebGL-fallback
+  S-30:✅complete-Slang-connect-Southern-Lights-ref/beams_compute_playground.slang-Shadertoy-XdlSDs-build-rs-gen-playground-wgsl
+  S-31:✅complete-Login-WGPU-Slint-UI-WGPU-background-Slint-WASM-form-VITE_S31_LOGIN_UI-html-slint-slint-runtime-build-slint
+  ref:navitrack-app/docs/REFS_ADOPTION.md,navitrack-app/docs/FORM_STYLE_REF.md,TOTEM_MATH.ti,TOTEM_WGPU.ti,navitrack-app/src-rust/wgpu,navitrack-app/src-rust/slint-runtime,navitrack-app/src-slint,southern-lights,sprints/31/,navitrack-app/.env,.gitignore,navitrack-app/.gitignore
+
+###############################################################################
+# PHASE E: REFACTORING (NEW)
+###############################################################################
+
+phase-E:
+  name:Codebase-Refactoring
+  owner:Dev+CTO
+  epic:E-REFACTOR
+  sprints:[S34,S35,S36,S37]
+  scope:
+    - S34:Vue-components-<150-lines,css-extraction
+    - S35:Graphics-fallback-WGPU(0)-WebGL(1)-HTML(2)
+    - S36:Slint-HTML-switch-html-default-slint-optional
+    - S37:Architecture-consolidation-platform-abstraction
+  priority:P0-before-new-features
+  notes:addresses-4-areas-identified-2026-02-06
+
+###############################################################################
+# RECOMMENDATION
+###############################################################################
+
+recommendation:Phase-E-immediate-refactoring→Phase-A-release-preparation→Phase-B-submit-UAT→Phase-C-follow-up-roadmap
+
+###############################################################################
+# HUMAN SOURCE
+###############################################################################
+
+source:../legacy/README.old.md#proposed-next-steps

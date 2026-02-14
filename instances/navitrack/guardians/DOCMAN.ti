@@ -1,0 +1,8 @@
+status:DEPRECATED-v3.0
+merged-into:ROOT.ti
+reason:consolidation-11-to-6-roles
+
+# Original role (archived):
+# role: Technical Documentation, Knowledge Base
+# focus: tech-docs, knowledge-base, references
+# Rules now in ROOT.ti under docman-rules section.

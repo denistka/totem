@@ -41,6 +41,7 @@ If the project already has history and generated sprints, follow these steps to 
 1.  Go to `totem/instances/` and create folder `your-project-name`.
 2.  Copy `totem/templates/PROJECT_README.template.md` → `totem/instances/your-project-name/README.md`.
 3.  Fill the `README.md` and `project.config.yml` with your stack and goals.
+4.  Select appropriate stack adapters from `/stacks` (e.g., `vue3-ts-tauri2`).
 
 ### 3. Start the Machine
 
@@ -57,7 +58,7 @@ _The shared intelligence across ALL your projects._
 
 - **`/core`**: Protocol rules (MRPP 3.0). How the agents talk.
 - **`/guardians`**: Universal roles (PM, Architect, TL). How the agents think.
-- **`/stacks`**: Tech-specific adapters (React, Go, Python). What the agents know.
+- **`/stacks`**: Tech-specific adapters (React+TS, Vue+Tauri, Rust+WGPU). What the agents know about specific technologies. These extend universal guardians with stack-specific rules.
 - **`/templates`**: Blueprints for new projects.
 - **`/instances`**: **Registry of active projects.** (One folder per project).
 
