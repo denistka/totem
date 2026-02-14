@@ -15,11 +15,21 @@ You should have 3 folders (repos) side-by-side:
 ```bash
 /Projects/
   ├── totem/          # (This Repo) Intelligence, Guardians, Core Protocol
-  ├── project-code/   # The actual Source Code (React, Django, etc.)
-  ├── prompt-machine/ # Project Execution History (Sprints, Tasks, Reports)
+  ├── project-code/   # The Source Code (React, Django, etc.)
+  ├── prompt-machine/ # Execution History (.pd, .ptl, .ppm, .pqa files)
 ```
 
-### 2. Register the Instance (The "Why")
+## 👶 Onboarding: Joining a Running Project
+
+If the project already has history and generated sprints, follow these steps to sync context:
+
+1.  **Repo Initialization**: Clone `totem`, `prompt-machine`, and the `code` repo.
+2.  **Context Sync**: Point the AI to `totem/instances/{your-project}/README.md`.
+3.  **Ground Truth**: Run the build/dev command (e.g., `npm run build`) to verify current state.
+4.  **History Check**: Review the latest `.ptl` (Sprint) and `.pd` (Task) files in `prompt-machine/sprints/`.
+5.  **Role Alignment**: Load the appropriate Guardian from `totem/guardians/`.
+
+### 2. Register the Instance (The "Class vs Instance")
 
 **Difference between /templates and /instances:**
 
@@ -55,9 +65,9 @@ _The shared intelligence across ALL your projects._
 
 _The immutable history of work._
 
-- **`/sprints`**: Where `.po` (Task) files live.
-- **`/reports`**: Verification results and QA checks.
-- **`/analysis`**: Performance and cost metrics.
+- **`/sprints`**: Where `.ptl` (Sprint) and `.pd` (Task) files live.
+- **`/reports`**: Verification results and QA checks (`.pqa`).
+- **`/analysis`**: Architectural decisions (`.pa`) and PM planning (`.ppm`).
 
 ### 💻 Project Code (Project-Specific)
 

@@ -7,17 +7,19 @@
 
 ---
 
-## File Types (.v3)
+## File Extensions (Role-Linked)
 
-| Pattern             | Role           | Scope   | Focus                           |
-| ------------------- | -------------- | ------- | ------------------------------- |
-| `PROTOCOL_INDEX.pi` | Protocol Index | Project | Entry point, navigation         |
-| `S*.po`             | Team Lead      | Sprint  | Orchestration, execution        |
-| `S*-T*.po`          | Developer      | Task    | Code execution, tests           |
-| `.ppm`              | PM             | Both    | Schedule, deps, risks           |
-| `.pqa`              | QA             | Both    | Tests, acceptance, verification |
-| `.pcto`             | Architect      | Both    | Architecture, decisions         |
-| `*.ti`              | Totem          | Project | Machine-only totem context      |
+| Extension | Role          | Scope   | Focus                                     |
+| --------- | ------------- | ------- | ----------------------------------------- |
+| `.pi`     | **ROOT**      | Project | Index, hub, and cross-role navigation.    |
+| `.ptl`    | **TEAM_LEAD** | Sprint  | Sprint orchestration and dispatch.        |
+| `.pd`     | **DEVELOPER** | Task    | Task execution and implementation logic.  |
+| `.pa`     | **ARCHITECT** | Project | Decisions, patterns, and design gates.    |
+| `.ppm`    | **PM**        | Both    | Schedule, risks, and business analysis.   |
+| `.pqa`    | **QA**        | Both    | Testing, verification, and quality gates. |
+| `.pdo`    | **DEVOPS**    | Both    | Build, deploy, and infrastructure.        |
+| `.ti`     | **TOTEM**     | Tech    | Machine-only internal context.            |
+| `.po`     | _GENERAL_     | Legacy  | General objectives or legacy v1 support.  |
 
 ---
 
