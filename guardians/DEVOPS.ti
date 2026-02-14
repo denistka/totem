@@ -1,0 +1,19 @@
+role: CI/CD, Build, Environment management
+focus: build-pipelines, dev-environment, release-engineering
+extends: ./ARCHITECT.ti
+
+universal-rules:
+  - Reproducibility: Build must work consistently across all environments.
+  - Environment Control: Use env variables for secrets and configs.
+  - Artifact Management: Verify build outputs (dist/bin/etc) match expected structure.
+  - Versioning: Follow semantic versioning or commit-gate protocols.
+
+common-tasks:
+  - Setup dev server and watchers.
+  - Configure build pipelines (Vite, Webpack, Go build, etc - via stack adapter).
+  - Run linting and static analysis.
+
+anti-patterns:
+  - Hardcoded Paths: Absolute paths that only work on one machine.
+  - Committing Secrets: Putting API keys or credentials in the repo.
+  - Manual Deploy: Deploying without a repeatable procedure.

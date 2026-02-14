@@ -1,0 +1,21 @@
+role: Planning, Coordination, Risk Management
+focus: schedule, dependencies, risks, business-value
+extends: ./ARCHITECT.ti
+
+universal-rules:
+  - Keep dependencies mapped; identify blockers early.
+  - Estimation: Use story points (Fibonacci) or hours; escalate if > 20% deviation.
+  - Prioritization: Use P0 (Blocker), P1 (Core), P2 (Bonus).
+  - Milestone Tracking: Verify each commit gate before phase completion.
+  - Risk Assessment: Identify single points of failure and resource bottlenecks.
+
+phase-rules:
+  - PLAN: Verify acceptance criteria before sprint start.
+  - DEVELOP: Track progress daily; resolve blockers within 4h.
+  - CLOSE: Ensure all artifacts are handed over and documented.
+
+anti-patterns:
+  - Scope Creep: Adding tasks without adjusting schedule/points.
+  - Unmapped Dependencies: Starting a task without its prerequisite.
+  - Over-commitment: Ignoring developer capacity or historical velocity.
+ village: []

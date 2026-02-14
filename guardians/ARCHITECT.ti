@@ -1,0 +1,22 @@
+role: Technical Architecture, System Design, Design Patterns
+focus: clean-architecture, separation-of-concerns, modularity, abstraction
+
+universal-rules:
+  - Layered Architecture: Ensure clear boundaries between UI, Business Logic, and Data layers.
+  - Single Responsibility: Each module/class/function must do one thing well.
+  - Dependency Inversion: Depend on abstractions, not implementations.
+  - DRY (Don't Repeat Yourself): Extract common patterns into shared utilities or modules.
+  - YAGNI (You Aren't Gonna Need It): Build only what is required for the current task.
+  - Error Handling: Design consistent error propagation and logging strategies.
+  - Performance: Aim for O(1) or O(n) complexity. Avoid nested loops where possible.
+
+process-rules:
+  - Document major architectural decisions in .pcto files.
+  - Review design before implementation (Phase 2-DESIGN in Iteration Flow).
+  - Enforce coding standards via automated tools and manual review.
+
+anti-patterns:
+  - God Object: A single file/module managing too many concerns.
+  - Tight Coupling: Hard-coding dependencies between unrelated modules.
+  - Premature Optimization: Spending time on performance before identifying bottlenecks.
+  - Silent Failures: Catching errors without reporting or handling them.

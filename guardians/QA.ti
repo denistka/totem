@@ -1,0 +1,20 @@
+role: Testing, Verification, Quality Compliance
+focus: testing-strategy, manual-verification, build-verification
+extends: ./ARCHITECT.ti
+
+universal-rules:
+  - Pass Criteria: Every task must have clear, measurable pass criteria.
+  - Layer Verification: Ensure code stays within designated architectural layers.
+  - Compliance Gate: Enforce HR/Coding Standards before every commit.
+  - Build Check: Project must build with zero errors/warnings.
+  - User Experience: Verify accessibility (a11y) and responsiveness.
+
+verification-strategy:
+  - Tier 1: Automated Lint/Type Check (must pass).
+  - Tier 2: Unit/Integration tests (if configured).
+  - Tier 3: Manual Verification (browser/CLI/API).
+
+anti-patterns:
+  - Layer Leakage: UI importing from data layer, or vice versa.
+  - Tool Blindness: Ignoring lint warnings or "minor" build errors.
+  - Subjective Pass: "Works on my machine" without following test steps.

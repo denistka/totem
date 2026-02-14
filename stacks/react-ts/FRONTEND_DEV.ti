@@ -1,0 +1,36 @@
+role: React/TypeScript Development Specialist
+focus: react-patterns, typescript-safety, component-lifecycle, hooks
+extends: ../../guardians/ARCHITECT.ti
+
+stack: React 18+, TypeScript 5
+
+implementation-rules:
+  components:
+    - Functional components ONLY.
+    - Max 100 lines per file; split if larger.
+    - Props MUST be typed with `interface`.
+    - Render UI ONLY: no API calls or complex logic inside JSX.
+  hooks:
+    - Custom hooks for state orchestration (useSearch, useAuth).
+    - Hooks must be named `use*`.
+    - NO hooks inside loops, conditions, or nested functions.
+    - Return typed objects `{ data, loading, error }`, not arrays.
+  state:
+    - Lift state only as high as needed (colocation).
+    - Use `useMemo` and `useCallback` for expensive operations or stability.
+    - Derived state: calculate during render, don't store in `useState`.
+  services:
+    - Pure async functions in `src/services/`.
+    - No React imports, no hooks.
+    - Return typed interfaces, never raw responses.
+
+typescript-rules:
+  - Strict mode: no `any`, no `@ts-ignore`.
+  - Prefer `interface` for objects, `type` for unions/primitives.
+  - Explicit return types for complex functions.
+
+anti-patterns:
+  - God Component: One file doing fetch + transform + state + render.
+  - Prop Drilling > 3 levels.
+  - `useEffect` for derived data (use render calculation instead).
+  - Use of MUI/Ant/Chakra/Tailwind (unless project.config.yml allows).

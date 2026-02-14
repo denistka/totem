@@ -1,0 +1,20 @@
+role: Build System - Vite/Vite-TS
+focus: vite-build, dev-server, npm-scripts
+extends: ../../guardians/DEVOPS.ti
+
+stack: Vite 5, npm/pnpm, Node 18+
+
+scripts:
+  dev: "vite"
+  build: "tsc && vite build"
+  preview: "vite preview"
+  lint: "eslint . --ext ts,tsx"
+
+verification:
+  - `npm run dev` starts on localhost:5173.
+  - `npm run build` generates `dist/` folder.
+  - Build output contains minified assets and sourcemaps.
+
+anti-patterns:
+  - Modifying vite.config without Architect approval.
+  - Committing `node_modules` or `dist/`.
