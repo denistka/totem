@@ -1,0 +1,42 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S04
+task:T1-tuya-service
+summary:Tuya Cloud API client. Auth, device list, control. Normalize to shared Device schema (match eWeLink).
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  scope:apps/server
+  service:tuyaService (or tuyaClient)
+  auth:env vars (TUYA_CLIENT_ID, TUYA_CLIENT_SECRET, TUYA_REGION)
+  normalize:id,type,channels,status,power (same as eWeLink)
+  mirror:Structure of ewelinkService; extract shared patterns if possible
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Create apps/server/src/services/tuyaService.js
+  - Implement getDevices(), controlDevice(id,params)
+  - Normalize Tuya response to shared schema
+  - Add TUYA_* to .env.example
+  - Use async/await, error handling, retry
+
+out:
+  - apps/server/src/services/tuyaService.js
+  - apps/server/.env.example (update)
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Service exports getDevices() and controlDevice()
+  - Payload matches shared schema (id,type,channels,status,power)
+  - Credentials from env
+verify:
+  - No hardcoded secrets
+  - Ref @intel/sprints/S04/BACKEND_DEV.ti

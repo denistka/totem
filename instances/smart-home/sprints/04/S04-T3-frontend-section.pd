@@ -1,0 +1,40 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S04
+task:T3-frontend-section
+summary:Tuya dashboard section. Reuse DeviceCard. Provider badge. No duplication.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  view:Tuya section or unified device list with provider filter
+  fetch:GET /devices/tuya (or /devices with filter)
+  reuse:DeviceCard from S03; add provider prop/badge (eWeLink|Tuya)
+  style:Consistent with eWeLink section; glassmorphism, dark mode
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Add Tuya section to dashboard (or extend unified view)
+  - Fetch Tuya devices on mount
+  - Render DeviceCard with provider="tuya" badge
+  - Ensure eWeLink section still renders correctly (regression)
+  - No duplicate card logic
+
+out:
+  - apps/client dashboard with Tuya section
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Tuya devices visible
+  - DeviceCard reused with provider badge
+  - eWeLink section unchanged
+verify:
+  - Ref @intel/sprints/S04/FRONTEND_DEV.ti
+  - npm run build passes

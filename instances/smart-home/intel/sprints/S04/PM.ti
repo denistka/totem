@@ -1,0 +1,31 @@
+# S04 — PM Brief: Tuya Integration
+
+role: PM
+sprint: S04
+objective: Tuya Cloud API & Device Sync (mirror eWeLink pattern)
+
+scope:
+  - Tuya Cloud API client integration
+  - Device sync (fetch and normalize Tuya devices)
+  - Dashboard extension for Tuya devices (reuse S03 card pattern)
+  - Optional: Tuya Scene execution, energy monitoring
+
+backlog-priority:
+  P1: Tuya Cloud API client, device sync
+  P1: Dashboard section for Tuya devices
+  P2: Tuya Scene execution
+  P2: Energy monitoring for Tuya plugs
+  P3: iOS App SDK bridging (research only)
+
+dependencies:
+  - S03 eWeLink baseline must be complete
+  - Reuse DeviceCard and dashboard layout from S03
+
+risks:
+  - Tuya API complexity or rate limits
+  - Different device schema vs eWeLink (normalization effort)
+
+deliverables:
+  - Tuya devices visible and controllable in dashboard
+  - Single dashboard with eWeLink + Tuya sections (or unified view)
+  - Automation-ready device list for future sprints

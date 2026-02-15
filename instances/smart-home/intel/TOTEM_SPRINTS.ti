@@ -1,0 +1,15 @@
+# TOTEM_SPRINTS — smart-home
+
+## Sprint History
+
+| Sprint | Objective | Status | Result |
+| ------ | --------- | ------ | ------ |
+| S01 | Project Registration | DONE | Instance created, Stack adapters added |
+| S02 | Backend Analysis | DONE | Analyzed current Modbus & eWeLink state |
+| S03 | eWeLink Refinement | PLANNED | Dashboard integration & UI cards |
+| S04 | Tuya Integration | PLANNED | Tuya Cloud API & Device Sync |
+
+## Active Sprint: S03
+Focus: Finalizing the eWeLink dashboard integration to provide a baseline for Tuya.
+Next: Implementing the Tuya Cloud client.
+

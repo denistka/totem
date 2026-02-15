@@ -1,0 +1,27 @@
+# S03 — BACKEND_DEV Brief: eWeLink Refinement
+
+role: BACKEND_DEV
+sprint: S03
+stack: Node.js (ESM), Express, Socket.IO, eWeLink SDK/API
+
+tasks:
+  - eWeLink client service (auth, device list, control)
+  - REST endpoints: GET /devices/ewelink, POST /devices/:id/control
+  - Normalize device payload for frontend (id, type, channels, status, power)
+  - Socket.IO emit on device status change
+  - Multi-channel switch support in control logic
+
+implementation:
+  - Async/await, centralized error handling
+  - Dedicated eWeLink service (abstraction for future Tuya)
+  - .env for eWeLink credentials
+  - Rate limiting / retry for eWeLink API
+
+defer-if-complex:
+  - LAN mode (local control) — research, may move to backlog
+  - Historical power — only if eWeLink provides API
+
+anti-patterns:
+  - Hardcoded credentials
+  - Blocking event loop
+  - Global mutable state

@@ -1,0 +1,41 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S03
+task:T5-wire-up
+summary:Socket.IO listener for live updates. Optional chart for power. Final integration.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  socket:listen for device:update (or equivalent)
+  update:refresh device state in dashboard without page reload
+  chart:power consumption if API provides data (optional)
+  lifecycle:cleanup on unmount (no memory leaks)
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Add Socket.IO client listener in dashboard/device view
+  - On device:update, update local state (reactive)
+  - Use computed for derived chart data if chart added
+  - onUnmounted: remove listener
+  - Verify build, lint
+
+out:
+  - apps/client socket integration
+  - (optional) Chart.js component for power
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Live updates work without refresh
+  - Build passes
+  - No listener leaks
+verify:
+  - npm run build
+  - Manual: toggle device, see update in UI

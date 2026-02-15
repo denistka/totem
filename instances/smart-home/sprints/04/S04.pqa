@@ -1,0 +1,42 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:QA
+sprint:S04
+objective:Verification strategy and quality gates for Tuya Integration. Regression check on eWeLink.
+
+###############################################################################
+# TIERS
+###############################################################################
+tier-1:
+  - lint-type-check:[apps/client,apps/server]
+  gate:must-pass
+
+tier-2:
+  - npm run build:[apps/client,apps/server]
+  gate:must-pass
+
+tier-3:
+  - manual:tuya-devices-load-control
+  - manual:ewelink-regression-still-works
+  - manual:both-providers-dashboard
+  - manual:socket-updates-both-providers
+  - manual:provider-badge-correct
+  - manual:responsive-dark-mode
+  - manual:error-states
+  gate:tests-pass
+
+###############################################################################
+# PASS CRITERIA
+###############################################################################
+done:
+  - Zero build errors and warnings
+  - Tuya devices visible and controllable
+  - eWeLink flow unchanged (regression-free)
+  - Both providers in same dashboard
+  - No layer leakage
+
+###############################################################################
+# REF
+###############################################################################
+ref:intel/sprints/S04/QA.ti

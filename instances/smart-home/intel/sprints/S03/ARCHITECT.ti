@@ -1,0 +1,25 @@
+# S03 — ARCHITECT Brief: eWeLink Refinement
+
+role: ARCHITECT
+sprint: S03
+objective: Design patterns that scale to Tuya in S04
+
+design-focus:
+  - Abstraction: Device provider interface (eWeLink today, Tuya tomorrow)
+  - Data flow: Server → Socket.IO → Vue components
+  - Shared models: Device, Status, PowerReading (reusable)
+
+patterns:
+  - Adapter/Strategy for cloud providers (eWeLink, Tuya)
+  - Single source of truth for device state (server)
+  - Card component composition (slot/props for device-type variants)
+
+layer-boundaries:
+  - Backend: eWeLink client service, device normalization
+  - Frontend: Dashboard layout, DeviceCard, Chart wrappers
+  - No direct eWeLink SDK in client; all via API/socket
+
+decisions-to-document:
+  - Device schema (id, type, channels, lastSeen, power, etc.)
+  - API shape for device list and control
+  - Socket event naming convention

@@ -1,0 +1,39 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S03
+task:T3-dashboard
+summary:Dashboard section for eWeLink devices. Fetch from API, layout, glassmorphism.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  view:DashboardEweLink or eWeLink section in existing dashboard
+  fetch:GET /devices/ewelink on mount
+  layout:responsive, glassmorphism (backdrop-blur, transparency)
+  stack:Vue 3 script setup, Tailwind, ref/reactive
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Create or extend dashboard view
+  - Fetch devices onMounted (use proxy/env for API URL)
+  - Render device list container (cards in T4)
+  - Tailwind utility-first, dark mode support
+
+out:
+  - apps/client/src/views/DashboardEweLink.vue (or apps/client/src/...)
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Dashboard section fetches and displays device list placeholder
+  - Responsive, glassmorphism
+  - No hardcoded API URLs
+verify:
+  - npm run build passes
+  - Ref @intel/sprints/S03/FRONTEND_DEV.ti

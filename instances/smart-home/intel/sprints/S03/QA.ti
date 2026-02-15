@@ -1,0 +1,23 @@
+# S03 — QA Brief: eWeLink Refinement
+
+role: QA
+sprint: S03
+objective: Verify dashboard integration and build integrity
+
+verification-tiers:
+  Tier 1: Lint/type check passes (client + server)
+  Tier 2: Build succeeds (`npm run build`)
+  Tier 3: Manual — device list loads, cards render, toggles work
+
+pass-criteria:
+  - Zero build errors and warnings
+  - eWeLink dashboard section visible and responsive
+  - At least one device controllable (on/off or channel)
+  - Socket updates reflect in UI without refresh
+  - No layer leakage (client does not import eWeLink SDK)
+
+checks:
+  - Mobile and desktop layout
+  - Dark mode consistency
+  - Error state when API/Socket fails
+  - a11y basics (labels, focus, contrast)

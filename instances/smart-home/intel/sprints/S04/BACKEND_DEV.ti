@@ -1,0 +1,27 @@
+# S04 — BACKEND_DEV Brief: Tuya Integration
+
+role: BACKEND_DEV
+sprint: S04
+stack: Node.js (ESM), Express, Socket.IO, Tuya Cloud API
+
+tasks:
+  - Tuya Cloud API client (auth, device list, control)
+  - REST: GET /devices/tuya, POST /devices/tuya/:id/control
+  - Normalize Tuya devices to shared schema (id, type, channels, status, power)
+  - Optional: Tuya Scene execution, energy monitoring endpoints
+  - Socket.IO emit on Tuya device changes
+  - Unified /devices endpoint aggregating eWeLink + Tuya
+
+implementation:
+  - Tuya service mirrors eWeLink service structure
+  - Shared Device type/interface for both providers
+  - .env for Tuya credentials (client id, secret, etc.)
+  - Rate limiting and retry for Tuya API
+
+defer-if-complex:
+  - iOS App SDK bridging — research only this sprint
+
+anti-patterns:
+  - Copy-paste eWeLink logic; extract shared patterns
+  - Hardcoded credentials
+  - Blocking or unhandled Tuya API errors

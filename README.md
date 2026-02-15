@@ -10,23 +10,23 @@ Deploying a new project takes 3 steps across 3 repositories:
 
 ### 1. Setup the Filesystem
 
-You should have 3 folders (repos) side-by-side:
+You should have 2-3 folders (repos) side-by-side. The execution history (`prompt-machine`) can be standalone or stored within the project instance for better portability:
 
 ```bash
 /Projects/
   ├── totem/          # (This Repo) Intelligence, Guardians, Core Protocol
+  │     └── instances/your-project/sprints/  # (Integrated History)
   ├── project-code/   # The Source Code (React, Django, etc.)
-  ├── prompt-machine/ # Execution History (.pd, .ptl, .ppm, .pqa files)
 ```
 
 ## 👶 Onboarding: Joining a Running Project
 
 If the project already has history and generated sprints, follow these steps to sync context:
 
-1.  **Repo Initialization**: Clone `totem`, `prompt-machine`, and the `code` repo.
+1.  **Repo Initialization**: Clone `totem` and the `code` repo.
 2.  **Context Sync**: Point the AI to `totem/instances/{your-project}/README.md`.
 3.  **Ground Truth**: Run the build/dev command (e.g., `npm run build`) to verify current state.
-4.  **History Check**: Review the latest `.ptl` (Sprint) and `.pd` (Task) files in `prompt-machine/sprints/`.
+4.  **History Check**: Review the latest `.ptl` (Sprint) and `.pd` (Task) files in the configured history path.
 5.  **Role Alignment**: Load the appropriate Guardian from `totem/guardians/`.
 
 ### 2. Register the Instance (The "Class vs Instance")

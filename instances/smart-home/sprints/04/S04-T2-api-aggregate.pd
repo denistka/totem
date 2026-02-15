@@ -1,0 +1,40 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S04
+task:T2-api-aggregate
+summary:Tuya REST endpoints. Optional unified GET /devices. Socket emit on Tuya changes.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  routes:GET /devices/tuya, POST /devices/tuya/:id/control
+  optional:GET /devices (aggregate eWeLink + Tuya with source tag)
+  socket:emit tuya:update or device:update with source
+  regression:Do not break eWeLink endpoints
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Add Tuya routes (or extend devices router)
+  - Wire tuyaService to routes
+  - Socket emit after Tuya control
+  - Optional: unified /devices aggregating both providers
+  - Test eWeLink endpoints still work
+
+out:
+  - apps/server/src/routes/devices.js (or tuya.js)
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - GET /devices/tuya returns Tuya devices
+  - POST controls Tuya device, triggers socket emit
+  - eWeLink endpoints unchanged
+verify:
+  - Both providers functional
+  - Consistent JSON responses

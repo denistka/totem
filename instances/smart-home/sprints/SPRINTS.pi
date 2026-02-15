@@ -1,0 +1,38 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:ROOT
+objective:Smart Home S03–S04 — eWeLink baseline, Tuya integration. Pick sprint, run lead .ptl, then task .pd in dispatch order.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+ref:intel/TOTEM_INDEX.ti, intel/TOTEM_SPRINTS.ti, intel/TOTEM_BACKLOG.ti
+code:apps (workspace root: apps/client, apps/server, apps/data)
+paths:intel=instances/smart-home/intel, sprints=instances/smart-home/sprints
+stack:[vue3,vite,tailwind,nodejs,express,modbus-tcp]
+
+###############################################################################
+# SPRINT ORDER
+###############################################################################
+order: S03 → S04 (S04 depends on S03 baseline)
+
+###############################################################################
+# SPRINT PROMPTS (lead .ptl → task .pd in dispatch order)
+###############################################################################
+S03: sprints/03/S03.ptl — eWeLink Refinement. Tasks: T1..T5 .pd. Verify: S03.pqa (QA), S03.pdo (DEVOPS).
+S04: sprints/04/S04.ptl — Tuya Integration. Tasks: T1..T4 .pd. Verify: S04.pqa (QA), S04.pdo (DEVOPS).
+
+###############################################################################
+# HOW TO RUN
+###############################################################################
+1. Open this file (SPRINTS.pi) for overview.
+2. Open sprints/03/S03.ptl (or 04/S04.ptl).
+3. Run phases: plan → design → develop → verify → close.
+4. For each phase, run tasks from dispatch (S03-T1-*.pd, etc.).
+5. Verify: npm run build in apps/client and apps/server.
+
+###############################################################################
+# GATES (MRPP 5-phase)
+###############################################################################
+plan → scope-approved | design → design-reviewed | develop → build-passes | verify → tests-pass | close → iteration-complete

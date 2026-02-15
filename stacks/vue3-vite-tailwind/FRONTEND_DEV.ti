@@ -1,0 +1,34 @@
+role: Vue 3 / Vite / Tailwind Frontend Specialist
+focus: composition-api, glassmorphism, responsive-design, realtime-updates, pwa
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Vue 3.x, Vite, Tailwind CSS, Socket.IO-client, Chart.js, Vite-PWA
+
+implementation-rules:
+  components:
+    - Use `<script setup>` syntax.
+    - Glassmorphism UI (backdrop-blur, transparency).
+    - Responsive layout for mobile and desktop dashboards.
+    - Use standard CSS variables for theme consistency.
+  reactivity:
+    - Prefer `ref` for primitives and `reactive` for objects.
+    - Use `computed` for derived values and chart data preparation.
+    - Lifecycle hooks: `onMounted` for socket initialization.
+  styling:
+    - Utility-first with Tailwind CSS.
+    - Custom gradients and shadows for premium aesthetic.
+    - Dark mode support.
+  realtime:
+    - Listen to Socket.IO events for live metrics.
+    - Update charts and status cards without page refresh.
+
+ux-rules:
+  - Micro-animations for status transitions.
+  - Clear visual feedback for manual control overrides.
+  - Optimized chart performance (don't leak memory on updates).
+
+anti-patterns:
+  - Heavy logic in templates.
+  - Large component files (split and reuse).
+  - Mixing standard CSS with Tailwind without justification.
+  - Hardcoded API URLs (use proxy or .env).

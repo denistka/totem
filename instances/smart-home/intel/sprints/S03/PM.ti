@@ -1,0 +1,27 @@
+# S03 — PM Brief: eWeLink Refinement
+
+role: PM
+sprint: S03
+objective: eWeLink dashboard integration & UI cards (baseline for Tuya)
+
+scope:
+  - Dashboard integration for eWeLink devices
+  - UI cards for device status and control
+  - Foundation for S04 Tuya integration
+
+backlog-priority:
+  P1: Multi-channel switch support
+  P2: Historical power consumption charts (if feasible)
+  P2: LAN mode support (research / defer if complex)
+
+phase-gates:
+  PLAN: Acceptance criteria defined for dashboard views and card components
+  CLOSE: S03 artifacts documented; S04 dependencies identified
+
+risks:
+  - eWeLink API rate limits or auth complexity
+  - Chart data availability from eWeLink
+
+deliverables:
+  - Functional eWeLink dashboard section
+  - At least one working device card pattern (reusable for Tuya)

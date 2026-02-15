@@ -1,0 +1,17 @@
+# TOTEM_BACKLOG — Smart Home Intelligence
+
+## Integration Backlog
+
+### eWeLink
+- [ ] Multi-channel switch support.
+- [ ] Historical power consumption charts.
+- [ ] LAN mode support (local control without cloud).
+
+### Tuya / SmartLife
+- [ ] iOS App SDK bridging (research).
+- [ ] Tuya Scene execution.
+- [ ] Energy monitoring for Tuya plugs.
+
+### Automation
+- [ ] "Low Inverter Battery" -> "Turn off non-essential Tuya/eWeLink devices" logic.
+- [ ] "Solar Peak" -> "Turn on eWeLink water heater" logic.

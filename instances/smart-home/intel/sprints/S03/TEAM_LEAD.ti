@@ -1,0 +1,21 @@
+# S03 — TEAM_LEAD Brief: eWeLink Refinement
+
+role: TEAM_LEAD
+sprint: S03
+objective: Orchestrate backend-first, then frontend integration
+
+execution-order:
+  1. Backend: eWeLink client service, device normalization API
+  2. Backend: Socket.IO events for device updates
+  3. Frontend: Dashboard layout, DeviceCard components
+  4. Frontend: Wire to API and socket
+  5. QA: Build, lint, manual verification
+
+gates:
+  - build-passes: `npm run build` in apps/client and apps/server
+  - Integration: Device list and status visible in UI
+  - No blocking bugs before handoff to S04
+
+blocker-resolution:
+  - eWeLink auth/env: escalate within 4h
+  - API contract mismatch: align with ARCHITECT

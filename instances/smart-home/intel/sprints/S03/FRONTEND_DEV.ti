@@ -1,0 +1,25 @@
+# S03 — FRONTEND_DEV Brief: eWeLink Refinement
+
+role: FRONTEND_DEV
+sprint: S03
+stack: Vue 3, Vite, Tailwind, Socket.IO-client, Chart.js
+
+tasks:
+  - Dashboard section for eWeLink devices (glassmorphism, responsive)
+  - DeviceCard component: status, channels, on/off toggle
+  - Chart component for power consumption (if API provides data)
+  - Socket.IO listener for live device updates
+
+implementation:
+  - Use `<script setup>`, ref/reactive, computed for chart data
+  - Tailwind utility-first; dark mode support
+  - Micro-animations for status transitions
+  - No hardcoded API URLs (use proxy/.env)
+
+reusability:
+  - Card and chart designed for Tuya devices in S04
+  - Props: device-type, channels, status; slots for custom controls
+
+anti-patterns:
+  - Heavy logic in templates
+  - Large monolithic components (split by concern)

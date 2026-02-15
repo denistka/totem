@@ -1,0 +1,27 @@
+project:
+  name: PowMr Inverter Dashboard
+  version: 1.0.0
+  stack:
+    - vue3
+    - nodejs
+    - express
+    - vite
+    - tailwindcss
+    - modbus-tcp
+
+paths:
+  code: ../apps
+  history: .
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - BACKEND_DEV

@@ -1,0 +1,40 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S03
+task:T2-api-socket
+summary:REST endpoints + Socket.IO emit for eWeLink device updates.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  routes:GET /devices/ewelink, POST /devices/:id/control
+  socket:emit on device status change (e.g. device:update)
+  body:normalized device payload from T1
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Add routes in apps/server (devices or ewelink router)
+  - GET /devices/ewelink → ewelinkService.getDevices()
+  - POST /devices/:id/control → ewelinkService.controlDevice(), then socket.emit
+  - Wire Socket.IO to emit after any control action or poll update
+  - Centralized error handling
+
+out:
+  - apps/server/src/routes/devices.js (or equivalent)
+  - Socket.IO emit integration
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - GET returns device list
+  - POST controls device, triggers socket emit
+  - Client can receive live updates
+verify:
+  - Async/await, no blocking
+  - Consistent JSON responses

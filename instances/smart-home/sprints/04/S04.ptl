@@ -1,0 +1,102 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S04-Tuya-Integration
+objective:Tuya Cloud API & device sync. Mirror eWeLink pattern. Unified dashboard with eWeLink + Tuya. No regressions.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+priority:P1
+dep:S03 (eWeLink baseline must be complete)
+ref:intel/TOTEM_BACKLOG.ti, intel/sprints/S04/
+code:../../../../apps
+stack:[vue3,vite,tailwind,nodejs,express,socket.io,tuya]
+
+Backend: Tuya service → API → Socket. Frontend: Reuse DeviceCard, add Tuya section.
+
+###############################################################################
+# PHASES (MRPP 5-phase)
+###############################################################################
+phase-plan:
+  tasks:[T1-scope]
+  gate:scope-approved
+
+phase-design:
+  tasks:[T1-design]
+  gate:design-reviewed
+
+phase-develop:
+  tasks:[T1-tuya-service,T2-api-aggregate,T3-frontend-section,T4-wire-up]
+  dur:est-2-3d
+  gate:build-passes
+
+phase-verify:
+  tasks:[S04.pqa,S04.pdo]
+  verify:[npm run build,eWeLink regression check,Tuya devices controllable]
+  gate:tests-pass
+
+phase-close:
+  verify:[docs-update,automation-ready]
+  gate:iteration-complete
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-scope:
+    spec:Acceptance criteria for Tuya section, unified /devices, provider badge. Ref @intel/sprints/S04/PM.ti
+    exec-order:1
+    gate:scope-approved
+
+  T1-design:
+    spec:Tuya adapter mirrors eWeLink. Shared Device schema. Unified registry. Ref @intel/sprints/S04/ARCHITECT.ti
+    exec-order:2
+    dep-wait:T1-scope
+    gate:design-reviewed
+
+  T1-tuya-service:
+    pd:S04-T1-tuya-service.pd
+    model:$$
+    critical:y
+    exec-order:3
+    dep-wait:T1-design
+    output:[apps/server/src/services/tuyaService.js,apps/server/.env.example]
+    verify:[service exports device list, control; normalizes to shared schema]
+
+  T2-api-aggregate:
+    pd:S04-T2-api-aggregate.pd
+    model:$$
+    critical:y
+    exec-order:4
+    dep-wait:T1-tuya-service
+    output:[apps/server routes, unified GET /devices or /devices/tuya]
+    verify:[Tuya endpoints, Socket emit, optional unified /devices]
+
+  T3-frontend-section:
+    pd:S04-T3-frontend-section.pd
+    model:$$
+    critical:y
+    exec-order:5
+    dep-wait:T2-api-aggregate
+    output:[apps/client Tuya section, reuse DeviceCard]
+    verify:[Tuya devices visible, provider badge, eWeLink still works]
+
+  T4-wire-up:
+    pd:S04-T4-wire-up.pd
+    model:$$
+    exec-order:6
+    dep-wait:T3-frontend-section
+    output:[socket listener, scenes/energy if in scope]
+    verify:[live updates, both providers, build passes]
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Tuya devices in dashboard
+  - DeviceCard reused with provider badge
+  - eWeLink flow unchanged (regression-free)
+  - npm run build passes
+  - Automation-ready device list

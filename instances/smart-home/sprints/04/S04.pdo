@@ -1,0 +1,36 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:DEVOPS
+sprint:S04
+objective:Build and env setup for Tuya integration. Both providers.
+
+###############################################################################
+# BUILD
+###############################################################################
+build:
+  client:cd apps/client && npm run build
+  server:cd apps/server && npm run build
+  gate:build-passes
+
+###############################################################################
+# ENV
+###############################################################################
+env:
+  doc:apps/server/.env.example
+  vars:[EWELINK_*,TUYA_CLIENT_ID,TUYA_CLIENT_SECRET,TUYA_REGION]
+  secret-check:no credentials in repo
+
+###############################################################################
+# CHECKS
+###############################################################################
+verify:
+  - Build passes with both provider configs
+  - eWeLink and Tuya env documented
+  - Artifacts match expected structure
+  - Dev server starts with placeholder Tuya config if needed
+
+###############################################################################
+# REF
+###############################################################################
+ref:intel/sprints/S04/DEVOPS.ti

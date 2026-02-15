@@ -1,0 +1,25 @@
+# S04 — FRONTEND_DEV Brief: Tuya Integration
+
+role: FRONTEND_DEV
+sprint: S04
+stack: Vue 3, Vite, Tailwind, Socket.IO-client, Chart.js
+
+tasks:
+  - Add Tuya dashboard section (or unified device list with provider filter)
+  - Reuse DeviceCard from S03; extend props if Tuya needs extras
+  - Tuya Scene selector/executor UI (if in scope)
+  - Energy chart for Tuya plugs (if API provides data)
+  - Socket listener for tuya:update or unified device:update
+
+implementation:
+  - Same patterns as S03: script setup, Tailwind, dark mode
+  - Provider badge/label on cards (eWeLink vs Tuya)
+  - Handle Tuya-specific controls (scenes, energy) via slots or conditional UI
+
+reusability:
+  - Card remains provider-agnostic where possible
+  - Chart component from S03 extended for Tuya energy
+
+anti-patterns:
+  - Duplicating card logic for Tuya
+  - Hardcoded Tuya-specific logic in shared components (prefer props/slots)

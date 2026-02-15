@@ -1,0 +1,20 @@
+# S04 — DEVOPS Brief: Tuya Integration
+
+role: DEVOPS
+sprint: S04
+objective: Env and build support for Tuya credentials
+
+tasks:
+  - Document Tuya env vars in .env.example (client id, secret, region)
+  - Ensure no Tuya credentials in repo
+  - Verify build and dev server with both providers configured
+  - Vite proxy or CORS if frontend calls Tuya indirectly (prefer backend proxy)
+
+env-vars:
+  - TUYA_CLIENT_ID, TUYA_CLIENT_SECRET, TUYA_REGION (or equivalent)
+  - Existing EWELINK vars from S03
+
+checks:
+  - `npm run build` passes with Tuya env placeholder
+  - Dev server starts with mock/empty Tuya config if needed
+  - Artifacts match expected structure

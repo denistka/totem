@@ -1,0 +1,43 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S03
+task:T1-ewelink-service
+summary:eWeLink client service: auth, device list, control. Normalize payload for frontend.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  scope:apps/server
+  service:ewelinkService (or eweLinkClient)
+  auth:env vars (EWELINK_*), no hardcoded credentials
+  normalize:id,type,channels,status,power
+  multi-channel:switch support in control logic
+  defer:LAN mode, historical power (if API unavailable)
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Create apps/server/src/services/ewelinkService.js (or .ts)
+  - Implement getDevices(), controlDevice(id,params)
+  - Normalize eWeLink response to {id,type,channels,status,power}
+  - Add EWELINK_* to .env.example
+  - Use async/await, error handling, retry if needed
+
+out:
+  - apps/server/src/services/ewelinkService.js
+  - apps/server/.env.example (update)
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Service exports getDevices() and controlDevice()
+  - Device payload matches schema (id,type,channels,status,power)
+  - Credentials from env
+verify:
+  - No hardcoded secrets
+  - ESM syntax

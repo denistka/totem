@@ -1,0 +1,40 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S03
+task:T4-device-card
+summary:DeviceCard component — status, channels, on/off toggle. Reusable for Tuya.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  props:device {id,type,channels,status,power}
+  ui:status indicator, channel toggles, on/off
+  style:glassmorphism, micro-animations for transitions
+  slots:optional for custom controls (Tuya scenes later)
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Create DeviceCard.vue
+  - Props: device (object), emit control actions
+  - Call POST /devices/:id/control on toggle
+  - Tailwind, dark mode
+  - Keep component <150 lines (split if needed)
+
+out:
+  - apps/client/src/components/DeviceCard.vue
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Card shows status, channels, toggle
+  - Control actions call API
+  - Reusable (props-driven, no eWeLink-specific logic in template)
+verify:
+  - Ref @intel/sprints/S03/FRONTEND_DEV.ti
+  - No heavy logic in template

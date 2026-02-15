@@ -1,0 +1,26 @@
+# S04 — ARCHITECT Brief: Tuya Integration
+
+role: ARCHITECT
+sprint: S04
+objective: Extend S03 design to support Tuya without duplication
+
+design-focus:
+  - Provider abstraction: Tuya client alongside eWeLink
+  - Shared Device model: both providers normalize to same schema
+  - Unified device registry (server aggregates eWeLink + Tuya)
+  - Optional: Provider-agnostic "smart device" facade
+
+patterns:
+  - Adapter: TuyaAdapter implements same interface as EweLinkAdapter
+  - Factory or registry: resolve provider by device type/source
+  - Single API: GET /devices returns combined list with source tag
+
+layer-boundaries:
+  - Backend: Tuya client service, device normalization (match eWeLink schema)
+  - Frontend: Reuse DeviceCard; add Tuya section or unified list
+  - No Tuya SDK in client; all via API/socket
+
+decisions-to-document:
+  - Tuya device schema mapping to shared Device model
+  - API shape for Tuya control (scenes, energy)
+  - Socket event extension (ewelink:update, tuya:update or unified)

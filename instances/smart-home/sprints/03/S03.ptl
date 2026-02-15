@@ -1,0 +1,110 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S03-eWeLink-Refinement
+objective:eWeLink dashboard integration & UI cards. Baseline for S04 Tuya. Device list, control, Socket.IO live updates.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+priority:P0
+ref:intel/TOTEM_BACKLOG.ti, intel/sprints/S03/
+code:../../../../apps
+stack:[vue3,vite,tailwind,nodejs,express,socket.io,ewelink]
+
+Backend-first: eWeLink service → API → Socket → Frontend dashboard.
+
+###############################################################################
+# PHASES (MRPP 5-phase)
+###############################################################################
+phase-plan:
+  tasks:[T1-scope]
+  gate:scope-approved
+
+phase-design:
+  tasks:[T1-design]
+  gate:design-reviewed
+
+phase-develop:
+  tasks:[T1-ewelink-service,T2-api-socket,T3-dashboard,T4-device-card,T5-wire-up]
+  dur:est-2-3d
+  gate:build-passes
+
+phase-verify:
+  tasks:[S03.pqa,S03.pdo]
+  verify:[npm run build in apps/client,apps/server,lint-pass,manual-device-control]
+  gate:tests-pass
+
+phase-close:
+  verify:[docs-update,S04-deps-identified]
+  gate:iteration-complete
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-scope:
+    spec:Define acceptance criteria for dashboard views, card components, API shape. Ref @intel/sprints/S03/PM.ti
+    exec-order:1
+    gate:scope-approved
+
+  T1-design:
+    spec:Device schema, API contract, Socket events. Provider abstraction for Tuya. Ref @intel/sprints/S03/ARCHITECT.ti
+    exec-order:2
+    dep-wait:T1-scope
+    gate:design-reviewed
+
+  T1-ewelink-service:
+    pd:S03-T1-ewelink-service.pd
+    model:$$
+    critical:y
+    exec-order:3
+    dep-wait:T1-design
+    output:[apps/server/src/services/ewelinkService.js,apps/server/.env.example]
+    verify:[service exports device list, control]
+
+  T2-api-socket:
+    pd:S03-T2-api-socket.pd
+    model:$$
+    critical:y
+    exec-order:4
+    dep-wait:T1-ewelink-service
+    output:[apps/server/src/routes/devices.js]
+    verify:[GET /devices/ewelink, POST /devices/:id/control, socket emit on change]
+
+  T3-dashboard:
+    pd:S03-T3-dashboard.pd
+    model:$$
+    critical:y
+    exec-order:5
+    dep-wait:T2-api-socket
+    output:[apps/client/src/views/DashboardEweLink.vue or similar]
+    verify:[dashboard section renders, fetches devices]
+
+  T4-device-card:
+    pd:S03-T4-device-card.pd
+    model:$$
+    critical:y
+    exec-order:6
+    dep-wait:T3-dashboard
+    output:[apps/client/src/components/DeviceCard.vue]
+    verify:[card shows status, channels, on/off toggle; reusable for Tuya]
+
+  T5-wire-up:
+    pd:S03-T5-wire-up.pd
+    model:$$
+    exec-order:7
+    dep-wait:T4-device-card
+    output:[apps/client socket listener, chart if data available]
+    verify:[live updates, no refresh; build passes]
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - eWeLink devices visible in dashboard
+  - DeviceCard with status and control
+  - Socket.IO live updates
+  - npm run build passes (client + server)
+  - Reusable pattern for S04 Tuya

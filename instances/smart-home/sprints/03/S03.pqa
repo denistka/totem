@@ -1,0 +1,42 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:QA
+sprint:S03
+objective:Verification strategy and quality gates for eWeLink Refinement
+
+###############################################################################
+# TIERS
+###############################################################################
+tier-1:
+  - lint-type-check:[apps/client,apps/server]
+  gate:must-pass
+
+tier-2:
+  - npm run build:[apps/client,apps/server]
+  gate:must-pass
+
+tier-3:
+  - manual:device-list-loads
+  - manual:cards-render-toggles-work
+  - manual:socket-updates-without-refresh
+  - manual:responsive-mobile-desktop
+  - manual:dark-mode-consistency
+  - manual:error-state-api-socket-fail
+  - manual:a11y-labels-focus-contrast
+  gate:tests-pass
+
+###############################################################################
+# PASS CRITERIA
+###############################################################################
+done:
+  - Zero build errors and warnings
+  - eWeLink dashboard section visible and responsive
+  - At least one device controllable (on/off or channel)
+  - Socket updates reflect in UI without refresh
+  - No layer leakage (client does not import eWeLink SDK)
+
+###############################################################################
+# REF
+###############################################################################
+ref:intel/sprints/S03/QA.ti

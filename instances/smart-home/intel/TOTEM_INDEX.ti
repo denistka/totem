@@ -1,0 +1,15 @@
+# TOTEM_INDEX — Smart Home Intelligence
+
+## Index of Intelligence Files
+
+- `TOTEM_PROJECT.ti`: Core project requirements and vision.
+- `TOTEM_BACKLOG.ti`: List of feature requests and ideas.
+- `TOTEM_SPRINTS.ti`: Sprint history and current roadmap.
+- `TOTEM_DECISIONS.ti`: Architectural Decision Records (ADR).
+- `sprints/S03/`, `sprints/S04/`: Role-specific sprint briefs (PM, ARCHITECT, TEAM_LEAD, FRONTEND_DEV, BACKEND_DEV, QA, DEVOPS).
+- `../sprints/`: MRPP protocol sprints (SPRINTS.pi, 03/S03.ptl, 04/S04.ptl, .pd tasks).
+
+## Current Status
+
+The project has been registered in Totem.
+Current focus: Initial onboarding and history synchronization.

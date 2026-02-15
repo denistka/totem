@@ -1,0 +1,24 @@
+# S04 — QA Brief: Tuya Integration
+
+role: QA
+sprint: S04
+objective: Verify Tuya integration and no eWeLink regressions
+
+verification-tiers:
+  Tier 1: Lint/type check, build passes
+  Tier 2: Both eWeLink and Tuya sections/builds functional
+  Tier 3: Manual — Tuya devices load, control works; eWeLink still works
+
+pass-criteria:
+  - Zero build errors and warnings
+  - Tuya dashboard section visible, devices listed
+  - Tuya device control (on/off) works
+  - eWeLink flow unchanged (regression check)
+  - Socket updates for both providers
+  - No layer leakage
+
+checks:
+  - Provider filtering or section switching if implemented
+  - Error states: Tuya API down, auth fail
+  - Scenes and energy (if implemented)
+  - Responsive, dark mode, a11y

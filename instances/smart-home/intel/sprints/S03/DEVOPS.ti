@@ -1,0 +1,20 @@
+# S03 — DEVOPS Brief: eWeLink Refinement
+
+role: DEVOPS
+sprint: S03
+objective: Reproducible build and env for eWeLink integration
+
+tasks:
+  - Ensure .env.example documents eWeLink credentials
+  - Verify client and server build scripts work
+  - No secrets committed (API keys, tokens)
+  - Dev server hot-reload functional
+
+env-vars:
+  - EWELINK env vars documented in .env.example
+  - Vite proxy configured for API if needed
+
+checks:
+  - `npm run build` from project root or apps/*
+  - Lint/type-check in CI or pre-commit if configured
+  - Artifacts (dist) match expected structure

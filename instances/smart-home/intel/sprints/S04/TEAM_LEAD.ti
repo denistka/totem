@@ -1,0 +1,23 @@
+# S04 — TEAM_LEAD Brief: Tuya Integration
+
+role: TEAM_LEAD
+sprint: S04
+objective: Add Tuya in parallel structure to eWeLink; avoid regressions
+
+execution-order:
+  1. Backend: Tuya client service, device fetch, control
+  2. Backend: Normalize Tuya devices to shared schema
+  3. Backend: Aggregate /devices or extend endpoints
+  4. Backend: Socket events for Tuya updates
+  5. Frontend: Tuya section or unified device list
+  6. Frontend: Reuse DeviceCard; handle Tuya-specific controls if needed
+  7. QA: Build, lint, eWeLink + Tuya both working
+
+gates:
+  - build-passes: no regressions in eWeLink flow
+  - Both providers functional in same dashboard
+  - Device control works for both eWeLink and Tuya
+
+blocker-resolution:
+  - Tuya API/auth: escalate within 4h
+  - Schema mismatch: align with ARCHITECT

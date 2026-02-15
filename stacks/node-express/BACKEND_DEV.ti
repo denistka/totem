@@ -1,0 +1,34 @@
+role: Node.js / Express Backend Specialist
+focus: rest-api, modbus-communication, socket-io, node-cron, dash-logic
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Node.js (ESM), Express, Socket.IO, Modbus-Serial, Node-Cron
+
+implementation-rules:
+  api:
+    - Use async/await for all route handlers.
+    - Centralized error handling middleware.
+    - Return consistent JSON responses.
+  modbus:
+    - Dedicated service for Modbus communication.
+    - Connection pooling and semaphore for serial/TCP access.
+    - Proper timeout and retry logic for inverter polling.
+  realtime:
+    - Use Socket.IO for live data broadcast.
+    - Emit status changes immediately after polling.
+    - Handle client disconnects gracefully.
+  scheduling:
+    - Use Node-Cron for scheduled inverter tasks.
+    - Persistence for schedule configurations (CSV/JSON).
+    - Validation for time and current parameters.
+
+code-style:
+  - ESM syntax (`import`/`export`).
+  - Descriptive variable and function names.
+  - Constant for Modbus registers and static configs.
+
+anti-patterns:
+  - Blocking the event loop with sync operations.
+  - Global variables (use local state or shared services).
+  - Hardcoded IP/Port (use .env).
+  - Multiple simultaneous Modbus requests (must be serialized).

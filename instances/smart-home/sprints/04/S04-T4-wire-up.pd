@@ -1,0 +1,41 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:dev
+sprint:S04
+task:T4-wire-up
+summary:Socket listener for Tuya updates. Optional scenes/energy UI. Final integration.
+
+###############################################################################
+# SPEC
+###############################################################################
+spec:
+  socket:Listen for tuya:update or unified device:update
+  update:Refresh Tuya device state without page reload
+  optional:Tuya Scene selector, energy chart (if API provides)
+  lifecycle:Cleanup on unmount
+
+###############################################################################
+# EXECUTION
+###############################################################################
+cmd:
+  - Add Socket listener for Tuya device updates
+  - Update reactive state on event
+  - Optional: Scene execution UI, energy chart
+  - onUnmounted: remove listener
+  - Verify build, both providers, no regressions
+
+out:
+  - apps/client socket integration for Tuya
+  - (optional) Scenes, energy components
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Tuya live updates work
+  - eWeLink + Tuya both functional
+  - Build passes
+verify:
+  - npm run build
+  - Manual: both providers controllable, live updates

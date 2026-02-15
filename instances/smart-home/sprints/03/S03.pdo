@@ -1,0 +1,37 @@
+v:1
+c:$$ m:sn4t
+mode:agent
+role:DEVOPS
+sprint:S03
+objective:Build and env setup for eWeLink integration
+
+###############################################################################
+# BUILD
+###############################################################################
+build:
+  client:cd apps/client && npm run build
+  server:cd apps/server && npm run build
+  gate:build-passes
+
+###############################################################################
+# ENV
+###############################################################################
+env:
+  doc:apps/server/.env.example
+  vars:[EWELINK_*]
+  secret-check:no API keys or tokens in repo
+
+###############################################################################
+# CHECKS
+###############################################################################
+verify:
+  - Build from apps/client and apps/server
+  - Lint/type-check if configured
+  - Artifacts (dist) match expected structure
+  - Vite proxy for API if frontend needs it
+  - Dev server hot-reload functional
+
+###############################################################################
+# REF
+###############################################################################
+ref:intel/sprints/S03/DEVOPS.ti
