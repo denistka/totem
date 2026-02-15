@@ -39,11 +39,11 @@ roles-active:[ROOT,TEAM_LEAD,CTO,QA,PM,DEVOPS]
 
 project:
   name:Navitrack-Totem
-  app:navitrack-app
+  app:navitrack-apps
   stack:[tauri2,vue3,ts,rust,vite,pinia,tailwind,leaflet]
   scope:frontend
-  status:✅ Epic 0 complete
-  next:Epic 1
+  status:✅ Epic 0 + S34–S37,S27 complete
+  next:Epic 1 (S38,S39,S40,S20,S21)
   epic0:E-00
   epic1:E-01-TO-DO
   done-ref:TOTEM_EPICS.ti#E-00

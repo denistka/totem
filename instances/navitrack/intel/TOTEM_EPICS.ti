@@ -10,13 +10,13 @@ purpose:machine-only epics index
 E-00:
   name:Epic-0-Done
   purpose:aggregate-all-completed-work
-  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33]
+  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27]
   status:✅ complete
 
 E-01-TO-DO:
   name:Epic-1-To-Do
   purpose:aggregate-all-planned-and-ready-work
-  sprints:[S34,S35,S36,S37,S38,S39,S40,S20,S21,S27]
-  scope:refactoring-S34-S37,release-S27,optional-S20-S21,async-reports-2FA-S38,feature-pack-S39,tech-debt-S40
+  sprints:[S38,S39,S40,S20,S21]
+  scope:optional-S20-S21,async-reports-2FA-S38,feature-pack-S39,tech-debt-S40
   backlog-ref:TOTEM_BACKLOG.ti
   status:🟢 active

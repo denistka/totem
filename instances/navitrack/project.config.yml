@@ -9,7 +9,7 @@ project:
     - wgpu
 
 paths:
-  code: ../navitrack-app
+  code: ../navitrack-apps
   history: ../prompt-machine
   intel: ./intel
 

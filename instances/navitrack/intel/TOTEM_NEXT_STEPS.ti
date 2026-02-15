@@ -19,4 +19,4 @@ epic-1:E-01-TO-DO
 # RECOMMENDATION
 ###############################################################################
 
-recommendation:Phase-E-refactoring-S34-S37→Phase-A-release-preparation→Phase-B-submit-UAT→Phase-C-post-launch
+recommendation:S38-async-reports-2FA-or-optional-S20-S21→Phase-A-release-preparation→Phase-B-submit-UAT→Phase-C-post-launch

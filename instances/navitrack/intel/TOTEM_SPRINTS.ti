@@ -8,7 +8,7 @@ purpose:machine-only sprint index
 
 done:E-00
   ref:TOTEM_EPICS.ti#E-00
-  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33]
+  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27]
 
 ###############################################################################
 # TO-DO (Epic 1)
@@ -17,28 +17,28 @@ done:E-00
 S34:
   name:Vue-Component-Refactoring
   path:sprints/34/
-  status:🟢 ready
+  status:✅ complete
   priority:P0
   scope:vue-components-<150-lines,css-extraction,component-split
 
 S35:
   name:Graphics-Fallback-System
   path:sprints/35/
-  status:🟢 ready
+  status:✅ complete
   priority:P1
   scope:wgpu-webgl-html-priority-0-1-2
 
 S36:
   name:Slint-HTML-Switch-System
   path:sprints/36/
-  status:🟢 ready
+  status:✅ complete
   priority:P2
   scope:html-default-slint-optional-dev-toggle
 
 S37:
   name:Architecture-Consolidation
   path:sprints/37/
-  status:🟢 ready
+  status:✅ complete
   priority:P3
   scope:platform-abstraction,pwa-fallbacks,docs
 
@@ -81,11 +81,12 @@ S21:
 S27:
   name:Release-Go-Live
   path:sprints/27/
-  status:🟢 planned
+  status:✅ complete
   scope:CI-build-matrix-store-assets-runbook
 
 ###############################################################################
 # ORDER
 ###############################################################################
 
-order:[S34→S35→S36→S37→S38→S39→S40]
+order:[S38→S39→S40]
+done-order:[S34→S35→S36→S37→S27]

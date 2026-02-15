@@ -9,17 +9,17 @@
 
 | Layer          | Directory                       | Responsibility             |
 | -------------- | ------------------------------- | -------------------------- |
-| App Shell      | `navitrack-app/`                | Core Vue 3 PWA application |
+| App Shell      | `navitrack-apps/`               | Core Vue 3 PWA application |
 | Graphics       | `wgpu/`                         | WebGPU/WASM components     |
-| UI Components  | `navitrack-app/src/components/` | Reusable Nt components     |
-| Business Logic | `navitrack-app/src/stores/`     | Pinia stores and state     |
+| UI Components  | `navitrack-apps/src/components/`| Reusable Nt components     |
+| Business Logic | `navitrack-apps/src/stores/`    | Pinia stores and state     |
 
 ---
 
 ## Epics
 
 - **Epic 0 (E-00)**: Done — all completed work. See `intel/TOTEM_EPICS.ti`.
-- **Epic 1 (E-01-TO-DO)**: To-Do — refactoring (S34–S37), optional (S20, S21), release (S27), backlog (S38–S40). See `intel/TOTEM_EPICS.ti`, `intel/TOTEM_SPRINTS.ti`.
+- **Epic 1 (E-01-TO-DO)**: To-Do — optional (S20, S21), backlog (S38–S40). S34–S37 and S27 done. See `intel/TOTEM_EPICS.ti`, `intel/TOTEM_SPRINTS.ti`.
 
 ---
 
