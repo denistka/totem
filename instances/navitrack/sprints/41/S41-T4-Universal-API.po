@@ -1,0 +1,19 @@
+v:1
+c:$$ m:claude-3-5-opus
+mode:agent
+x:architect
+stack:[rest,typescript,vue]
+task:Synthesize universal API specification from legacy findings.
+spec:
+  inputs: [ANDROID_API_MAP.md, IOS_API_MAP.md]
+  focus: unify endpoints, align parameters, standard response formats.
+  output_format: UNIVERSAL_API_SPEC.md
+  
+out: [UNIVERSAL_API_SPEC.md]
+cmd: []
+done:
+  - comprehensive universal API spec with TS interfaces
+  - legacy endpoint mappings documented
+  - clean RESTful structure proposed
+  - auth strategy defined
+verify: []

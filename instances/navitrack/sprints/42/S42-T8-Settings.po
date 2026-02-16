@@ -1,0 +1,25 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:frontend-dev
+stack:[react,typescript,tailwind]
+adapter: totem/stacks/react-ts/APP_UI_KIT.ti
+task:Implement Settings Screen.
+spec:
+  api: refs/react-app/src/lib/api.ts
+  features:
+    - User Profile display.
+    - App Configuration (Map layer selection, Units, Language).
+    - VEA (Vehicle Event Config) if applicable per vehicle.
+  ui:
+    - List/Group layout.
+    
+out:
+  - refs/react-app/src/pages/Settings.tsx
+
+done:
+  - Settings are persisted.
+  - User can logout.
+
+math-model: N/A
+verify: []

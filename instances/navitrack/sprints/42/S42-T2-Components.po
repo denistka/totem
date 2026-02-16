@@ -1,0 +1,45 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:frontend-dev
+stack:[react,typescript,tailwind,radix-ui]
+adapter: totem/stacks/react-ts/APP_UI_KIT.ti
+canonical-ref:
+  package: refs/app-ui-kit/package.json
+  components: refs/app-ui-kit/components/ui
+  utils: refs/app-ui-kit/lib/utils.ts
+task:Port core UI components from app-ui-kit to new app.
+spec:
+  input: /Users/denistka/Projects/navitrack/refs/app-ui-kit/components/ui
+  target: /Users/denistka/Projects/navitrack/refs/react-app/src/components/ui
+  utils: /Users/denistka/Projects/navitrack/refs/app-ui-kit/lib/utils.ts
+  components:
+    - button.tsx
+    - input.tsx
+    - label.tsx
+    - card.tsx
+    - sheet.tsx
+    - separator.tsx
+    - dialog.tsx
+    - calendar.tsx
+    - popover.tsx
+    - select.tsx
+    - table.tsx
+    - toast.tsx
+  instructions:
+    - Follow APP_UI_KIT.ti: use canonical-ref package for dependency versions.
+    - Create src/lib/utils.ts with cn() helper (pattern from refs/app-ui-kit/lib/utils.ts).
+    - Copy and adapt components to ensure independent functionality.
+    - Remove Next.js specific dependencies if any (Vite/SPA target).
+    
+out:
+  - refs/react-app/src/lib/utils.ts
+  - refs/react-app/src/components/ui/*.tsx
+
+done:
+  - components match visual design of ui-kit
+  - components are usable in standard React app
+  - strict types compliance
+
+math-model: N/A
+verify: []

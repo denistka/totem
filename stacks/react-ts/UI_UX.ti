@@ -4,16 +4,6 @@ extends: ../../guardians/ARCHITECT.ti
 
 stack:vanilla-CSS-only,CSS-Grid,Flexbox,CSS-custom-properties
 
-banned-imports:
-  - ❌ MUI (@mui/*)
-  - ❌ Ant Design (antd)
-  - ❌ Bootstrap (react-bootstrap, bootstrap)
-  - ❌ Chakra UI (@chakra-ui/*)
-  - ❌ Tailwind CSS (tailwindcss)
-  - ❌ styled-components
-  - ❌ Emotion (@emotion/*)
-  - ❌ CSS Modules (*.module.css) — use plain .css
-  - ✅ @floating-ui (positioning only, allowed)
 
 css-architecture:
   file-per-component:

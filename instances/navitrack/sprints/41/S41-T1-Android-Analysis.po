@@ -1,0 +1,19 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:android-expert
+stack:[java,kotlin,retrofit,okhttp,volley]
+task:Deeply analyze Android legacy codebase for API logic and sequences.
+spec:
+  input: /Users/denistka/Projects/navitrack/old-apps/navitrack-mobile-android
+  focus: API endpoints, parameters, response handling, auth flows, quirks.
+  output_format: ANDROID_API_MAP.md
+  
+out: [ANDROID_API_MAP.md]
+cmd: []
+done:
+  - comprehensive map of all API endpoints
+  - auth flow documented
+  - data models extracted
+  - logic sequences diagrammed (text)
+verify: []

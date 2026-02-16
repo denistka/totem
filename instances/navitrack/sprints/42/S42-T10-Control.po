@@ -1,0 +1,24 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:frontend-dev
+stack:[react,typescript,radix-ui]
+adapter: totem/stacks/react-ts/APP_UI_KIT.ti
+task:Implement Control Commands (Engine Block).
+spec:
+  tz_ref: "TZ-Section-14: Engine Block"
+  features:
+    - UI for "Safe Stop" and "Emergency Stop".
+    - Confirmation Dialog (Critical Action).
+    - API integration (if endpoint found) or Mock with "Not Implemented" toast.
+    - Security: Require password re-entry if specified in legacy logic (check mobile.md).
+    
+out:
+  - refs/react-app/src/features/control/EngineBlock.tsx
+
+done:
+  - User can access blocking controls.
+  - Accidental activation prevented via confirmation.
+
+math-model: N/A
+verify: []

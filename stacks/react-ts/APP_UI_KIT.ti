@@ -1,0 +1,26 @@
+role: UI Stack Adapter — app-ui-kit
+focus: canonical dependency set, Radix UI, Tailwind, component parity with ref
+extends: ../../guardians/ARCHITECT.ti
+
+stack: React 19, Radix UI (primitives), Tailwind CSS 3.4, TypeScript 5.7
+
+canonical-ref:
+  package: refs/app-ui-kit/package.json
+  components: refs/app-ui-kit/components/ui
+  utils: refs/app-ui-kit/lib/utils.ts
+
+dependency-rules:
+  - Use refs/app-ui-kit/package.json as source of truth for React, Radix, Tailwind, and shared UI lib versions.
+  - Align @types/react and @types/react-dom via pnpm overrides when using this stack.
+  - Same major/minor (or exact) versions for: react, react-dom, all @radix-ui/*, tailwind-merge, clsx, class-variance-authority, tailwindcss-animate, date-fns, lucide-react, react-day-picker, sonner, vaul, zod, react-hook-form, @hookform/resolvers.
+
+ui-rules:
+  - Tailwind CSS for styling (utility-first). Theme parity with app-ui-kit.
+  - Radix UI primitives for accessible components; do not replace with other headless libraries.
+  - cn() helper from refs/app-ui-kit/lib/utils.ts pattern (clsx + tailwind-merge).
+  - Port or adapt components from refs/app-ui-kit/components/ui when building UI; remove Next.js-specific imports (e.g. next/link, next/image) for Vite/SPA.
+
+anti-patterns:
+  - Adding UI dependencies or versions that diverge from refs/app-ui-kit/package.json without alignment.
+  - Using vanilla CSS or other design systems when this adapter is selected.
+  - Next-only packages in Vite/SPA targets; use SPA equivalents.

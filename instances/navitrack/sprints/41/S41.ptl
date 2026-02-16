@@ -1,0 +1,74 @@
+v:1
+c:$$ m:sn4t
+mode:agent test:y
+role:lead
+sprint:S41-Legacy-Analysis
+objective:Deep dive into legacy iOS/Android apps; extract full API logic & sequences; define universal API spec; analyze UI/UX patterns.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-01-TO-DO
+priority:P2
+dep:S40
+backlog:legacy-api-analysis, api-unification, ui-ux-audit
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-analyze:
+  tasks:[T1-Android-API, T2-iOS-API]
+  dur:2d
+  gate:reports-generated
+
+phase-visual:
+  tasks:[T3-Visual-System]
+  dur:1d
+  gate:ui-audit-complete
+
+phase-synthesize:
+  tasks:[T4-Universal-API-Spec]
+  dur:2d
+  gate:spec-approved
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-Android-API:
+    po:S41-T1-Android-Analysis.po
+    model:$$$
+    critical:y
+    exec-order:1
+    output:[ANDROID_API_MAP.md]
+  
+  T2-iOS-API:
+    po:S41-T2-iOS-Analysis.po
+    model:$$$
+    critical:y
+    exec-order:1
+    output:[IOS_API_MAP.md]
+
+  T3-Visual-System:
+    po:S41-T3-Visual-Analysis.po
+    model:$$
+    critical:n
+    exec-order:1
+    output:[LEGACY_UI_AUDIT.md]
+
+  T4-Universal-API-Spec:
+    po:S41-T4-Universal-API.po
+    model:$$$
+    critical:y
+    exec-order:2
+    dep-wait:[T1-Android-API, T2-iOS-API]
+    output:[UNIVERSAL_API_SPEC.md]
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - comprehensive analysis of legacy API calls
+  - identification of platform differences
+  - UNIVERSAL_API_SPEC.md created
+  - LEGACY_UI_AUDIT.md created

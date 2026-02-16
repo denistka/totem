@@ -1,0 +1,40 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:architect
+stack:[vite,react,typescript,tailwind,pwa,i18next]
+ui_stack_ref: refs/app-ui-kit
+ui_stack_package: refs/app-ui-kit/package.json
+adapter: totem/stacks/react-ts/APP_UI_KIT.ti
+task:Initialize React PWA, setup i18n, and foundational design system.
+spec:
+  input: /Users/denistka/Projects/navitrack/refs/app-ui-kit
+  target: /Users/denistka/Projects/navitrack/refs/react-app
+  rules:
+    - Follow totem/stacks/react-ts/FRONTEND_DEV.ti (Strict TS, Logic outside JSX).
+    - Follow totem/stacks/react-ts/APP_UI_KIT.ti for UI stack (deps from refs/app-ui-kit/package.json, Tailwind + Radix).
+  steps:
+    - Initialize Vite+React+TS project.
+    - Configure Tailwind (Theme parity with app-ui-kit). Dependency versions from ui_stack_package.
+    - Setup PWA (Manifest, Icons).
+    - Setup `i18next` with `react-i18next` (En, Ua).
+    - Setup Routing (react-router-dom).
+    
+out:
+  - refs/react-app/package.json
+  - refs/react-app/src/i18n.ts
+  - refs/react-app/src/main.tsx
+  
+cmd:
+  - npm create vite@latest . -- --template react-ts
+  - npm install i18next react-i18next i18next-browser-languagedetector
+  - npm install react-router-dom
+
+done:
+  - app runs
+  - localization works
+  - routing works
+  - strict typescript enabled
+
+math-model: N/A
+verify: []

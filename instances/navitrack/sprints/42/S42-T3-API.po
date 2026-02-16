@@ -1,0 +1,25 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:backend-dev
+stack:[typescript,fetch]
+task:Implement API Client based on Universal API Spec.
+spec:
+  input: /Users/denistka/Projects/navitrack/totem/instances/navitrack/sprints/41/UNIVERSAL_API_SPEC.md
+  target: /Users/denistka/Projects/navitrack/refs/react-app/src/lib/api.ts
+  base_url: http://online.navitrack.com.ua:2052/
+  features:
+    - Basic Auth (base64)
+    - Methods: login, getVehicles, getVehicleDetails, getDailyTrack
+    - Types: Vehicle, TrackPoint, User (strict interfaces)
+    
+out:
+  - refs/react-app/src/lib/api.ts
+
+done:
+  - ApiClient class/module implemented
+  - Types match Spec exactly
+  - Error handling for 401/500
+
+math-model: N/A
+verify: []

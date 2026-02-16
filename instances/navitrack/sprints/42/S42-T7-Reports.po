@@ -1,0 +1,26 @@
+v:1
+c:$$ m:claude-3-5-sonnet
+mode:agent
+x:frontend-dev
+stack:[react,typescript]
+task:Implement Report Engine for json2 format.
+spec:
+  api: refs/react-app/src/lib/api.ts
+  tz_ref: "TZ-Section-5: Reports"
+  format: "API.md - ReportResponse"
+  features:
+    - Dynamic Columns: Parse `rows` and `ReportCell`.
+    - Grouping: Render `ReportGroup` sections (Vehicle -> Rows).
+    - Export: Basic print/export.
+    - Display: Responsive Table component.
+    
+out:
+  - refs/react-app/src/pages/Reports.tsx
+  - refs/react-app/src/features/reports/ReportTable.tsx
+
+done:
+  - Reports render correctly from JSON2 data.
+  - Complexity of nested arrays is handled.
+
+math-model: N/A
+verify: []
