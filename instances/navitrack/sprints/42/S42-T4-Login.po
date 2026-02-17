@@ -7,8 +7,8 @@ adapter: totem/stacks/react-ts/APP_UI_KIT.ti
 task:Implement Login Screen.
 spec:
   input_audit: /Users/denistka/Projects/navitrack/totem/instances/navitrack/sprints/41/LEGACY_UI_AUDIT.md
-  input_comps: refs/react-app/src/components/ui
-  api: refs/react-app/src/lib/api.ts
+  input_comps: navitrack-apps/react-app/src/components/ui
+  api: navitrack-apps/react-app/src/lib/api.ts
   design:
     - Centered Card Layout
     - Modern "Emerald/Lime" branding or simple clean UI
@@ -19,7 +19,7 @@ spec:
     - Error toast/alert on failure
     
 out:
-  - refs/react-app/src/pages/Login.tsx
+  - navitrack-apps/react-app/src/pages/Login.tsx
 
 done:
   - User can log in

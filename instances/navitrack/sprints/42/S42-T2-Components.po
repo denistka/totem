@@ -11,7 +11,7 @@ canonical-ref:
 task:Port core UI components from app-ui-kit to new app.
 spec:
   input: /Users/denistka/Projects/navitrack/refs/app-ui-kit/components/ui
-  target: /Users/denistka/Projects/navitrack/refs/react-app/src/components/ui
+  target: /Users/denistka/Projects/navitrack/navitrack-apps/react-app/src/components/ui
   utils: /Users/denistka/Projects/navitrack/refs/app-ui-kit/lib/utils.ts
   components:
     - button.tsx
@@ -33,8 +33,8 @@ spec:
     - Remove Next.js specific dependencies if any (Vite/SPA target).
     
 out:
-  - refs/react-app/src/lib/utils.ts
-  - refs/react-app/src/components/ui/*.tsx
+  - navitrack-apps/react-app/src/lib/utils.ts
+  - navitrack-apps/react-app/src/components/ui/*.tsx
 
 done:
   - components match visual design of ui-kit

@@ -18,9 +18,9 @@ spec:
     - Error handling for API failures.
     
 out:
-  - refs/react-app/src/components/ui/dialog.tsx
-  - refs/react-app/src/components/ui/toast.tsx
-  - refs/react-app/src/components/ui/calendar.tsx
+  - navitrack-apps/react-app/src/components/ui/dialog.tsx
+  - navitrack-apps/react-app/src/components/ui/toast.tsx
+  - navitrack-apps/react-app/src/components/ui/calendar.tsx
 
 done:
   - All modals from legacy audit are covered.

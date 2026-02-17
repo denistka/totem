@@ -3,9 +3,9 @@ mode:agent
 x:frontend-dev
 stack:[react,typescript]
 adapter: totem/stacks/react-ts/APP_UI_KIT.ti
-task:Remove unused files and dead code from refs/react-app.
+task:Remove unused files and dead code from navitrack-apps/react-app.
 spec:
-  input: totem/instances/navitrack/sprints/43/S43-AUDIT.md, refs/react-app/src (after T2)
+  input: totem/instances/navitrack/sprints/43/S43-AUDIT.md, navitrack-apps/react-app/src (after T2)
   rules:
     - Delete only files that are not imported anywhere (confirm with grep/search).
     - Remove unused exports from barrel files (e.g. components/screens/index.ts).
@@ -21,7 +21,7 @@ spec:
 
 out:
   - (Deleted files — document in S43-AUDIT.md or commit message)
-  - refs/react-app/src/components/screens/index.ts (or remove barrel if screens removed)
+  - navitrack-apps/react-app/src/components/screens/index.ts (or remove barrel if screens removed)
 
 done:
   - No dead files under src/.

@@ -38,19 +38,19 @@ phase-feature-main:
   tasks:[T4-Login-Flow, T5-Map-Dashboard]
   dur:3d
   gate:core-features-working
-  verify:[test -f refs/react-app/src/features/map/ClusterMap.tsx]
+  verify:[test -f navitrack-apps/react-app/src/features/map/ClusterMap.tsx]
 
 phase-feature-complex:
   tasks:[T6-Tracking-History, T7-Reports, T8-Settings]
   dur:3d
   gate:secondary-features-working
-  verify:[test -f refs/react-app/src/features/reports/ReportTable.tsx]
+  verify:[test -f navitrack-apps/react-app/src/features/reports/ReportTable.tsx]
 
 phase-polish:
   tasks:[T9-Popups-States, T10-Control-Commands]
   dur:2d
   gate:ui-polished
-  verify:[test -f refs/react-app/src/features/control/EngineBlock.tsx]
+  verify:[test -f navitrack-apps/react-app/src/features/control/EngineBlock.tsx]
 
 ###############################################################################
 # DISPATCH
@@ -61,8 +61,8 @@ dispatch:
     model:$$$
     critical:y
     exec-order:1
-    output:[refs/react-app/package.json, refs/react-app/src/i18n.ts]
-    verify:[test -f refs/react-app/src/i18n.ts]
+    output:[navitrack-apps/react-app/package.json, navitrack-apps/react-app/src/i18n.ts]
+    verify:[test -f navitrack-apps/react-app/src/i18n.ts]
   
   T2-UI-Components:
     po:S42-T2-Components.po
@@ -70,8 +70,8 @@ dispatch:
     critical:y
     exec-order:2
     dep-wait:[T1-Setup-Foundation]
-    output:[refs/react-app/src/components/ui/*.tsx]
-    verify:[ls refs/react-app/src/components/ui/dialog.tsx]
+    output:[navitrack-apps/react-app/src/components/ui/*.tsx]
+    verify:[ls navitrack-apps/react-app/src/components/ui/dialog.tsx]
 
   T3-API-Integration:
     po:S42-T3-API.po
@@ -79,8 +79,8 @@ dispatch:
     critical:y
     exec-order:2
     dep-wait:[T1-Setup-Foundation]
-    output:[refs/react-app/src/lib/api.ts]
-    verify:[test -f refs/react-app/src/lib/api.ts]
+    output:[navitrack-apps/react-app/src/lib/api.ts]
+    verify:[test -f navitrack-apps/react-app/src/lib/api.ts]
 
   T4-Login-Flow:
     po:S42-T4-Login.po
@@ -88,8 +88,8 @@ dispatch:
     critical:n
     exec-order:3
     dep-wait:[T2-UI-Components, T3-API-Integration]
-    output:[refs/react-app/src/pages/Login.tsx]
-    verify:[test -f refs/react-app/src/pages/Login.tsx]
+    output:[navitrack-apps/react-app/src/pages/Login.tsx]
+    verify:[test -f navitrack-apps/react-app/src/pages/Login.tsx]
 
   T5-Map-Dashboard:
     po:S42-T5-Map.po
@@ -97,8 +97,8 @@ dispatch:
     critical:n
     exec-order:3
     dep-wait:[T2-UI-Components, T3-API-Integration]
-    output:[refs/react-app/src/pages/Dashboard.tsx]
-    verify:[test -f refs/react-app/src/pages/Dashboard.tsx]
+    output:[navitrack-apps/react-app/src/pages/Dashboard.tsx]
+    verify:[test -f navitrack-apps/react-app/src/pages/Dashboard.tsx]
 
   T6-Tracking-History:
     po:S42-T6-Tracking.po
@@ -106,8 +106,8 @@ dispatch:
     critical:n
     exec-order:4
     dep-wait:[T5-Map-Dashboard]
-    output:[refs/react-app/src/pages/Tracking.tsx]
-    verify:[test -f refs/react-app/src/pages/Tracking.tsx]
+    output:[navitrack-apps/react-app/src/pages/Tracking.tsx]
+    verify:[test -f navitrack-apps/react-app/src/pages/Tracking.tsx]
 
   T7-Reports:
     po:S42-T7-Reports.po
@@ -115,8 +115,8 @@ dispatch:
     critical:n
     exec-order:4
     dep-wait:[T3-API-Integration]
-    output:[refs/react-app/src/pages/Reports.tsx]
-    verify:[test -f refs/react-app/src/pages/Reports.tsx]
+    output:[navitrack-apps/react-app/src/pages/Reports.tsx]
+    verify:[test -f navitrack-apps/react-app/src/pages/Reports.tsx]
 
   T8-Settings:
     po:S42-T8-Settings.po
@@ -124,8 +124,8 @@ dispatch:
     critical:n
     exec-order:4
     dep-wait:[T2-UI-Components]
-    output:[refs/react-app/src/pages/Settings.tsx]
-    verify:[test -f refs/react-app/src/pages/Settings.tsx]
+    output:[navitrack-apps/react-app/src/pages/Settings.tsx]
+    verify:[test -f navitrack-apps/react-app/src/pages/Settings.tsx]
 
   T9-Popups-States:
     po:S42-T9-Popups.po
@@ -133,8 +133,8 @@ dispatch:
     critical:n
     exec-order:5
     dep-wait:[T4-Login-Flow]
-    output:[refs/react-app/src/components/ui/dialog.tsx]
-    verify:[grep "Dialog" refs/react-app/src/components/ui/dialog.tsx]
+    output:[navitrack-apps/react-app/src/components/ui/dialog.tsx]
+    verify:[grep "Dialog" navitrack-apps/react-app/src/components/ui/dialog.tsx]
 
   T10-Control-Commands:
     po:S42-T10-Control.po
@@ -142,8 +142,8 @@ dispatch:
     critical:n
     exec-order:5
     dep-wait:[T3-API-Integration]
-    output:[refs/react-app/src/features/control/EngineBlock.tsx]
-    verify:[test -f refs/react-app/src/features/control/EngineBlock.tsx]
+    output:[navitrack-apps/react-app/src/features/control/EngineBlock.tsx]
+    verify:[test -f navitrack-apps/react-app/src/features/control/EngineBlock.tsx]
 
 ###############################################################################
 # DONE

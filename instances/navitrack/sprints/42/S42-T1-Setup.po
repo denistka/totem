@@ -9,7 +9,7 @@ adapter: totem/stacks/react-ts/APP_UI_KIT.ti
 task:Initialize React PWA, setup i18n, and foundational design system.
 spec:
   input: /Users/denistka/Projects/navitrack/refs/app-ui-kit
-  target: /Users/denistka/Projects/navitrack/refs/react-app
+  target: /Users/denistka/Projects/navitrack/navitrack-apps/react-app
   rules:
     - Follow totem/stacks/react-ts/FRONTEND_DEV.ti (Strict TS, Logic outside JSX).
     - Follow totem/stacks/react-ts/APP_UI_KIT.ti for UI stack (deps from refs/app-ui-kit/package.json, Tailwind + Radix).
@@ -21,9 +21,9 @@ spec:
     - Setup Routing (react-router-dom).
     
 out:
-  - refs/react-app/package.json
-  - refs/react-app/src/i18n.ts
-  - refs/react-app/src/main.tsx
+  - navitrack-apps/react-app/package.json
+  - navitrack-apps/react-app/src/i18n.ts
+  - navitrack-apps/react-app/src/main.tsx
   
 cmd:
   - npm create vite@latest . -- --template react-ts

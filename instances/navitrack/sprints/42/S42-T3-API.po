@@ -6,7 +6,7 @@ stack:[typescript,fetch]
 task:Implement API Client based on Universal API Spec.
 spec:
   input: /Users/denistka/Projects/navitrack/totem/instances/navitrack/sprints/41/UNIVERSAL_API_SPEC.md
-  target: /Users/denistka/Projects/navitrack/refs/react-app/src/lib/api.ts
+  target: /Users/denistka/Projects/navitrack/navitrack-apps/react-app/src/lib/api.ts
   base_url: http://online.navitrack.com.ua:2052/
   features:
     - Basic Auth (base64)
@@ -14,7 +14,7 @@ spec:
     - Types: Vehicle, TrackPoint, User (strict interfaces)
     
 out:
-  - refs/react-app/src/lib/api.ts
+  - navitrack-apps/react-app/src/lib/api.ts
 
 done:
   - ApiClient class/module implemented

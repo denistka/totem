@@ -5,7 +5,7 @@ x:frontend-dev
 stack:[react,typescript,react-leaflet]
 task:Implement Tracking History with Playback.
 spec:
-  api: refs/react-app/src/lib/api.ts
+  api: navitrack-apps/react-app/src/lib/api.ts
   legacy_audit: /Users/denistka/Projects/navitrack/totem/instances/navitrack/sprints/41/LEGACY_UI_AUDIT.md
   features:
     - Date Picker for track selection.
@@ -15,8 +15,8 @@ spec:
     - Speed graph (optional/nice-to-have).
     
 out:
-  - refs/react-app/src/pages/Tracking.tsx
-  - refs/react-app/src/components/map/PlaybackControl.tsx
+  - navitrack-apps/react-app/src/pages/Tracking.tsx
+  - navitrack-apps/react-app/src/components/map/PlaybackControl.tsx
 
 done:
   - User can select date and vehicle.

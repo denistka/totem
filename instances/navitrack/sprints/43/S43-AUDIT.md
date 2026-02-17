@@ -1,4 +1,4 @@
-# S43 Audit: refs/react-app structure
+# S43 Audit: navitrack-apps/react-app structure
 
 ## 1. Entry points and render tree
 
@@ -91,9 +91,9 @@ S42 deliverables (ClusterMap, EngineBlock, ReportTable, PlaybackControl) exist u
 
 ## 5. T3 deleted files (S43 consolidation)
 
-- `refs/react-app/src/pages/Login.tsx`
-- `refs/react-app/src/pages/Dashboard.tsx`
-- `refs/react-app/src/pages/Settings.tsx`
-- `refs/react-app/src/pages/Tracking.tsx`
-- `refs/react-app/src/pages/Reports.tsx`
-- `refs/react-app/src/components/RequireAuth.tsx`
+- `navitrack-apps/react-app/src/pages/Login.tsx`
+- `navitrack-apps/react-app/src/pages/Dashboard.tsx`
+- `navitrack-apps/react-app/src/pages/Settings.tsx`
+- `navitrack-apps/react-app/src/pages/Tracking.tsx`
+- `navitrack-apps/react-app/src/pages/Reports.tsx`
+- `navitrack-apps/react-app/src/components/RequireAuth.tsx`

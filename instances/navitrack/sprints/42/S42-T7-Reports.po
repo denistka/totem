@@ -5,7 +5,7 @@ x:frontend-dev
 stack:[react,typescript]
 task:Implement Report Engine for json2 format.
 spec:
-  api: refs/react-app/src/lib/api.ts
+  api: navitrack-apps/react-app/src/lib/api.ts
   tz_ref: "TZ-Section-5: Reports"
   format: "API.md - ReportResponse"
   features:
@@ -15,8 +15,8 @@ spec:
     - Display: Responsive Table component.
     
 out:
-  - refs/react-app/src/pages/Reports.tsx
-  - refs/react-app/src/features/reports/ReportTable.tsx
+  - navitrack-apps/react-app/src/pages/Reports.tsx
+  - navitrack-apps/react-app/src/features/reports/ReportTable.tsx
 
 done:
   - Reports render correctly from JSON2 data.

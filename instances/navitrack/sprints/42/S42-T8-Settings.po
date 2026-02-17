@@ -6,7 +6,7 @@ stack:[react,typescript,tailwind]
 adapter: totem/stacks/react-ts/APP_UI_KIT.ti
 task:Implement Settings Screen.
 spec:
-  api: refs/react-app/src/lib/api.ts
+  api: navitrack-apps/react-app/src/lib/api.ts
   features:
     - User Profile display.
     - App Configuration (Map layer selection, Units, Language).
@@ -15,7 +15,7 @@ spec:
     - List/Group layout.
     
 out:
-  - refs/react-app/src/pages/Settings.tsx
+  - navitrack-apps/react-app/src/pages/Settings.tsx
 
 done:
   - Settings are persisted.

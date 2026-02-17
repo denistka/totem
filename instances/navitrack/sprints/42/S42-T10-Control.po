@@ -14,7 +14,7 @@ spec:
     - Security: Require password re-entry if specified in legacy logic (check mobile.md).
     
 out:
-  - refs/react-app/src/features/control/EngineBlock.tsx
+  - navitrack-apps/react-app/src/features/control/EngineBlock.tsx
 
 done:
   - User can access blocking controls.

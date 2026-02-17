@@ -3,9 +3,9 @@ mode:agent
 x:architect
 stack:[react,typescript]
 adapter: totem/stacks/react-ts/APP_UI_KIT.ti
-task:Audit refs/react-app: document used vs unused code and recommend target structure.
+task:Audit navitrack-apps/react-app: document used vs unused code and recommend target structure.
 spec:
-  codebase: refs/react-app/src
+  codebase: navitrack-apps/react-app/src
   rules:
     - Follow totem/stacks/react-ts/FRONTEND_DEV.ti (logic outside JSX).
   steps:

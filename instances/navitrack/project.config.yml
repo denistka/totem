@@ -7,7 +7,7 @@ project:
     - tauri2
     - rust
     - wgpu
-  # Canonical UI stack for React/port work (S42, refs/react-app). Alignment: ROOT.ti.
+  # Canonical UI stack for React/port work (S42, navitrack-apps/react-app). Alignment: ROOT.ti.
   ui_stack_ref: refs/app-ui-kit
   ui_stack_package: refs/app-ui-kit/package.json
 

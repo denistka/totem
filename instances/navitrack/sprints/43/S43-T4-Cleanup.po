@@ -3,22 +3,22 @@ mode:agent
 x:frontend-dev
 stack:[react,typescript,eslint]
 adapter: totem/stacks/react-ts/APP_UI_KIT.ti
-task:Final cleanup: lint, barrel consistency, and verify refs/react-app for future work.
+task:Final cleanup: lint, barrel consistency, and verify navitrack-apps/react-app for future work.
 spec:
-  target: refs/react-app
+  target: navitrack-apps/react-app
   rules:
     - Follow totem/stacks/react-ts/FRONTEND_DEV.ti.
   steps:
     - Run pnpm run lint; fix any reported issues (imports, unused vars, types).
     - Ensure consistent path aliases (@/); no broken imports.
     - Ensure index.ts / barrel files only export what is used.
-    - Optional: add or update README in refs/react-app with current structure (entry, routes/screens, features).
+    - Optional: add or update README in navitrack-apps/react-app with current structure (entry, routes/screens, features).
   do_not:
     - Change behavior or remove used code.
 
 out:
-  - refs/react-app (lint-clean state)
-  - refs/react-app/README.md (optional, if missing or outdated)
+  - navitrack-apps/react-app (lint-clean state)
+  - navitrack-apps/react-app/README.md (optional, if missing or outdated)
 
 done:
   - pnpm run lint passes.

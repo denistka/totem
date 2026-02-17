@@ -5,7 +5,7 @@ x:frontend-dev
 stack:[react,typescript,leaflet,react-leaflet,leaflet.markercluster]
 task:Implement Advanced Map Dashboard.
 spec:
-  api: refs/react-app/src/lib/api.ts
+  api: navitrack-apps/react-app/src/lib/api.ts
   tz_ref: "TZ-Section-3: Map"
   features:
     - Map Providers: OSM (Default), Google Satellite (via TileLayer), Hybrid.
@@ -20,9 +20,9 @@ spec:
     - Overlay controls (Layer Switcher, Zoom).
     
 out:
-  - refs/react-app/src/pages/Dashboard.tsx
-  - refs/react-app/src/features/map/ClusterMap.tsx
-  - refs/react-app/src/features/map/VehicleMarker.tsx
+  - navitrack-apps/react-app/src/pages/Dashboard.tsx
+  - navitrack-apps/react-app/src/features/map/ClusterMap.tsx
+  - navitrack-apps/react-app/src/features/map/VehicleMarker.tsx
 
 done:
   - Map supports switching layers.
