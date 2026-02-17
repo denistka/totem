@@ -66,6 +66,22 @@ S40:
   scope:wgpu-update,static-mut-refactor,M-002
   dep:S39
 
+S42:
+  name:App-Ignition
+  path:sprints/42/
+  status:🟢 in-progress
+  priority:P1
+  scope:react-pwa,ui-port,clustering,engine-block,i18n
+  dep:S41
+
+S43:
+  name:React-App-Refactor
+  path:sprints/43/
+  status:⬜ planned
+  priority:P2
+  scope:structure-consolidation,dead-code-removal,single-routing-model
+  dep:S42
+
 S20:
   name:Universal-UI-Template
   path:sprints/20/
@@ -88,5 +104,5 @@ S27:
 # ORDER
 ###############################################################################
 
-order:[S38→S39→S40]
+order:[S38→S39→S40,S42→S43]
 done-order:[S34→S35→S36→S37→S27]

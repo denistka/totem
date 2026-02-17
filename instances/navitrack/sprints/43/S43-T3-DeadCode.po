@@ -1,0 +1,31 @@
+v:1
+mode:agent
+x:frontend-dev
+stack:[react,typescript]
+adapter: totem/stacks/react-ts/APP_UI_KIT.ti
+task:Remove unused files and dead code from refs/react-app.
+spec:
+  input: totem/instances/navitrack/sprints/43/S43-AUDIT.md, refs/react-app/src (after T2)
+  rules:
+    - Delete only files that are not imported anywhere (confirm with grep/search).
+    - Remove unused exports from barrel files (e.g. components/screens/index.ts).
+  steps:
+    - List files that T2 made obsolete (e.g. either all of pages/* or all of screens/* + MobileShell + mobile-header, etc.).
+    - Delete obsolete files. Do not delete: components/ui/*, lib/api.ts, lib/utils.ts, hooks/useAuth.ts, features/* in use, i18n, ErrorBoundary, main.tsx, App.tsx.
+    - Remove RequireAuth.tsx if still unused (no imports).
+    - Remove any component with zero references (e.g. theme-toggle if unused after refactor; date-range-picker if unused).
+    - Update barrel files (index.ts) to drop removed exports.
+    - Run pnpm run build and pnpm run lint; fix any broken imports.
+  do_not:
+    - Remove files that are still imported by the chosen structure.
+
+out:
+  - (Deleted files — document in S43-AUDIT.md or commit message)
+  - refs/react-app/src/components/screens/index.ts (or remove barrel if screens removed)
+
+done:
+  - No dead files under src/.
+  - pnpm run build and pnpm run lint pass.
+
+math-model: N/A
+verify: [pnpm run build, pnpm run lint]

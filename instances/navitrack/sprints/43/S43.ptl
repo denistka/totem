@@ -1,0 +1,98 @@
+v:1
+mode:agent
+role:lead
+sprint:S43-React-App-Refactor
+objective:Refactor refs/react-app: consolidate structure, remove unused and extra code, align with single feature set for future work.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-02-NEW-APP
+priority:P2
+dep:S42
+backlog:structure-consolidation, dead-code-removal, routing-single-model
+
+# Same UI stack as S42 (project.config.yml ui_stack_ref + APP_UI_KIT.ti).
+stack_overrides:
+  - Logic: totem/stacks/react-ts/FRONTEND_DEV.ti
+  - UI: totem/stacks/react-ts/APP_UI_KIT.ti
+  - BUILD: totem/stacks/react-ts/BUILD.ti
+
+###############################################################################
+# CURRENT STATE (pre-refactor)
+###############################################################################
+# refs/react-app has two parallel structures:
+# - In use: App → MobileShell → screens/* (login-screen, objects-screen, map-screen, etc.) + lib/navigation (state-based).
+# - Built but not wired: pages/* (Login, Dashboard, Settings, Tracking, Reports) + features/* (ClusterMap, EngineBlock, ReportTable, etc.). BrowserRouter present but no <Route>.
+# Goal: One consistent structure; remove code not used in the chosen structure.
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-audit:
+  tasks:[T1-Audit]
+  dur:0.5d
+  gate:audit-doc-exists
+  verify:[test -f totem/instances/navitrack/sprints/43/S43-AUDIT.md]
+
+phase-consolidate:
+  tasks:[T2-Structure]
+  dur:1d
+  gate:single-entry-structure
+  verify:[pnpm run build in refs/react-app]
+
+phase-remove:
+  tasks:[T3-DeadCode]
+  dur:0.5d
+  gate:no-unused-files
+  verify:[grep -L "from '@/components/RequireAuth'" refs/react-app/src --include="*.tsx" -r || true]
+
+phase-cleanup:
+  tasks:[T4-Cleanup]
+  dur:0.5d
+  gate:lint-pass
+  verify:[pnpm run lint in refs/react-app]
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-Audit:
+    po:S43-T1-Audit.po
+    critical:y
+    exec-order:1
+    output:[totem/instances/navitrack/sprints/43/S43-AUDIT.md]
+    verify:[test -f totem/instances/navitrack/sprints/43/S43-AUDIT.md]
+
+  T2-Structure:
+    po:S43-T2-Structure.po
+    critical:y
+    exec-order:2
+    dep-wait:[T1-Audit]
+    output:[refs/react-app/src/App.tsx, refs/react-app/src/main.tsx, refs/react-app/src/lib/navigation.ts or router]
+    verify:[pnpm run build in refs/react-app]
+
+  T3-DeadCode:
+    po:S43-T3-DeadCode.po
+    critical:y
+    exec-order:3
+    dep-wait:[T2-Structure]
+    output:[deleted unused files list]
+    verify:[pnpm run build, pnpm run lint]
+
+  T4-Cleanup:
+    po:S43-T4-Cleanup.po
+    critical:n
+    exec-order:4
+    dep-wait:[T3-DeadCode]
+    output:[refs/react-app/tsconfig.json, eslint config if needed]
+    verify:[pnpm run lint, pnpm run build]
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Single navigation/routing model in refs/react-app.
+  - No duplicate screen vs page implementations for same feature.
+  - Unused components and dead code removed.
+  - Build and lint pass; codebase ready for future feature work.

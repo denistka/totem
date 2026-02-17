@@ -1,0 +1,32 @@
+v:1
+mode:agent
+x:architect
+stack:[react,typescript]
+adapter: totem/stacks/react-ts/APP_UI_KIT.ti
+task:Audit refs/react-app: document used vs unused code and recommend target structure.
+spec:
+  codebase: refs/react-app/src
+  rules:
+    - Follow totem/stacks/react-ts/FRONTEND_DEV.ti (logic outside JSX).
+  steps:
+    - List all entry points: App.tsx, main.tsx. Trace what is rendered (MobileShell, screens/*).
+    - List all files under src/ (components, pages, features, lib, hooks). For each, determine: imported by whom (or never).
+    - Identify duplicate feature implementations: screens/login-screen vs pages/Login.tsx; screens/settings-screen vs pages/Settings.tsx; etc. Note which set is currently used.
+    - Identify unused: RequireAuth.tsx (no imports); pages/* if app uses only screens/*; any component with zero imports.
+    - Recommend target structure: (A) Router + pages/ + features/ (wire S42 deliverables, remove screens/ + MobileShell), or (B) Keep MobileShell + screens/, have them delegate to features/* where applicable, remove pages/*. Document pros/cons.
+  output_doc:
+    path: totem/instances/navitrack/sprints/43/S43-AUDIT.md
+    sections:
+      - Entry points and render tree
+      - File inventory (used / unused)
+      - Duplicate feature map (screen vs page)
+      - Recommendation (A or B) and migration steps for T2
+
+out:
+  - totem/instances/navitrack/sprints/43/S43-AUDIT.md
+
+done:
+  - S43-AUDIT.md exists with clear used/unused and recommendation.
+
+math-model: N/A
+verify: []
