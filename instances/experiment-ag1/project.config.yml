@@ -1,0 +1,23 @@
+project:
+  name: Experiment AG1
+  version: 0.0.0
+  description: Vue 3 experiment project.
+  stack:
+    - vue3
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../experiment/ag1
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV

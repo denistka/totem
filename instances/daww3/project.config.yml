@@ -1,0 +1,27 @@
+project:
+  name: DAWW3
+  version: 0.1.0
+  description: Web-based Digital Audio Workstation with P2P streaming and Web3 monetization.
+  stack:
+    - vue3
+    - typescript
+    - turbo
+    - web3
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../daww3
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - WEB3

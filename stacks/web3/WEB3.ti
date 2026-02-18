@@ -1,0 +1,20 @@
+role: Web3/Blockchain Adapter
+focus: Smart Contracts, Wallet Integration, On-chain Data, Monetization
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Solidity, Ethers.js, Viem, Wagmi, Hardhat/Foundry
+
+integration-rules:
+  - Keep contract ABIs and addresses in a shared package or config.
+  - Implement robust error handling for wallet rejections and network failures.
+  - Use Wagmi/Viem for frontend-blockchain interaction.
+  - Ensure all sensitive on-chain interactions are confirmed by the user.
+
+security-rules:
+  - Never store private keys in the frontend or environment variables exposed to the client.
+  - Validate all incoming on-chain data before using it in the UI.
+  - Implement transaction state tracking (pending, success, error) with user feedback.
+
+anti-patterns:
+  - Trusting client-side state for transaction verification (always verify on-chain).
+  - Hardcoding network IDs or contract addresses across the codebase.

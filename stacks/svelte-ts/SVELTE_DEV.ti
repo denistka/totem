@@ -1,0 +1,21 @@
+role: Svelte Stack Adapter
+focus: Svelte components, SvelteKit routing, Store management, Tailwind integration
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Svelte 5, SvelteKit 2, TypeScript, Tailwind CSS, Vite
+
+integration-rules:
+  - Use SvelteKit file-based routing (+page.svelte, +layout.svelte).
+  - Prefer Svelte 5 runes ($state, $derived, $effect) for state management.
+  - Context API for cross-component state when necessary.
+  - Server-side logic in +page.server.ts for DB/API interactions.
+
+ui-rules:
+  - Tailwind CSS for styling.
+  - Keep components modular and reusable in src/lib/components.
+  - Use $lib alias for internal imports.
+
+anti-patterns:
+  - Direct DOM manipulation (use Svelte bindings).
+  - Putting sensitive logic in +page.svelte (use +page.server.ts).
+  - Excessive use of global stores (prefer local state or context).

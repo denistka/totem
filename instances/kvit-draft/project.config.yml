@@ -1,0 +1,22 @@
+project:
+  name: KVIT Draft
+  version: 1.0.0
+  description: Military-grade project draft analysis.
+  stack:
+    - military-standards
+    - mrpp-3.0
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../kvit/draft
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT

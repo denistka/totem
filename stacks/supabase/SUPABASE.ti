@@ -1,0 +1,22 @@
+role: Supabase Adapter
+focus: Supabase Client, Auth, Database, Edge Functions, Row Level Security (RLS)
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Supabase, PostgreSQL, GoTrue (Auth), PostgREST
+
+integration-rules:
+  - Use @supabase/supabase-js for client-side interaction.
+  - Keep Supabase URL and Anon Key in .env files; never hardcode.
+  - Implement RLS for all tables in the database.
+  - Use Supabase Auth for user management and session handling.
+  - Prefer server-side logic in Edge Functions (Deno) when sensitive processing is required.
+
+security-rules:
+  - Never bypass RLS in the client (service_role key should only be used in server-side/edge functions).
+  - Use granular policies (SELECT, INSERT, UPDATE, DELETE) based on auth.uid().
+  - Validate data on the client before submission, but rely on DB constraints for final integrity.
+
+anti-patterns:
+  - Exposing service_role key to the frontend.
+  - Tables without RLS enabled.
+  - Business logic entirely on the client that bypasses security checks.

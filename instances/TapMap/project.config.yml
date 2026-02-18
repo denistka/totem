@@ -1,0 +1,28 @@
+project:
+  name: TapMap
+  version: 1.0.0
+  description: iiko/Poster products aggregator with Supabase backend and React PWA.
+  stack:
+    - react
+    - typescript
+    - tailwind
+    - supabase
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../TapMap
+  client: ../../TapMap/client
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - SUPABASE

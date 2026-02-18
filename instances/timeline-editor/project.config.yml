@@ -1,0 +1,26 @@
+project:
+  name: Timeline Editor
+  version: 1.0.0
+  description: Professional visual editor for timeline-based animations.
+  stack:
+    - vue3
+    - typescript
+    - tailwind
+    - gsap
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../timeline-editor
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV

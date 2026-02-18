@@ -1,0 +1,28 @@
+project:
+  name: Fit
+  version: 1.0.0
+  description: Fitness tracking app with SvelteKit and Supabase.
+  stack:
+    - svelte
+    - typescript
+    - tailwind
+    - supabase
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../fit
+  web: ../../fit/web
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - SUPABASE

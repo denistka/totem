@@ -1,0 +1,24 @@
+project:
+  name: TAT
+  version: 0.0.0
+  description: React 19 test project.
+  stack:
+    - react
+    - typescript
+  ui_stack_ref: refs/app-ui-kit
+
+paths:
+  code: ../../tat/tat-test
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
