@@ -1,0 +1,273 @@
+v:1
+mode:agent
+role:lead
+sprint:S45-Touch-And-UI-Polish
+objective:Refactor for finger-friendly sizing (44px+), deduplicate components, split oversized screens, and apply modern UI micro-improvements.
+status:ACTIVE  # Unpaused 2026-02-18 — S46 (component split) is DONE, T8 covered by S46
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-02-NEW-APP
+priority:P1
+dep:S44
+backlog:touch-targets, spacing, interactive-sizing, mobile-ergonomics, deduplication, splitting-large-components, ui-trend-polish
+
+# Lesson from S44: ad-hoc sizing (h-8, h-9, h-10, h-11, h-12, h-14) across screens
+# creates refactoring hell. This sprint establishes universal sizing tokens and applies
+# them everywhere via components, NOT raw classes.
+#
+# Current problems found in audit:
+# - ThemeToggle: h-8 w-8 (32px) — below 44px minimum
+# - Bottom nav tabs: py-2 (no min-h, ~40px) — below 44px
+# - Checkbox circles in select-objects: h-7 w-7 (28px) — far below 44px
+# - Select vehicle button: h-11 (44px) — OK but inconsistent with others
+# - Settings buttons: h-11 (44px) — OK
+# - Range sliders: h-2 (8px track) — no touch padding
+# - Date range picker time slider: touch-none — may need larger hit area
+# - List items in BottomSelectModal: no min-h — could be tiny
+# - Event toggle buttons: h-11 w-11 (44px) — OK
+# - Search input: h-10 (40px) — slightly below 44px
+# - MobileHeader back button: no explicit sizing
+#
+# Reference standards:
+# - Apple HIG: 44x44pt minimum touch target
+# - Material Design: 48x48dp recommended
+# - WCAG 2.5.5 (AAA): 44x44 CSS px
+# - WCAG 2.5.8 (AA): 24x24 CSS px with 24px spacing
+
+guide:core/DESIGN_SPRINT_GUIDE.md
+invariants:sprints/45/S44-INVARIANTS.md
+
+# ⚠️  HARD RULE: Every task in this sprint MUST check S44-INVARIANTS.md before changing
+# any CSS token, glass class, component variant, animation, or component API.
+# If a change breaks any invariant — it is BLOCKED until resolved.
+# S44 artifacts reference: sprints/44/ (AUDIT, QA-REPORT, UPDATES)
+
+stack_overrides:
+  - Logic: totem/stacks/react-ts/FRONTEND_DEV.ti
+  - UI: totem/stacks/react-ts/UI_UX.ti
+  - BUILD: totem/stacks/react-ts/BUILD.ti
+
+###############################################################################
+# TOUCH SIZE STANDARDS (immutable for this sprint)
+###############################################################################
+# Minimum touch target: 44x44px (11 in Tailwind 4px scale)
+# Recommended touch target: 48x48px (12 in Tailwind)
+# Spacing between targets: ≥ 8px (2 in Tailwind)
+# Primary CTA: 56px height (14 in Tailwind)
+# Standard button: 48px height (12 in Tailwind)
+# Standard input: 48px height (12 in Tailwind)
+# Icon button: 44x44px minimum (11x11 in Tailwind)
+# Bottom nav item: 56px height (14 in Tailwind), icon + label
+# List item (tappable): min-height 56px (14 in Tailwind)
+# Checkbox/toggle hit area: 44x44px (11x11 regardless of visual size)
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-audit:
+  tasks:[T1-TouchAudit]
+  dur:0.5d
+  gate:audit-complete
+  verify:[test -f totem/instances/navitrack/sprints/45/S45-TOUCH-AUDIT.md]
+
+phase-tokens:
+  tasks:[T2-TouchTokens]
+  dur:0.5d
+  gate:tokens-defined
+  verify:[pnpm run build in navitrack-apps/react-app]
+
+phase-components:
+  tasks:[T3-ComponentSizing]
+  dur:1.5d
+  gate:components-updated
+  verify:[pnpm run build in navitrack-apps/react-app]
+
+phase-apply:
+  tasks:[T4-ApplyScreens]
+  dur:2d
+  gate:all-screens-touch-friendly
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+phase-qa:
+  tasks:[T5-TouchQA]
+  dur:0.5d
+  gate:qa-pass
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+# ── Track B: Component health ──────────────────────────────────────────────────
+phase-dedup:
+  tasks:[T6-DedupAudit, T7-ExtractShared]
+  dur:1d
+  gate:no-duplicate-patterns
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+phase-split:
+  tasks:[T8-SplitLargeScreens]
+  dur:1d
+  gate:no-god-components
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+# ── Track C: UI trend polish ───────────────────────────────────────────────────
+phase-trends:
+  tasks:[T9-TrendAudit, T10-MicroImprovements, T11-MotionPolish, T12-FinalReview]
+  dur:1.5d
+  gate:ui-refreshed
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-TouchAudit:
+    po:S45-T1-TouchAudit.po
+    critical:y
+    exec-order:1
+    output:[totem/instances/navitrack/sprints/45/S45-TOUCH-AUDIT.md]
+    verify:[test -f totem/instances/navitrack/sprints/45/S45-TOUCH-AUDIT.md]
+    desc:Measure all interactive elements; document which are below 44px; screenshot problem areas.
+
+  T2-TouchTokens:
+    po:S45-T2-TouchTokens.po
+    critical:y
+    exec-order:2
+    dep-wait:[T1-TouchAudit]
+    output:[updated index.css with --touch-* tokens, updated button/input components with new size defaults]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Define CSS custom properties for touch sizes; update base component size variants.
+
+  T3-ComponentSizing:
+    po:S45-T3-ComponentSizing.po
+    critical:y
+    exec-order:3
+    dep-wait:[T2-TouchTokens]
+    output:[updated button.tsx, input.tsx, switch.tsx, glass components, mobile-shell.tsx, mobile-header.tsx, bottom-select-modal.tsx, theme-toggle.tsx]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Update all UI components to enforce 44px+ touch targets; adjust size variants; add touch-area utility for visually small elements.
+
+  T4-ApplyScreens:
+    po:S45-T4-ApplyScreens.po
+    critical:y
+    exec-order:4
+    dep-wait:[T3-ComponentSizing]
+    output:[all 9 screens updated with touch-friendly sizing]
+    verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+    desc:Apply touch tokens across all screens; fix all elements below 44px; ensure proper spacing between targets.
+
+  T5-TouchQA:
+    po:S45-T5-TouchQA.po
+    critical:y
+    exec-order:5
+    dep-wait:[T4-ApplyScreens]
+    output:[totem/instances/navitrack/sprints/45/S45-TOUCH-QA.md]
+    verify:[test -f totem/instances/navitrack/sprints/45/S45-TOUCH-QA.md]
+    desc:Test all touch targets on real device (or emulator); verify min 44px; test one-handed reachability; Lighthouse tap target audit.
+
+  # ── Track B: Component health ──────────────────────────────────────────────────
+
+  T6-DedupAudit:
+    po:S45-T6-DedupAudit.po
+    critical:y
+    exec-order:6
+    dep-wait:[T4-ApplyScreens]
+    output:[totem/instances/navitrack/sprints/45/S45-DEDUP-AUDIT.md]
+    verify:[test -f totem/instances/navitrack/sprints/45/S45-DEDUP-AUDIT.md]
+    desc:Find duplicated patterns — similar popups, buttons, overlays, tab bars, inline SVG icons. List reuse candidates.
+
+  T7-ExtractShared:
+    po:S45-T7-ExtractShared.po
+    critical:y
+    exec-order:7
+    dep-wait:[T6-DedupAudit]
+    output:[new shared components, refactored screens]
+    verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+    desc:Extract shared patterns into reusable components (SegmentedControl, DropdownButton, TabBar, EventCheckbox). Remove duplicates.
+
+  T8-SplitLargeScreens:
+    po:S45-T8-SplitLargeScreens.po
+    critical:y
+    exec-order:8
+    dep-wait:[T7-ExtractShared]
+    output:[refactored screens under 150 lines each]
+    verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+    desc:Split oversized screens (ObjectDetails 308L, Objects 256L, Reports 253L, DateRangerPicker 533L) into smaller focused sub-components.
+
+  # ── Track C: UI trend polish ───────────────────────────────────────────────────
+
+  T9-TrendAudit:
+    po:S45-T9-TrendAudit.po
+    critical:n
+    exec-order:9
+    dep-wait:[T8-SplitLargeScreens]
+    output:[totem/instances/navitrack/sprints/45/S45-TREND-AUDIT.md]
+    verify:[test -f totem/instances/navitrack/sprints/45/S45-TREND-AUDIT.md]
+    desc:Review UI against 2025-26 mobile trends (Apple HIG, Material 3). Find small improvements—no redesign.
+
+  T10-MicroImprovements:
+    po:S45-T10-MicroImprovements.po
+    critical:n
+    exec-order:10
+    dep-wait:[T9-TrendAudit]
+    output:[updated UI components and screens with micro-improvements]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Apply small visual improvements from trend audit: spacing tweaks, corner radius, subtle shadows, typography refinement. One change at a time.
+
+  T11-MotionPolish:
+    po:S45-T11-MotionPolish.po
+    critical:n
+    exec-order:11
+    dep-wait:[T10-MicroImprovements]
+    output:[refined animation timings, new subtle transitions]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Add/refine meaningful micro-animations—screen transitions, button feedback, list item entrances. No heavy animations.
+
+  T12-FinalReview:
+    po:S45-T12-FinalReview.po
+    critical:y
+    exec-order:12
+    dep-wait:[T11-MotionPolish]
+    output:[totem/instances/navitrack/sprints/45/S45-FINAL-QA.md]
+    verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+    desc:Final visual review of all changes. Verify nothing broken. Build + lint + Lighthouse. Ship-ready check.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  # Track A: Touch
+  - All interactive elements meet 44px minimum touch target.
+  - Touch sizing tokens defined in CSS custom properties.
+  - Component size variants updated to enforce minimums.
+  - All 9 screens verified with proper touch targets.
+  - Spacing between interactive elements ≥ 8px.
+  - Lighthouse "Tap targets" audit: PASS.
+  # Track B: Component health
+  - Zero duplicated UI patterns (one overlay style, one tab bar, one dropdown button).
+  - No screen file > 200 lines (split into sub-components).
+  - DateRangePicker split into Calendar + TimePicker + trigger.
+  - Shared components: SegmentedControl, DropdownButton, TabBar, EventCheckbox.
+  # Track C: UI trend polish
+  - Modern spacing and typography reviewed.
+  - Micro-animations meaningful and subtle.
+  - No visual regressions.
+  - Build and lint pass with zero errors.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  # Touch
+  - Zero interactive elements below 44px touch target.
+  - Universal touch tokens used (no ad-hoc h-8, h-9, h-10 for touch elements).
+  - Consistent sizing: primary CTA = 56px, standard = 48px, icon = 44px.
+  - Spacing: ≥ 8px between all adjacent touch targets.
+  - Lighthouse "Tap targets" audit: PASS.
+  # Component health
+  - Zero duplicated overlay/modal/tab/button patterns.
+  - Biggest screen file < 200 lines.
+  - All new shared components typed and documented.
+  # UI polish
+  - Modern, trending feel without redesign.
+  - Subtle, meaningful animations (not gratuitous).
+  - Build + lint: zero errors.

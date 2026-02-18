@@ -1,0 +1,128 @@
+task:T4-ApplyScreens
+sprint:S45
+title:Apply Touch-Friendly Sizing to All Screens
+priority:P1
+estimate:16h
+owner:FRONTEND_DEV
+dep:[T3-ComponentSizing]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Apply touch-friendly sizing to all 9 screens. Replace any remaining ad-hoc
+sizes with token-based values. Ensure ≥ 8px spacing between touch targets.
+
+###############################################################################
+# LESSON FROM S44 (DESIGN_SPRINT_GUIDE.md)
+###############################################################################
+# In S44, we applied glass styling BY SCREEN, which was slow and error-prone.
+# In S45, T2+T3 update the COMPONENTS FIRST, so most screens auto-fix.
+# T4 only catches screen-specific overrides and raw <button> elements
+# that bypass the component system.
+#
+# Focus areas for T4:
+# 1. Raw <button> elements that don't use <Button> component
+# 2. Ad-hoc className overrides that set heights (h-8, h-10 etc)
+# 3. Spacing between adjacent interactive elements
+# 4. Scrollable lists with tappable rows (min-height)
+
+###############################################################################
+# SCREEN-BY-SCREEN CHECKLIST
+###############################################################################
+
+### 1. login-screen.tsx
+- [ ] Inputs: h-12 (48px) — already OK via glass-input
+- [ ] Show/hide password button: verify ≥ 44px tap area
+- [ ] Sign In button: h-14 (56px) — already OK
+- [ ] No spacing issues expected
+Status: LOW RISK — mostly OK
+
+### 2. objects-screen.tsx
+- [ ] Search input: verify updated to h-12 (48px)
+- [ ] Settings icon button: verify ≥ 44px
+- [ ] Vehicle list rows: raw <button> — add min-h-[56px]
+- [ ] Vehicle icon containers: h-14 w-14 — OK (not interactive by themselves)
+- [ ] Spacing between rows: border-b provides visual separation; verify touch gap
+Status: MEDIUM — vehicle rows need min-height
+
+### 3. settings-screen.tsx
+- [ ] Language/Map type buttons: h-11 → auto-fixed by component
+- [ ] Rate app button: h-14 — OK
+- [ ] Logout button: h-12 → auto-fixed
+- [ ] Switch toggles: verify touch area
+- [ ] Spacing between toggle rows
+Status: LOW — mostly via components
+
+### 4. tracking-screen.tsx
+- [ ] Vehicle select button: h-11 raw <button> → use <Button> or add min-h
+- [ ] Event toggle buttons: h-11 w-11 (44px) — OK
+- [ ] Range sliders (color, width): verify touch-friendly via T3 CSS
+- [ ] Execute button: h-14 — OK
+- [ ] Spacing between event toggles and vehicle select: gap-3 (12px) — OK
+Status: MEDIUM — vehicle select raw button, sliders
+
+### 5. reports-screen.tsx
+- [ ] Dropdown buttons: h-11 → auto-fixed by component
+- [ ] Build Report button: h-14 — OK
+- [ ] Settings icon: ≥ 44px
+- [ ] Calendar icon button: verify touch area
+- [ ] Report Type/Company/Vehicle controls: ≥ 44px
+Status: LOW — mostly via components
+
+### 6. map-screen.tsx
+- [ ] Settings icon button: verify ≥ 44px
+- [ ] Map controls (if any): ≥ 44px
+- [ ] PlaybackControl buttons: verify ≥ 44px
+Status: LOW
+
+### 7. object-details-screen.tsx
+- [ ] Tab buttons: verify ≥ 44px
+- [ ] Apply button: verify h-14
+- [ ] Event toggles: verify ≥ 44px
+- [ ] Date selectors: verify
+- [ ] Back button: verify
+Status: MEDIUM — multiple interactive types
+
+### 8. select-objects-screen.tsx
+- [ ] Search input: h-10 → auto-fixed to h-12
+- [ ] Vehicle rows: raw <button> — add min-h-[56px]
+- [ ] Checkbox circles: h-7 w-7 (28px) — ensure row is the interactive area
+- [ ] Apply button: h-14 — OK
+- [ ] Settings icon: verify ≥ 44px
+Status: HIGH — checkboxes need attention
+
+### 9. account-security-screen.tsx
+- [ ] Form inputs: auto-fixed via component
+- [ ] Buttons: auto-fixed via component
+- [ ] Back button: verify
+Status: LOW
+
+###############################################################################
+# WHAT T4 SHOULD NOT DO
+###############################################################################
+anti-patterns:
+  - ❌ Don't add h-12 to every element by hand — component defaults handle it
+  - ❌ Don't change component internals — that was T3's job
+  - ❌ Don't add new components — use existing Button, Input, GlassButton
+  - ❌ Don't change visual design — only sizing and spacing
+
+###############################################################################
+# RAW BUTTONS TO CONVERT
+###############################################################################
+Raw <button> elements that bypass the component system (need conversion or sizing):
+  1. objects-screen.tsx vehicle rows → add min-h-[3.5rem]
+  2. tracking-screen.tsx vehicle select → convert to <Button variant="glass">
+  3. select-objects-screen.tsx vehicle rows → add min-h-[3.5rem]
+  4. mobile-shell.tsx tab buttons → add min-h-[3.5rem]
+  5. login-screen.tsx show/hide password → ensure touch area via .touch-area
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] Zero interactive elements below 44px measured touch target
+  - [ ] All ad-hoc height classes (h-8, h-9, h-10) replaced with tokens
+  - [ ] Spacing ≥ 8px between all adjacent touch targets
+  - [ ] Raw <button> elements have proper min-height
+  - [ ] pnpm run build && pnpm run lint pass with zero errors
+  - [ ] Visual layout not broken (no excessive spacing gaps)

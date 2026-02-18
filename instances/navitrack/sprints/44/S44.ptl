@@ -1,0 +1,201 @@
+v:1
+mode:agent
+role:lead
+sprint:S44-Design-System-Application
+objective:Apply approved login page design (glass/glow effects) across entire app; refactor for reusability and optimize performance.
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-02-NEW-APP
+priority:P1
+dep:S43
+status:DONE
+completed:2026-02-18
+backlog:design-system-extraction, component-refactoring, style-consistency, performance-optimization
+
+# Current state: Login screen has approved glass/glow design with:
+# - Glass input components (.glass-input) with pulse animation
+# - Glass glow buttons (.glass-glow) with rainbow pulse
+# - Animated background (AppBg component with rotating BG_ANIM_IMAGES 1-4.webp, 15s interval)
+# - Logo component with 3 variants (icon, icon+text vertical, icon+text horizontal)
+# - Design tokens in index.css (--glass-*, --primary, etc.)
+# Goal: Extract design system, apply consistently across all screens, ensure reusability.
+
+stack_overrides:
+  - Logic: totem/stacks/react-ts/FRONTEND_DEV.ti
+  - UI: totem/stacks/react-ts/APP_UI_KIT.ti
+  - BUILD: totem/stacks/react-ts/BUILD.ti
+
+###############################################################################
+# CURRENT STATE (COMPLETED)
+###############################################################################
+# ✅ All screens: Consistent glass/glow design system applied
+# ✅ Components: Reusable GlassCard, GlassButton, GlassInputWrapper created
+# ✅ Performance: 60fps animations, CSS containment, hardware acceleration
+# ✅ Accessibility: WCAG AA, prefers-reduced-motion, keyboard nav
+# ✅ PWA: manifest, service worker, Lighthouse verified
+# ✅ QA: PASSED — see S44-QA-REPORT.md
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-audit:
+  tasks:[T1-Audit]
+  dur:0.5d
+  gate:audit-doc-exists
+  verify:[test -f totem/instances/navitrack/sprints/44/S44-AUDIT.md]
+
+phase-design-system:
+  tasks:[T2-DesignSystem]
+  dur:1.5d
+  gate:design-tokens-documented
+  verify:[test -f navitrack-apps/react-app/src/styles/design-system.md]
+
+phase-components:
+  tasks:[T3-Components]
+  dur:2d
+  gate:reusable-components-created
+  verify:[pnpm run build in navitrack-apps/react-app]
+
+phase-apply:
+  tasks:[T4-ApplyScreens]
+  dur:2d
+  gate:all-screens-styled
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+phase-optimize:
+  tasks:[T5-Performance, T6-Accessibility]
+  dur:1.5d
+  gate:performance-verified
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+phase-qa:
+  tasks:[T7-QA]
+  dur:0.5d
+  gate:visual-qa-pass
+  verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-Audit:
+    po:S44-T1-Audit.po
+    critical:y
+    exec-order:1
+    output:[totem/instances/navitrack/sprints/44/S44-AUDIT.md]
+    verify:[test -f totem/instances/navitrack/sprints/44/S44-AUDIT.md]
+    desc:Audit all screens and components; document current glass/glow usage; identify inconsistencies.
+
+  T2-DesignSystem:
+    po:S44-T2-DesignSystem.po
+    critical:y
+    exec-order:2
+    dep-wait:[T1-Audit]
+    output:[navitrack-apps/react-app/src/styles/design-system.md, updated index.css with organized tokens]
+    verify:[test -f navitrack-apps/react-app/src/styles/design-system.md]
+    desc:Extract and document design system from login screen; organize CSS custom properties; create design system guide.
+
+  T3-Components:
+    po:S44-T3-Components.po
+    critical:y
+    exec-order:3
+    dep-wait:[T2-DesignSystem]
+    output:[
+      navitrack-apps/react-app/src/components/ui/glass-card.tsx,
+      navitrack-apps/react-app/src/components/ui/glass-button.tsx,
+      navitrack-apps/react-app/src/components/ui/glass-input-wrapper.tsx,
+      updated button.tsx and input.tsx with glass variants
+    ]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Create reusable glass/glow components; add variants to existing UI components; ensure TypeScript safety.
+
+  T4-ApplyScreens:
+    po:S44-T4-ApplyScreens.po
+    critical:y
+    exec-order:4
+    dep-wait:[T3-Components]
+    output:[
+      updated objects-screen.tsx,
+      updated settings-screen.tsx,
+      updated tracking-screen.tsx,
+      updated reports-screen.tsx,
+      updated map-screen.tsx,
+      updated object-details-screen.tsx,
+      updated select-objects-screen.tsx,
+      updated account-security-screen.tsx
+    ]
+    verify:[pnpm run build && pnpm run lint in navitrack-apps/react-app]
+    desc:Apply glass/glow design system to all screens using new reusable components; ensure consistency.
+
+  T5-Performance:
+    po:S44-T5-Performance.po
+    critical:y
+    exec-order:5
+    dep-wait:[T4-ApplyScreens]
+    output:[
+      optimized animations with will-change and contain,
+      reduced animation complexity,
+      lazy loading for heavy components,
+      updated index.css with performance optimizations
+    ]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Optimize animations; reduce repaints/reflows; add CSS containment; verify 60fps on mobile.
+
+  T6-Accessibility:
+    po:S44-T6-Accessibility.po
+    critical:y
+    exec-order:6
+    dep-wait:[T4-ApplyScreens]
+    output:[
+      prefers-reduced-motion support for all animations,
+      ARIA labels where needed,
+      keyboard navigation verified,
+      color contrast verified (WCAG AA)
+    ]
+    verify:[pnpm run lint in navitrack-apps/react-app]
+    desc:Ensure all animations respect prefers-reduced-motion; verify ARIA labels; test keyboard navigation; check color contrast.
+
+  T7-QA:
+    po:S44-T7-QA.po
+    critical:y
+    exec-order:7
+    dep-wait:[T5-Performance, T6-Accessibility]
+    output:[totem/instances/navitrack/sprints/44/S44-QA-REPORT.md]
+    verify:[test -f totem/instances/navitrack/sprints/44/S44-QA-REPORT.md]
+    desc:Visual QA across all screens; verify design consistency; test on multiple devices/browsers; document issues.
+
+  T8-LogoBranding:
+    po:S44-T8-LogoBranding.po
+    critical:n
+    exec-order:4.5
+    dep-wait:[T4-ApplyScreens]
+    output:[Updated MobileHeader with Logo, Logo documentation in design-system.md]
+    verify:[pnpm run build in navitrack-apps/react-app]
+    desc:Verify Logo component integration; ensure branding consistency with glass effects; document Logo usage.
+
+###############################################################################
+# DONE
+###############################################################################
+done:
+  - Glass/glow design system extracted and documented.
+  - Reusable glass components created (GlassCard, GlassButton, GlassInput variants).
+  - All 8 screens updated with consistent glass/glow styling.
+  - Logo component integrated and documented with glass effects compatibility.
+  - Performance optimized (60fps animations, CSS containment).
+  - Accessibility verified (prefers-reduced-motion, ARIA, keyboard nav, WCAG AA).
+  - PWA functionality verified (manifest, service worker, Lighthouse audit).
+  - Build and lint pass with zero errors.
+  - Visual QA complete; app ready for production.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - Design consistency: All screens use same design tokens and components.
+  - Code reusability: No duplicate glass/glow styles; all via reusable components.
+  - Performance: Smooth 60fps animations on mobile (iPhone 12/13 baseline).
+  - Accessibility: All WCAG AA standards met; full keyboard navigation.
+  - Build quality: Zero TypeScript errors, zero ESLint warnings.
+  - Client approval: Visual design matches approved login screen aesthetic.

@@ -56,8 +56,8 @@ If the project already has history and generated sprints, follow these steps to 
 
 _The shared intelligence across ALL your projects._
 
-- **`/core`**: Protocol rules (MRPP 3.0). How the agents talk.
-- **`/guardians`**: Universal roles (PM, Architect, TL). How the agents think.
+- **`/core`**: Protocol rules (MRPP 3.0), iteration flow, design sprint guide, invariant management. How the agents talk and protect prior decisions.
+- **`/guardians`**: Universal roles (PM, Architect, TL, QA, DevOps, Root). How the agents think. Includes: component size limits, dedup enforcement, multi-track sprint management, touch target verification, invariant protection.
 - **`/stacks`**: Tech-specific adapters (React+TS, Vue+Tauri, Rust+WGPU). What the agents know about specific technologies. These extend universal guardians with stack-specific rules.
 - **`/templates`**: Blueprints for new projects.
 - **`/instances`**: **Registry of active projects.** (One folder per project).

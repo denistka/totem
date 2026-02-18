@@ -1,0 +1,162 @@
+task:T3-Components
+sprint:S44
+title:Create Reusable Glass/Glow Components
+priority:P1
+estimate:16h
+owner:FRONTEND_DEV
+dep:[T2-DesignSystem]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Create reusable, type-safe React components that encapsulate glass/glow design patterns; extend existing Radix UI components with glass variants.
+
+###############################################################################
+# SCOPE
+###############################################################################
+Create new components:
+  1. GlassCard - Container with glass effect
+  2. GlassButton - Button with glass-glow effect (primary CTA)
+  3. GlassInputWrapper - Wrapper for inputs with icon support
+
+Extend existing components with glass variants:
+  4. Button.tsx - Add 'glass' and 'glass-glow' variants
+  5. Input.tsx - Add 'glass' variant with state support
+  6. Card.tsx - Add 'glass' variant
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+output:
+  - src/components/ui/glass-card.tsx
+  - src/components/ui/glass-button.tsx
+  - src/components/ui/glass-input-wrapper.tsx
+  - Updated src/components/ui/button.tsx
+  - Updated src/components/ui/input.tsx
+  - Updated src/components/ui/card.tsx
+
+1. GlassCard Component:
+   ```typescript
+   interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
+     variant?: 'base' | 'strong'
+     children: React.ReactNode
+   }
+   
+   export function GlassCard({ variant = 'base', className, children, ...props }: GlassCardProps)
+   ```
+   - Variants: base (.glass), strong (.glass-strong)
+   - Proper TypeScript types
+   - Composes with className for flexibility
+
+2. GlassButton Component:
+   ```typescript
+   interface GlassButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+     variant?: 'glass' | 'glass-glow'
+     children: React.ReactNode
+   }
+   
+   export function GlassButton({ variant = 'glass-glow', className, children, ...props }: GlassButtonProps)
+   ```
+   - Default variant: glass-glow (primary CTA)
+   - Includes rainbow pulse animation
+   - Respects disabled state
+   - Proper accessibility attributes
+
+3. GlassInputWrapper Component:
+   ```typescript
+   interface GlassInputWrapperProps {
+     icon?: React.ReactNode
+     iconPosition?: 'left' | 'right'
+     children: React.ReactElement // Input component
+     state?: 'default' | 'error' | 'success'
+   }
+   
+   export function GlassInputWrapper({ icon, iconPosition = 'left', state, children }: GlassInputWrapperProps)
+   ```
+   - Wraps Input with icon support
+   - Manages state classes (error, success)
+   - Positions icon correctly
+
+4. Button.tsx Updates:
+   - Add 'glass' variant to variant class-variance-authority config
+   - Add 'glass-glow' variant
+   - Example:
+     ```typescript
+     const buttonVariants = cva(
+       "inline-flex items-center justify-center...",
+       {
+         variants: {
+           variant: {
+             // ... existing variants
+             glass: "glass",
+             "glass-glow": "glass-glow",
+           }
+         }
+       }
+     )
+     ```
+
+5. Input.tsx Updates:
+   - Add 'glass' className support via data-variant or className prop
+   - Support data-state attribute for error/success states
+   - Ensure compatibility with GlassInputWrapper
+
+6. Card.tsx Updates:
+   - Add 'glass' variant option
+   - Use .glass class when variant="glass"
+
+###############################################################################
+# IMPLEMENTATION RULES
+###############################################################################
+Follow FRONTEND_DEV.ti and UI_UX.ti:
+  - Functional components only
+  - TypeScript strict mode (no any, no @ts-ignore)
+  - Props interface for each component
+  - Max 100 lines per component; split if larger
+  - Use class-variance-authority for variant management
+  - Compose className with cn() helper (tailwind-merge + clsx)
+  - Add JSDoc comments for exported components
+  - Ensure accessibility (ARIA labels, keyboard support)
+
+Design System Adherence:
+  - No hard-coded colors - use CSS custom properties
+  - Use existing .glass, .glass-input, .glass-glow classes
+  - No inline styles - className only
+  - Respect prefers-reduced-motion in animations
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] All 6 components/files created or updated
+  - [ ] pnpm run build passes with zero TypeScript errors
+  - [ ] pnpm run lint passes with zero warnings
+  - [ ] All components have proper TypeScript interfaces
+  - [ ] Components use design system tokens (no hard-coded values)
+  - [ ] JSDoc comments on all exported components
+  - [ ] Variants work correctly (tested in Storybook or dev mode)
+
+###############################################################################
+# TESTING CHECKLIST
+###############################################################################
+test:
+  - [ ] GlassCard renders with both variants
+  - [ ] GlassButton shows rainbow pulse animation
+  - [ ] GlassInputWrapper positions icon correctly (left/right)
+  - [ ] GlassInputWrapper applies state classes (error/success)
+  - [ ] Button variant="glass-glow" renders correctly
+  - [ ] Input className includes glass styles when passed
+  - [ ] All components compose with additional className
+  - [ ] Disabled states work correctly
+  - [ ] prefers-reduced-motion disables animations
+
+###############################################################################
+# RESOURCES
+###############################################################################
+ref:
+  - totem/instances/navitrack/sprints/44/design-system.md
+  - src/components/screens/login-screen.tsx (reference implementation)
+  - src/index.css (CSS classes)
+  - totem/stacks/react-ts/FRONTEND_DEV.ti
+  - totem/stacks/react-ts/UI_UX.ti
+  - totem/stacks/react-ts/APP_UI_KIT.ti

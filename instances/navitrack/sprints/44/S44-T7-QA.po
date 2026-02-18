@@ -1,0 +1,284 @@
+task:T7-QA
+sprint:S44
+title:Visual QA and Final Verification
+priority:P1
+estimate:4h
+owner:QA
+dep:[T5-Performance, T6-Accessibility]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Conduct comprehensive visual QA across all screens and devices; verify design consistency, animation quality, and overall user experience; prepare for client approval.
+
+###############################################################################
+# SCOPE
+###############################################################################
+Visual and functional QA:
+  1. Cross-screen consistency verification
+  2. Animation quality check
+  3. Cross-browser testing
+  4. Cross-device testing (mobile, tablet, desktop)
+  5. Theme testing (light/dark mode)
+  6. Edge case testing
+  7. Final build verification
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+output:
+  - QA report: totem/instances/navitrack/sprints/44/S44-QA-REPORT.md
+  - Screenshots of all screens (light/dark themes)
+  - Bug list (if any issues found)
+
+###############################################################################
+# QA TESTING MATRIX
+###############################################################################
+
+1. Screen-by-Screen Visual QA:
+
+For each of 8 screens:
+  - [ ] Glass effects render correctly
+  - [ ] Glow effects visible and smooth
+  - [ ] Animations play correctly
+  - [ ] Spacing and layout correct
+  - [ ] Typography correct (sizes, weights)
+  - [ ] Icons positioned correctly
+  - [ ] Color usage consistent with design system
+  - [ ] Hover states work
+  - [ ] Focus states visible
+  - [ ] Disabled states styled correctly
+  - [ ] Loading states work (if applicable)
+  - [ ] Error states work (if applicable)
+
+Screens to test:
+  1. login-screen.tsx
+  2. objects-screen.tsx
+  3. settings-screen.tsx
+  4. tracking-screen.tsx
+  5. reports-screen.tsx
+  6. map-screen.tsx
+  7. object-details-screen.tsx
+  8. select-objects-screen.tsx
+  9. account-security-screen.tsx
+
+2. Animation Quality Check:
+
+For all animated elements:
+  - [ ] glass-input-pulse: Smooth, subtle pulsing
+  - [ ] rainbow-glow-pulse: Smooth rainbow effect, not jarring
+  - [ ] app-bg-pulse: Smooth background breathing effect
+  - [ ] Hover transitions: 280ms smooth
+  - [ ] Focus transitions: Instant or very fast
+  - [ ] All animations 60fps (no jank)
+  - [ ] Reduced motion: All animations disabled when enabled
+
+3. Cross-Browser Testing:
+
+Test in:
+  - [ ] Chrome (latest)
+  - [ ] Safari (latest)
+  - [ ] Firefox (latest)
+  - [ ] Edge (latest)
+
+Verify:
+  - Glass effects render correctly (backdrop-filter support)
+  - Animations play smoothly
+  - Colors correct in all browsers
+  - Layout consistent
+
+4. Cross-Device Testing:
+
+Desktop:
+  - [ ] 1920x1080 (Full HD)
+  - [ ] 1366x768 (Common laptop)
+  - [ ] 2560x1440 (QHD)
+
+Tablet:
+  - [ ] iPad (1024x768)
+  - [ ] iPad Pro (1366x1024)
+
+Mobile:
+  - [ ] iPhone 12/13 (390x844)
+  - [ ] iPhone SE (375x667)
+  - [ ] Android (various sizes)
+
+Verify all:
+  - Responsive design works
+  - Glass effects scaled appropriately
+  - Touch targets min 44x44px
+  - No horizontal scroll
+  - Safe areas respected (notches)
+
+5. Theme Testing:
+
+Light Theme:
+  - [ ] All screens render correctly
+  - [ ] Glass effects visible
+  - [ ] Glow effects visible
+  - [ ] Text contrast sufficient
+  - [ ] Background animation inverted correctly
+
+Dark Theme:
+  - [ ] All screens render correctly
+  - [ ] Glass effects visible (darker opacity)
+  - [ ] Glow effects more pronounced
+  - [ ] Text contrast sufficient
+  - [ ] Background animation dark overlay
+
+6. Edge Cases:
+
+Test:
+  - [ ] Empty states (no data)
+  - [ ] Loading states
+  - [ ] Error states (network, validation)
+  - [ ] Very long text (truncation)
+  - [ ] Special characters in text
+  - [ ] Rapid interactions (spam clicking)
+  - [ ] Screen rotation (mobile)
+  - [ ] Landscape mode (mobile)
+
+7. Build Verification:
+
+Final checks:
+  - [ ] pnpm run build: Zero errors
+  - [ ] pnpm run lint: Zero warnings
+  - [ ] TypeScript: Zero errors
+  - [ ] dist/ bundle size reasonable (< 500KB gzip for JS)
+  - [ ] No console errors in production build
+  - [ ] Source maps generated
+  - [ ] Service worker (PWA) works
+
+8. PWA & Lighthouse Testing:
+
+PWA checks:
+  - [ ] manifest.json correct (NaviTrack icons 192/512)
+  - [ ] apple-touch-icon present
+  - [ ] theme-color correct (#2d8a3e)
+  - [ ] Service worker caching works (navitrack-app-v3)
+  - [ ] Offline fallback page works
+  - [ ] Install prompt works on mobile
+
+Lighthouse audit:
+  - [ ] Performance: ≥ 90
+  - [ ] Accessibility: ≥ 95
+  - [ ] Best Practices: ≥ 90
+  - [ ] SEO: ≥ 90
+  - [ ] PWA: ✓ Installable
+  - [ ] Run on: Desktop + Mobile simulation
+  - [ ] Document scores in S44-QA-REPORT.md
+
+###############################################################################
+# QA REPORT STRUCTURE
+###############################################################################
+
+S44-QA-REPORT.md should include:
+
+## Executive Summary
+- Overall quality: [Pass/Fail]
+- Critical issues: [count]
+- Minor issues: [count]
+- Ready for client approval: [Yes/No]
+
+## Screen-by-Screen Results
+For each screen:
+- Visual QA: [Pass/Fail]
+- Animations: [Pass/Fail]
+- Responsiveness: [Pass/Fail]
+- Issues found: [list]
+
+## Cross-Browser Results
+- Chrome: [Pass/Fail]
+- Safari: [Pass/Fail]
+- Firefox: [Pass/Fail]
+- Edge: [Pass/Fail]
+- Issues found: [list]
+
+## Cross-Device Results
+- Desktop: [Pass/Fail]
+- Tablet: [Pass/Fail]
+- Mobile: [Pass/Fail]
+- Issues found: [list]
+
+## Theme Testing Results
+- Light theme: [Pass/Fail]
+- Dark theme: [Pass/Fail]
+- Issues found: [list]
+
+## Performance
+- FPS: [60fps on target devices: Yes/No]
+- Bundle size: [size in KB]
+- Load time: [time in ms]
+
+## Accessibility
+- Lighthouse score: [score]
+- WCAG AA compliance: [Yes/No]
+- Issues found: [list]
+
+## PWA & Lighthouse Results
+- PWA installable: [Yes/No]
+- Service worker: [Working/Failed]
+- Offline mode: [Working/Failed]
+- Lighthouse Performance: [score/100]
+- Lighthouse Accessibility: [score/100]
+- Lighthouse Best Practices: [score/100]
+- Lighthouse SEO: [score/100]
+- Issues found: [list]
+
+## Issues Log
+For each issue:
+1. Issue description
+2. Severity: [Critical/High/Medium/Low]
+3. Screen/component affected
+4. Steps to reproduce
+5. Expected behavior
+6. Actual behavior
+7. Suggested fix
+
+## Recommendations
+- [ ] List any improvements for future sprints
+- [ ] List any technical debt identified
+- [ ] List any optimization opportunities
+
+## Sign-off
+- QA Engineer: [name]
+- Date: [date]
+- Status: [APPROVED / NEEDS FIXES]
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] All 8+ screens tested in all browsers
+  - [ ] All devices tested (desktop, tablet, mobile)
+  - [ ] Both themes tested (light, dark)
+  - [ ] Animation quality verified (60fps)
+  - [ ] S44-QA-REPORT.md exists with comprehensive results
+  - [ ] Screenshots captured for all screens
+  - [ ] All critical bugs (if any) documented
+  - [ ] Final build passes all checks
+
+###############################################################################
+# CLIENT APPROVAL PREPARATION
+###############################################################################
+
+For client demo:
+  - [ ] Prepare demo flow (happy path through all screens)
+  - [ ] Ensure demo data is realistic
+  - [ ] Test demo environment (staging)
+  - [ ] Prepare comparison: Before (without glass) vs After (with glass)
+  - [ ] Highlight key improvements:
+    - Visual consistency
+    - Premium aesthetic (glass/glow effects)
+    - Smooth animations
+    - Accessibility improvements
+
+###############################################################################
+# RESOURCES
+###############################################################################
+ref:
+  - totem/instances/navitrack/sprints/44/S44-PERFORMANCE.md
+  - totem/instances/navitrack/sprints/44/S44-A11Y-REPORT.md
+  - totem/instances/navitrack/sprints/44/design-system.md
+  - All updated screen files
+  - totem/guardians/QA.ti

@@ -1,18 +1,25 @@
 project:
   name: NaviTrack
   version: 1.0.0
+  description: Fleet tracking PWA — React 19 PWA (primary), optional Tauri 2 desktop, WebGPU/WASM.
   stack:
-    - vue3
+    - react
     - typescript
+    - vue3
     - tauri2
     - rust
     - wgpu
-  # Canonical UI stack for React/port work (S42, navitrack-apps/react-app). Alignment: ROOT.ti.
+  # Canonical UI stack for React PWA (navitrack-apps/react-app). Tailwind + glass design system.
   ui_stack_ref: refs/app-ui-kit
   ui_stack_package: refs/app-ui-kit/package.json
+  # UI/design planning: see README.md "UI & design sprints", core/DESIGN_SPRINT_GUIDE.md
+  ui_design_docs:
+    - README.md#ui--design-sprints
+    - totem/core/DESIGN_SPRINT_GUIDE.md
 
 paths:
   code: ../navitrack-apps
+  react_app: ../navitrack-apps/react-app
   history: ../prompt-machine
   intel: ./intel
 

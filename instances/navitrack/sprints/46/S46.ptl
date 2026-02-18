@@ -1,0 +1,30 @@
+sprint:S46-ComponentSplit
+status:DONE  # completed 2026-02-18 — all 6 tasks done, build+lint pass
+objective:Split all components >150 lines into sub-components. Max 150 lines per file.
+invariants:sprints/45/S44-INVARIANTS.md
+
+# ⚠️ DO NOT change any glass class, token, animation, or component API.
+# This sprint is STRUCTURAL ONLY — move code into sub-files, no behavior changes.
+
+targets:
+  date-range-picker.tsx:      532 lines → folder with 5 files
+  object-details-screen.tsx:  307 lines → folder with 4 files
+  objects-screen.tsx:          256 lines → folder with 3 files
+  reports-screen.tsx:          252 lines → 2 views + constants
+  tracking-screen.tsx:         213 lines → folder with 3 files
+  mobile-shell.tsx:            179 lines → extract renderScreen
+
+dispatch:
+  T1: po:S46-T1-DateRangePicker.po    exec-order:1  critical:y
+  T2: po:S46-T2-ObjectDetails.po      exec-order:2  critical:y
+  T3: po:S46-T3-ObjectsScreen.po      exec-order:3  critical:n
+  T4: po:S46-T4-ReportsScreen.po      exec-order:4  critical:n
+  T5: po:S46-T5-TrackingScreen.po     exec-order:5  critical:n
+  T6: po:S46-T6-MobileShell.po        exec-order:6  critical:n
+
+done:
+  - Every file ≤ 150 lines
+  - npm run build passes
+  - npm run lint passes
+  - No visual/behavioral changes
+  - All existing imports still work (re-exports from index)

@@ -13,7 +13,28 @@ dispatch-rules:
   - Verification: Every phase ends with a COMMIT GATE.
   - Resolution: Act as primary point for developer blockers.
 
+multi-track-management:
+  - A sprint can have multiple tracks (e.g. Track A: sizing, Track B: dedup, Track C: polish).
+  - Tracks execute sequentially unless marked parallel.
+  - Each track has its own audit phase — never skip analysis before changes.
+  - Final QA covers ALL tracks together (not per-track).
+  - An INVARIANTS.md from prior sprints gates ALL tracks.
+
+invariant-enforcement:
+  - Before sprint kickoff: verify INVARIANTS.md exists (if prior sprint had UI changes).
+  - Link invariants in .ptl file via `invariants:` field.
+  - Every task touching CSS/components MUST reference invariant doc.
+  - If a developer proposes changing an invariant — escalate, do not auto-approve.
+
+incremental-change-discipline:
+  - Visual changes (CSS, animations) applied ONE at a time.
+  - Build + check BOTH themes after each change.
+  - If result is worse — revert immediately, do not fix forward.
+  - No batching of "small visual fixes" into one commit.
+
 anti-patterns:
   - Out-of-order execution: Building UI before API/Data layers.
   - Skipping Gates: Committing code that hasn't passed TL/QA review.
   - Abandoned State: Leaving the project in a non-building state overnight.
+  - Track Mixing: Working on Track C tasks before Track A is complete.
+  - Batch Visual Changes: Combining multiple CSS tweaks, making regressions untraceable.

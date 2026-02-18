@@ -1,0 +1,129 @@
+task:T5-TouchQA
+sprint:S45
+title:Touch Target QA & Verification
+priority:P1
+estimate:4h
+owner:QA
+dep:[T4-ApplyScreens]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Verify all touch targets meet 44px minimum on real devices (or emulator).
+Run Lighthouse tap target audit. Document results.
+
+###############################################################################
+# TEST METHOD
+###############################################################################
+
+### 1. Automated: Lighthouse Tap Target Audit
+- Run Lighthouse in mobile simulation mode
+- Check "Tap targets are not sized appropriately" audit
+- Target: PASS (no failing elements)
+
+### 2. Manual: Screen-by-Screen Verification
+For each screen, verify every interactive element:
+- Tap with thumb (not fingertip) — comfortable?
+- Adjacent targets: can you tap one without accidentally hitting another?
+- Range sliders: can you drag comfortably?
+- Toggle switches: easy to reach and tap?
+
+### 3. Device Testing Matrix
+Test on:
+- [ ] Chrome DevTools mobile simulation (iPhone 12/13, 390x844)
+- [ ] Chrome DevTools mobile simulation (iPhone SE, 375x667)
+- [ ] Chrome DevTools mobile simulation (Galaxy S21, 360x800)
+- [ ] Real device if available
+
+### 4. One-Handed Reachability Test
+With phone held in one hand:
+- [ ] Bottom nav tabs reachable with thumb
+- [ ] Primary CTAs (Execute, Build Report, Apply) in thumb zone
+- [ ] Settings button (top-right) — reachable via MobileHeader action
+
+###############################################################################
+# VERIFICATION CHECKLIST
+###############################################################################
+
+### Global Components
+- [ ] Button (default): ≥ 48px
+- [ ] Button (sm): ≥ 44px
+- [ ] Button (icon): ≥ 44x44px
+- [ ] Input (default): ≥ 48px
+- [ ] Switch: ≥ 44px touch area
+- [ ] ThemeToggle: ≥ 44x44px (was 32px)
+- [ ] Bottom nav tabs: ≥ 44px each, ≥ 8px spacing
+- [ ] MobileHeader back button: ≥ 44x44px
+- [ ] BottomSelectModal list items: ≥ 48px
+- [ ] BottomSelectModal cancel button: ≥ 44px
+
+### Screen-Specific
+- [ ] Login: all inputs, password toggle, sign in button
+- [ ] Objects: search, vehicle rows, settings icon
+- [ ] Settings: all buttons, toggles, logout
+- [ ] Tracking: vehicle select, event toggles, sliders, execute
+- [ ] Reports: all dropdowns, date trigger, build report
+- [ ] Map: settings, map controls, playback
+- [ ] Object Details: tabs, event toggles, apply, dates
+- [ ] Select Objects: search, checkboxes/rows, apply
+- [ ] Account Security: form elements, buttons
+
+### Spacing
+- [ ] No two adjacent touch targets overlap
+- [ ] Minimum 8px gap between interactive elements
+- [ ] No accidental activation when targeting adjacent element
+
+###############################################################################
+# LIGHTHOUSE TAP TARGETS AUDIT
+###############################################################################
+Run:
+  npx lighthouse http://localhost:5173 --only-categories=accessibility --output=json
+
+Check result:
+  - "tap-targets" audit: PASS/FAIL
+  - Document any failing elements
+  - Fix and re-run until PASS
+
+###############################################################################
+# QA REPORT STRUCTURE (S45-TOUCH-QA.md)
+###############################################################################
+```markdown
+# S45 Touch Target QA Report
+
+## Summary
+- Status: PASS/FAIL
+- Elements tested: [count]
+- Elements passing: [count]
+- Issues found: [count]
+
+## Lighthouse Tap Target Audit
+- Result: PASS/FAIL
+- Score: [score]
+- Failing elements: [list or "none"]
+
+## Screen-by-Screen Results
+[Table with: Screen | Element | Size (px) | Status | Notes]
+
+## Device Testing
+[Results per device in test matrix]
+
+## One-Handed Reachability
+[Assessment of thumb-zone coverage]
+
+## Issues Found
+[Detailed list of any remaining issues]
+
+## Recommendation
+[Ship / fix before ship / block]
+```
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] S45-TOUCH-QA.md created with comprehensive results
+  - [ ] Lighthouse tap target audit: PASS
+  - [ ] Zero elements below 44px on any tested device
+  - [ ] Spacing between targets ≥ 8px verified
+  - [ ] One-handed reachability assessed
+  - [ ] Build passes

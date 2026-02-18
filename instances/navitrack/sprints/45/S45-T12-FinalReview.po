@@ -1,0 +1,85 @@
+task:T12-FinalReview
+sprint:S45
+title:Final Review & Ship-Ready Check
+priority:P1
+estimate:4h
+owner:QA
+dep:[T11-MotionPolish]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Verify everything works together after all changes.
+No regressions. Ship-ready quality.
+
+###############################################################################
+# CHECKLIST
+###############################################################################
+
+### Build & Lint
+- [ ] pnpm run build: zero errors
+- [ ] pnpm run lint: zero warnings
+- [ ] TypeScript: zero errors (strict mode)
+- [ ] Bundle size reasonable (compare with pre-S45 baseline)
+
+### Touch Targets (Track A recap)
+- [ ] Lighthouse tap target audit: PASS
+- [ ] Manual thumb test on mobile simulation
+- [ ] All buttons ≥ 44px
+- [ ] All inputs ≥ 48px
+
+### Component Health (Track B recap)
+- [ ] No file > 200 lines in components/screens/
+- [ ] No duplicate overlay/modal patterns (grep for "fixed inset-0")
+- [ ] No duplicate dropdown button patterns
+- [ ] Shared components imported in ≥ 2 screens each
+
+### UI Quality (Track C recap)
+- [ ] Light mode: every screen looks polished
+- [ ] Dark mode: every screen looks polished
+- [ ] Animations smooth (no jank)
+- [ ] prefers-reduced-motion: all animations stop
+- [ ] No visual regressions from S44 baseline
+
+### Screen-by-Screen
+- [ ] Login: glass effects, animations, touch targets
+- [ ] Objects: search, list, badges, touch targets
+- [ ] Settings: buttons, toggles, spacing
+- [ ] Tracking: sliders, toggles, vehicle select
+- [ ] Reports: dropdowns, date picker, table
+- [ ] Map: controls, settings
+- [ ] Object Details: tabs, history, events
+- [ ] Select Objects: search, checkboxes, apply
+- [ ] Account Security: forms, buttons
+
+### PWA
+- [ ] manifest.json correct
+- [ ] Service worker works
+- [ ] Offline fallback page shows
+
+### Lighthouse (production build)
+- [ ] Performance: ≥ 85
+- [ ] Accessibility: ≥ 95
+- [ ] Best Practices: ≥ 90
+- [ ] Tap Targets: PASS
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+output:
+  - S45-FINAL-QA.md with:
+    - All checklists completed
+    - Any issues found and their resolution
+    - Lighthouse scores
+    - Bundle size comparison (before vs after)
+    - Screenshot of each screen (light + dark)
+    - SHIP / NO-SHIP recommendation
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] All checks pass
+  - [ ] S45-FINAL-QA.md created
+  - [ ] SHIP recommendation given
+  - [ ] No P0 or P1 issues open

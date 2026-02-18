@@ -1,0 +1,89 @@
+task:T8-SplitLargeScreens
+sprint:S45
+title:Split Oversized Screen Components
+priority:P1
+estimate:8h
+owner:FRONTEND_DEV
+dep:[T7-ExtractShared]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Split screen components exceeding 200 lines into smaller, focused sub-components.
+Target: every screen file ≤ 150 lines. Logic files (helpers/hooks) are exceptions.
+
+###############################################################################
+# OVERSIZED COMPONENTS (current line counts)
+###############################################################################
+
+### 1. DateRangePicker — 533 lines (MOST CRITICAL)
+Split into:
+  - date-range-picker.tsx (trigger UI, state orchestration) — ~80 lines
+  - calendar-grid.tsx (month grid, day cells, range highlighting) — ~120 lines
+  - time-picker-2d-slider.tsx (already a sub-component, formalize) — ~80 lines
+  - analog-clock.tsx (SVG clock, extract) — ~45 lines
+  - date-range-picker-utils.ts (getDaysInMonth, getFirstDayOfMonth, isSameDay, etc.) — ~30 lines
+Location: src/components/date-range-picker/ (folder)
+
+### 2. ObjectDetailsScreen — 308 lines
+Split into:
+  - object-details-screen.tsx (shell, tabs, state) — ~60 lines
+  - vehicle-info-panel.tsx (vehicle data + map placeholder) — ~80 lines
+  - history-tab.tsx (date tabs + history log) — ~80 lines
+  - events-tab.tsx (event checkboxes + apply button) — ~50 lines
+Location: src/components/screens/object-details/ (folder)
+
+### 3. ObjectsScreen — 256 lines
+Split into:
+  - objects-screen.tsx (shell, search, state) — ~60 lines
+  - vehicle-list-item.tsx (single vehicle row with badges) — ~90 lines
+  - vehicle-utils.ts (formatTimeAgo, formatLastUpdate, vehicleToListItem) — ~40 lines
+  - NOTE: Vehicle icons already extracted to icons/ in T7
+Location: src/components/screens/ (stays flat, sub-components in same dir)
+
+### 4. ReportsScreen — 253 lines
+Split into:
+  - reports-screen.tsx (shell, state, modals) — ~80 lines
+  - report-form.tsx (form controls: type, date, period, company, vehicle) — ~80 lines
+  - report-result-view.tsx (table display after build) — ~40 lines
+Location: src/components/screens/ (stays flat)
+
+### 5. TrackingScreen — 216 lines
+Split into:
+  - tracking-screen.tsx (shell, state) — ~60 lines
+  - track-settings-panel.tsx (color, width sliders + preview) — ~60 lines
+  - NOTE: vehicle select + event toggles simplified via shared components in T7
+Location: stays flat
+
+###############################################################################
+# RULES
+###############################################################################
+rules:
+  - One component per file, one export per file
+  - Sub-components receive props, don't import global state
+  - Parent screen manages state + passes callbacks
+  - File names: kebab-case (vehicle-list-item.tsx)
+  - Folders only for complex components (DateRangePicker, ObjectDetails)
+  - Don't change functionality — only split
+  - Build + lint after each split
+
+###############################################################################
+# EXECUTION ORDER (safest first)
+###############################################################################
+order:
+  1. DateRangePicker → extract utils, AnalogClock, TimePicker, CalendarGrid
+  2. ObjectsScreen → extract VehicleListItem, vehicle-utils
+  3. ObjectDetailsScreen → extract HistoryTab, EventsTab, VehicleInfoPanel
+  4. ReportsScreen → extract ReportForm, ReportResultView
+  5. TrackingScreen → extract TrackSettingsPanel
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] No screen file > 150 lines (excluding comments/types)
+  - [ ] DateRangePicker split into ≥ 4 files
+  - [ ] ObjectDetailsScreen split into ≥ 3 sub-components
+  - [ ] All sub-components have proper TypeScript props interfaces
+  - [ ] Zero functionality changes (visual + behavioral parity)
+  - [ ] pnpm run build && pnpm run lint pass

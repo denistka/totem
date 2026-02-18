@@ -85,12 +85,24 @@ component-patterns:
     - hover:darken or opacity change
     - disabled:opacity:0.5, cursor:not-allowed
     - transition:var(--transition-fast)
+  accent-buttons:
+    - Class: .glass-glow — use for CTA, primary actions, accents
+    - Semi-transparent primary bg + backdrop-filter blur
+    - Rainbow hue-rotate pulse (welcoming glow), soft edges
+    - Tokens: --glass-glow-bg-opacity, --glass-glow-text
+    - prefers-reduced-motion: pulse disabled
   loading-spinner:
     - Pure CSS animation (@keyframes spin)
     - No external spinner library
   error/empty-state:
     - Centered text with icon
     - Muted color:var(--color-text-muted)
+  logo-branding:
+    - Reusable logo component with variants: (1) icon only, (2) icon + text vertical, (3) icon + text horizontal.
+    - Use for header, login, footer; single source of truth for brand mark and tagline.
+  full-viewport-background:
+    - Layer: full-viewport image (or animated image) + overlay (theme color, optional pulse).
+    - Optional: rotate image set on interval (e.g. array of image paths, timer in app root); keep overlay/theme in one place.
 
 accessibility:
   - Semantic HTML: <form>, <button>, <input>, <ul>/<li> for lists.

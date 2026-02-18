@@ -1,0 +1,40 @@
+task:T3-ObjectsScreen
+sprint:S46
+title:Split objects-screen.tsx (256→3 files)
+priority:P1
+estimate:1h
+owner:FRONTEND_DEV
+invariants:S44-INVARIANTS.md
+
+###############################################################################
+# PROMPT
+###############################################################################
+
+Split `src/components/screens/objects-screen.tsx` (256 lines) into a folder.
+
+Current structure:
+- Util functions: formatTimeAgo, formatLastUpdate (lines 8-26)
+- SVG icon components: TruckIcon, CarIcon, VanIcon + VEHICLE_TYPE_ICONS map (lines 28-92, ~64 lines)
+- Data transform: vehicleToListItem (lines 93-122)
+- ObjectsScreen component (lines 131-256, ~125 lines)
+
+Target folder: `src/components/screens/objects-screen/`
+
+Create these files:
+1. `vehicle-icons.tsx` — TruckIcon, CarIcon, VanIcon, VEHICLE_TYPE_ICONS map, VehicleType type
+2. `utils.ts` — formatTimeAgo, formatLastUpdate, vehicleToListItem
+3. `ObjectsScreen.tsx` — main component (imports from ./vehicle-icons, ./utils)
+4. `index.ts` — re-export ObjectsScreen + ObjectsScreenProps
+
+Rules:
+- NO behavior/CSS changes
+- Delete old file
+- Each file ≤ 150 lines
+- Build + lint pass
+
+###############################################################################
+done:
+  - folder exists with 4 files
+  - old file deleted
+  - each file ≤ 150 lines
+  - build + lint pass

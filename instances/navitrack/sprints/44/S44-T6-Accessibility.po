@@ -1,0 +1,223 @@
+task:T6-Accessibility
+sprint:S44
+title:Accessibility Verification and Fixes
+priority:P1
+estimate:6h
+owner:QA
+dep:[T4-ApplyScreens]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Ensure all glass/glow effects and animations meet WCAG 2.1 AA accessibility standards; verify keyboard navigation, screen reader support, and reduced motion support.
+
+###############################################################################
+# SCOPE
+###############################################################################
+Accessibility audit and fixes:
+  1. Reduced motion support (prefers-reduced-motion)
+  2. Color contrast (WCAG AA: 4.5:1 for text, 3:1 for large text/UI)
+  3. Keyboard navigation
+  4. Screen reader support (ARIA labels)
+  5. Focus indicators
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+output:
+  - Updated src/index.css with reduced-motion support
+  - Updated components with ARIA labels (if needed)
+  - Accessibility report: totem/instances/navitrack/sprints/44/S44-A11Y-REPORT.md
+
+###############################################################################
+# ACCESSIBILITY REQUIREMENTS
+###############################################################################
+
+1. Reduced Motion (prefers-reduced-motion):
+   
+   Current state:
+   - glass-input: Has @media (prefers-reduced-motion) - GOOD
+   - glass-glow::before: Has @media (prefers-reduced-motion) - GOOD
+   - app-bg-pulse: NO reduced motion support - FIX NEEDED
+   
+   Required fixes:
+   ```css
+   @media (prefers-reduced-motion: reduce) {
+     .app-bg__layer--overlay {
+       animation: none;
+       background-color: rgba(var(--app-bg-overlay-light-rgb), var(--app-bg-pulse-opacity-high));
+     }
+     
+     /* Verify other animations respect this setting */
+     .glass-input,
+     .glass-glow::before {
+       animation: none; /* Already implemented, verify */
+     }
+   }
+   ```
+   
+   Test: Enable prefers-reduced-motion in OS settings; verify animations stop
+
+2. Color Contrast:
+   
+   Check contrast ratios:
+   - Primary text on glass background
+   - Muted text on glass background
+   - Icon colors on glass background
+   - Button text on glass-glow background
+   
+   Tools:
+   - Chrome DevTools (Lighthouse)
+   - WebAIM Contrast Checker
+   - axe DevTools extension
+   
+   Minimum ratios:
+   - Normal text (< 18pt): 4.5:1
+   - Large text (≥ 18pt or 14pt bold): 3:1
+   - UI components: 3:1
+   
+   Common issues:
+   - text-muted-foreground on glass backgrounds
+   - Icons on glass backgrounds
+   - Placeholder text
+   
+   Fix: Adjust --muted-foreground or --glass-bg-opacity if needed
+
+3. Keyboard Navigation:
+   
+   Verify all interactive elements are keyboard accessible:
+   - [ ] Tab order is logical
+   - [ ] All buttons reachable via Tab
+   - [ ] Enter/Space activate buttons
+   - [ ] Focus indicators visible on all elements
+   - [ ] No keyboard traps
+   
+   Test:
+   - Navigate entire app using only keyboard
+   - Verify focus ring visible on all interactive elements
+   - Ensure glass effects don't obscure focus indicators
+
+4. Focus Indicators:
+   
+   Current state:
+   - glass:focus-within has ring (good)
+   - glass-input:focus-within has ring (good)
+   
+   Verify:
+   - Focus ring visible on ALL interactive elements
+   - Focus ring has sufficient contrast (3:1 minimum)
+   - Focus ring not hidden by glass effects
+   
+   Fix if needed:
+   - Increase focus ring size or contrast
+   - Ensure z-index doesn't hide focus indicators
+
+5. ARIA Labels:
+   
+   Verify ARIA labels on:
+   - Icon-only buttons (Settings button, etc.)
+   - Toggle switches
+   - Status indicators (online/offline)
+   
+   Review all screens for:
+   - [ ] Icon-only buttons have aria-label
+   - [ ] Form inputs have associated labels
+   - [ ] Status indicators have aria-live (if dynamic)
+   - [ ] Loading states have aria-busy
+   
+   Current state (from code review):
+   - Login screen: Eye icon toggle has aria-label - GOOD
+   - Settings screen: Settings button has aria-label - GOOD
+   - Objects screen: Verify all icon buttons
+
+6. Screen Reader Support:
+   
+   Test with VoiceOver (macOS/iOS):
+   - [ ] All interactive elements announced
+   - [ ] Button labels clear
+   - [ ] Form inputs have labels
+   - [ ] Error messages announced
+   - [ ] Loading states announced
+
+###############################################################################
+# IMPLEMENTATION CHECKLIST
+###############################################################################
+fixes:
+  - [ ] Add prefers-reduced-motion to app-bg-pulse animations
+  - [ ] Verify color contrast (WCAG AA)
+  - [ ] Fix any contrast issues (adjust colors or opacity)
+  - [ ] Verify all icon-only buttons have aria-label
+  - [ ] Test keyboard navigation across all screens
+  - [ ] Verify focus indicators visible
+  - [ ] Test with screen reader (VoiceOver)
+  - [ ] Document findings in S44-A11Y-REPORT.md
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] All animations respect prefers-reduced-motion
+  - [ ] All color contrast ratios meet WCAG AA (4.5:1 for text)
+  - [ ] Full keyboard navigation works across all screens
+  - [ ] Focus indicators visible on all interactive elements
+  - [ ] All icon-only buttons have aria-label
+  - [ ] Screen reader announces all interactive elements correctly
+  - [ ] Lighthouse accessibility score ≥ 95
+  - [ ] axe DevTools shows zero violations
+  - [ ] S44-A11Y-REPORT.md exists with test results
+
+###############################################################################
+# TESTING TOOLS
+###############################################################################
+tools:
+  - Chrome Lighthouse (Accessibility audit)
+  - axe DevTools browser extension
+  - WebAIM Contrast Checker
+  - VoiceOver (macOS/iOS)
+  - Keyboard-only navigation testing
+
+###############################################################################
+# A11Y REPORT STRUCTURE
+###############################################################################
+
+S44-A11Y-REPORT.md should include:
+
+1. Reduced Motion Testing
+   - Animations tested
+   - Results: All animations disabled when prefers-reduced-motion enabled
+
+2. Color Contrast Results
+   - Elements tested
+   - Contrast ratios measured
+   - Issues found and fixes applied
+
+3. Keyboard Navigation Testing
+   - Screens tested
+   - Tab order verified
+   - Issues found and fixes applied
+
+4. Screen Reader Testing
+   - VoiceOver testing results
+   - Elements announced correctly
+   - Issues found and fixes applied
+
+5. Lighthouse Score
+   - Before: [score]
+   - After: [score]
+   - Issues resolved
+
+6. axe DevTools Scan
+   - Violations found: [count]
+   - Violations fixed: [count]
+   - Remaining issues: [if any, with justification]
+
+###############################################################################
+# RESOURCES
+###############################################################################
+ref:
+  - https://www.w3.org/WAI/WCAG21/quickref/
+  - https://webaim.org/resources/contrastchecker/
+  - https://developer.mozilla.org/en-US/docs/Web/Accessibility
+  - totem/stacks/react-ts/UI_UX.ti (accessibility section)
+  - src/index.css
+  - All updated screen files

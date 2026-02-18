@@ -1,0 +1,80 @@
+task:T1-Audit
+sprint:S44
+title:Design System Audit
+priority:P1
+estimate:4h
+owner:ARCHITECT
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Conduct comprehensive audit of current design implementation:
+- Document all glass/glow usage across screens
+- Identify design inconsistencies
+- Catalog CSS custom properties and their usage
+- List all animation effects currently in use
+- Map login screen design elements to be propagated
+
+###############################################################################
+# SCOPE
+###############################################################################
+Files to audit:
+  - src/index.css (design tokens)
+  - src/styles/app-bg.css (background animations)
+  - src/components/screens/*.tsx (all 8 screens)
+  - src/components/ui/*.tsx (UI components)
+  - src/components/*.tsx (app-level components: Logo, AppBg, MobileHeader, ThemeToggle)
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+output:totem/instances/navitrack/sprints/44/S44-AUDIT.md
+
+Document must include:
+1. Current Design Elements Analysis
+   - Glass effects inventory (.glass, .glass-input, .glass-glow, .glass-strong)
+   - Animation inventory (glass-input-pulse, rainbow-glow-pulse, app-bg-pulse)
+   - Color palette (primary, destructive, muted, etc.)
+   - Typography tokens
+   - Spacing/sizing tokens
+
+2. Screen-by-Screen Analysis
+   For each of 8 screens:
+   - Glass/glow usage (which classes, where)
+   - Inconsistencies vs login screen
+   - Missing design elements
+   - Custom/ad-hoc styles that should use tokens
+
+3. Component Analysis
+   - Existing UI components using glass effects
+   - Components that need glass variants
+   - Opportunities for new reusable components
+
+4. Performance & Accessibility Notes
+   - Current animation performance concerns
+   - Missing prefers-reduced-motion support
+   - Color contrast issues (if any)
+   - Missing ARIA labels
+
+5. Recommendations
+   - Priority list for design system extraction
+   - Suggested new components
+   - Refactoring opportunities
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] S44-AUDIT.md exists in sprint folder
+  - [ ] All 8 screens documented
+  - [ ] All CSS custom properties catalogued
+  - [ ] Inconsistencies clearly identified
+  - [ ] Recommendations actionable for T2-DesignSystem
+
+###############################################################################
+# RESOURCES
+###############################################################################
+ref:
+  - totem/stacks/react-ts/UI_UX.ti (design guidelines)
+  - src/components/screens/login-screen.tsx (approved design reference)
+  - src/index.css (current design tokens)

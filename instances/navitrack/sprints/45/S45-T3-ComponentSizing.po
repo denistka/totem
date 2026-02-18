@@ -1,0 +1,133 @@
+task:T3-ComponentSizing
+sprint:S45
+title:Update Components for Touch-Friendly Sizing
+priority:P1
+estimate:12h
+owner:FRONTEND_DEV
+dep:[T2-TouchTokens]
+invariants:S44-INVARIANTS.md
+
+# ⚠️ S44 PROTECTIONS:
+# - Button variant NAMES (glass, glass-strong, glass-glow, glass-subtle, glass-outline) — DO NOT RENAME
+# - GlassButton is SEPARATE from Button — DO NOT MERGE
+# - GlassCard / GlassInputWrapper APIs unchanged
+# - glass-glow::before with inset: -14px MUST keep overflow: visible
+# - glass-input animation (4s pulse) must still work on idle
+# - data-state="error"/"success" API on inputs preserved
+# - contain: layout style paint on .glass surfaces — KEEP
+# You MAY change height values (h-10→h-11 etc) but NOT variant names or CSS class names.
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Update all UI and app-level components to enforce 44px+ touch targets.
+Use tokens from T2. NO ad-hoc pixel values.
+
+###############################################################################
+# COMPONENTS TO UPDATE
+###############################################################################
+
+### 1. button.tsx — Size variants
+Update size default values per T2 mapping.
+Ensure all variants that produce interactive elements are ≥ 44px.
+Key: `default` → h-12, `sm` → h-11, `icon` → h-11 w-11.
+
+### 2. input.tsx — Default height
+Set default height to h-12 (48px).
+Ensure glass-input variant is h-12.
+Search input variant: h-12.
+
+### 3. switch.tsx — Touch area
+Radix Switch visual size may be small.
+Wrap with touch-area utility or increase overall size.
+Minimum interactive area: 44x44px.
+
+### 4. theme-toggle.tsx — CRITICAL FIX
+Current: h-8 w-8 (32px) — 12px below minimum!
+Fix: h-11 w-11 (44px) minimum.
+Keep icon size the same (h-4 w-4), increase button area.
+
+### 5. mobile-shell.tsx — Bottom nav tabs
+Current: py-2 pt-2.5 (approximately 40px).
+Fix: add min-h-[56px] or use --nav-item-h token.
+Each tab button must be ≥ 44px touch target.
+Icon size stays h-5 w-5; touch area increases.
+
+### 6. mobile-header.tsx — Back button
+Current: implicit sizing from content.
+Fix: ensure back button area is ≥ 44x44px.
+Header height: h-12 → OK (48px), keep as is.
+
+### 7. bottom-select-modal.tsx — List items
+Current: no explicit min-height for selectable items.
+Fix: add min-h-[48px] or min-h-[3rem] to each list item.
+Cancel button: ensure ≥ 44px.
+
+### 8. date-range-picker.tsx — Calendar cells & time slider
+Calendar day cells: ensure ≥ 44x44px tap target.
+Time slider: ensure touch-friendly height.
+Done/Cancel buttons: ≥ 44px.
+
+### 9. glass-button.tsx, glass-card.tsx, glass-input-wrapper.tsx
+Verify all sizes meet 44px minimum for interactive variants.
+GlassButton: ensure smallest variant is ≥ 44px.
+GlassInputWrapper: input height 48px.
+
+### 10. select.tsx — Trigger sizing
+Select trigger: ensure ≥ 48px height.
+Select items in dropdown: ensure ≥ 44px per item.
+
+###############################################################################
+# SPECIAL: RANGE SLIDERS
+###############################################################################
+Range inputs (tracking-screen.tsx, object-details-screen.tsx):
+- Track height: h-2 (8px) — visually fine
+- BUT thumb (the draggable circle) must be ≥ 44px
+- Add CSS for input[type=range]:
+  ```css
+  input[type="range"] {
+    min-height: var(--touch-min);
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    /* With padding, total touch area ≥ 44px */
+  }
+  ```
+
+###############################################################################
+# SPECIAL: CHECKBOXES (select-objects-screen.tsx)
+###############################################################################
+Current: h-7 w-7 (28px) visual checkbox circles.
+Fix options:
+  A) Increase visual size to h-11 w-11 (44px) — may look too large
+  B) Keep visual h-7 w-7 but add .touch-area to extend hit area
+  C) Make the entire row tappable (already is — the row button handles it)
+Recommended: Option C — the row itself is a button. The checkbox is purely
+visual. Verify the row has min-h-[56px] and is the actual touch target.
+
+###############################################################################
+# RULES (from DESIGN_SPRINT_GUIDE.md lessons)
+###############################################################################
+rules:
+  - Use tokens, not ad-hoc values: var(--touch-target) not h-12
+  - Update the COMPONENT, not each screen usage: ButtonProps default size
+    handles all instances automatically
+  - Test build after each component update — don't batch all changes
+  - If a visual element must stay small, use .touch-area for the hit area
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] button.tsx: all size variants ≥ 44px
+  - [ ] input.tsx: default height = 48px
+  - [ ] switch.tsx: touch area ≥ 44x44px
+  - [ ] theme-toggle.tsx: h-11 w-11 (44px)
+  - [ ] mobile-shell.tsx: nav items ≥ 44px, spacing ≥ 8px
+  - [ ] bottom-select-modal.tsx: list items min-h 48px
+  - [ ] date-range-picker.tsx: calendar cells ≥ 44px, buttons ≥ 44px
+  - [ ] range sliders: thumb ≥ 24px, total touch area adequate
+  - [ ] select-objects checkboxes: tap area ≥ 44px (via row or touch-area)
+  - [ ] pnpm run build passes with zero errors

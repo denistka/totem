@@ -1,0 +1,106 @@
+task:T7-ExtractShared
+sprint:S45
+title:Extract Shared Components from Duplicates
+priority:P1
+estimate:8h
+owner:FRONTEND_DEV
+dep:[T6-DedupAudit]
+invariants:S44-INVARIANTS.md
+
+# ⚠️ S44 PROTECTIONS (critical for refactoring):
+# - BottomSheet extraction: must preserve glass-strong class, ring-1 ring-border, rounded-2xl
+# - Overlay: must keep bg-foreground/20 backdrop-blur-sm (exact values from S44!
+# - GlassButton, GlassCard, GlassInputWrapper are FINAL — do not modify their APIs
+# - New shared components must USE glass/glass-strong classes, not reinvent
+# - button.glass override (no border, bg 0.34) MUST survive refactoring
+# - header.glass / nav.glass (no border) MUST survive
+# - Do NOT create new glass CSS classes — use existing ones
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Create shared components for each duplicate pattern found in T6.
+Replace all instances. Zero duplicate patterns remaining.
+
+###############################################################################
+# COMPONENTS TO CREATE (based on preliminary analysis)
+###############################################################################
+
+### 1. BottomSheet (base overlay + content)
+File: src/components/ui/bottom-sheet.tsx
+Props:
+  - isOpen: boolean
+  - onClose: () => void
+  - children: React.ReactNode
+  - className?: string
+Replaces: overlay divs in BottomSelectModal + DateRangePicker
+BottomSelectModal becomes: <BottomSheet> + list render logic
+
+### 2. DropdownButton (select-like trigger)
+File: src/components/ui/dropdown-button.tsx
+Props:
+  - label: string
+  - onClick: () => void
+  - placeholder?: string
+  - className?: string
+Replaces: glass Button + ChevronDown in Reports (3x), Settings (2x), Tracking (1x)
+
+### 3. SegmentedControl (tab bar / toggle)
+File: src/components/ui/segmented-control.tsx
+Props:
+  - items: { id: string; label: string }[]
+  - activeId: string
+  - onChange: (id: string) => void
+  - variant?: 'underline' | 'pill'
+  - className?: string
+Replaces: ObjectDetails tab bar, Reports period toggle
+
+### 4. FixedBottomAction (sticky CTA container)
+File: src/components/fixed-bottom-action.tsx
+Props:
+  - children: React.ReactNode (the Button)
+  - className?: string
+Replaces: fixed bottom glass card pattern in Tracking, Reports, SelectObjects
+
+### 5. Vehicle Icons → separate file
+File: src/components/icons/vehicle-icons.tsx
+Move: TruckIcon, CarIcon, VanIcon from objects-screen.tsx
+Frees ~65 lines from the screen component
+
+### 6. Button "pill" size variant
+File: update src/components/ui/button.tsx
+Add size: 'pill' → 'rounded-full px-3 py-1 text-xs'
+Replaces: Done/Cancel mini-buttons in DateRangePicker + BottomSelectModal
+
+###############################################################################
+# RULES (DESIGN_SPRINT_GUIDE.md lessons)
+###############################################################################
+rules:
+  - Create the component FIRST, then replace all usages
+  - Each component in its own file with proper TypeScript types
+  - Export from component, not from index
+  - Test build after each component creation
+  - After replacing, delete the old duplicate code
+  - Run pnpm run lint after each replacement batch
+
+###############################################################################
+# EXECUTION ORDER (one at a time, build after each)
+###############################################################################
+order:
+  1. Vehicle icons → separate file (safest, no logic change)
+  2. BottomSheet → refactor BottomSelectModal + DateRangePicker overlays
+  3. DropdownButton → replace in Reports, Settings, Tracking
+  4. Button "pill" size → replace Done/Cancel buttons
+  5. SegmentedControl → replace in ObjectDetails, Reports
+  6. FixedBottomAction → replace in Tracking, Reports, SelectObjects
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] All shared components created with TypeScript interfaces
+  - [ ] All duplicate instances replaced
+  - [ ] Zero code duplication for overlay/modal/tab/dropdown patterns
+  - [ ] Vehicle icons in separate file
+  - [ ] pnpm run build && pnpm run lint pass
+  - [ ] Visual result identical to before (no regressions)

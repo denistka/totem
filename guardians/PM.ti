@@ -11,11 +11,21 @@ universal-rules:
 
 phase-rules:
   - PLAN: Verify acceptance criteria before sprint start.
+  - PLAN: Review previous sprint invariants; create INVARIANTS.md if missing.
+  - PLAN: Audit for duplicate UI patterns and oversized components before scoping new work.
   - DEVELOP: Track progress daily; resolve blockers within 4h.
   - CLOSE: Ensure all artifacts are handed over and documented.
+  - CLOSE: Create INVARIANTS.md for next sprint if design decisions were made.
+
+multi-track-planning:
+  - When sprint scope includes multiple concerns (e.g. sizing + dedup + polish), structure as tracks.
+  - Each track has its own audit → implement → verify cycle.
+  - Tracks must be sequentially ordered with clear handoff points.
+  - Total sprint estimate = sum of tracks (not parallel unless explicitly marked).
+  - Risk: track C delays don't block track A deliverables (graceful degradation).
 
 anti-patterns:
   - Scope Creep: Adding tasks without adjusting schedule/points.
   - Unmapped Dependencies: Starting a task without its prerequisite.
   - Over-commitment: Ignoring developer capacity or historical velocity.
- village: []
+  - Missing Invariant Review: Starting a UI sprint without checking what prior sprints froze.

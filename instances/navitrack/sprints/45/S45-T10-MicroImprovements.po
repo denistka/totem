@@ -1,0 +1,92 @@
+task:T10-MicroImprovements
+sprint:S45
+title:Apply Small Visual Improvements
+priority:P2
+estimate:6h
+owner:FRONTEND_DEV
+dep:[T9-TrendAudit]
+invariants:S44-INVARIANTS.md
+
+# ⚠️ S44 PROTECTIONS:
+# - DO NOT change --glass-* token values (opacity, blur, shadow, border)
+# - DO NOT change glass-input pulse animation timing (4s) or keyframes
+# - DO NOT change rainbow-glow-pulse animation (12s, hue rotation)
+# - DO NOT change object-badge-dot-pulse animation
+# - DO NOT modify .glass-glow ::before inset/blur values
+# - Light vs dark token differences are INTENTIONAL — don't "normalize"
+# - --glass-transition: 280ms is deliberate — not 200 or 300
+# Improvements should be ADDITIVE: new spacing, new shadows, NOT replacing S44 values
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Apply ONLY the small (S) improvements identified in T9 trend audit.
+One change at a time. Build after each. No regressions.
+
+###############################################################################
+# EXECUTION RULES
+###############################################################################
+rules:
+  - Implement ONE improvement at a time
+  - Verify build passes after each change
+  - Check both light AND dark mode after each change
+  - If visual result is worse, revert immediately
+  - No new npm packages
+  - No changes to component APIs
+  - Only CSS tokens, className adjustments, and minor JSX tweaks
+
+###############################################################################
+# LIKELY IMPROVEMENTS (to be confirmed by T9 audit)
+###############################################################################
+
+### Category: Spacing & Layout
+  1. Normalize horizontal padding across screens (px-4 everywhere)
+  2. Normalize section spacing (mb-5 or mb-6, pick one)
+  3. Increase padding inside glass containers (if < 16px)
+  4. Ensure 8px grid alignment (gap-2, gap-3, gap-4 consistently)
+
+### Category: Typography
+  5. Review font-weight hierarchy (semibold for headings, medium for labels, regular for body)
+  6. Ensure caption text ≥ 12px (text-xs = 12px — verify)
+  7. Add letter-spacing to all-caps text (if any exists)
+
+### Category: Corners
+  8. Normalize border-radius: cards = rounded-2xl, buttons = rounded-xl, chips = rounded-full
+  9. Ensure bottom sheet corners consistent (rounded-2xl already — verify)
+
+### Category: Shadows & Depth
+  10. Review glass shadow depth (subtle but visible)
+  11. Ensure cards have soft shadow (not hard edge)
+  12. Add subtle shadow to bottom nav bar
+
+### Category: Colors
+  13. Review text-muted-foreground opacity (not too dim, not too bright)
+  14. Review active/selected state prominence
+  15. Ensure destructive color is clearly red (not some ambiguous shade)
+
+### Category: Component Polish
+  16. Add subtle scale effect on button press (active:scale-[0.98])
+  17. Smooth out transition durations (consistent 200ms or 250ms)
+  18. Icon stroke width consistency (1.5 or 2, not mixed)
+
+###############################################################################
+# TRACKING
+###############################################################################
+Each improvement gets:
+  - [ ] Change description
+  - [ ] Files modified
+  - [ ] Build status: PASS/FAIL
+  - [ ] Light mode: OK/ISSUE
+  - [ ] Dark mode: OK/ISSUE
+  - [ ] Kept/Reverted
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] All S-size improvements from T9 implemented
+  - [ ] Each change documented with before/after
+  - [ ] Zero regressions
+  - [ ] Both themes look correct
+  - [ ] pnpm run build passes
+  - [ ] No new npm dependencies

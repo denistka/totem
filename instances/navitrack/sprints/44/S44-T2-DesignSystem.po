@@ -1,0 +1,115 @@
+task:T2-DesignSystem
+sprint:S44
+title:Extract and Document Design System
+priority:P1
+estimate:12h
+owner:UI_UX
+dep:[T1-Audit]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Extract design system from approved login screen; organize and document all design tokens; create comprehensive design system guide for team use.
+
+###############################################################################
+# SCOPE
+###############################################################################
+Create formal design system based on login screen's glass/glow aesthetic:
+- Organize CSS custom properties into logical groups
+- Document all design tokens with usage examples
+- Create visual design guide
+- Establish naming conventions
+- Define component usage patterns
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+output:
+  - navitrack-apps/react-app/src/styles/design-system.md
+  - Updated navitrack-apps/react-app/src/index.css (reorganized, well-commented)
+
+1. design-system.md Structure:
+   ```markdown
+   # NaviTrack Design System
+   
+   ## Color Palette
+   - Primary: hsl(74 60% 44%) - Application accent color
+   - [Document all color tokens with hex/hsl values]
+   
+   ## Glass Effects
+   ### Glass Base (.glass)
+   - Semi-transparent surfaces with backdrop blur
+   - Usage: cards, panels, containers
+   - [Visual example, code snippet]
+   
+   ### Glass Input (.glass-input)
+   - Input fields with subtle glow animation
+   - States: default, hover, focus, error, success
+   - [Visual examples for each state]
+   
+   ### Glass Glow (.glass-glow)
+   - Primary CTA buttons with rainbow pulse
+   - Usage: primary actions only
+   - [Visual example, code snippet]
+   
+   ## Typography
+   [Document font families, sizes, weights]
+   
+   ## Spacing & Sizing
+   [Document spacing scale, common patterns]
+   
+   ## Animation Principles
+   - Timing functions
+   - Duration standards
+   - Reduced motion support
+   
+   ## Component Patterns
+   [Common UI patterns and when to use them]
+   
+   ### Logo Component
+   - 3 variants: icon-only, vertical (icon + text), horizontal
+   - Responsive sizing based on context
+   - Maintains brand consistency
+   ```
+
+2. Updated index.css:
+   - Reorganize CSS custom properties with clear sections
+   - Add comprehensive comments for each token
+   - Group related properties
+   - Ensure all values are referenceable
+   - Add usage examples in comments
+
+###############################################################################
+# ACCEPTANCE CRITERIA
+###############################################################################
+verify:
+  - [ ] design-system.md is comprehensive and includes examples
+  - [ ] All design tokens documented with purpose and usage
+  - [ ] index.css is well-organized with clear comments
+  - [ ] No hard-coded values - all via CSS custom properties
+  - [ ] Design system is actionable for developers
+
+###############################################################################
+# DESIGN PRINCIPLES
+###############################################################################
+Glass/Glow Aesthetic:
+  - Surfaces: Semi-transparent with backdrop blur
+  - Depth: Created via layered shadows and glows
+  - Motion: Subtle, purposeful animations (pulse, glow)
+  - Colors: Primary green (hsl(74 60% 44%)) with theme variants
+  - Accessibility: All effects have reduced-motion fallbacks
+
+Token Organization:
+  - Base tokens: colors, spacing, typography
+  - Semantic tokens: glass-*, primary, destructive
+  - Component tokens: specific to components
+  - Theme tokens: light/dark mode variants
+
+###############################################################################
+# RESOURCES
+###############################################################################
+ref:
+  - totem/instances/navitrack/sprints/44/S44-AUDIT.md
+  - src/components/screens/login-screen.tsx
+  - src/index.css
+  - totem/stacks/react-ts/UI_UX.ti
