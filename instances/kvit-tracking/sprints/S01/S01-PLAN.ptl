@@ -1,0 +1,26 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+role:TEAM_LEAD
+sprint:S01-Foundation
+objective:Initialize workspace and prepare technical specification based on military-grade requirements
+
+phase-1: Audit & Spec
+  tasks:
+    - S01-T01-Requirement-Analysis
+    - S01-T02-Project-Initialization
+  dur:1h
+  verify:[ls -R]
+  gate:ROOT.pi-updated
+
+dispatch:
+  S01-T01:
+    po:sprints/S01/tasks/T01.pd
+    model:high-precision
+    critical:y
+    exec-order:1
+  S01-T02:
+    po:sprints/S01/tasks/T01.pd
+    model:standard
+    critical:y
+    exec-order:2

@@ -1,0 +1,15 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+x:fullstack
+stack:[node,ws,typescript]
+task:Implement high-performance mock server for tracking simulation
+spec:
+  objects: 200
+  freq: 1000ms
+  drift: 0.001
+out: [mock-server/server.js]
+cmd: [node mock-server/server.js]
+done: [Server emits valid JSON with 200 objects]
+math-model: movement = prev + rand(-drift, drift)
+verify: [curl http://localhost:3001/data]

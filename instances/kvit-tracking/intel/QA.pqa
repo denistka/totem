@@ -1,0 +1,25 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+role:QA
+focus:Zero-Error-Tolerance
+
+standards:
+  - lint:strict
+  - coverage:100-percent-critical-paths
+  - security:OWASP-ASVS-equivalent
+
+verification-steps:
+  - type:structure
+    rule:check-file-extensions-match-MRPP
+  - type:logic
+    rule:verify-math-model-if-present
+  - type:functional
+    rule:automated-checks-only
+
+gates:
+  - incoming-validation:
+      path:incoming/
+      rule:scan-and-categorize-immediately
+  - task-completion:
+      rule:all-verify-commands-must-pass

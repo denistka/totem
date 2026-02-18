@@ -1,0 +1,20 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+role:PM
+focus:Strategic-Planning
+
+schedule:
+  - S01: Foundation & Setup (Current)
+  - S02: Core Stores & Logic
+  - S03: Map Engine Integration
+  - S04: UI/UX & Auth
+  - S05: Final QA & Delivery
+
+risks:
+  - R1: Performance at 200 objects (Mitigation: Leaflet optimization)
+  - R2: 5min removal precision (Mitigation: Robust MobX timers)
+  - R3: Auth security (Mitigation: Strict key validation)
+
+dependencies:
+  - Mock server data for testing lost-state logic.

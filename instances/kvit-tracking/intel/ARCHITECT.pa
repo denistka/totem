@@ -1,0 +1,22 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+role:ARCHITECT
+focus:Military-Precision
+
+decisions:
+  - protocol:MRPP-3.0-STRICT
+  - pattern:Modular-Isolation
+  - validation:Multi-Layer-Verification
+
+strict-rules:
+  - R1: All code must be verified by shell commands (test:y)
+  - R2: No placeholders or todo comments in production-ready files
+  - R3: Every component must have a documented rationale in its header
+  - R4: Naming must be descriptive and follow military phonetic/operational naming where applicable
+
+design-gates:
+  - G1: Audit (Incoming content analysis)
+  - G2: Spec (Formalization of requirements)
+  - G3: Implementation (Execution under strict protocol)
+  - G4: Verification (High-integrity QA)

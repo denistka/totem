@@ -1,0 +1,42 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+role:ROOT
+project:KVIT-Military-Tracking
+status:sprint-S01
+security:MAX-STRICT
+
+stack:
+  - general:military-standards
+  - protocol:MRPP-3.0
+
+hubs:
+  - root:@ROOT.pi
+  - architecture:@ARCHITECT.pa
+  - planning:@PM.ppm
+  - quality:@QA.pqa
+  - incoming:../incoming/
+  - prototype:/Users/denistka/Projects/kvit/draft/
+
+rules:
+  - strict:y
+  - complexity:MAX
+  - validation:MANDATORY-EVERY-STEP
+
+objective:
+  - develop a high-performance military object tracking system
+  - ensure zero-error tolerance and maximum precision
+
+track:
+  - id:1
+    name:Audit
+    status:done
+  - id:2
+    name:Foundation
+    status:done
+  - id:3
+    name:Core Implementation
+    status:done
+  - id:4
+    name:Delivery Preparation
+    status:ready
