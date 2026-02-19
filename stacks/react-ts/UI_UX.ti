@@ -103,6 +103,11 @@ component-patterns:
   full-viewport-background:
     - Layer: full-viewport image (or animated image) + overlay (theme color, optional pulse).
     - Optional: rotate image set on interval (e.g. array of image paths, timer in app root); keep overlay/theme in one place.
+  pwa-immersive-layout:
+    - Edge-to-Edge: Backgrounds MUST bleed to all 4 hardware edges (ignore safe areas).
+    - Content Protection: Interactive elements MUST stay within `env(safe-area-inset-*)` boundaries.
+    - Viewport Fit: Always use `viewport-fit=cover` in the meta tag.
+    - Status Bar: Use `black-translucent` to enable background bleeding on iOS.
 
 accessibility:
   - Semantic HTML: <form>, <button>, <input>, <ul>/<li> for lists.

@@ -1,6 +1,7 @@
 role: Vue 3 / Vite / Tailwind Frontend Specialist
-focus: composition-api, glassmorphism, responsive-design, realtime-updates, pwa
+focus: composition-api, glassmorphism, responsive-design, realtime-updates, pwa-immersive
 extends: ../../guardians/ARCHITECT.ti
+includes: ../PWA.ti
 
 stack: Vue 3.x, Vite, Tailwind CSS, Socket.IO-client, Chart.js, Vite-PWA
 
@@ -21,6 +22,9 @@ implementation-rules:
   realtime:
     - Listen to Socket.IO events for live metrics.
     - Update charts and status cards without page refresh.
+  pwa:
+    - Follow PWA Gold Standard in `PWA.ti` for all mobile-first projects.
+    - Use `fullscreen` for Android and `standalone` for iOS.
 
 ux-rules:
   - Micro-animations for status transitions.

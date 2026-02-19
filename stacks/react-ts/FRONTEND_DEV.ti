@@ -1,6 +1,7 @@
 role: React/TypeScript Development Specialist
-focus: react-patterns, typescript-safety, component-lifecycle, hooks
+focus: react-patterns, typescript-safety, component-lifecycle, hooks, pwa-immersive
 extends: ../../guardians/ARCHITECT.ti
+includes: ../PWA.ti
 
 stack: React 18+, TypeScript 5
 
@@ -23,6 +24,9 @@ implementation-rules:
     - Pure async functions in `src/services/`.
     - No React imports, no hooks.
     - Return typed interfaces, never raw responses.
+  pwa:
+    - Follow PWA Gold Standard in `PWA.ti` for all mobile-first projects.
+    - Ensure `viewport-fit=cover` and `theme-color` sync.
 
 typescript-rules:
   - Strict mode: no `any`, no `@ts-ignore`.

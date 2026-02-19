@@ -1,0 +1,42 @@
+role: PWA Immersive Experience Specialist
+focus: viewport-fit, safe-areas, manifest-sync, ios-standalone, android-fullscreen
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Web App Manifest, Service Workers, Viewport API, CSS Environment Variables
+
+pwa-gold-standard:
+  viewport:
+    meta: '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">'
+    logic:
+      - Use `viewport-fit=cover` to extend content behind notches and home indicators.
+      - Set `user-scalable=no` to prevent accidental zooming breaking the app-like feel.
+  
+  display-modes:
+    ios:
+      - Use `standalone` in manifest for stability.
+      - Meta tag: `<meta name="apple-mobile-web-app-capable" content="yes">`.
+      - Meta tag: `<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">`.
+      - Note: `black-translucent` allows the background to bleed behind the status bar.
+    android:
+      - Use `fullscreen` in manifest for an immersive experience (hides status/nav bars).
+      - Ensure `theme_color` in manifest matches the app's primary background color.
+
+  css-reset:
+    - `html, body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; position: fixed; }`
+    - Use `position: fixed` or `absolute` pinning (top: 0, bottom: 0, left: 0, right: 0) to ensure full coverage.
+    - Avoid hardcoded heights (100vh); prefer `100dvh` or pinning.
+
+  safe-areas:
+    - Use `env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`, etc., for content padding.
+    - Backgrounds SHOULD NOT respect safe areas (bleed to edges).
+    - Tappable elements MUST respect safe areas to avoid being obscured by hardware or home indicators.
+
+  cache-control (Dev Phase):
+    - Service Worker: Use a "network-only" pass-through for `fetch` during development.
+    - Manifest: Append `?v=[timestamp]` to prevent stale icons/colors during iteration.
+
+anti-patterns:
+  - ❌ `display: fullscreen` on iOS (causes bottom clipping/red bars).
+  - ❌ Hardcoded 100vh (fails to account for mobile toolbars/notches).
+  - ❌ Respecting safe-areas for background colors (causes letterboxing).
+  - ❌ Forgetting `theme-color` meta tag (browser header won't match app).
