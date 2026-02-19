@@ -1,114 +1,49 @@
-v:3
-format:totem-index
-purpose:machine-only reading
-human-hub:[../../README.md,../../core/PROTOCOL_SCHEMA.md]
-totem-folder:universal-logic-and-protocol
-all-content:in-instances-navitrack-intel
-
 ###############################################################################
-# MRPP 3.0 — CONTEXT CONTROL
-###############################################################################
-
-context-control:
-  max-active:8
-  ttl-days:14
-  
-  always-load:
-    - TOTEM_INDEX.ti
-    - TOTEM_PROJECT.ti
-    - ITERATION_FLOW.ti
-  
-  load-for-planning:[TOTEM_BACKLOG.ti,TOTEM_NEXT_STEPS.ti]
-  load-for-development:[TOTEM_SPRINTS.ti,TOTEM_DECISIONS.ti]
-  
-  pruning:
-    - archive-completed-sprints-after:7d
-    - remove-resolved-blockers:on-iteration-close
-
-###############################################################################
-# ITERATION FLOW (v3.0)
-###############################################################################
-
-iteration-flow:./ITERATION_FLOW.ti
-phases:[plan,design,develop,verify,close]
-roles-active:[ROOT,TEAM_LEAD,CTO,QA,PM,DEVOPS]
-
-###############################################################################
-# PROJECT
+# PROJECT & BRAND
 ###############################################################################
 
 project:
-  name:Navitrack-Totem
-  app:navitrack-apps
-  stack:[tauri2,vue3,ts,rust,vite,pinia,tailwind,leaflet]
-  scope:frontend
-  status:✅ Epic 0 (Core) + Epic 1 (Design) complete.
-  next:Epic 2 (Architectural Hardening & Refactoring)
-  epic0:E-00
-  epic1:E-01
-  epic2:E-02-ACTIVE
-  done-ref:TOTEM_EPICS.ti#E-00
-  to-do-ref:TOTEM_EPICS.ti#E-01-TO-DO
+  name: NaviTrack
+  company: ООО НАВИТРЕК
+  mission: universal solutions, satellite tech, monitoring, remote control
+  tagline: NaviTrack — ВСЕГДА ВЫИГРЫШНОЕ РЕШЕНИЕ
+  website: https://navitrack.com.ua
+  stack: [tauri2, vue3, ts, rust, vite, pinia, tailwind, leaflet]
+  status: ✅ Epic 0 + Epic 1 complete. Next: Epic 2 (Hardening).
+
+brand:
+  primary: "#2D8A3E"
+  bg: dark-background
+  style: glassmorphism-neumorphism
 
 ###############################################################################
-# DOCS
+# ITERATION RULES (Consolidated)
 ###############################################################################
 
-docs:
-  totem-existing:[../../README.md,../../core/PROTOCOL_SCHEMA.md]
-
-###############################################################################
-# SPRINTS
-###############################################################################
-
-sprints:
-  mrpp-root:../../../../prompt-machine/sprints/
-  content:./TOTEM_SPRINTS.ti
-
-###############################################################################
-# GUARDIANS
-###############################################################################
-
-guardians:
-  index:project.config.yml
-  rules-dir:../guardians/
-
-###############################################################################
-# PROMPT-MACHINE
-###############################################################################
-
-prompt-machine:
-  root:../../../../prompt-machine/
-  readme:../../../../prompt-machine/README.md
-  totem-index:./TOTEM_INDEX.ti
-  
-  usage:
-    dry-run:./run-sprint-flow.sh <N>
-    cursor:./generate-sprint-prompt.sh <N> | pbcopy
+iteration-flow:
+  phases: [plan, design, develop, verify, close]
+  rules: sequence:plan→design→develop→verify→close; rollback:if-gate-fails
+  artifacts: [scope.ti, tasks.ti, report.ti]
 
 ###############################################################################
 # MACHINE-ONLY CONTENT
 ###############################################################################
 
 content:
-    iteration-flow:./ITERATION_FLOW.ti
-    refactoring:./TOTEM_REFACTORING.ti
-    log:./LOG.ti
-  project:./TOTEM_PROJECT.ti
-  epics:./TOTEM_EPICS.ti
-  sprints:./TOTEM_SPRINTS.ti
-  backlog:./TOTEM_BACKLOG.ti
-  decisions:./TOTEM_DECISIONS.ti
-  next-steps:./TOTEM_NEXT_STEPS.ti
+  index: ./TOTEM_INDEX.ti
+  backlog: ./TOTEM_BACKLOG.ti
+  epics: ./TOTEM_EPICS.ti
+  decisions: ./TOTEM_DECISIONS.ti
+  sprints: ./TOTEM_SPRINTS.ti
+  log: ./LOG.ti
 
 ###############################################################################
-# MACHINE-ONLY REFS (MRPP 3.0)
+# MACHINE-ONLY REFS (MRPP 3.1)
 ###############################################################################
 
 machine-only:
-  spec:../../core/PROTOCOL_SCHEMA.md
-  section:MRPP 3.0 — Iteration Flow + Context Control
-  human-hub:[../../README.md,../../core/PROTOCOL_SCHEMA.md]
-  audience:prompt-machine,agents
-  load-order:[TOTEM_INDEX.ti→then-any-content-file-as-needed]
-  full-totem:[TOTEM_PROJECT,TOTEM_EPICS,TOTEM_SPRINTS,TOTEM_BACKLOG,TOTEM_DECISIONS,TOTEM_NEXT_STEPS,TOTEM_REFACTORING]
+  spec: ../../core/PROTOCOL_SCHEMA.md
+  version: 3.1
+  load-order: [TOTEM_INDEX.ti → content-files]
+  audience: prompt-machine, agents
+

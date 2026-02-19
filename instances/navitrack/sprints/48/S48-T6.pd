@@ -1,0 +1,28 @@
+v:1
+mode:verify
+role:architect
+task:S48-T6-Final-Polish
+objective:Clean up dead code and verify visual regression in `src-react`.
+context:The migration to `src-react` is complete. Now we ensure `src` is deprecated or removed (if requested) and `src-react` is production-ready.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - **Dead Code**: Ensure no dependencies in `src-react` point back to `src`.
+  - **Lint**: Run strict linting on `src-react`.
+  - **Documentation**: Update `APP_UI_KIT.ti` to point to `src-react` as canonical ref.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - S48-COMPLETION-REPORT.md
+  - Clean `src-react` codebase.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. **Audit**: Grep for `#` (hex) in `src-react`. Should be 0.
+  2. **Verify**: Full app walkthrough using the new `src-react` build.

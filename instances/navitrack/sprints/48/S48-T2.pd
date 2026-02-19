@@ -1,0 +1,31 @@
+v:1
+mode:code
+role:architect
+task:S48-T2-Define-Theme
+objective:Implement the CSS variables identified in T1 and configure Tailwind.
+context:Based on `S48-ANALYSIS-MAP.md`, we define the source of truth for all colors.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - **Initialize**: Create `src-react` folder structure (components, screens, styles, hooks).
+  - **Config**: Update `vite.config.ts` (or similar) to build from `src-react/main.tsx`.
+  - **Theme**: Create `src-react/styles/theme.css` with defined variables.
+  - **Tailwind**: Update `tailwind.config.ts` to scan `src-react`.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - `src/styles/theme.css`
+  - Updated `tailwind.config.ts`
+  - Updated `src/index.css`
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. **Strict adherence**: Use EXACT variable names from `S48-ANALYSIS-MAP.md`.
+  2. **No arbitrary values**: If a color is missing from the map, STOP and ask.
+  3. **Output**: Operational theme system ready for component adoption.

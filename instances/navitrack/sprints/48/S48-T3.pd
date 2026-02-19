@@ -1,0 +1,31 @@
+v:1
+mode:code
+role:developer
+task:S48-T3-Refactor-Atoms
+objective:Refactor core UI Atoms (Button, Input, Badge, Typography) to use theme variables.
+context:Foundational components must be stable before moving to complex patterns.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - **Scope**: Create CLEAN components in `src-react/components/ui/`.
+  - **Source**: Port from `src/components/ui/` but refactor to strict standards.
+  - **Architecture**: Ensure components are pure functional with NO business logic.
+  - **Cleanup**: Remove any `style={{...}}` overrides unless absolutely dynamic.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Refactored `Button.tsx`, `Input.tsx`, `Badge.tsx`, `Label.tsx`...
+  - Updated stories or tests if applicable.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. **ATOMIC EXECUTION**: You MUST NOT change more than 50 lines of code in a single step/commit.
+  2. **One by one**: Refactor `Button`, verify visuals. Stop. Refactor `Input`, verify. Stop.
+  3. **Visual Match**: Must look exactly like S47.
+  4. **No logic**: Logic belongs in `hooks` or `screens`.

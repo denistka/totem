@@ -21,8 +21,8 @@ critical:
 
 high:
   H-001:[✅,OTP-support,S04-complete]
-  H-002:[⬜,2FA-via-Google,Google-Sign-In-done-flow-TBD]
-  H-003:[⬜,async-Reports-API,build-status-download-cancel]
+  H-002:[✅,2FA-via-Google,Google-Sign-In-done-flow-TBD]
+  H-003:[✅,async-Reports-API,build-status-download-cancel]
   H-004:[✅,push-after-logout,S-15-unregister-token]
   H-005:[✅,parking-duration-display,S33-time-utils]
   H-006:[✅,401-crash,S02-S03-error-handler-login-UX]

@@ -1,0 +1,64 @@
+v:1
+mode:agent
+role:lead
+sprint:S47-Feature-Hardening
+objective:Implement high-priority security and performance features: 2FA via Google and Async Reports API.
+status:ACTIVE
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-02-NEW-APP
+priority:P0
+dep:S46
+backlog:2FA, async-reports, protocol-sync
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/45/S44-INVARIANTS.md
+max-file-lines:150
+touch-target:44px
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-sync:
+  tasks:[T1-ProtocolSync]
+  gate:sync-complete
+
+phase-security:
+  tasks:[T2-Google2FA]
+  gate:2fa-implemented
+
+phase-performance:
+  tasks:[T3-AsyncReports]
+  gate:reports-async
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-ProtocolSync:
+    critical:y
+    exec-order:1
+    desc:Verify S46 split components are accounted for in system documentation; update index if necessary.
+
+  T2-Google2FA:
+    critical:y
+    exec-order:2
+    desc:Implement Google 2FA (H-002) following the established Auth flow.
+
+  T3-AsyncReports:
+    critical:y
+    exec-order:3
+    desc:Implement Async Reports API (H-003) to prevent UI blocking during large exports.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - 2FA flow functional and secure.
+  - Reports generated asynchronously with progress tracking.
+  - Zero regressions in glass transitions or touch targets.
+  - All new files < 150 lines.

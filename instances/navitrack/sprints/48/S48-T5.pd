@@ -1,0 +1,30 @@
+v:1
+mode:code
+role:developer
+task:S48-T5-Refactor-Screens
+objective:Refactor Page layouts and Screen views to use the global theme.
+context:Final layer of the UI. Replacing high-level layout colors and background handling.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - **Scope**: Create CLEAN screens in `src-react/screens/` and `src-react/App.tsx`.
+  - **Global Bg**: Ensure `body` background is handled by `theme.css`.
+  - **Containers**: Replace `h-[100dvh]` or similar with standard layout utilities if possible.
+  - **Consistnecy**: No hardcoded `bg-slate-900` in pages. Use `bg-background`.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Refactored all Screen components.
+  - Clean `App.tsx` layout.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. **ATOMIC EXECUTION**: Screens are large. Break refactoring into chunks (e.g. Layout first, then content). Max 50 lines changed per step.
+  2. **Visual Regression**: Compare heavily against S47 implementation.
+  3. **Responsiveness**: Ensure refactor doesn't break mobile layouts.

@@ -1,4 +1,4 @@
-**Active Roles (Process)**: ROOT, PLANNER (Librarian/Orchestrator), OPTIMIZER (Director - Core), TEAM_LEAD, ARCHITECT, QA, PM, DEVOPS.
+**Active Roles (Process)**: ROOT, PLANNER (Librarian/Orchestrator), PM (Executor), OPTIMIZER (Director - Core), TEAM_LEAD, ARCHITECT, QA, DEVOPS.
 
 file-extensions:
 
@@ -7,7 +7,7 @@ file-extensions:
 - .pa: ARCHITECT (Patterns) - **DEFAULT**. MUST use for design gates.
 - .pi: ROOT (Project Index) - Canonical project hub.
 - .pqa: QA (Verification) - **ON-DEMAND** only.
-- .ppm: PM (Project Managers) - **ON-DEMAND** only.
+- .ppm: PM (Prompt Module) - **ON-DEMAND**. Executable context.
 - .ti: TOTEM (Internal) - Logic/Rules context.
 - .po: LEGACY / BANNED - ❌ Do NOT use.
 

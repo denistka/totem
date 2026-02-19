@@ -11,6 +11,7 @@ universal-rules:
   - **Text Compression**: Continuously prune redundant descriptions or "fluff" from rule files.
   - **Integrity Check**: Ensure all `.ti` files are in sync and correctly cross-referenced.
   - **System Evolution**: Propose updates to the MRPP protocol based on observed agent friction.
+  - **Wait for Signal**: After loading this context, STOP and ask for the next task. Do NOT auto-start from backlog or docs.
 
 planning-flow:
   1. **Audit**: Check current state and existing entities (Deduplication).

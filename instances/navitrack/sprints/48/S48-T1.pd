@@ -1,0 +1,33 @@
+v:1
+mode:plan
+role:architect
+task:S48-T1-Map-And-Analyze
+objective:Analyze the current codebase to map all color and blur usages, identifying patterns for variable standardization.
+context:The application has a polished visual design, but the implementation uses scattered hardcoded values. We need to consolidate these into a semantic theme system.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - **Audit**: Scan `src/**/*.{css,tsx,ts,vue}` for colors.
+  - **Map**: Create a markdown table mapping old values to new `src-react` theme variables.
+  - **Group**: Propose semantic names for identified clusters (e.g. `#1a1a1a`, `#1c1c1c` -> `--bg-surface-dark`).
+  - **Variables**: Define the final set of CSS variables for Light and Dark modes.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - `S48-ANALYSIS-MAP.md`: The audit report and proposed variable mapping.
+  - `src/styles/theme.css`: The new CSS file containing the variable definitions (draft).
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. **Dont change code yet**. Just analyze and propose.
+  2. **Look for**:
+     - Hex codes (`#...`)
+     - Tailwind arbitrary values (`bg-[#...]`, `backdrop-blur-[...]`)
+     - Hardcoded RGBA/HSLA
+  3. **Output**: A clear mapping document.

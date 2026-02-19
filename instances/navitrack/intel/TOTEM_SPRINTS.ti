@@ -8,7 +8,7 @@ purpose:machine-only sprint index
 
 done:E-00
   ref:TOTEM_EPICS.ti#E-00
-  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S44,S45]
+  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S44,S45,S46,S47,S48]
 
 ###############################################################################
 # TO-DO (Epic 1)
@@ -69,7 +69,7 @@ S40:
 S42:
   name:App-Ignition
   path:sprints/42/
-  status:🟢 in-progress
+  status:✅ complete
   priority:P1
   scope:react-pwa,ui-port,clustering,engine-block,i18n
   dep:S41
@@ -77,32 +77,52 @@ S42:
 S43:
   name:React-App-Refactor
   path:sprints/43/
-  status:⬜ planned
+  status:✅ complete
   priority:P2
   scope:structure-consolidation,dead-code-removal,single-routing-model
   dep:S42
 
-S20:
-  name:Universal-UI-Template
-  path:sprints/20/
-  status:🟢 ready
-  scope:optional
-
-S21:
-  name:Rebrand-Login-WOW
-  path:sprints/21/
-  status:🟢 ready
-  scope:optional
-
-S27:
-  name:Release-Go-Live
-  path:sprints/27/
+S44:
+  name:Glass-Visual-Dash
+  path:sprints/44/
   status:✅ complete
-  scope:CI-build-matrix-store-assets-runbook
+  priority:P0
+  scope:visual-polish,glassmorphism,animations
+
+S45:
+  name:Touch-And-UI-Polish
+  path:sprints/45/
+  status:✅ complete
+  priority:P1
+  scope:touch-targets,spacing,interactive-sizing
+
+S46:
+  name:Component-Split
+  path:sprints/46/
+  status:✅ complete
+  priority:P0
+  scope:structural-hardening,file-size-limits
+
+S47:
+  name:Feature-Hardening
+  path:sprints/47/
+  status:✅ complete
+  priority:P0
+  scope:2FA,async-reports,protocol-sync
+  dep:S46
+
+S48:
+  name:Refactoring-Clean-UI
+  path:sprints/48/
+  status:🟢 in-progress
+  priority:P0
+  scope:css-refactor,app-ui-kit-cleanup
+  dep:S47
 
 ###############################################################################
 # ORDER
 ###############################################################################
 
-order:[S38→S39→S40,S42→S43]
-done-order:[S34→S35→S36→S37→S27]
+order:[S48→S38→S39→S40]
+done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47]
+

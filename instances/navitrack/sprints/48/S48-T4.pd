@@ -1,0 +1,29 @@
+v:1
+mode:code
+role:developer
+task:S48-T4-Refactor-Patterns
+objective:Refactor composite UI Patterns (Cards, Forms, Nav, Dialogs).
+context:Building on Atoms, ensuring larger structures use the theme correctly.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - **Scope**: Create CLEAN patterns in `src-react/components/ui/`.
+  - **Composition**: Use Atoms found in T3. Do not re-style buttons manually inside cards.
+  - **Theme**: Ensure backgrounds (surface/overlay) are correct in Dark Mode.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Refactored pattern components in `src-react/components/ui/`.
+  - Consistent spacing and layout using Tailwind spacing tokens.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. **ATOMIC EXECUTION**: Strict 50-line limit per change. Refactor one pattern at a time.
+  2. **Check Dark Mode**: Verify cards/dialogs against dark backgrounds.
+  3. **Accessibility**: Ensure contrast ratios are maintained.

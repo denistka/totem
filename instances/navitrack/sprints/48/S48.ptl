@@ -1,0 +1,91 @@
+v:1
+mode:agent
+role:lead
+sprint:S48-Refactoring-Clean-UI
+objective:Create a clean React app version in `src-react` with standardized CSS variables and App UI Kit architecture.
+status:ACTIVE
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-02-NEW-APP
+priority:P0
+dep:S47
+backlog:H-004, H-005, H-006, H-007
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/45/S44-INVARIANTS.md
+ui-kit:stacks/react-ts/APP_UI_KIT.ti
+max-file-lines:150
+colors:oklch-preferred
+atomic-limit:50-lines
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-analysis:
+  tasks:[T1-Map-Colors]
+  gate:map-defined
+
+phase-foundation:
+  tasks:[T2-Define-Theme]
+  gate:vars-operational
+
+phase-execution:
+  tasks:[T3-Refactor-Atoms, T4-Refactor-Patterns, T5-Refactor-Screens]
+  gate:visual-match
+
+phase-cleanup:
+  tasks:[T6-Final-Polish]
+  gate:zero-dead-code
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-Map-Colors:
+    critical:y
+    exec-order:1
+    desc:Audit codebase to map all color/blur values. Identify clusters for consolidation.
+    context:Output `S48-ANALYSIS-MAP.md`. No code changes yet.
+
+  T2-Define-Theme:
+    critical:y
+    exec-order:2
+    desc:Initialize `src-react`. Implement `src-react/styles/theme.css`. Update build config to point to `src-react`.
+    context:Foundation layer. Switching build target to `src-react`.
+
+  T3-Refactor-Atoms:
+    critical:y
+    exec-order:3
+    desc:Refactor basic UI elements into `src-react/components/ui/` using theme variables.
+    context:Low-risk, high-usage components. enforce `APP_UI_KIT.ti` rules on these atoms.
+
+  T4-Refactor-Patterns:
+    critical:y
+    exec-order:4
+    desc:Refactor composite components (Cards, Dialogs, Forms, Navigation).
+    context:Medium complexity. Ensure composition uses Atoms correctly.
+
+  T5-Refactor-Screens:
+    critical:y
+    exec-order:5
+    desc:Refactor Page layouts and Screen views. Replace hardcoded page backgrounds/containers.
+    context:High-level layout. Ensure global background handling is correct.
+
+  T6-Final-Polish:
+    critical:y
+    exec-order:6
+    desc:Remove unused legacy classes/variables. Verify visual regression.
+    context:Final cleanup to ensure no "dead" styles remain.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - Global Theme System is the ONLY source of truth for colors/blurs.
+  - Component hierarchy strictly follows Atoms -> Patterns -> Screens.
+  - No arbitrury Tailwind `[...]` values for styling.
+  - Visual output remains EXACTLY identical to S47.

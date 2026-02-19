@@ -26,7 +26,7 @@ dependency-rules:
   - Alignment: Exact versions for React, Radix, Tailwind, and supporting UI libs (CVA, Lucide, etc.).
 
 ui-kit-rules:
-  - Pure Functional UI: Components in `src/components/ui` MUST be stateless/controlled where possible.
+  - Pure Functional UI: Components in `src-react/components/ui` (canonical) MUST be stateless/controlled where possible.
   - Composition: Use Radix primitives to ensure accessibility (WAI-ARIA).
   - Styling: Strictly utility-first (no custom CSS). Use `cn()` for merging.
   - Variants: Use `class-variance-authority` (CVA) for all component states/sizes.
