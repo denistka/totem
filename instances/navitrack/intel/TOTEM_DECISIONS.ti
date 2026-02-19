@@ -45,10 +45,11 @@ purpose:machine-only key decisions
   - [S29-Southern-Lights,E-19-replaced-webgl-flower-wgpu-flower-with-southern-lights-Slang-compute-modular-navitrack-wgpu-common-southern_lights-WebGL-fallback-SouthernLightsBg-SouthernLightsWebGL]
   - [S30-Slang-connect,E-20-Slang-pipeline-for-Southern-Lights-ref/beams_compute_playground.slang-Shadertoy-XdlSDs-port-build-rs-slangc-or-ref-fallback-gen-beams_compute_playground.wgsl]
 
-2026-02-05-S32:
-  - [D-032-01,CI-runner,ubuntu-latest-for-CI-matrix-for-release-cost-effective]
-  - [D-032-02,HTTPS-env,VITE_BASE_ONLINE-VITE_BASE_API-env-variable-per-environment]
-  - [D-032-03,iOS-Keychain-key,single-key-navitrack_tokens-JSON-blob-simpler-atomic]
+2026-02-19:
+  - [Visual-Completion-S44,design-dash-succeeded-visuals-95-percent-complete]
+  - [Priority-Shift-Architecture,S44-legacy-quality-issues-make-refactoring-P0]
+  - [Atomic-Task-Hardening,tasks-must-be-under-50-lines-to-prevent-regression]
+  - [Suspicion-First,agents-warn-user-before-adding-redundant-logic]
 
 ###############################################################################
 # HUMAN SOURCE

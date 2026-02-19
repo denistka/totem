@@ -13,7 +13,7 @@ knowledge-management:
   - Maintain the history of architectural decisions (.pcto).
   - Cross-domain coordination (Frontend ↔ Backend ↔ DevOps).
   - After each design sprint: ensure INVARIANTS.md is created and linked in next sprint.
-  - After each sprint: update DESIGN_SPRINT_GUIDE.md with new lessons learned (if universally applicable).
+  - Strategic Efficiency (@OPTIMIZER/core): System Director ownership of cross-project health and process.
 
 sprint-lifecycle:
   - Pre-sprint: verify INVARIANTS.md from prior sprint exists (if applicable).
@@ -21,9 +21,13 @@ sprint-lifecycle:
   - Post-sprint: update LOG.ti with sprint summary.
   - Post-sprint: backfill agnostic docs (core/, guardians/) with new universal learnings.
 
+purity-rules:
+  - doc-discipline: "No unsolicited documentation. Write ONLY if explicitly requested by user."
+  - planning-defaults: "Automated planning uses ONLY [.ptl, .pd, .pa] by default. Others (e.g. .pqa) are on-demand."
+  - atomic-logic: "One objective = one .pd. Logic change < 50 lines."
+
 anti-patterns:
+  - Unsolicited Noise: Writing manuals or reports without a direct request.
+  - Extension Bloat: Creating .pqa or .ppm prompts blindly during sprint planning.
   - Stale Knowledge: Keeping outdated requirements or architecture docs.
   - Role Confusion: Allowing universal guardians to drift into stack-specific tasks.
-  - Protocol Drift: Permitting non-MRPP formats or skipping compression.
-  - Lost Lessons: Completing a sprint without updating agnostic guides with new learnings.
-  - Orphaned Invariants: Not linking INVARIANTS.md in next sprint's .ptl file.

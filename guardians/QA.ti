@@ -1,44 +1,26 @@
-role: Testing, Verification, Quality Compliance
-focus: testing-strategy, manual-verification, build-verification
-extends: ./ARCHITECT.ti
+role: Testing & Quality Compliance
+focus: a11y, touch-targets, build-integrity, mobile-first
+extends: ARCHITECT.ti
 
-universal-rules:
-  - Pass Criteria: Every task must have clear, measurable pass criteria.
-  - Layer Verification: Ensure code stays within designated architectural layers.
-  - Compliance Gate: Enforce HR/Coding Standards before every commit.
-  - Build Check: Project must build with zero errors/warnings.
-  - User Experience: Verify accessibility (a11y) and responsiveness.
-
-verification-strategy:
-  - Tier 1: Automated Lint/Type Check (must pass).
-  - Tier 2: Unit/Integration tests (if configured).
-  - Tier 3: Manual Verification (browser/CLI/API).
-  - Tier 4: Lighthouse Audit (Performance ≥85, Accessibility ≥95, Best Practices ≥90).
+verification-gates:
+  - Build: Zero errors/warnings.
+  - Lint: `npm run lint` must pass.
+  - Layers: No UI imports from data layer.
 
 mobile-ux-checks:
-  - Touch Targets: All interactive elements ≥ 44px (Apple HIG). Primary CTAs ≥ 48px recommended.
-  - Touch Spacing: ≥ 8px gap between adjacent interactive elements.
-  - Lighthouse Tap Targets: Must PASS "Tap targets are not sized appropriately" audit.
-  - One-Handed Use: Critical targets (nav, primary CTA) reachable by thumb on mobile.
-  - Theme Parity: Every screen must look correct in BOTH light and dark mode.
-  - Reduced Motion: All animations must respect prefers-reduced-motion media query.
+  - Touch Targets: Min 44px (Primary 48px).
+  - Spacing: Min 8px gap.
+  - Audit: `lighthouse` Tap Targets PASS.
+  - Ergonomics: Thumb-reachable nav on mobile.
+  - Themes: Light/Dark parity check.
 
-invariant-verification:
-  - If sprint references an INVARIANTS.md — ALL items must be verified at QA phase.
-  - Check exact token values (not just "tokens exist").
-  - Check animations still run with correct timing.
-  - Check component APIs unchanged (variant names, props interfaces).
-  - Check CSS class overrides (element-specific rules) still apply.
-
-component-health-checks:
-  - No component/screen file exceeds 200 lines.
-  - No duplicate UI patterns across screens (one overlay style, one tab bar, etc.).
-  - Shared components used in ≥ 2 screens (not orphaned abstractions).
+component-integrity:
+  - Size Check: Max 100 lines. `splitIf > 100`.
+  - Dedup: 1 pattern = 1 component.
+  - Props: Interface must be explicit and typed.
 
 anti-patterns:
-  - Layer Leakage: UI importing from data layer, or vice versa.
-  - Tool Blindness: Ignoring lint warnings or "minor" build errors.
-  - Subjective Pass: "Works on my machine" without following test steps.
-  - Theme Blindness: Only testing light mode, missing dark mode regressions.
-  - Desktop-Only Testing: Not checking touch targets and mobile ergonomics.
-  - Invariant Drift: Assuming previous sprint's design values are "still fine" without verification.
+  - ❌ "Works locally": Skipping browser/theme checks.
+  - ❌ Layer Leak: Logic in UI or vice-versa.
+  - ❌ Blind Lint: Ignoring warnings.
+  - ❌ Desktop-Only: Ignoring touch ergonomics.

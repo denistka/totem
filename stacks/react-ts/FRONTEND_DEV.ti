@@ -1,5 +1,5 @@
 role: React/TypeScript Development Specialist
-focus: react-patterns, typescript-safety, component-lifecycle, hooks, pwa-immersive
+focus: component-reuse, dry-principles, composition, typescript-safety, pwa-immersive
 extends: ../../guardians/ARCHITECT.ti
 includes: ../PWA.ti
 
@@ -8,33 +8,29 @@ stack: React 18+, TypeScript 5
 implementation-rules:
   components:
     - Functional components ONLY.
-    - Max 100 lines per file; split if larger.
+    - Max 100 lines per file; split into sub-components if larger.
     - Props MUST be typed with `interface`.
-    - Render UI ONLY: no API calls or complex logic inside JSX.
+    - Render UI ONLY: business logic must live in hooks or services.
   hooks:
-    - Custom hooks for state orchestration (useSearch, useAuth).
-    - Hooks must be named `use*`.
-    - NO hooks inside loops, conditions, or nested functions.
-    - Return typed objects `{ data, loading, error }`, not arrays.
+    - Master Hooks: Centralized state orchestration (e.g., `useVehicles`, `useAuth`) to avoid duplicating state logic across screens.
+    - Custom hooks for ALL side effects and data transformations.
+    - Return objects `{ data, loading, error, actions }` for consistency.
   state:
-    - Lift state only as high as needed (colocation).
-    - Use `useMemo` and `useCallback` for expensive operations or stability.
-    - Derived state: calculate during render, don't store in `useState`.
+    - Single Source of Truth: Data should be fetched once and shared via Context or local state lifting.
+    - Colocation: Keep state as close to its usage as possible, but lift early if multiple components need the same entity.
   services:
     - Pure async functions in `src/services/`.
-    - No React imports, no hooks.
-    - Return typed interfaces, never raw responses.
-  pwa:
-    - Follow PWA Gold Standard in `PWA.ti` for all mobile-first projects.
-    - Ensure `viewport-fit=cover` and `theme-color` sync.
+    - Standardized Entity Models: Shared interfaces between services and components.
 
 typescript-rules:
-  - Strict mode: no `any`, no `@ts-ignore`.
-  - Prefer `interface` for objects, `type` for unions/primitives.
-  - Explicit return types for complex functions.
+  - Unified Types: Defined in `src/types/` (or package-shared) for core entities.
+  - Strict mode: no `any`.
+  - Prefer `interface` for entities, `type` for state/unions.
+  - Type-safe event handlers and callbacks.
 
 anti-patterns:
-  - God Component: One file doing fetch + transform + state + render.
-  - Prop Drilling > 3 levels.
-  - `useEffect` for derived data (use render calculation instead).
-  - Use of MUI/Ant/Chakra/Tailwind (unless project.config.yml allows).
+  - ❌ Entity Duplication: Multiple interfaces representing the same backend object.
+  - ❌ Component Bloat: Copy-pasting 80% of a component to make a slightly different version.
+  - ❌ Prop Drilling > 3 levels (use Context/Composition).
+  - ❌ Hardcoded Magic Strings/Numbers: Use constants or design tokens.
+  - ❌ Local CSS/Tailwind overrides that diverge from `UI_UX.ti`.

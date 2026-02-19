@@ -1,40 +1,29 @@
-role: Technical Architecture, System Design, Design Patterns
-focus: clean-architecture, separation-of-concerns, modularity, abstraction
+role: Technical Architecture & System Integrity
+focus: reuse, composition, atomic-tasks, dry, low-perplexity
+extends: ROOT.ti
 
 universal-rules:
-  - Layered Architecture: Ensure clear boundaries between UI, Business Logic, and Data layers.
-  - Single Responsibility: Each module/class/function must do one thing well.
-  - Dependency Inversion: Depend on abstractions, not implementations.
-  - DRY (Don't Repeat Yourself): Extract common patterns into shared utilities or modules.
-  - YAGNI (You Aren't Gonna Need It): Build only what is required for the current task.
-  - Error Handling: Design consistent error propagation and logging strategies.
-  - Performance: Aim for O(1) or O(n) complexity. Avoid nested loops where possible.
+  - Atomic Tasks: Tasks MUST be < 50 lines of logic change. Use granular sub-tasks.
+  - DRY & Reuse: `import { Button } from "@/components/ui/button"` -> EXTEND, don't CLONE.
+  - Composition: `const Card = ({ children }) => <div className="p-4">{children}</div>`.
+  - Inversion: Inject dependencies; keep UI pure.
+  - Performance: No O(n^2) in render. Use `useMemo` for filters.
 
-component-rules:
-  - Size Limit: No component/screen file should exceed 200 lines (excluding comments/types).
-  - Split Strategy: Parent manages state; children are presentational with explicit props interfaces.
-  - Folder Structure: Complex widgets (date picker, rich editor) get own folder with sub-components.
-  - Deduplication: Same UI pattern must exist in exactly ONE component. Audit before adding new patterns.
-  - Common duplicates to watch: overlay/backdrop, dropdown triggers, tab bars, fixed CTAs, inline SVGs.
-  - Variant System: Use CVA or similar for component variants. Never create parallel component for size/style difference.
+component-integrity:
+  - Hard Limit: 100 lines max per file. `splitIf > 100`.
+  - Architecture: Parent (State) -> Children (Presentational + Props Interface).
+  - Variant Logic: 
+    ```typescript
+    const buttonVariants = cva("...", { variants: { size: { sm: "h-8", lg: "h-12" } } })
+    ```
+  - Dedup Audit: `grep -r "className=..."` before adding new styles. Reuse `UI_UX.ti` tokens.
 
 invariant-protection:
-  - Changes from completed sprints (tokens, animations, APIs, CSS classes) become invariants.
-  - Create INVARIANTS.md after each design sprint documenting frozen decisions.
-  - Changes to invariants are BLOCKED until explicitly discussed.
-  - New work must be ADDITIVE — extend, don't replace established patterns.
-
-process-rules:
-  - Document major architectural decisions in .pcto files.
-  - Review design before implementation (Phase 2-DESIGN in Iteration Flow).
-  - Enforce coding standards via automated tools and manual review.
-  - Conduct dedup audit (grep for repeated patterns) before each UI sprint.
+  - Frozen: `INVARIANTS.md` gates all UI/API changes from prior sprints.
+  - Protocol: Extend existing types; never break backward compatibility.
 
 anti-patterns:
-  - God Object: A single file/module managing too many concerns.
-  - God Component: A single UI file exceeding 200+ lines mixing state, layout, and presentation.
-  - Tight Coupling: Hard-coding dependencies between unrelated modules.
-  - Premature Optimization: Spending time on performance before identifying bottlenecks.
-  - Silent Failures: Catching errors without reporting or handling them.
-  - Pattern Duplication: Same UI pattern (overlay, tab bar, button group) reimplemented in multiple files.
-  - Invariant Violation: Changing tuned design values from prior sprints without discussion.
+  - ❌ God Component: > 100 lines or > 2 responsibilities.
+  - ❌ Fragmented Logic: Business logic in JSX. Use hooks.
+  - ❌ Shadow Elements: Local `const MyBtn = ...` when global `Button` exists.
+  - ❌ Massive Commits: > 3 files of logic at once. Keep it granular.

@@ -42,10 +42,11 @@ project:
   app:navitrack-apps
   stack:[tauri2,vue3,ts,rust,vite,pinia,tailwind,leaflet]
   scope:frontend
-  status:✅ Epic 0 + S34–S37,S27 complete
-  next:Epic 1 (S38,S39,S40,S20,S21)
+  status:✅ Epic 0 (Core) + Epic 1 (Design) complete.
+  next:Epic 2 (Architectural Hardening & Refactoring)
   epic0:E-00
-  epic1:E-01-TO-DO
+  epic1:E-01
+  epic2:E-02-ACTIVE
   done-ref:TOTEM_EPICS.ti#E-00
   to-do-ref:TOTEM_EPICS.ti#E-01-TO-DO
 

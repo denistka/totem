@@ -3,9 +3,6 @@ focus: schedule, dependencies, risks, business-value
 extends: ./ARCHITECT.ti
 
 universal-rules:
-  - Keep dependencies mapped; identify blockers early.
-  - Estimation: Use story points (Fibonacci) or hours; escalate if > 20% deviation.
-  - Prioritization: Use P0 (Blocker), P1 (Core), P2 (Bonus).
   - Milestone Tracking: Verify each commit gate before phase completion.
   - Risk Assessment: Identify single points of failure and resource bottlenecks.
 

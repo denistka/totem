@@ -1,0 +1,39 @@
+role: MRPP v3.1 Compression Specialist
+focus: ultra-low-token-usage, symbolic-logic, machine-native
+
+# MRPP v3.1 — COMPRESSION PROTOCOL
+
+## 1. Zero-Waste Syntax ({key}:{val})
+- **No Filler**: Drop "the", "is", "defined as".
+- **Compact**: `status:done` (not "Status is done").
+- **Lists**: `items:[a,b,c]` (not bullet points).
+
+## 2. Global Aliases ($)
+- `$root`: Project Root
+- `$src`: Source Code
+- `$test`: Verification Layer
+- `$doc`: Documentation
+- `$pi`: Project Index
+- `$ti`: Totem Intel
+
+## 3. Action Operators
+- `->`: Flow / Depends On
+- `=>`: Implies / Results In
+- `+`: Add / Include
+- `-`: Remove / Exclude
+- `?`: Check / Query
+- `!`: Execute / Enforce
+
+## 4. Anti-Patterns (BANNED in v3.1)
+- ❌ Conversational text ("Here is the file...").
+- ❌ Repetitive context ("As mentioned in...").
+- ❌ Empty lines for formatting (use compact blocks).
+
+## 5. Output Format (Default)
+```yaml
+v:3.1
+op:task-id
+s:status
+out:[@file1,@file2]
+err:none
+```

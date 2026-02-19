@@ -1,26 +1,39 @@
-role: UI Stack Adapter — app-ui-kit
-focus: canonical dependency set, Radix UI, Tailwind, component parity with ref
+role: UI Stack Adapter & Component Library — app-ui-kit
+focus: canonical dependency set, Radix UI, Tailwind, complete component library
 extends: ../../guardians/ARCHITECT.ti
 
-stack: React 19, Radix UI (primitives), Tailwind CSS 3.4, TypeScript 5.7
+stack: React 19, Radix UI (primitives), Tailwind CSS 3.4, TypeScript 5.7, Lucide React
 
 canonical-ref:
   package: refs/app-ui-kit/package.json
   components: refs/app-ui-kit/components/ui
   utils: refs/app-ui-kit/lib/utils.ts
 
-dependency-rules:
-  - Use refs/app-ui-kit/package.json as source of truth for React, Radix, Tailwind, and shared UI lib versions.
-  - Align @types/react and @types/react-dom via pnpm overrides when using this stack.
-  - Same major/minor (or exact) versions for: react, react-dom, all @radix-ui/*, tailwind-merge, clsx, class-variance-authority, tailwindcss-animate, date-fns, lucide-react, react-day-picker, sonner, vaul, zod, react-hook-form, @hookform/resolvers.
+scope:
+  elements:
+    - Typography: Headings (h1-h6), Body, Muted text, Inline code, Blockquotes
+    - Forms: Input, Textarea, Select, Checkbox, Radio, Switch, Label, Slider, OTP, DatePicker
+    - Interactive: Button, Toggle, ToggleGroup, Dropdown, ContextMenu, Command, Pagination
+    - Layout: Header, Footer, Sidebar, Shell, Card, Separator, ScrollArea, AspectRatio
+    - Feedback: Alert, Dialog/Modal, Drawer, Toast, Sonner, Progress, Skeleton, Badge
+    - Navigation: Breadcrumb, NavigationMenu, Tabs, Pagination, Accordion
+  patterns:
+    - Lists: Standardized <ul>/<li> wrappers with Tailwind spacing
+    - Containers: Centered wrappers with responsive padding
 
-ui-rules:
-  - Tailwind CSS for styling (utility-first). Theme parity with app-ui-kit.
-  - Radix UI primitives for accessible components; do not replace with other headless libraries.
-  - cn() helper from refs/app-ui-kit/lib/utils.ts pattern (clsx + tailwind-merge).
-  - Port or adapt components from refs/app-ui-kit/components/ui when building UI; remove Next.js-specific imports (e.g. next/link, next/image) for Vite/SPA.
+dependency-rules:
+  - Source of Truth: `refs/app-ui-kit/package.json`.
+  - Alignment: Exact versions for React, Radix, Tailwind, and supporting UI libs (CVA, Lucide, etc.).
+
+ui-kit-rules:
+  - Pure Functional UI: Components in `src/components/ui` MUST be stateless/controlled where possible.
+  - Composition: Use Radix primitives to ensure accessibility (WAI-ARIA).
+  - Styling: Strictly utility-first (no custom CSS). Use `cn()` for merging.
+  - Variants: Use `class-variance-authority` (CVA) for all component states/sizes.
+  - Immersive: Mobile-first responsive patterns using standard breakpoints.
 
 anti-patterns:
-  - Adding UI dependencies or versions that diverge from refs/app-ui-kit/package.json without alignment.
-  - Using vanilla CSS or other design systems when this adapter is selected.
-  - Next-only packages in Vite/SPA targets; use SPA equivalents.
+  - ❌ Fragmented UI: Creating ad-hoc buttons or inputs outside the central library.
+  - ❌ Logic-Heavy UI: Mixing business logic inside UI Kit components.
+  - ❌ Divergent Styling: Using HEX codes or custom classes instead of the design system tokens.
+  - ❌ Accessibility Gaps: Implementing complex UI (Modals, Selects) without Radix primitives.

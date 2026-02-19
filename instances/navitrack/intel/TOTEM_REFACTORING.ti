@@ -131,11 +131,20 @@ files:
   - sprints/EPIC1-TO-DO.pi
 
 ###############################################################################
+# 🛡️ PURITY RULES (Architectural Guardrails)
+###############################################################################
+
+purity-rules:
+  - deduplication: "Merge logic before adding files. One source of truth for every business rule."
+  - entity-unification: "Standardize types (Vehicle, Event, User) in @/types. No shadow clones."
+  - component-logic: "UI components (< 100 lines) are for rendering only. logic belongs in hooks/services."
+  - master-hooks: "Use orchestration hooks to manage complex state transitions."
+  - suspicion: "If a task increases complexity unnecessarily — BLOCK and explain."
+
+###############################################################################
 # NOTES
 ###############################################################################
 
 notes:
-  - addresses-4-areas-identified-2026-02-06
-  - foundation-for-future-development
-  - required-before-new-features
-  - improves-maintainability-performance
+  - pivot-2026-02-19: Visuals are 95% mature; all future energy goes to architectural purity.
+  - status: "Design Dash (S44) complete; logic cleanup is now P0."
