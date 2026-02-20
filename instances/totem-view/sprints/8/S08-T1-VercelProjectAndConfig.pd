@@ -1,0 +1,21 @@
+# S08-T1: Vercel project and vercel.json
+# S08-T1-VercelProjectAndConfig.pd
+
+**Objective:** Add Vercel project and root config so totem-view can be deployed. Configure routing (API rewrites, SPA fallback), and respect Vercel limits (URL length, rewrites/redirects count).
+
+**Context:**
+- Stack: `@totem/stacks/vercel`. Serverless under `api/`; SPA under client build output.
+- Invariants: S05, S06, S07 (no change to glass or display structure).
+
+**Gate:** OPEN
+
+**requires:** [VERCEL, BUILD]
+
+**Steps:**
+1. Add or link Vercel project (e.g. `vercel link` or project creation) for the totem-view codebase.
+2. Add root `vercel.json`: rewrites for `/api/:path*` to API destination; SPA fallback for non-api routes to `index.html`.
+3. Add security headers section in `vercel.json` if required (CSP, etc. per stack).
+4. Ensure config stays within limits (e.g. max rewrites/redirects, URL length).
+
+**Acceptance Criteria:**
+- `vercel.json` exists and defines API routing and SPA fallback. Project is linkable/deployable from CLI.

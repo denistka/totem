@@ -1,0 +1,20 @@
+# S05-T2: Glass Utility Classes and Component Classes
+# S05-T2-GlassUtilitiesAndComponents.pd
+
+**Objective:** Port glass utility and component classes from `taskboard-supabase` so panels, cards, and inputs share the same glass levels (subtle, standard, strong).
+
+**Context:**
+- Source: `taskboard-supabase/client/src/style.css` — `@layer components` (card-glass-*, button-icon-rounded-glass, input-bordered-focus-ring-primary), `@layer utilities` (glass-effect, glass-card, glass-subtle, glass-navbar-fixed).
+- Reference: `taskboard-supabase/totem/docs/UI_GLASS_EFFECT_SUMMARY.md` (§1–2, §7–8).
+
+**Gate:** OPEN
+
+**Steps:**
+1. Port `@layer components` classes: `card-glass-effect-with-border`, `card-glass-strong-rounded-2xl`, `card-glass-subtle-rounded`, `button-icon-rounded-glass`, `input-bordered-focus-ring-primary`, `textarea-bordered-focus-ring`, `label-text-themed-semibold`, and loading/button primaries as needed.
+2. Port `@layer utilities`: `glass-effect`, `glass-card`, `glass-subtle`, `glass-navbar-fixed`. Use Tailwind 4-compatible syntax; keep Safari `-webkit-backdrop-filter` where blur is used.
+3. Ensure light/dark variants for bg and border (e.g. white/20 and gray-700/30) match source.
+4. Add scrollbar and base styles from source if not already present (scrollbar thin, dark thumb).
+
+**Acceptance Criteria:**
+- All ported glass utility and component classes exist in totem-view `style.css` and render correctly in light/dark.
+- Blur surfaces use both `backdrop-filter` and `-webkit-backdrop-filter`.

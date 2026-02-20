@@ -1,0 +1,30 @@
+# Sprint 07: Pixel-Perfect and Logic-Perfect Parity with taskboard-supabase
+# S07.ptl
+
+**Goal:** Continue the taskboard-supabase copy by achieving pixel-perfect visual parity and logic-perfect behavioral parity. No new features — align totem-view with the reference so it looks identical and behaves identically (create/edit/delete, DnD, modals, toasts).
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass tokens, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer, planning by flow.
+
+**Source of truth (taskboard-supabase):**
+- Same as S06: pages (Boards.vue, Tasks.vue), components (BoardCard, TasksBoard, TasksColumn, TaskCard, TaskDetails, PageLayout), style.css, UI_GLASS_EFFECT_SUMMARY.md.
+- Behavior: CreateBoardModal, useBoardActions, useTaskOperations, useTaskDragAndDrop, TaskCreationForm, EmptyTaskState, DropIndicator, toasts (useNotification), TaskDetails edit/delete/close.
+
+**Gate:** OPEN
+
+## Track 1: Pixel-perfect (visual audit and alignment)
+- task: S07-T1-PixelBoardsList.pd
+- task: S07-T2-PixelBoardView.pd
+- task: S07-T3-PixelTaskDetail.pd
+
+## Track 2: Logic-perfect (behavior parity)
+- task: S07-T4-LogicCreateBoard.pd
+- task: S07-T5-LogicCreateTaskAndDnD.pd
+- task: S07-T6-LogicTaskDetailEditDelete.pd
+
+---
+
+**Result (sprint outcome):** totem-view matches taskboard-supabase in appearance (spacing, typography, empty/loading states) and in behavior (create board, create/move/delete task, task detail edit/delete, DnD, modals, toasts). Build passes; S05/S06 invariants preserved.
+
+**Invariants for next sprints:** Extend or create `instances/totem-view/S07-INVARIANTS.md` only if new frozen decisions arise; otherwise keep linking S05 + S06.

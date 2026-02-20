@@ -1,0 +1,16 @@
+# S04-T2: Layout Architecture Porting
+# S04-T2-LayoutArchitecture.pd
+
+**Objective:** Implement the transparent UI structure using `AppLayout` and `Background` patterns from `taskboard-supabase`.
+
+**Gate: OPEN**
+
+**Steps:**
+1. Create `components/layout/AppLayout.vue` based on source.
+2. Create `components/layout/AppBackground.vue` with premium gradients.
+3. Update `App.vue` to use the new layout wrappers.
+4. Ensure `RouterView` is correctly nested within the transparent content area.
+
+**Acceptance Criteria:**
+- Full-screen transparent UI with vibrant background gradients.
+- Layout remains responsive and stable.

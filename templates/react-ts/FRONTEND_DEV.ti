@@ -8,7 +8,7 @@ stack: React 18+, TypeScript 5
 implementation-rules:
   components:
     - Functional components ONLY.
-    - Max 100 lines per file; split into sub-components if larger.
+    - Max 150 lines per file; split into sub-components if larger. (Strict Rule: >150 lines triggers a refactor sprint).
     - Props MUST be typed with `interface`.
     - Render UI ONLY: business logic must live in hooks or services.
   hooks:
@@ -21,8 +21,9 @@ implementation-rules:
   services:
     - Pure async functions in `src/services/`.
     - Standardized Entity Models: Shared interfaces between services and components.
-
-typescript-rules:
+    - Heavy workloads (e.g., large data exports, reports) MUST be executed asynchronously to avoid blocking the UI thread.
+  
+  typescript-rules:
   - Unified Types: Defined in `src/types/` (or package-shared) for core entities.
   - Strict mode: no `any`.
   - Prefer `interface` for entities, `type` for state/unions.

@@ -1,0 +1,20 @@
+# S07-T6: Logic-Perfect — Task Detail Edit and Delete
+# S07-T6-LogicTaskDetailEditDelete.pd
+
+**Objective:** Implement task detail panel behavior in totem-view to match taskboard-supabase: edit title/description/status (and persist), delete task (with confirmation if present in reference), close panel on delete, and success/error toasts.
+
+**Context:**
+- Reference: `taskboard-supabase/client/src/components/modules/taskDetails/TaskDetails.vue` (edit mode, update, delete), `composables/useTaskOperations.ts` (update, remove), useNotification/toasts. Panel closes when selected task is deleted; list/board view updates.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. In task detail panel: editable title/description/status (inline or edit mode) per reference; on save call update handler (API or state).
+2. Delete action: if reference has confirmation (e.g. TaskDeleteConfirmation), implement same; on confirm call remove handler; close detail panel and clear selected task; refresh board task list.
+3. Wire toasts for update/delete success and errors to match reference (message text and type).
+4. Ensure closing panel (backdrop, close button) clears selection and matches reference behavior.
+
+**Acceptance Criteria:**
+- User can edit task in detail panel and delete task (with same confirmation flow as reference). Panel closes on delete; list updates; toasts match. Logic parity with taskboard-supabase.

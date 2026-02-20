@@ -1,0 +1,22 @@
+# S06-T2: Boards List Display
+# S06-T2-BoardsListDisplay.pd
+
+**Objective:** Add a boards list page in totem-view that displays items in a grid of board cards, matching the structure and styling of taskboard-supabase Boards.vue.
+
+**Context:**
+- Reference: `taskboard-supabase/client/src/components/pages/Boards.vue` (grid of BoardCard, PageLayout, optional loading overlay), `common/boards/BoardCard.vue` (ui-card variant strong, header/footer slots, glass styling).
+- Route in reference: `/boards`. Use S05-INVARIANTS for card classes (glass-card, card-glass-strong-rounded-2xl).
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add route for boards list (e.g. `/boards`) and a page component that wraps content in the same layout as other pages (PageLayout equivalent).
+2. Implement or reuse a board card component: glass card with header (name, description) and footer (actions/role), matching BoardCard.vue structure and styling.
+3. Render boards in a responsive grid (e.g. grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8) inside a max-width container, as in Boards.vue.
+4. Optional: loading overlay while boards are loading; optional create-board entry (modal can be S06-T4 or later). Focus on list + card display first.
+
+**Acceptance Criteria:**
+- Boards list page exists and shows items in a grid of glass-styled board cards.
+- Visual and structural parity with taskboard-supabase Boards.vue and BoardCard.

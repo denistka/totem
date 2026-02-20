@@ -1,0 +1,20 @@
+# S05-T1: Glass Tokens and CSS Variables
+# S05-T1-GlassTokensAndVariables.pd
+
+**Objective:** Port glass-related CSS variables and design tokens from `taskboard-supabase` into `totem-view` so all glass effects use a single source of truth.
+
+**Context:**
+- Source: `taskboard-supabase/client/src/style.css` (`:root` block), `taskboard-supabase/totem/docs/UI_GLASS_EFFECT_SUMMARY.md` (§1–3, §6).
+- Target: `totem-view/client/src/style.css` (`:root` and/or `@theme` as appropriate for Tailwind 4).
+
+**Gate:** OPEN
+
+**Steps:**
+1. Ensure `:root` (or `@theme`) defines glass accent RGB variables: `--glass-primary`, `--glass-accent` (and optional `--glass-secondary`, `--glass-tertiary`) as comma-separated RGB (no `rgba()`).
+2. Add any missing drag/drop and glass-related variables from taskboard-supabase `:root` that totem-view does not yet have.
+3. Add or align shadow tokens per UI_GLASS_EFFECT_SUMMARY §6: `glass`, `glass-lg`, `glass-xl`, `neon`, `neon-lg` (using accent RGB vars where applicable).
+4. Document in S05-INVARIANTS.md: token names and Safari rule (always pair `backdrop-filter` with `-webkit-backdrop-filter`).
+
+**Acceptance Criteria:**
+- Glass accent variables and shadow tokens are defined and usable in totem-view styles.
+- No build errors; dev server runs.

@@ -1,0 +1,15 @@
+---
+title: Server Initialization
+requires: [Node, Express, TypeScript]
+---
+
+# Server Initialization
+
+## Objective
+Create a lightweight Express backend in `totem-view/server` that serves Totem instances' data.
+
+## Tasks
+1. Initialize TypeScript Express app in `server/`.
+2. Implement an endpoint `GET /api/instances` that reads `/Users/denistka/Projects/totem/instances/`.
+3. The endpoint should parse `README.md` and basic metadata for each instance folder.
+4. Set up CORS to allow requests from the Vite dev server.

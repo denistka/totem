@@ -28,6 +28,7 @@ flow-rules:
   - Sequential: Phases follow the order (1→5).
   - Rollback: Failure at gate N returns the process to phase N-1.
   - Parallel: Task execution within DEVELOP can be parallelized if dependencies allow.
+  - Gate-Definition: A "gate" is an EXTERNAL human signal. The agent is strictly FORBIDDEN from assuming a gate is passed. You MUST stop and wait for user confirmation (e.g., "LGTM", "Proceed").
 
 multi-track-sprints:
   - Rule 1: Each track follows the same 5-phase flow internally.

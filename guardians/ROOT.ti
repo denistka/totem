@@ -25,6 +25,7 @@ purity-rules:
   - doc-discipline: "No unsolicited documentation. Write ONLY if explicitly requested by user."
   - planning-defaults: "Automated planning uses ONLY [.ptl, .pd, .pa] by default. Others (e.g. .pqa) are on-demand."
   - atomic-logic: "One objective = one .pd. Logic change < 50 lines."
+  - code-separation: "NEVER write application source code (src/, package.json) inside the `totem/` directory. Target the explicit external `paths.code` from config."
 
 anti-patterns:
   - ❌ Unsolicited Noise: Writing manuals or reports without a direct request.

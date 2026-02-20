@@ -1,0 +1,21 @@
+project:
+  name: totem-view
+  version: 1.0.0
+  stack: [vite]
+
+paths:
+  code: ../../../totem-view
+  history: .
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - NODE_EXPRESS
+    - REACT_TS
+    - BUILD
+    - VERCEL

@@ -1,0 +1,20 @@
+# S07-T4: Logic-Perfect — Create Board Flow
+# S07-T4-LogicCreateBoard.pd
+
+**Objective:** Implement create-board behavior in totem-view to match taskboard-supabase: open modal, submit (name/description), add board to list, close modal. Same UX and error handling as reference.
+
+**Context:**
+- Reference: `taskboard-supabase/client/src/components/pages/Boards.vue` (create trigger, list refresh), `common/boards/CreateBoardModal.vue`, `composables/useBoardActions.ts` (create flow). Modal uses S05 backdrop + modal-glass.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add create-board entry point on boards list (e.g. button or header action) matching reference placement.
+2. Implement CreateBoardModal equivalent: form fields (name, description), submit and cancel; on submit call create API or local state update, then close and refresh list.
+3. Ensure modal open/close and focus behavior matches reference; close on backdrop click per S05.
+4. If reference uses toasts for success/error, add equivalent feedback in totem-view.
+
+**Acceptance Criteria:**
+- User can open create-board modal, submit, see new board in list, modal closes. Behavior matches taskboard-supabase.

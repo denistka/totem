@@ -1,0 +1,18 @@
+---
+id: S03-T3-SprintListComponent
+title: Sprint List Component
+status: pending
+type: feature
+requires:
+  - REACT_TS
+---
+
+## Objective
+Build a component to list all sprints for an instance in a structured view (e.g. accordion or timeline).
+
+## Requirements
+- Create a `client/src/components/SprintList.tsx` component.
+- The component should accept an array of sprint objects as props.
+- Each sprint should display its ID, title, and goal.
+- Sprints should probably be collapsible (accordion style) to hide/show their inner tracks and tasks.
+- If a sprint has no tracks or tasks yet, display an appropriate empty state.

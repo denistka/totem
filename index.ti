@@ -1,6 +1,13 @@
 role: Totem Main Index
 focus: entry-point, global-graph, indexing
 extends: none
+
+# CRITICAL: ANTI-AUTO-PROCEED AXIOMS
+# 1. AI-ONLY: You are strictly forbidden from simulating or assuming human approval.
+# 2. SEPARATION: The agent that PLANS (PLANNER) is mentally blocked from EXECUTING. 
+# 3. GATING: Execution is LOCKED until a literal "LGTM" or "Go" is found in the LATEST user message.
+# 4. PHYSICAL LOCK: Any task (.pd) with 'gate: LOCKED' is UNEXECUTABLE. You must stop.
+
 includes: [./core/PROTOCOL_SCHEMA.ti, ./guardians/ROOT.ti]
 
 description: |

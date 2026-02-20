@@ -1,0 +1,18 @@
+# S05-T3: Modal / Overlay Glass Pattern
+# S05-T3-ModalOverlayPattern.pd
+
+**Objective:** Implement the two-layer modal pattern (backdrop + glass panel) from `taskboard-supabase` and document it for reuse in totem-view.
+
+**Context:**
+- Source: `taskboard-supabase/totem/docs/UI_GLASS_EFFECT_SUMMARY.md` (§4). Implementation refs: `HandoffPanel.vue`, `TaskDetails.vue`, `CreateBoardModal.vue`, `LoadingOverlay.vue`, `BoardJoinRequestsOverlay.vue` — `fixed inset-0 bg-black/30 backdrop-blur-md z-40` for backdrop; `modal-glass` + `backdrop-filter`/`-webkit-backdrop-filter` for panel.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Add a reusable `.modal-glass` class in `totem-view/client/src/style.css`: semi-transparent bg, blur (with Safari prefix), light border (`border-white/20` / `dark:border-gray-700/40`), shadow (e.g. shadow-2xl or token from T1).
+2. Document the pattern: backdrop = fixed inset-0, dim (e.g. bg-black/30), blur (e.g. backdrop-blur-md), z-40; panel = `.modal-glass`, z-50, appropriate width/position.
+3. Optionally add a minimal demo usage in one existing Vue component (e.g. a modal or overlay) to verify the pattern.
+
+**Acceptance Criteria:**
+- `.modal-glass` is defined and matches taskboard-supabase modal panel look (blur, border, shadow).
+- Pattern is documented in S05-INVARIANTS.md or a short comment in style.css.

@@ -1,0 +1,15 @@
+# Task: Enhanced Task Card & Content Display
+# S04-T2-EnhancedTaskCard.pd
+
+**Objective:** Upgrade the `TaskCard.vue` component to use glassmorphism and show more task detail.
+
+**Steps:**
+1. Apply `.glass-card` and `hover-lift-scale` to the main card container.
+2. Refactor layout to allow for "task content" display (not just title/desc).
+3. If task has markdown content, use a markdown renderer (e.g., `marked` which is already in dependencies).
+4. Improve spacing and typography to match the "hip-hop" premium aesthetic.
+
+**Acceptance Criteria:**
+- Cards have backdrop blur and glass borders.
+- Task content is visible and formatted.
+- Card interactions (hover, click) feel premium and responsive.

@@ -1,0 +1,13 @@
+# S04-T5: Project Configuration Sync
+# S04-T5-ProjectConfigFix.pd
+
+**Objective:** Update `project.config.yml` to reflect the correct frontend stack.
+
+**Gate: OPEN**
+
+**Steps:**
+1. Update `stack` from `react` to `vue`.
+2. Add info about Tailwind 4 and Vite.
+
+**Acceptance Criteria:**
+- Instance metadata is accurate.

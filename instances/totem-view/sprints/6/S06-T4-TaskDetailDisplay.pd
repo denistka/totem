@@ -1,0 +1,22 @@
+# S06-T4: Task Detail View (Modal / Panel)
+# S06-T4-TaskDetailDisplay.pd
+
+**Objective:** Add a task detail view in totem-view that opens as a modal/overlay when a task card is selected, matching taskboard-supabase TaskDetails.vue structure and modal-glass pattern.
+
+**Context:**
+- Invariants: S05-INVARIANTS modal/overlay pattern — backdrop (fixed inset-0 bg-black/30 backdrop-blur-md z-40), panel `.modal-glass` (semi-transparent bg, blur + -webkit-backdrop-filter, border, shadow, z-50).
+- Reference: `taskboard-supabase/client/src/components/modules/taskDetails/TaskDetails.vue` (visibility from selected task, backdrop + glass panel, header/content/metadata sections, close behavior).
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Implement task detail visibility tied to selected task (composable or shared state); open when a task card is clicked, close on backdrop click or close button.
+2. Render overlay: backdrop layer (dim + blur per S05-INVARIANTS) and panel layer with class `.modal-glass` (blur, border, shadow, z-50).
+3. Panel content structure: header (title, close), main content (e.g. description, status), metadata section (assignee, dates, etc.) — match TaskDetails.vue sections.
+4. Ensure Safari: every backdrop-filter has -webkit-backdrop-filter on the same element.
+
+**Acceptance Criteria:**
+- Clicking a task card opens a task detail overlay.
+- Overlay uses backdrop + modal-glass panel per S05-INVARIANTS; content structure matches TaskDetails.vue.

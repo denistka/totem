@@ -1,0 +1,22 @@
+# S07-T2: Pixel-Perfect — Board View (Kanban)
+# S07-T2-PixelBoardView.pd
+
+**Objective:** Align the single-board kanban view in totem-view with taskboard-supabase: column layout, task cards, column headers, empty state, loading state, and any drag visual feedback.
+
+**Context:**
+- Reference: `taskboard-supabase/client/src/components/pages/Tasks.vue`, `modules/tasksBoard/TasksBoard.vue`, `parts/TasksColumn.vue`, `parts/TasksColumnHeader.vue`, `common/tasks/TaskCard.vue`, `EmptyTaskState.vue`. Compare gap, min-width, padding, status border colors, drag classes (dragging, ghost-placeholder, drag-over).
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Compare board container: flex/gap, column min-width (e.g. 280px), padding (e.g. p-6 pb-0).
+2. Compare column header: title, task count, add-button placement and style.
+3. Compare TaskCard: left border by status (todo/in_progress/done colors), title/description typography, footer metadata spacing.
+4. Align EmptyTaskState: copy, layout, icon if any.
+5. Align drag visuals if DnD present: .dragging, .ghost-placeholder, .drag-over; use reference CSS vars (--drag-opacity, --drag-shadow-*, etc.).
+
+**Acceptance Criteria:**
+- Board view columns and task cards match reference in spacing and appearance.
+- Empty state and drag visuals (if implemented) match. Build passes.

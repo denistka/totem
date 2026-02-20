@@ -1,0 +1,10 @@
+# S04-T4: Project Config Update
+
+**Goal:** Fix the stack description in `project.config.yml`.
+
+**Steps:**
+1. Update `stack`: Change `react` to `vue`.
+2. Add `@tailwindcss/vite` and `Tailwind 4` to stack info if relevant (description/meta).
+
+**Acceptance Criteria:**
+- `project.config.yml` correctly describes the Node/Express/Vue/Vite stack.

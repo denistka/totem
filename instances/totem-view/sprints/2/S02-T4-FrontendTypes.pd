@@ -1,0 +1,17 @@
+---
+id: S02-T4-FrontendTypes
+title: Frontend Entities & Types Enhancement
+status: pending
+type: feature
+requires:
+  - REACT_TS
+---
+
+## Objective
+Enhance the shared types to accommodate the deeply parsed data so the frontend can define its consumption flow.
+
+## Requirements
+- Update `types.ts` in the `shared` module.
+- Update the `Project` interface to include fields from `project.config.yml` (e.g., stack, guardians).
+- Flesh out `Sprint` and `Task` parsing types based on the payloads that `S02-T3-ApiEndpoints` will expose.
+- Export these definitions clearly for frontend consumption.

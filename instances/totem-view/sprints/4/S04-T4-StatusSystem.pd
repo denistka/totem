@@ -1,0 +1,16 @@
+# S04-T4: Status Visualization Refinement
+# S04-T4-StatusSystem.pd
+
+**Objective:** Implement a vibrant, high-contrast status system for tasks.
+
+**Gate: OPEN**
+
+**Steps:**
+1. Define vibrant color tokens for each status (todo, in-progress, done, failed).
+2. Implement left-border accent markers on `TaskCard.vue`.
+3. Create glass-background badges for status names.
+4. Sync status mapping with the actual task data from the backend.
+
+**Acceptance Criteria:**
+- Statuses are instantly recognizable via color coding.
+- Badges look "premium" with glass effects.

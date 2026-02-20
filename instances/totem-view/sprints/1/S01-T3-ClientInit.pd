@@ -1,0 +1,15 @@
+---
+title: Client Initialization
+requires: [Vue3, Vite, Tailwind]
+---
+
+# Client Initialization
+
+## Objective
+Set up the `totem-view/client` application using Vue 3, Vite, and Tailwind CSS.
+
+## Tasks
+1. Create a new Vue 3 + TypeScript project using Vite inside `client/`.
+2. Install and configure Tailwind CSS adhering to a standard modern design.
+3. Remove boilerplate components and set up a clean `index.css` and `App.vue`.
+4. Configure Vue Router for navigation (e.g., `/` for Dashboard).

@@ -1,0 +1,23 @@
+# S07-T1: Pixel-Perfect — Boards List
+# S07-T1-PixelBoardsList.pd
+
+**Objective:** Align the boards list page in totem-view with taskboard-supabase so spacing, typography, grid, card layout, empty state, and loading state match the reference pixel-perfect.
+
+**Context:**
+- Invariants: S05-INVARIANTS (glass), S06-INVARIANTS (display parity).
+- Reference: `taskboard-supabase/client/src/components/pages/Boards.vue`, `common/boards/BoardCard.vue`. Compare container max-width, grid gap, card padding, font sizes, empty state copy/layout, loading overlay.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Compare totem-view boards list route/page with Boards.vue: wrapper, max-width, padding, grid (cols, gap).
+2. Compare BoardCard: header/footer slots, padding, border-radius, typography (title, description), any hover/focus states.
+3. Align empty state (no boards): copy, icon/illustration if any, centering; match reference.
+4. Align loading state: overlay or skeleton per reference; same z-index and blur as S05.
+5. Verify responsive breakpoints (grid-cols-1 md:2 xl:3 or equivalent) match.
+
+**Acceptance Criteria:**
+- Boards list layout, spacing, and typography match taskboard-supabase.
+- Empty and loading states match reference. Build passes.

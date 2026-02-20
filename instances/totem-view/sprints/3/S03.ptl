@@ -1,0 +1,14 @@
+# Sprint 03: Instance Details & Sprint Dashboard UI
+
+**Goal:** Build the frontend UI React components in `totem-view` to visualize project instances, their sprint histories, and respective task details using the newly created API endpoints.
+
+**Invariants:**
+- `S01-INVARIANTS.md`
+
+## Track 1: UI State & API Client
+- task: S03-T1-SprintApiClient.pd
+
+## Track 2: UI Components & Layout
+- task: S03-T2-InstanceDetailsPage.pd
+- task: S03-T3-SprintListComponent.pd
+- task: S03-T4-TaskCardComponent.pd

@@ -1,0 +1,28 @@
+# Sprint 06: Copy Styles and Display Parity with taskboard-supabase
+# S06.ptl
+
+**Goal:** Copy UI styles and glass-effect system from taskboard-supabase into totem-view, and replicate the three-level display structure: boards list, single board view, and task view. Achieve visual and structural parity with the reference.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass tokens, shadow tokens, Safari backdrop-filter, modal/overlay pattern, glass buttons and cards. All new UI must comply.
+
+**Source of truth (taskboard-supabase):**
+- Display: `client/src/components/pages/Boards.vue` (boards list), `Tasks.vue` (board + task detail), `router/index.ts` (routes `/boards`, `/board/:id`).
+- Components: `common/boards/BoardCard.vue`, `modules/tasksBoard/TasksBoard.vue`, `modules/tasksBoard/parts/TasksColumn.vue`, `common/tasks/TaskCard.vue`, `modules/taskDetails/TaskDetails.vue`, `wrappers/PageLayout.vue`.
+- Styles: `client/src/style.css` (glass utilities, card classes), `totem/docs/UI_GLASS_EFFECT_SUMMARY.md`.
+
+**Gate:** OPEN
+
+## Track 1: Style and glass parity
+- task: S06-T1-StyleAndGlassParity.pd
+
+## Track 2: Display structure (boards → board → task)
+- task: S06-T2-BoardsListDisplay.pd
+- task: S06-T3-BoardViewDisplay.pd
+- task: S06-T4-TaskDetailDisplay.pd
+
+---
+
+**Result (sprint outcome):** totem-view has the same three-level display (boards list, board view with columns, task detail view) and the same UI/glass styling as taskboard-supabase, in line with S05-INVARIANTS.
+
+**Invariants for next sprints:** `instances/totem-view/S06-INVARIANTS.md` — display parity, shared UI layer, planning note (do not scope tasks narrowly).

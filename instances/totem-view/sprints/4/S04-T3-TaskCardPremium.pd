@@ -1,0 +1,16 @@
+# S04-T3: Task Card Premium Upgrade
+# S04-T3-TaskCardPremium.pd
+
+**Objective:** Overhaul `TaskCard.vue` to support glassmorphism and detailed markdown content display.
+
+**Gate: OPEN**
+
+**Steps:**
+1. Apply `.glass-card` and `hover-lift-scale` to the card container.
+2. Implement `renderedContent` computed property for markdown support.
+3. Add a scrollable "Content" area for tasks with long descriptions/details.
+4. Use `marked` for rendering task body/content.
+
+**Acceptance Criteria:**
+- Cards have backdrop blur and elegant borders.
+- Task content is visible, formatted, and doesn't break layout.

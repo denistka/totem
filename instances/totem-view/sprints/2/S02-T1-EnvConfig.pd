@@ -1,0 +1,15 @@
+---
+id: S02-T1-EnvConfig
+title: Environment Configuration for Instances Path
+status: pending
+type: feature
+requires:
+  - NODE_EXPRESS
+---
+
+## Objective
+Update the environment variables to dynamically point to the `totem/instances` directory rather than relying on relative paths which break depending on the execution context.
+
+## Requirements
+- Add `TOTEM_INSTANCES_PATH=../totem/instances` to `.env.example` and standard backend configuration.
+- Ensure `server/src/index.ts` uses `process.env.TOTEM_INSTANCES_PATH` as a fallback or primary path instead of hardcoded `../../../`.

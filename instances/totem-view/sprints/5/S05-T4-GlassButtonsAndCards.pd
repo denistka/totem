@@ -1,0 +1,19 @@
+# S05-T4: Glass Buttons and Card Components
+# S05-T4-GlassButtonsAndCards.pd
+
+**Objective:** Provide glass-styled button and card building blocks in totem-view, aligned with taskboard-supabase glass button variants and card usage.
+
+**Context:**
+- Source: `taskboard-supabase/client/src/components/common/ui/Button.vue` (glass-button, glass-neon, glass-shimmer, glass-basic; CSS vars --glass-primary/--glass-accent; hover glow). `Card.vue` (card-glass-subtle-rounded, card-glass-strong-rounded-2xl).
+- Reference: `taskboard-supabase/totem/docs/UI_GLASS_EFFECT_SUMMARY.md` (§5, §8).
+
+**Gate:** OPEN
+
+**Steps:**
+1. In totem-view, add scoped or global CSS for glass button base: `backdrop-filter` + `-webkit-backdrop-filter` blur(5px), semi-transparent bg, border, inset highlight, hover glow using `rgba(var(--glass-accent), 0.2)` (and 0.1 for outer). Optionally add variants: glass-neon, glass-shimmer, glass-basic per Button.vue.
+2. Ensure at least one card style uses existing glass utility (e.g. card-glass-strong-rounded-2xl or glass-card) so task/sprint cards can use it.
+3. If totem-view has a shared Button component, add a glass variant that applies the new classes and passes through --glass-* CSS vars; otherwise document class names for use in templates.
+
+**Acceptance Criteria:**
+- Glass button styles (base + hover glow, optional variants) are available and use --glass-primary/--glass-accent.
+- Cards can use ported glass card classes; at least one screen uses a glass card or button for visual parity check.

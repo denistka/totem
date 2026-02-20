@@ -1,0 +1,16 @@
+---
+id: S03-T1-SprintApiClient
+title: Sprint API Client Methods
+status: pending
+type: feature
+requires:
+  - REACT_TS
+---
+
+## Objective
+Create frontend service methods to fetch sprints and tasks from the backend API.
+
+## Requirements
+- Add methods to the existing API client (e.g. `client/src/services/api.ts` or similar) to call GET `/api/instances/:id/sprints`.
+- Ensure the methods are strongly typed according to the shared types.
+- Provide proper error handling for failed requests.

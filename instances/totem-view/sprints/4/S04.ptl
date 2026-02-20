@@ -1,0 +1,18 @@
+# Sprint 04: Premium Glass UI/UX & Status Refinement
+# S04.ptl
+
+**Goal:** Import the complete "Premium Glass" aesthetic from `taskboard-supabase` into `totem-view`. Implement transparent UI layout, vibrant status visualization, and detailed task content rendering.
+
+**Invariants:**
+- `S04-INVARIANTS.md` (Design: Glassmorphism, Colors: Primary/Accent)
+
+**Gate:** LOCKED
+
+## Track 1: Style & Layout Foundation
+- task: S04-T1-StyleSystem.pd
+- task: S04-T2-LayoutArchitecture.pd
+
+## Track 2: Component & Data Visualization
+- task: S04-T3-TaskCardPremium.pd
+- task: S04-T4-StatusSystem.pd
+- task: S04-T5-ProjectConfigFix.pd

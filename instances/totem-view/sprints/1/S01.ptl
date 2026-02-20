@@ -1,0 +1,15 @@
+# Sprint 01: Totem View Foundation
+
+**Goal:** Establish the web application architecture (client/server) mimicking taskboard-supabase to visualize all Totem instances.
+
+**Invariants:**
+- `S01-INVARIANTS.md` (To be created upon architectural decisions)
+
+## Track 1: Setup & Backend (Core & Services)
+- task: S01-T1-MonorepoSetup.pd
+- task: S01-T2-ServerInit.pd
+
+## Track 2: Frontend App (UI & Types)
+- task: S01-T3-ClientInit.pd
+- task: S01-T4-ApiClient.pd
+- task: S01-T5-DashboardUI.pd

@@ -1,0 +1,22 @@
+# S06-T3: Board View Display (Kanban columns + task cards)
+# S06-T3-BoardViewDisplay.pd
+
+**Objective:** Add a single-board page in totem-view that shows a kanban board: columns per status and task cards in each column, matching taskboard-supabase Tasks.vue and TasksBoard/TasksColumn/TaskCard.
+
+**Context:**
+- Reference: `taskboard-supabase/client/src/components/pages/Tasks.vue` (PageLayout, TasksBoard full-width), `modules/tasksBoard/TasksBoard.vue` (horizontal columns), `parts/TasksColumn.vue` (column header + task list + drop zone), `common/tasks/TaskCard.vue` (ui-card variant strong, status border, header/footer).
+- Route in reference: `/board/:id`. TaskCard uses glass-card styling and status left border (todo/in_progress/done colors).
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add route for board view (e.g. `/board/:id`) and a page component that wraps content in the same layout; main area full-width for the board.
+2. Implement board view: horizontal flex/grid of columns, each column has a fixed header (title + task count) and a scrollable list of task cards.
+3. Task card component: glass card (per S05-INVARIANTS), left border color by status, title/description in header, metadata/actions in footer; match TaskCard.vue structure.
+4. Columns and cards use glass styling (glass-card, glass-subtle) and existing drag/drop CSS vars if drag-and-drop is implemented; at minimum match static layout and look.
+
+**Acceptance Criteria:**
+- Board page exists and shows columns with task cards.
+- Task cards and column layout match taskboard-supabase TasksBoard, TasksColumn, and TaskCard in structure and styling.

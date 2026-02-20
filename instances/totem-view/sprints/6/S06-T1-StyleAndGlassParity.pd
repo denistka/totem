@@ -1,0 +1,23 @@
+# S06-T1: Style and Glass Parity with taskboard-supabase
+# S06-T1-StyleAndGlassParity.pd
+
+**Objective:** Align totem-view global styles and glass usage with taskboard-supabase so that layout, cards, buttons, and modals match the reference. All rules from S05-INVARIANTS apply.
+
+**Context:**
+- Invariants: `instances/totem-view/S05-INVARIANTS.md` (glass tokens, shadows, Safari prefix, modal pattern, glass buttons/cards).
+- Reference: `taskboard-supabase/client/src/style.css`, `UI_GLASS_EFFECT_SUMMARY.md`, `PageLayout.vue`, `Card.vue`, `Button.vue`, modal usage (e.g. CreateBoardModal, TaskDetails backdrop/panel).
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Ensure `:root` in totem-view defines all glass and shadow tokens from S05-INVARIANTS; add any missing from taskboard-supabase style.css (e.g. drag/drop vars if needed for board view).
+2. Port or align layout wrapper (PageLayout equivalent): same content slot and structure as taskboard-supabase so pages sit in the same visual frame.
+3. Apply glass card classes to list/card surfaces per S05-INVARIANTS (card-glass-subtle-rounded, card-glass-strong-rounded-2xl, or glass-card); ensure TaskCard and list containers use glass-card / glass-subtle.
+4. Apply modal/overlay pattern: backdrop `fixed inset-0 bg-black/30 backdrop-blur-md z-40`; panel `.modal-glass` with semi-transparent bg, blur (and -webkit-backdrop-filter), border, shadow per S05-INVARIANTS.
+5. Ensure glass buttons (glass-button, glass-neon, glass-shimmer, glass-basic) and hover glow from --glass-accent are available and used where the reference uses them.
+
+**Acceptance Criteria:**
+- Global styles and tokens match S05-INVARIANTS and taskboard-supabase.
+- Layout wrapper and glass cards/buttons/modals are applied so totem-view visually aligns with taskboard-supabase.

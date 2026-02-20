@@ -1,0 +1,16 @@
+---
+id: S02-T3-ApiEndpoints
+title: Enhance API Endpoints for Totem Data
+status: pending
+type: feature
+requires:
+  - NODE_EXPRESS
+---
+
+## Objective
+Integrate the new `totemParser` service into the API endpoints to return fully parsed project and sprint payloads.
+
+## Requirements
+- Update GET `/api/instances` in `server/src/index.ts` to return fully parsed project objects including configuration from `project.config.yml` and the standard README.
+- Add GET `/api/instances/:id/sprints` endpoint to fetch detailed sprint history for a specific instance.
+- The endpoints should return JSON matching the extended shared types.

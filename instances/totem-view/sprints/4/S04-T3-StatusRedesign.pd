@@ -1,0 +1,15 @@
+# Task: Status Redesign & Detailing
+# S04-T3-StatusRedesign.pd
+
+**Objective:** Deepen the status visualization for tasks in `totem-view`.
+
+**Steps:**
+1. Design new badges/icons for all task statuses (todo, in_progress, done, failed).
+2. Use vibrant, high-contrast colors with glass backgrounds for status indicators.
+3. Implement a "status bar" or "border-accent" logic similar to `taskboard-supabase` (left border color coding).
+4. Ensure "actual status" is prominently displayed and easy to read at a glance.
+
+**Acceptance Criteria:**
+- Each status has a distinct, vibrant visual identity.
+- Status indicators respect the overall glassmorphism theme.
+- Statuses are correctly mapped from the task data.

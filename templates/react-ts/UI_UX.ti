@@ -39,10 +39,10 @@ component-patterns:
     - Reusable components located in `src/components/ui/`
     - Components should be "Shadcn-like" (Radix + Tailwind + CVA)
   inputs:
-    - Height: min-h-[44px] (Touch target standard)
+    - Height: min-h-[44px] (Strict Touch Target Standard: Apple HIG 44x44pt minimum).
     - Style: bg-background border-input ring-offset-background focus-visible:ring-2
   buttons:
-    - Height: min-h-[44px]
+    - Height: min-h-[44px] (Primary CTA should be 56px, standard 48px, min 44px).
     - Variants: default, destructive, outline, secondary, ghost, link
     - State: Hover, active, focus, disabled transitions (@apply transition-colors)
   modals/drawers:
@@ -51,6 +51,10 @@ component-patterns:
   accent-styles:
     - Glassmorphism: `bg-white/10 backdrop-blur-md border-white/20`
     - Glow effects: `shadow-[0_0_15px_rgba(var(--primary),0.5)]`
+  
+  performance:
+    - Hardware Acceleration: Critical animated elements (glass, glows, overlays) must use `will-change: transform, opacity; transform: translateZ(0);`
+    - Containment: Complex glass surfaces should use `contain: layout style paint;` for layout isolation.
 
 responsive-design:
   strategy: Mobile-First

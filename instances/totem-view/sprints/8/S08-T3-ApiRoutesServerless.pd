@@ -1,0 +1,21 @@
+# S08-T3: API routes as serverless (api/)
+# S08-T3-ApiRoutesServerless.pd
+
+**Objective:** Expose totem-view API as Vercel serverless functions under `api/`. Port or adapt existing endpoints (e.g. instances, sprints, tasks) to serverless handlers; respect max duration, payload size, and stateless execution.
+
+**Context:**
+- Stack: `@totem/stacks/vercel`. Directory `api/`; explicit Node runtime if needed; no WebSockets in functions.
+- Current server: Express in `server/src/index.ts` (instances, sprints, tasks, parser). Adapt to serverless invocation model.
+
+**Gate:** OPEN
+
+**requires:** [VERCEL, NODE_EXPRESS]
+
+**Steps:**
+1. Create `api/` structure; one route per logical endpoint or a single proxy handler as per stack routing.
+2. Implement serverless handlers that replicate existing API behavior (read instances, sprints, tasks; parser if used).
+3. Use `export const config = { runtime: 'nodejs' }` where required; handle Promise resolution/rejection in proxy scenarios.
+4. Keep handlers within duration and payload limits; no sticky sessions.
+
+**Acceptance Criteria:**
+- Existing API surface (e.g. `/api/instances`, `/api/sprints`, `/api/tasks`) available via serverless routes. Build and deploy succeed.

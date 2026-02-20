@@ -1,0 +1,26 @@
+# Sprint 05: Copy Styles from taskboard-supabase (UI & Glass Effects)
+# S05.ptl
+
+**Goal:** Copy and implement UI styles and glass-effect system from `taskboard-supabase` into `totem-view`, with focus on glassmorphism tokens, utility classes, modal/overlay pattern, and reusable glass components.
+
+**Source of truth:**
+- `taskboard-supabase/client/src/style.css` — variables, @layer components/utilities
+- `taskboard-supabase/totem/docs/UI_GLASS_EFFECT_SUMMARY.md` — glass recipe, levels, accent, modal/button patterns
+- taskboard-supabase components: `Button.vue` (glass variants), `Card.vue`, `.modal-glass` usage in modals/panels
+
+**Invariants:**
+- S04-INVARIANTS.md (if present); after S05: create S05-INVARIANTS.md (glass tokens, class names, Safari backdrop-filter rule).
+
+**Gate:** OPEN
+
+## Track 1: Style foundation
+- task: S05-T1-GlassTokensAndVariables.pd
+- task: S05-T2-GlassUtilitiesAndComponents.pd
+
+## Track 2: Glass UI implementation
+- task: S05-T3-ModalOverlayPattern.pd
+- task: S05-T4-GlassButtonsAndCards.pd
+
+---
+
+**Result (sprint outcome):** Текущий UI totem-view **не соответствует** дизайну taskboard-supabase. Токены, классы и паттерны портированы, но визуальная и композиционная parity с референсом не достигнута; требуется отдельная задача на выравнивание дизайна.

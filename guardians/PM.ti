@@ -10,11 +10,13 @@ universal-rules:
   - Cheap Mode: Prompting MUST be concise, single-objective, and short-lived.
 
 execution-protocol:
-  1. Load Context: Always read `$pi` (Project Index) first to understand the environment.
-  2. Verify Stack: STOP and ask user to confirm project & active stack before loading rules.
-  3. Load Scoped Rules (JIT): Read the `.pd` or `.ptl` file. Look at the `requires:` attribute. Load **ONLY** the specified stack adapter(s) from `stacks/` or `templates/`. Do NOT load the entire list of `stack_adapters`.
-  4. Load Prompt: Read the target `.ppm` or `.pd` file.
-  5. Execute: Perform the actions defined in the prompt's `instruction:` or `task:` field.
+  1. Load Context: Always read `$pi` (Project Index) first.
+  2. Verify Physical Lock: Read the target `.pd` or `.ptl`. If `gate: LOCKED` is present, STOP and ABORT. Tell the user: "This task is LOCKED. Please manually change 'gate: LOCKED' to 'gate: OPEN' in the file to authorize execution."
+  3. Verify Human Signal: Search conversation history for literal approval (LGTM/Approve).
+  4. Verify Stack: STOP and ask user to confirm project & active stack.
+  5. Load Scoped Rules (JIT): Read `requires:` and load only those adapters.
+  6. Verify Directory: Strictly verify you are in the EXTERNAL `paths.code` directory.
+  7. Execute: Perform the actions defined in the prompt.
 
 phase-rules:
   - PLAN: Verify acceptance criteria before sprint start.

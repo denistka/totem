@@ -1,0 +1,18 @@
+---
+id: S03-T2-InstanceDetailsPage
+title: Instance Details Page Layout
+status: pending
+type: feature
+requires:
+  - REACT_TS
+---
+
+## Objective
+Implement the main routing and layout for viewing a specific instance's details.
+
+## Requirements
+- Create a new page component `client/src/pages/InstanceDetailsPage.tsx`.
+- Add a new route `/instances/:id` in the frontend router.
+- Use the API client to fetch instance details and sprint data on mount.
+- Display basic instance information (Name, Version, Description, Stack).
+- Handle loading and error states appropriately.

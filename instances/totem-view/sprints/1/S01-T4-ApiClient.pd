@@ -1,0 +1,15 @@
+---
+title: API Client Composables
+requires: [Vue3, TypeScript]
+---
+
+# API Client Composables
+
+## Objective
+Create the frontend communication layer to fetch instance data from the Express backend.
+
+## Tasks
+1. Create `src/composables/useInstances.ts`.
+2. Implement fetching logic pointing to the `VITE_API_URL`.
+3. Define TypeScript interfaces for `TotemInstance` (e.g., `id`, `name`, `readmeContent`).
+4. Support loading and error states within the composable.

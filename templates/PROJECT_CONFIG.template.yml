@@ -1,0 +1,20 @@
+project:
+  name: { { PROJECT_NAME } }
+  version: 1.0.0
+  description: { { DESCRIPTION } }
+  stack: []
+
+paths:
+  # CRITICAL: This explicit relative path enforces that the agent writes OUTSIDE the totem/ history directory.
+  # Adjust the dots depending on where the `project-code` folder is located relative to the `totem/instances/` folder.
+  code: ../../../../{{PROJECT_NAME}}
+  history: .
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters: []

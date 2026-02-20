@@ -1,0 +1,14 @@
+---
+title: Monorepo Setup
+requires: [Node]
+---
+
+# Monorepo Setup
+
+## Objective
+Set up a basic workspace structure for `totem-view` with `client` and `server` directories.
+
+## Tasks
+1. Initialize a `package.json` in `totem-view/` with `pnpm` workspaces for `client` and `server`.
+2. Add root-level scripts to run both dev servers concurrently (e.g., `dev:server`, `dev:client`).
+3. Add `.env.example` defining basic variables like `PORT` and `VITE_API_URL`.

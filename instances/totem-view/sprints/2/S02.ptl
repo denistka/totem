@@ -1,0 +1,14 @@
+# Sprint 02: Totem Instances Data Pipeline
+
+**Goal:** Import all data from the `totem/instances` directory, parse it, and convert it into a structured, web-app-ready format.
+
+**Invariants:**
+- `S01-INVARIANTS.md`
+
+## Track 1: Backend Data & Parsers (Core Services)
+- task: S02-T1-EnvConfig.pd
+- task: S02-T2-ParserService.pd
+- task: S02-T3-ApiEndpoints.pd
+
+## Track 2: Frontend Integration (Types & Consuming)
+- task: S02-T4-FrontendTypes.pd

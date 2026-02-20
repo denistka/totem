@@ -1,0 +1,21 @@
+# S08-T6: UI and server copy continuation
+# S08-T6-UIAndServerParity.pd
+
+**Objective:** Complete any remaining UI and server-side parity with taskboard-supabase after S07. Address gaps in toasts/notifications, error handling, or server responses so behavior and visuals match the reference.
+
+**Context:**
+- Invariants: S05 (glass), S06 (display parity), S07 (pixel/logic parity).
+- Source: taskboard-supabase — useNotification, error states, server sync behavior.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Audit totem-view vs taskboard-supabase for remaining gaps: toasts, notification placement, error messages, loading states, server error handling.
+2. Implement or align toast/notification layer if missing (per reference).
+3. Align server response shape or client handling (status codes, error payloads) with reference where applicable.
+4. Preserve S05/S06/S07 invariants; no breaking changes to glass or three-level structure.
+
+**Acceptance Criteria:**
+- Identified parity gaps closed. Toasts/notifications and error handling match reference. Build passes; invariants preserved.

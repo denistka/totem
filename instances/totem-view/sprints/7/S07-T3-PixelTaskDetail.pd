@@ -1,0 +1,23 @@
+# S07-T3: Pixel-Perfect — Task Detail Panel
+# S07-T3-PixelTaskDetail.pd
+
+**Objective:** Align the task detail overlay in totem-view with taskboard-supabase: panel width/max-width, header/content/metadata sections, typography, spacing, and close control placement.
+
+**Context:**
+- Invariants: S05-INVARIANTS (modal-backdrop, modal-glass).
+- Reference: `taskboard-supabase/client/src/components/modules/taskDetails/TaskDetails.vue`. Compare panel size, section order, title size, description area, metadata layout (assignee, dates), close button position.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Compare overlay panel: max-width, padding, section spacing (header vs content vs metadata).
+2. Align header: title font size/weight, close button placement and style.
+3. Align content: description area (scroll if needed), line-height.
+4. Align metadata block: labels, values, spacing; match assignee/date layout.
+5. Ensure Safari: backdrop and panel use -webkit-backdrop-filter per S05.
+
+**Acceptance Criteria:**
+- Task detail panel layout and typography match TaskDetails.vue.
+- Build passes; S05 modal pattern preserved.

@@ -1,0 +1,20 @@
+# S07-T5: Logic-Perfect — Create Task and Drag-and-Drop
+# S07-T5-LogicCreateTaskAndDnD.pd
+
+**Objective:** Implement per-column task creation and drag-and-drop move in totem-view to match taskboard-supabase: add-task per column, TaskCreationForm, move task between columns/position, DropIndicator, ghost placeholder, and move API or state update.
+
+**Context:**
+- Reference: `taskboard-supabase/client/src/components/modules/tasksBoard/TasksBoard.vue` (isCreatingState, handleTaskCreate, handleTaskMoved), `parts/TasksColumn.vue` (useTaskDragAndDrop, DropIndicator, EmptyTaskState), `common/tasks/TaskCreationForm.vue`, `composables/useTaskDragAndDrop.ts`, `useTaskOperations.ts` (create, move). CSS: .dragging, .ghost-placeholder, .drag-over.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Implement toggle "add task" per column and TaskCreationForm: title/description, submit creates task in that column status, form closes; match reference UX.
+2. Implement useTaskDragAndDrop equivalent: drag start/end, drag over/enter/leave, drop; compute new status and position; call move handler (API or local state).
+3. Render DropIndicator at correct positions (before task, after task, empty column); show ghost placeholder for dragged card origin.
+4. Apply reference drag CSS vars and classes so drag state looks like taskboard-supabase. If reference uses toasts on move error, add same.
+
+**Acceptance Criteria:**
+- User can create a task from each column and move tasks between columns by drag-and-drop. Visual and behavioral parity with taskboard-supabase.

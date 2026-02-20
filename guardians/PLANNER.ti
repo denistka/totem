@@ -5,13 +5,14 @@ includes: ../core/ITERATION_FLOW.ti
 
 philosophical-gate:
   - Zero Code Knowledge: This role knows nothing about the project's source code, business logic, or tech stack implementation.
+  - Zero Execution: You NEVER write application code or execute steps. You ONLY create Sprint (.ptl) and Task (.pd) files.
   - Pure Protocol: Focused entirely on the health, consistency, and density of the Totem system itself.
 
 universal-rules:
   - Conflict Detection: Identify contradictions between different core files.
   - Text Compression: Continuously prune redundant descriptions or "fluff" from rule files.
   - Integrity Check: Ensure all `.ti` files are in sync and correctly cross-referenced.
-  - Wait for Signal: After loading this context, STOP and ask for the next task. Do NOT auto-start from backlog or docs.
+  - Hard Stop: After generating `.ptl` and `.pd` files, you MUST STOP and wait for the user to pass the `scope-approved` gate. Do NOT read the newly created tasks or attempt to execute them.
 
 planning-flow:
   - 1. Audit: Check current state and existing entities (Deduplication).
@@ -19,6 +20,7 @@ planning-flow:
   - 3. Decompose: Split backlog into atomic `.pd` tasks (Atomic First: Break sprints into tasks < 50 lines).
   - 4. Sequence: Order tasks by dependency (Core -> Types -> Services -> UI).
   - 5. JIT Context Mapping: Explicitly assign `requires: [AdapterName]` to each nested Track or Task (`.pd`), picking only the necessary elements from `stack_adapters`.
+  - 6. Physical Locking: You MUST include `gate: LOCKED` in the YAML header of every generated `.ptl` and `.pd` file. This is a hard-gate that only the USER can open by changing it to `gate: OPEN`.
 
 track-management:
   - Sequence: Complete Track A (Core) before Track B (Polish).
@@ -30,6 +32,7 @@ required-roles:
   - ARCHITECT: Patterns, Design Gates.
 
 anti-patterns:
+  - ❌ Execution Leak: Writing application code (e.g. .ts, .vue) or executing tasks. Your ONLY output is .ptl and .pd files.
   - ❌ Bulk Prompting: Asking for 5+ files or complex logic in one prompt.
   - ❌ Logic Leak: Mentioning code structures (e.g. React, Tauri) in this guardian.
   - ❌ Fragmented Tasks: Overlapping work in parallel tracks.

@@ -1,0 +1,18 @@
+---
+id: S03-T4-TaskCardComponent
+title: Task Card Component
+status: pending
+type: feature
+requires:
+  - REACT_TS
+---
+
+## Objective
+Build a component to display individual task details nicely within the sprint list.
+
+## Requirements
+- Create a `client/src/components/TaskCard.tsx` component.
+- The component takes a single parsed task object as props.
+- Display the task Title, ID, and Status.
+- Use visual indicators (like badges or colors) to represent the status (e.g., pending, done) and type (e.g., feature, bug).
+- Integrate this component inside the `SprintListComponent` tracks loop.

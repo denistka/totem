@@ -1,0 +1,35 @@
+# Sprint 08: Vercel Hosting, Server-Side Copy, Realtime
+# S08.ptl
+
+**Goal:** Host totem-view on Vercel; continue UI and server-side copy from taskboard-supabase; add a realtime layer. Delivered as a working Vercel deployment with API, optional realtime updates, and parity work.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass tokens, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer, planning by flow.
+- Sprint 07 outcome — pixel/logic parity with taskboard-supabase; extend only if new frozen decisions (S07-INVARIANTS.md).
+
+**Stack:** `@totem/stacks/vercel` (VERCEL). For execution, add `VERCEL` to `project.config.yml` `guardians.stack_adapters` when implementing this sprint.
+
+**Source of truth (taskboard-supabase):** Same as S06/S07 for UI and behavior. Server-side and realtime: align with reference where applicable; Vercel constraints (serverless, no WebSockets in functions) apply.
+
+**Gate:** OPEN
+
+## Track 1: Vercel hosting and build
+- task: S08-T1-VercelProjectAndConfig.pd
+- task: S08-T2-VercelBuildAndDeploy.pd
+
+## Track 2: Server-side (API on Vercel)
+- task: S08-T3-ApiRoutesServerless.pd
+- task: S08-T4-ServerlessDataEnv.pd
+
+## Track 3: Realtime
+- task: S08-T5-RealtimeStrategy.pd
+
+## Track 4: UI and server copy continuation
+- task: S08-T6-UIAndServerParity.pd
+
+---
+
+**Result (sprint outcome):** totem-view is deployable on Vercel; API runs as serverless; realtime strategy implemented (e.g. SSE or external provider); remaining UI/server parity from taskboard-supabase addressed. S05/S06 (and S07) invariants preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S08-INVARIANTS.md` only if new frozen decisions (e.g. Vercel layout, realtime contract); otherwise keep linking S05 + S06 + S07.

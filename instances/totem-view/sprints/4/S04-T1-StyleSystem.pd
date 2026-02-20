@@ -1,0 +1,20 @@
+# S04-T1: Style System Synchronization
+# S04-T1-StyleSystem.pd
+
+**Objective:** Port the core CSS variables and Tailwind utility layers from `taskboard-supabase` to ensure styling parity.
+
+**Context:**
+- Source: `taskboard-supabase/client/src/style.css`
+- Target: `totem-view/client/src/style.css`
+
+**Gate: OPEN**
+
+**Steps:**
+1. Copy all `:root` variables (drag indicators, glass colors, etc.).
+2. Port `@layer base` styles for body backgrounds and scrollbars.
+3. Port `.glass-*` utilities and `hover-lift-scale` from source.
+4. Ensure `tailwind.config` (or CSS `@theme`) matches the primary/accent palette.
+
+**Acceptance Criteria:**
+- `styled.css` contains all premium variables.
+- Dev server runs without CSS compilation errors.

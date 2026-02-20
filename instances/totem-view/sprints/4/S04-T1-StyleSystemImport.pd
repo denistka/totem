@@ -1,0 +1,18 @@
+# S04-T1: Style System Import
+
+**Goal:** Port the core CSS variables and Tailwind layer definitions from `taskboard-supabase` to `totem-view`.
+
+**Context:**
+- Source: `taskboard-supabase/client/src/style.css`
+- Target: `totem-view/client/src/style.css`
+
+**Steps:**
+1. Copy `:root` variables: drag indicators, glass colors, etc.
+2. Port `@layer base` styles for body, scrollbars, and focus states.
+3. Port `@layer components` for `button-*`, `card-*`, and `loading-*`.
+4. Port `@layer utilities` for glass effects and gradients.
+5. Ensure Tailwind 4 compatibility (use `@theme` if necessary, but stay close to source).
+
+**Acceptance Criteria:**
+- `style.css` in `totem-view` contains all essential "Premium" classes from source.
+- No build errors in Dev server.

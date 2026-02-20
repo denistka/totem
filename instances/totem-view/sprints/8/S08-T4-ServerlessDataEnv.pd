@@ -1,0 +1,21 @@
+# S08-T4: Serverless data and environment
+# S08-T4-ServerlessDataEnv.pd
+
+**Objective:** Make API data source compatible with Vercel serverless: no reliance on local filesystem beyond what is bundled or explicitly allowed. Use environment variables for paths and config; consider Vercel KV/Postgres/Blob only if persistence is required beyond env.
+
+**Context:**
+- Stack: `@totem/stacks/vercel`. No local file storage for persistent data; ephemeral/temp only.
+- Current: server reads from `TOTEM_INSTANCES_PATH` or default `../totem/instances`. On Vercel, instances may be at build-time or provided via env (e.g. repo path at build).
+
+**Gate:** OPEN
+
+**requires:** [VERCEL, NODE_EXPRESS]
+
+**Steps:**
+1. Document and use env vars for instance path and any config; ensure they are set in Vercel project.
+2. If runtime filesystem access to instances is required, ensure path resolves in serverless context (e.g. build-time bundle or allowed path).
+3. If persistence is needed for boards/tasks beyond in-memory, scope use of Vercel storage (KV/Postgres/Blob) in this task or defer; avoid hardcoded paths.
+4. No hardcoded API keys; no local file system storage for user data.
+
+**Acceptance Criteria:**
+- API runs in serverless with clear env contract. No forbidden use of local storage for persistent data.

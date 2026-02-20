@@ -1,0 +1,21 @@
+# S08-T2: Vercel build and deploy pipeline
+# S08-T2-VercelBuildAndDeploy.pd
+
+**Objective:** Configure build output and deploy pipeline so the client and serverless API deploy correctly on Vercel. Use environment variables for secrets and paths; no hardcoded keys.
+
+**Context:**
+- Stack: `@totem/stacks/vercel`. Build minutes and concurrency limits apply.
+- Output: client static assets; API from `api/` directory.
+
+**Gate:** OPEN
+
+**requires:** [VERCEL, BUILD]
+
+**Steps:**
+1. Set build command and output directory (e.g. client dist or root dist) in Vercel project settings or `vercel.json`.
+2. Define environment variables (e.g. `TOTEM_INSTANCES_PATH`, API keys) in project; document required env for deploy.
+3. Ensure serverless functions in `api/` are built or referenced so they deploy (Node runtime, no long-running loops).
+4. Verify one successful deploy (or build-only) so pipeline is green.
+
+**Acceptance Criteria:**
+- Build runs on Vercel; deploy produces client + API. Env vars documented; no secrets in repo.

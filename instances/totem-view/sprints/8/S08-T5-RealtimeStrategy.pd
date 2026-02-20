@@ -1,0 +1,21 @@
+# S08-T5: Realtime strategy and integration
+# S08-T5-RealtimeStrategy.pd
+
+**Objective:** Introduce a realtime layer for totem-view compatible with Vercel (no WebSockets in serverless). Implement Server-Sent Events (SSE) or integrate an external realtime provider; connect UI to live updates where needed.
+
+**Context:**
+- Stack: `@totem/stacks/vercel`. Anti-pattern: WebSockets in Serverless Functions (will disconnect).
+- Reference: taskboard-supabase may use Supabase Realtime; totem-view can use SSE from serverless or external service.
+
+**Gate:** OPEN
+
+**requires:** [VERCEL, BUILD]
+
+**Steps:**
+1. Choose strategy: SSE (e.g. endpoint in `api/` that streams events) or external provider (e.g. Pusher, Ably, Supabase Realtime), and document choice.
+2. Implement server-side: either SSE endpoint (within duration limits) or client config for external provider.
+3. Implement client-side: subscribe to stream or provider; update boards/tasks state on events (create/update/delete/move).
+4. Keep within Vercel limits (no long-running loops in API; edge or serverless duration).
+
+**Acceptance Criteria:**
+- Realtime updates (e.g. board/task changes) reflected in UI when using the chosen mechanism. No WebSockets in serverless.

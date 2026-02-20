@@ -1,0 +1,15 @@
+---
+title: Dashboard UI Implementation
+requires: [Vue3, Tailwind]
+---
+
+# Dashboard UI Implementation
+
+## Objective
+Build the dynamic visual interface to list Totem instances and view their details.
+
+## Tasks
+1. Build `InstanceList.vue` - a modern, stylized sidebar/grid displaying all available instances globally.
+2. Build `InstanceDetail.vue` - a main content area displaying the README.md transformed to HTML or formatted markdown.
+3. Add subtle hover micro-animations and a premium dark-mode aesthetic.
+4. Integrate the `useInstances` composable to display real data.
