@@ -1,0 +1,21 @@
+# S20-T6: Run sprint/task from UI
+# S20-T6-RunFromUi.pd
+
+**Objective:** Expose "Run" from the UI so the user can run a sprint or task: (1) Generate the run prompt (S20-T5) for the selected task or sprint. (2) Expose it to the user: copy to clipboard, show in a modal ("Paste this in Cursor"), or optional "Send to runner" if an API exists. No execution inside the app; human pastes in Cursor or approves run elsewhere. Entry points: "Run" on task card or task detail, "Run" on sprint/board, "Run" on a saved prompt (S20-T4).
+
+**Context:**
+- S20-T5: generated prompt text. UI: button "Run task" or "Run" opens modal with prompt text and "Copy" button; optional "Open in Cursor" (cursor:// or vscode:// URL with prompt if supported) or just "Copy and paste in Cursor". If runner API exists (external service that executes agent), optional "Run now" that POSTs prompt and shows status (separate story).
+- S05/S06: modal with textarea or pre-formatted text, Copy button, close. S10: gate reminder ("Ensure gate is OPEN and you've said LGTM before running.").
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add "Run" action on task: from task card or task detail, "Run task" generates prompt for that task (instance + sprint + task file) and opens a modal showing the prompt text. Button "Copy to clipboard"; optional short note "Paste in Cursor and ensure gate is OPEN."
+2. Add "Run" for sprint/board: "Run sprint" can list tasks with individual Run links, or generate one prompt that references the sprint .ptl (document behavior). Prefer per-task run for clarity.
+3. For saved prompts (S20-T4): "Run" resolves template (if any) with current instance/task context and shows same modal (copy paste). If prompt has no placeholders, show body as-is.
+4. Optional: if runner API is configured (e.g. POST /api/run with prompt), add "Run now" that sends prompt and shows "Run requested" or job id; status polling can be later sprint. Document. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- User can trigger Run from task, sprint, or saved prompt. Generated prompt is shown and copyable. Human-in-loop preserved. S05/S06 preserved.

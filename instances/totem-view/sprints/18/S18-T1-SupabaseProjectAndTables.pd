@@ -1,0 +1,21 @@
+# S18-T1: Supabase project and tables
+# S18-T1-SupabaseProjectAndTables.pd
+
+**Objective:** Set up a Supabase project (or use existing) for totem-view and create the initial tables for user data. Tables can include: user preferences (theme, last_instance_id, last_board_id), integration links (task_id, provider, external_id, url) or tenant settings (tenant_id, key, value). Document table names and purposes; no RLS implementation yet (S18-T2).
+
+**Context:**
+- SUPABASE.ti: RLS on all tables; use Supabase dashboard or migrations. Plan for at least one table that is clearly "user data" (e.g. user_preferences or tenant_data). If S14 tenant and S16 integration links exist, tables can store tenant_id, integration_links, etc.
+- S08: Supabase is external; no secrets in repo. Project URL and anon key in env.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Document or create Supabase project (e.g. via Supabase dashboard). Note project URL and anon key; document that they go in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (or server-side only if API proxies).
+2. Define initial tables: e.g. (a) user_preferences (id, user_id or tenant_id, key, value jsonb, updated_at); (b) integration_links (id, tenant_id, instance_id, task_id, provider, external_id, url, created_at); (c) or a single tenant_data table with flexible key-value. Choose one schema that fits preferences + integration links + future fields.
+3. Create tables via SQL or Supabase migrations. Add primary keys and timestamps. Document schema in S18 or README.
+4. Do not enable RLS or policies in this task; that is S18-T2.
+
+**Acceptance Criteria:**
+- Supabase project exists; at least one user-data table is created and documented. Schema supports preferences and optional integration links.

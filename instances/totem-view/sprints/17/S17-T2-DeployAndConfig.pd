@@ -7,7 +7,7 @@
 - Server needs file system access to TOTEM_INSTANCES_PATH; typically same machine or mounted volume. No secrets in repo; env for path and port.
 - totem-view client will need the realtime server URL (e.g. ws://localhost:3001 or wss://realtime.example.com) when not using serverless-only mode.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

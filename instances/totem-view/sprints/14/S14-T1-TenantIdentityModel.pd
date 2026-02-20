@@ -7,7 +7,7 @@
 - SaaS: each client = tenant. Request must carry tenant identity so backend can filter instances. Options: X-Tenant-Id header, Authorization Bearer (API key or JWT with tenant claim), subdomain (tenant.x.com), or query param (dev only).
 - Vercel/serverless: no sticky session; identity per request. Prefer header or Bearer token. Document; implementation of actual auth (login/signup) can be a later sprint.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

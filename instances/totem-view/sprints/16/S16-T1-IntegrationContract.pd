@@ -7,7 +7,7 @@
 - Each provider has different API (REST, auth). Abstraction: (a) getLink(taskKey) → url; (b) optional listProjects(), listTasks(projectId); (c) optional createOrUpdate. For "link only" we need at least (a) and a way to store taskKey per Totem task.
 - Field mapping: Totem task (id, title, status) ↔ external (key, summary, status). Document mapping per provider; status map can be configurable.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

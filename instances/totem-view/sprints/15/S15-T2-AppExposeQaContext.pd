@@ -7,7 +7,7 @@
 - S15-T1: contract and shape. Data comes from current route (instance, board id) and selected task (from task detail or board state). Use existing task payload (objective, steps, acceptanceCriteria from parser/boardMapping).
 - Production: optional to only expose when e.g. VITE_QA_DEVTOOLS=true or always; document. No secrets in context.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

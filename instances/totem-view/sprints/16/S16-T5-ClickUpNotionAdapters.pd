@@ -8,7 +8,7 @@
 - Notion: REST API; auth via integration token. Pages have id; URL: https://notion.so/{page_id}. Search or list database. Different auth and URL shape than Jira; adapter abstracts.
 - Implement same pattern: server-side client, getTaskUrl(id), optional list endpoints. Store credentials per tenant or env. No secrets in repo.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

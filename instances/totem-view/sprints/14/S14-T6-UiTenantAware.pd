@@ -7,7 +7,7 @@
 - S14-T3: API returns only tenant's instances; 403 for unauthorized :id. Client already sends tenant context (S14-T5). useInstances and useSprints will receive filtered data or 403.
 - S05/S06: preserve layout; add only error state and copy for 403/401. Optional: "Log out" or "Switch project" placeholder if multi-tenant UX is planned later.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

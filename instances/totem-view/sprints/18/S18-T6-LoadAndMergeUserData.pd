@@ -1,0 +1,21 @@
+# S18-T6: Load and merge user data
+# S18-T6-LoadAndMergeUserData.pd
+
+**Objective:** Load user data from Supabase on app init (or when user/tenant is known) and merge it into the app state so the UI reflects persisted preferences, last-viewed, integration links, etc. Read path uses same identity as write (S18-T4); RLS ensures only own data is returned.
+
+**Context:**
+- S18-T5: data is saved. On load (e.g. app mount or after auth), fetch user_preferences and/or integration_links. Apply theme, optionally redirect to last_instance/last_board, and merge integration links into task objects (or store in a store for task detail to read).
+- Totem data (instances, sprints) stays from existing API; user data from Supabase is merged (e.g. task.integrationLink from Supabase if not in .pd). Document merge strategy.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. On app init (or after identity is available), fetch user data from Supabase: e.g. SELECT * FROM user_preferences WHERE user_id = auth.uid(), and SELECT * FROM integration_links WHERE tenant_id = .... Store in Pinia store or composable state.
+2. Apply preferences: set theme from saved value; optional "open last viewed" (navigate to last instance/board if stored). Merge integration links into task context: when displaying a task, look up link by instance_id + task_id and attach to task object so "Open in Jira" works (S16).
+3. Handle empty or missing data (first visit); defaults for theme and no redirect. Handle load errors (show nothing or fallback to defaults). S05/S06 preserved.
+4. Document load order: identity → load user data → merge → render. Optional: show loading state until user data is loaded if it affects initial route.
+
+**Acceptance Criteria:**
+- User data is loaded from Supabase and applied (theme, last-viewed, links). Merge with existing Totem/API data where needed. Empty and error cases handled. S05/S06 preserved.

@@ -1,0 +1,21 @@
+# S18-T2: User data schema and RLS
+# S18-T2-UserDataSchemaAndRls.pd
+
+**Objective:** Enable Row Level Security (RLS) on all user-data tables and define policies so each user or tenant can only read/write their own rows. Use auth.uid() if using Supabase Auth, or a custom claim/column (e.g. tenant_id) that the client sends and the backend validates. Document policy shape.
+
+**Context:**
+- SUPABASE.ti: RLS on all tables; granular policies (SELECT, INSERT, UPDATE, DELETE) based on auth.uid() or equivalent. Never expose service_role to frontend.
+- If totem-view uses tenant id (S14) without Supabase Auth: options are (a) use Supabase Auth and map tenant to user, or (b) store tenant_id in table and enforce via RLS using a custom role or app-checked tenant_id (Supabase RLS can use request headers or JWT custom claims). Document chosen approach.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Enable RLS on every user-data table created in S18-T1. Default: deny all; then add policies.
+2. Define policies: e.g. "user can SELECT/INSERT/UPDATE/DELETE own rows where user_id = auth.uid()" or "tenant can access rows where tenant_id = request.jwt.claims.tenant_id". Implement in SQL (CREATE POLICY). Document policy logic.
+3. If using tenant_id without Supabase Auth: document how tenant_id is passed (e.g. JWT custom claim set by API, or API proxies all writes and uses service_role server-side). Ensure client cannot bypass by changing tenant_id in request.
+4. Test: user A cannot read or write user B's rows. No service_role in client bundle.
+
+**Acceptance Criteria:**
+- RLS enabled on all user-data tables. Policies restrict access by user or tenant. Documented and verified.

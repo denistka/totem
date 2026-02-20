@@ -7,7 +7,7 @@
 - S17-T4: event types and payload. S17-T5: server pushes. useRealtime currently subscribes to /api/events and calls onRefresh (refetch instances + sprints). New: when realtime server URL is set, connect to ws:// or SSE URL and on event "instances" call refresh instances; on "sprints" with instanceId call fetchSprints(instanceId) for that instance (and current view if applicable).
 - S05/S06: no UI change beyond data updating; loading states and errors handled. Optional: small "Live" indicator when connected to realtime server.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

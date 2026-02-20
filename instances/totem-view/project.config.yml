@@ -19,3 +19,4 @@ guardians:
     - REACT_TS
     - BUILD
     - VERCEL
+    - SUPABASE

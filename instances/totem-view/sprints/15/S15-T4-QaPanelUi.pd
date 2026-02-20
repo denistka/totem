@@ -7,7 +7,7 @@
 - S15-T3: panel receives QA context. S15-T1: shape has taskTitle, objective, steps, acceptanceCriteria, taskUrl, instanceId, boardId.
 - Audience: manual QA engineers (testers) who need to see "what to verify" without switching tabs. Copy and layout should be clear and friendly.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

@@ -8,7 +8,7 @@
 - Sync status: when Totem task status changes, call provider API to update issue status. Requires status map (todo → To Do, done → Done, etc.) and write permission on provider side.
 - Choose one: (a) Import from Jira (fetch issues, create links; no .pd creation if complex), or (b) Push status to Jira when task status changes in Totem. Document the other as future work.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS, BUILD]
 

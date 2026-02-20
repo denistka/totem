@@ -1,0 +1,21 @@
+# S18-T5: Save user data to Supabase
+# S18-T5-SaveUserData.pd
+
+**Objective:** Implement saving user data from totem-view to Supabase. At least one concrete flow: e.g. save user preferences (theme, last_instance_id, last_board_id) or save integration link (task_id, provider, external_id, url). Client calls Supabase (with session) or API that writes to Supabase; data persists and is scoped by user/tenant.
+
+**Context:**
+- S18-T1/T2: tables and RLS. S18-T3: client. S18-T4: identity. Write path: INSERT or UPSERT into the appropriate table. Validate payload (required fields, types) before write; rely on DB constraints for integrity.
+- Trigger saves when: user changes theme, navigates away from instance/board (save last viewed), or links a task to Jira (S16). Start with one flow (e.g. preferences or integration link) and use the same pattern for others.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Implement save for one user-data type: e.g. upsert into user_preferences (user_id, key, value, updated_at) for theme and last_instance_id, last_board_id. Or upsert into integration_links for task link. Use Supabase client from S18-T3; ensure session or tenant context is set (S18-T4).
+2. Call save from app at the right moment (e.g. on theme change, on route change for "last viewed", or on "Link to Jira" submit). Debounce or batch if many writes (e.g. last_viewed on route change). Handle errors (network, RLS denial); show toast or log.
+3. Do not block UI on save failure; optional retry or "Save failed" message. S05/S06 preserved.
+4. Document which keys/fields are saved and in which table.
+
+**Acceptance Criteria:**
+- At least one user-data flow (preferences or links) saves to Supabase. Scoped by user/tenant. Errors handled. S05/S06 preserved.

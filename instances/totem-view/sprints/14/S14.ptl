@@ -11,7 +11,7 @@
 **Source of truth:**
 - Current: API returns all instances from INSTANCES_DIR with no tenant filter. New: tenant identity (e.g. tenant id or API key) is determined per request; instance list and all instance-scoped endpoints filter by tenant ownership. Ownership mapping: tenant → instance ids (or instance → tenant id) from config or store.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 ## Track 1: Tenant and ownership model
 - task: S14-T1-TenantIdentityModel.pd

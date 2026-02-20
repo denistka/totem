@@ -1,0 +1,21 @@
+# S20-T5: Run prompt generation (sprint/task → runnable text)
+# S20-T5-RunPromptGeneration.pd
+
+**Objective:** Given a sprint or task in the current instance, generate the runnable Totem prompt text that the user (or runner) can use to execute it. Format: "read totem/index.ti, load instance {instanceId}, load PM and execute sprints/{sprintId}/{taskFile}.pd" for a task; for a sprint, either "execute S07.ptl" or list of tasks. Instance id and paths must match Totem layout (instances/totem-view, sprints/N/...). Document path conventions; optional API that returns generated prompt so UI can display or send to runner.
+
+**Context:**
+- README: "read totem/index.ti, load instance navitrack, load PM and execute sprints/46/S46-T1-ServerAuth.pd". For totem-view instance, instance id = totem-view; sprint dir = 7, task file = S07-T1-PixelBoardsList.pd → path sprints/7/S07-T1-PixelBoardsList.pd.
+- Generation can be client-side (template with instanceId, sprintId, task filename) or API GET /api/instances/:id/run-prompt?sprintId=7&taskId=S07-T1 so response is { prompt: "read totem/..." }. Document so runner (if any) can use same format.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define template for task run: "read totem/index.ti, load instance {{instanceId}}, load PM and execute sprints/{{sprintId}}/{{taskFileName}}.pd". For sprint run: "load PLANNER and ..." or "execute sprints/{{sprintId}}/S{{sprintId}}.ptl" — document whether "run sprint" means "run all open tasks" or "open sprint for planning". Prefer task-level run as primary; sprint = list tasks with run links.
+2. Implement generator (client or API): input (instanceId, sprintId, taskId or task filename) → output prompt string. Task filename from task id (e.g. S07-T1-PixelBoardsList.pd). Instance id from current context.
+3. Optional: GET /api/instances/:id/run-prompt?sprintId=&taskId= returns { prompt }. Useful for runner or clipboard. Document.
+4. No UI in this task; generation logic and contract only.
+
+**Acceptance Criteria:**
+- Given sprint and task (or task only), a runnable Totem prompt string is generated. Format matches README and PM protocol. Documented.

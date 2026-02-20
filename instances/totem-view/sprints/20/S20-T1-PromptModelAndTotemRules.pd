@@ -1,0 +1,21 @@
+# S20-T1: Prompt model and Totem rules
+# S20-T1-PromptModelAndTotemRules.pd
+
+**Objective:** Define the shape of a "prompt" that can be added from the app and that follows Totem rules. A runnable Totem prompt typically: (1) read index.ti, (2) load instance X, (3) load guardian (PLANNER, PM, etc.), (4) execute or plan with target (sprint .ptl or task .pd path, or free text). Model: name, body (template or final text), instanceId, guardian?, targetType? (sprint | task | custom), targetRef? (e.g. sprints/7/S07.ptl or task id), optional requires. Document so prompts are valid for Cursor/agent consumption.
+
+**Context:**
+- PROTOCOL_SCHEMA: .ptl, .pd, .ppm. PM usage: "load pm -> execute @prompt.ppm". README examples: "read totem/index.ti, load instance X, load PM and execute sprints/N/Task.pd".
+- Prompts added from app can be templates: e.g. "read totem/index.ti, load instance {{instanceId}}, load {{guardian}} and execute {{targetRef}}". Or pre-rendered with current instance and task. Document format (placeholder vs literal).
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define Prompt type: id, name, body (string; may contain placeholders {{instanceId}}, {{guardian}}, {{targetRef}}), instanceId, guardian? (PLANNER | PM | ARCHITECT | etc.), targetType? (sprint | task | custom), targetRef? (path or id). Optional: requires[] for JIT. CreatedAt, updatedAt.
+2. Document Totem rules that the prompt must satisfy: reference index.ti, instance, guardian, and either a concrete target (path to .ptl/.pd) or a clear intent (plan sprint for X). No execution inside the app; prompt is for use in Cursor or runner.
+3. Define how "run sprint" / "run task" maps to a prompt: e.g. for task S07-T1, targetRef = "sprints/7/S07-T1-PixelBoardsList.pd", guardian = PM, body = "read totem/index.ti, load instance totem-view, load PM and execute sprints/7/S07-T1-PixelBoardsList.pd". Instance id from current context.
+4. No storage or UI in this task; model and rules only.
+
+**Acceptance Criteria:**
+- Prompt shape and Totem rules for runnable prompts are documented. Run prompt generation (sprint/task → text) is defined.

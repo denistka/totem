@@ -5,7 +5,7 @@
 
 **Context:**
 - Client can either (a) refetch: on any event, call GET /api/instances or GET /api/instances/:id/sprints again; (b) apply delta: server sends new data in the event so client can merge. (a) is simpler and works with existing API; (b) reduces latency and load. Define at least (a); (b) optional.
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

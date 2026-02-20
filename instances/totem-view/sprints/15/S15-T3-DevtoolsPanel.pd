@@ -7,7 +7,7 @@
 - Chrome Extension with "devtools_page" in manifest points to devtools.html, which creates a panel. Panel script can use chrome.devtools.inspectedWindow.eval to read window.__TOTEM_QA_CONTEXT__ from the page, or use a content script that posts context to the extension via chrome.runtime.sendMessage.
 - Prefer content script + messaging so we don't rely on eval. Content script is injected into the page when DevTools is open (or when extension is enabled on totem-view origin). Document how to load the extension (unpacked) for QA.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

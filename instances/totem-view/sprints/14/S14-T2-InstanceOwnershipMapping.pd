@@ -7,7 +7,7 @@
 - INSTANCES_DIR currently holds all instance folders. Ownership: either (a) each instance has a tenant id (e.g. in project.config.yml or a small meta file), or (b) a central map (tenant_id → [instance ids]) in config or DB.
 - Vercel: no local file write at runtime for user data; config or env or external store. Single-tenant can use env TENANT_ID + single instance or instance prefix.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

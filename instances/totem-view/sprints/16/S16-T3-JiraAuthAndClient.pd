@@ -7,7 +7,7 @@
 - Jira Cloud REST API: auth via Basic (email + API token) or OAuth 2.0. Endpoints: GET /rest/api/3/issue/{key}, GET /rest/api/3/project, etc. Base URL: https://{domain}.atlassian.net.
 - Serverless: call Jira from API route (server-side only); pass tenant context if S14. Rate limits apply; document.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

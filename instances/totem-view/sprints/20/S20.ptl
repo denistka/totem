@@ -1,0 +1,32 @@
+# Sprint 20: Add prompts from app (Totem rules) and run sprints from UI
+# S20.ptl
+
+**Goal:** (1) Allow the user to add and manage prompts from the app that follow Totem rules (load index, instance, guardian, task/sprint ref, requires) and attach them to the project (instance). (2) Allow the user to "run" a sprint or task from the UI: generate the correct Totem-style run prompt (e.g. "read totem/index.ti, load instance X, load PM and execute sprints/N/Task.pd") and expose it (copy to clipboard, show in modal, or send to a runner API if available). Execution remains human-in-loop (user pastes in Cursor or approves run); the app provides the prompt and optional run trigger.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API. Totem protocol: execution is gated (gate, LGTM); agent runs in Cursor or runner, not inside totem-view.
+
+**Source of truth:**
+- Totem: `index.ti` → instance config → guardian (PLANNER, PM, etc.) → `.ptl` / `.pd`. Example run: "read totem/index.ti, load instance totem-view, load PM and execute sprints/7/S07-T1-PixelBoardsList.pd". Prompts added from app should follow this pattern (instance, guardian, target file or intent). Storage: instance folder (e.g. prompts/*.ppm or prompts list in Supabase) or API-served list.
+
+**Gate:** OPEN
+
+## Track 1: Prompt model and Totem rules
+- task: S20-T1-PromptModelAndTotemRules.pd
+- task: S20-T2-PromptStorageAndApi.pd
+
+## Track 2: Add prompts from app
+- task: S20-T3-AddPromptUi.pd
+- task: S20-T4-PromptListAndEdit.pd
+
+## Track 3: Run sprint/task from UI
+- task: S20-T5-RunPromptGeneration.pd
+- task: S20-T6-RunFromUi.pd
+
+---
+
+**Result (sprint outcome):** User can create and save prompts from the app using Totem rules (instance, guardian, target). User can trigger "Run sprint" or "Run task" from the UI and get a runnable prompt (copy or display); optional API to trigger an external runner. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S20-INVARIANTS.md` only if new frozen decisions (e.g. prompt schema, run API); otherwise keep linking S05 + S06 + S08.

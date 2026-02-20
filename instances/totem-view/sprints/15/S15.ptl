@@ -12,7 +12,7 @@
 - Task data already has objective, steps, acceptanceCriteria (parser and TaskDetails). App can expose "current QA context" (instance, sprint, task, acceptance criteria, steps) so DevTools panel can display it.
 - Chrome DevTools: custom panel via chrome.devtools API; communication with page via content script and chrome.runtime messaging, or inspectedWindow.eval. Extension does not change totem-view production build; it is an add-on for QA.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 ## Track 1: QA context contract and app exposure
 - task: S15-T1-QaContextContract.pd

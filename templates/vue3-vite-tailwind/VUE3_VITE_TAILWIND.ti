@@ -13,6 +13,10 @@ vue-vite-tailwind-rules:
     - Configure `tailwind.config.js` to intelligently purge unused CSS across all `.vue` and `.ts` files in the `src` directory.
   workflow:
     - Leverage Vite's lightning-fast HMR for rapid UI iterations without losing component state.
+  glassmorphism (optional):
+    - **Tokens:** Define in `:root`: `--glass-primary`, `--glass-accent`, `--glass-secondary`, `--glass-tertiary` (RGB, no `rgba()`). Use in styles as `rgba(var(--glass-accent), 0.2)`.
+    - **Safari:** Always pair `backdrop-filter` with `-webkit-backdrop-filter` for blur on glass surfaces.
+    - **Modal overlay:** Backdrop `fixed inset-0 bg-black/30 backdrop-blur-md z-40`; panel `.modal-glass`: semi-transparent bg, blur (with Safari prefix), light border, shadow, z-50.
 
 anti-patterns:
   - ❌ Running heavy custom post-css plugins alongside Tailwind without need, degrading Vite's out-of-the-box speed.

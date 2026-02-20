@@ -1,0 +1,21 @@
+# S20-T4: Prompt list and edit
+# S20-T4-PromptListAndEdit.pd
+
+**Objective:** Show a list of saved prompts for the current instance and allow the user to edit or delete. List can live in instance view (e.g. "Prompts" section or tab) or in a dedicated prompts page. Each item: name, optional guardian/target hint, actions (Edit, Delete, Run). Edit opens form (same as add) with PATCH on save.
+
+**Context:**
+- S20-T2: GET and PATCH, DELETE. S20-T3: add form. Reuse form for edit (pre-filled with prompt data). List from GET /api/instances/:id/prompts.
+- S05/S06: list as cards or table; actions as buttons. Confirm before delete.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add prompts list: fetch GET /api/instances/:id/prompts when on instance view (or prompts page). Display name, optional subtitle (guardian, targetRef), and buttons Edit, Delete, Run (Run = S20-T6).
+2. Edit: click Edit opens modal/form with prompt data; on save call PATCH. Delete: confirm dialog then DELETE. Handle empty list ("No prompts yet. Add one.").
+3. Optional: sort by name or updatedAt. S05/S06 preserved.
+4. Ensure instance context is clear (prompts are for this instance). Tenant scoping if S14.
+
+**Acceptance Criteria:**
+- User sees list of prompts for the instance; can edit and delete. Run action wired (S20-T6). S05/S06 preserved.

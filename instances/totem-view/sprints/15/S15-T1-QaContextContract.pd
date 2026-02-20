@@ -7,7 +7,7 @@
 - Manual QA tests against a given task: "I'm testing S07-T1; show me acceptance criteria and steps." Data is already in the app (task detail, board mapping). Contract is how DevTools panel gets it.
 - Options: (a) window.__TOTEM_QA_CONTEXT__ updated when route/task changes; (b) postMessage from page to extension with context; (c) extension injects script and reads from app state. Prefer (a) or (b) so panel can poll or subscribe.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

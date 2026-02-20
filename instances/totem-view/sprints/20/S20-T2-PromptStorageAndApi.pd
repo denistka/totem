@@ -1,0 +1,21 @@
+# S20-T2: Prompt storage and API
+# S20-T2-PromptStorageAndApi.pd
+
+**Objective:** Persist user-added prompts and expose them via API so the app can list, create, update, and delete prompts per instance. Storage: Supabase table (if S18) or file under instance (e.g. instance/prompts.json or instance/prompts/*.ppm). API: GET /api/instances/:id/prompts, POST to create, PATCH to update, DELETE to remove. Scoped by instanceId; tenant if S14.
+
+**Context:**
+- S20-T1: prompt shape. S18: Supabase for user data; prompts can be a table (prompts: id, instance_id, tenant_id?, name, body, guardian, target_type, target_ref, created_at, updated_at). RLS by tenant/user. Alternative: store in Totem instance dir (instance/prompts.json) if app has write access to instance.
+- S08: serverless-friendly. POST/PATCH/DELETE require auth (tenant or user); GET returns list for instance.
+
+**Gate:** OPEN
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Create storage: Supabase table prompts (or prompts.json in instance). Columns/fields per S20-T1. RLS if Supabase. Document choice.
+2. Implement GET /api/instances/:id/prompts: return array of prompts for that instance. Optional sort by name or updatedAt.
+3. Implement POST /api/instances/:id/prompts: body = { name, body, guardian?, targetType?, targetRef? }. Validate required fields; set instanceId from route. Return created prompt with id.
+4. Implement PATCH /api/instances/:id/prompts/:promptId and DELETE. Auth per S14 if applied. Document API.
+
+**Acceptance Criteria:**
+- Prompts can be created, listed, updated, and deleted per instance. API documented. Storage and auth clarified.

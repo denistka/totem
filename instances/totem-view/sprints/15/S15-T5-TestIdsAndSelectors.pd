@@ -7,7 +7,7 @@
 - S06: boards list, board view, task cards, task detail. Key elements: board cards, task cards, column headers, create button, task detail panel, close button. Adding data-testid does not change visuals (S05/S06).
 - QA benefit: manual testers can say "click the element with data-testid=board-card-S07"; automation or scripts can use the same ids. DevTools panel can list or copy selectors for current view.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

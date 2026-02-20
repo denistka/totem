@@ -6,6 +6,7 @@ tailwind-gold-standard:
     - Maximize utility classes directly in HTML structure instead of writing custom CSS.
   component-extraction:
     - If a combination of Tailwind classes is heavily repeated (like a button), extract it into a framework component (React/Vue/Svelte) rather than using `@apply` in CSS, to keep styling collocated.
+    - **Tailwind v4:** Use `@apply` only for Tailwind utility names. Do not `@apply` custom/component class names — compilation can fail or behave unexpectedly.
   configuration:
     - Use `tailwind.config.js` to define your design system (colors, typography, spacing).
   responsive-design:

@@ -1,0 +1,21 @@
+# S18-T3: Supabase client and env
+# S18-T3-SupabaseClientAndEnv.pd
+
+**Objective:** Add Supabase client to totem-view (e.g. @supabase/supabase-js) and initialize it with URL and anon key from env (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY). Single place to get the client (composable or module); use for all Supabase calls from the client. Document env vars and that anon key is public but safe with RLS.
+
+**Context:**
+- SUPABASE.ti: keep URL and anon key in .env; never hardcode. Client-side use is allowed with anon key when RLS protects data.
+- S08: Vercel deploy; env vars set in Vercel project. Local .env.example or README lists required vars.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add dependency: @supabase/supabase-js. Create a module or composable (e.g. useSupabase or lib/supabase.ts) that creates and exports createClient(SUPABASE_URL, SUPABASE_ANON_KEY). Read from import.meta.env.VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.
+2. Handle missing env: if URL or key is missing, return null or a no-op client so app does not crash when Supabase is not configured. Optional: feature-flag so "user data" features are hidden when Supabase is off.
+3. Document .env.example: VITE_SUPABASE_URL=, VITE_SUPABASE_ANON_KEY=. State that anon key is safe for frontend when RLS is enabled. No service_role key in client code or env.
+4. S05/S06 unchanged; no UI yet, only client init.
+
+**Acceptance Criteria:**
+- Supabase client is initialized from env. Single export for use across app. Missing env handled. Documented.

@@ -1,0 +1,21 @@
+# S20-T3: Add prompt UI (create prompt with Totem rules)
+# S20-T3-AddPromptUi.pd
+
+**Objective:** Provide UI in the app to create a new prompt that follows Totem rules: form with name, body (template or text), optional guardian, target type (sprint/task/custom), and target ref. Instance is current instance (from route or context). On submit, call POST to save prompt; validate required fields (name, body) and optional Totem placeholders. Use S05 glass form; modal or dedicated page.
+
+**Context:**
+- S20-T1: prompt model. S20-T2: POST /api/instances/:id/prompts. User can type body with placeholders {{instanceId}}, {{guardian}}, {{targetRef}} or use a simplified form that builds the body (e.g. "Run task" pre-fills guardian=PM and targetRef from selected task).
+- S05/S06: form in modal or section; validation and error toast.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add entry point: "Add prompt" or "New prompt" (button in instance view or prompts section). Open modal or navigate to form.
+2. Form fields: name (required), body (textarea; required), optional guardian (dropdown: PM, PLANNER, ARCHITECT, etc.), optional target type and target ref. Instance id from current route (instance detail or boards context). Help text: "Use {{instanceId}}, {{guardian}}, {{targetRef}} in body for templates."
+3. On submit: validate; call POST /api/instances/:id/prompts. On success, close modal and refresh prompt list (S20-T4); on error, show message. S05/S06 preserved.
+4. Optional: "From current task" pre-fill — when opening form from a task, pre-fill body with "read totem/index.ti, load instance X, load PM and execute sprints/N/TaskId.pd" using current instance and task.
+
+**Acceptance Criteria:**
+- User can create a prompt from the app with Totem-aware fields. Saved via API. S05/S06 preserved.

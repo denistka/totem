@@ -7,7 +7,7 @@
 - S14-T1: backend expects e.g. X-Tenant-Id or Authorization. Client must send it. In SaaS, tenant might come from login response (store in memory or safe storage) or from build-time config (e.g. each deploy is one tenant, VITE_TENANT_ID).
 - No login UI in this task if not already present; use env or config for tenant id or API key. Document how to set for dev and prod.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

@@ -1,0 +1,33 @@
+# Sprint 18: Save user data to Supabase
+# S18.ptl
+
+**Goal:** Persist user data in Supabase so it survives sessions and devices. Define which data is "user data" (preferences, settings, integration links, last-viewed state, tenant-specific config), create Supabase tables with RLS, and implement save/load from totem-view client (or via API). Supabase URL and anon key in env; no service_role in frontend.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API. Supabase is an external store; API may proxy or client may call Supabase directly with anon key and RLS.
+- `totem/stacks/supabase/SUPABASE.ti` — RLS on all tables; auth.uid() or tenant id for policies; no service_role in frontend.
+
+**Source of truth:**
+- User data: anything that belongs to a user or tenant and should persist (preferences, integration credentials/links, last instance/board, theme, etc.). Totem instance/sprint/task content stays file-based; user data lives in Supabase. Identity: Supabase Auth (user id) or existing tenant id (S14); RLS scopes rows by user_id or tenant_id.
+
+**Gate:** OPEN
+
+## Track 1: Supabase project and schema
+- task: S18-T1-SupabaseProjectAndTables.pd
+- task: S18-T2-UserDataSchemaAndRls.pd
+
+## Track 2: Client and env
+- task: S18-T3-SupabaseClientAndEnv.pd
+- task: S18-T4-IdentityForSupabase.pd
+
+## Track 3: Save and load user data
+- task: S18-T5-SaveUserData.pd
+- task: S18-T6-LoadAndMergeUserData.pd
+
+---
+
+**Result (sprint outcome):** User data (defined scope) is saved to and loaded from Supabase. Tables have RLS; client or API uses anon key and user/tenant identity. totem-view can persist preferences, integration links, and other user-scoped data. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S18-INVARIANTS.md` only if new frozen decisions (e.g. table names, RLS policy shape); otherwise keep linking S05 + S06 + S08.

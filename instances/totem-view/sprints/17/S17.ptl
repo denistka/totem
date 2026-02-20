@@ -11,7 +11,7 @@
 **Source of truth:**
 - Totem: files under TOTEM_INSTANCES_PATH (instances, sprints/*.ptl, sprints/*/*.pd). Existing totemParser (parseProjectConfig, parseSprintFile, parseTaskFile) is reused. Realtime server watches (or polls) that path and re-parses on change; then pushes event types (e.g. instances, sprints, task) so clients can refetch or apply delta.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 ## Track 1: Realtime server role and architecture
 - task: S17-T1-RealtimeServerArchitecture.pd

@@ -1,0 +1,21 @@
+# S19-T1: Feedback model and contract
+# S19-T1-FeedbackModelAndContract.pd
+
+**Objective:** Define the shape of "AI feedback for human": what the agent sends and what the app stores and displays. Fields: scope (instanceId, sprintId, taskId — at least one), type (status | block | suggestion | message), body (markdown or plain text), actor (id, name, type: 'agent'), createdAt. Optional: priority, read/dismissed flag. Document the contract for both agent submission and API/UI consumption.
+
+**Context:**
+- S12: Actor has id, type, name. Feedback is from an agent (or system) to the human. Types: status = "Task completed", block = "Waiting for gate OPEN / LGTM", suggestion = "Consider adding X", message = free-form.
+- Scope allows filtering: "all feedback for this task", "for this sprint", "for this instance". Human sees feedback in context (task detail, board, or panel).
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define Feedback type: id, instanceId?, sprintId?, taskId?, type, body, actor: { id, name, type: 'agent' }, createdAt (ISO8601). Optional: priority (number or enum), dismissed (boolean). Document in shared types or API spec.
+2. Define semantics of type: status (informational), block (human action needed), suggestion (optional improvement), message (other). UI may style differently (e.g. block = warning, suggestion = info).
+3. Define scope rules: at least one of instanceId, sprintId, taskId must be set so feedback can be scoped. Task-level feedback should have taskId (and usually sprintId, instanceId for context). Document for agent and API.
+4. No storage or UI in this task; contract only.
+
+**Acceptance Criteria:**
+- Feedback shape and type semantics are documented. Agent and app can implement against the same contract.

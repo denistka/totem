@@ -7,7 +7,7 @@
 - S14-T1: tenant id per request. S14-T2: ownership resolver. Middleware or per-handler: resolve tenant, resolve allowed instances, filter or guard.
 - Endpoints: /api/instances (filter list), /api/instances/:id/sprints (guard :id), and any /api/instances/:id/... (guard). Optional: /api/events (SSE) scoped to tenant if it includes instance data.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

@@ -7,7 +7,7 @@
 - S15-T2: context exposed. S15-T5: test ids on elements. In-page hint can help QA "see" which task they're testing or which elements are scriptable without opening DevTools.
 - Options: (a) small corner badge "QA: S07-T1" with link to docs or panel; (b) toggle that adds outline to [data-testid] elements; (c) tooltip on hover for test id. Pick one or two; keep minimal.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

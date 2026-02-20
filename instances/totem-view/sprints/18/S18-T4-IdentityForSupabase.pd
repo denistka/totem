@@ -1,0 +1,21 @@
+# S18-T4: Identity for Supabase (user or tenant)
+# S18-T4-IdentityForSupabase.pd
+
+**Objective:** Ensure the client (or API) can identify the user or tenant when reading/writing Supabase user data so RLS policies apply correctly. Options: (a) Supabase Auth — user signs in, auth.uid() is used in RLS; (b) tenant-only — no Supabase Auth, tenant_id from existing S14 context (e.g. header or token); then either API proxies writes with service_role and sets tenant_id, or use a custom JWT/session that includes tenant_id for RLS. Document and implement one approach.
+
+**Context:**
+- S14: tenant identity (X-Tenant-Id or API key). If we use Supabase without Auth, RLS needs a way to know tenant_id. Supabase RLS can use custom claims in JWT (e.g. set by an Edge Function or API that issues a short-lived JWT with tenant_id). Or all writes go through API that uses service_role and inserts tenant_id from request.
+- If we add Supabase Auth: user signs in, RLS uses auth.uid(); tenant can be a column (user belongs to tenant) or 1:1. Simpler for "user data" to be per auth.uid().
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose approach: (A) Supabase Auth — add sign-in (email/password or OAuth); after login, client uses session and RLS uses auth.uid(). Tables have user_id = auth.uid(). (B) Tenant-only — no Auth; API endpoint (e.g. POST /api/user-data) accepts tenant-scoped payload and writes to Supabase with service_role, setting tenant_id from validated request. Client calls API, not Supabase directly. Document choice.
+2. If (A): implement minimal sign-in/sign-up or document "use Supabase Auth"; ensure tables use user_id and RLS policies reference auth.uid(). If (B): implement API route that writes to Supabase (server-side with service_role or with tenant_id in JWT); client never uses Supabase directly for writes, or use custom JWT for direct client writes. 
+3. Ensure read path is consistent: client reads with anon key + session (A) or client calls API that reads with service_role filtered by tenant (B). Document.
+4. No plaintext secrets in client. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- User or tenant identity is established for Supabase operations. RLS or API enforces scope. Approach documented.

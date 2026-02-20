@@ -7,7 +7,7 @@
 - Totem tasks are .pd files; editing them requires write access to instance dir. If we don't want to modify .pd, use external store (e.g. Vercel KV or a JSON file in instance dir that maps taskId → link). If we allow .pd frontmatter, parser and API must read it.
 - S08: no persistent local file in serverless for user data unless bundled; Vercel KV or env-backed store is acceptable. Per-tenant if S14.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

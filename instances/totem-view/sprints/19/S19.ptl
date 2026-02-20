@@ -1,0 +1,33 @@
+# Sprint 19: AI feedback for human
+# S19.ptl
+
+**Goal:** Enable the AI (agent) to leave feedback for the human that is visible in totem-view. The agent can submit status updates, blocks ("waiting for LGTM"), suggestions, or short messages; the human sees them in the app (e.g. on the task, on the board, or in a feedback panel). Feedback is scoped to task, sprint, or instance and is persisted so it survives refresh.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API. Feedback can be stored in Supabase (S18), file, or API-only; agent submits via API or file write.
+- S12: Actor (human | agent). Feedback has an actor (agent) and optional type so the human knows who said what.
+
+**Source of truth:**
+- Feedback record: id, scope (instanceId?, sprintId?, taskId?), type (status | block | suggestion | message), body (text), actor (id, name, type: agent), createdAt. Storage: Supabase table (if S18) or API-backed store; agent submits via POST to API (with API key or tenant) or writes to a defined file format that API serves.
+- Display: task detail shows feedback for that task; board or list can show badge ("1 AI message"); optional global "AI feedback" panel.
+
+**Gate:** OPEN
+
+## Track 1: Feedback model and storage
+- task: S19-T1-FeedbackModelAndContract.pd
+- task: S19-T2-FeedbackStorageAndApi.pd
+
+## Track 2: Agent submission path
+- task: S19-T3-AgentSubmitFeedback.pd
+
+## Track 3: Display AI feedback in totem-view
+- task: S19-T4-FeedbackInTaskDetail.pd
+- task: S19-T5-FeedbackPanelOrBadges.pd
+
+---
+
+**Result (sprint outcome):** The agent can submit feedback (status, block, suggestion, message) scoped to task/sprint/instance. Feedback is stored and shown in totem-view so the human sees what the AI is saying. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S19-INVARIANTS.md` only if new frozen decisions (e.g. feedback schema, API shape); otherwise keep linking S05 + S06 + S08.

@@ -1,0 +1,21 @@
+# S19-T3: Agent submission path for feedback
+# S19-T3-AgentSubmitFeedback.pd
+
+**Objective:** Document and implement the path by which an agent (running in Cursor, CLI, or another runner) can submit feedback so the human sees it in totem-view. Agent calls POST /api/feedback with payload (scope, type, body, actor) and optional API key or tenant header. Document how the agent gets the API base URL and auth; provide a minimal example or script.
+
+**Context:**
+- S19-T2: API accepts POST. Agent runs outside the browser; it needs to know totem-view API URL (e.g. env TOTEM_VIEW_API_URL or config) and a way to authenticate (API key, tenant token, or service key for server-side). No secrets in prompts; agent reads from env or config file.
+- Alternative: agent writes to a file in the Totem instance (e.g. instance/feedback/feedback.json or instance/sprints/7/feedback.json) and totem-view API (or realtime server) reads that file and serves it. Then no POST from agent to totem-view; agent only writes to disk. Choose one: API POST vs file write. Document for PLANNER/PM so agents know how to leave feedback.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose submission method: (a) Agent POSTs to totem-view API (requires API URL + auth), or (b) Agent writes feedback to a defined file path in the Totem instance (e.g. feedback.json); totem-view API or realtime server reads and serves it. Document pros/cons (API = works remote; file = works when agent has repo access).
+2. If (a): document env vars (TOTEM_VIEW_API_URL, TOTEM_VIEW_API_KEY or tenant token). Provide example curl or script that agents can use. If (b): document file path and JSON format (array of feedback objects); API or server includes this in GET /api/feedback or GET sprints response.
+3. Ensure feedback from agent includes actor (e.g. agent name from env AGENT_NAME or "agent"). Type and body as per S19-T1.
+4. Optional: add to PM or PLANNER guardian a note "After executing a task, you may submit feedback for the human via [method]." So agents know the capability exists.
+
+**Acceptance Criteria:**
+- Agent can submit feedback via the chosen path (API or file). Documented so agent implementers know how to call or write. Actor and format per S19-T1.

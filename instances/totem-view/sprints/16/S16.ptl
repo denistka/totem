@@ -12,7 +12,7 @@
 **Source of truth:**
 - Totem task: id, title, status, description (from .pd). External: provider (jira | clickup | notion), externalId or key, url. Link can live in task metadata (e.g. in .pd frontmatter or separate store). API returns task with optional integrationLink: { provider, externalId, url }.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 ## Track 1: Integration contract and link model
 - task: S16-T1-IntegrationContract.pd

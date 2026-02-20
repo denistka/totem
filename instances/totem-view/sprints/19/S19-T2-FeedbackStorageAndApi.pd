@@ -1,0 +1,21 @@
+# S19-T2: Feedback storage and API
+# S19-T2-FeedbackStorageAndApi.pd
+
+**Objective:** Persist AI feedback and expose it via API so totem-view can load and display it. Storage: Supabase table (if S18 exists) with RLS, or a simple API that writes to file/DB. Endpoints: POST to submit feedback (agent or system), GET to list feedback by scope (e.g. ?taskId=, ?sprintId=, ?instanceId=). Optional: mark as read/dismissed.
+
+**Context:**
+- S19-T1: feedback shape. S18: Supabase for user data; feedback can be a new table (ai_feedback) with instance_id, sprint_id, task_id, type, body, actor_id, actor_name, created_at. RLS by tenant or open for read (feedback is not secret). Or API-only: serverless writes to Supabase or file; agent calls POST with API key or tenant token.
+- S08: serverless-friendly; no long-lived state. GET returns array of feedback; sort by createdAt desc.
+
+**Gate:** OPEN
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Create storage: Supabase table ai_feedback (id, instance_id, sprint_id, task_id, type, body, actor_id, actor_name, created_at) with RLS if using Supabase; or file-based (e.g. instance/feedback.json or per-task file). Document choice.
+2. Implement POST /api/feedback (or /api/instances/:id/feedback): body = feedback payload (scope, type, body, actor). Validate scope and required fields. Store and return id, createdAt. Auth: API key or tenant header so only agent or trusted caller can post.
+3. Implement GET /api/feedback?instanceId=&sprintId=&taskId= (or under /api/instances/:id/...). Return array of feedback matching scope; optional limit, sort. Client uses this to load feedback for current task/sprint/instance.
+4. Optional: PATCH to mark dismissed; or store dismissed in client only. Document.
+
+**Acceptance Criteria:**
+- Feedback can be submitted (POST) and listed by scope (GET). Stored persistently. API documented. Auth for write clarified.

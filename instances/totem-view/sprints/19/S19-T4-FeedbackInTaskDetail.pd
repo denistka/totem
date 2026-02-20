@@ -1,0 +1,21 @@
+# S19-T4: AI feedback in task detail
+# S19-T4-FeedbackInTaskDetail.pd
+
+**Objective:** Show AI feedback for the current task in the task detail panel. When the user opens a task, load feedback scoped to that task (taskId or instanceId + sprintId + taskId) and display it in a dedicated section: "AI feedback" with list of messages (type, body, actor, date). Use S05 glass styling; distinguish type (e.g. block = warning style, suggestion = info).
+
+**Context:**
+- S19-T2: GET /api/feedback?taskId=... returns feedback. Task detail already shows objective, steps, acceptance criteria (TaskDetailsContent). Add a section below or in a tab; fetch when task is selected.
+- S12: actor name and type (agent). Show "Agent name" and optional type badge (block, suggestion, status).
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. When task detail opens, fetch feedback for that task (taskId from current task). Store in ref or composable; display in a section "AI feedback" (or "Feedback from AI") in the task detail panel.
+2. Render each feedback item: type (badge or icon), body (text or markdown), actor name, relative time (e.g. "2 min ago"). Empty state: "No AI feedback for this task." Use S05 glass/card style; keep compact.
+3. Optional: filter by type (e.g. show only blocks and suggestions) or sort by newest first. Handle loading and error (e.g. no section if fetch fails, or show "Could not load feedback").
+4. S05/S06 preserved. No layout break; section is additive.
+
+**Acceptance Criteria:**
+- Task detail shows AI feedback for the current task. Type and actor visible. Empty and error states handled. S05/S06 preserved.

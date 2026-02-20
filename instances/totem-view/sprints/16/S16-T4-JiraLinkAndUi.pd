@@ -5,7 +5,7 @@
 
 **Context:**
 - S16-T2: API returns task.integrationLink (provider, externalId, url). S16-T3: Jira client and optional save endpoint. Task detail panel (S06) already shows task content; add a row or button "Open in Jira" when link exists.
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

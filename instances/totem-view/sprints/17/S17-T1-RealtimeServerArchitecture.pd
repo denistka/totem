@@ -7,7 +7,7 @@
 - S08: Vercel serverless cannot hold long-lived connections or watch filesystem. Realtime server must run in an environment with persistent process and file access (e.g. Node on Railway, Fly, or local dev).
 - Reuse existing totemParser and same response shapes (instances, sprints with tasks) so totem-view can refetch from REST after receiving a push, or apply delta if payload is defined.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [BUILD]
 

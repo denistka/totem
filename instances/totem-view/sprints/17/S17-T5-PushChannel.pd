@@ -7,7 +7,7 @@
 - S17-T1: choice of WebSocket vs SSE. Implement the chosen one. WebSocket: ws library, one connection per client, broadcast on event. SSE: one endpoint, keep connection open, write "event: X\ndata: {...}\n\n" on each push.
 - Reuse event types and payloads from S17-T4. Parse pipeline (S17-T3) invokes "broadcast(event)" or similar so push layer is decoupled.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

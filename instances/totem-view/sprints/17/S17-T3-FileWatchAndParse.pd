@@ -7,7 +7,7 @@
 - totemParser: parseProjectConfig, parseSprintFile, parseTaskFile. Realtime server must call these when files change. Watch: chokidar or fs.watch; poll: setInterval and compare mtimes or dir listing. Prefer watch for lower latency; fallback to poll if watch is unreliable in deploy env.
 - Scope: a change in instance A's sprint 7 only needs "sprints changed for A" (or "task changed for A/7"); full instances list only when instance dirs added/removed. Minimize re-parse to affected instance/sprint.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

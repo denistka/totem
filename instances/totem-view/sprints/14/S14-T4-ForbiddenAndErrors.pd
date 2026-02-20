@@ -7,7 +7,7 @@
 - S14-T1: missing tenant → 401 or 403. S14-T3: no access to instance → 403. Body shape: e.g. { error: string }; avoid leaking "instance exists but you can't see it" vs "instance does not exist" if that would aid enumeration; document policy.
 - S08: error responses already { error: string } with status codes. Extend for 401/403.
 
-**Gate:** LOCKED
+**Gate:** OPEN
 
 **requires:** [NODE_EXPRESS]
 

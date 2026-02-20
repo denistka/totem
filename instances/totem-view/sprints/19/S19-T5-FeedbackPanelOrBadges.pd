@@ -1,0 +1,21 @@
+# S19-T5: Feedback panel or badges (board / instance)
+# S19-T5-FeedbackPanelOrBadges.pd
+
+**Objective:** Surface AI feedback at board or instance level so the human can see there is feedback without opening every task. Options: (a) badge on task card (e.g. "1" or icon when task has feedback, especially type=block); (b) a small "AI feedback" panel or drawer listing recent feedback for current sprint/instance with links to task. Implement at least one so the human discovers feedback easily.
+
+**Context:**
+- S19-T4: task detail shows feedback for one task. Board view and instance view need a way to show "you have N AI messages" or "block on task X". S12/S10: "waiting for human" already exists for gate; AI feedback can add "Agent says: waiting for LGTM" on the same task.
+- S05/S06: badge or panel uses existing glass; no new layout break.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Option A — Badges on task cards: when loading board data, fetch feedback counts (or feedback list) for the sprint; for each task that has feedback (or has type=block), show a small badge on the task card (e.g. dot or "1"). Click opens task detail where full feedback is shown. Option B — Feedback panel: a collapsible panel or drawer (e.g. "AI feedback") that lists recent feedback for current instance or sprint; each item links to the task (or opens task detail). Choose one or both; document.
+2. Implement chosen option(s). Use GET /api/feedback with sprintId or instanceId to get list; aggregate by task if needed for badges. Panel can show last N items with task title and feedback body preview.
+3. Optional: highlight or sort by type=block so "blocking" feedback is visible first. Handle empty (no panel or no badges when no feedback). S05/S06 preserved.
+4. Ensure realtime or refresh: when new feedback arrives (if realtime server or poll), update badges or panel. Optional for this task; can be follow-up.
+
+**Acceptance Criteria:**
+- Board or instance view surfaces AI feedback (badges on cards and/or feedback panel). Human can see that feedback exists and reach it. S05/S06 preserved.
