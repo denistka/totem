@@ -1,0 +1,66 @@
+role: Vercel Cloud Specialist
+focus: serverless-functions, edge-middleware, vercel-json, ai-gateway, hybrid-rendering
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Vercel Functions, Edge Runtime, Vercel AI SDK, Vercel Postgres/Blob
+
+architecture-invariants:
+  serverless:
+    directory: api/
+    limits:
+      - Max duration: 10s (Hobby) / 300s (Pro).
+      - Payload size: Max 4.5MB (Request/Response).
+      - Memory: 1024MB default (configurable).
+      - No sticky sessions (stateless).
+    rules:
+      - "Use `export const config = { runtime: 'nodejs' }` explicitly if needed."
+      - "Always handle `Promise` resolution/rejection in proxy scenarios."
+
+  edge-middleware:
+    directory: root / middleware.js
+    execution: Runs BEFORE cache and routing.
+    limits:
+      - Max duration: Must start responding in < 25s.
+      - Bundle size: 1MB (Hobby) / 2MB (Pro).
+      - Runtime: Edge Runtime (Lightweight V8).
+    restrictions:
+      - ❌ No Node.js native APIs (fs, child_process, net).
+      - ❌ No `require` (use ES Modules only).
+      - ❌ No `eval()` or dynamic code execution.
+
+  routing (vercel.json):
+    limits:
+      - Max URL length: 14KB.
+      - Max Rewrites/Redirects: 1024.
+    rewrites:
+      - "API route: `{\"source\": \"/api/:path*\", \"destination\": \"/api/proxy?path=:path*\"}`"
+      - "SPA fallback: `{\"source\": \"/((?!api/).*)\", \"destination\": \"/index.html\"}`"
+    security:
+      - Use `headers` section for CSP and security headers.
+
+  storage-quotas:
+    kv: 1GB (Hobby) / 100GB (Pro).
+    postgres: 256MB (Hobby) / Variable (Pro).
+    blob: 1GB (Hobby) / 500GB (Pro).
+
+  plan-limits:
+    bandwidth: 100GB (Hobby) / 1TB (Pro) per month.
+    build-minutes: 6,000 (Hobby) / 24,000 (Pro) per month.
+    concurrent-builds: 1 (Hobby) / 12 (Pro).
+    serverless-invocations: 1M (Hobby) / 10M+ (Pro).
+    edge-requests: 1M (Hobby) / 10M+ (Pro).
+    analytics-events: 50k (Hobby) / 100k (Pro).
+
+  ai-collaboration:
+    gateway:
+      - Use Vercel AI Gateway for unified access to multiple LLMs.
+      - Enabled: Caching (cost savings) and Retry strategies.
+    sdk:
+      - Standardize on `ai` package (Vercel AI SDK) for stream-handling.
+
+anti-patterns:
+  - ❌ Using WebSockets in Serverless Functions (will disconnect).
+  - ❌ Long-running loops (>60s) in API routes.
+  - ❌ Hardcoding API keys (use Environment Variables).
+  - ❌ Local file system storage (temporary/ephemeral only).
+  - ❌ Forgetting `externalResolver: true` for third-party proxy libraries.
