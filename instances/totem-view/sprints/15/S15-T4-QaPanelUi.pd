@@ -1,0 +1,21 @@
+# S15-T4: QA panel UI (helpful for manual testers)
+# S15-T4-QaPanelUi.pd
+
+**Objective:** Build the DevTools panel UI so it is helpful for manual QA: show current task title, objective, steps (numbered list), and acceptance criteria in a readable layout. Optional: link "Open in totem-view" (task or board URL), and instance/board name. Compact and scannable; no clutter.
+
+**Context:**
+- S15-T3: panel receives QA context. S15-T1: shape has taskTitle, objective, steps, acceptanceCriteria, taskUrl, instanceId, boardId.
+- Audience: manual QA engineers (testers) who need to see "what to verify" without switching tabs. Copy and layout should be clear and friendly.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Panel layout: header with "Current task" or "No task selected"; then task title, objective (short block), steps as numbered list, acceptance criteria as bullet or block. Use simple HTML/CSS or a minimal framework; panel runs in DevTools so keep bundle small.
+2. Show instance and board name/id so QA knows which scope they are in. Optional: "Open in totem-view" button (taskUrl or board URL in new tab).
+3. When context is empty (no task), show "Select a task on the board or open task detail to see QA context." Handle missing fields (no steps, no AC) gracefully.
+4. Optional: refresh button to re-read context from page. Style so it's readable (contrast, font size); no dependency on S05 glass (panel is outside the app).
+
+**Acceptance Criteria:**
+- Panel shows task title, objective, steps, acceptance criteria, and optional link. Readable and helpful for manual QA. Empty state is clear.

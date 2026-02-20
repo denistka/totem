@@ -1,0 +1,21 @@
+# S13-T2: Backend — state at time (time slice)
+# S13-T2-StateAtTimeBackend.pd
+
+**Objective:** Implement the ability to return sprints and tasks as of a given time. Support at least one of: query param `at` (ISO8601) or `commit` (git SHA). Use git history if instance dir is in a git repo (e.g. `git show rev:path`), or file mtime to filter "existed at T", or a snapshot mechanism. Respect Vercel/serverless limits.
+
+**Context:**
+- S13-T1: contract for at/commit and response shape. Totem instances often live in a git repo; git log gives timeline, git show gives content at rev.
+- S08: serverless; no long-running or heavy git operations. Prefer: list of "available times" (e.g. commit list or mtime list) from a lightweight call; full content at T on demand.
+
+**Gate:** OPEN
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Implement GET /api/instances/:id/sprints with optional ?at= or ?commit=. When present, return state at that time per S13-T1 contract.
+2. If using git: ensure instance path is a git repo; use git to list commits (or commits touching sprints/) and to read file content at a given rev. Handle non-git or shallow clone gracefully (fallback to current state or empty).
+3. If using mtime only: filter sprint/task dirs and files by mtime <= T; read current content (no history of content changes). Document limitation.
+4. Optional: GET /api/instances/:id/timeline or /api/instances/:id/history to return list of available times (e.g. commit dates or mtimes) for the slider range. Keep response small.
+
+**Acceptance Criteria:**
+- API returns sprints/tasks as of given time when at or commit is provided. Timeline/history endpoint optional. S08 and serverless limits respected.

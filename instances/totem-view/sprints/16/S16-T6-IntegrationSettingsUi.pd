@@ -1,0 +1,21 @@
+# S16-T6: Integration settings UI
+# S16-T6-IntegrationSettingsUi.pd
+
+**Objective:** Provide a settings or "Connected apps" surface where the user (or admin) can connect Jira, ClickUp, Notion: enter domain and API token (or start OAuth), test connection, and see connected state. Links to provider docs for obtaining tokens. Per-tenant if S14.
+
+**Context:**
+- S16-T3, T5: credentials in env or store. For multi-user/tenant, credentials are often set in UI (store in backend securely). For MVP, settings can be "paste API token" and "Save" that stores per tenant; or env-only and settings just show "Jira connected (using env)" with no token field. Document both.
+- S05/S06: settings page or section in existing layout; glass form; no secrets in client (token input can be password type, sent once to API and never echoed).
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add Integration settings section: e.g. under instance settings or app settings. List providers (Jira, ClickUp, Notion); each has "Connect" or "Connected" state. If connected, show domain or account hint (no token).
+2. Connect flow: form for provider (e.g. Jira: domain, email, API token). Submit to API (POST /api/integrations/jira/connect or similar); backend validates and stores. Return success or error (invalid token, etc.). Use password input for token; do not log.
+3. Optional: "Test connection" button that calls provider API (e.g. get current user or projects) and shows success/fail. Link to provider docs ("How to get Jira API token").
+4. If credentials are env-only (no UI storage), show "Configured via environment" and hide token fields. Document. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- User can open Integration settings, see providers, and connect (or see env-configured state). Tokens not exposed in UI after save. S05/S06 preserved.

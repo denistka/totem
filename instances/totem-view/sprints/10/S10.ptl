@@ -1,0 +1,38 @@
+# Sprint 10: Best project management practice (Human-AI tandem)
+# S10.ptl
+
+**Goal:** Implement best project-management practices inside totem-view so the Human-AI tandem can see and act on protocol: gates, phases, roles, invariants, and dependencies. The UI surfaces what the human must do (e.g. open gate, LGTM) and what is blocked or ready; invariants and requires are visible to avoid drift.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- S09 outcome — boards and tasks are real Totem data (sprints, .pd). S10 builds on that.
+
+**Source of truth (protocol):**
+- `totem/core/ITERATION_FLOW.ti` — phases (PLAN → DESIGN → DEVELOP → VERIFY → CLOSE), gates as external human signal.
+- `totem/guardians/PLANNER.ti`, `totem/guardians/PM.ti` — gate LOCKED/OPEN, role (PLANNER/PM/ARCHITECT/QA), scope-approved.
+- `.ptl` / `.pd` — gate, requires, tracks, invariants linkage.
+
+**Gate:** OPEN
+
+## Track 1: API and data (gate, phase, invariants, requires)
+- task: S10-T1-GatePhaseInApi.pd
+- task: S10-T2-InvariantsRequiresInApi.pd
+
+## Track 2: Gate and human-signal visibility in UI
+- task: S10-T3-GateAndWaitingInUi.pd
+
+## Track 3: Phase and role visibility in UI
+- task: S10-T4-PhaseAndRoleInUi.pd
+
+## Track 4: Invariants and dependencies in UI
+- task: S10-T5-InvariantsRequiresInUi.pd
+
+## Track 5: Next-step and onboarding hints
+- task: S10-T6-NextStepHints.pd
+
+---
+
+**Result (sprint outcome):** totem-view shows gate (LOCKED/OPEN) and "waiting for human" where relevant; phase and role for sprint/task; linked invariants and requires; clear next-step hints for the human. Human-AI tandem can follow protocol from the UI. S05/S06 (and S09) invariants preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S10-INVARIANTS.md` only if new frozen decisions (e.g. PM UX patterns); otherwise keep linking S05 + S06.

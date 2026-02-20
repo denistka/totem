@@ -1,0 +1,22 @@
+# S10-T1: Expose gate and phase in API
+# S10-T1-GatePhaseInApi.pd
+
+**Objective:** Ensure the API exposes `gate` (LOCKED | OPEN) and, where available, iteration phase (PLAN | DESIGN | DEVELOP | VERIFY | CLOSE) for sprints and tasks. Parser or response builder must read these from .ptl and .pd frontmatter/header.
+
+**Context:**
+- .ptl and .pd use `gate: LOCKED` or `gate: OPEN` in YAML header. PM execution protocol requires checking gate before run.
+- ITERATION_FLOW: phases 1-PLAN through 5-CLOSE. Phase may be in .ptl or derived (e.g. default PLAN if gate LOCKED).
+- Server: totemParser (parseSprintFile, parseTaskFile); /api/instances/:id/sprints returns sprints with tasks.
+
+**Gate:** OPEN
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Extend parser or response logic to read `gate` from .ptl and .pd (YAML frontmatter or first block). Include in sprint and task objects (e.g. sprint.gate, task.gate).
+2. Define phase source: if .ptl has a phase field, expose it; otherwise omit or use a convention (e.g. "plan" when gate LOCKED). Document in API shape.
+3. Ensure every sprint and task in API response has at least `gate` when present in file; phase optional.
+4. No change to file format; read-only exposure for UI.
+
+**Acceptance Criteria:**
+- GET sprints/tasks include `gate` (and optional `phase`) where present in source files. Documented.

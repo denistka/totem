@@ -1,0 +1,21 @@
+# S11-T2: Align philosophy with protocol (no contradiction)
+# S11-T2-PhilosophyAlignProtocol.pd
+
+**Objective:** Ensure the philosophy document does not contradict Totem protocol. Cross-check against index.ti (anti-auto-proceed axioms), ITERATION_FLOW (gates, phases), PLANNER (no execution), PM (verify gate, human signal). Fix or reword any clash.
+
+**Context:**
+- Philosophy is the "why" and "how we work"; protocol is the "what must happen." They must be consistent.
+- Key protocol points: (1) No simulated approval. (2) PLANNER does not execute. (3) Gate LOCKED = stop. (4) Gates are external human signal. (5) Invariants block non-additive change.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Take the philosophy draft (from S11-T1 or existing). Read index.ti, ITERATION_FLOW.ti, PLANNER.ti, PM.ti (relevant sections).
+2. Check each principle/tenet: does it align with these axioms? Flag any that imply "agent may assume approval" or "PLANNER may execute" or "gate can be bypassed."
+3. Revise philosophy text to remove contradictions; add a short "Protocol alignment" note if helpful (e.g. "This philosophy is implemented by Totem protocol; see index.ti and guardians.").
+4. Output: revised philosophy text. Still no final placement.
+
+**Acceptance Criteria:**
+- Philosophy is consistent with protocol. No statement contradicts index.ti or guardian rules. Optional protocol-alignment note included.

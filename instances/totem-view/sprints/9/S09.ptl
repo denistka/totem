@@ -1,0 +1,29 @@
+# Sprint 09: Link real Totem data to boards
+# S09.ptl
+
+**Goal:** Replace mock boards and tasks with real Totem data. Boards list and board view (columns, task cards, task detail) must source from the existing API (instances, sprints, parsed .pd tasks). Users see real sprints as boards and real tasks on the board; task detail shows parsed .pd content.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer, types in `types/board.ts` and `shared/types.ts`.
+
+**Source of truth:** Totem API: `/api/instances`, `/api/instances/:id/sprints` (sprints include parsed tasks from .pd). Mapping: Board = Sprint (within an instance); Task on board = parsed .pd task; columns = by task status (todo / in_progress / done) from .pd or convention.
+
+**Gate:** OPEN
+
+## Track 1: Data contract and API shape
+- task: S09-T1-BoardTaskMapping.pd
+- task: S09-T2-SprintTasksStatusApi.pd
+
+## Track 2: Boards list from Totem
+- task: S09-T3-BoardsListFromApi.pd
+
+## Track 3: Board view and task detail from Totem
+- task: S09-T4-BoardViewFromApi.pd
+- task: S09-T5-TaskDetailFromPd.pd
+
+---
+
+**Result (sprint outcome):** Boards list shows real Totem sprints (with instance context); board view shows real tasks from .pd; task detail shows parsed .pd content. No mock data on /boards and /board/:id. S05/S06 invariants preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S09-INVARIANTS.md` only if new frozen decisions (e.g. Board=Sprint, status mapping); otherwise keep linking S05 + S06.

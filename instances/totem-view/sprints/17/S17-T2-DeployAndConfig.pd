@@ -1,0 +1,21 @@
+# S17-T2: Realtime server deploy and config
+# S17-T2-DeployAndConfig.pd
+
+**Objective:** Set up the realtime server as a runnable artifact: entry point (e.g. server/realtimeServer.ts or a separate package), env (TOTEM_INSTANCES_PATH, PORT, optional REALTIME_WS_URL for client), and how to run it (pnpm run realtime or node dist/realtimeServer.js). Document deploy options (Docker, Railway, Fly, or same host as app) and that it is optional when using Vercel-only.
+
+**Context:**
+- Server needs file system access to TOTEM_INSTANCES_PATH; typically same machine or mounted volume. No secrets in repo; env for path and port.
+- totem-view client will need the realtime server URL (e.g. ws://localhost:3001 or wss://realtime.example.com) when not using serverless-only mode.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add realtime server entry (e.g. a new script in package.json "realtime": "ts-node server/realtimeServer.ts" or build and run from server/). Server listens on PORT (default e.g. 3001); reads TOTEM_INSTANCES_PATH from env.
+2. Document env vars: TOTEM_INSTANCES_PATH, PORT. Optional: CORS origin for WebSocket if client is on different origin. Document in README or S17 invariants.
+3. Document how to run locally (pnpm run realtime alongside pnpm run dev) and how to deploy (e.g. Dockerfile or platform config). State that production can stay Vercel-only and skip this server.
+4. Ensure server does not conflict with existing Express server port when both run (e.g. Express 3000, realtime 3001).
+
+**Acceptance Criteria:**
+- Realtime server can be started via a defined command and env. Deploy and "optional" usage documented.

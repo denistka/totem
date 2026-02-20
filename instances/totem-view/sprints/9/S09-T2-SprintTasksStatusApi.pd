@@ -1,0 +1,21 @@
+# S09-T2: Sprint tasks and status from API
+# S09-T2-SprintTasksStatusApi.pd
+
+**Objective:** Ensure the API exposes sprint tasks in a form the board can use: each task has an explicit or derivable status (todo / in_progress / done). If the parser does not yet expose status, add it (e.g. from .pd frontmatter or convention).
+
+**Context:**
+- Server: `parseTaskFile` in totemParser; `/api/instances/:id/sprints` returns sprints with `tasks` array. Tasks are parsed .pd content.
+- Board columns are by TaskStatus. Parser or API must provide a status field aligned with S09-T1 mapping.
+
+**Gate:** OPEN
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Inspect parsed task shape (totemParser / parseTaskFile): what fields are returned (title, objective, gate, etc.). Determine if status exists in .pd (e.g. frontmatter or body).
+2. If status is present in .pd, ensure parser exposes it and API includes it in each task object.
+3. If status is not in .pd, define a convention (e.g. by track, or default "todo") and implement in parser or API so every task has a status field.
+4. Document the task response shape (and status values) for client consumption.
+
+**Acceptance Criteria:**
+- Each task in `/api/instances/:id/sprints` response has a status (or equivalent) that maps to todo | in_progress | done. Documented and stable.

@@ -1,0 +1,21 @@
+# S14-T2: Instance ownership mapping
+# S14-T2-InstanceOwnershipMapping.pd
+
+**Objective:** Define and implement where ownership is stored: which tenant can see which instance(s). Options: config file (e.g. instances ownership list), env (single-tenant deploy), or external store (DB/API). Resolve "tenant T → list of instance ids" or "instance I → tenant id" so API can filter.
+
+**Context:**
+- INSTANCES_DIR currently holds all instance folders. Ownership: either (a) each instance has a tenant id (e.g. in project.config.yml or a small meta file), or (b) a central map (tenant_id → [instance ids]) in config or DB.
+- Vercel: no local file write at runtime for user data; config or env or external store. Single-tenant can use env TENANT_ID + single instance or instance prefix.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Choose ownership storage: (a) per-instance: e.g. project.config.yml or ownership.json in instance dir with tenantId; (b) central: e.g. config file or env listing tenant→instances; (c) external API/DB. Document and implement read path only.
+2. Implement resolver: given tenant id (from S14-T1), return list of allowed instance ids. Given instance id + tenant id, return whether tenant may access that instance. Use in S14-T3.
+3. If no store exists yet, support a default: e.g. env TENANT_ID with single instance id, or "all instances for dev" when TENANT_ID is unset (document as dev-only). Production must have tenant and mapping.
+4. No secrets in repo; tenant list or mapping from env or secure config.
+
+**Acceptance Criteria:**
+- Backend can resolve allowed instance ids for a tenant and can check instance access. Ownership source is documented and read path implemented.

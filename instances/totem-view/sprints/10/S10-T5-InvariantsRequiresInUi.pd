@@ -1,0 +1,21 @@
+# S10-T5: Invariants and requires (dependencies) in UI
+# S10-T5-InvariantsRequiresInUi.pd
+
+**Objective:** Show linked invariants and task requires (stack adapters) in the UI so the human and agent see what must not change and what context is needed. Supports invariant protection and JIT context loading.
+
+**Context:**
+- API exposes sprint.invariants and task.requires (S10-T2). Invariants = frozen decisions (S05, S06, …). requires = adapters needed to run task (BUILD, VERCEL, …).
+- Show in task detail panel and optionally on sprint/board header. Compact list or tags.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Task detail: display task.requires as tags or list ("Requires: BUILD, VERCEL"). Helps human confirm stack before "execute".
+2. Sprint/board: display sprint.invariants (e.g. "Invariants: S05, S06") in header or in a collapsible section so team knows what not to break.
+3. Optional: on task card tooltip or subtitle, show requires if space allows; else only in detail.
+4. Use existing typography and glass; no new layout break. Handle empty arrays (show nothing or "—").
+
+**Acceptance Criteria:**
+- Invariants visible at sprint level; requires visible at task level (at least in detail). S05/S06 preserved.

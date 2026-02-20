@@ -1,0 +1,22 @@
+# S16-T7: Optional import or one-way sync
+# S16-T7-OptionalImportOrSync.pd
+
+**Objective:** Optionally support one-way flow: import tasks from a Jira/ClickUp/Notion project into Totem (as new .pd or as linked tasks), or push Totem task status to external (e.g. update Jira issue status when Totem task moves to done). Scope to one direction and one provider in this task to keep it shippable; document extension points.
+
+**Context:**
+- Import: fetch tasks from external project, map to Totem task shape, create links (and optionally create .pd or placeholders). Requires write path and conflict handling (id clash).
+- Sync status: when Totem task status changes, call provider API to update issue status. Requires status map (todo → To Do, done → Done, etc.) and write permission on provider side.
+- Choose one: (a) Import from Jira (fetch issues, create links; no .pd creation if complex), or (b) Push status to Jira when task status changes in Totem. Document the other as future work.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS, BUILD]
+
+**Steps:**
+1. Define scope: either "Import from Jira" (user picks project/sprint, we fetch issues and create integration links for existing Totem tasks by title/key match) or "Push status to Jira" (on task status change in UI, call Jira API to transition issue). Document choice.
+2. If import: API POST /api/integrations/jira/import with projectKey or filter; fetch issues; match by key or title to existing Totem tasks; save links (S16-T2). Return count linked. If no match, optional "create as new task" can be later.
+3. If push status: on task update (or explicit "Sync to Jira" button), call Jira transition API with mapped status. Status map configurable (e.g. todo→To Do, done→Done). Handle errors (403, 404).
+4. UI: one button or menu item for the chosen flow ("Import from Jira" or "Sync status to Jira"). Keep minimal. Document extension for other providers.
+
+**Acceptance Criteria:**
+- One optional flow (import or push status) works for at least Jira. Documented and minimal. S05/S06 preserved.

@@ -1,0 +1,21 @@
+# S12-T4: Presence indicators in UI
+# S12-T4-PresenceIndicatorsUi.pd
+
+**Objective:** Show who is present in the current scope: e.g. "3 humans, 2 agents" or a list of avatars/names. Scope is at least one of instance, board, or task (per S12-T2). Use existing glass/avatar styles (S05/S06).
+
+**Context:**
+- S12-T1: Actor (id, type, name). S12-T3: presence list per scope. Client subscribes to presence for current route (instance page, board view, or task detail).
+- UI: compact presence strip or avatar group; distinguish human vs agent (icon or label). No clutter; one clear place per view.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Subscribe to presence for the current scope (instance id, board id, or task id from route). Use composable or store; connect to backend or provider from S12-T3.
+2. Render presence: list of actors (avatar, name, type badge) in a small strip or sidebar. Show "N humans, M agents" if many actors.
+3. Handle empty presence (no one else); handle disconnect (show "presence unavailable" or hide). S05/S06 layout and glass preserved.
+4. Optional: show "You" or current actor in the list if backend includes it. Ensure no duplicate or confusing display.
+
+**Acceptance Criteria:**
+- Presence (array of humans and agents in scope) is visible in UI. At least one scope supported. S05/S06 preserved.

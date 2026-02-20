@@ -1,0 +1,21 @@
+# S14-T5: Client tenant context
+# S14-T5-ClientTenantContext.pd
+
+**Objective:** Ensure the client sends tenant identity with every API request so the backend can filter by tenant. How the client gets the tenant id (or token) is environment-specific: env var, injected config, or after login. Implement a single place (e.g. API client or fetch wrapper) that attaches the header or token; all instance/sprint requests use it.
+
+**Context:**
+- S14-T1: backend expects e.g. X-Tenant-Id or Authorization. Client must send it. In SaaS, tenant might come from login response (store in memory or safe storage) or from build-time config (e.g. each deploy is one tenant, VITE_TENANT_ID).
+- No login UI in this task if not already present; use env or config for tenant id or API key. Document how to set for dev and prod.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add tenant context to client: e.g. VITE_TENANT_ID or VITE_API_KEY in env; or a small auth module that provides token/tenant id after "login" (if login exists). Single source of truth for "current tenant id or token".
+2. Ensure every fetch to /api/instances and /api/instances/:id/... includes the tenant header or Authorization. Use axios interceptor, fetch wrapper, or composable that adds the header. Centralize so new endpoints don't forget.
+3. Handle missing context: if tenant id/token is not set, do not send request or show "Not configured" / "Please log in" so user does not get 401 with no explanation. Document env vars for tenant.
+4. No secrets in client bundle: API key in env is build-time; for runtime token use secure storage and avoid logging.
+
+**Acceptance Criteria:**
+- All instance-scoped API calls send tenant identity. Single place to configure it. Missing context handled gracefully. Documented.

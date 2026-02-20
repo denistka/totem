@@ -1,0 +1,33 @@
+# Sprint 15: Manual QA staff — Chrome DevTools integration and helpful QA UI
+# S15.ptl
+
+**Goal:** Make totem-view friendly for manual QA engineers by integrating with Chrome DevTools: a custom panel (or extension) that shows helpful context — which task/sprint is in focus, acceptance criteria, test steps, and quick links. QA can use the panel while testing without leaving the app tab. Optional: in-page QA hints (e.g. test ids, selectors) and a11y cues.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API. DevTools extension is a separate artifact (bundle or repo); it talks to the app in the page.
+
+**Source of truth:**
+- Task data already has objective, steps, acceptanceCriteria (parser and TaskDetails). App can expose "current QA context" (instance, sprint, task, acceptance criteria, steps) so DevTools panel can display it.
+- Chrome DevTools: custom panel via chrome.devtools API; communication with page via content script and chrome.runtime messaging, or inspectedWindow.eval. Extension does not change totem-view production build; it is an add-on for QA.
+
+**Gate:** LOCKED
+
+## Track 1: QA context contract and app exposure
+- task: S15-T1-QaContextContract.pd
+- task: S15-T2-AppExposeQaContext.pd
+
+## Track 2: Chrome DevTools panel
+- task: S15-T3-DevtoolsPanel.pd
+- task: S15-T4-QaPanelUi.pd
+
+## Track 3: QA helpers and optional in-page hints
+- task: S15-T5-TestIdsAndSelectors.pd
+- task: S15-T6-QaOverlayOrHints.pd
+
+---
+
+**Result (sprint outcome):** QA engineers can open a custom Chrome DevTools panel that shows current task, acceptance criteria, and steps; optional in-page hints (test ids, selectors) and link to totem-view. Panel is usable alongside the app for manual testing. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S15-INVARIANTS.md` only if new frozen decisions (e.g. QA context API, extension packaging); otherwise keep linking S05 + S06 + S08.

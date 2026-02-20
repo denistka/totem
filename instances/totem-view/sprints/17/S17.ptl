@@ -1,0 +1,32 @@
+# Sprint 17: Realtime server for parsing Totem and updating totem-view data
+# S17.ptl
+
+**Goal:** Introduce a realtime-capable server that watches the Totem instance directory, parses .ptl/.pd and config on change, and pushes updates to totem-view clients so they see fresh data without manual refresh. The server runs as a long-lived process (not Vercel serverless); it may expose both REST (same shape as current API) and a realtime channel (WebSocket or long-lived SSE). Optionally it can publish to an external provider instead of holding connections.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel API remains for serverless deploy; realtime server is a separate deploy or mode (e.g. Node server with file access and WebSocket/SSE). Client can use either: serverless API + one-shot SSE, or realtime server for live updates.
+
+**Source of truth:**
+- Totem: files under TOTEM_INSTANCES_PATH (instances, sprints/*.ptl, sprints/*/*.pd). Existing totemParser (parseProjectConfig, parseSprintFile, parseTaskFile) is reused. Realtime server watches (or polls) that path and re-parses on change; then pushes event types (e.g. instances, sprints, task) so clients can refetch or apply delta.
+
+**Gate:** LOCKED
+
+## Track 1: Realtime server role and architecture
+- task: S17-T1-RealtimeServerArchitecture.pd
+- task: S17-T2-DeployAndConfig.pd
+
+## Track 2: Watch and parse pipeline
+- task: S17-T3-FileWatchAndParse.pd
+- task: S17-T4-EventTypesAndPayload.pd
+
+## Track 3: Push to clients
+- task: S17-T5-PushChannel.pd
+- task: S17-T6-ClientSubscribeRealtime.pd
+
+---
+
+**Result (sprint outcome):** A realtime server runs alongside (or instead of) serverless API: it watches Totem, parses on change, and pushes updates to connected totem-view clients. Clients subscribe and receive instances/sprints/tasks updates; UI stays in sync with file changes. S05/S06/S08 preserved; serverless API unchanged for Vercel-only deploy.
+
+**Invariants for next sprints:** Create `instances/totem-view/S17-INVARIANTS.md` only if new frozen decisions (e.g. event schema, server port, env); otherwise keep linking S05 + S06 + S08.

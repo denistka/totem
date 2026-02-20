@@ -1,0 +1,21 @@
+# S11-T1: Define philosophy principles and "new way" tenets
+# S11-T1-PhilosophyPrinciples.pd
+
+**Objective:** Write the core content of the Human-AI tandem philosophy: principles and "new way" tenets. Document in clear, short statements what the tandem believes and how it differs from "AI does everything" or "human does everything alone."
+
+**Context:**
+- THAIT = Totem for Human AI Tandem. Philosophy should answer: Why tandem? Who decides? Who executes? What is the human's job? What is the agent's job?
+- Draw from existing protocol (gates, separation, roles) but express as principles, not as implementation. Audience: humans and agents reading the doc.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. List 5–10 principles (e.g. "Human holds the gate"; "Agent never assumes approval"; "Plan and execute are separate roles"; "Shared context: Totem + code + history").
+2. Write 3–5 "new way" tenets: how this way differs from alternatives (e.g. no blind automation; human stays in the loop; invariants protect past decisions; JIT context keeps scope clear).
+3. Keep language concise; one paragraph per principle or tenet is enough. No code; philosophy only.
+4. Output: draft text (can be in a .md file or handed to next task). No placement decision yet.
+
+**Acceptance Criteria:**
+- A coherent set of principles and "new way" tenets exists in written form. Readable by human and referable by agent.

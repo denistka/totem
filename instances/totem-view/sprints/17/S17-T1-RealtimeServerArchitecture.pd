@@ -1,0 +1,21 @@
+# S17-T1: Realtime server architecture and role
+# S17-T1-RealtimeServerArchitecture.pd
+
+**Objective:** Define the role and architecture of the realtime server: what it does (watch Totem dir, parse on change, push to clients), where it runs (standalone Node process, not Vercel serverless), and how it relates to the existing REST API. Document options: (a) same server exposes REST + WebSocket/SSE, (b) realtime server only pushes; clients still use Vercel (or another) for REST.
+
+**Context:**
+- S08: Vercel serverless cannot hold long-lived connections or watch filesystem. Realtime server must run in an environment with persistent process and file access (e.g. Node on Railway, Fly, or local dev).
+- Reuse existing totemParser and same response shapes (instances, sprints with tasks) so totem-view can refetch from REST after receiving a push, or apply delta if payload is defined.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Document the realtime server's responsibilities: (1) watch TOTEM_INSTANCES_PATH (or poll at interval); (2) on change, re-parse affected instance/sprint/task; (3) push events to connected clients (WebSocket or long-lived SSE). Optional: (4) serve GET /api/instances and GET /api/instances/:id/sprints so one server can replace serverless for that deploy.
+2. Choose push mechanism: WebSocket (e.g. ws library) or long-lived SSE (one connection per client, server writes events). Document pros/cons (SSE simpler, WebSocket bidirectional if needed later).
+3. Document when to use realtime server vs serverless: e.g. dev and self-hosted use realtime server; Vercel deploy keeps serverless API + one-shot SSE. Client can detect or be configured (e.g. VITE_REALTIME_WS_URL).
+4. No code in this task; architecture and decisions only.
+
+**Acceptance Criteria:**
+- Realtime server role, push mechanism, and relation to REST are documented. Team can implement against this spec.

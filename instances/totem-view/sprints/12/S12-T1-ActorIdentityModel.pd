@@ -1,0 +1,21 @@
+# S12-T1: Actor identity model (human vs agent, array)
+# S12-T1-ActorIdentityModel.pd
+
+**Objective:** Define a shared model for actors so the system can represent an array of humans and an array of agents. Each actor has a stable identity (id), type (human | agent), display name, and optional session/client id for presence.
+
+**Context:**
+- Existing: `TotemEvent.actor` has type and name. No id; no distinction between multiple humans or multiple agents.
+- Need: multiple humans (e.g. Alice, Bob), multiple agents (e.g. Agent-1, Agent-2 or by role). Presence and activity must refer to the same actor across events.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define Actor type: id (string, stable across sessions), type ('human' | 'agent'), name (string), optional sessionId (for "this browser/agent instance"). Document in shared types or API contract.
+2. Extend or align TotemEvent.actor to include actor id; ensure backward compatibility (name still required for display).
+3. Define how human id is obtained (e.g. auth later, or anonymous id per browser; placeholder "human-{session}" acceptable). Define how agent id is set (e.g. env, or agent name as id).
+4. Result: one canonical Actor shape used for presence and activity. No auth implementation in this task; ids can be placeholders.
+
+**Acceptance Criteria:**
+- Actor type with id, type, name (and optional sessionId) is defined and used. Multiple humans and multiple agents can be represented. Build passes.

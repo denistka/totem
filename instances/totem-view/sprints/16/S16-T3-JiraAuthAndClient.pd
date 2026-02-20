@@ -1,0 +1,21 @@
+# S16-T3: Jira — auth and API client
+# S16-T3-JiraAuthAndClient.pd
+
+**Objective:** Implement Jira as the first integration provider: authentication (API token or OAuth) and a minimal API client to resolve issue key to URL and optionally fetch issue/project list. Credentials from env or secure store (per tenant if S14); no secrets in repo.
+
+**Context:**
+- Jira Cloud REST API: auth via Basic (email + API token) or OAuth 2.0. Endpoints: GET /rest/api/3/issue/{key}, GET /rest/api/3/project, etc. Base URL: https://{domain}.atlassian.net.
+- Serverless: call Jira from API route (server-side only); pass tenant context if S14. Rate limits apply; document.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Document required env or config: JIRA_DOMAIN, JIRA_EMAIL, JIRA_API_TOKEN (or OAuth client id/secret). For multi-tenant, store per tenant in KV or DB; single-tenant can use env.
+2. Implement server-side client: getIssueUrl(key) → browser URL; optional getProjects(), getIssues(projectKey). Use fetch to Jira REST API; Basic auth or Bearer. Handle 401/403 and rate limits; return errors to client as 502 or 403 with message.
+3. Expose via internal helper or API route (e.g. GET /api/integrations/jira/projects) for UI to list projects/issues when linking. Do not expose tokens to client.
+4. Optional: POST /api/integrations/jira/link (taskId, issueKey) to save link (calls S16-T2 write path). Document API.
+
+**Acceptance Criteria:**
+- Jira auth and minimal client work. Issue URL can be resolved. Optional project/issue list endpoint. Credentials not in repo. Documented.

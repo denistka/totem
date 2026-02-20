@@ -1,0 +1,21 @@
+# S11-T4: Surface philosophy in totem-view
+# S11-T4-PhilosophyInTotemView.pd
+
+**Objective:** Expose or link the Human-AI tandem philosophy inside totem-view so users (and the tandem) can see what the "new way" is. Options: About/Philosophy page, onboarding snippet, footer link, or dashboard card — one clear entry point.
+
+**Context:**
+- S05/S06: existing layout and glass; add one entry point (route, modal, or section). Philosophy content may be loaded from static file, embedded summary, or link to doc.
+- Goal: the product embodies the philosophy by making it visible, not hidden.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose one primary surface: e.g. "About" or "Philosophy" page (new route), or a collapsible section on dashboard/instance view, or a link in header/footer to the doc.
+2. Implement: either (a) render a short summary + link to full doc, or (b) load and display the full philosophy (if doc is in repo or served). Respect S05/S06 layout and glass.
+3. Ensure the entry point is discoverable (e.g. from main nav or instance home). No automatic popup; user chooses to read.
+4. Preserve S05/S06 invariants; no new layout break.
+
+**Acceptance Criteria:**
+- Users can open and read (or reach) the tandem philosophy from within totem-view. One clear entry point. S05/S06 preserved.

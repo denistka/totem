@@ -1,0 +1,32 @@
+# Sprint 14: Encapsulate for SaaS model — client sees only own project
+# S14.ptl
+
+**Goal:** Encapsulate totem-view so each client (tenant) can view only their own project(s)/instances. API and UI are scoped by tenant: instance list, sprints, and boards/tasks return only data the current client is allowed to see. Unauthorized access to another tenant's instance returns 403. No cross-tenant data leakage.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API shape; serverless constraints apply.
+
+**Source of truth:**
+- Current: API returns all instances from INSTANCES_DIR with no tenant filter. New: tenant identity (e.g. tenant id or API key) is determined per request; instance list and all instance-scoped endpoints filter by tenant ownership. Ownership mapping: tenant → instance ids (or instance → tenant id) from config or store.
+
+**Gate:** LOCKED
+
+## Track 1: Tenant and ownership model
+- task: S14-T1-TenantIdentityModel.pd
+- task: S14-T2-InstanceOwnershipMapping.pd
+
+## Track 2: API tenant scoping
+- task: S14-T3-ApiFilterByTenant.pd
+- task: S14-T4-ForbiddenAndErrors.pd
+
+## Track 3: Client and UI encapsulation
+- task: S14-T5-ClientTenantContext.pd
+- task: S14-T6-UiTenantAware.pd
+
+---
+
+**Result (sprint outcome):** Each client sees only instances (projects) they own. API filters by tenant; 403 for unauthorized instance access. Tenant context is established per request (header, token, or API key). UI shows only allowed instances and handles 403/empty gracefully. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S14-INVARIANTS.md` only if new frozen decisions (e.g. tenant id source, ownership store); otherwise keep linking S05 + S06 + S08.

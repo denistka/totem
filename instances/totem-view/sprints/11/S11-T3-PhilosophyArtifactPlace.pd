@@ -1,0 +1,21 @@
+# S11-T3: Place and own the philosophy artifact
+# S11-T3-PhilosophyArtifactPlace.pd
+
+**Objective:** Decide where the philosophy document lives and create the final artifact. Options: totem core (e.g. `totem/docs/` or `totem/core/`) for global use, or totem-view instance (e.g. `instances/totem-view/` or `totem-view/` repo) as first philosophy-aware product. Document the decision.
+
+**Context:**
+- Philosophy may be reused across instances (then totem) or specific to totem-view first (then instance or code repo). Single canonical location.
+- Format: Markdown recommended. Name: e.g. HUMAN_AI_TANDEM_PHILOSOPHY.md or PHILOSOPHY.md. Avoid overwriting existing files.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose location: (a) totem repo (docs/ or core/) so all instances can reference it, or (b) totem-view instance or code repo so the app owns it first. Document why.
+2. Choose filename and path; create the file with the final philosophy content (from S11-T1/T2).
+3. Add a one-line reference from a relevant place if needed (e.g. totem README "See HUMAN_AI_TANDEM_PHILOSOPHY.md" or instance README). Do not duplicate full text.
+4. Result: one canonical philosophy file at a defined path; decision recorded (e.g. in S11-INVARIANTS or in the doc itself).
+
+**Acceptance Criteria:**
+- Philosophy document exists at a single, documented location. Ownership and reuse scope are clear.

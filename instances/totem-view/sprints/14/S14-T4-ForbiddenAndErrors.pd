@@ -1,0 +1,21 @@
+# S14-T4: Forbidden and error handling (tenant)
+# S14-T4-ForbiddenAndErrors.pd
+
+**Objective:** Define and implement consistent error responses for tenant-related failures: 401 (missing or invalid identity), 403 (valid identity but no access to this resource). Client can show appropriate message; no sensitive detail in response body.
+
+**Context:**
+- S14-T1: missing tenant → 401 or 403. S14-T3: no access to instance → 403. Body shape: e.g. { error: string }; avoid leaking "instance exists but you can't see it" vs "instance does not exist" if that would aid enumeration; document policy.
+- S08: error responses already { error: string } with status codes. Extend for 401/403.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Define response for missing/invalid tenant identity: 401 Unauthorized with generic message (e.g. "Unauthorized" or "Invalid or missing tenant identity"). No tenant id in body.
+2. Define response for "tenant valid but no access to this instance": 403 Forbidden with generic message (e.g. "Access denied"). Do not confirm existence of instance id in body if that would aid enumeration; optional: same message for 404 vs 403 on instance to avoid leaking.
+3. Implement in API: return these status codes and bodies from tenant middleware or handlers. Document in API or S14 invariants.
+4. Client handling: S14-T6 will consume these; ensure body is parseable (e.g. { error: string }).
+
+**Acceptance Criteria:**
+- 401 and 403 are returned consistently for tenant failures. Response body is safe and parseable. Documented.

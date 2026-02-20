@@ -1,0 +1,21 @@
+# S17-T6: Client subscribes to realtime server and updates data
+# S17-T6-ClientSubscribeRealtime.pd
+
+**Objective:** totem-view client subscribes to the realtime server (WebSocket or SSE) when configured (e.g. VITE_REALTIME_WS_URL or VITE_REALTIME_URL). On received events (instances, sprints, task), trigger refetch of the relevant data (useInstances.refresh, useSprints.fetchSprints for instanceId) so the UI updates without manual refresh. Fallback when realtime server is not configured: keep existing useRealtime (one-shot SSE) or no realtime.
+
+**Context:**
+- S17-T4: event types and payload. S17-T5: server pushes. useRealtime currently subscribes to /api/events and calls onRefresh (refetch instances + sprints). New: when realtime server URL is set, connect to ws:// or SSE URL and on event "instances" call refresh instances; on "sprints" with instanceId call fetchSprints(instanceId) for that instance (and current view if applicable).
+- S05/S06: no UI change beyond data updating; loading states and errors handled. Optional: small "Live" indicator when connected to realtime server.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add env or config: VITE_REALTIME_WS_URL or VITE_REALTIME_URL (SSE). When set, use it for realtime; when not set, keep existing useRealtime behavior (one-shot /api/events if any) or no subscription.
+2. Implement subscription: WebSocket or EventSource to the configured URL. On message/event, parse type and payload (S17-T4). On "instances": call useInstances().refresh() (or equivalent). On "sprints": call useSprints(instanceId).fetchSprints() for the instanceId in payload; if current route is that instance, UI will update. On "sprint" or "task": refetch sprints for the given instanceId.
+3. Handle disconnect and reconnect (e.g. exponential backoff or simple retry). Optional: show "Realtime connected" / "Realtime disconnected" in UI (small badge or console). Do not block render on connection failure.
+4. Ensure refetch does not cause duplicate requests (e.g. debounce or cancel previous). S05/S06 preserved.
+
+**Acceptance Criteria:**
+- When realtime server URL is set, client subscribes and refetches on events. Instances and sprints views update when Totem files change. Fallback when not set. S05/S06 preserved.

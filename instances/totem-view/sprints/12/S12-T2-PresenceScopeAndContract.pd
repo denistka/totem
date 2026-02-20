@@ -1,0 +1,21 @@
+# S12-T2: Presence scope and contract
+# S12-T2-PresenceScopeAndContract.pd
+
+**Objective:** Define what "presence" means and at which scopes it is tracked: e.g. instance, sprint/board, task. Define the contract (payload shape, join/leave, heartbeat) so backend and UI agree. No implementation yet — contract and scope only.
+
+**Context:**
+- S08: realtime via SSE or external provider. Presence typically requires a channel or room (e.g. "instance:totem-view", "board:7", "task:S07-T1").
+- Scope drives UI: "3 humans, 2 agents viewing this board" vs "viewing this task". Start with one scope (e.g. instance or board) if needed.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose presence scopes: at least one of (instance, board/sprint, task). Document which scopes are supported and how they map to channels/rooms.
+2. Define presence message contract: join (actor + scope), leave (actor + scope), optional heartbeat (actor + scope, for timeout). Payload includes actor (id, type, name) and scope (e.g. instanceId, boardId, taskId).
+3. Define how presence list is exposed to clients (e.g. event "presence" with list of actors in scope, or GET presence endpoint). Prefer event-driven for realtime.
+4. Document the contract (and any limits, e.g. max actors per scope) for S12-T3 and UI tasks.
+
+**Acceptance Criteria:**
+- Presence scope(s) and message/API contract are documented. Backend and UI can implement against the same contract.

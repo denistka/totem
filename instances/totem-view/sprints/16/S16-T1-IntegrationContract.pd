@@ -1,0 +1,21 @@
+# S16-T1: Integration contract and provider abstraction
+# S16-T1-IntegrationContract.pd
+
+**Objective:** Define the contract for "task manager integration": what a provider (Jira, ClickUp, Notion) exposes and how Totem tasks link to external items. Common shape: provider id, external task id/key, human-readable url. Optional: list projects, list tasks, map status. Document so all providers implement the same interface.
+
+**Context:**
+- Each provider has different API (REST, auth). Abstraction: (a) getLink(taskKey) → url; (b) optional listProjects(), listTasks(projectId); (c) optional createOrUpdate. For "link only" we need at least (a) and a way to store taskKey per Totem task.
+- Field mapping: Totem task (id, title, status) ↔ external (key, summary, status). Document mapping per provider; status map can be configurable.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define IntegrationLink type: provider ('jira' | 'clickup' | 'notion'), externalId (e.g. Jira key PROJ-123), url (open in browser). Task can have optional integrationLink.
+2. Define provider adapter interface: getTaskUrl(externalId) → string; optional fetchProjects(), fetchTasks(projectId), mapStatus(externalStatus) → Totem status. Document in shared types or API docs.
+3. Define how user picks external item to link: by project + task key, or by pasting URL (parse key from URL). Document for UI (S16-T4, T6).
+4. No implementation of a specific provider in this task; contract only.
+
+**Acceptance Criteria:**
+- Integration link shape and provider interface are documented. All providers will implement the same contract.

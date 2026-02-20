@@ -1,0 +1,21 @@
+# S13-T6: Time Machine entry point and navigation
+# S13-T6-TimeMachineEntryPoint.pd
+
+**Objective:** Provide a clear entry point to the Time Machine view (e.g. route, nav link, or button) and simple navigation: enter Time Machine → see slider + boards at selected time → exit to current view. Integrate with existing app layout and instance context.
+
+**Context:**
+- S06: routes /boards, /board/:id. Time Machine can be a new route (e.g. /instances/:id/time-machine or /boards/time-machine?instance=) or a mode toggle on existing boards route. Instance context required so we know which instance's history to show.
+- S05/S06: one entry point (link or button), clear exit. No automatic redirect.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add entry point: e.g. "Time Machine" link in instance view or boards list header, or a tab. Route to dedicated Time Machine view that includes timeline slider (S13-T3) and boards/tasks at time (S13-T5). Instance id from route or context.
+2. Time Machine view layout: slider at top (or side); below it, boards list and board view in read-only mode. "Exit" or "View current" returns to normal boards (current state) and updates route.
+3. Ensure deep link or refresh in Time Machine restores selected time if stored in query (e.g. ?at=ISO8601). Optional.
+4. Document route and entry in README or S13 invariants. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- User can open Time Machine from a defined entry point, use the slider to see status at a time, and exit to current view. Instance context and route are clear. S05/S06 preserved.

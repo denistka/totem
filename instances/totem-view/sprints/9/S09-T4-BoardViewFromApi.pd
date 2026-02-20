@@ -1,0 +1,22 @@
+# S09-T4: Board view (columns and tasks) from Totem API
+# S09-T4-BoardViewFromApi.pd
+
+**Objective:** Load board view (kanban columns and task cards) from real Totem data. Route /board/:id identifies a sprint; load that sprint's tasks from API (or from already-loaded sprints), map to Board Task with status, and display in columns (todo, in_progress, done).
+
+**Context:**
+- S06: TasksBoard, TasksColumn, TaskCard; tasks stored in refs by status. Currently initialTasksForBoard is mock.
+- After S09-T1/T2: mapping and API shape are defined. After S09-T3: board id = sprint id.
+- Load sprint tasks (from useSprints or a dedicated fetch for one sprint); map to tasksByStatus; drive columns from that.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. On /board/:id enter: resolve sprint id (from route); fetch sprint with tasks (existing API or useSprints + find sprint by id).
+2. Map tasks to Board Task[] with status per S09-T1; partition into todo / in_progress / done.
+3. Replace mock initialTasksForBoard and refs (todoTasks, inProgressTasks, doneTasks) with data from API. Keep column UI and DnD structure; if DnD is read-only for now, document.
+4. Handle loading and error states; empty columns when no tasks. Preserve task click → task detail.
+
+**Acceptance Criteria:**
+- Board view shows real tasks from the selected sprint; columns reflect status. No mock tasks. Loading/empty/error handled. S05/S06 preserved.

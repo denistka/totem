@@ -1,0 +1,22 @@
+# S09-T5: Task detail from parsed .pd data
+# S09-T5-TaskDetailFromPd.pd
+
+**Objective:** When user opens a task on the board, the task detail panel (modal) shows content from the real parsed .pd: title, objective, steps, acceptance criteria, etc. No mock or placeholder body.
+
+**Context:**
+- S06: Task detail modal (TaskDetails or equivalent); modal-glass, S05 invariants.
+- Task is identified by id (from S09-T1 mapping). Data can come from the same sprint payload (task in tasks array) or a single-task API if added.
+4. Display all relevant .pd fields (objective, steps, acceptance criteria, requires, gate) in the panel; keep layout consistent with S06/S07.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Ensure task detail receives the full task object (parsed .pd) for the selected task id — from board view state or refetch.
+2. Render title from task; render body from objective, steps, acceptance criteria (and other parsed fields) in a readable layout.
+3. Remove any mock or placeholder content; show "—" or hide missing optional fields. Preserve close/back and modal behavior (S05).
+4. If task is deleted or missing, close panel or show "Task not found" per existing UX.
+
+**Acceptance Criteria:**
+- Task detail panel shows real .pd content for the selected task. No mock content. S05/S06 preserved.

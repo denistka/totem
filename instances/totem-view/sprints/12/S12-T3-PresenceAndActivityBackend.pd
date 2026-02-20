@@ -1,0 +1,21 @@
+# S12-T3: Presence and activity backend
+# S12-T3-PresenceAndActivityBackend.pd
+
+**Objective:** Implement presence (join/leave, list per scope) and multi-actor activity (who did what) on the backend. Use SSE within Vercel limits or integrate an external realtime provider; persist or broadcast presence and activity events per S12-T2 contract.
+
+**Context:**
+- S08: no WebSockets in serverless; SSE one-shot or external provider (Supabase Realtime, Ably, Pusher) for push. Presence often needs long-lived channels — external provider is a better fit for "array of" scale.
+- If staying on SSE only: presence can be best-effort (e.g. GET /api/presence?scope=... with short TTL) plus activity events via existing or new SSE stream. Document choice.
+
+**Gate:** OPEN
+
+**requires:** [VERCEL, NODE_EXPRESS]
+
+**Steps:**
+1. Choose approach: (a) external provider for presence + activity channels, or (b) SSE + optional GET presence endpoint with short-lived state. Document in S08 or S12 invariants.
+2. Implement presence: on client "enter scope" send join; on "leave" send leave; backend or provider maintains list per scope; broadcast or expose list to subscribers. Use S12-T1 actor shape.
+3. Implement activity: when an action occurs (e.g. task viewed, task moved), emit event with actor and payload. Existing TotemEvent shape can be extended; ensure actor id is included.
+4. Respect Vercel limits (no long-running loops, stateless where possible). If using external provider, document config and env.
+
+**Acceptance Criteria:**
+- Presence (who is in scope) and activity (who did what) are available to clients via chosen mechanism. Contract from S12-T2 satisfied. S08 invariants preserved.

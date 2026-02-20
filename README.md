@@ -108,6 +108,8 @@ _The binary output._
 
 ---
 
+**Philosophy:** See [docs/HUMAN_AI_TANDEM_PHILOSOPHY.md](docs/HUMAN_AI_TANDEM_PHILOSOPHY.md) for the Human–AI tandem principles and "new way" tenets.
+
 ## 🚀 Why this way?
 
 1.  **Shared Knowledge**: Improvements to `guardians/ARCHITECT.ti` in Project A automatically benefit Project B.

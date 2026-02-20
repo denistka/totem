@@ -1,0 +1,22 @@
+# S09-T1: Board and task data mapping (Totem → UI)
+# S09-T1-BoardTaskMapping.pd
+
+**Objective:** Define the mapping between Totem entities and board UI: Sprint → Board, parsed .pd task → Board Task (with status). Document or implement types/adapters so the rest of the sprint can consume API data in the existing Board/Task shape.
+
+**Context:**
+- API: sprints have `id`, `name`, `goal`, `projectId`, `tasks` (array of parsed .pd). Parsed task has fields from .pd (e.g. title, objective, status if present).
+- UI: `types/board.ts` — Board (id, name, description?, role?), Task (id, title, description?, status, created_at?, updated_at?), TaskStatus = todo | in_progress | done.
+- S06: shared types in `shared/types.ts` (Sprint, SprintTaskRef, Task). Avoid breaking dashboard/sprint list.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Document mapping: Sprint → Board (id, name, description from goal); parsed .pd task → Task (id from filename or slug, title, description, status).
+2. Define how .pd task status maps to TaskStatus (todo/in_progress/done): from parsed field, track position, or default. Single convention for the app.
+3. Add or extend types/adapters (e.g. `mapSprintToBoard`, `mapPdTaskToBoardTask`) in a single place; keep `types/board.ts` and `shared/types.ts` consistent.
+4. No change to API response shape unless necessary; mapping lives on client (or shared).
+
+**Acceptance Criteria:**
+- Clear contract: one Sprint → one Board; one .pd task → one Board Task with status. Types/adapters in place; build passes.

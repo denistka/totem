@@ -1,0 +1,21 @@
+# S14-T3: API filter by tenant
+# S14-T3-ApiFilterByTenant.pd
+
+**Objective:** Apply tenant scoping to all instance-scoped API endpoints. GET /api/instances returns only instances the current tenant is allowed to see. GET /api/instances/:id/sprints (and any other :id endpoint) first checks that the instance belongs to the tenant; then returns data. No data for other tenants.
+
+**Context:**
+- S14-T1: tenant id per request. S14-T2: ownership resolver. Middleware or per-handler: resolve tenant, resolve allowed instances, filter or guard.
+- Endpoints: /api/instances (filter list), /api/instances/:id/sprints (guard :id), and any /api/instances/:id/... (guard). Optional: /api/events (SSE) scoped to tenant if it includes instance data.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. For each request to instance-scoped routes: resolve tenant id (S14-T1). If missing, return 401/403 and do not return instance data.
+2. GET /api/instances: after loading instance list from disk, filter to only instances in the tenant's allowed list (S14-T2). Return filtered list.
+3. GET /api/instances/:id/...: before reading sprints or other data, check that tenant is allowed to access :id. If not, return 403. If yes, proceed as today.
+4. Ensure no response ever includes another tenant's instance. Logging: avoid logging tenant id in plain text if sensitive; document.
+
+**Acceptance Criteria:**
+- /api/instances returns only tenant's instances. /api/instances/:id/... returns 403 when instance is not owned by tenant. No cross-tenant data in responses.

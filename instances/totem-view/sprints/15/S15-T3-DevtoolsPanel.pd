@@ -1,0 +1,21 @@
+# S15-T3: Chrome DevTools panel (extension)
+# S15-T3-DevtoolsPanel.pd
+
+**Objective:** Create a Chrome Extension that adds a custom DevTools panel. The panel runs in the DevTools context and can read the page's QA context (via content script messaging or inspectedWindow.eval) so it can display it in S15-T4. Extension structure: manifest.json, devtools.html, devtools.js, content script (optional) for reliable messaging.
+
+**Context:**
+- Chrome Extension with "devtools_page" in manifest points to devtools.html, which creates a panel. Panel script can use chrome.devtools.inspectedWindow.eval to read window.__TOTEM_QA_CONTEXT__ from the page, or use a content script that posts context to the extension via chrome.runtime.sendMessage.
+- Prefer content script + messaging so we don't rely on eval. Content script is injected into the page when DevTools is open (or when extension is enabled on totem-view origin). Document how to load the extension (unpacked) for QA.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Create extension folder structure: manifest.json (manifest_version 3), devtools.html + devtools.js, optional content script (injected into totem-view origin) that reads __TOTEM_QA_CONTEXT__ and sends to extension.
+2. In devtools.js: create a panel (e.g. "Totem QA"); panel's page loads a small HTML/JS UI that will show QA context (S15-T4). Establish messaging from page to panel (content script → background → devtools page, or inspectedWindow.eval once to get context).
+3. Panel receives context (on load and optionally on refresh or timer). Document how QA engineers install the extension (Load unpacked, point to extension folder) and open the panel (DevTools → Totem QA).
+4. No backend change; extension is a separate artifact (can live in totem-view repo under /extension or separate repo). Document in README or S15 invariants.
+
+**Acceptance Criteria:**
+- Chrome Extension with a custom DevTools panel exists. Panel can obtain QA context from the totem-view tab. Installation and usage documented.

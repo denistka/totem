@@ -1,0 +1,21 @@
+# S15-T2: App exposes QA context to DevTools
+# S15-T2-AppExposeQaContext.pd
+
+**Objective:** Implement in totem-view client the exposure of QA context per S15-T1 contract. When the user is on a board or has a task open, set window.__TOTEM_QA_CONTEXT__ (or send postMessage) with current instance, board, task, steps, and acceptance criteria. Keep it lightweight; only in dev or when a flag is on if desired.
+
+**Context:**
+- S15-T1: contract and shape. Data comes from current route (instance, board id) and selected task (from task detail or board state). Use existing task payload (objective, steps, acceptanceCriteria from parser/boardMapping).
+- Production: optional to only expose when e.g. VITE_QA_DEVTOOLS=true or always; document. No secrets in context.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add a small module or composable that builds QA context from current route and selected task (instance id, board id, task id, title, objective, steps, acceptanceCriteria, optional taskUrl). Call it when route or selected task changes.
+2. Set window.__TOTEM_QA_CONTEXT__ to that object (or postMessage to parent/extension). Ensure it updates when user navigates or opens another task. Clear or minimal context when no task/board (e.g. dashboard only).
+3. Optional: guard with import.meta.env.DEV or VITE_QA_DEVTOOLS so production build does not expose if not needed. Document.
+4. Do not break existing UI; no visual change. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- QA context is set on window (or sent) and stays in sync with current board/task. Shape matches S15-T1. S05/S06 preserved.

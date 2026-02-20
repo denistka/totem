@@ -1,0 +1,21 @@
+# S10-T6: Next-step and onboarding hints
+# S10-T6-NextStepHints.pd
+
+**Objective:** Add clear "next step" or onboarding hints so the human knows what to do: e.g. "3 tasks are LOCKED — open gate to run", "Run build to verify", or "Review S07 invariants before starting". One place (dashboard, boards list, or instance view) surfaces the hint.
+
+**Context:**
+- Totem README: onboarding = context sync, build verification, history check, role alignment. Best PM practice = reduce ambiguity for the human.
+- Data: gates (S10-T1), phases, maybe sprint result. Derive hint from current state (e.g. all gates OPEN → "Ready to execute"; some LOCKED → "Open gate on N tasks to proceed").
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose one primary surface for hints: instance detail page, boards list header, or dashboard. Prefer where human lands after "load instance".
+2. Implement one or two hint rules: (a) "N task(s) LOCKED — change gate to OPEN in .pd to run"; (b) optional "Run build to verify" or "Review invariants: S05, S06". Use existing API (sprints, tasks, gate).
+3. Display as short text or compact banner; do not block main content. Dismissible or static.
+4. No automatic actions; hints are guidance only. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- At least one actionable next-step hint visible (e.g. gate status). Human has clear "what to do next". S05/S06 preserved.

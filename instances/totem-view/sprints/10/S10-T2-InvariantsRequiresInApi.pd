@@ -1,0 +1,21 @@
+# S10-T2: Expose invariants and requires in API
+# S10-T2-InvariantsRequiresInApi.pd
+
+**Objective:** Expose linked invariants (e.g. S05-INVARIANTS, S06-INVARIANTS) and `requires` (stack adapters) in API for sprints and tasks so the UI can show them without parsing files.
+
+**Context:**
+- .ptl often lists invariants in an Invariants section; .pd may reference them. tasks have `requires: [BUILD, VERCEL]` in frontmatter. Parser already returns requires for tasks.
+4. Sprints: invariants are in .ptl body (e.g. "S05-INVARIANTS.md", "S06-INVARIANTS.md"). Parse or extract list; include in sprint object.
+
+**Gate:** OPEN
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Ensure task objects in API include `requires` (array) from .pd frontmatter; already in parser — verify and document.
+2. Parse .ptl for invariant references (e.g. lines under "**Invariants:**" or "Invariants:") and return as array (e.g. sprint.invariants: ["S05-INVARIANTS", "S06-INVARIANTS"]).
+3. Include sprint.invariants and task.requires in API response; stable shape for client.
+4. Optional: per-task invariant mention if .pd references any; otherwise task inherits sprint invariants.
+
+**Acceptance Criteria:**
+- Sprints expose invariants list; tasks expose requires. Client can show both without re-parsing. Documented.

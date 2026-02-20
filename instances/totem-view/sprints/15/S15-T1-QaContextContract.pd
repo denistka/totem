@@ -1,0 +1,21 @@
+# S15-T1: QA context contract
+# S15-T1-QaContextContract.pd
+
+**Objective:** Define the "QA context" that the app will expose to DevTools or an extension: what the QA engineer needs at a glance while testing. At minimum: current instance id, current sprint/board id, current task (if any) with id, title, objective, steps, acceptance criteria. Optional: app URL, task deep link. Document the shape (e.g. JSON) and how it is consumed (global variable, postMessage, or one-time query).
+
+**Context:**
+- Manual QA tests against a given task: "I'm testing S07-T1; show me acceptance criteria and steps." Data is already in the app (task detail, board mapping). Contract is how DevTools panel gets it.
+- Options: (a) window.__TOTEM_QA_CONTEXT__ updated when route/task changes; (b) postMessage from page to extension with context; (c) extension injects script and reads from app state. Prefer (a) or (b) so panel can poll or subscribe.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define QA context type: instanceId?, boardId?, taskId?, taskTitle?, objective?, steps?: string[], acceptanceCriteria?, taskUrl? (link to open in totem-view). Document in shared types or extension repo.
+2. Define when context is "current": e.g. when user has a task detail open, or when user has selected a task on the board. If no task selected, board/sprint still useful.
+3. Define how context is exposed: e.g. window.__TOTEM_QA_CONTEXT__ = { ... } updated on route/task change; or window.postMessage('totem-qa-context', payload). Document for S15-T2 and extension.
+4. No implementation in this task; contract only.
+
+**Acceptance Criteria:**
+- QA context shape and exposure method are documented. DevTools panel and app can implement against the same contract.

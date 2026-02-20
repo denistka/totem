@@ -1,0 +1,21 @@
+# S15-T6: Optional QA overlay or in-page hints
+# S15-T6-QaOverlayOrHints.pd
+
+**Objective:** Optionally add a lightweight in-page aid for QA: e.g. a small floating "QA mode" indicator that shows current task id and a link to open DevTools panel, or a toggle that highlights elements with data-testid. Minimal and off by default (e.g. only when ?qa=1 or VITE_QA_HINTS=true) so production is unchanged.
+
+**Context:**
+- S15-T2: context exposed. S15-T5: test ids on elements. In-page hint can help QA "see" which task they're testing or which elements are scriptable without opening DevTools.
+- Options: (a) small corner badge "QA: S07-T1" with link to docs or panel; (b) toggle that adds outline to [data-testid] elements; (c) tooltip on hover for test id. Pick one or two; keep minimal.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Implement one in-page QA hint: e.g. when qa=1 in URL or env flag, show a small fixed badge (e.g. bottom-right) with current task id (from QA context) and "Open DevTools → Totem QA". Click or hover can show short instructions.
+2. Optional: toggle (in badge or in panel) to "Highlight test ids": add a temporary outline or overlay to elements with data-testid so QA can see what's scriptable. Remove on toggle off.
+3. Default off: no badge or highlight in production or when flag not set. No layout shift when off. S05/S06 preserved when off; when on, badge is minimal and does not block content.
+4. Document how to enable (query param or env). Optional: link to extension install instructions.
+
+**Acceptance Criteria:**
+- Optional in-page QA hint (badge and/or highlight) exists; off by default. Helpful for QA without cluttering normal use. S05/S06 preserved.

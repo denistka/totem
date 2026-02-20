@@ -1,0 +1,21 @@
+# S17-T5: Push channel (WebSocket or long-lived SSE)
+# S17-T5-PushChannel.pd
+
+**Objective:** Implement the channel that pushes events from the realtime server to connected clients: WebSocket server or long-lived SSE endpoint. When the parse pipeline emits an event (S17-T4), broadcast it to all connected clients. Handle connect, disconnect, and reconnection-friendly behavior (e.g. send last event id or full state on connect optional).
+
+**Context:**
+- S17-T1: choice of WebSocket vs SSE. Implement the chosen one. WebSocket: ws library, one connection per client, broadcast on event. SSE: one endpoint, keep connection open, write "event: X\ndata: {...}\n\n" on each push.
+- Reuse event types and payloads from S17-T4. Parse pipeline (S17-T3) invokes "broadcast(event)" or similar so push layer is decoupled.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Implement WebSocket server (e.g. on same port as HTTP or separate port) or SSE endpoint (e.g. GET /realtime or /api/realtime-stream). On client connect, accept and add to connection list. On client disconnect, remove.
+2. Expose broadcast(event) or equivalent: when parse pipeline emits, call broadcast with event type and payload (S17-T4). Send to all connected clients. Serialize as JSON where needed.
+3. Optional: on new client connect, send current state (e.g. last "instances" and "sprints" events) or a single "sync" event so new clients get up to date. Otherwise clients refetch on first event after connect.
+4. Handle errors (e.g. write failure); remove dead connections. Document URL and protocol for client (S17-T6).
+
+**Acceptance Criteria:**
+- Clients can connect to the push channel. Events from parse pipeline are broadcast to all clients. Connect/disconnect handled. Documented.

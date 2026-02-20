@@ -1,0 +1,21 @@
+# S15-T5: Test ids and selectors for QA
+# S15-T5-TestIdsAndSelectors.pd
+
+**Objective:** Add stable test identifiers (e.g. data-testid or data-qa) to key UI elements so QA and DevTools can reference them (e.g. "Board card S07", "Task card S07-T1", "Create board button"). Optionally expose a list of "key selectors" for the current view in QA context so the panel can show "Copy selector" or list them for test scripts.
+
+**Context:**
+- S06: boards list, board view, task cards, task detail. Key elements: board cards, task cards, column headers, create button, task detail panel, close button. Adding data-testid does not change visuals (S05/S06).
+- QA benefit: manual testers can say "click the element with data-testid=board-card-S07"; automation or scripts can use the same ids. DevTools panel can list or copy selectors for current view.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Add data-testid (or data-qa) to key components: e.g. board card (board-card-{id}), task card (task-card-{id}), task detail panel (task-detail), columns (column-todo, column-in-progress, column-done), create board button, create task button. Use a consistent prefix (e.g. totem- or qa-). Document the list.
+2. Optional: include in QA context a "selectors" or "testIds" array for the current view (e.g. list of data-testid values on the current page) so panel can show them. Implement by scanning DOM in content script or by app exposing them when context is built.
+3. Do not change styling or behavior; only add attributes. S05/S06 preserved.
+4. Document naming convention so future components can follow.
+
+**Acceptance Criteria:**
+- Key elements have stable data-testid (or data-qa). Optional: QA context or panel shows selectors for current view. Documented. S05/S06 preserved.

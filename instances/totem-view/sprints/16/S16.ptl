@@ -1,0 +1,36 @@
+# Sprint 16: Integration with popular task managers (Jira, ClickUp, Notion, etc.)
+# S16.ptl
+
+**Goal:** Integrate totem-view with popular task managers so users can link Totem tasks to external items (Jira issues, ClickUp tasks, Notion pages) and open them in one click. Optionally support one-way import or status sync. Start with one provider (e.g. Jira) as reference, then add ClickUp and Notion (or a generic "external link") so the pattern is reusable.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API; serverless constraints. External API calls from serverless; no secrets in repo (env or secure store).
+- S14 (if applied): integrations can be tenant-scoped (credentials per tenant).
+
+**Source of truth:**
+- Totem task: id, title, status, description (from .pd). External: provider (jira | clickup | notion), externalId or key, url. Link can live in task metadata (e.g. in .pd frontmatter or separate store). API returns task with optional integrationLink: { provider, externalId, url }.
+
+**Gate:** LOCKED
+
+## Track 1: Integration contract and link model
+- task: S16-T1-IntegrationContract.pd
+- task: S16-T2-TaskLinkStorage.pd
+
+## Track 2: First provider — Jira
+- task: S16-T3-JiraAuthAndClient.pd
+- task: S16-T4-JiraLinkAndUi.pd
+
+## Track 3: Second and third providers
+- task: S16-T5-ClickUpNotionAdapters.pd
+- task: S16-T6-IntegrationSettingsUi.pd
+
+## Track 4: Optional sync
+- task: S16-T7-OptionalImportOrSync.pd
+
+---
+
+**Result (sprint outcome):** Users can connect at least one task manager (Jira first; then ClickUp and/or Notion). Tasks can be linked to external items; "Open in Jira/ClickUp/Notion" in UI. Optional one-way import or status sync. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S16-INVARIANTS.md` only if new frozen decisions (e.g. integration API shape, provider list); otherwise keep linking S05 + S06 + S08.

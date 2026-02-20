@@ -1,0 +1,33 @@
+# Sprint 13: Time Machine view — implementation status over time
+# S13.ptl
+
+**Goal:** Implement an Apple-style "Time Machine" view: the user can move a timeline slider to see how boards and tasks looked at a chosen point in time. Implementation status (which sprints existed, which tasks and their state) is shown as of that date; the view is read-only and clearly labeled "as of [date]".
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API; serverless constraints apply.
+- S09 outcome — boards and tasks are real Totem data (sprints, .pd). Time Machine operates on the same data model, filtered or reconstructed for a point in time.
+
+**Source of truth:**
+- Current API: `/api/instances/:id/sprints` returns current file state. Historical state requires either git history (content at commit/date) or file mtimes (existence at date), or stored snapshots. Same response shape, different time slice.
+
+**Gate:** OPEN
+
+## Track 1: Historical state contract and backend
+- task: S13-T1-TimeSliceContract.pd
+- task: S13-T2-StateAtTimeBackend.pd
+
+## Track 2: Timeline slider UI
+- task: S13-T3-TimelineSliderComponent.pd
+- task: S13-T4-TimeRangeAndMarks.pd
+
+## Track 3: Time Machine view integration
+- task: S13-T5-BoardsTasksAtTime.pd
+- task: S13-T6-TimeMachineEntryPoint.pd
+
+---
+
+**Result (sprint outcome):** User can open a Time Machine view, drag a timeline slider to pick a date (or commit), and see boards list and board/task content as of that time. Read-only; clear "as of [date]" labeling. S05/S06/S08 preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S13-INVARIANTS.md` only if new frozen decisions (e.g. time slice API shape, slider behavior); otherwise keep linking S05 + S06 + S08.

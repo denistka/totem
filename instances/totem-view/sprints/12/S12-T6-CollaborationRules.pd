@@ -1,0 +1,21 @@
+# S12-T6: Collaboration rules and conflict hint
+# S12-T6-CollaborationRules.pd
+
+**Objective:** Document or lightly implement collaboration rules for multiple humans and agents: e.g. who can open a gate, what happens when two actors edit the same task, or how handoff works. Prefer documentation and one or two UI hints over full conflict resolution in this sprint.
+
+**Context:**
+- Protocol: only human can open gate (index.ti). With multiple humans, rule could be "any human" or "assignee" — document the choice.
+- Conflict: two agents or humans editing same task — options include "show both" (last-write-wins), "lock while editing", or "notify and let human decide". Pick one simple rule and document; optional UI hint ("Another actor is editing this task").
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Document collaboration rules: (a) Gate: who may set gate OPEN (e.g. any human, or first-come). (b) Same-task conflict: last-write-wins vs lock vs notify. (c) Agent vs human: agents never open gate; humans approve. Place in S12-INVARIANTS or a short COLLABORATION_RULES.md in instance.
+2. If implementing one hint: e.g. when presence shows another actor in the same task scope, show "Another user/agent is viewing this task" (no lock, just awareness). Optional.
+3. Do not build full locking or merge in this task unless scoped to a single, simple rule. Prefer clarity and documentation.
+4. S05/S06 preserved. Protocol (human holds gate) remains unchanged.
+
+**Acceptance Criteria:**
+- Collaboration rules are documented (gate, conflict, human vs agent). Optional UI hint for "someone else is viewing/editing". S05/S06 and protocol preserved.

@@ -1,0 +1,21 @@
+# S10-T3: Gate and "waiting for human" visibility in UI
+# S10-T3-GateAndWaitingInUi.pd
+
+**Objective:** Show gate (LOCKED / OPEN) on task cards and sprint header so the human sees which work is blocked. Where gate is LOCKED, show a short "waiting for human" cue (e.g. "Open gate to run" or "LGTM to proceed") without changing protocol.
+
+**Context:**
+- Protocol: gate is external human signal; agent must not assume approval. UI supports human by making gate state obvious.
+- S05/S06: task card and board layout; add compact badge or label for gate. Sprint header (board view or list) shows sprint gate if available from API (S10-T1).
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Task card: display gate (LOCKED/OPEN) from task.gate — badge, icon, or short label. LOCKED = "Waiting: open gate in file" or similar.
+2. Sprint/board level: if API provides sprint.gate, show it in board header or boards list card (e.g. "Sprint gate: LOCKED").
+3. Use existing glass/badge styles (S05/S06); keep compact. No automatic gate change from UI (file remains source of truth).
+4. Handle missing gate (e.g. show "—" or "OPEN" by convention). Preserve layout and accessibility.
+
+**Acceptance Criteria:**
+- Gate visible on tasks and sprints. "Waiting for human" cue when LOCKED. S05/S06 preserved.

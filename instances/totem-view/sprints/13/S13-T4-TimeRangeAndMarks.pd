@@ -1,0 +1,21 @@
+# S13-T4: Time range and timeline marks
+# S13-T4-TimeRangeAndMarks.pd
+
+**Objective:** Define and supply the time range (min–max) and optional marks for the timeline slider. Range could be "first commit to now" or "first event to now" or configurable. Marks: e.g. commit dates, release dates, or significant events so the user sees meaningful points on the slider.
+
+**Context:**
+- S13-T2 may expose a list of available times (commits or mtimes). S13-T3 slider needs min, max, and optional marks.
+- Data source: from API (e.g. GET .../history or .../timeline) or from existing TotemEvent dates. If no history API, range can be "last N days" or "instance creation to now" with no marks.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define how min/max are obtained: call to backend (S13-T2 optional endpoint) or client default (e.g. 1 year ago to now). Document.
+2. Define marks: if backend returns commit dates or event dates, map them to marks (date + optional label, e.g. commit message or "Sprint 7 closed"). If no backend support, marks can be empty.
+3. Integrate with timeline slider: parent fetches range and marks (or uses defaults), passes to S13-T3 component. Slider shows range and optional marks.
+4. Handle empty or single-point range (e.g. only "now"); slider still usable, default selection = now.
+
+**Acceptance Criteria:**
+- Timeline has a defined range and optional marks. Data flow from API or defaults to slider is clear. Edge cases (no history, single point) handled.

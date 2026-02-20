@@ -1,0 +1,21 @@
+# S09-T3: Boards list sourced from Totem API
+# S09-T3-BoardsListFromApi.pd
+
+**Objective:** Replace mock boards on the boards list with real Totem data. Boards = sprints of an instance. Instance context: from route (e.g. /boards?instance=totem-view or /instances/:instanceId/boards) or a chosen default; then load sprints via existing API and display as board cards.
+
+**Context:**
+- Invariants: S05, S06. Boards list route and BoardCard layout unchanged; only data source changes.
+- API: useInstances, useSprints(instanceId). Boards list must get instanceId (query, route param, or default) and call fetchSprints; map sprints to Board per S09-T1.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Decide instance context for /boards: query param (instance=), route param (/instances/:id/boards), or single default instance. Document and implement.
+2. On boards list load: fetch instances if needed, then fetch sprints for the chosen instance; map sprints to Board[] via S09-T1 mapping.
+3. Replace hardcoded boards ref with reactive data from API; keep loading and empty states (S06). Handle errors and toasts.
+4. Board card click still navigates to board view (e.g. /board/:id where id = sprint id); ensure id is stable (sprint id).
+
+**Acceptance Criteria:**
+- Boards list shows real sprints from Totem for the chosen instance. No mock boards. Loading and empty states work. S05/S06 preserved.

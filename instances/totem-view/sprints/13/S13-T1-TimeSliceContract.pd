@@ -1,0 +1,21 @@
+# S13-T1: Time slice contract (state at time T)
+# S13-T1-TimeSliceContract.pd
+
+**Objective:** Define the contract for "implementation status at time T": what the API or client receives when requesting boards/sprints and tasks as of a given point in time. Same shape as current sprints/tasks response; semantics: only include data that existed at or before T.
+
+**Context:**
+- Current: GET /api/instances/:id/sprints returns current state. Time Machine needs state at date (or commit).
+- Options: (a) Query param `at` (ISO8601 or timestamp); (b) Query param `commit` (git SHA). Response = sprints/tasks as of that time; sprints or tasks created after T are excluded or not yet present.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define request: e.g. GET /api/instances/:id/sprints?at=ISO8601 or ?commit=SHA. Document which format is supported (at least one).
+2. Define response: same shape as current sprints (id, name, goal, tasks, tracks, ...). Semantics: "sprints that existed at T" and "tasks that existed at T within those sprints". If a sprint existed but had fewer tasks at T, tasks array reflects that.
+3. Define how "existed at T" is determined: file mtime <= T, or git history (content at commit/date), or snapshot store. Document in contract; implementation in S13-T2.
+4. Optional: include "sliceTime" or "asOf" in response so client can display "As of 2025-02-15".
+
+**Acceptance Criteria:**
+- Contract documented: request (at or commit), response shape, semantics. Client and backend agree on how to request and interpret state at time T.

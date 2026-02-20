@@ -1,0 +1,32 @@
+# Sprint 11: Philosophy for the new way — Human-AI tandem
+# S11.ptl
+
+**Goal:** Create and document a philosophy for the "new way" of Human-AI tandem. Articulate principles, axioms, and tenets so humans and agents share a clear mental model: who decides what, how gates and roles work, and why this way of working is different. The philosophy is written down, aligned with protocol, and optionally surfaced in totem-view so the product embodies it.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- Totem protocol (index.ti, ITERATION_FLOW, PLANNER, PM) — philosophy must not contradict existing axioms.
+
+**Source of truth (existing axioms):**
+- `totem/index.ti` — AI does not simulate approval; PLANNER does not execute; execution LOCKED until LGTM/Go; gate LOCKED = unexecutable.
+- `totem/core/ITERATION_FLOW.ti` — gates are external human signal; rollback on failure; invariant protection.
+- `totem/README.md` — THAIT (Totem for Human AI Tandem); shared knowledge, clean history, human in the loop.
+
+**Gate:** OPEN
+
+## Track 1: Philosophy content and structure
+- task: S11-T1-PhilosophyPrinciples.pd
+- task: S11-T2-PhilosophyAlignProtocol.pd
+
+## Track 2: Artifact placement and ownership
+- task: S11-T3-PhilosophyArtifactPlace.pd
+
+## Track 3: Surface philosophy in product
+- task: S11-T4-PhilosophyInTotemView.pd
+
+---
+
+**Result (sprint outcome):** A written philosophy for the "new way" Human-AI tandem exists; it is aligned with protocol and placed in a defined location. Optionally, totem-view exposes or links it so users see what the tandem stands for. S05/S06 invariants preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S11-INVARIANTS.md` only if new frozen decisions (e.g. philosophy doc location, naming); otherwise keep linking S05 + S06.

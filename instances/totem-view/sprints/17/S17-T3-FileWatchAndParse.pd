@@ -1,0 +1,21 @@
+# S17-T3: File watch and parse pipeline
+# S17-T3-FileWatchAndParse.pd
+
+**Objective:** Implement watching (or polling) of TOTEM_INSTANCES_PATH so that when .ptl, .pd, project.config.yml, or instance dir structure changes, the server re-parses the affected scope and produces an internal event (e.g. "instances changed", "sprints changed for instance X"). Reuse totemParser; no duplicate parsing logic.
+
+**Context:**
+- totemParser: parseProjectConfig, parseSprintFile, parseTaskFile. Realtime server must call these when files change. Watch: chokidar or fs.watch; poll: setInterval and compare mtimes or dir listing. Prefer watch for lower latency; fallback to poll if watch is unreliable in deploy env.
+- Scope: a change in instance A's sprint 7 only needs "sprints changed for A" (or "task changed for A/7"); full instances list only when instance dirs added/removed. Minimize re-parse to affected instance/sprint.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Implement watcher on INSTANCES_DIR: watch for add/remove/unlink of directories (instances) and files (*.ptl, *.pd, project.config.yml, README.md). Use chokidar or fs.watch; handle rename and debounce (e.g. 300ms) to avoid duplicate work.
+2. On change: determine affected scope (which instance, which sprint dir if applicable). Re-parse only that scope using existing totemParser (read instance list, or one instance's sprints, or one sprint's tasks). Produce internal event: e.g. { type: 'instances' } or { type: 'sprints', instanceId } or { type: 'sprint', instanceId, sprintId }.
+3. If instance list changed (dir add/remove), re-scan instances and emit instances. If a .ptl or .pd inside an instance changed, emit sprints for that instance (or finer-grained if needed). Pass events to push layer (S17-T5).
+4. Handle parse errors (e.g. invalid YAML): log and optionally emit an error event; do not crash. Document watch/poll choice and debounce.
+
+**Acceptance Criteria:**
+- File changes under TOTEM_INSTANCES_PATH trigger re-parse of affected scope. Internal events are produced. totemParser reused. Errors handled.

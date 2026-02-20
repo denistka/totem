@@ -1,0 +1,21 @@
+# S14-T6: UI tenant-aware behavior
+# S14-T6-UiTenantAware.pd
+
+**Objective:** UI behaves correctly under tenant scoping: instance list shows only tenant's instances (from filtered API); direct link or refresh to another tenant's instance shows 403 and a clear message (e.g. "Access denied" or "You don't have access to this project"). Empty state when tenant has no instances. No cross-tenant data in UI.
+
+**Context:**
+- S14-T3: API returns only tenant's instances; 403 for unauthorized :id. Client already sends tenant context (S14-T5). useInstances and useSprints will receive filtered data or 403.
+- S05/S06: preserve layout; add only error state and copy for 403/401. Optional: "Log out" or "Switch project" placeholder if multi-tenant UX is planned later.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Instance list: already driven by API; with tenant filter it will show only allowed instances. Ensure empty state copy is appropriate ("No projects" or "No instances for your account"). No change to list layout.
+2. On 403 (e.g. user opened /instances/other-tenant-id or /board/... for another tenant): show clear message "Access denied" or "You don't have access to this project"; optional "Go to dashboard" or "Back to your projects". Do not render other tenant's data.
+3. On 401 (missing or invalid tenant): show "Unauthorized" or "Please log in" and do not render instance data. Optional: redirect to login if it exists.
+4. Ensure no URL or client state leaks another tenant's instance id in error message. S05/S06 preserved.
+
+**Acceptance Criteria:**
+- UI shows only tenant's instances. 403/401 show clear, safe messages. Empty state is correct. No cross-tenant leakage. S05/S06 preserved.

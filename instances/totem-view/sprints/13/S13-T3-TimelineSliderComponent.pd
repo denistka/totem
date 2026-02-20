@@ -1,0 +1,21 @@
+# S13-T3: Timeline slider component (Apple-style)
+# S13-T3-TimelineSliderComponent.pd
+
+**Objective:** Build a horizontal timeline slider component: user drags a thumb (or clicks) to select a point in time. Visual style inspired by Apple Time Machine: clear track, draggable handle, optional labels. Emits selected time (date or timestamp) to parent.
+
+**Context:**
+- S05/S06: use glass and existing UI tokens; component fits in AppLayout or a dedicated Time Machine view.
+- Input: time range (min, max) and optional list of marks (dates or events to show on the track). Output: selected time (ISO8601 or timestamp) for parent to fetch state-at-time.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Create a reusable timeline slider: track (horizontal), thumb/draggable handle, min/max range. Use native input range or custom drag; ensure accessible (keyboard, aria).
+2. Accept props: minDate, maxDate (or min/max timestamps), optional marks (array of { date, label? }). Render marks as ticks or labels along the track.
+3. Emit selected date/time on change (and optionally on mount with default = max = "now"). Parent uses this to request state at time (S13-T5).
+4. Style with S05 glass/tokens; compact so it can sit above boards list or in a dedicated view. Responsive.
+
+**Acceptance Criteria:**
+- Timeline slider component exists; user can select a point in time; selected value is emitted. S05/S06 preserved. Accessible.

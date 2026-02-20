@@ -1,0 +1,21 @@
+# S13-T5: Boards and tasks view at selected time
+# S13-T5-BoardsTasksAtTime.pd
+
+**Objective:** When the user has selected a time on the timeline slider, show boards list and board/task content as of that time. Reuse existing Boards list and Board view components; data source is state-at-time from API (S13-T2). View is read-only; show clear "As of [date]" label.
+
+**Context:**
+- S09: boards = sprints, tasks = .pd tasks; data from API. Same components, but data fetched with ?at= or ?commit=.
+- Time Machine mode: no create/edit/delete; display only. Banner or subtitle: "Viewing implementation status as of 15 Feb 2025" (or selected date).
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. When timeline selection changes, fetch sprints (and tasks) with at= or commit= query param. Store in a dedicated "timeSlice" state or pass as props so boards list and board view render from that data.
+2. Reuse BoardsList and BoardView (and task detail) with time-slice data. Ensure routes or a "timeMachine" mode flag prevent mutations (read-only). Hide or disable create/edit/delete in Time Machine mode.
+3. Display "As of [date]" (formatted) prominently: e.g. above boards list or in header. Optional: "Exit Time Machine" to return to current view.
+4. Handle loading and errors (e.g. no data for that time); show empty state or message. S05/S06 layout preserved.
+
+**Acceptance Criteria:**
+- Boards and tasks reflect selected time. Read-only; "As of [date]" visible. Same components, different data source. S05/S06 preserved.

@@ -1,0 +1,22 @@
+# S16-T5: ClickUp and Notion adapters
+# S16-T5-ClickUpNotionAdapters.pd
+
+**Objective:** Add integration adapters for ClickUp and Notion (or at least one of them) following the same contract as Jira. Each adapter: auth (API token or OAuth), resolve task/page to URL, optional list spaces/projects and tasks. Reuse S16-T1 interface and S16-T2 link storage (provider = 'clickup' | 'notion').
+
+**Context:**
+- ClickUp: REST API; auth via API token (Authorization: {token}). Tasks have id; URL format: https://app.clickup.com/.../v/li/{list_id}/t/{task_id}. Projects/lists endpoints available.
+- Notion: REST API; auth via integration token. Pages have id; URL: https://notion.so/{page_id}. Search or list database. Different auth and URL shape than Jira; adapter abstracts.
+- Implement same pattern: server-side client, getTaskUrl(id), optional list endpoints. Store credentials per tenant or env. No secrets in repo.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Implement ClickUp adapter: env or store (CLICKUP_API_TOKEN); getTaskUrl(taskId); optional getSpaces(), getTasks(listId). API route GET /api/integrations/clickup/... for UI. Map ClickUp task to IntegrationLink (provider: 'clickup', externalId, url).
+2. Implement Notion adapter: env or store (NOTION_TOKEN, optional NOTION_DATABASE_ID); getPageUrl(pageId); optional list databases, search. API route GET /api/integrations/notion/... Map to IntegrationLink (provider: 'notion', externalId, url).
+3. Ensure task link storage (S16-T2) accepts provider 'clickup' and 'notion'. Task detail UI (extend S16-T4) shows "Open in ClickUp" / "Open in Notion" when link exists.
+4. Document env vars and setup for each provider. Rate limits and scopes where applicable.
+
+**Acceptance Criteria:**
+- ClickUp and Notion (or one of them) work as integration providers. Same link storage and UI pattern as Jira. Documented.

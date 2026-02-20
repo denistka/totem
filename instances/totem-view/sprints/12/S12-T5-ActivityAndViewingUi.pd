@@ -1,0 +1,21 @@
+# S12-T5: Activity and "who is viewing" in UI
+# S12-T5-ActivityAndViewingUi.pd
+
+**Objective:** Surface activity (who did what) and optional "who is viewing this [board/task]" so the tandem sees recent actions and who is focused where. Use existing timeline/event shape where possible; add viewing context if presence supports per-task or per-board scope.
+
+**Context:**
+- TotemEvent has actor and payload; TimelineView shows events. Multi-actor: ensure events show actor name/id so "Alice moved task" vs "Agent-1 moved task" is clear.
+- "Viewing" = presence scoped to current board or task. If S12-T2 includes board/task scope, show "Alice is viewing this board" or "Agent-2 is viewing this task" near the content.
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Ensure activity feed or timeline shows actor for each event (name and type: human/agent). Use S12-T1 actor shape; support multiple distinct names.
+2. If presence is scoped to board or task: show a short "Viewing now: Alice, Agent-1" (or avatars) near the board header or task detail panel. Reuse presence data from S12-T4; scope to current board/task.
+3. If backend emits "viewing" events (e.g. "actor X opened task Y"), show them in timeline or a compact recent-activity list. Keep UI minimal; avoid noise.
+4. S05/S06 preserved. Handle empty activity and missing presence gracefully.
+
+**Acceptance Criteria:**
+- Activity shows who did what (multiple humans and agents). Optional "who is viewing" for current board/task. S05/S06 preserved.

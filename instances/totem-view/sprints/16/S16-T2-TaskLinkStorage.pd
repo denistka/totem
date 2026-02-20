@@ -1,0 +1,21 @@
+# S16-T2: Task link storage (Totem task ↔ external)
+# S16-T2-TaskLinkStorage.pd
+
+**Objective:** Decide where and how the link between a Totem task and an external task (Jira/ClickUp/Notion) is stored. Options: (a) in .pd frontmatter (e.g. integrationLink: { provider, externalId, url }); (b) in a separate store (DB, KV, file per instance). So that API can return task with integrationLink and UI can show "Open in Jira".
+
+**Context:**
+- Totem tasks are .pd files; editing them requires write access to instance dir. If we don't want to modify .pd, use external store (e.g. Vercel KV or a JSON file in instance dir that maps taskId → link). If we allow .pd frontmatter, parser and API must read it.
+- S08: no persistent local file in serverless for user data unless bundled; Vercel KV or env-backed store is acceptable. Per-tenant if S14.
+
+**Gate:** LOCKED
+
+**requires:** [NODE_EXPRESS]
+
+**Steps:**
+1. Choose storage: (a) .pd frontmatter (parser already reads metadata; add integrationLink); (b) instance-level file (e.g. instance/integrations.json mapping taskId → link); (c) external KV/DB. Document and implement read path first.
+2. If (a): extend parser to return integrationLink from frontmatter; document frontmatter shape. If (b) or (c): add API to get link for task (GET .../tasks/:taskId/link or include in task object when returning sprints). Write path (save link) can be separate endpoint or deferred.
+3. Ensure API response for tasks (in sprints or single task) includes integrationLink when present. Client uses it for "Open in Jira" etc.
+4. No secrets in storage; only provider, externalId, url (url can be built from base + key if needed).
+
+**Acceptance Criteria:**
+- Link storage is defined and read path implemented. API returns integrationLink on task when available. Documented.

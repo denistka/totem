@@ -1,0 +1,21 @@
+# S10-T4: Phase and role visibility in UI
+# S10-T4-PhaseAndRoleInUi.pd
+
+**Objective:** Surface iteration phase (PLAN / DESIGN / DEVELOP / VERIFY / CLOSE) and owning role (PLANNER, PM, ARCHITECT, QA) for sprint or task so the tandem knows who does what and what stage the work is in.
+
+**Context:**
+- ITERATION_FLOW: 1-PLAN (PLANNER/PM), 2-DESIGN (ARCHITECT), 3-DEVELOP (DEV), 4-VERIFY (QA), 5-CLOSE (ROOT/PM). Phase and role are protocol concepts.
+- API may expose phase (S10-T1); role can be derived from phase or from task/sprint metadata if added later. Start with phase; role can be implied (e.g. "PLAN → PLANNER/PM").
+
+**Gate:** OPEN
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Where phase is available (sprint or task), show it in UI: sprint header, task detail panel, or board column label. Use short labels (e.g. "Plan", "Develop").
+2. Optionally show owning role for current phase (e.g. "Owner: PM") from phase mapping. If API does not yet expose role, skip or use phase-only.
+3. Keep presentation minimal (badge or one line); do not clutter board cards. Task detail can show phase/role more fully.
+4. Handle missing phase (omit or "—"). S05/S06 preserved.
+
+**Acceptance Criteria:**
+- Phase (and role if available) visible where data exists. Human can see "what stage" and "who owns". S05/S06 preserved.

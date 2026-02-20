@@ -1,0 +1,35 @@
+# Sprint 12: Real-time collaboration — array of humans, array of agents
+# S12.ptl
+
+**Goal:** Improve real-time collaboration so multiple humans and multiple AI agents can work in the same instance/sprint/board with visible presence, shared activity, and clear rules. The system supports an array of humans and an array of agents: who is here, who is viewing what, and who did what — without blocking the existing Vercel/SSE constraints.
+
+**Invariants:**
+- `instances/totem-view/S05-INVARIANTS.md` — glass, modal/overlay, glass buttons and cards.
+- `instances/totem-view/S06-INVARIANTS.md` — three-level display (boards → board → task), shared UI layer.
+- `instances/totem-view/S08-INVARIANTS.md` — Vercel layout, API shape, realtime contract (SSE or external provider; no WebSockets in serverless).
+
+**Source of truth:**
+- Existing: `TotemEvent.actor` (type: human | agent, name). S08: SSE or external provider for push-style realtime.
+- New: presence (who is in scope), multi-actor identity (id, type, name, session), and optional viewing/editing scope (instance, board, task).
+
+**Gate:** OPEN
+
+## Track 1: Actor and presence model
+- task: S12-T1-ActorIdentityModel.pd
+- task: S12-T2-PresenceScopeAndContract.pd
+
+## Track 2: Presence and activity backend
+- task: S12-T3-PresenceAndActivityBackend.pd
+
+## Track 3: Multi-actor realtime in UI
+- task: S12-T4-PresenceIndicatorsUi.pd
+- task: S12-T5-ActivityAndViewingUi.pd
+
+## Track 4: Collaboration rules and conflict hint
+- task: S12-T6-CollaborationRules.pd
+
+---
+
+**Result (sprint outcome):** totem-view supports multiple humans and multiple agents with visible presence (who is here), optional viewing context (who is on this board/task), and activity attribution (who did what). Collaboration rules or conflict hints documented or lightly implemented. S05/S06/S08 invariants preserved.
+
+**Invariants for next sprints:** Create `instances/totem-view/S12-INVARIANTS.md` only if new frozen decisions (e.g. presence contract, actor id scheme); otherwise keep linking S05 + S06 + S08.

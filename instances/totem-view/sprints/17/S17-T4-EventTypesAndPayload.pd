@@ -1,0 +1,19 @@
+# S17-T4: Event types and payload for clients
+# S17-T4-EventTypesAndPayload.pd
+
+**Objective:** Define the event types and payloads that the realtime server sends to clients so totem-view can refetch or apply updates. At minimum: "instances" (list changed), "sprints" (instanceId; sprints for that instance changed), and optionally "sprint" (instanceId, sprintId) or full payload (instances array, sprints array) for delta. Document schema.
+
+**Context:**
+- Client can either (a) refetch: on any event, call GET /api/instances or GET /api/instances/:id/sprints again; (b) apply delta: server sends new data in the event so client can merge. (a) is simpler and works with existing API; (b) reduces latency and load. Define at least (a); (b) optional.
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Define event names: e.g. "instances", "sprints", "task" (or "sprint" for one sprint). Payload: for refetch mode, minimal payload (e.g. { type: 'sprints', instanceId }); for delta mode, optional full payload (e.g. { type: 'sprints', instanceId, sprints: [...] }). Document in S17 or API docs.
+2. Ensure payload is JSON-serializable and matches what client expects (instanceId, sprintId, etc.). Include timestamp or version if useful for ordering.
+3. Document how client should react: on "instances" refetch instances list; on "sprints" refetch sprints for that instanceId; on "task"/"sprint" refetch that sprint or task. If delta payload is present, client may merge instead of refetch.
+4. No server implementation in this task; schema and client contract only.
+
+**Acceptance Criteria:**
+- Event types and payloads are documented. Client and server implement against the same schema.

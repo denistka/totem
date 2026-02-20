@@ -1,0 +1,21 @@
+# S14-T1: Tenant identity model
+# S14-T1-TenantIdentityModel.pd
+
+**Objective:** Define how the system identifies the "client" (tenant) for a request so that API and UI can scope data to that tenant. No full auth system required in this task — minimal identity: e.g. tenant id from header, API key, or JWT sub. Document the chosen mechanism and how it is passed (header name, cookie, or query for serverless).
+
+**Context:**
+- SaaS: each client = tenant. Request must carry tenant identity so backend can filter instances. Options: X-Tenant-Id header, Authorization Bearer (API key or JWT with tenant claim), subdomain (tenant.x.com), or query param (dev only).
+- Vercel/serverless: no sticky session; identity per request. Prefer header or Bearer token. Document; implementation of actual auth (login/signup) can be a later sprint.
+
+**Gate:** LOCKED
+
+**requires:** [BUILD]
+
+**Steps:**
+1. Choose tenant identity mechanism: at least one of (a) header e.g. X-Tenant-Id, (b) API key in Authorization header (key maps to tenant id in store), (c) JWT with tenant/sub claim. Document choice and header/format.
+2. Define tenant id type: string (uuid or slug). Same id used in ownership mapping (S14-T2). Optional: tenant display name for UI (from store or token).
+3. Define behavior when identity is missing: 401 Unauthorized or 403 Forbidden, and no instance data returned. Document.
+4. No passwords or signup in this task; only "how we know who the tenant is" per request.
+
+**Acceptance Criteria:**
+- Tenant identity model is defined and documented. Request can carry tenant id (or derive from API key/JWT). Missing identity behavior is defined.
