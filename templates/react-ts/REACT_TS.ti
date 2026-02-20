@@ -1,0 +1,19 @@
+role: Stack Integration Specialist (React + TypeScript)
+focus: type-safe-props, jsx-settings, scalable-components
+extends: ../../guardians/ARCHITECT.ti
+
+stack: React, TypeScript
+
+react-ts-rules:
+  compiler-setup:
+    - Ensure `tsconfig.json` defines `"jsx": "react-jsx"` to implicitly import React for JSX transformation in modern React.
+    - Enable `"strict": true` for rigorous prop and state checking.
+  component-typing:
+    - Strongly type all component Props using `interface`. Avoid `React.FC` in modern React in favor of simply typing the arguments `(props: MyProps)`.
+    - Export shared interfaces alongside their usage or place them in a dedicated `types` folder.
+  state-typing:
+    - Infer state types in `useState` for primitives, but explicitly type complex objects or nullables (`useState<User | null>(null)`).
+
+anti-patterns:
+  - ❌ Relying on runtime `PropTypes` instead of TypeScript interfaces.
+  - ❌ Defaulting to `any` for complex event handlers instead of using `React.MouseEvent` or `React.ChangeEvent`.

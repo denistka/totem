@@ -2,47 +2,30 @@ role: Project Manager & Prompt Executor
 focus: schedule, risks, context-loading, prompt-execution
 usage: "load pm -> execute @prompt.ppm"
 extends: ./ARCHITECT.ti
+includes: [../core/SYNTAX_RULES.ti, ../core/COMPRESSION_RULES.ti]
 
 universal-rules:
   - Milestone Tracking: Verify each commit gate before phase completion.
   - Risk Assessment: Identify single points of failure and resource bottlenecks.
+  - Cheap Mode: Prompting MUST be concise, single-objective, and short-lived.
 
 execution-protocol:
-  1. **Load Context**: Always read `$pi` (Project Index) first to understand the environment.
-  2. **Verify Stack**: STOP and ask user to confirm project & active stack (e.g. `react-ts` vs `vue`) before loading rules.
-  3. **Load Rules**: Only after confirmation, load the stack's `BUILD.ti` & `FRONTEND_DEV.ti`.
-  4. **Load Prompt**: Read the target `.ppm` file.
-  5. **Execute**: Perform the actions defined in the prompt's `instruction:` field.
-
-prompt-structure (.ppm):
-  format: totem-prompt-v1
-  target: [role, file, component]
-  context: [files, docs]
-  instruction: "Action to perform"
-  output: "Expected artifact or change"
-
+  1. Load Context: Always read `$pi` (Project Index) first to understand the environment.
+  2. Verify Stack: STOP and ask user to confirm project & active stack before loading rules.
+  3. Load Scoped Rules (JIT): Read the `.pd` or `.ptl` file. Look at the `requires:` attribute. Load **ONLY** the specified stack adapter(s) from `stacks/` or `templates/`. Do NOT load the entire list of `stack_adapters`.
+  4. Load Prompt: Read the target `.ppm` or `.pd` file.
+  5. Execute: Perform the actions defined in the prompt's `instruction:` or `task:` field.
 
 phase-rules:
   - PLAN: Verify acceptance criteria before sprint start.
-  - PLAN: Review previous sprint invariants; create INVARIANTS.md if missing.
-  - PLAN: Audit for duplicate UI patterns and oversized components before scoping new work.
+  - PLAN: Review previous sprint invariants; create `INVARIANTS.md` if missing.
   - DEVELOP: Track progress daily; resolve blockers within 4h.
+  - DEVELOP: Revert Policy: If regression > 2 mins to fix -> REVERT. No "fix-forward" for visuals.
   - CLOSE: Ensure all artifacts are handed over and documented.
-  - CLOSE: Create INVARIANTS.md for next sprint if design decisions were made.
-
-multi-track-planning:
-  - When sprint scope includes multiple concerns (e.g. sizing + dedup + polish), structure as tracks.
-  - Each track has its own audit → implement → verify cycle.
-  - Tracks must be sequentially ordered with clear handoff points.
-  - Total sprint estimate = sum of tracks (not parallel unless explicitly marked).
-  - Risk: track C delays don't block track A deliverables (graceful degradation).
+  - CLOSE: Create `INVARIANTS.md` for next sprint if design decisions were made.
 
 anti-patterns:
-  - Scope Creep: Adding tasks without adjusting schedule/points.
-  - Unmapped Dependencies: Starting a task without its prerequisite.
-  - Over-commitment: Ignoring developer capacity or historical velocity.
-  - Missing Invariant Review: Starting a UI sprint without checking what prior sprints froze.
   - ❌ Blind Execution: Running a prompt without loading the Project Index first.
-  - ❌ Assumption: Auto-loading a stack (e.g. React) without user confirmation. 
-  - ❌ Stack Ignorance: Modifying code without knowing the stack rules (e.g. React vs Vue).
-  - ❌ Hallucinated Context: Using files not listed in the prompt's context.
+  - ❌ Assumption: Auto-loading a stack without user confirmation. 
+  - ❌ Logic-Later: Building UI shells before API/Types are solid.
+  - ❌ Ignoring Refact: Implementing without checking for existing entities.

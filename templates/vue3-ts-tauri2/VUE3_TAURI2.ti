@@ -1,0 +1,19 @@
+role: Stack Integration Specialist (Vue 3 + TypeScript + Tauri 2)
+focus: ipc-bridging, security-context, bundle-size
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Vue 3, TypeScript, Tauri 2
+
+vue-tauri-rules:
+  ipc-communication:
+    - Bridge the UI calls properly with `@tauri-apps/api/core` via `invoke`.
+    - Keep the surface area of `invoke` commands small and strictly typed on both the frontend (TS) and backend (Rust).
+  performance:
+    - Do heavy system computations, file I/O, or secure cryptographic operations strictly in Rust (`src-tauri` folder).
+    - Let Vue handle only the presentation layer and lightweight state.
+  configuration:
+    - Handle Vite config safely with `tauri.conf.json`, ensuring the frontend dev server coordinates with the native window creation.
+
+anti-patterns:
+  - ❌ Attempting to use Node.js built-in modules (like `fs` or `path`) in the Vue frontend; use Tauri's API plugins or Rust instead.
+  - ❌ Running the local Vite dev server without the Tauri wrapper, missing native IPC testing capabilities.

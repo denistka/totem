@@ -1,0 +1,50 @@
+role: Protocol Schema Definition
+focus: protocol-v4, file-extensions, sprint-structure
+extends: none
+
+description: "Canonical definition of core file structures, roles, and load order for V4."
+
+file-extensions:
+  - `.ptl`: PLANNER/PM (Sprint) - **DEFAULT**. MUST use for orchestration. NOTE: Can be executed by `OPTIMIZER` for Global Cleanup Sprints.
+  - `.pd`: PM/DEVELOPER (Task) - **DEFAULT**. MUST use for implementation.
+  - `.pa`: ARCHITECT (Patterns) - **DEFAULT**. MUST use for design gates.
+  - `.pi`: ROOT (Project Index) - Canonical project hub.
+  - `.pqa`: QA (Verification) - **ON-DEMAND** only.
+  - `.ppm`: PM (Prompt Module) - **ON-DEMAND**. Executable context.
+  - `.ti`: TOTEM (Internal) - Logic/Rules context.
+  - `.po`: LEGACY / BANNED - ❌ Do NOT use.
+
+documentation-rules:
+  - Solicited Only: "Do NOT write manuals, reports, or docs unless explicitly requested."
+  - Minimalist: "Use code snippets and file refs (@path) instead of text descriptions."
+  - Compression: "Follow v4 syntax compression protocols."
+
+sprint-structure (.ptl):
+  format: |
+    v:4 c:$$ m:alias role:planner
+    objective: goal
+    requires: [Global_Stack_Adapters_Required]
+    invariants: @path
+    track-_:
+      tasks: [T_-task]
+      requires: [Specific_Stack_Adapter_For_Track]
+      gate: condition
+
+task-structure (.pd):
+  format: |
+    v:4 c:$ m:alias role:dev x:expertise
+    task: summary
+    requires: [Target_Stack_Adapter]
+    out: [paths]
+    cmd: [shell]
+    done: [criteria]
+
+machine-rules:
+  - Load Order: `index.ti` -> `config` -> Stack Adapaters -> `.ptl` -> `.pd`.
+  - Atomic: Task logic change < 50 lines.
+  - Granularity: One `.pd` file per atomic objective.
+
+anti-patterns:
+  - ❌ Extension Blur: Using `.po` for tasks (use `.pd`).
+  - ❌ Logic Bloat: Mixing multiple tracks in one `.pd`.
+  - ❌ Shadow Schemas: Creating custom keys outside this protocol.

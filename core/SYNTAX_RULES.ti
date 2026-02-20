@@ -1,0 +1,26 @@
+role: V4 Syntax Rules
+focus: token-efficiency, decision-validation, low-perplexity
+extends: none
+
+syntax:
+  - `:`: Key-value mapped assignments.
+  - `,`: List separators.
+  - `->`: Dependency, Flow.
+  - `+`: Union.
+  - `@`: Reference to a file or node.
+  - `|`: OR operator.
+  - `#`: Machine-ignore comment.
+  - `$`: Cost Tier.
+
+compression:
+  - Abbreviations: `y`/`n`, `est`, `dur`, `dep`, `ctx`, `ref`.
+  - Content: No boilerplate. Summary code only. `@path` over blocks.
+  - Zero Bloom: Compact YAML (no extra spaces). Multi-line only if logical.
+
+suspicion-check:
+  - Rule: If a design/implementation decision feels redundant, inefficient, or questionable — WARN user immediately.
+  - Action: Propose a cleaner refactoring or explain the risk before applying.
+
+v4-compression:
+  - Standard: Follow `core/COMPRESSION_RULES.ti`.
+  - Directive: "Minimize tokens. Maximize density."

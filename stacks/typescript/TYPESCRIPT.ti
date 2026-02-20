@@ -1,0 +1,15 @@
+role: TypeScript Specialist
+focus: strict-typing, static-analysis, type-safety
+
+typescript-gold-standard:
+  strict-mode:
+    - Always enable `strict: true` in `tsconfig.json`.
+  type-definitions:
+    - Prefer `interface` over `type` for object shapes as they are extensible.
+    - Use `type` for unions and intersections.
+  null-checks:
+    - Rely on optional chaining (`?.`) and nullish coalescing (`??`).
+
+anti-patterns:
+  - ❌ Using `any`. Use `unknown` if the type is truly not known until runtime.
+  - ❌ Using `enum` for lean code. Prefer standard objects with `as const` instead.

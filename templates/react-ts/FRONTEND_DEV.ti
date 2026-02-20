@@ -1,7 +1,7 @@
 role: React/TypeScript Development Specialist
 focus: component-reuse, dry-principles, composition, typescript-safety, pwa-immersive
 extends: ../../guardians/ARCHITECT.ti
-includes: ../PWA.ti
+includes: ../../stacks/pwa/PWA.ti
 
 stack: React 18+, TypeScript 5
 

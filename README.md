@@ -1,4 +1,4 @@
-# Totem: Universal AI Agent Orchestration
+# THAIT (Totem for Human AI Tandem)
 
 The brain of your AI-driven team. Centralized, tech-agnostic, and project-aware.
 
@@ -50,6 +50,36 @@ If the project already has history and generated sprints, follow these steps to 
 
 ---
 
+## 💡 Example Prompts (V4 Context Flow)
+
+The V4 protocol uses **Just-In-Time (JIT) Context Loading** to keep the agent's memory clean. You should always start by loading the master protocol, the specific project instance, and then the required role.
+
+**1. Sprint Planning (PLANNER)**
+
+```text
+load totem, read instance navitrack, load PLANNER and plan sprint for [feature description].
+```
+
+_(The agent will load the core protocols, read the project config, and generate `.ptl` and `.pd` files. It will explicitly assign specific tech stacks to each `.pd` task using the `requires:` field)._
+
+**2. Task Execution (PM)**
+
+```text
+load totem, read instance navitrack, load PM and execute sprints/46/S46-T1-ServerAuth.pd
+```
+
+_(The agent will load the task file, see exactly which tech stacks are required via the `requires:` field, and load **ONLY** those specific rules before writing code)._
+
+**3. Cleanup & Knowledge Extraction (OPTIMIZER)**
+
+```text
+load totem, read instance navitrack, load OPTIMIZER and optimize totem (extract lessons from last 10 sprints).
+```
+
+_(The agent will audit recent work, abstract new "world best practices" into the global `/stacks/`, create a dense historical digest, and securely delete intermediate logs to keep the instance clean)._
+
+---
+
 ## 📁 Repository Map
 
 ### 🏺 Totem (Central Repo)
@@ -86,7 +116,7 @@ _The binary output._
 
 ---
 
-**Protocol**: MRPP v3.0  
+**Protocol**: MRPP v4.0  
 **Repo**: [denistka/totem](https://github.com/denistka/totem)
 
 _Accumulate power, one project at a time._

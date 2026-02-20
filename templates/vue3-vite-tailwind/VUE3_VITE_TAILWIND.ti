@@ -1,0 +1,19 @@
+role: Stack Integration Specialist (Vue 3 + Vite + Tailwind CSS)
+focus: vite-plugins, global-styles, rapid-prototyping
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Vue 3, Vite, Tailwind CSS
+
+vue-vite-tailwind-rules:
+  build-tooling:
+    - Use Vite plugins (e.g., `@vitejs/plugin-vue`) for optimal Vue compilation.
+    - Keep `vite.config.ts` lean; rely on Vite's sensible defaults for asset handling.
+  styling-integration:
+    - Place global tailwind directives (`@tailwind base; @tailwind components; @tailwind utilities;`) in a single root `style.css` imported in `main.ts`.
+    - Configure `tailwind.config.js` to intelligently purge unused CSS across all `.vue` and `.ts` files in the `src` directory.
+  workflow:
+    - Leverage Vite's lightning-fast HMR for rapid UI iterations without losing component state.
+
+anti-patterns:
+  - ❌ Running heavy custom post-css plugins alongside Tailwind without need, degrading Vite's out-of-the-box speed.
+  - ❌ Using `<style scoped>` extensively in Vue components for layout rules instead of tailwind utility classes.

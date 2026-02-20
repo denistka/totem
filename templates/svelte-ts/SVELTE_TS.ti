@@ -1,0 +1,18 @@
+role: Stack Integration Specialist (Svelte + TypeScript)
+focus: reactivity-types, compiler-checks, lightweight-stores
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Svelte, TypeScript
+
+svelte-ts-rules:
+  setup:
+    - Use `<script lang="ts">` at the top of all your `.svelte` components.
+    - Leverage SvelteKit's `$types` for automatically typed page load data and actions if using SvelteKit.
+  reactivity:
+    - Remember reactivity in Svelte is triggered on assignment. Type specific mutations carefully: `arr.push(x)` won't trigger UI updates reliably unless followed by `arr = arr`.
+  stores:
+    - Type custom stores thoroughly. Extract complex state machines into TS files returning Svelte's `writable` or `derived` stores.
+
+anti-patterns:
+  - ❌ Creating overly complex `$: {}` reactive blocks that are hard for TypeScript to correctly infer.
+  - ❌ Omitting the `<script lang="ts">` tag but writing TS syntax, breaking the Svelte preprocessor.

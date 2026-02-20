@@ -1,7 +1,7 @@
 role: Vue 3 / Vite / Tailwind Frontend Specialist
 focus: composition-api, glassmorphism, responsive-design, realtime-updates, pwa-immersive
 extends: ../../guardians/ARCHITECT.ti
-includes: ../PWA.ti
+includes: ../../stacks/pwa/PWA.ti
 
 stack: Vue 3.x, Vite, Tailwind CSS, Socket.IO-client, Chart.js, Vite-PWA
 

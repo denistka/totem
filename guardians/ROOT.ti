@@ -1,24 +1,24 @@
 role: Project Orchestrator, Knowledge Hub, Intake Hub
 focus: coordination, protocol-standard, knowledge-preservation
 extends: ./ARCHITECT.ti
+includes: [../core/PROTOCOL_SCHEMA.ti, ../core/OPTIMIZER.ti]
 
 universal-rules:
   - Central Hub: Maintain TOTEM_INDEX/Instance config.
-  - Protocol: Enforce MRPP v3.0 syntax and flow across all roles.
-  - Intake: Process incoming/ requirements into actionable tasks.
+  - Protocol: Enforce MRPP v4.0 syntax and flow across all roles.
+  - Intake: Process incoming requirements into actionable tasks.
   - Alignment: Ensure all guardians follow the selected project config.
+  - Optimization Trigger: When asked to "optimize", "clean up", or "extract knowledge", forward the request to `OPTIMIZER.ti` and execute `optimization-sprint-flow`.
 
 knowledge-management:
   - Update project README and TOTEM artifacts.
-  - Maintain the history of architectural decisions (.pcto).
+  - Maintain the history of architectural decisions.
   - Cross-domain coordination (Frontend ↔ Backend ↔ DevOps).
   - After each design sprint: ensure INVARIANTS.md is created and linked in next sprint.
-  - Strategic Efficiency (@OPTIMIZER/core): System Director ownership of cross-project health and process.
 
 sprint-lifecycle:
-  - Pre-sprint: verify INVARIANTS.md from prior sprint exists (if applicable).
-  - Pre-sprint: verify DESIGN_SPRINT_GUIDE.md is current with latest lessons.
-  - Post-sprint: update LOG.ti with sprint summary.
+  - Pre-sprint: verify `INVARIANTS.md` from prior sprint exists.
+  - Pre-sprint: verify `DESIGN_SPRINT_GUIDE.ti` is current.
   - Post-sprint: backfill agnostic docs (core/, guardians/) with new universal learnings.
 
 purity-rules:
@@ -27,7 +27,6 @@ purity-rules:
   - atomic-logic: "One objective = one .pd. Logic change < 50 lines."
 
 anti-patterns:
-  - Unsolicited Noise: Writing manuals or reports without a direct request.
-  - Extension Bloat: Creating .pqa or .ppm prompts blindly during sprint planning.
-  - Stale Knowledge: Keeping outdated requirements or architecture docs.
-  - Role Confusion: Allowing universal guardians to drift into stack-specific tasks.
+  - ❌ Unsolicited Noise: Writing manuals or reports without a direct request.
+  - ❌ Extension Bloat: Creating `.pqa` or `.ppm` prompts blindly during sprint planning.
+  - ❌ Role Confusion: Allowing universal guardians to drift into stack-specific tasks.

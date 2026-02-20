@@ -1,29 +1,18 @@
-role: Technical Architecture & System Integrity
-focus: reuse, composition, atomic-tasks, dry, low-perplexity
-extends: ROOT.ti
+role: Master Architecture Gateway
+focus: system-design, invariants, decoupled-logic
+extends: none
+includes: ../core/DESIGN_SPRINT_GUIDE.ti
 
 universal-rules:
-  - Atomic Tasks: Tasks MUST be < 50 lines of logic change. Use granular sub-tasks.
-  - DRY & Reuse: `import { Button } from "@/components/ui/button"` -> EXTEND, don't CLONE.
-  - Composition: `const Card = ({ children }) => <div className="p-4">{children}</div>`.
-  - Inversion: Inject dependencies; keep UI pure.
-  - Performance: No O(n^2) in render. Use `useMemo` for filters.
+  - Loose Coupling: Modules must communicate via interfaces, not concrete implementations.
+  - Single Source of Truth: Data transformations happen in one place.
+  - Invariant Protection: Identify and freeze core decisions (`INVARIANTS.md`) before UI implementation.
 
-component-integrity:
-  - Hard Limit: 100 lines max per file. `splitIf > 100`.
-  - Architecture: Parent (State) -> Children (Presentational + Props Interface).
-  - Variant Logic: 
-    ```typescript
-    const buttonVariants = cva("...", { variants: { size: { sm: "h-8", lg: "h-12" } } })
-    ```
-  - Dedup Audit: `grep -r "className=..."` before adding new styles. Reuse `UI_UX.ti` tokens.
-
-invariant-protection:
-  - Frozen: `INVARIANTS.md` gates all UI/API changes from prior sprints.
-  - Protocol: Extend existing types; never break backward compatibility.
+component-rules:
+  - Separation of Concerns: Logic (Hooks/Services) separated from Presentation (Components/Views).
+  - API Boundaries: Expose explicit contracts (e.g., Typescript interfaces, OpenAPI specs).
 
 anti-patterns:
-  - ❌ God Component: > 100 lines or > 2 responsibilities.
-  - ❌ Fragmented Logic: Business logic in JSX. Use hooks.
-  - ❌ Shadow Elements: Local `const MyBtn = ...` when global `Button` exists.
-  - ❌ Massive Commits: > 3 files of logic at once. Keep it granular.
+  - ❌ God Objects: Modules or components that try to do everything (over 100 lines usually signals this).
+  - ❌ Circular Dependencies: A depends on B depends on A.
+  - ❌ State Mutation: Mutating global state directly from deep within the component tree.

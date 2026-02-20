@@ -1,41 +1,9 @@
-# Timeline Editor — Project Overview
+# Project Instance: timeline-editor
 
-**Stack**: Vue 3 + TypeScript + GSAP + Tailwind CSS  
-**Source**: [Local Timeline Editor Dir](../../timeline-editor)
+## Architecture / Stack
 
----
+- **Root**: Vue, Tailwind CSS, TypeScript, Vite
+- **server**: Express
 
-## Architecture
-
-| Layer        | Directory | Responsibility                 |
-| ------------ | --------- | ------------------------------ |
-| UI Layer     | `src/`    | Vue 3 Editor (Vite + Tailwind) |
-| Server Layer | `server/` | Optional Node.js server        |
-| E2E          | `e2e/`    | Playwright tests               |
-
----
-
-## Sprints & History
-
-- **History Root**: `./` (Instance Root)
-- **Active Sprint**: **S01: Initial Setup**
-
----
-
-## Key Docs (Instance)
-
-| Doc           | Location               |
-| ------------- | ---------------------- |
-| Protocol Core | `totem/core/`          |
-| Intel Index   | `intel/TOTEM_INDEX.ti` |
-| Config        | `project.config.yml`   |
-
----
-
-## Guardians Selection
-
-Universal Process: `ROOT`, `PM`, `TEAM_LEAD`, `QA`, `DEVOPS`, `ARCHITECT`
-
-Stack Adapters:
-
-- `FRONTEND_DEV` (`stacks/vue3-vite-tailwind/FRONTEND_DEV.ti`)
+## Recommendations
+Based on this instance, new projects can utilize similar stacks such as Vite, Vue/React, and Supabase or Node.js/Express.

@@ -4,7 +4,7 @@ extends: ../../guardians/DEVOPS.ti
 
 stack: Vite 5, npm/pnpm, Node 18+
 
-scripts:
+build-rules:
   dev: "vite"
   build: "tsc && vite build"
   preview: "vite preview"

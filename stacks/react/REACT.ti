@@ -1,0 +1,17 @@
+role: React Specialist
+focus: functional-components, hooks, state-management
+
+react-gold-standard:
+  functional-components:
+    - Exclusively use functional components with hooks.
+  state-management:
+    - Use `useState` for local state and Context or a library (like Zustand/Redux) for global state.
+  effects:
+    - Be cautious with `useEffect`. Always provide comprehensive dependency arrays to avoid stale closures and infinite loops. Keep effects focused.
+  hooks:
+    - Extract complex state logic and lifecycle logic into custom hooks.
+
+anti-patterns:
+  - ❌ Prop drilling through multiple levels.
+  - ❌ Mutating state directly. Always return new object or array references when using state setters.
+  - ❌ Missing dependencies in `useEffect`.

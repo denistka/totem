@@ -4,7 +4,7 @@ extends: ../../guardians/ARCHITECT.ti
 
 stack: React 19, Radix UI (primitives), Tailwind CSS 3.4, TypeScript 5.7, Lucide React
 
-canonical-ref:
+app-ui-kit-rules:
   package: refs/app-ui-kit/package.json
   components: refs/app-ui-kit/components/ui
   utils: refs/app-ui-kit/lib/utils.ts

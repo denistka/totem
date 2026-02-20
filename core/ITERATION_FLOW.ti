@@ -1,0 +1,42 @@
+role: Iteration Flow Definition
+focus: sprint-phases, validation-gates, invariant-protection
+extends: none
+
+iteration-phases:
+  1-PLAN:
+    role: PLANNER/PM
+    focus: Scope, requirements, estimation
+    gate: scope-approved
+  2-DESIGN:
+    role: ARCHITECT
+    focus: Patterns, data structures, APIs
+    gate: design-reviewed
+  3-DEVELOP:
+    role: DEV
+    focus: Implementation, coding, logic
+    gate: build-passes
+  4-VERIFY:
+    role: QA
+    focus: Testing, verification, compliance
+    gate: tests-pass
+  5-CLOSE:
+    role: ROOT/PM
+    focus: Handoff, documentation, cleanup
+    gate: iteration-complete
+
+flow-rules:
+  - Sequential: Phases follow the order (1→5).
+  - Rollback: Failure at gate N returns the process to phase N-1.
+  - Parallel: Task execution within DEVELOP can be parallelized if dependencies allow.
+
+multi-track-sprints:
+  - Rule 1: Each track follows the same 5-phase flow internally.
+  - Rule 2: Tracks execute sequentially unless explicitly marked parallel.
+  - Invariant-Gate: Before phase 3-DEVELOP, verify `INVARIANTS.md` from prior sprints.
+  - Final-QA: Phase 4-VERIFY covers ALL tracks together (not per-track).
+  - Incremental-Discipline: Visual changes applied one at a time; build after each.
+
+invariant-protection:
+  - Post-Sprint: Create `<SPRINT>-INVARIANTS.md` documenting frozen decisions (tokens, APIs, animations).
+  - Linkage: Link via `invariants:` field in next sprint's `.ptl` file.
+  - Modification: Any change to an invariant requires explicit discussion — auto-approve is BLOCKED.

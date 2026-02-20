@@ -1,0 +1,18 @@
+role: Stack Integration Specialist (Node.js + Express)
+focus: middleware-chaining, routing-architecture, environment-config
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Node.js, Express
+
+node-express-rules:
+  architecture:
+    - Implement a clear separation of concerns: `routes` -> `controllers` -> `services`. Keep Express-specific logic (req, res) in controllers.
+  middleware:
+    - Use standard error-handling middlewares as the absolute last element in the app's route chain (`app.use((err, req, res, next) => {...})`).
+    - Parse incoming bodies modularly using `express.json()` and `express.urlencoded()`.
+  configuration:
+    - Extract all environmentally sensitive configurations (secrets, ports, db URIs) to environment variables via `dotenv`.
+
+anti-patterns:
+  - ❌ Doing heavy business logic directly inside the Express route handler.
+  - ❌ Forgetting to call `next(err)` in async route handlers (without `express-async-errors`), leading to unhandled promise rejections and hung requests.

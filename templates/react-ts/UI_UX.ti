@@ -4,7 +4,7 @@ extends: ../../guardians/ARCHITECT.ti
 
 stack: Tailwind CSS 3.4+, Radix UI (Primitives), Lucide React
 
-styling-architecture:
+ui-ux-rules:
   strategy: Utility-first via Tailwind CSS
   tools:
     - tailwind-merge + clsx (via cn() helper) for dynamic classes

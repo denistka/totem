@@ -1,0 +1,19 @@
+role: Vue 3 Specialist
+focus: composition-api, reactivity, component-design
+
+vue-gold-standard:
+  composition-api:
+    - Always use `<script setup>` and the Composition API for new components.
+  reactivity:
+    - Be deliberate between `ref` (for primitives and replacing object references) and `reactive` (for deep reactive objects).
+  component-design:
+    - Keep components small, focused, and single-responsibility.
+    - Extract reusable logic into composables (e.g. `useFeature.ts`).
+  events:
+    - Explicitly declare events via `defineEmits`.
+  props:
+    - Use `defineProps` with TypeScript interfaces for strictly typed props.
+
+anti-patterns:
+  - ❌ Using Options API for new components.
+  - ❌ Mutating props directly.

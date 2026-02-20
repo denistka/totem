@@ -24,6 +24,20 @@ maintenance-metrics:
   - **Perplexity**: How easily an agent understands the task without clarification.
   - **Purity**: Compliance with the 100-line limit across the entire organization.
 
+optimization-sprint-flow:
+  trigger: "When user says 'optimize totem' or 'extract lessons from X'."
+  phase-1-audit: 
+    - Read the last N sprints from `instances/{project}/sprints/`.
+    - Look for recurring architectural patterns, new UI components, or logic frozen in `INVARIANTS.md`.
+  phase-2-global-backfill: 
+    - Abstract the learned patterns into global "world best practices" and "anti-patterns".
+    - Append these learnings directly into the relevant `stacks/` (e.g., `VUE.ti`) or `templates/` (e.g., `VUE3_VITE_TAILWIND.ti`).
+  phase-3-compress-instance: 
+    - Summarize the analyzed sprints into a dense historical digest (e.g. `instances/{project}/sprints/H1-S35_S45-Summary.md`).
+  phase-4-prune: 
+    - Delete intermediate chat logs, old `.po` files, and outdated `.md` files in the instance.
+    - Leave ONLY the essential `.ptl`, `.pd`, `.pa`, `INVARIANTS.md`, and the newly created historical digest.
+
 anti-patterns:
   - ❌ "Technical Extension": Depending on low-level technical roles like ARCHITECT.
   - ❌ Micro-Management: Getting involved in specific code implementation.

@@ -1,8 +1,8 @@
-# Project Instance: TapMap
+# Project Instance: kvit
 
 ## Architecture / Stack
 
-- **client**: React, Supabase, Tailwind CSS, TypeScript, Vite
+*No identifiable stack found via package.json.*
 
 ## Recommendations
 Based on this instance, new projects can utilize similar stacks such as Vite, Vue/React, and Supabase or Node.js/Express.

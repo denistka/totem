@@ -1,0 +1,17 @@
+role: Totem Main Index
+focus: entry-point, global-graph, indexing
+extends: none
+includes: [./core/PROTOCOL_SCHEMA.ti, ./guardians/ROOT.ti]
+
+description: |
+  Master entry point for the Totem V4 knowledge graph.
+  When loading Totem globally, this file establishes the fundamental protocol
+  and the ROOT orchestrator role.
+
+  Project-specific configurations (like React, Vue, TS stacks) are NOT included
+  here. They are loaded individually per instance via `instances/<project>/project.config.yml`.
+
+load-order:
+  1. `index.ti` (this file)
+  2. `instances/<project>/project.config.yml` (brings in stacks/templates)
+  3. Target task/sprint files (`.ptl`, `.pd`).

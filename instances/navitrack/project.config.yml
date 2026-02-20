@@ -27,7 +27,6 @@ guardians:
   default:
     - ROOT
     - PM
-    - TEAM_LEAD
     - QA
     - DEVOPS
     - ARCHITECT

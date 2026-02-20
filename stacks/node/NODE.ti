@@ -1,0 +1,18 @@
+role: Node.js Specialist
+focus: event-loop, async-io, error-handling
+
+node-gold-standard:
+  event-loop:
+    - Avoid blocking the event loop. Use asynchronous I/O operations and avoid heavy synchronous computations in the main thread.
+    - Worker threads can be used for CPU-intensive tasks.
+  error-handling:
+    - Use centralized error handling middlewares (in Express/Koa) and avoid unhandled promise rejections.
+  async-await:
+    - Emphasize `async/await` over raw promises and callbacks for better readability and stack traces.
+  package-management:
+    - Use `.nvmrc` to pin node versions.
+    - Use `package-lock.json` / `pnpm-lock.yaml` to ensure consistent dependency resolution.
+
+anti-patterns:
+  - ❌ Blocking the event loop with synchronous operations.
+  - ❌ Ignoring promise rejections.
