@@ -1,0 +1,29 @@
+v:4
+c:$
+role: dev
+task: S04-T5
+title: Final QA — WOW and contrast checklist
+gate: OPEN
+stack_source: @incoming/requirements.md
+stack: [TypeScript, React, MobX, Material UI]
+requires: [UI]
+
+objective: |
+  Run final verification against S02/S03 invariants and the "top army generals WOW"
+  checklist: contrast, glass consistency, typography, and tactical feel.
+
+context:
+  - Phase 4-VERIFY (ITERATION_FLOW): single final QA across all tracks.
+  - No new features; only validation and small polish fixes.
+
+steps:
+  1. Verify all surfaces use S02/S03 dark and glass tokens; no invariant violations.
+  2. Check contrast ratios for text and interactive elements (operational standards).
+  3. Confirm typography hierarchy and data-dense readability on main views.
+  4. Validate status grids and tactical accents render correctly (no overflow, no missing glass).
+  5. Document any open issues or follow-up tweaks in a short checklist result.
+
+acceptance-criteria:
+  - Full app passes invariant and contrast checks.
+  - "Generals WOW" criteria met: technological, data-dense, mission-critical feel.
+  - Build and smoke test pass; ready for handoff or iteration-complete gate.

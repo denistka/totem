@@ -1,0 +1,17 @@
+gate: OPEN
+task: S03-T2
+title: Port totem-view glass buttons and cards
+objective: Incorporate the glass system UI patterns from totem-view into kvit-tracking.
+
+context:
+- totem-view contains an excellent glass styling system for buttons and cards (e.g. S05-T4-GlassButtonsAndCards.pd).
+- We need to import the CSS classes (backdrop-filter, semi-transparent backgrounds, hover glows) into kvit-tracking to elevate the UI's modern feel.
+
+steps:
+1. Locate the glass button and glass card CSS styles/components in `totem-view`.
+2. Port these specific styles (base + hover glow, optional variants) into the `kvit-tracking` styling context.
+3. Update key buttons and container cards in `kvit-tracking` to utilize these newly imported glass components/classes.
+
+acceptance-criteria:
+- [x] Glass button styles and card styles are available and used in kvit-tracking.
+- [x] The visual presentation matches the aesthetic defined in the totem-view glass UI system.

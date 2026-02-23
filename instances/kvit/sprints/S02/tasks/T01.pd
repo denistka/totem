@@ -1,0 +1,18 @@
+# S02-T01: Port Dark Theme from navitrack
+
+**Objective:** Apply the dark theme military use colors from `navitrack` into `kvit-tracking`.
+
+**Context:**
+- Source: `navitrack` source files and configuration.
+- Target: `kvit-tracking` global styling.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Audit `navitrack` for dark theme variables (backgrounds, text, primary colors) optimized for military use.
+2. Integrate these color tokens into `kvit-tracking`.
+3. Ensure no arbitrary color values are used, strictly following the established color map.
+
+**Acceptance Criteria:**
+- `kvit-tracking` successfully implements the dark theme military colors.
+- Color contrast meets operational standards.

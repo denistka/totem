@@ -1,0 +1,28 @@
+v:4
+c:$
+role: dev
+task: S04-T4
+title: Tactical accents and operational feel
+gate: OPEN
+stack_source: @incoming/requirements.md
+stack: [TypeScript, React, MobX, Material UI]
+requires: [UI]
+
+objective: |
+  Add subtle tactical accents: optional pulse/glow for live data, focus borders,
+  and an "operational" polish that completes the generals WOW effect.
+
+context:
+  - S03 glass variants (glass-glow, glass-neon) support emphasis; use sparingly for live/critical state.
+  - Motion must be subtle and purposeful (e.g. status indicator, not decorative).
+
+steps:
+  1. Define or reuse accent patterns for "live" or "critical" state (e.g. soft pulse, border glow).
+  2. Apply to key status indicators or real-time data points only; avoid overuse.
+  3. Ensure focus states (keyboard/a11y) use visible border or outline per design system.
+  4. Optionally add a single "operational" detail (e.g. subtle grid or line accent) to main layout.
+
+acceptance-criteria:
+  - Live/critical states are visually distinct without being distracting.
+  - Focus and interaction states are clear and accessible.
+  - Overall feel is "operational" and premium, aligned with glass + dark theme.

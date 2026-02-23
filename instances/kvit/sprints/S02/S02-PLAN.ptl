@@ -1,0 +1,26 @@
+v:1
+c:$$$ m:sn4t
+mode:agent
+role:TEAM_LEAD
+sprint:S02-Design-Improvement
+objective:Improve kvit-tracking design by integrating navitrack dark theme and totem-view glass system
+
+phase-1: Design System Porting
+  tasks:
+    - S02-T01-Port-Dark-Theme
+    - S02-T02-Port-Glass-System
+  dur:2h
+  verify:[ls -R]
+  gate:OPEN
+
+dispatch:
+  S02-T01:
+    po:sprints/S02/tasks/T01.pd
+    model:standard
+    critical:y
+    exec-order:1
+  S02-T02:
+    po:sprints/S02/tasks/T02.pd
+    model:standard
+    critical:y
+    exec-order:2

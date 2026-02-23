@@ -4,11 +4,17 @@ project:
   description: Military-grade project draft analysis.
   stack:
     - military-standards
-    - mrpp-3.0
-  ui_stack_ref: refs/app-ui-kit
+    - protocol-v4
+    - react-19
+    - typescript
+    - vite
+    - mui
+    - mobx
+    - socket.io
+    - leaflet
 
 paths:
-  code: ../../kvit/draft
+  code: ../../kvit/clear
   history: ./sprints
   intel: ./intel
 

@@ -1,0 +1,13 @@
+gate: OPEN
+objective: Improve Kvit-Tracking Design with External References
+context: The kvit-tracking instance needs a modern, unified design. We will incorporate the military-use dark theme from navitrack and the glass buttons/cards from totem-view.
+requires: [UI]
+invariants: @sprints/S03/S03-INVARIANTS.md
+
+tasks:
+  - id: S03-T1
+    file: S03-T1-DarkTheme.pd
+    title: Port navitrack dark theme
+  - id: S03-T2
+    file: S03-T2-GlassSystem.pd
+    title: Port totem-view glass buttons and cards

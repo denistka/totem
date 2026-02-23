@@ -16,6 +16,7 @@ hubs:
   - planning:@PM.ppm
   - quality:@QA.pqa
   - incoming:../incoming/
+  - code:../../kvit/client
   - prototype:/Users/denistka/Projects/kvit/draft/
 
 rules:

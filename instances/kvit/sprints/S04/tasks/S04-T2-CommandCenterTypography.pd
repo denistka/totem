@@ -1,0 +1,28 @@
+v:4
+c:$
+role: dev
+task: S04-T2
+title: Command-center typography and hierarchy
+gate: OPEN
+stack_source: @incoming/requirements.md
+stack: [TypeScript, React, MobX, Material UI]
+requires: [UI]
+
+objective: |
+  Establish a technological, military-grade typographic system: data-dense readability,
+  clear hierarchy (mission-critical → secondary), and "generals WOW" at a glance.
+
+context:
+  - Command-center UIs favor monospace or technical display fonts for data; clear headings for hierarchy.
+  - High contrast and consistent scale support quick scanning.
+
+steps:
+  1. Define or adopt a type scale (e.g. --font-mono, --font-display) for data and labels.
+  2. Apply mono/display to status values, IDs, timestamps; reserve readable sans for headings and body.
+  3. Enforce hierarchy: primary info (size/weight) > secondary > tertiary; avoid visual noise.
+  4. Ensure line-height and letter-spacing meet readability under dark theme (S02/S03 contrast).
+
+acceptance-criteria:
+  - Typography tokens documented and used consistently.
+  - Data-dense blocks remain scannable; headings clearly separate sections.
+  - Contrast and legibility validated against existing dark theme.

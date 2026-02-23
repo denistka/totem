@@ -1,0 +1,28 @@
+v:4
+c:$
+role: dev
+task: S04-T3
+title: Status grid and data-dense tactical layout
+gate: OPEN
+stack_source: @incoming/requirements.md
+stack: [TypeScript, React, MobX, Material UI]
+requires: [UI]
+
+objective: |
+  Introduce status-grid and dashboard-style panels: high-contrast labels, aligned
+  data cells, and a "mission control" feel that reads like a tactical briefing.
+
+context:
+  - Army-generals WOW implies at-a-glance status, grids, and clear grouping of KPIs/blocks.
+  - Glass cards (S02/S03) should wrap panels; layout should support dense information.
+
+steps:
+  1. Implement or refine a status-grid pattern: label + value pairs, consistent alignment, glass-card containers.
+  2. Apply to key dashboard or list views so critical data appears in clear, scannable blocks.
+  3. Use high-contrast labels (e.g. muted but readable) and prominent values (primary/accent).
+  4. Ensure responsive behavior: grid collapses or stacks cleanly on smaller viewports.
+
+acceptance-criteria:
+  - Status grids and tactical panels are present on primary views.
+  - Layout feels data-dense and "command-center" without clutter.
+  - Glass-card and dark theme invariants respected.

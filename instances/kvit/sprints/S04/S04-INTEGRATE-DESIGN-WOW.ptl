@@ -1,0 +1,56 @@
+v:4
+c:$$$
+role: PLANNER
+sprint: S04-Integrate-Design-WOW
+gate: OPEN
+
+objective: |
+  Integrate S02 + S03 design (navitrack dark theme + totem-view glass) into the app
+  and elevate to a technological command-center aesthetic — "top army generals WOW":
+  data-dense, high-contrast, mission-critical hierarchy, tactical status grids.
+
+# Stack per @incoming/requirements.md (Technical Stack §5)
+stack_source: @incoming/requirements.md
+stack: [TypeScript, React, MobX, Material UI]
+requires: [UI]
+code_path: instances/kvit/client
+invariants: [@sprints/S02/S02-INVARIANTS.md, @sprints/S03/S03-INVARIANTS.md]
+
+track-A-core:
+  name: Design coverage and token consistency
+  tasks: [S04-T1]
+  requires: [UI]
+  gate: OPEN
+
+track-B-wow:
+  name: Command-center technological WOW
+  tasks: [S04-T2, S04-T3, S04-T4]
+  requires: [UI]
+  gate: OPEN
+  depends-on: track-A-core
+
+track-C-verify:
+  name: Final QA — generals checklist
+  tasks: [S04-T5]
+  requires: [UI]
+  gate: OPEN
+  depends-on: track-B-wow
+
+tasks:
+  - id: S04-T1
+    file: S04-T1-DesignCoverage.pd
+    title: Audit and apply S02/S03 tokens app-wide
+  - id: S04-T2
+    file: S04-T2-CommandCenterTypography.pd
+    title: Command-center typography and hierarchy
+  - id: S04-T3
+    file: S04-T3-StatusGridLayout.pd
+    title: Status grid and data-dense tactical layout
+  - id: S04-T4
+    file: S04-T4-TacticalAccents.pd
+    title: Tactical accents and operational feel
+  - id: S04-T5
+    file: S04-T5-GeneralsQA.pd
+    title: Final QA — WOW and contrast checklist
+
+sequence: S04-T1 → S04-T2 → S04-T3 → S04-T4 → S04-T5

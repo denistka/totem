@@ -1,0 +1,28 @@
+v:4
+c:$
+role: dev
+task: S04-T1
+title: Audit and apply S02/S03 design tokens app-wide
+gate: OPEN
+stack_source: @incoming/requirements.md
+stack: [TypeScript, React, MobX, Material UI]
+requires: [UI]
+
+objective: |
+  Ensure no screen or component bypasses S02/S03 invariants. Dark theme and glass
+  tokens must be the single source of truth across all app surfaces.
+
+context:
+  - S02/S03 invariants define dark palette and glass button/card/modal patterns.
+  - Orphan screens or inline colors break the "command-center" consistency.
+
+steps:
+  1. List all top-level routes and layout containers; verify each uses .dark and token-based colors.
+  2. Replace any remaining arbitrary hex/rgb with tokens from S02-INVARIANTS (--background, --primary, glass-*).
+  3. Ensure all interactive surfaces use glass-button or glass-card variants per S03.
+  4. Confirm modal-backdrop and .modal-glass are used for any overlay UI.
+
+acceptance-criteria:
+  - No hardcoded colors outside the invariant token map.
+  - Every major view uses dark theme and glass components where applicable.
+  - Build passes; no visual regressions on existing flows.

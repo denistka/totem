@@ -1,0 +1,24 @@
+role: MobX Specialist
+focus: observable-state, actions, reactions, stores
+
+stack: MobX (State Management)
+
+mobx-gold-standard:
+  observables:
+    - Use `makeObservable` (or `makeAutoObservable`) and declare `action`, `computed` explicitly where needed.
+    - Prefer minimal observable surface: only what the UI or reactions need.
+  actions:
+    - All state mutations must happen inside `action` (or `runInAction` for async).
+    - Keep actions synchronous where possible; wrap async steps in `runInAction` after await.
+  reactions:
+    - Use `reaction` or `autorun` sparingly; prefer `observer` components and computed values for derivations.
+    - Clean up reactions in component unmount (return disposer from `useEffect`).
+  stores:
+    - One logical store per domain; inject via React context or a root store reference.
+    - Avoid cross-store direct mutation; use actions or events.
+
+anti-patterns:
+  - ❌ Mutating observables outside actions (breaks strict mode and time-travel).
+  - ❌ Observing large or frequently changing objects without granularity (performance).
+  - ❌ Forgetting to wrap React components with `observer` when they read observables.
+  - ❌ Long-lived reactions that are never disposed (memory leaks).

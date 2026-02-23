@@ -1,0 +1,23 @@
+role: Material UI (MUI) Specialist
+focus: components, theming, accessibility, layout
+
+stack: Material UI (UI Library)
+
+mui-gold-standard:
+  components:
+    - Prefer MUI primitives (Button, TextField, Card, etc.) and customize via `sx`, `styled()`, or theme.
+    - Use composition: Box for layout, Typography for text, Stack/Grid for spacing.
+  theming:
+    - Centralize palette and typography in `createTheme()` (or ThemeProvider); avoid inline colors that bypass theme.
+    - Use theme tokens in `sx`: `theme.palette.primary.main`, `theme.spacing()`, `theme.breakpoints`.
+  accessibility:
+    - Preserve MUI defaults: focus rings, aria attributes, keyboard nav. Override only when necessary.
+    - Use semantic components (e.g. correct heading levels, list markup).
+  layout:
+    - Prefer Grid2 (Grid) or Stack for responsive layouts; avoid raw flex/grid unless needed for custom behavior.
+
+anti-patterns:
+  - ❌ Inline styles or hardcoded colors that ignore theme (breaks dark mode and consistency).
+  - ❌ Removing or weakening focus indicators without providing an alternative (a11y).
+  - ❌ Deep `sx` overrides that duplicate what theme could define (DRY).
+  - ❌ Mixing MUI with another full UI kit (e.g. Tailwind component library) without a clear boundary.

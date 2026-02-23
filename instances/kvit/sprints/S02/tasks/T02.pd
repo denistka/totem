@@ -1,0 +1,19 @@
+# S02-T02: Port Glass System from totem-view
+
+**Objective:** Implement the glass system and buttons from `totem-view` into `kvit-tracking`.
+
+**Context:**
+- Source: `totem-view` glass tokens (`--glass-primary`, `--glass-accent`), utility classes (`.modal-glass`, `glass-button`), and S05 invariants.
+- Target: `kvit-tracking` UI components.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Extract glass CSS variables and shadow tokens from `totem-view`.
+2. Port utility classes like `glass-button`, `glass-card`, and modal overlay patterns.
+3. Ensure Safari `-webkit-backdrop-filter` is paired correctly.
+4. Apply the glass system to `kvit-tracking` buttons and containers.
+
+**Acceptance Criteria:**
+- Glass tokens and utility classes are available in `kvit-tracking`.
+- Buttons and cards exhibit the premium glass effect from `totem-view`.

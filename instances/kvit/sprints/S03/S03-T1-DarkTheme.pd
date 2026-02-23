@@ -1,0 +1,17 @@
+gate: OPEN
+task: S03-T1
+title: Port navitrack dark theme
+objective: Incorporate the military-use dark theme from the navitrack instance into kvit-tracking.
+
+context:
+- navitrack has a well-defined dark theme appropriate for military applications.
+- This tasks involves extracting those CSS values/theme configurations and applying them to the kvit-tracking Tailwind or CSS configuration.
+
+steps:
+1. Locate the dark theme colors in the `navitrack` instance.
+2. Port those color variables into `kvit-tracking` (`tailwind.config.js` or `index.css`).
+3. Ensure the base layout and primary components fall back or actively use these dark theme colors.
+
+acceptance-criteria:
+- [x] kvit-tracking successfully uses the military dark theme colors originating from navitrack.
+- [x] Global background and text contrast adhere to proper design rules under the new theme.
