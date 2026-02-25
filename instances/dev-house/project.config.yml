@@ -1,0 +1,25 @@
+project:
+  name: dev-house
+  version: 0.1.0
+  description: Project management and tracking tool that treats software development like a clan-based RPG.
+  stack:
+    - sveltekit
+    - supabase-auth
+    - supabase-db
+    - gsap
+    - tailwindcss
+    - protocol-v4
+
+paths:
+  code: /Users/denistka/Projects/dev-house
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - ARCHITECT
+    - UI_UX

@@ -1,0 +1,13 @@
+---
+gate: OPEN
+requires: [supabase-db, protocol-v4]
+---
+# Approval Logic
+
+## Objective
+Enforce the peer-review gate logically.
+
+## Tasks
+1. Update RLS policies or database mutation functions handling quest status updates.
+2. Reject updates to "Done" status unless the request includes a valid approval signature or is performed by a valid peer reviewer.
+3. Validate that the user approving the quest is NOT the same user that executed it.

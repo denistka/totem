@@ -1,0 +1,14 @@
+---
+gate: LOCKED
+requires: [sveltekit, supabase-db, protocol-v4]
+---
+# Task State Update
+
+## Objective
+Persist task state changes to Supabase when a quest is moved.
+
+## Tasks
+1. Implement a database mutation function to update a quest's `status` given its ID.
+2. Wire the `onDrop` event from `DragAndDrop` to this mutation function.
+3. Handle optimistic UI updates so the card snaps instantly while the network request is processing.
+4. Handle error states and revert the card if the request fails.

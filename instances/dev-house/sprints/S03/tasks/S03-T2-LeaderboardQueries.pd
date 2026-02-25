@@ -1,0 +1,13 @@
+---
+gate: OPEN
+requires: [supabase-db, protocol-v4]
+---
+# Leaderboard Queries
+
+## Objective
+Create the database queries to establish user and clan rankings.
+
+## Tasks
+1. Write a query to fetch the top global users ordered by level then XP.
+2. Write a query to compute clan rankings based on the aggregate XP of their members.
+3. Expose these functions safely to authenticated users.

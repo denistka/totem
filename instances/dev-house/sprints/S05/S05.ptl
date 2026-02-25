@@ -1,0 +1,20 @@
+---
+gate: OPEN
+---
+# Sprint 05: Polish & Visuals
+
+**Goal:** Enhance the UI to feel like an RPG interface (dark fantasy or cypherpunk aesthetic). Add sound effects and particle effects for the "Level Up" screen.
+**Outcome:** MVP Release. Teams can manage software tasks in a fluid, rewarding, and gamified environment.
+
+**Invariants:**
+- Extends `S04-INVARIANTS.md`
+
+## Track 1: Aesthetic Overhaul
+- task: tasks/S05-T1-RPGUITheming.pd
+
+## Track 2: Visual & Audio Feedback
+- task: tasks/S05-T2-SoundEffects.pd
+- task: tasks/S05-T3-ParticleEffects.pd
+
+## Track 3: Final Verification
+- task: tasks/S05-T4-FinalIntegrationTesting.pd

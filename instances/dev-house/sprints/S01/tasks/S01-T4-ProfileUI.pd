@@ -1,0 +1,13 @@
+---
+gate: LOCKED
+requires: [sveltekit, tailwindcss, protocol-v4]
+---
+# Profile UI
+
+## Objective
+Create the character sheet view for the authenticated user.
+
+## Tasks
+1. Retrieve user profile data including XP and Level from Supabase.
+2. Build a character sheet component displaying Level (e.g., Level 1), current XP, and unassigned Clan status.
+3. Style with Tailwind CSS matching an RPG dark-fantasy/cypherpunk aesthetic.

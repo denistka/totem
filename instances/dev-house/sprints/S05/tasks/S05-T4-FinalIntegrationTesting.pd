@@ -1,0 +1,14 @@
+---
+gate: OPEN
+requires: [protocol-v4]
+---
+# Final Integration Testing
+
+## Objective
+Execute a final sweep to assure all MVP epics behave seamlessly together.
+
+## Tasks
+1. Walk through the new user registration.
+2. Have a user pick up a quest, wait for peer review, and complete it.
+3. Verify the correct allocation of XP, level ups, and leaderboard adjustments across multiple accounts.
+4. Verify animations and UI theming present correctly.

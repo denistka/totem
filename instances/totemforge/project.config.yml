@@ -1,0 +1,25 @@
+project:
+  name: TotemForge
+  version: 0.1.0
+  description: A web-based, real-time collaborative animation and audio design tool.
+  stack:
+    - vue-3
+    - tauri-2
+    - supabase-realtime
+    - gsap
+    - rust-wasm
+    - protocol-v4
+
+paths:
+  code: ../../totemforge
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+    - ARCHITECT
+    - UI_UX

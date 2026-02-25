@@ -1,0 +1,18 @@
+---
+gate: OPEN
+---
+# Sprint 01: Identity & Database Schema
+
+**Goal:** Set up SvelteKit and Supabase. Create schemas for `users` (with XP/Level columns), `clans`, and `quests`.
+**Outcome:** A user can log in via GitHub/Supabase Auth and view their basic character sheet (Level 1, 0 XP, unassigned Clan).
+
+**Invariants:**
+- `S01-INVARIANTS.md` (To be created)
+
+## Track 1: Setup & Database (Core)
+- task: tasks/S01-T1-ProjectSetup.pd
+- task: tasks/S01-T2-DatabaseSchema.pd
+
+## Track 2: Services & UI (Frontend)
+- task: tasks/S01-T3-AuthFlow.pd
+- task: tasks/S01-T4-ProfileUI.pd

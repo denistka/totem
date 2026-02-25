@@ -1,0 +1,14 @@
+---
+gate: LOCKED
+requires: [supabase-db, protocol-v4]
+---
+# Database Schema
+
+## Objective
+Create the initial database schema on Supabase for users, clans, and quests.
+
+## Tasks
+1. Define the SQL migration for the `clans` table.
+2. Define the SQL migration for extending the `users` table or creating a `profiles` table to store `xp` (integer) and `level` (integer).
+3. Define the SQL migration for the `quests` table (`id`, `title`, `description`, `difficulty_rating`, `status`, `bounty_xp`).
+4. Apply row-level security (RLS) policies.

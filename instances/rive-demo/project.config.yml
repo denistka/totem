@@ -1,0 +1,16 @@
+project:
+  name: Rive Demo
+  version: 1.0.0
+  description: Rive animation engine demonstration and testing.
+  stack:
+    - rive
+    - web-animations
+    - protocol-v4
+
+paths:
+  code: ../../rive-demo
+
+guardians:
+  default:
+    - ROOT
+    - UI_UX

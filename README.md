@@ -73,7 +73,7 @@ _(The agent will load the task file, see exactly which tech stacks are required 
 **3. Cleanup & Knowledge Extraction (OPTIMIZER)**
 
 ```text
-read totem/index.ti, load instance navitrack, load OPTIMIZER and optimize totem (extract lessons from last 10 sprints).
+read totem/index.ti, load instance navitrack, load OPTIMIZER and optimize totem (extract lessons from last 20 sprints).
 ```
 
 _(The agent will audit recent work, abstract new "world best practices" into the global `/stacks/`, create a dense historical digest, and securely delete intermediate logs to keep the instance clean)._

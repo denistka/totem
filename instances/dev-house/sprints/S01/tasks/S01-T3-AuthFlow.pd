@@ -1,0 +1,14 @@
+---
+gate: LOCKED
+requires: [sveltekit, supabase-auth, protocol-v4]
+---
+# Authentication Flow
+
+## Objective
+Implement user login and registration using Supabase Auth.
+
+## Tasks
+1. Create a Supabase client utility in SvelteKit.
+2. Implement a login/signup view (`/login` route).
+3. Wire up GitHub OAuth or Email Auth using `supabase.auth.signInWithOAuth`.
+4. Ensure robust session hand-off on callback (`/auth/callback`).
