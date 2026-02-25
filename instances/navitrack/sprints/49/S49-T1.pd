@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S49-T1-HTTP-Adapter
+objective:Create runtime-aware HTTP adapter with Tauri detection and URL rewriting.
+status:DONE
+gate:DONE
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Created `src-client/src/lib/http-adapter.ts` (~55 lines)
+  - Installed `@tauri-apps/plugin-http` + `@tauri-apps/api`
+  - Runtime detection via `__TAURI_INTERNALS__`
+  - Dynamic import of plugin-http (web build stays clean)
+  - URL rewriting: /api-nav/* → http://api.navitrack.com.ua:2052/*

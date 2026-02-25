@@ -1,0 +1,117 @@
+v:1
+mode:agent
+role:lead
+sprint:S50-Tauri2-MultiPlatform
+objective:Configure and validate Tauri 2 builds for Android, iOS, macOS, Windows, and Raspberry Pi 5.
+status:ACTIVE
+gate:OPEN
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-03-UNIVERSAL-BUILD
+priority:P0
+dep:S49
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/45/S44-INVARIANTS.md
+max-file-lines:150
+atomic-limit:50-lines
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-desktop:
+  tasks:[T3-macOS]
+  gate:macos-builds
+
+phase-mobile:
+  tasks:[T1-Android, T2-iOS]
+  gate:mobile-inits
+
+phase-extended:
+  tasks:[T4-Windows, T5-RPi5]
+  gate:cross-targets
+
+phase-verify:
+  tasks:[T6-Validate]
+  gate:all-platforms-boot
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-Android:
+    critical:y
+    exec-order:2
+    desc:Initialize Tauri Android target. Configure signing, INTERNET permission.
+    context:Requires Android SDK + NDK.
+
+  T2-iOS:
+    critical:y
+    exec-order:3
+    desc:Initialize Tauri iOS target. Xcode project, provisioning, NSAppTransportSecurity.
+    context:Requires Xcode + Apple Developer account.
+
+  T3-macOS:
+    critical:y
+    exec-order:1
+    desc:Build and validate macOS app. Test HTTP adapter end-to-end in native binary.
+    context:Primary validation target — runs on dev machine.
+
+  T4-Windows:
+    critical:n
+    exec-order:4
+    desc:Configure Windows build target. MSI/NSIS installer.
+    context:Cross-compile or CI. Code signing optional.
+
+  T5-RPi5:
+    critical:n
+    exec-order:5
+    desc:ARM64 Linux target for Raspberry Pi 5. Cross-compile via `cross`.
+    context:aarch64-unknown-linux-gnu target. .deb package.
+
+  T6-Validate:
+    critical:y
+    exec-order:6
+    desc:Validate all configured platforms build and API calls succeed.
+    context:End-to-end verification.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - macOS build runs and fetches vehicle data from API.
+  - Android and iOS targets initialized.
+  - Linux targets configured (deb/appimage).
+  - All platforms pass build step.
+
+###############################################################################
+# CHANGELOG / PROGRESS
+###############################################################################
+progress:
+  - date: 2026-02-25
+    milestones:
+      - "Created platform-specific Tauri configs (tauri.ios.conf.json, tauri.android.conf.json, etc.) for clean modularity."
+      - "Implemented comprehensive 3-mode Theme System (light/dark/system) via useTheme.ts with OS prefers-color-scheme detection and Tauri native window sync (core:window:allow-set-theme) to match title bars."
+      - "Configured Edge-to-Edge viewports for mobile with tauri-plugin-edge-to-edge and added launch background-color flash prevention."
+      - "Secured API endpoints: Extracting VITE_API_NAV / VITE_API_ONLINE into a Tauri Rust `get_api_urls` command via `option_env!` ensuring real domains never leak into the Web client JS bundle."
+
+###############################################################################
+# QA HISTORY
+###############################################################################
+qa-history:
+  - id: QA-01
+    focus: SPA/PWA Test
+    goods:
+      - desc: "Theming responded correctly for SPA/PWA opened in browser."
+        context: "Validates the inline theme script and prefers-color-scheme implementation."
+    bugs:
+      - desc: "After login, vehicles didn't appear on objects screen, despite 200 OK network response."
+        root-cause: "Vite dev server didn't hot-reload dynamically created .env files. Proxy forwarded to local SPA Vite server serving index.html, causing silent JSON parse failure in api.ts instead of throwing."
+        fix: "Restart the `pnpm dev` process."
+      - desc: "Main visual container div didn't have height, hiding the objects list and map."
+        root-cause: ".app-shell container is flex-col, but its immediate child MobileShell only had h-full, which some browser engines evaluate to 0px inside flex without explicit block height."
+        fix: "Added `flex-1` to the MobileShell root div to explicitly fill the parent layout."

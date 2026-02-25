@@ -19,7 +19,7 @@ project:
 
 paths:
   code: ../navitrack-apps
-  react_app: ../navitrack-apps/react-app
+  react_app: ../navitrack-apps/src-client
   history: ../prompt-machine
   intel: ./intel
 

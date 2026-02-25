@@ -1,0 +1,33 @@
+v:1
+mode:code
+role:developer
+task:S51-T2-Vercel-Deploy
+objective:Configure Vercel to auto-deploy the web PWA from src-client on push to main.
+gate:LOCKED
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Set Vercel project root directory to `src-client`.
+  - Ensure `vercel.json` rewrites and `api/proxy.js` work from new path.
+  - Configure build command: `cd src-client && npm run build`.
+  - Output directory: `src-client/dist`.
+  - Environment: production auto-deploy on main branch.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Vercel project configured for src-client.
+  - Auto-deploy on push to main verified.
+  - CORS proxy functional in production.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Update Vercel project settings (root directory).
+  2. Verify vercel.json and api/proxy.js paths.
+  3. Push to main, confirm deploy succeeds.
+  4. Test API calls work through Vercel proxy.

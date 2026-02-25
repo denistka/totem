@@ -1,0 +1,33 @@
+v:1
+mode:code
+role:developer
+task:S50-T3-macOS
+objective:Build and validate macOS desktop app. Verify HTTP adapter works end-to-end.
+gate:OPEN
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Align Tauri crate versions (Rust + NPM must match major.minor).
+  - Run `npx @tauri-apps/cli build` from navitrack-apps root.
+  - Verify DMG / .app bundle is produced in `src-tauri/target/release/bundle/`.
+  - Launch the app and confirm it calls the API directly (no proxy).
+  - Validate HTTP adapter rewrites /api-nav → http://api.navitrack.com.ua:2052.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - macOS .app bundle builds successfully.
+  - App launches and renders the UI.
+  - API calls succeed via tauri-plugin-http (verified in DevTools or logs).
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Run `cargo update` in src-tauri to align crate versions.
+  2. Run `npx @tauri-apps/cli build`.
+  3. Launch the .app and test login / vehicle list.
+  4. If build fails, fix and retry (max 3 iterations).

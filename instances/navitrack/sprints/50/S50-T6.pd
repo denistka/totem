@@ -1,0 +1,33 @@
+v:1
+mode:code
+role:developer
+task:S50-T6-Validate
+objective:End-to-end validation of all configured platform builds.
+gate:OPEN
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Each platform that has been configured must produce a build artifact.
+  - macOS .app must launch and fetch vehicle data.
+  - Android APK must install on emulator/device.
+  - iOS .app must run in simulator.
+  - Windows and RPi5 builds verified via CI or cross-compile.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Build matrix summary table (platform, artifact, status).
+  - Screenshot or log proof of macOS app running.
+  - Known issues documented.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Collect build artifacts from each platform.
+  2. Test macOS app manually.
+  3. Test Android on emulator (if Android SDK present).
+  4. Document results in sprint completion report.

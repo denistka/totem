@@ -1,0 +1,32 @@
+v:1
+mode:code
+role:developer
+task:S51-T5-RPi5-Release
+objective:Automate ARM64 .deb build and release for Raspberry Pi 5.
+gate:LOCKED
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Cross-compile aarch64-unknown-linux-gnu on ubuntu-latest.
+  - Use `cargo-zigbuild` or `cross` for cross-compilation.
+  - Tauri bundle produces .deb package.
+  - Upload .deb to GitHub Releases on tag push.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - ARM64 cross-compile job in build.yml.
+  - .deb package uploaded to GitHub Releases.
+  - RPi5 deployment docs (install via dpkg).
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Install cross-compile toolchain in CI.
+  2. Build with `--target aarch64-unknown-linux-gnu`.
+  3. Upload .deb artifact on tag push.
+  4. Document RPi5 install steps.

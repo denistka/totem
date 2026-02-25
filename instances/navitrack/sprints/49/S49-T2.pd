@@ -1,0 +1,15 @@
+v:1
+mode:code
+role:developer
+task:S49-T2-API-Refactor
+objective:Replace fetch() with httpFetch() in api.ts — single-line change.
+status:DONE
+gate:DONE
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Added `import { httpFetch } from './http-adapter'` to api.ts
+  - Changed `fetch(url, ...)` → `httpFetch(url, ...)` on line 274
+  - All 352 lines of types/interfaces untouched

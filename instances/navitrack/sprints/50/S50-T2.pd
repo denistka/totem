@@ -1,0 +1,33 @@
+v:1
+mode:code
+role:developer
+task:S50-T2-iOS
+objective:Initialize Tauri 2 iOS target with Xcode project and transport security.
+gate:OPEN
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Run `npx @tauri-apps/cli ios init` from navitrack-apps root.
+  - Verify `src-tauri/gen/apple/` project is generated.
+  - Add NSAppTransportSecurity exception for HTTP API domains in Info.plist.
+  - Validate Xcode project opens and scheme is correct.
+  - Provisioning profile setup (document steps, actual signing requires dev account).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - iOS project initialized in `src-tauri/gen/apple/`.
+  - Info.plist allows HTTP to api.navitrack.com.ua and online.navitrack.com.ua.
+  - `npx @tauri-apps/cli ios build --debug` produces .app (simulator).
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Run ios init.
+  2. Update Info.plist with ATS exceptions for HTTP API endpoints.
+  3. Attempt debug build for simulator.
+  4. Document signing steps for device deployment.

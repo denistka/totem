@@ -1,0 +1,78 @@
+v:1
+mode:agent
+role:lead
+sprint:S49-Runtime-HTTP-Adapter
+objective:Make api.ts work on both Web (proxied) and Tauri (direct) with zero code duplication via a runtime-aware HTTP adapter.
+status:DONE
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-03-UNIVERSAL-BUILD
+priority:P0
+dep:S48
+backlog:H-008
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/45/S44-INVARIANTS.md
+max-file-lines:150
+atomic-limit:50-lines
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-adapter:
+  tasks:[T1-HTTP-Adapter]
+  gate:adapter-created
+
+phase-integration:
+  tasks:[T2-API-Refactor]
+  gate:fetch-replaced
+
+phase-config:
+  tasks:[T3-CSP-Update]
+  gate:csp-widened
+
+phase-verify:
+  tasks:[T4-Verify]
+  gate:zero-errors
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-HTTP-Adapter:
+    critical:y
+    exec-order:1
+    desc:Create src/lib/http-adapter.ts — runtime detection + adapter factory.
+    context:Detects Tauri via __TAURI_INTERNALS__. Dynamic import of @tauri-apps/plugin-http. Rewrites proxy URLs to direct API URLs.
+
+  T2-API-Refactor:
+    critical:y
+    exec-order:2
+    desc:Refactor api.ts — replace fetch() with httpFetch() adapter call.
+    context:Single-line change. All types/interfaces untouched.
+
+  T3-CSP-Update:
+    critical:y
+    exec-order:3
+    desc:Update tauri.conf.json CSP connect-src for both API domains.
+    context:Allows direct HTTP calls from Tauri webview.
+
+  T4-Verify:
+    critical:y
+    exec-order:4
+    desc:Verify tsc --noEmit passes. Web proxy paths preserved. Tauri URLs rewrite correctly.
+    context:Zero type errors confirmed.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - Runtime adapter detects Tauri vs Web correctly.
+  - Web proxy paths (/api-online, /api-nav) unchanged.
+  - Tauri rewrites to direct API URLs.
+  - tsc --noEmit passes with zero errors.
+  - CSP allows both API domains for native HTTP.

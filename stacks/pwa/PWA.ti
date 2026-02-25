@@ -7,9 +7,11 @@ stack: Web App Manifest, Service Workers, Viewport API, CSS Environment Variable
 pwa-gold-standard:
   viewport:
     meta: '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">'
+    optional: 'Add interactive-widget=resizes-content for better virtual-keyboard behavior (may omit user-scalable=no for accessibility).'
     logic:
       - Use `viewport-fit=cover` to extend content behind notches and home indicators.
-      - Set `user-scalable=no` to prevent accidental zooming breaking the app-like feel.
+      - Set `user-scalable=no` to prevent accidental zooming breaking the app-like feel (trade-off: accessibility).
+      - Prefer `--app-height` from `visualViewport.height` (not 100vh) for full-height layout.
   
   display-modes:
     ios:
@@ -17,19 +19,34 @@ pwa-gold-standard:
       - Meta tag: `<meta name="apple-mobile-web-app-capable" content="yes">`.
       - Meta tag: `<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">`.
       - Note: `black-translucent` allows the background to bleed behind the status bar.
+      - iOS standalone: one-time height fix (e.g. set height 100%+100px then 100%, apply no-scroll, lock html/body height and --app-height); do not set height on the scroll container.
     android:
       - Use `fullscreen` in manifest for an immersive experience (hides status/nav bars).
       - Ensure `theme_color` in manifest matches the app's primary background color.
 
+  layout:
+    single-scroll-container:
+      - One scroll container (e.g. #root): `position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: auto`.
+      - Body: `overflow: hidden` so only the scroll container scrolls.
+      - Do not set height on the scroll container from JS (iOS height fix applies to html, body, and --app-height only).
+    header-footer:
+      - Header: `position: fixed; top: 0; left: 0; right: 0`; transparent background; padding with `env(safe-area-inset-top)` and horizontal insets.
+      - Footer: `position: fixed; bottom: 0; ...`; transparent; padding with `env(safe-area-inset-bottom)` and horizontal insets.
+      - Scroll container gets top/bottom padding so content scrolls edge-to-edge under the transparent header/footer.
+    chrome-and-corners:
+      - Header, footer, and any "corner" UI must be `position: fixed` and positioned with `env(safe-area-inset-*)` so they stay in viewport corners and do not scroll.
+      - Do not put corner or chrome elements inside the scroll container (they would scroll with content).
+
   css-reset:
-    - `html, body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; position: fixed; }`
-    - Use `position: fixed` or `absolute` pinning (top: 0, bottom: 0, left: 0, right: 0) to ensure full coverage.
-    - Avoid hardcoded heights (100vh); prefer `100dvh` or pinning.
+    - `html, body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; }` (optionally `position: fixed` for full coverage).
+    - Use `position: fixed` pinning (top: 0, bottom: 0, left: 0, right: 0) on the scroll container to ensure full viewport coverage.
+    - Avoid hardcoded heights (100vh); prefer `100dvh`, `var(--app-height)`, or pinning.
 
   safe-areas:
-    - Use `env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`, etc., for content padding.
-    - Backgrounds SHOULD NOT respect safe areas (bleed to edges).
-    - Tappable elements MUST respect safe areas to avoid being obscured by hardware or home indicators.
+    - Use `env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`, etc., for padding of header, footer, and tappable/chrome elements.
+    - Backgrounds and main content area SHOULD NOT respect safe areas (bleed to edges); padding on the scroll container or chrome holds content away from notches.
+    - Tappable elements and fixed chrome MUST respect safe areas so they are not obscured by hardware or home indicators.
+    - Debug/overlay panels: position with `calc(Npx + env(safe-area-inset-*))` so they stay in safe region.
 
   cache-control (Dev Phase):
     - Service Worker: Use a "network-only" pass-through for `fetch` during development.
@@ -40,3 +57,6 @@ anti-patterns:
   - ❌ Hardcoded 100vh (fails to account for mobile toolbars/notches).
   - ❌ Respecting safe-areas for background colors (causes letterboxing).
   - ❌ Forgetting `theme-color` meta tag (browser header won't match app).
+  - ❌ Putting header, footer, or corner elements inside the scroll container (they scroll away; use position: fixed outside).
+  - ❌ Setting height on the fixed scroll container from iOS height script (set only on html, body, and --app-height).
+  - ❌ Positioning overlays (e.g. debug panel) with raw px from viewport edges without safe-area insets.

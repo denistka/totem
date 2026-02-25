@@ -1,0 +1,34 @@
+v:1
+mode:code
+role:developer
+task:S50-T1-Android
+objective:Initialize Tauri 2 Android target with signing and permissions.
+gate:OPEN
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Run `npx @tauri-apps/cli android init` from navitrack-apps root.
+  - Verify `src-tauri/gen/android/` project is generated.
+  - Add INTERNET permission to AndroidManifest.xml (if not present by default).
+  - Configure signing: create `keystore.properties` placeholder (gitignored).
+  - Ensure `tauri-plugin-http` works on Android (native HTTP, no CORS).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Android project initialized in `src-tauri/gen/android/`.
+  - INTERNET permission confirmed.
+  - Signing config placeholder ready.
+  - `npx @tauri-apps/cli android build --debug` produces APK.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Run android init.
+  2. Verify manifest permissions.
+  3. Attempt debug APK build.
+  4. Confirm APK boots in emulator (if available).

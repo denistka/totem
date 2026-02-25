@@ -1,0 +1,13 @@
+v:1
+mode:code
+role:developer
+task:S49-T3-CSP-Update
+objective:Widen tauri.conf.json CSP connect-src for direct API access.
+status:DONE
+gate:DONE
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Updated CSP: added connect-src for api.navitrack.com.ua:2052 and online.navitrack.com.ua:2052

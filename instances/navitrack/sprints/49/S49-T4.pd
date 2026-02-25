@@ -1,0 +1,16 @@
+v:1
+mode:code
+role:developer
+task:S49-T4-Verify
+objective:Verify tsc --noEmit passes, web proxy preserved, Tauri URLs rewrite correctly.
+status:DONE
+gate:DONE
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - tsc --noEmit: zero errors
+  - Web proxy paths (/api-online, /api-nav) preserved
+  - Tauri URL rewriting validated
+  - CSP allows both API domains

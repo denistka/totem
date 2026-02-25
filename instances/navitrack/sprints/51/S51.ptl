@@ -1,0 +1,88 @@
+v:1
+mode:agent
+role:lead
+sprint:S51-CICD-Universal-Deploy
+objective:Automate build and deploy for all platforms via GitHub Actions matrix. Web PWA auto-deploys to Vercel, native apps publish to GitHub Releases.
+status:PLANNED
+gate:LOCKED
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-03-UNIVERSAL-BUILD
+priority:P1
+dep:S50
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/45/S44-INVARIANTS.md
+max-file-lines:150
+atomic-limit:50-lines
+
+###############################################################################
+# PHASES
+###############################################################################
+phase-foundation:
+  tasks:[T1-GH-Actions-Matrix]
+  gate:matrix-builds
+
+phase-web:
+  tasks:[T2-Vercel-Deploy]
+  gate:web-auto-deploy
+
+phase-mobile:
+  tasks:[T3-Mobile-Release]
+  gate:mobile-artifacts
+
+phase-desktop:
+  tasks:[T4-Desktop-Release]
+  gate:desktop-artifacts
+
+phase-arm:
+  tasks:[T5-RPi5-Release]
+  gate:arm-artifacts
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  T1-GH-Actions-Matrix:
+    critical:y
+    exec-order:1
+    desc:Create `.github/workflows/build.yml` with matrix strategy for all platforms.
+    context:Matrix: [macos-latest, ubuntu-latest, windows-latest]. Mobile builds on macOS runner. ARM64 via cross or QEMU.
+
+  T2-Vercel-Deploy:
+    critical:y
+    exec-order:2
+    desc:Configure Vercel project to auto-deploy src-client on push to main.
+    context:vercel.json + proxy.js already in place. Set root directory to src-client.
+
+  T3-Mobile-Release:
+    critical:n
+    exec-order:3
+    desc:Android APK → GitHub Releases. iOS IPA → TestFlight prep (docs only).
+    context:Android signing via GH secrets. iOS requires Apple Developer account.
+
+  T4-Desktop-Release:
+    critical:y
+    exec-order:4
+    desc:macOS DMG + Windows MSI → GitHub Releases via tauri-action.
+    context:Use tauri-apps/tauri-action for automated bundling and upload.
+
+  T5-RPi5-Release:
+    critical:n
+    exec-order:5
+    desc:ARM64 .deb → GitHub Releases. Cross-compile on ubuntu-latest.
+    context:Uses cross or cargo-zigbuild for aarch64-unknown-linux-gnu.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - GitHub Actions matrix green for all configured platforms.
+  - Web PWA auto-deploys to Vercel on push to main.
+  - macOS DMG and Windows MSI posted to GitHub Releases.
+  - Android APK posted to GitHub Releases.
+  - RPi5 .deb posted to GitHub Releases.

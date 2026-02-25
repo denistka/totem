@@ -1,0 +1,33 @@
+v:1
+mode:code
+role:developer
+task:S51-T4-Desktop-Release
+objective:Automate macOS DMG and Windows MSI release to GitHub Releases via tauri-action.
+gate:LOCKED
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Use `tauri-apps/tauri-action` in CI for automated bundling.
+  - macOS: produce DMG on macos-latest runner.
+  - Windows: produce MSI/NSIS on windows-latest runner.
+  - Upload bundles to GitHub Releases on tag push.
+  - Optional: macOS notarization via CI.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Desktop release jobs in build.yml.
+  - macOS DMG uploaded to GitHub Releases.
+  - Windows MSI uploaded to GitHub Releases.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Add tauri-action steps for macOS and Windows.
+  2. Configure release creation on tag push.
+  3. Test with a v0.1.0 tag.
+  4. Document notarization steps for macOS.

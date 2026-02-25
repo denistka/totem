@@ -1,0 +1,31 @@
+v:1
+mode:code
+role:developer
+task:S50-T4-Windows
+objective:Configure Windows build target with MSI/NSIS installer.
+gate:OPEN
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add Windows cross-compile target or configure CI for Windows build.
+  - Verify `bundle.targets` in tauri.conf.json includes msi/nsis.
+  - Document code signing steps (optional for dev).
+  - Test build produces MSI installer.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Windows target configured in Cargo and tauri.conf.json.
+  - CI config or cross-compile instructions documented.
+  - MSI/NSIS installer config verified.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Add `x86_64-pc-windows-msvc` target to rustup (or configure CI).
+  2. Verify bundle config in tauri.conf.json.
+  3. Document CI-based build steps for GitHub Actions.

@@ -1,0 +1,32 @@
+v:1
+mode:code
+role:developer
+task:S50-T5-RPi5
+objective:Configure ARM64 Linux build for Raspberry Pi 5 (.deb package).
+gate:OPEN
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add `aarch64-unknown-linux-gnu` Rust target via rustup.
+  - Install or configure cross-compilation toolchain (cross or zig).
+  - Verify tauri.conf.json bundle produces .deb for Linux ARM64.
+  - Document deployment steps for RPi5.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - ARM64 Linux target configured.
+  - Cross-compile toolchain documented.
+  - .deb package config verified.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. `rustup target add aarch64-unknown-linux-gnu`.
+  2. Configure linker for cross-compile (zig or cross).
+  3. Test build: `npx @tauri-apps/cli build --target aarch64-unknown-linux-gnu`.
+  4. Document RPi5-specific deployment (systemd service, etc.).

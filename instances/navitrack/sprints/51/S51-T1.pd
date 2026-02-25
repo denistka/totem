@@ -1,0 +1,35 @@
+v:1
+mode:code
+role:developer
+task:S51-T1-GH-Actions-Matrix
+objective:Create GitHub Actions workflow with matrix strategy for all platform builds.
+gate:LOCKED
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Create `.github/workflows/build.yml` in navitrack-apps repo.
+  - Matrix strategy: macOS (arm64), Ubuntu (x64), Windows (x64).
+  - Steps: checkout, setup-node, setup-rust, pnpm install, tauri build.
+  - Mobile builds (Android) on ubuntu-latest with Android SDK.
+  - iOS build on macos-latest with Xcode.
+  - ARM64 Linux via cross-compilation on ubuntu-latest.
+  - Cache: Cargo registry, node_modules, target dir.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - `.github/workflows/build.yml` with platform matrix.
+  - Caching for Rust and Node dependencies.
+  - Build artifacts uploaded via actions/upload-artifact.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Create workflow file with trigger on push to main and pull_request.
+  2. Define matrix: os × target.
+  3. Use `tauri-apps/tauri-action` for build + bundle.
+  4. Upload artifacts per platform.
