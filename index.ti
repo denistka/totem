@@ -15,7 +15,19 @@ includes:
   - ./KNOWLEDGE_SOURCES.ti
 
 description: |
-  Master entry point for the Totem V4 knowledge graph.
+  Master entry point for the Totem V5 knowledge graph.
+  Protocol V5 Codename: AI-CRUD-OPERATION
+
+  FROZEN STACK FORMAT (GraphQL-ready Entities):
+  All `.ti` files in `stacks/` represent database entities for Code-Generation CRUD logic.
+  Required schema mappings:
+    - id: derived from filename
+    - role: string
+    - focus: comma-separated list
+    - features/content: object (contains domain-specific rules)
+    - security: array of strings
+    - anti_patterns: array of strings
+
   When loading Totem globally, this file establishes the fundamental protocol
   and the ROOT orchestrator role.
 

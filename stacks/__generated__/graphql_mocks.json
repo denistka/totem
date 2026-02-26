@@ -1,0 +1,1520 @@
+{
+  "stacks": [
+    {
+      "id": "accessibility",
+      "category": "accessibility",
+      "name": "ACCESSIBILITY",
+      "role": "Web Accessibility Specialist",
+      "focus": [
+        "semantic-html",
+        "aria",
+        "wcag",
+        "focus-management",
+        "user-preferences"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "accessibility-gold-standard": {
+          "standards": [
+            "**WCAG 2.2 AA** is the baseline for all projects.",
+            "WCAG 3.0 (expected 2027-2028) — focus on user outcomes and task completion."
+          ],
+          "semantic-html": [
+            "Always prefer native elements over custom: `<button>`, `<dialog>`, `<details>/<summary>`, `<select>`.",
+            "Landmarks: `<header>`, `<main>`, `<nav>`, `<footer>`, `<aside>` — critical for screen reader navigation.",
+            "Content: `<article>`, `<section>` with headings — adds context for assistive tech.",
+            "Avoid `<div>`/`<span>` when a semantic element exists.",
+            "Single `<h1>` per page, proper heading hierarchy (h1 → h2 → h3)."
+          ],
+          "aria-rules": [
+            "**Rule 1:** No ARIA is better than bad ARIA.",
+            "**Rule 2:** Do NOT override native semantics with ARIA roles.",
+            "**Rule 3:** All interactive ARIA controls must be keyboard accessible.",
+            "**Rule 4:** Never `aria-hidden='true'` on focusable elements.",
+            "Use `aria-label` or `aria-labelledby` for accessible names on interactive elements."
+          ],
+          "focus-management": [
+            "Dialogs: trap focus inside, return focus to trigger on close. Use native `<dialog>` + `showModal()`.",
+            "Popovers: `aria-haspopup`, `aria-expanded` on trigger. Focus returns on close (Esc).",
+            "All interactive elements must have visible `:focus-visible` indicators."
+          ],
+          "css-accessibility": [
+            "`:focus-visible` — show focus ring only for keyboard users.",
+            "`prefers-reduced-motion` — respect user's motion preferences. Disable animations when set.",
+            "`prefers-contrast` — adapt colors for high-contrast users.",
+            "`appearance: base-select` — style native `<select>` without losing a11y.",
+            "CSS anchor positioning for tooltips/dropdowns — accessible by default."
+          ],
+          "user-preferences": [
+            "Always respect: `prefers-reduced-motion`, `prefers-contrast`, `prefers-color-scheme`.",
+            "Overriding user system preferences = inaccessible."
+          ],
+          "testing": [
+            "Keyboard-only navigation test on every interactive feature.",
+            "Screen reader testing (VoiceOver on Mac, NVDA on Windows).",
+            "Automated: axe-core, Lighthouse a11y audit.",
+            "User testing with people with disabilities > automated tools alone."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Using `<div>` as a button (no keyboard/screen reader support).",
+          "❌ `outline: none` without `:focus-visible` replacement.",
+          "❌ Ignoring `prefers-reduced-motion` (causes vestibular disorders).",
+          "❌ custom dropdowns/modals without focus trapping.",
+          "❌ Images without `alt` text or dimensions (causes CLS + a11y fail).",
+          "❌ Relying only on color to convey information."
+        ]
+      }
+    },
+    {
+      "id": "architecture-architecture_scale",
+      "category": "architecture",
+      "name": "ARCHITECTURE_SCALE",
+      "role": "Vue Architecture at Scale Specialist",
+      "focus": [
+        "modular-architecture",
+        "micro-frontends",
+        "module-federation",
+        "monorepo",
+        "edge-deploy"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "architecture-gold-standard": {
+          "modular-pattern": [
+            "Structure: `src/modules/{feature}/` — each with components/, composables/, stores/, types/, index.ts.",
+            "Modules communicate only through public API (`index.ts`).",
+            "No cross-module imports except through `shared/` utilities.",
+            "Each module has its own Pinia store."
+          ],
+          "micro-frontends": [
+            "Use ONLY when: 5+ independent teams, independent deploy cadences, truly separate domains.",
+            "Module Federation with Vite: `@module-federation/vite` plugin.",
+            "Share Vue, Pinia, Vue Router across host and remotes.",
+            "Start with well-structured monolith. Add micro frontends incrementally."
+          ],
+          "scaling-lessons": [
+            "Focus on 'how clean is your architecture' not 'which framework'.",
+            "Design system = separate shared package across all apps.",
+            "Knowledge patterns > specific implementations (teams change).",
+            "Delivery = first test case (`git clone → install → start` must work)."
+          ],
+          "full-stack-agents": [
+            "Vue SPA + Nitro server + AI agents as first-class system components.",
+            "Agent state in Pinia: `isProcessing`, `messages`, `tools`, `executeAction()`.",
+            "Stream agent results into Vue components via SSE / ReadableStream.",
+            "Nitro API routes for secure agent action execution."
+          ],
+          "migration-strategy": [
+            "Wrap existing app in Vue/Nuxt shell, migrate feature-by-feature.",
+            "Keep API backward-compatible during migration.",
+            "Use Nuxt rendering modes per-page: SSR for public, CSR/SPA for app."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Micro frontends for small teams (< 10 devs) — overhead exceeds value.",
+          "❌ Cross-module imports bypassing public API boundaries.",
+          "❌ Big-bang rewrites — migrate incrementally.",
+          "❌ Tight coupling between independently deployed frontends.",
+          "❌ Forgetting shared design system when splitting into micro frontends."
+        ]
+      }
+    },
+    {
+      "id": "astro",
+      "category": "astro",
+      "name": "ASTRO",
+      "role": "Astro Cloud Specialist",
+      "focus": [
+        "vite-environment-api",
+        "rust-compiler",
+        "content-collections",
+        "route-caching",
+        "csp"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "Astro 6, Vite 8, Node.js 22+",
+        "astro-gold-standard": {
+          "architecture": [
+            "Island architecture — ship zero JavaScript by default, hydrate interactive components.",
+            "Framework-agnostic: mix Vue, React, Svelte, or use native Astro components."
+          ],
+          "astro-6-features": [
+            "**Vite Environment API:** Dev server rewritten to match production behavior exactly.",
+            "**Rust Compiler (Experimental):** Use `@astrojs/compiler-rs` for massive speedups and better error traces.",
+            "**Content Collections:** Stable, live collections for real-time Markdown/JSON data.",
+            "**CSP:** Built-in Content Security Policy support.",
+            "**Route Caching:** Standards-based caching for SSR pages.",
+            "**Fonts API:** New native API for managing web fonts."
+          ],
+          "runtime": [
+            "Requires Node.js 22+.",
+            "Deployable to edge (Cloudflare) or Node.js servers."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Shipping unnecessary JS to the client (use `client:load` / `client:visible` only when interactivity is needed).",
+          "❌ Running Astro 6 on Node.js < 22.",
+          "❌ Using client-side fetching for static content (use SSR or Content Collections)."
+        ]
+      }
+    },
+    {
+      "id": "graphics-slang",
+      "category": "graphics",
+      "name": "SLANG",
+      "role": "Slang Shader Architect",
+      "focus": [
+        "cross-compilation",
+        "generic-shaders",
+        "metaprogramming",
+        "build-automation"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "./WGPU.ti",
+        "stack": "Slang, slangc, WGSL/SPIR-V targets",
+        "philosophy": [
+          "Synergy over separation: One shader source, multiple targets.",
+          "Semantic compression: Use generics for common light/material models."
+        ],
+        "slang-wgsl-pipeline": [
+          "Build: Use `build.rs` or `scripts/compile-shaders.mjs` to invoke `slangc`.",
+          "Targets: `slangc -target wgsl -stage compute -entry beamsMain -o gen/beams.wgsl`.",
+          "Runtime: Include the generated WGSL via `include_str!` or fetch in TS."
+        ],
+        "best-practices": [
+          "Maintain `.slang` as the \"Source of Truth\".",
+          "Use namespaces/modules for shared shader logic.",
+          "Implement fallback WGSL in git for environments without the compiler."
+        ],
+        "anti-patterns": [
+          "Manually editing generated WGSL files.",
+          "Hardcoded shader paths in application logic."
+        ]
+      }
+    },
+    {
+      "id": "graphics-webgl",
+      "category": "graphics",
+      "name": "WEBGL",
+      "role": "WebGL/GLSL Shader Specialist",
+      "focus": [
+        "fragment-shaders",
+        "gpu-sim",
+        "post-processing",
+        "procedural-generation"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "WebGL, GLSL (ES 3.0), THREE.js (optional)",
+        "patterns": [
+          "GPU Particle Sim: Position/velocity in textures.",
+          "Post-Process: Render-to-texture → Full-screen quad fragment pass.",
+          "Full-Screen Quad: Procedural backgrounds using `u_time`, `u_resolution`.",
+          "Procedural Particles: Deterministic spawn and lifetime loops in fragment."
+        ],
+        "glsl-best-practices": {
+          "random-noise": [
+            "`random1d`: `fract(sin(x * 12.9898) * 43758.5453)`",
+            "`noise1d`: Mix `random1d` floor and fract values for smooth transition."
+          ],
+          "performance": [
+            "Avoid branching in loops where possible.",
+            "Pre-calculate uniforms outside the shader.",
+            "Match texture sizes to power-of-two for older backends."
+          ]
+        },
+        "anti-patterns": [
+          "Direct buffer allocation per frame (use pools).",
+          "WebGL without a solid-color or reduced-motion fallback.",
+          "Monolithic shaders > 500 lines (use includes/templates)."
+        ]
+      }
+    },
+    {
+      "id": "graphics-wgpu",
+      "category": "graphics",
+      "name": "WGPU",
+      "role": "WGPU/WebGPU Systems Developer",
+      "focus": [
+        "compute-pipelines",
+        "wasm-performance",
+        "shader-compilation",
+        "resource-management"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "WGPU (Rust), WGSL, WebGPU (TS), WASM",
+        "strategy": [
+          "WASM-in-WebView: Direct canvas access is faster than streaming frames from native.",
+          "Multi-Backend: WGPU automatically handles Vulkan/Metal/D3D mappings.",
+          "Fallback: Always provide WebGL/Canvas2D paths for non-WebGPU browsers."
+        ],
+        "wgpu-patterns": [
+          "Compute-First: Use compute shaders for heavy simulation (Southern Lights).",
+          "Modular Pipelines: Separate init (Promise) and render (Result) logic.",
+          "Efficient Buffers: Use storage buffers for large datasets crossing the WASM boundary."
+        ],
+        "wgsl-tips": [
+          "`mod_f32`: Use `x - y * floor(x / y)` as WGSL lacks a built-in `%` for floats.",
+          "No `#define`: Use `const` or specialize constants.",
+          "Alignment: Structs must follow 16-byte alignment rules for common backends."
+        ],
+        "anti-patterns": [
+          "Synchronous `device.requestDevice()` (use async/Promise).",
+          "Large binary blobs in crates (use modular build scripts).",
+          "WGPU-in-Tauri-process for WebView rendering (latency/transfer overhead)."
+        ]
+      }
+    },
+    {
+      "id": "local-first-local_first",
+      "category": "local-first",
+      "name": "LOCAL_FIRST",
+      "role": "Local-First Architecture Specialist",
+      "focus": [
+        "offline-first",
+        "crdt",
+        "sync-engines",
+        "indexeddb",
+        "conflict-resolution"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "local-first-gold-standard": {
+          "philosophy": [
+            "Data lives on user's device FIRST, syncs to server when available.",
+            "Reads are instant (local), writes never block on network.",
+            "Conflict resolution is automatic via CRDTs or operational transforms."
+          ],
+          "crdt-libraries": [
+            "**Automerge** — JSON-like CRDT. Best for: documents, collaborative editing.",
+            "**Yjs** — High-performance CRDT. Best for: real-time collab, text editing. Huge ecosystem.",
+            "**Loro** — Next-gen CRDT. Rust-based, high performance, rich types."
+          ],
+          "sync-engines": [
+            "**Electric SQL** — Postgres ↔ client sync (1.0 GA). Uses Rich-CRDTs. 'Shapes' for partial sync. PGLite for in-browser Postgres.",
+            "**TanStack DB** — Reactive client store (beta). Live queries, optimistic mutations, differential dataflow engine (sub-ms updates). Backend-agnostic sync. Integrates with Electric SQL, RxDB, PowerSync.",
+            "**rstore** — Vue/Nuxt data store. Normalized cache, offline sync, see @rstore stack for details."
+          ],
+          "client-storage": [
+            "**Dexie.js** — IndexedDB wrapper. Vue composable pattern: wrap with reactive refs. Supports cloud sync (Dexie Cloud).",
+            "**PGLite** — Embedded Postgres in browser via WASM. Works with Electric SQL.",
+            "IndexedDB directly — use only for simple key-value; prefer Dexie.js for complex queries."
+          ],
+          "vue-integration": [
+            "Dexie.js + Vue 3: create composable wrapping IndexedDB ops with `ref()` and `watch()`.",
+            "rstore: use `@rstore/nuxt` with `offline: true` for zero-config local-first.",
+            "TanStack DB: `useLiveQuery` hook (React-first, Vue adapter expected)."
+          ],
+          "real-world-examples": [
+            "Figma — CRDT for real-time design collaboration.",
+            "Notion — Local-first with server sync for knowledge base.",
+            "Linear — Offline-first project management with instant UI."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Cloud-first thinking — reading from server on every action.",
+          "❌ Ignoring conflict resolution — last-write-wins loses data.",
+          "❌ Raw IndexedDB without wrapper (verbose, error-prone).",
+          "❌ Skipping offline testing during development."
+        ]
+      }
+    },
+    {
+      "id": "material-ui-mui",
+      "category": "material-ui",
+      "name": "MUI",
+      "role": "Material UI (MUI) Specialist",
+      "focus": [
+        "components",
+        "theming",
+        "accessibility",
+        "layout"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "Material UI (UI Library)",
+        "mui-gold-standard": {
+          "components": [
+            "Prefer MUI primitives (Button, TextField, Card, etc.) and customize via `sx`, `styled()`, or theme.",
+            "Use composition: Box for layout, Typography for text, Stack/Grid for spacing."
+          ],
+          "theming": [
+            "Centralize palette and typography in `createTheme()` (or ThemeProvider); avoid inline colors that bypass theme.",
+            "Use theme tokens in `sx`: `theme.palette.primary.main`, `theme.spacing()`, `theme.breakpoints`."
+          ],
+          "accessibility": [
+            "Preserve MUI defaults: focus rings, aria attributes, keyboard nav. Override only when necessary.",
+            "Use semantic components (e.g. correct heading levels, list markup)."
+          ],
+          "layout": [
+            "Prefer Grid2 (Grid) or Stack for responsive layouts; avoid raw flex/grid unless needed for custom behavior."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Inline styles or hardcoded colors that ignore theme (breaks dark mode and consistency).",
+          "❌ Removing or weakening focus indicators without providing an alternative (a11y).",
+          "❌ Deep `sx` overrides that duplicate what theme could define (DRY).",
+          "❌ Mixing MUI with another full UI kit (e.g. Tailwind component library) without a clear boundary."
+        ]
+      }
+    },
+    {
+      "id": "mcp",
+      "category": "mcp",
+      "name": "MCP",
+      "role": "MCP & Agentic AI Specialist",
+      "focus": [
+        "model-context-protocol",
+        "ai-agent-integration",
+        "guardrails",
+        "vue-mcp",
+        "nuxt-mcp"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "vite-plugin-vue-mcp, @nuxtjs/mcp-toolkit, Pinia (guardrails)",
+        "mcp-gold-standard": {
+          "protocol": [
+            "MCP (Model Context Protocol) — open standard by Anthropic for LLM ↔ tools integration.",
+            "Three primitives: **Resources** (data), **Tools** (actions), **Prompts** (templates)."
+          ],
+          "vue-mcp-plugin": [
+            "Package: `vite-plugin-vue-mcp` — MCP server in Vite dev mode.",
+            "Exposes: component tree, component state (read/edit), Vue Router routes, Pinia stores.",
+            "Setup: add `VueMcp()` to `vite.config.ts` plugins — auto-connects to Cursor/IDE.",
+            "Tools: `get_component_tree`, `get_component_state`, `edit_component_state`, `get_routes`, `get_pinia_tree`, `get_pinia_state`."
+          ],
+          "nuxt-mcp-toolkit": [
+            "Module: `@nuxtjs/mcp-toolkit` — creates MCP server inside Nuxt app.",
+            "Auto-registers from directory structure: `server/mcp/resources/`, `server/mcp/tools/`, `server/mcp/prompts/`.",
+            "Define tools with `defineMCPTool({ name, description, parameters, handler })`."
+          ],
+          "ecosystem": [
+            "Angular and Svelte already have official MCP servers — Vue ecosystem catching up fast."
+          ],
+          "agentic-copilot-pattern": [
+            "Agent operates via handler functions, NEVER direct DOM manipulation.",
+            "Vue composable (`useAICopilot`) maps agent intents → component actions.",
+            "Agent is context-aware: knows current screen, selected items, user permissions.",
+            "Pinia guardrails store: whitelist of allowed actions, rate limiting, per-screen scope.",
+            "Every agent action is audited (logged)."
+          ],
+          "ai-auth": [
+            "Token Vault — agent never sees raw credentials.",
+            "Human-in-the-loop — user consent before sensitive actions.",
+            "Fine-grained RAG authorization — filter data BEFORE it reaches LLM.",
+            "Scoped tokens — minimal permissions per agent action."
+          ],
+          "agentic-workflows": [
+            "Assign tasks to agents → agents use MCP tools → Playwright verifies output.",
+            "Agent state managed in Pinia store (`isProcessing`, `messages`, `tools`).",
+            "Stream agent results into Vue components via SSE/fetch streaming.",
+            "Example (Debbie O'Brien): Agent updates Nuxt content → Cloudinary MCP uploads/transforms images → GitHub MCP creates PR → Playwright verifies pages render → dev reviews and merges."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Giving AI agents unrestricted access to app state/actions.",
+          "❌ Agent manipulating DOM directly instead of calling handler functions.",
+          "❌ Skipping human-in-the-loop for sensitive operations.",
+          "❌ Hardcoding AI credentials in client bundle.",
+          "❌ No audit trail for agent actions."
+        ]
+      }
+    },
+    {
+      "id": "mobx",
+      "category": "mobx",
+      "name": "MOBX",
+      "role": "MobX Specialist",
+      "focus": [
+        "observable-state",
+        "actions",
+        "reactions",
+        "stores"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "MobX (State Management)",
+        "mobx-gold-standard": {
+          "observables": [
+            "Use `makeObservable` (or `makeAutoObservable`) and declare `action`, `computed` explicitly where needed.",
+            "Prefer minimal observable surface: only what the UI or reactions need."
+          ],
+          "actions": [
+            "All state mutations must happen inside `action` (or `runInAction` for async).",
+            "Keep actions synchronous where possible; wrap async steps in `runInAction` after await."
+          ],
+          "reactions": [
+            "Use `reaction` or `autorun` sparingly; prefer `observer` components and computed values for derivations.",
+            "Clean up reactions in component unmount (return disposer from `useEffect`)."
+          ],
+          "stores": [
+            "One logical store per domain; inject via React context or a root store reference.",
+            "Avoid cross-store direct mutation; use actions or events."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Mutating observables outside actions (breaks strict mode and time-travel).",
+          "❌ Observing large or frequently changing objects without granularity (performance).",
+          "❌ Forgetting to wrap React components with `observer` when they read observables.",
+          "❌ Long-lived reactions that are never disposed (memory leaks)."
+        ]
+      }
+    },
+    {
+      "id": "node",
+      "category": "node",
+      "name": "NODE",
+      "role": "Node.js Specialist",
+      "focus": [
+        "event-loop",
+        "async-io",
+        "error-handling",
+        "esm-first"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "node-gold-standard": {
+          "runtime": [
+            "Target **Node.js 22+** (required by Astro 6, modern ecosystem).",
+            "ESM-only is the direction for the Vue/Nuxt/Vite ecosystem — prefer ES Modules."
+          ],
+          "event-loop": [
+            "Avoid blocking the event loop. Use asynchronous I/O operations and avoid heavy synchronous computations in the main thread.",
+            "Worker threads can be used for CPU-intensive tasks."
+          ],
+          "error-handling": [
+            "Use centralized error handling middlewares (in Express/Koa) and avoid unhandled promise rejections."
+          ],
+          "async-await": [
+            "Emphasize `async/await` over raw promises and callbacks for better readability and stack traces."
+          ],
+          "package-management": [
+            "Use `.nvmrc` to pin node versions.",
+            "Use `package-lock.json` / `pnpm-lock.yaml` to ensure consistent dependency resolution."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Blocking the event loop with synchronous operations.",
+          "❌ Ignoring promise rejections.",
+          "❌ Using `require()` in new projects (use ESM `import`).",
+          "❌ Targeting Node.js < 22 for new projects."
+        ]
+      }
+    },
+    {
+      "id": "nuxt",
+      "category": "nuxt",
+      "name": "NUXT",
+      "role": "Nuxt 4+ Specialist",
+      "focus": [
+        "hybrid-rendering",
+        "nitro",
+        "edge-first",
+        "dx-tooling",
+        "local-first"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "includes": [
+          "../rstore/RSTORE.ti",
+          "../mcp/MCP.ti"
+        ],
+        "stack": "Nuxt 4, Nitro v3, Pinia, @nuxt/hints, @rstore/nuxt, @nuxtjs/mcp-toolkit",
+        "nuxt-gold-standard": {
+          "architecture": [
+            "Use `app/` directory structure (Nuxt 4 default) for cleaner org and IDE performance.",
+            "**Nitro v3** is the universal server engine — deploy to edge/serverless/traditional.",
+            "Hybrid rendering by default: blend SSR, SSG, ISR per route."
+          ],
+          "state-management": [
+            "**Pinia** is the official state management (replaces Vuex).",
+            "For local-first/offline: use **rstore** Nuxt module — typed `useStore()`, SSR payloads, offline sync.",
+            "rstore integrates with Drizzle ORM, Directus CMS, WebSocket real-time."
+          ],
+          "data-fetching": [
+            "Auto-generated TypeScript types for server routes.",
+            "Typed composables: `useFetch`, `useAsyncData` with full type inference."
+          ],
+          "routing": [
+            "Automatic route generation from file structure.",
+            "Enhanced middleware system (inline and named)."
+          ],
+          "dev-tooling": [
+            "**@nuxt/hints 1.0**: dev-time analysis module, launched at Vue.js Amsterdam 2026.",
+            "Performance: LCP optimization, render-blocking scripts, unused components detection.",
+            "Hydration: detects server→client HTML mismatches.",
+            "CLS: layout shifts (e.g. images without dimensions).",
+            "Third-party: audit external scripts (analytics, ads) for performance impact.",
+            "Accessibility: dev-time a11y checks.",
+            "Integrates into Nuxt DevTools — real-time feedback during development."
+          ],
+          "ai-mcp": [
+            "**Nuxt MCP Toolkit**: exposes Nuxt app to AI agents via MCP server.",
+            "Use for AI-assisted development workflows and app introspection."
+          ],
+          "open-source": [
+            "Nuxt UI Pro → free/open-source.",
+            "Nuxt Studio → self-hostable CMS.",
+            "NuxtHub → agnostic deployment interface."
+          ]
+        },
+        "nuxt-5-preview": [
+          "Nitro v3 upgrade with Rust-powered CLI.",
+          "Edge-first architecture by default.",
+          "Support for Rolldown/Vite/Rspack bundlers."
+        ],
+        "anti-patterns": [
+          "❌ Using Vuex in Nuxt 4+ projects (use Pinia).",
+          "❌ Over-reliance on plugins — blocks hydration, degrades UX.",
+          "❌ Unused imports/components inflating bundle (use @nuxt/hints to detect).",
+          "❌ Ignoring hydration mismatches (causes re-renders and perf issues).",
+          "❌ Unoptimized images without dimensions (causes CLS).",
+          "❌ Third-party scripts without performance audit."
+        ]
+      }
+    },
+    {
+      "id": "pwa",
+      "category": "pwa",
+      "name": "PWA",
+      "role": "PWA Immersive Experience Specialist",
+      "focus": [
+        "viewport-fit",
+        "safe-areas",
+        "manifest-sync",
+        "ios-standalone",
+        "android-fullscreen"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "Web App Manifest, Service Workers, Viewport API, CSS Environment Variables",
+        "pwa-gold-standard": {
+          "viewport": {
+            "meta": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no\">",
+            "optional": "Add interactive-widget=resizes-content for better virtual-keyboard behavior (may omit user-scalable=no for accessibility).",
+            "logic": [
+              "Use `viewport-fit=cover` to extend content behind notches and home indicators.",
+              "Set `user-scalable=no` to prevent accidental zooming breaking the app-like feel (trade-off: accessibility).",
+              "Prefer `--app-height` from `visualViewport.height` (not 100vh) for full-height layout."
+            ]
+          },
+          "display-modes": {
+            "ios": [
+              "Use `standalone` in manifest for stability.",
+              "Meta tag: `<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">`.",
+              "Meta tag: `<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\">`.",
+              "Note: `black-translucent` allows the background to bleed behind the status bar.",
+              "iOS standalone: one-time height fix (e.g. set height 100%+100px then 100%, apply no-scroll, lock html/body height and --app-height); do not set height on the scroll container."
+            ],
+            "android": [
+              "Use `fullscreen` in manifest for an immersive experience (hides status/nav bars).",
+              "Ensure `theme_color` in manifest matches the app's primary background color.",
+              "Apply horizontal safe area (notch/camera) only when in fullscreen (Fullscreen API or installed fullscreen); otherwise use `data-notch-side: none` so browser chrome handles insets."
+            ]
+          },
+          "layout": {
+            "single-scroll-container": [
+              "One scroll container inside #root (e.g. .main-scroll): flex: 1; min-height: 0; overflow: auto. #root is flex column; body/html get fixed height and overflow: hidden when pwa-no-scroll.",
+              "Body: `overflow: hidden` when no-scroll so only the scroll container scrolls.",
+              "Do not set height on the scroll container from JS (iOS height fix applies to html, body,"
+            ],
+            "header-footer": [
+              "Header: `position: fixed; top: 0; left: 0; right: 0` outside #root; padding with `env(safe-area-inset-top)` and horizontal insets. Footer: `position: fixed; bottom: 0; ...`; same for bottom and horizontal.",
+              "In landscape: keep horizontal safe area, e.g. `padding-left: max(12px, env(safe-area-inset-left));` (do not replace with fixed 12px or content can sit under notch).",
+              "Scroll container top/bottom padding = base + safe-area + observed chrome height. Set CSS vars (e.g. --pwa-header-height, --pwa-footer-height) from header/footer offsetHeight via ResizeObserver + MutationObserver + resize; use `var(--pwa-header-height, 48px)` in padding so content scrolls under the real chrome.",
+              "When header or footer are empty (no element children), reduce scroll padding to base + safe-area only (e.g. body.header-empty / body.footer-empty)."
+            ],
+            "chrome-and-corners": [
+              "Header, footer, and any \"corner\" UI must be `position: fixed` and positioned with `env(safe-area-inset-*)` so they stay in viewport corners and do not scroll.",
+              "Do not put corner or chrome elements inside the scroll container (they would scroll with content)."
+            ]
+          },
+          "horizontal-safe-area (notch / curved edges)": {
+            "data-attribute": "Set `data-notch-side` on html: \"left\" | \"right\" | \"both\" | \"none\" from env(safe-area-inset-left/right) and orientation.",
+            "both-sides": "When BOTH left and right insets are > 0, use \"both\" so the scroll container gets both padding-left and padding-right (avoid content touching one edge when both edges have insets).",
+            "scroll-padding": "Apply only to the scroll container via selectors like `html[data-notch-side=\"left\"] .main-scroll { padding-left: env(safe-area-inset-left); }` (and right / both).",
+            "android": "Use \"none\" when not in fullscreen; apply left/right/both only when document is in fullscreen. Run the same per-frame orientation/inset observation as iOS so notch side updates on 270°↔90° rotation; use angle when only one inset, \"both\" when both > 0.",
+            "ios-browser-tab": "On orientationchange, schedule delayed updateNotchSide (e.g. 2, 8, 16 frames) so angle/insets are read after the browser updates them (they can lag in non-standalone)."
+          },
+          "timing-and-memory": {
+            "ticker": "Use a single requestAnimationFrame loop as the app ticker. No setTimeout/setInterval for layout or chrome updates.",
+            "flags": "Drive work from flags (e.g. appHeight, notchSide, chromeEmpty) so each tick runs only what is dirty.",
+            "schedule": "Provide schedule(fn, frames) for delayed runs and everyNFrames(n, fn) returning an unsubscribe; remove callbacks when done to avoid list growth.",
+            "safe-area-probe": "Reuse one DOM probe element for measuring env(safe-area-inset-*) (create once, read many times); do not create/remove a node every frame."
+          },
+          "platform": {
+            "classes": "Set platform-ios / platform-android on html from user agent for conditional CSS (e.g. hide fullscreen controls on iOS).",
+            "single-source": "Prefer one set of scroll-container padding rules in base CSS for all platforms; avoid duplicate Android-only overrides when values match."
+          },
+          "css-reset": [
+            "`html, body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; }` when no-scroll (optionally `position: fixed` for full coverage).",
+            "Avoid hardcoded heights (100vh); prefer `100dvh`, `var(--app-height)`, or pinning."
+          ],
+          "safe-areas": [
+            "Use `env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`, etc., for padding of header, footer, and tappable/chrome elements.",
+            "Backgrounds and main content area SHOULD NOT respect safe areas (bleed to edges); padding on the scroll container or chrome holds content away from notches.",
+            "Tappable elements and fixed chrome MUST respect safe areas so they are not obscured by hardware or home indicators.",
+            "Debug/overlay panels: position with `calc(Npx + env(safe-area-inset-*))` so they stay in safe region."
+          ],
+          "cache-control (Dev Phase)": [
+            "Service Worker: Use a \"network-only\" pass-through for `fetch` during development.",
+            "Manifest: Append `?v=[timestamp]` to prevent stale icons/colors during iteration."
+          ],
+          "desktop": {
+            "not-controllable": "OS app menu and browser chrome (address bar, extension icons, window menu) cannot be hidden from the page; only manifest `display` (fullscreen/standalone) affects the installed PWA window.",
+            "optional": "Config flag (e.g. disableContextMenu) to prevent default on `contextmenu` so the browser right-click menu is hidden for an app-like feel."
+          }
+        },
+        "anti-patterns": [
+          "❌ `display: fullscreen` on iOS (causes bottom clipping/red bars).",
+          "❌ Hardcoded 100vh (fails to account for mobile toolbars/notches).",
+          "❌ Respecting safe-areas for background colors (causes letterboxing).",
+          "❌ Forgetting `theme-color` meta tag (browser header won't match app).",
+          "❌ Putting header, footer, or corner elements inside the scroll container (they scroll away; use position: fixed outside).",
+          "❌ Setting height on the fixed scroll container from iOS height script (set only on html, body,",
+          "❌ Positioning overlays (e.g. debug panel) with raw px from viewport edges without safe-area insets.",
+          "❌ Using only one horizontal safe-area side when both left and right insets are non-zero (use \"both\" so both paddings apply).",
+          "❌ Dropping horizontal safe area in landscape for header/footer (use max(12px, env(safe-area-inset-*))).",
+          "❌ Using setTimeout/setInterval for layout or chrome updates (use a single RAF ticker with flags and schedule).",
+          "❌ Creating and removing a DOM node every frame to read safe-area insets (reuse one probe element)."
+        ],
+        "integration-log": {
+          "navitrack": {
+            "date": "2026-02-26",
+            "target": "navitrack-apps/src-client",
+            "pattern": "pre-React shell layer (pwa-shell.ts) + React createPortal into fixed .pwa-header/.pwa-footer outside",
+            "files": "src/pwa/pwa-shell.ts, src/pwa/pwa-ios.ts, src/pwa/pwa-android.ts, src/pwa/pwa-shell.css",
+            "details": "see ./SUMMARY.md#navitrack-integration-2026-02-26"
+          }
+        }
+      }
+    },
+    {
+      "id": "react-jotai",
+      "category": "react",
+      "name": "JOTAI",
+      "role": "Jotai State Specialist",
+      "focus": [
+        "atomic-state",
+        "bottom-up-state",
+        "complex-ui-state"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "Jotai",
+        "jotai-gold-standard": {
+          "philosophy": [
+            "Bottom-up, atomic state management. Perfect for highly complex, interactive UIs where state pieces depend on each other.",
+            "Solves React Context re-render issues without global monolithic stores."
+          ],
+          "architecture": [
+            "Primitive atoms: `const countAtom = atom(0)`",
+            "Derived atoms: `const doubleAtom = atom((get) => get(countAtom) * 2)`",
+            "Define atoms *outside* components to avoid infinite loops."
+          ],
+          "usage": [
+            "Use hooks: `const [count, setCount] = useAtom(countAtom)`",
+            "Similar DX to `useState` but globally accessible."
+          ],
+          "performance": [
+            "React to changes instantly; components only re-render if the specific atom they subscribe to changes.",
+            "Fully compatible with Concurrent React, Suspense, and `use` hook."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Creating atoms inside the component render function (causes infinite re-renders or state resets).",
+          "❌ Using Jotai as a cache for server data fetched via fetch/axios (use TanStack Query instead).",
+          "❌ Overcomplicating simple local component state with global atoms."
+        ]
+      }
+    },
+    {
+      "id": "react",
+      "category": "react",
+      "name": "REACT",
+      "role": "React 19/20 Specialist",
+      "focus": [
+        "react-19",
+        "react-20",
+        "hooks",
+        "actions",
+        "server-first"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "react-gold-standard": {
+          "architecture": [
+            "Server-First by default: React Server Components (RSC) are standard.",
+            "Strict component boundaries using `'use client'` to opt into interactivity."
+          ],
+          "react-19-features": [
+            "**Actions:** Use `<form action={submitData}>` and `useActionState` to handle asynchronous updates natively.",
+            "**Optimistic Updates:** Use `useOptimistic` hook to render UI mutations instantly while server processes the action.",
+            "**`use` Hook:** Use `use(Promise)` instead of `useEffect` to unwrap promises directly in render (works with Suspense).",
+            "**Refs as Props:** Pass `ref` as a normal prop (`<div ref={myRef}>`). No more `forwardRef` needed for most cases.",
+            "**Document Metadata:** Manage `<title>` and `<meta>` tags natively inside components (React handles lifting them to `<head>`)."
+          ],
+          "performance": [
+            "Rely on **React Compiler** for automatic memoization (no manual `useMemo`/`useCallback`)."
+          ],
+          "state-management": [
+            "Separate Server State (TanStack Query/React Router loaders) from Client State (Zustand/Jotai).",
+            "`useState` is for strictly local component state only."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Overusing `useEffect` for data fetching (use Suspense, `use()` or Actions).",
+          "❌ Manual `forwardRef` boilerplate.",
+          "❌ Managing Server State inside `useState` + `useEffect`.",
+          "❌ Using `'use client'` at the root layout (breaks RSC benefits)."
+        ]
+      }
+    },
+    {
+      "id": "react-react_compiler",
+      "category": "react",
+      "name": "REACT_COMPILER",
+      "role": "React Compiler Specialist",
+      "focus": [
+        "react-forget",
+        "auto-memoization",
+        "performance-optimization",
+        "dead-code-elimination"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "React Compiler",
+        "compiler-gold-standard": {
+          "philosophy": [
+            "Write simple, declarative React. Let the compiler optimize it.",
+            "Zero configuration needed for Next.js / Babel setups."
+          ],
+          "optimizations": [
+            "**No more `useMemo` / `useCallback`:** The compiler automatically memoizes values and functions based on their dependencies.",
+            "**No more `React.memo`:** Components only re-render if their exact props change.",
+            "Fine-grained reactivity: React now understands which *parts* of a component changed, updating only necessary DOM nodes."
+          ],
+          "rules-of-react": [
+            "**Purity:** Components must be pure regarding rendering (given same inputs, return same JSX).",
+            "**Immutability:** Never mutate props or state directly.",
+            "**Hook Rules:** Don't call hooks conditionally or inside loops.",
+            "*The compiler will fail to optimize (and warn you) if these rules are broken.*"
+          ]
+        },
+        "anti-patterns": [
+          "❌ Manually wrapping everything in `useMemo` / `useCallback` (the Compiler does this for you).",
+          "❌ Mutating state `state.user.name = 'Bob'` instead of `{ ...state, user: { ...state.user, name: 'Bob' } }` (Breaks compiler optimizations).",
+          "❌ Side effects inside the render phase (e.g., fetching data directly inside the component body instead of `useEffect` or `use()`)."
+        ]
+      }
+    },
+    {
+      "id": "react-react_server_components",
+      "category": "react",
+      "name": "REACT_SERVER_COMPONENTS",
+      "role": "React Server Components Specialist",
+      "focus": [
+        "rsc",
+        "server-actions",
+        "nextjs",
+        "remix",
+        "performance"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "React Server Components, Next.js App Router / Remix",
+        "rsc-gold-standard": {
+          "philosophy": [
+            "Server Components are the default. They run on the server and ship ZERO JavaScript to the client.",
+            "Client Components are \"interactive islands\". They run on both server (SSR) and client (hydration)."
+          ],
+          "boundaries": [
+            "Use `'use client'` ONLY at the top of the file of a component that needs interactivity (`onClick`, `useState`, `useEffect`, browser APIs).",
+            "Pass data as serializable props from Server to Client component.",
+            "Pass Server Components as `children` into Client Components to keep the tree server-rendered."
+          ],
+          "data-fetching": [
+            "Fetch data directly in Server Components using native `async/await`. No need for API routes or `useEffect`.",
+            "Access DB/backend directly (e.g. `const users = await db.query.users()`)."
+          ],
+          "server-actions": [
+            "Mark functions with `'use server'` to create callable server endpoints directly from client.",
+            "Use Server Actions for all mutations (forms, buttons) instead of manual `fetch` calls."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Adding `'use client'` to a component just to import another client component (it cascades automatically).",
+          "❌ Passing non-serializable data (functions, Maps) as props from Server to Client component.",
+          "❌ Fetching data in `useEffect` when it could be fetched at the Server Component level.",
+          "❌ Leaking secrets explicitly by not putting `server-only` import in sensitive files."
+        ]
+      }
+    },
+    {
+      "id": "react-zustand",
+      "category": "react",
+      "name": "ZUSTAND",
+      "role": "Zustand State Specialist",
+      "focus": [
+        "client-state",
+        "global-store",
+        "minimalist-store"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "Zustand",
+        "zustand-gold-standard": {
+          "philosophy": [
+            "Lightweight, unopinionated, hooks-first state management for Global Client State.",
+            "Replaces Redux for 90% of use cases (except massive enterprise sync)."
+          ],
+          "architecture": [
+            "Create a store: `create((set) => ({ count: 0, inc: () => set(state => ({ count: state.count + 1 })) }))`",
+            "Stores exist *outside* React context tree = no wrapping `<Provider>` required."
+          ],
+          "performance": [
+            "**Selecting State:** Always select *only* what you need to prevent over-rendering: `const count = useStore((state) => state.count)`.",
+            "Avoid returning entire objects from selectors unless using `useShallow` from `zustand/react/shallow`."
+          ],
+          "actions": [
+            "Keep actions inside the store to co-locate logic and state modifications."
+          ],
+          "persistence": [
+            "Use `persist` middleware for trivial `localStorage` / `sessionStorage` sync."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Managing Server/API data in Zustand (Use TanStack Query instead).",
+          "❌ Selecting the whole store `const state = useStore()` (causes re-renders on ANY change).",
+          "❌ Wrapping the app in a Context Provider just to pass a Zustand store (unnecessary)."
+        ]
+      }
+    },
+    {
+      "id": "rstore",
+      "category": "rstore",
+      "name": "RSTORE",
+      "role": "rstore Local-First Data Specialist",
+      "focus": [
+        "local-first-cache",
+        "offline-sync",
+        "data-federation",
+        "optimistic-mutations",
+        "form-handling"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "@rstore/vue, @rstore/nuxt, @rstore/nuxt-drizzle, @rstore/nuxt-directus",
+        "rstore-gold-standard": {
+          "architecture": [
+            "Normalized reactive cache — single source of truth, client-side reads.",
+            "Optimistic mutations — UI updates instantly, server catches up async.",
+            "Plugin system abstracts data sources (REST, GraphQL, WebSocket, ORM, CMS)."
+          ],
+          "collections": [
+            "Define typed collections with `RStoreSchema.withItemType<T>().defineCollection(...)`.",
+            "Hooks: `fetchFirst`, `fetchMany`, `create`, `update`, `delete`.",
+            "Use plugins to share fetch logic across multiple collections."
+          ],
+          "queries": [
+            "`store.todos.query(q => q.many())` — one-time fetch.",
+            "`store.todos.liveQuery(q => q.many())` — reactive subscription, auto-updates.",
+            "`store.todos.query(q => q.first(key))` — single item."
+          ],
+          "forms": [
+            "`store.todos.createForm({ defaultValues: () => ({...}) })` — built-in form handling.",
+            "Form provides `$submit()`, `$loading`, `$schema`, `$onSuccess()`."
+          ],
+          "nuxt-setup": [
+            "Module: `@rstore/nuxt` — auto-scans `app/rstore/` for collections, `app/rstore/plugins/` for plugins.",
+            "Handles SSR payload, exposes typed `useStore()`.",
+            "Supports Nuxt Layers for multi-layer collection scanning."
+          ],
+          "nuxt-drizzle": [
+            "Module: `@rstore/nuxt-drizzle` — auto-generates collections from Drizzle schema.",
+            "Zero-config: creates REST API `/api/rstore`, types, plugins automatically.",
+            "Options: `{ ws: true, offline: true }` for WebSocket realtime + offline sync."
+          ],
+          "nuxt-directus": [
+            "Module: `@rstore/nuxt-directus` — auto-generates collections from Directus CMS.",
+            "Config: `{ url, adminToken }`."
+          ],
+          "relationship-to-pinia": [
+            "rstore = server data layer (CRUD, sync, offline). Pinia = client state (UI, business logic). Use BOTH."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Using rstore for UI-only state (use Pinia instead).",
+          "❌ Manual API calls in components when rstore collection hooks exist.",
+          "❌ Skipping `liveQuery` in favor of `query` for data that changes in real-time.",
+          "❌ Defining hooks in every collection — use plugins for shared fetch logic."
+        ]
+      }
+    },
+    {
+      "id": "rust-rust_dev",
+      "category": "rust",
+      "name": "RUST_DEV",
+      "role": "Rust / WGPU Systems Developer",
+      "focus": [
+        "safety",
+        "performance",
+        "memory-management",
+        "shader-compilation",
+        "wasm-optimization"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "Rust, WGPU, WGSL, WASM, Slint",
+        "implementation-rules": {
+          "rust": [
+            "Prefer `Result` and `Option` over `unwrap`/`expect`.",
+            "Use `clippy` for linting; fix all warnings.",
+            "Leverage algebraic data types (Enums) for state machines.",
+            "Clear ownership/borrowing: avoid unnecessary cloning."
+          ],
+          "wgpu-graphics": [
+            "Manage GPU resources (buffers, pipelines) carefully.",
+            "Shaders in `.wgsl` files, not hardcoded strings.",
+            "Handle window resize events to recreate surface/swapchain.",
+            "Optimize draw calls by grouping instances where possible."
+          ],
+          "wasm-bridge": [
+            "Keep Wasm boundary thin; minimize data crossing (use byte buffers).",
+            "Use `wasm-bindgen` for JS interop.",
+            "Optimize build size with `wasm-opt`."
+          ],
+          "slint-ui": [
+            "Keep `.slint` files clean and separate from Rust logic.",
+            "Use two-way bindings for UI updates.",
+            "Handle all property changes in Rust callback handlers."
+          ]
+        },
+        "anti-patterns": [
+          "unsafe blocks without documented justification.",
+          "Large binary blobs in git; use scripts for assets.",
+          "Hardcoded GPU constants; use configuration or push constants.",
+          "Blocking the main thread with heavy compute (use workers/threads)."
+        ]
+      }
+    },
+    {
+      "id": "security",
+      "category": "security",
+      "name": "SECURITY",
+      "role": "Vue & Frontend Security Specialist",
+      "focus": [
+        "tree-shaking-risks",
+        "owasp",
+        "env-vars",
+        "xss",
+        "citizen-dev-guardrails"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "security-gold-standard": {
+          "tree-shaking-is-not-security": [
+            "Tree-shaking removes unused code, NOT sensitive code. It cannot distinguish secrets from app logic.",
+            "Server-only modules imported in client components WILL leak into production bundle.",
+            "`VITE_PUBLIC_` / `VUE_APP_` prefixed env vars are ALWAYS in client code — never use for secrets.",
+            "All sensitive logic (auth, DB, API keys) must stay server-side, accessed only via API."
+          ],
+          "code-separation": [
+            "Strict server/client boundary — never import from `server/` in client components.",
+            "Use Nuxt `server/api/` or Nitro routes for all sensitive operations.",
+            "Audit `import` chains regularly — one wrong import leaks the entire module tree."
+          ],
+          "owasp-for-vue": [
+            "**XSS:** Never use `v-html` with user input. Sanitize all dynamic content.",
+            "**CSRF:** Use tokens for state-changing operations.",
+            "**Injection:** Parameterize all queries. Never concatenate user input into SQL/commands.",
+            "**Secrets:** Use `.env` files, never commit them. Rotate credentials regularly.",
+            "**Dependencies:** Audit with `npm audit`. Update packages proactively."
+          ],
+          "env-var-rules": [
+            "`VITE_` prefix = public, baked into client bundle.",
+            "Server-only vars: NO prefix, access via `useRuntimeConfig().secret` (Nuxt) or `process.env` (Node).",
+            "Never log secrets in client-side code or error messages."
+          ],
+          "citizen-developer-guardrails": [
+            "Schema-driven components: accessibility, brand rules, performance defaults baked in.",
+            "AI-generated code operates in safe boundaries — routing, logic, data flow are protected.",
+            "Devs become platform enablers; citizen builders use visual editors + schema tools.",
+            "Guardrail-based versioning: opinionated component design prevents architecture breakage.",
+            "Lightweight review processes for AI-generated/citizen-contributed code."
+          ],
+          "backend-validation": [
+            "NEVER trust client-side validation for security. All checks must be on server.",
+            "Auth and authorization must be server-enforced (middleware, API guards)."
+          ],
+          "production-mode": [
+            "Deploy Vue apps in production mode — removes dev warnings and verbose debug info.",
+            "Enable source map generation in CI only, never serve to public."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Trusting tree-shaking to remove sensitive server code.",
+          "❌ Using `VITE_` prefix for API keys or secrets.",
+          "❌ `v-html` with unsanitized user input.",
+          "❌ Client-side only validation for security-critical operations.",
+          "❌ Letting AI/citizen devs modify routing, data flow, or auth logic.",
+          "❌ Serving source maps to production users."
+        ]
+      }
+    },
+    {
+      "id": "supabase",
+      "category": "supabase",
+      "name": "SUPABASE",
+      "role": "Supabase Adapter",
+      "focus": [
+        "Supabase Client",
+        "Auth",
+        "Database",
+        "Edge Functions",
+        "Row Level Security (RLS)"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "Supabase, PostgreSQL, GoTrue (Auth), PostgREST",
+        "integration-rules": [
+          "Use @supabase/supabase-js for client-side interaction.",
+          "Keep Supabase URL and Anon Key in .env files; never hardcode.",
+          "Implement RLS for all tables in the database.",
+          "Use Supabase Auth for user management and session handling.",
+          "Prefer server-side logic in Edge Functions (Deno) when sensitive processing is required."
+        ],
+        "security-rules": [
+          "Never bypass RLS in the client (service_role key should only be used in server-side/edge functions).",
+          "Use granular policies (SELECT, INSERT, UPDATE, DELETE) based on auth.uid().",
+          "Validate data on the client before submission, but rely on DB constraints for final integrity."
+        ],
+        "anti-patterns": [
+          "Exposing service_role key to the frontend.",
+          "Tables without RLS enabled.",
+          "Business logic entirely on the client that bypasses security checks."
+        ]
+      }
+    },
+    {
+      "id": "svelte-svelte_dev",
+      "category": "svelte",
+      "name": "SVELTE_DEV",
+      "role": "Svelte Stack Adapter",
+      "focus": [
+        "Svelte components",
+        "SvelteKit routing",
+        "Store management",
+        "Tailwind integration"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "Svelte 5, SvelteKit 2, TypeScript, Tailwind CSS, Vite",
+        "integration-rules": [
+          "Use SvelteKit file-based routing (+page.svelte, +layout.svelte).",
+          "Prefer Svelte 5 runes ($state, $derived, $effect) for state management.",
+          "Context API for cross-component state when necessary.",
+          "Server-side logic in +page.server.ts for DB/API interactions."
+        ],
+        "ui-rules": [
+          "Tailwind CSS for styling.",
+          "Keep components modular and reusable in src/lib/components.",
+          "Use $lib alias for internal imports."
+        ],
+        "anti-patterns": [
+          "Direct DOM manipulation (use Svelte bindings).",
+          "Putting sensitive logic in +page.svelte (use +page.server.ts).",
+          "Excessive use of global stores (prefer local state or context)."
+        ]
+      }
+    },
+    {
+      "id": "tailwind",
+      "category": "tailwind",
+      "name": "TAILWIND",
+      "role": "Tailwind CSS Specialist",
+      "focus": [
+        "utility-first",
+        "responsive-design",
+        "design-system"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "tailwind-gold-standard": {
+          "utility-first": [
+            "Maximize utility classes directly in HTML structure instead of writing custom CSS."
+          ],
+          "component-extraction": [
+            "If a combination of Tailwind classes is heavily repeated (like a button), extract it into a framework component (React/Vue/Svelte) rather than using `@apply` in CSS, to keep styling collocated.",
+            "**Tailwind v4:** Use `@apply` only for Tailwind utility names. Do not `@apply` custom/component class names — compilation can fail or behave unexpectedly."
+          ],
+          "configuration": [
+            "Use `tailwind.config.js` to define your design system (colors, typography, spacing)."
+          ],
+          "responsive-design": [
+            "Think mobile-first. Write base utilities for mobile, and use prefixes (e.g., `md:`, `lg:`) for larger screens."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Overusing `@apply` instead of component abstractions.",
+          "❌ Writing arbitrary values (e.g., `w-[123px]`) instead of configuring the design system."
+        ]
+      }
+    },
+    {
+      "id": "typescript",
+      "category": "typescript",
+      "name": "TYPESCRIPT",
+      "role": "TypeScript Specialist",
+      "focus": [
+        "strict-typing",
+        "static-analysis",
+        "type-safety"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "typescript-gold-standard": {
+          "strict-mode": [
+            "Always enable `strict: true` in `tsconfig.json`."
+          ],
+          "type-definitions": [
+            "Prefer `interface` over `type` for object shapes as they are extensible.",
+            "Use `type` for unions and intersections."
+          ],
+          "null-checks": [
+            "Rely on optional chaining (`?.`) and nullish coalescing (`??`)."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Using `any`. Use `unknown` if the type is truly not known until runtime.",
+          "❌ Using `enum` for lean code. Prefer standard objects with `as const` instead."
+        ]
+      }
+    },
+    {
+      "id": "vercel",
+      "category": "vercel",
+      "name": "VERCEL",
+      "role": "Vercel Cloud Specialist",
+      "focus": [
+        "serverless-functions",
+        "edge-middleware",
+        "vercel-json",
+        "ai-gateway",
+        "hybrid-rendering"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "Vercel Functions, Edge Runtime, Vercel AI SDK, Vercel Postgres/Blob",
+        "architecture-invariants": {
+          "serverless": {
+            "directory": "api/",
+            "limits": [
+              "Max duration: 10s (Hobby) / 300s (Pro).",
+              "Payload size: Max 4.5MB (Request/Response).",
+              "Memory: 1024MB default (configurable).",
+              "No sticky sessions (stateless)."
+            ],
+            "rules": [
+              "Use `export const config = { runtime: 'nodejs' }` explicitly if needed.",
+              "Always handle `Promise` resolution/rejection in proxy scenarios."
+            ]
+          },
+          "edge-middleware": {
+            "directory": "root / middleware.js",
+            "execution": "Runs BEFORE cache and routing.",
+            "limits": [
+              "Max duration: Must start responding in < 25s.",
+              "Bundle size: 1MB (Hobby) / 2MB (Pro).",
+              "Runtime: Edge Runtime (Lightweight V8)."
+            ],
+            "restrictions": [
+              "❌ No Node.js native APIs (fs, child_process, net).",
+              "❌ No `require` (use ES Modules only).",
+              "❌ No `eval()` or dynamic code execution."
+            ]
+          },
+          "routing (vercel.json)": {
+            "limits": [
+              "Max URL length: 14KB.",
+              "Max Rewrites/Redirects: 1024."
+            ],
+            "rewrites": [
+              "API route: `{\"source\": \"/api/:path*\", \"destination\": \"/api/proxy?path=:path*\"}`",
+              "SPA fallback: `{\"source\": \"/((?!api/).*)\", \"destination\": \"/index.html\"}`"
+            ],
+            "security": [
+              "Use `headers` section for CSP and security headers."
+            ]
+          },
+          "storage-quotas": {
+            "kv": "1GB (Hobby) / 100GB (Pro).",
+            "postgres": "256MB (Hobby) / Variable (Pro).",
+            "blob": "1GB (Hobby) / 500GB (Pro)."
+          },
+          "plan-limits": {
+            "bandwidth": "100GB (Hobby) / 1TB (Pro) per month.",
+            "build-minutes": "6,000 (Hobby) / 24,000 (Pro) per month.",
+            "concurrent-builds": "1 (Hobby) / 12 (Pro).",
+            "serverless-invocations": "1M (Hobby) / 10M+ (Pro).",
+            "edge-requests": "1M (Hobby) / 10M+ (Pro).",
+            "analytics-events": "50k (Hobby) / 100k (Pro)."
+          },
+          "ai-collaboration": {
+            "gateway": [
+              "Use Vercel AI Gateway for unified access to multiple LLMs.",
+              "Enabled: Caching (cost savings) and Retry strategies."
+            ],
+            "sdk": [
+              "Standardize on `ai` package (Vercel AI SDK) for stream-handling."
+            ]
+          }
+        },
+        "anti-patterns": [
+          "❌ Using WebSockets in Serverless Functions (will disconnect).",
+          "❌ Long-running loops (>60s) in API routes.",
+          "❌ Hardcoding API keys (use Environment Variables).",
+          "❌ Local file system storage (temporary/ephemeral only).",
+          "❌ Forgetting `externalResolver: true` for third-party proxy libraries."
+        ]
+      }
+    },
+    {
+      "id": "vite",
+      "category": "vite",
+      "name": "VITE",
+      "role": "Vite 8+ Build Tooling Specialist",
+      "focus": [
+        "rolldown",
+        "environment-api",
+        "hmr",
+        "nitro-integration",
+        "unified-pipeline"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "Vite 8, Rolldown, Nitro",
+        "vite-gold-standard": {
+          "bundler": [
+            "**Rolldown** (Rust) is the default bundler in Vite 8 — replaces esbuild + Rollup.",
+            "10-30x faster than Rollup, on par with esbuild.",
+            "Single unified dev→prod pipeline — no more two-bundler inconsistencies.",
+            "Rolldown 1.0 RC: API stable, passes 900+ Rollup and 670+ esbuild tests.",
+            "Built-in: TS/JSX transforms, ESM/CJS interop, CSS bundling (experimental)."
+          ],
+          "environment-api": [
+            "Vite Environment API defines multiple execution environments (client, server, edge).",
+            "Dev mirrors prod — develop against real server runtimes, not simulations.",
+            "Critical for Cloudflare Workers, edge runtimes, SSR.",
+            "Stabilizing in Vite 7; fully adopted in Vite 8."
+          ],
+          "nitro-integration": [
+            "Nitro Vite plugin enables full-stack apps: auto SSR, bundled `index.html`, native Env API.",
+            "Vendor-agnostic: same code runs across environments without lock-in."
+          ],
+          "hmr": [
+            "Leverage Vite's fast HMR — preserve component state during iterations.",
+            "Optimize cold starts: keep `vite.config.ts` lean, minimize plugin overhead."
+          ],
+          "config": [
+            "Keep `vite.config.ts` minimal — rely on sensible defaults.",
+            "Use `@vitejs/plugin-vue` for Vue compilation."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Using separate esbuild (dev) + Rollup (prod) in new projects (Rolldown unifies both).",
+          "❌ Ignoring dev/prod divergence — use Environment API to match runtimes.",
+          "❌ Heavy custom PostCSS chains degrading HMR speed.",
+          "❌ Over-configuring Vite — defaults are optimized."
+        ]
+      }
+    },
+    {
+      "id": "vue",
+      "category": "vue",
+      "name": "VUE",
+      "role": "Vue 3.6+ Specialist",
+      "focus": [
+        "composition-api",
+        "reactivity",
+        "vapor-mode",
+        "component-design",
+        "typed-routing"
+      ],
+      "security": [
+        "Tree-shaking does NOT protect server code from leaking into client bundle.",
+        "Never import server-only modules in client components.",
+        "Never use `VITE_PUBLIC_` prefix for sensitive env vars.",
+        "All auth/authorization must happen on backend."
+      ],
+      "anti_patterns": [],
+      "features": {
+        "vue-gold-standard": {
+          "composition-api": [
+            "Always use `<script setup>` and the Composition API for new components."
+          ],
+          "reactivity": [
+            "Be deliberate between `ref` (for primitives and replacing object references) and `reactive` (for deep reactive objects).",
+            "Vue 3.6 uses **alien-signals** engine: 3-5x faster, 40% less memory, push-pull with lazy evaluation.",
+            "Fine-grained updates — only the changed part re-renders."
+          ],
+          "vapor-mode": [
+            "Opt-in per component; compiles templates to direct DOM ops (no VDOM diffing).",
+            "Requires `<script setup>` + Composition API only.",
+            "Use for performance-critical components (lists, dashboards, animations).",
+            "Does NOT require changes to existing codebase — incremental adoption."
+          ],
+          "component-design": [
+            "Keep components small, focused, and single-responsibility.",
+            "Extract reusable logic into composables (e.g. `useFeature.ts`)."
+          ],
+          "events": [
+            "Explicitly declare events via `defineEmits`."
+          ],
+          "props": [
+            "Use `defineProps` with TypeScript interfaces for strictly typed props."
+          ],
+          "state-management": [
+            "**Pinia** is the canonical state management (replaces Vuex).",
+            "For local-first/offline: consider **rstore** (typed `useStore()`, offline sync, Drizzle/Directus)."
+          ],
+          "routing": [
+            "Vue Router treats URL as **typed state** (path, query, hash → numbers, objects).",
+            "Use `unplugin-vue-router` for auto-generated route types."
+          ],
+          "mcp-ai": [
+            "`vue-mcp` Vite plugin exposes component tree, state, routes, Pinia to MCP servers.",
+            "For agentic AI copilots: use Vue composable + Pinia for guardrailed agent actions (Directus pattern)."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Using Options API for new components.",
+          "❌ Mutating props directly.",
+          "❌ Using Vuex in new projects (use Pinia).",
+          "❌ Assuming tree-shaking protects sensitive server logic.",
+          "❌ Hardcoded API keys in client code."
+        ]
+      }
+    },
+    {
+      "id": "vue-backend-vue_backend_reactivity",
+      "category": "vue-backend",
+      "name": "VUE_BACKEND_REACTIVITY",
+      "role": "Vue Backend Reactivity Specialist",
+      "focus": [
+        "server-side-reactivity",
+        "sse",
+        "websocket",
+        "fan-out",
+        "reactive-orchestration"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "stack": "@vue/reactivity (standalone), SSE, WebSocket",
+        "vue-backend-reactivity-gold-standard": {
+          "concept": [
+            "Vue's `@vue/reactivity` package works standalone — no browser needed.",
+            "Use `ref()`, `reactive()`, `computed()`, `watch()`, `effect()` on the server.",
+            "Reactive source of truth on server → auto fan-out to many clients."
+          ],
+          "patterns": [
+            "**Reactive state → SSE/WebSocket:** Server state changes trigger `effect()` → push to clients via SSE or WebSocket.",
+            "**Computed projections:** `computed()` for per-user/per-role data views — only send what each client needs.",
+            "**Side effect management:** `watch()` and `effect()` handle scheduling, cleanup, and dependency tracking automatically.",
+            "**Event-driven:** Reactive effects replace manual event listeners for state-dependent logic."
+          ],
+          "setup": [
+            "Install: `npm install @vue/reactivity`",
+            "Import: `import { ref, computed, watch, effect } from '@vue/reactivity'`",
+            "Create reactive state, attach effects that push to connected clients."
+          ],
+          "use-cases": [
+            "Real-time dashboards: server computes metrics → push to all viewers.",
+            "Game state: single reactive truth → fan-out to players via WebSocket.",
+            "IoT orchestration: sensor data triggers reactive effects → commands to devices.",
+            "Multi-user collaboration: shared reactive state with per-user projections."
+          ]
+        },
+        "anti-patterns": [
+          "❌ Using @vue/reactivity for heavy computation (it's for orchestration, not number crunching).",
+          "❌ Polling from clients when server can push via SSE/WebSocket.",
+          "❌ Manual event wiring when reactive effects auto-track dependencies.",
+          "❌ Forgetting cleanup — always dispose watchers/effects on disconnect."
+        ]
+      }
+    },
+    {
+      "id": "web3",
+      "category": "web3",
+      "name": "WEB3",
+      "role": "Web3/Blockchain Adapter",
+      "focus": [
+        "Smart Contracts",
+        "Wallet Integration",
+        "On-chain Data",
+        "Monetization"
+      ],
+      "security": [],
+      "anti_patterns": [],
+      "features": {
+        "extends": "../../guardians/ARCHITECT.ti",
+        "stack": "Solidity, Ethers.js, Viem, Wagmi, Hardhat/Foundry",
+        "integration-rules": [
+          "Keep contract ABIs and addresses in a shared package or config.",
+          "Implement robust error handling for wallet rejections and network failures.",
+          "Use Wagmi/Viem for frontend-blockchain interaction.",
+          "Ensure all sensitive on-chain interactions are confirmed by the user."
+        ],
+        "security-rules": [
+          "Never store private keys in the frontend or environment variables exposed to the client.",
+          "Validate all incoming on-chain data before using it in the UI.",
+          "Implement transaction state tracking (pending, success, error) with user feedback."
+        ],
+        "anti-patterns": [
+          "Trusting client-side state for transaction verification (always verify on-chain).",
+          "Hardcoding network IDs or contract addresses across the codebase."
+        ]
+      }
+    }
+  ]
+}
