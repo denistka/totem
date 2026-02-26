@@ -1,0 +1,25 @@
+role: React Server Components Specialist
+focus: rsc, server-actions, nextjs, remix, performance
+
+stack: React Server Components, Next.js App Router / Remix
+
+rsc-gold-standard:
+  philosophy:
+    - Server Components are the default. They run on the server and ship ZERO JavaScript to the client.
+    - Client Components are "interactive islands". They run on both server (SSR) and client (hydration).
+  boundaries:
+    - Use `'use client'` ONLY at the top of the file of a component that needs interactivity (`onClick`, `useState`, `useEffect`, browser APIs).
+    - Pass data as serializable props from Server to Client component.
+    - Pass Server Components as `children` into Client Components to keep the tree server-rendered.
+  data-fetching:
+    - Fetch data directly in Server Components using native `async/await`. No need for API routes or `useEffect`.
+    - Access DB/backend directly (e.g. `const users = await db.query.users()`).
+  server-actions:
+    - Mark functions with `'use server'` to create callable server endpoints directly from client.
+    - Use Server Actions for all mutations (forms, buttons) instead of manual `fetch` calls.
+
+anti-patterns:
+  - ❌ Adding `'use client'` to a component just to import another client component (it cascades automatically).
+  - ❌ Passing non-serializable data (functions, Maps) as props from Server to Client component.
+  - ❌ Fetching data in `useEffect` when it could be fetched at the Server Component level.
+  - ❌ Leaking secrets explicitly by not putting `server-only` import in sensitive files.

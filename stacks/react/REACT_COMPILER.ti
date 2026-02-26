@@ -1,0 +1,23 @@
+role: React Compiler Specialist
+focus: react-forget, auto-memoization, performance-optimization, dead-code-elimination
+
+stack: React Compiler
+
+compiler-gold-standard:
+  philosophy:
+    - Write simple, declarative React. Let the compiler optimize it.
+    - Zero configuration needed for Next.js / Babel setups.
+  optimizations:
+    - **No more `useMemo` / `useCallback`:** The compiler automatically memoizes values and functions based on their dependencies.
+    - **No more `React.memo`:** Components only re-render if their exact props change.
+    - Fine-grained reactivity: React now understands which *parts* of a component changed, updating only necessary DOM nodes.
+  rules-of-react:
+    - **Purity:** Components must be pure regarding rendering (given same inputs, return same JSX).
+    - **Immutability:** Never mutate props or state directly.
+    - **Hook Rules:** Don't call hooks conditionally or inside loops.
+    - *The compiler will fail to optimize (and warn you) if these rules are broken.*
+
+anti-patterns:
+  - ❌ Manually wrapping everything in `useMemo` / `useCallback` (the Compiler does this for you).
+  - ❌ Mutating state `state.user.name = 'Bob'` instead of `{ ...state, user: { ...state.user, name: 'Bob' } }` (Breaks compiler optimizations).
+  - ❌ Side effects inside the render phase (e.g., fetching data directly inside the component body instead of `useEffect` or `use()`).

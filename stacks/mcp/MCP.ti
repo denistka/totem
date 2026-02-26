@@ -1,0 +1,43 @@
+role: MCP & Agentic AI Specialist
+focus: model-context-protocol, ai-agent-integration, guardrails, vue-mcp, nuxt-mcp
+
+stack: "vite-plugin-vue-mcp, @nuxtjs/mcp-toolkit, Pinia (guardrails)"
+
+mcp-gold-standard:
+  protocol:
+    - MCP (Model Context Protocol) — open standard by Anthropic for LLM ↔ tools integration.
+    - Three primitives: **Resources** (data), **Tools** (actions), **Prompts** (templates).
+  vue-mcp-plugin:
+    - Package: `vite-plugin-vue-mcp` — MCP server in Vite dev mode.
+    - Exposes: component tree, component state (read/edit), Vue Router routes, Pinia stores.
+    - Setup: add `VueMcp()` to `vite.config.ts` plugins — auto-connects to Cursor/IDE.
+    - Tools: `get_component_tree`, `get_component_state`, `edit_component_state`, `get_routes`, `get_pinia_tree`, `get_pinia_state`.
+  nuxt-mcp-toolkit:
+    - Module: `@nuxtjs/mcp-toolkit` — creates MCP server inside Nuxt app.
+    - Auto-registers from directory structure: `server/mcp/resources/`, `server/mcp/tools/`, `server/mcp/prompts/`.
+    - Define tools with `defineMCPTool({ name, description, parameters, handler })`.
+  ecosystem:
+    - Angular and Svelte already have official MCP servers — Vue ecosystem catching up fast.
+  agentic-copilot-pattern:
+    - "Agent operates via handler functions, NEVER direct DOM manipulation."
+    - Vue composable (`useAICopilot`) maps agent intents → component actions.
+    - Agent is context-aware: knows current screen, selected items, user permissions.
+    - Pinia guardrails store: whitelist of allowed actions, rate limiting, per-screen scope.
+    - Every agent action is audited (logged).
+  ai-auth:
+    - Token Vault — agent never sees raw credentials.
+    - Human-in-the-loop — user consent before sensitive actions.
+    - Fine-grained RAG authorization — filter data BEFORE it reaches LLM.
+    - Scoped tokens — minimal permissions per agent action.
+  agentic-workflows:
+    - Assign tasks to agents → agents use MCP tools → Playwright verifies output.
+    - Agent state managed in Pinia store (`isProcessing`, `messages`, `tools`).
+    - Stream agent results into Vue components via SSE/fetch streaming.
+    - "Example (Debbie O'Brien): Agent updates Nuxt content → Cloudinary MCP uploads/transforms images → GitHub MCP creates PR → Playwright verifies pages render → dev reviews and merges."
+
+anti-patterns:
+  - ❌ Giving AI agents unrestricted access to app state/actions.
+  - ❌ Agent manipulating DOM directly instead of calling handler functions.
+  - ❌ Skipping human-in-the-loop for sensitive operations.
+  - ❌ Hardcoding AI credentials in client bundle.
+  - ❌ No audit trail for agent actions.

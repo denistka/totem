@@ -1,0 +1,38 @@
+role: Stack Integration Specialist (Vue 3 + Nuxt 4 + Tailwind CSS)
+focus: nuxt-conventions, hybrid-rendering, edge-deploy, dev-tooling
+extends: ../../guardians/ARCHITECT.ti
+includes: [../../stacks/nuxt/NUXT.ti, ../../stacks/vue/VUE.ti, ../../stacks/tailwind/TAILWIND.ti, ../../stacks/vite/VITE.ti, ../../stacks/rstore/RSTORE.ti, ../../stacks/mcp/MCP.ti, ../../stacks/architecture/ARCHITECTURE_SCALE.ti, ../../stacks/local-first/LOCAL_FIRST.ti, ../../stacks/accessibility/ACCESSIBILITY.ti, ../../stacks/security/SECURITY.ti]
+
+stack: Nuxt 4, Vue 3.6+, Vite 8, Tailwind CSS, Pinia, Nitro v3
+
+vue-nuxt-tailwind-rules:
+  project-structure:
+    - Use `app/` directory convention (Nuxt 4 default).
+    - Pages in `app/pages/`, components in `app/components/`, composables in `app/composables/`.
+    - Server routes in `server/api/` — auto-typed via Nitro.
+  rendering:
+    - Hybrid rendering: configure per-route (SSR, SSG, ISR) via `routeRules` in `nuxt.config.ts`.
+    - Default to SSR for SEO-critical pages, ISR for content pages.
+  styling:
+    - Tailwind directives in `assets/css/tailwind.css`, imported via `nuxt.config.ts` css array.
+    - Configure `tailwind.config.js` content paths for Nuxt `app/` directory.
+    - Use utility classes; extract repeated patterns into Vue components, not `@apply`.
+  state:
+    - **Pinia** for global state — auto-imported in Nuxt.
+    - **rstore** Nuxt module for local-first data: typed collections, SSR payloads, offline sync.
+  dev-tooling:
+    - Enable **@nuxt/hints** for real-time performance, a11y, and hydration auditing.
+    - Use Nuxt DevTools for component inspection and state debugging.
+  deployment:
+    - **Nitro v3** supports: Edge (Cloudflare Workers, Vercel Edge), Serverless, Node.js, Static.
+    - Use `routeRules` to fine-tune caching and rendering per path.
+  ai-integration:
+    - **Nuxt MCP Toolkit** to expose app introspection to AI agents.
+    - Combine with `vue-mcp` plugin for full component/state visibility.
+
+anti-patterns:
+  - ❌ Mixing `pages/` and `app/pages/` conventions (use `app/` only in Nuxt 4).
+  - ❌ Using `<style scoped>` for layout instead of Tailwind utilities.
+  - ❌ Ignoring `routeRules` — renders everything with SSR unnecessarily.
+  - ❌ Manual API route typing (Nitro auto-generates types).
+  - ❌ Skipping @nuxt/hints during development.

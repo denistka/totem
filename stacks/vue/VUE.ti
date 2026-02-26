@@ -1,11 +1,18 @@
-role: Vue 3 Specialist
-focus: composition-api, reactivity, component-design
+role: Vue 3.6+ Specialist
+focus: composition-api, reactivity, vapor-mode, component-design, typed-routing
 
 vue-gold-standard:
   composition-api:
     - Always use `<script setup>` and the Composition API for new components.
   reactivity:
     - Be deliberate between `ref` (for primitives and replacing object references) and `reactive` (for deep reactive objects).
+    - Vue 3.6 uses **alien-signals** engine: 3-5x faster, 40% less memory, push-pull with lazy evaluation.
+    - Fine-grained updates — only the changed part re-renders.
+  vapor-mode:
+    - Opt-in per component; compiles templates to direct DOM ops (no VDOM diffing).
+    - Requires `<script setup>` + Composition API only.
+    - Use for performance-critical components (lists, dashboards, animations).
+    - Does NOT require changes to existing codebase — incremental adoption.
   component-design:
     - Keep components small, focused, and single-responsibility.
     - Extract reusable logic into composables (e.g. `useFeature.ts`).
@@ -13,7 +20,25 @@ vue-gold-standard:
     - Explicitly declare events via `defineEmits`.
   props:
     - Use `defineProps` with TypeScript interfaces for strictly typed props.
+  state-management:
+    - **Pinia** is the canonical state management (replaces Vuex).
+    - For local-first/offline: consider **rstore** (typed `useStore()`, offline sync, Drizzle/Directus).
+  routing:
+    - Vue Router treats URL as **typed state** (path, query, hash → numbers, objects).
+    - Use `unplugin-vue-router` for auto-generated route types.
+  mcp-ai:
+    - `vue-mcp` Vite plugin exposes component tree, state, routes, Pinia to MCP servers.
+    - For agentic AI copilots: use Vue composable + Pinia for guardrailed agent actions (Directus pattern).
+
+security:
+  - Tree-shaking does NOT protect server code from leaking into client bundle.
+  - Never import server-only modules in client components.
+  - Never use `VITE_PUBLIC_` prefix for sensitive env vars.
+  - All auth/authorization must happen on backend.
 
 anti-patterns:
   - ❌ Using Options API for new components.
   - ❌ Mutating props directly.
+  - ❌ Using Vuex in new projects (use Pinia).
+  - ❌ Assuming tree-shaking protects sensitive server logic.
+  - ❌ Hardcoded API keys in client code.

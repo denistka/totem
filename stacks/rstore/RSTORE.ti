@@ -1,0 +1,40 @@
+role: rstore Local-First Data Specialist
+focus: local-first-cache, offline-sync, data-federation, optimistic-mutations, form-handling
+
+stack: "@rstore/vue, @rstore/nuxt, @rstore/nuxt-drizzle, @rstore/nuxt-directus"
+
+rstore-gold-standard:
+  architecture:
+    - Normalized reactive cache — single source of truth, client-side reads.
+    - Optimistic mutations — UI updates instantly, server catches up async.
+    - Plugin system abstracts data sources (REST, GraphQL, WebSocket, ORM, CMS).
+  collections:
+    - Define typed collections with `RStoreSchema.withItemType<T>().defineCollection(...)`.
+    - Hooks: `fetchFirst`, `fetchMany`, `create`, `update`, `delete`.
+    - Use plugins to share fetch logic across multiple collections.
+  queries:
+    - `store.todos.query(q => q.many())` — one-time fetch.
+    - `store.todos.liveQuery(q => q.many())` — reactive subscription, auto-updates.
+    - `store.todos.query(q => q.first(key))` — single item.
+  forms:
+    - `store.todos.createForm({ defaultValues: () => ({...}) })` — built-in form handling.
+    - Form provides `$submit()`, `$loading`, `$schema`, `$onSuccess()`.
+  nuxt-setup:
+    - Module: `@rstore/nuxt` — auto-scans `app/rstore/` for collections, `app/rstore/plugins/` for plugins.
+    - Handles SSR payload, exposes typed `useStore()`.
+    - Supports Nuxt Layers for multi-layer collection scanning.
+  nuxt-drizzle:
+    - Module: `@rstore/nuxt-drizzle` — auto-generates collections from Drizzle schema.
+    - Zero-config: creates REST API `/api/rstore`, types, plugins automatically.
+    - Options: `{ ws: true, offline: true }` for WebSocket realtime + offline sync.
+  nuxt-directus:
+    - Module: `@rstore/nuxt-directus` — auto-generates collections from Directus CMS.
+    - Config: `{ url, adminToken }`.
+  relationship-to-pinia:
+    - "rstore = server data layer (CRUD, sync, offline). Pinia = client state (UI, business logic). Use BOTH."
+
+anti-patterns:
+  - ❌ Using rstore for UI-only state (use Pinia instead).
+  - ❌ Manual API calls in components when rstore collection hooks exist.
+  - ❌ Skipping `liveQuery` in favor of `query` for data that changes in real-time.
+  - ❌ Defining hooks in every collection — use plugins for shared fetch logic.

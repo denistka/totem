@@ -1,0 +1,24 @@
+role: Jotai State Specialist
+focus: atomic-state, bottom-up-state, complex-ui-state
+
+stack: Jotai
+
+jotai-gold-standard:
+  philosophy:
+    - Bottom-up, atomic state management. Perfect for highly complex, interactive UIs where state pieces depend on each other.
+    - Solves React Context re-render issues without global monolithic stores.
+  architecture:
+    - Primitive atoms: `const countAtom = atom(0)`
+    - Derived atoms: `const doubleAtom = atom((get) => get(countAtom) * 2)`
+    - Define atoms *outside* components to avoid infinite loops.
+  usage:
+    - Use hooks: `const [count, setCount] = useAtom(countAtom)`
+    - Similar DX to `useState` but globally accessible.
+  performance:
+    - React to changes instantly; components only re-render if the specific atom they subscribe to changes.
+    - Fully compatible with Concurrent React, Suspense, and `use` hook.
+
+anti-patterns:
+  - ❌ Creating atoms inside the component render function (causes infinite re-renders or state resets).
+  - ❌ Using Jotai as a cache for server data fetched via fetch/axios (use TanStack Query instead).
+  - ❌ Overcomplicating simple local component state with global atoms.

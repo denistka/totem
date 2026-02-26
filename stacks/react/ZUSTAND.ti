@@ -1,0 +1,24 @@
+role: Zustand State Specialist
+focus: client-state, global-store, minimalist-store
+
+stack: Zustand
+
+zustand-gold-standard:
+  philosophy:
+    - Lightweight, unopinionated, hooks-first state management for Global Client State.
+    - Replaces Redux for 90% of use cases (except massive enterprise sync).
+  architecture:
+    - Create a store: `create((set) => ({ count: 0, inc: () => set(state => ({ count: state.count + 1 })) }))`
+    - Stores exist *outside* React context tree = no wrapping `<Provider>` required.
+  performance:
+    - **Selecting State:** Always select *only* what you need to prevent over-rendering: `const count = useStore((state) => state.count)`.
+    - Avoid returning entire objects from selectors unless using `useShallow` from `zustand/react/shallow`.
+  actions:
+    - Keep actions inside the store to co-locate logic and state modifications.
+  persistence:
+    - Use `persist` middleware for trivial `localStorage` / `sessionStorage` sync.
+
+anti-patterns:
+  - ❌ Managing Server/API data in Zustand (Use TanStack Query instead).
+  - ❌ Selecting the whole store `const state = useStore()` (causes re-renders on ANY change).
+  - ❌ Wrapping the app in a Context Provider just to pass a Zustand store (unnecessary).

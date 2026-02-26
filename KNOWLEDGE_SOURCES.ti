@@ -1,0 +1,26 @@
+# Totem Knowledge Sources Index
+
+This file registers all external knowledge sources, conferences, and defining materials that act as the source of truth for the stacks and templates within the Totem ecosystem.
+
+When updating stacks or creating new ones, refer back to the knowledge artifacts linked below.
+
+---
+
+## 2026
+
+### Vue.js Amsterdam 2026 (12-13 March 2026)
+
+- **Status:** Integrated.
+- **Topics Covered:** Vue 3.6 (Vapor/Alien Signals), Rolldown, Nuxt 4/5, Astro 6, rstore, Local-First, Security, MCP/Agentic, Architecture at Scale.
+- **Knowledge Artifact:** `~/.gemini/antigravity/brain/3881bd0d-1dca-47da-8013-fc3d8c954d76/vuejs_amsterdam_2026_knowledge.md`
+- **Resulting Stacks:** `ASTRO.ti`, `LOCAL_FIRST.ti`, `VUE_BACKEND_REACTIVITY.ti`, `ACCESSIBILITY.ti`, `SECURITY.ti`, `MCP.ti`, `RSTORE.ti`, `ARCHITECTURE_SCALE.ti`, `NUXT.ti`, `VUE.ti` (updated), `VITE.ti`, `NODE.ti` (updated).
+
+---
+
+## Pending / WIP Research
+
+### React 2026 Ecosystem (React Conf & React Summit 2026)
+- **Status:** Integrated.
+- **Topics Covered:** React 19/20, Server Components (RSC), React Compiler, Zustand/Jotai State Management, Meta-frameworks (Next.js/Remix), AI Agentic workflows (MCP, CopilotKit).
+- **Knowledge Artifact:** `~/.gemini/antigravity/brain/3881bd0d-1dca-47da-8013-fc3d8c954d76/react_2026_knowledge.md`
+- **Resulting Stacks:** `REACT.ti` (updated), `REACT_SERVER_COMPONENTS.ti`, `REACT_COMPILER.ti`, `ZUSTAND.ti`, `JOTAI.ti`.

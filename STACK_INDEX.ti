@@ -1,0 +1,97 @@
+# Totem Stack Index
+
+This file serves as the master registry of all specialized `.ti` stacks and combination `.ti` templates available within the Totem ecosystem.
+
+## 🧱 Stacks (`stacks/`)
+
+### Frontend Frameworks
+
+- `vue/VUE.ti` - Vue 3 Specialist (Vapor, Composition API)
+- `react/REACT.ti` - React 19/20 Specialist (Hooks, Actions, useOptimistic)
+- `react/REACT_SERVER_COMPONENTS.ti` - RSC Specialist (Next.js/Remix Server First)
+- `react/REACT_COMPILER.ti` - React Compiler Specialist (Auto-memoization)
+- `svelte/SVELTE_DEV.ti` - Svelte Specialist
+- `astro/ASTRO.ti` - Astro Cloud Specialist (Vite Environment API)
+- `nuxt/NUXT.ti` - Nuxt 4+ Specialist (Hybrid, Nitro, @nuxt/hints)
+
+### Backend & Server
+
+- `node/NODE.ti` - Node.js 22+ Specialist (ESM-first)
+- `supabase/SUPABASE.ti` - Supabase Backend Specialist
+- `vue-backend/VUE_BACKEND_REACTIVITY.ti` - Vue Backend Orchestration
+
+### Build & Tooling
+
+- `typescript/TYPESCRIPT.ti` - TypeScript Lean Specialist
+- `vite/VITE.ti` - Vite 8 Specialist (Rolldown)
+
+### Data & State
+
+- `rstore/RSTORE.ti` - rstore Local-First Data Specialist
+- `mobx/MOBX.ti` - MobX State Specialist
+- `local-first/LOCAL_FIRST.ti` - Local-First Architecture Specialist (CRDTs, Dexie)
+- `react/ZUSTAND.ti` - Zustand State Specialist (Lightweight Client State)
+- `react/JOTAI.ti` - Jotai State Specialist (Atomic Bottom-up State)
+
+### UI & Styling
+
+- `tailwind/TAILWIND.ti` - Tailwind CSS Specialist
+- `material-ui/MUI.ti` - Material UI Specialist
+- `accessibility/ACCESSIBILITY.ti` - Web Accessibility Specialist (WCAG 2.2, Semantic)
+
+### Architecture & Security
+
+- `architecture/ARCHITECTURE_SCALE.ti` - Architecture at Scale (Micro Frontends, Modular)
+- `security/SECURITY.ti` - Frontend Security Specialist
+
+### AI & Agents
+
+- `mcp/MCP.ti` - MCP & Agentic AI Specialist
+
+### Graphics & Native
+
+- `graphics/SLANG.ti` - Slang Shading Language
+- `graphics/WEBGL.ti` - WebGL Specialist
+- `graphics/WGPU.ti` - WebGPU Specialist
+- `rust/RUST_DEV.ti` - Rust Specialist
+- `web3/WEB3.ti` - Web3 / Smart Contract Specialist
+
+### Platform & Deployment
+
+- `vercel/VERCEL.ti` - Vercel Deployment Specialist
+- `pwa/PWA.ti` - PWA Immersion Specialist
+
+---
+
+## 🏗️ Templates (`templates/`)
+
+Templates are pre-configured combinations of Stacks and Guardians meant for starting a sprint.
+
+### Vue & Nuxt (Modern Stack)
+
+- `vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti` (Nuxt 4 + Vue 3.6 + Vite + RSTORE + MCP + Architecture)
+- `vue3-vite-tailwind/VUE3_VITE_TAILWIND.ti` (Vue 3.6 + Vite 8 + Tailwind)
+- `vue3-vite-tailwind/FRONTEND_DEV.ti` (Vue 3 + PWA + Agentic/Local-First extensions)
+- `vue3-ts-tauri2/VUE3_TAURI2.ti`
+- `vue3-ts-tauri2/FRONTEND_DEV.ti`
+
+### React
+
+- `react-ts/REACT_TS.ti`
+- `react-ts/APP_UI_KIT.ti`
+- `react-ts/BUILD.ti`
+- `react-ts/FRONTEND_DEV.ti`
+- `react-ts/UI_UX.ti`
+
+### Backend
+
+- `node-express/BACKEND_DEV.ti`
+- `node-express/NODE_EXPRESS.ti`
+
+### Svelte
+
+- `svelte-ts/SVELTE_TS.ti`
+
+### General
+
+- `PROJECT_README.template.ti`

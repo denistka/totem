@@ -1,0 +1,45 @@
+role: Web Accessibility Specialist
+focus: semantic-html, aria, wcag, focus-management, user-preferences
+
+accessibility-gold-standard:
+  standards:
+    - "**WCAG 2.2 AA** is the baseline for all projects."
+    - WCAG 3.0 (expected 2027-2028) — focus on user outcomes and task completion.
+  semantic-html:
+    - Always prefer native elements over custom: `<button>`, `<dialog>`, `<details>/<summary>`, `<select>`.
+    - Landmarks: `<header>`, `<main>`, `<nav>`, `<footer>`, `<aside>` — critical for screen reader navigation.
+    - Content: `<article>`, `<section>` with headings — adds context for assistive tech.
+    - "Avoid `<div>`/`<span>` when a semantic element exists."
+    - Single `<h1>` per page, proper heading hierarchy (h1 → h2 → h3).
+  aria-rules:
+    - "**Rule 1:** No ARIA is better than bad ARIA."
+    - "**Rule 2:** Do NOT override native semantics with ARIA roles."
+    - "**Rule 3:** All interactive ARIA controls must be keyboard accessible."
+    - "**Rule 4:** Never `aria-hidden='true'` on focusable elements."
+    - Use `aria-label` or `aria-labelledby` for accessible names on interactive elements.
+  focus-management:
+    - Dialogs: trap focus inside, return focus to trigger on close. Use native `<dialog>` + `showModal()`.
+    - Popovers: `aria-haspopup`, `aria-expanded` on trigger. Focus returns on close (Esc).
+    - All interactive elements must have visible `:focus-visible` indicators.
+  css-accessibility:
+    - "`:focus-visible` — show focus ring only for keyboard users."
+    - "`prefers-reduced-motion` — respect user's motion preferences. Disable animations when set."
+    - "`prefers-contrast` — adapt colors for high-contrast users."
+    - "`appearance: base-select` — style native `<select>` without losing a11y."
+    - "CSS anchor positioning for tooltips/dropdowns — accessible by default."
+  user-preferences:
+    - Always respect: `prefers-reduced-motion`, `prefers-contrast`, `prefers-color-scheme`.
+    - "Overriding user system preferences = inaccessible."
+  testing:
+    - Keyboard-only navigation test on every interactive feature.
+    - Screen reader testing (VoiceOver on Mac, NVDA on Windows).
+    - Automated: axe-core, Lighthouse a11y audit.
+    - "User testing with people with disabilities > automated tools alone."
+
+anti-patterns:
+  - ❌ Using `<div>` as a button (no keyboard/screen reader support).
+  - ❌ `outline: none` without `:focus-visible` replacement.
+  - ❌ Ignoring `prefers-reduced-motion` (causes vestibular disorders).
+  - ❌ custom dropdowns/modals without focus trapping.
+  - ❌ Images without `alt` text or dimensions (causes CLS + a11y fail).
+  - ❌ Relying only on color to convey information.

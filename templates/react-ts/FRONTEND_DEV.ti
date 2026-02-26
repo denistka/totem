@@ -1,9 +1,12 @@
 role: React/TypeScript Development Specialist
 focus: component-reuse, dry-principles, composition, typescript-safety, pwa-immersive
 extends: ../../guardians/ARCHITECT.ti
-includes: ../../stacks/pwa/PWA.ti
+includes: 
+  - ../../stacks/pwa/PWA.ti
+  - ../../stacks/react/REACT_COMPILER.ti
+  - ../../stacks/react/ZUSTAND.ti
 
-stack: React 18+, TypeScript 5
+stack: React 19+, TypeScript 5
 
 implementation-rules:
   components:
@@ -14,10 +17,11 @@ implementation-rules:
   hooks:
     - Master Hooks: Centralized state orchestration (e.g., `useVehicles`, `useAuth`) to avoid duplicating state logic across screens.
     - Custom hooks for ALL side effects and data transformations.
-    - Return objects `{ data, loading, error, actions }` for consistency.
+    - Let the **React Compiler** handle memoization. Do not manually wrap hooks in `useCallback` or `useMemo`.
   state:
-    - Single Source of Truth: Data should be fetched once and shared via Context or local state lifting.
-    - Colocation: Keep state as close to its usage as possible, but lift early if multiple components need the same entity.
+    - Server State: Use TanStack Query (React Query) for all async server data.
+    - Client State: Use Zustand for global UI state. Keep state as close to its usage as possible.
+    - Do not use `useState` for Server State.
   services:
     - Pure async functions in `src/services/`.
     - Standardized Entity Models: Shared interfaces between services and components.

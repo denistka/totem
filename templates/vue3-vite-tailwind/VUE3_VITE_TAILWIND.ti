@@ -1,13 +1,19 @@
 role: Stack Integration Specialist (Vue 3 + Vite + Tailwind CSS)
-focus: vite-plugins, global-styles, rapid-prototyping
+focus: vite-plugins, global-styles, rapid-prototyping, rolldown, vapor-mode
 extends: ../../guardians/ARCHITECT.ti
+includes: [../../stacks/security/SECURITY.ti]
 
-stack: Vue 3, Vite, Tailwind CSS
+stack: Vue 3.6+, Vite 8, Rolldown, Tailwind CSS
 
 vue-vite-tailwind-rules:
   build-tooling:
-    - Use Vite plugins (e.g., `@vitejs/plugin-vue`) for optimal Vue compilation.
+    - Vite 8 with **Rolldown** (Rust bundler) — unified dev/prod pipeline, 10-30x faster.
+    - Use `@vitejs/plugin-vue` for optimal Vue compilation.
     - Keep `vite.config.ts` lean; rely on Vite's sensible defaults for asset handling.
+  vapor-mode:
+    - Opt-in **Vapor Mode** for performance-critical components (lists, charts, animations).
+    - Compiles templates to direct DOM ops — no VDOM overhead.
+    - Requires `<script setup>` + Composition API.
   styling-integration:
     - Place global tailwind directives (`@tailwind base; @tailwind components; @tailwind utilities;`) in a single root `style.css` imported in `main.ts`.
     - Configure `tailwind.config.js` to intelligently purge unused CSS across all `.vue` and `.ts` files in the `src` directory.
@@ -21,3 +27,4 @@ vue-vite-tailwind-rules:
 anti-patterns:
   - ❌ Running heavy custom post-css plugins alongside Tailwind without need, degrading Vite's out-of-the-box speed.
   - ❌ Using `<style scoped>` extensively in Vue components for layout rules instead of tailwind utility classes.
+  - ❌ Using old esbuild+Rollup two-bundler setup instead of Rolldown.

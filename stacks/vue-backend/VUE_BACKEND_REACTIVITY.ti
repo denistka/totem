@@ -1,0 +1,30 @@
+role: Vue Backend Reactivity Specialist
+focus: server-side-reactivity, sse, websocket, fan-out, reactive-orchestration
+
+stack: "@vue/reactivity (standalone), SSE, WebSocket"
+
+vue-backend-reactivity-gold-standard:
+  concept:
+    - "Vue's `@vue/reactivity` package works standalone — no browser needed."
+    - Use `ref()`, `reactive()`, `computed()`, `watch()`, `effect()` on the server.
+    - Reactive source of truth on server → auto fan-out to many clients.
+  patterns:
+    - "**Reactive state → SSE/WebSocket:** Server state changes trigger `effect()` → push to clients via SSE or WebSocket."
+    - "**Computed projections:** `computed()` for per-user/per-role data views — only send what each client needs."
+    - "**Side effect management:** `watch()` and `effect()` handle scheduling, cleanup, and dependency tracking automatically."
+    - "**Event-driven:** Reactive effects replace manual event listeners for state-dependent logic."
+  setup:
+    - "Install: `npm install @vue/reactivity`"
+    - "Import: `import { ref, computed, watch, effect } from '@vue/reactivity'`"
+    - "Create reactive state, attach effects that push to connected clients."
+  use-cases:
+    - Real-time dashboards: server computes metrics → push to all viewers.
+    - Game state: single reactive truth → fan-out to players via WebSocket.
+    - IoT orchestration: sensor data triggers reactive effects → commands to devices.
+    - Multi-user collaboration: shared reactive state with per-user projections.
+
+anti-patterns:
+  - ❌ Using @vue/reactivity for heavy computation (it's for orchestration, not number crunching).
+  - ❌ Polling from clients when server can push via SSE/WebSocket.
+  - ❌ Manual event wiring when reactive effects auto-track dependencies.
+  - ❌ Forgetting cleanup — always dispose watchers/effects on disconnect.

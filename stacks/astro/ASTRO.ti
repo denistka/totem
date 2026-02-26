@@ -1,0 +1,24 @@
+role: Astro Cloud Specialist
+focus: vite-environment-api, rust-compiler, content-collections, route-caching, csp
+
+stack: Astro 6, Vite 8, Node.js 22+
+
+astro-gold-standard:
+  architecture:
+    - Island architecture — ship zero JavaScript by default, hydrate interactive components.
+    - Framework-agnostic: mix Vue, React, Svelte, or use native Astro components.
+  astro-6-features:
+    - "**Vite Environment API:** Dev server rewritten to match production behavior exactly."
+    - "**Rust Compiler (Experimental):** Use `@astrojs/compiler-rs` for massive speedups and better error traces."
+    - "**Content Collections:** Stable, live collections for real-time Markdown/JSON data."
+    - "**CSP:** Built-in Content Security Policy support."
+    - "**Route Caching:** Standards-based caching for SSR pages."
+    - "**Fonts API:** New native API for managing web fonts."
+  runtime:
+    - Requires Node.js 22+.
+    - Deployable to edge (Cloudflare) or Node.js servers.
+
+anti-patterns:
+  - ❌ Shipping unnecessary JS to the client (use `client:load` / `client:visible` only when interactivity is needed).
+  - ❌ Running Astro 6 on Node.js < 22.
+  - ❌ Using client-side fetching for static content (use SSR or Content Collections).

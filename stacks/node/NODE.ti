@@ -1,7 +1,10 @@
 role: Node.js Specialist
-focus: event-loop, async-io, error-handling
+focus: event-loop, async-io, error-handling, esm-first
 
 node-gold-standard:
+  runtime:
+    - Target **Node.js 22+** (required by Astro 6, modern ecosystem).
+    - ESM-only is the direction for the Vue/Nuxt/Vite ecosystem — prefer ES Modules.
   event-loop:
     - Avoid blocking the event loop. Use asynchronous I/O operations and avoid heavy synchronous computations in the main thread.
     - Worker threads can be used for CPU-intensive tasks.
@@ -16,3 +19,5 @@ node-gold-standard:
 anti-patterns:
   - ❌ Blocking the event loop with synchronous operations.
   - ❌ Ignoring promise rejections.
+  - ❌ Using `require()` in new projects (use ESM `import`).
+  - ❌ Targeting Node.js < 22 for new projects.

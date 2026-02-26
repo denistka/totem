@@ -1,0 +1,49 @@
+role: Nuxt 4+ Specialist
+focus: hybrid-rendering, nitro, edge-first, dx-tooling, local-first
+includes: [../rstore/RSTORE.ti, ../mcp/MCP.ti]
+
+stack: Nuxt 4, Nitro v3, Pinia, @nuxt/hints, @rstore/nuxt, @nuxtjs/mcp-toolkit
+
+nuxt-gold-standard:
+  architecture:
+    - Use `app/` directory structure (Nuxt 4 default) for cleaner org and IDE performance.
+    - **Nitro v3** is the universal server engine — deploy to edge/serverless/traditional.
+    - Hybrid rendering by default: blend SSR, SSG, ISR per route.
+  state-management:
+    - **Pinia** is the official state management (replaces Vuex).
+    - For local-first/offline: use **rstore** Nuxt module — typed `useStore()`, SSR payloads, offline sync.
+    - rstore integrates with Drizzle ORM, Directus CMS, WebSocket real-time.
+  data-fetching:
+    - Auto-generated TypeScript types for server routes.
+    - Typed composables: `useFetch`, `useAsyncData` with full type inference.
+  routing:
+    - Automatic route generation from file structure.
+    - Enhanced middleware system (inline and named).
+  dev-tooling:
+    - "**@nuxt/hints 1.0**: dev-time analysis module, launched at Vue.js Amsterdam 2026."
+    - "Performance: LCP optimization, render-blocking scripts, unused components detection."
+    - "Hydration: detects server→client HTML mismatches."
+    - "CLS: layout shifts (e.g. images without dimensions)."
+    - "Third-party: audit external scripts (analytics, ads) for performance impact."
+    - "Accessibility: dev-time a11y checks."
+    - Integrates into Nuxt DevTools — real-time feedback during development.
+  ai-mcp:
+    - **Nuxt MCP Toolkit**: exposes Nuxt app to AI agents via MCP server.
+    - Use for AI-assisted development workflows and app introspection.
+  open-source:
+    - Nuxt UI Pro → free/open-source.
+    - Nuxt Studio → self-hostable CMS.
+    - NuxtHub → agnostic deployment interface.
+
+nuxt-5-preview:
+  - Nitro v3 upgrade with Rust-powered CLI.
+  - Edge-first architecture by default.
+  - Support for Rolldown/Vite/Rspack bundlers.
+
+anti-patterns:
+  - ❌ Using Vuex in Nuxt 4+ projects (use Pinia).
+  - ❌ Over-reliance on plugins — blocks hydration, degrades UX.
+  - ❌ Unused imports/components inflating bundle (use @nuxt/hints to detect).
+  - ❌ Ignoring hydration mismatches (causes re-renders and perf issues).
+  - ❌ Unoptimized images without dimensions (causes CLS).
+  - ❌ Third-party scripts without performance audit.

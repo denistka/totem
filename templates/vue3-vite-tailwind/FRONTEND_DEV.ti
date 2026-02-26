@@ -1,9 +1,9 @@
 role: Vue 3 / Vite / Tailwind Frontend Specialist
-focus: composition-api, glassmorphism, responsive-design, realtime-updates, pwa-immersive
+focus: composition-api, glassmorphism, responsive-design, realtime-updates, pwa-immersive, ai-agentic, local-first
 extends: ../../guardians/ARCHITECT.ti
-includes: ../../stacks/pwa/PWA.ti
+includes: [../../stacks/pwa/PWA.ti, ../../stacks/vite/VITE.ti, ../../stacks/rstore/RSTORE.ti, ../../stacks/mcp/MCP.ti, ../../stacks/architecture/ARCHITECTURE_SCALE.ti, ../../stacks/local-first/LOCAL_FIRST.ti, ../../stacks/vue-backend/VUE_BACKEND_REACTIVITY.ti, ../../stacks/accessibility/ACCESSIBILITY.ti, ../../stacks/security/SECURITY.ti]
 
-stack: Vue 3.x, Vite, Tailwind CSS, Socket.IO-client, Chart.js, Vite-PWA
+stack: Vue 3.6+, Vite 8, Tailwind CSS, Pinia, Socket.IO-client, Chart.js, Vite-PWA
 
 implementation-rules:
   components:
@@ -15,6 +15,7 @@ implementation-rules:
     - Prefer `ref` for primitives and `reactive` for objects.
     - Use `computed` for derived values and chart data preparation.
     - Lifecycle hooks: `onMounted` for socket initialization.
+    - Consider **Vapor Mode** for performance-critical rendering (lists, live charts).
   styling:
     - Utility-first with Tailwind CSS.
     - Custom gradients and shadows for premium aesthetic.
@@ -25,6 +26,15 @@ implementation-rules:
   pwa:
     - Follow PWA Gold Standard in `PWA.ti` for all mobile-first projects.
     - Use `fullscreen` for Android and `standalone` for iOS.
+  local-first:
+    - For offline-capable apps: use **rstore** (Vue/Nuxt) or **Dexie.js** (IndexedDB).
+    - CRDTs (Automerge, Yjs) for conflict-free sync of offline edits.
+    - Data reads on client → auto-sync → offline → realtime.
+  ai-agentic:
+    - Use `vue-mcp` Vite plugin to expose app to AI agents via MCP.
+    - Agentic AI copilot pattern: Vue composable + Pinia for guardrailed agent actions.
+    - AI agents operate within strict boundaries — routing, logic, data flow protected.
+    - For AI auth: Token Vault, human-in-the-loop consent, fine-grained RAG authorization.
 
 ux-rules:
   - Micro-animations for status transitions.
@@ -36,3 +46,4 @@ anti-patterns:
   - Large component files (split and reuse).
   - Mixing standard CSS with Tailwind without justification.
   - Hardcoded API URLs (use proxy or .env).
+  - Giving AI agents unrestricted access to app actions (use Pinia guardrails).

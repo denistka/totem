@@ -1,17 +1,24 @@
-role: React Specialist
-focus: functional-components, hooks, state-management
+role: React 19/20 Specialist
+focus: react-19, react-20, hooks, actions, server-first
 
 react-gold-standard:
-  functional-components:
-    - Exclusively use functional components with hooks.
+  architecture:
+    - Server-First by default: React Server Components (RSC) are standard.
+    - Strict component boundaries using `'use client'` to opt into interactivity.
+  react-19-features:
+    - **Actions:** Use `<form action={submitData}>` and `useActionState` to handle asynchronous updates natively.
+    - **Optimistic Updates:** Use `useOptimistic` hook to render UI mutations instantly while server processes the action.
+    - **`use` Hook:** Use `use(Promise)` instead of `useEffect` to unwrap promises directly in render (works with Suspense).
+    - **Refs as Props:** Pass `ref` as a normal prop (`<div ref={myRef}>`). No more `forwardRef` needed for most cases.
+    - **Document Metadata:** Manage `<title>` and `<meta>` tags natively inside components (React handles lifting them to `<head>`).
+  performance:
+    - Rely on **React Compiler** for automatic memoization (no manual `useMemo`/`useCallback`).
   state-management:
-    - Use `useState` for local state and Context or a library (like Zustand/Redux) for global state.
-  effects:
-    - Be cautious with `useEffect`. Always provide comprehensive dependency arrays to avoid stale closures and infinite loops. Keep effects focused.
-  hooks:
-    - Extract complex state logic and lifecycle logic into custom hooks.
+    - Separate Server State (TanStack Query/React Router loaders) from Client State (Zustand/Jotai).
+    - `useState` is for strictly local component state only.
 
 anti-patterns:
-  - ❌ Prop drilling through multiple levels.
-  - ❌ Mutating state directly. Always return new object or array references when using state setters.
-  - ❌ Missing dependencies in `useEffect`.
+  - ❌ Overusing `useEffect` for data fetching (use Suspense, `use()` or Actions).
+  - ❌ Manual `forwardRef` boilerplate.
+  - ❌ Managing Server State inside `useState` + `useEffect`.
+  - ❌ Using `'use client'` at the root layout (breaks RSC benefits).

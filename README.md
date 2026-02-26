@@ -91,6 +91,8 @@ _The shared intelligence across ALL your projects._
 - **`/stacks`**: Tech-specific adapters (React+TS, Vue+Tauri, Rust+WGPU). What the agents know about specific technologies. These extend universal guardians with stack-specific rules.
 - **`/templates`**: Blueprints for new projects.
 - **`/instances`**: **Registry of active projects.** (One folder per project).
+- **`STACK_INDEX.ti`**: Global registry of all available Totem stacks and templates.
+- **`KNOWLEDGE_SOURCES.ti`**: Global index of the external sources of truth (conferences, deep-dive docs) that power the stacks.
 
 ### 🤖 Prompt-Machine (Project-Specific)
 

@@ -9,7 +9,8 @@ react-ts-rules:
     - Ensure `tsconfig.json` defines `"jsx": "react-jsx"` to implicitly import React for JSX transformation in modern React.
     - Enable `"strict": true` for rigorous prop and state checking.
   component-typing:
-    - Strongly type all component Props using `interface`. Avoid `React.FC` in modern React in favor of simply typing the arguments `(props: MyProps)`.
+    - Strongly type all component Props using `interface`. Avoid `React.FC`.
+    - React 19: Pass `ref` as a normal prop (`ref?: React.Ref<HtmlDivElement>`). No `forwardRef` needed.
     - Export shared interfaces alongside their usage or place them in a dedicated `types` folder.
   state-typing:
     - Infer state types in `useState` for primitives, but explicitly type complex objects or nullables (`useState<User | null>(null)`).

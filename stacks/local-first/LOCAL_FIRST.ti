@@ -1,0 +1,34 @@
+role: Local-First Architecture Specialist
+focus: offline-first, crdt, sync-engines, indexeddb, conflict-resolution
+
+local-first-gold-standard:
+  philosophy:
+    - Data lives on user's device FIRST, syncs to server when available.
+    - Reads are instant (local), writes never block on network.
+    - Conflict resolution is automatic via CRDTs or operational transforms.
+  crdt-libraries:
+    - "**Automerge** — JSON-like CRDT. Best for: documents, collaborative editing."
+    - "**Yjs** — High-performance CRDT. Best for: real-time collab, text editing. Huge ecosystem."
+    - "**Loro** — Next-gen CRDT. Rust-based, high performance, rich types."
+  sync-engines:
+    - "**Electric SQL** — Postgres ↔ client sync (1.0 GA). Uses Rich-CRDTs. 'Shapes' for partial sync. PGLite for in-browser Postgres."
+    - "**TanStack DB** — Reactive client store (beta). Live queries, optimistic mutations, differential dataflow engine (sub-ms updates). Backend-agnostic sync. Integrates with Electric SQL, RxDB, PowerSync."
+    - "**rstore** — Vue/Nuxt data store. Normalized cache, offline sync, see @rstore stack for details."
+  client-storage:
+    - "**Dexie.js** — IndexedDB wrapper. Vue composable pattern: wrap with reactive refs. Supports cloud sync (Dexie Cloud)."
+    - "**PGLite** — Embedded Postgres in browser via WASM. Works with Electric SQL."
+    - IndexedDB directly — use only for simple key-value; prefer Dexie.js for complex queries.
+  vue-integration:
+    - Dexie.js + Vue 3: create composable wrapping IndexedDB ops with `ref()` and `watch()`.
+    - rstore: use `@rstore/nuxt` with `offline: true` for zero-config local-first.
+    - TanStack DB: `useLiveQuery` hook (React-first, Vue adapter expected).
+  real-world-examples:
+    - "Figma — CRDT for real-time design collaboration."
+    - "Notion — Local-first with server sync for knowledge base."
+    - "Linear — Offline-first project management with instant UI."
+
+anti-patterns:
+  - ❌ Cloud-first thinking — reading from server on every action.
+  - ❌ Ignoring conflict resolution — last-write-wins loses data.
+  - ❌ Raw IndexedDB without wrapper (verbose, error-prone).
+  - ❌ Skipping offline testing during development.
