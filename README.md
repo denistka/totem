@@ -2,6 +2,19 @@
 
 The brain of your AI-driven team. Centralized, tech-agnostic, and project-aware.
 
+> [!WARNING]
+> **Not a traditional application:** Totem is not an application that you start with `npm start` or run as a server. There is no CLI. It is a shared protocol repository and knowledge graph used by AI coders (Human–AI tandem) via prompt injection.
+
+---
+
+## ⚠️ Important Observations / Realities
+
+Before you dive in, please note the following about this repository:
+
+1. **Zero-Runtime Environment**: This is not a Node application. There is no `package.json` with an `npm start` script, and no CLI. It relies entirely on being integrated into your AI agent's prompt process.
+2. **Template Extensions**: When bootstrapping instances, use the regular Markdown template (`templates/PROJECT_README.template.md`), avoiding `.ti` extensions for purely structural readmes.
+3. **Instance Diversity**: The `/instances` folder acts as a living portfolio. Projects inside vary widely in quality and scope—some are minimal drafts or experimental configurations, whereas others (like `totem-view`) are massive, active production applications.
+
 ---
 
 ## 🐒 How to use it, Monkeys! (Quick Start)
@@ -91,6 +104,7 @@ _The shared intelligence across ALL your projects._
 - **`/stacks`**: Tech-specific adapters (React+TS, Vue+Tauri, Rust+WGPU). What the agents know about specific technologies. These extend universal guardians with stack-specific rules.
 - **`/templates`**: Blueprints for new projects.
 - **`/instances`**: **Registry of active projects.** (One folder per project).
+  - _Note: Projects in this folder range from minimal draft configs to large, active production apps._
 - **`STACK_INDEX.ti`**: Global registry of all available Totem stacks and templates.
 - **`KNOWLEDGE_SOURCES.ti`**: Global index of the external sources of truth (conferences, deep-dive docs) that power the stacks.
 
