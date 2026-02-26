@@ -92,6 +92,14 @@ success:
 # CHANGELOG / PROGRESS
 ###############################################################################
 progress:
+  - date: 2026-02-26
+    milestones:
+      - "Applied PWA-template gold-standard layout to React app: pre-React shell layer (pwa-shell.ts ticker, pwa-ios.ts, pwa-android.ts, pwa-shell.css) + React createPortal into fixed .pwa-header / .pwa-footer outside #root."
+      - "Viewport: added interactive-widget=resizes-content, --app-height inline script, pwa-no-scroll class chain."
+      - "Safe areas: data-notch-side (left/right/both/none) per-frame observation, pwa-main-scroll padding, env(safe-area-inset-*) on header/footer inner wrappers."
+      - "Chrome height: --pwa-header-height / --pwa-footer-height from ResizeObserver + MutationObserver on .pwa-header / .pwa-footer."
+      - "Android: Fullscreen API with goFullscreen()/exitFullscreen() exports for React. iOS: standalone height fix (overshoot→settle)."
+      - "Build passes (tsc + vite) with zero errors. See stacks/pwa/SUMMARY.md for architecture diagram."
   - date: 2026-02-25
     milestones:
       - "Created platform-specific Tauri configs (tauri.ios.conf.json, tauri.android.conf.json, etc.) for clean modularity."

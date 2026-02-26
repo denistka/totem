@@ -23,23 +23,41 @@ pwa-gold-standard:
     android:
       - Use `fullscreen` in manifest for an immersive experience (hides status/nav bars).
       - Ensure `theme_color` in manifest matches the app's primary background color.
+      - Apply horizontal safe area (notch/camera) only when in fullscreen (Fullscreen API or installed fullscreen); otherwise use `data-notch-side: none` so browser chrome handles insets.
 
   layout:
     single-scroll-container:
-      - One scroll container (e.g. #root): `position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: auto`.
-      - Body: `overflow: hidden` so only the scroll container scrolls.
-      - Do not set height on the scroll container from JS (iOS height fix applies to html, body, and --app-height only).
+      - One scroll container inside #root (e.g. .main-scroll): flex: 1; min-height: 0; overflow: auto. #root is flex column; body/html get fixed height and overflow: hidden when pwa-no-scroll.
+      - Body: `overflow: hidden` when no-scroll so only the scroll container scrolls.
+      - Do not set height on the scroll container from JS (iOS height fix applies to html, body, #root, and --app-height only).
     header-footer:
-      - Header: `position: fixed; top: 0; left: 0; right: 0`; transparent background; padding with `env(safe-area-inset-top)` and horizontal insets.
-      - Footer: `position: fixed; bottom: 0; ...`; transparent; padding with `env(safe-area-inset-bottom)` and horizontal insets.
-      - Scroll container gets top/bottom padding so content scrolls edge-to-edge under the transparent header/footer.
+      - Header: `position: fixed; top: 0; left: 0; right: 0` outside #root; padding with `env(safe-area-inset-top)` and horizontal insets. Footer: `position: fixed; bottom: 0; ...`; same for bottom and horizontal.
+      - In landscape: keep horizontal safe area, e.g. `padding-left: max(12px, env(safe-area-inset-left));` (do not replace with fixed 12px or content can sit under notch).
+      - Scroll container top/bottom padding = base + safe-area + observed chrome height. Set CSS vars (e.g. --pwa-header-height, --pwa-footer-height) from header/footer offsetHeight via ResizeObserver + MutationObserver + resize; use `var(--pwa-header-height, 48px)` in padding so content scrolls under the real chrome.
+      - When header or footer are empty (no element children), reduce scroll padding to base + safe-area only (e.g. body.header-empty / body.footer-empty).
     chrome-and-corners:
       - Header, footer, and any "corner" UI must be `position: fixed` and positioned with `env(safe-area-inset-*)` so they stay in viewport corners and do not scroll.
       - Do not put corner or chrome elements inside the scroll container (they would scroll with content).
 
+  horizontal-safe-area (notch / curved edges):
+    data-attribute: Set `data-notch-side` on html: "left" | "right" | "both" | "none" from env(safe-area-inset-left/right) and orientation.
+    both-sides: When BOTH left and right insets are > 0, use "both" so the scroll container gets both padding-left and padding-right (avoid content touching one edge when both edges have insets).
+    scroll-padding: Apply only to the scroll container via selectors like `html[data-notch-side="left"] .main-scroll { padding-left: env(safe-area-inset-left); }` (and right / both).
+    android: Use "none" when not in fullscreen; apply left/right/both only when document is in fullscreen. Run the same per-frame orientation/inset observation as iOS so notch side updates on 270°↔90° rotation; use angle when only one inset, "both" when both > 0.
+    ios-browser-tab: On orientationchange, schedule delayed updateNotchSide (e.g. 2, 8, 16 frames) so angle/insets are read after the browser updates them (they can lag in non-standalone).
+
+  timing-and-memory:
+    ticker: Use a single requestAnimationFrame loop as the app ticker. No setTimeout/setInterval for layout or chrome updates.
+    flags: Drive work from flags (e.g. appHeight, notchSide, chromeEmpty) so each tick runs only what is dirty.
+    schedule: Provide schedule(fn, frames) for delayed runs and everyNFrames(n, fn) returning an unsubscribe; remove callbacks when done to avoid list growth.
+    safe-area-probe: Reuse one DOM probe element for measuring env(safe-area-inset-*) (create once, read many times); do not create/remove a node every frame.
+
+  platform:
+    classes: Set platform-ios / platform-android on html from user agent for conditional CSS (e.g. hide fullscreen controls on iOS).
+    single-source: Prefer one set of scroll-container padding rules in base CSS for all platforms; avoid duplicate Android-only overrides when values match.
+
   css-reset:
-    - `html, body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; }` (optionally `position: fixed` for full coverage).
-    - Use `position: fixed` pinning (top: 0, bottom: 0, left: 0, right: 0) on the scroll container to ensure full viewport coverage.
+    - `html, body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; }` when no-scroll (optionally `position: fixed` for full coverage).
     - Avoid hardcoded heights (100vh); prefer `100dvh`, `var(--app-height)`, or pinning.
 
   safe-areas:
@@ -52,11 +70,28 @@ pwa-gold-standard:
     - Service Worker: Use a "network-only" pass-through for `fetch` during development.
     - Manifest: Append `?v=[timestamp]` to prevent stale icons/colors during iteration.
 
+  desktop:
+    not-controllable: OS app menu and browser chrome (address bar, extension icons, window menu) cannot be hidden from the page; only manifest `display` (fullscreen/standalone) affects the installed PWA window.
+    optional: Config flag (e.g. disableContextMenu) to prevent default on `contextmenu` so the browser right-click menu is hidden for an app-like feel.
+
 anti-patterns:
   - ❌ `display: fullscreen` on iOS (causes bottom clipping/red bars).
   - ❌ Hardcoded 100vh (fails to account for mobile toolbars/notches).
   - ❌ Respecting safe-areas for background colors (causes letterboxing).
   - ❌ Forgetting `theme-color` meta tag (browser header won't match app).
   - ❌ Putting header, footer, or corner elements inside the scroll container (they scroll away; use position: fixed outside).
-  - ❌ Setting height on the fixed scroll container from iOS height script (set only on html, body, and --app-height).
+  - ❌ Setting height on the fixed scroll container from iOS height script (set only on html, body, #root, and --app-height).
   - ❌ Positioning overlays (e.g. debug panel) with raw px from viewport edges without safe-area insets.
+  - ❌ Using only one horizontal safe-area side when both left and right insets are non-zero (use "both" so both paddings apply).
+  - ❌ Dropping horizontal safe area in landscape for header/footer (use max(12px, env(safe-area-inset-*))).
+  - ❌ Using setTimeout/setInterval for layout or chrome updates (use a single RAF ticker with flags and schedule).
+  - ❌ Creating and removing a DOM node every frame to read safe-area insets (reuse one probe element).
+
+integration-log:
+  navitrack:
+    date: 2026-02-26
+    target: navitrack-apps/src-client
+    pattern: pre-React shell layer (pwa-shell.ts) + React createPortal into fixed .pwa-header/.pwa-footer outside #root
+    files: src/pwa/pwa-shell.ts, src/pwa/pwa-ios.ts, src/pwa/pwa-android.ts, src/pwa/pwa-shell.css
+    details: see ./SUMMARY.md#navitrack-integration-2026-02-26
+
