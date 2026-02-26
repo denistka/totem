@@ -1,0 +1,43 @@
+role: Universal Quality Gates (Pre-Delivery Checklist)
+focus: delivery-readiness, code-hygiene, reviewer-experience
+extends: none
+
+description: |
+  Mandatory checklist that EVERY agent must verify before marking any task as DONE.
+  Origin: Kvit test assignment post-mortem (2026-02-26).
+  These gates are NON-NEGOTIABLE. A task that violates any gate is NOT complete.
+
+typing-gates:
+  - Zero `any`: Production code must have ZERO `any` types. Use explicit interfaces or generics.
+  - Explicit Contracts: All store/service constructor parameters must be typed (no `param: any`).
+  - Unused Code: Every declared variable, import, and parameter must be used. Dead code = failed gate.
+
+tooling-gates:
+  - Single Package Manager: ONE lock file in repo. Must match README install instructions.
+    examples: "If README says `pnpm install`, only `pnpm-lock.yaml` exists. Delete others."
+  - Linter Required: `eslint` must be in `devDependencies` with a config file (`.eslintrc.*` or `eslint.config.*`).
+  - Formatter Required: `prettier` must be in `devDependencies` with `.prettierrc` or equivalent config.
+  - Lint Must Pass: `npm run lint` (or equivalent) exits 0 before delivery.
+
+consistency-gates:
+  - State Access Pattern: ONE way to access stores across entire app. Either hook-based (`useStore`) or direct — never both.
+  - Style System: If using a component library (MUI, Ant, Chakra), style overrides go through theme/config, NOT raw CSS alongside. Choose one styling approach per project.
+  - Import Pattern: Consistent import aliasing (@/components, ~/utils) or relative — never mixed.
+
+performance-gates:
+  - Observable Granularity: Reactive containers (maps, charts, heavy DOM) must NOT re-render on every collection mutation. Use `observer()` on leaf components, fine-grained selectors, or `React.memo`.
+  - Re-render Audit: Components wrapping expensive third-party widgets (MapContainer, Canvas, Charts) MUST be isolated from high-frequency state changes.
+
+delivery-gates:
+  - Happy Path Smoke: Core user flow (register → login → primary action) must complete without errors.
+  - Console Clean: Zero unhandled errors or warnings in browser DevTools console.
+  - README Accuracy: Every command in README must work exactly as documented on a fresh clone.
+  - Clone-Install-Start: `git clone → install → start` must succeed with zero manual intervention.
+
+anti-patterns:
+  - ❌ `any` Escape Hatch: Using `any` to "fix it later" — it never gets fixed.
+  - ❌ Lock File Soup: Committing both `package-lock.json` and `pnpm-lock.yaml`.
+  - ❌ Phantom Tooling: README mentions linting but no linter in dependencies.
+  - ❌ Style Mixing: MUI `sx` props alongside raw `.css` files for same component.
+  - ❌ Observer Neglect: MobX stores triggering full-tree re-renders.
+  - ❌ Dead Declarations: Declared variables, imports, or timeouts that are never used.

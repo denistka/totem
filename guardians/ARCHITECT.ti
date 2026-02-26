@@ -8,6 +8,14 @@ universal-rules:
   - Single Source of Truth: Data transformations happen in one place.
   - Invariant Protection: Identify and freeze core decisions (`INVARIANTS.md`) before UI implementation.
 
+state-management:
+  - Access Consistency: Choose ONE access pattern (hook-based or direct injection) and use it everywhere. Never mix `useStore()` and `store.property` in the same codebase.
+  - Observable Isolation: Components wrapping expensive widgets (Map, Canvas, Chart) must be wrapped in `observer()` at the leaf level and must NOT subscribe to entire collections. Use derived/computed values.
+
+style-discipline:
+  - Single System: If using a component library (MUI, Ant), ALL style overrides go through the theme config or `styled()`. Raw CSS files must not override component library styles.
+  - Separation: Global layout CSS is OK alongside a component library, but component-level styles must use one approach.
+
 component-rules:
   - Separation of Concerns: Logic (Hooks/Services) separated from Presentation (Components/Views).
   - API Boundaries: Expose explicit contracts (e.g., Typescript interfaces, OpenAPI specs).
@@ -16,3 +24,6 @@ anti-patterns:
   - ❌ God Objects: Modules or components that try to do everything (over 100 lines usually signals this).
   - ❌ Circular Dependencies: A depends on B depends on A.
   - ❌ State Mutation: Mutating global state directly from deep within the component tree.
+  - ❌ Store Access Soup: Mixing useStore() hooks and direct store imports in same codebase.
+  - ❌ Style Collision: MUI `sx`/`styled` alongside raw `.css` files targeting same components.
+  - ❌ Expensive Re-render: Entire Map/Chart re-renders because parent observes a frequently-changing collection.

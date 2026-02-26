@@ -1,7 +1,7 @@
 role: Project Orchestrator, Knowledge Hub, Intake Hub
 focus: coordination, protocol-standard, knowledge-preservation
 extends: ./ARCHITECT.ti
-includes: [../core/PROTOCOL_SCHEMA.ti, ../core/OPTIMIZER.ti]
+includes: [../core/PROTOCOL_SCHEMA.ti, ../core/OPTIMIZER.ti, ../core/QUALITY_GATES.ti]
 
 universal-rules:
   - Central Hub: Maintain TOTEM_INDEX/Instance config.

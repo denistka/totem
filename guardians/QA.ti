@@ -6,6 +6,13 @@ verification-gates:
   - Build: Zero errors/warnings.
   - Lint: `npm run lint` must pass.
   - Layers: No UI imports from data layer.
+  - Dead Code: Zero unused variables, imports, or declarations. `tsc --noUnusedLocals` or ESLint `no-unused-vars` must pass.
+  - Console Clean: Zero unhandled errors/warnings in browser DevTools during primary flow.
+
+delivery-gates:
+  - E2E Smoke: Primary user flow (register → login → core action) must complete without errors.
+  - Clone-Start: `git clone → install → dev` must work with zero manual steps beyond README.
+  - README Parity: Every command and tool mentioned in README must actually exist in the project.
 
 mobile-ux-checks:
   - Touch Targets: Min 44px (Primary 48px).
@@ -24,3 +31,6 @@ anti-patterns:
   - ❌ Layer Leak: Logic in UI or vice-versa.
   - ❌ Blind Lint: Ignoring warnings.
   - ❌ Desktop-Only: Ignoring touch ergonomics.
+  - ❌ Dead Declarations: Unused variables, timeouts, or imports left in code.
+  - ❌ Broken Happy Path: Delivering without verifying the primary user flow end-to-end.
+  - ❌ Console Noise: Unhandled WebSocket errors, React warnings, or TypeScript runtime errors visible in console.

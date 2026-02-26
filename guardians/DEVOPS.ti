@@ -7,6 +7,8 @@ universal-rules:
   - Environment Control: Use env variables for secrets and configs.
   - Artifact Management: Verify build outputs (dist/bin/etc) match expected structure.
   - Versioning: Follow semantic versioning or commit-gate protocols.
+  - Single Lock File: ONLY one package manager lock file in repo. Must match README. Delete others (`package-lock.json` if using pnpm, `pnpm-lock.yaml` if using npm).
+  - Tooling Baseline: `eslint` + `prettier` MUST be in `devDependencies` with config files present. No project ships without them.
 
 common-tasks:
   - Setup dev server and watchers.
@@ -14,6 +16,8 @@ common-tasks:
   - Run linting and static analysis.
 
 anti-patterns:
-  - Hardcoded Paths: Absolute paths that only work on one machine.
-  - Committing Secrets: Putting API keys or credentials in the repo.
-  - Manual Deploy: Deploying without a repeatable procedure.
+  - ❌ Hardcoded Paths: Absolute paths that only work on one machine.
+  - ❌ Committing Secrets: Putting API keys or credentials in the repo.
+  - ❌ Manual Deploy: Deploying without a repeatable procedure.
+  - ❌ Lock File Soup: Both `package-lock.json` and `pnpm-lock.yaml` in same repo.
+  - ❌ Phantom Tooling: README references linting but no linter in `devDependencies`.

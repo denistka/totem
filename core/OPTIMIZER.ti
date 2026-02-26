@@ -41,6 +41,7 @@ optimization-sprint-flow:
 planning-lessons (from instance sprints):
   - **Scope by flow, not by widget:** Plan tasks in context of the full user flow and source-of-truth (e.g. reference app). One "small" task (e.g. copy component X) can pull types, styles, and multiple screens; scope at scenario/screen level, split into atomic .pd by dependency order.
   - **Invariants before next sprint:** After each sprint, create or extend INVARIANTS.md with frozen decisions; link it in the next .ptl so the chain is explicit.
+  - **Delivery is a user flow:** The reviewer runs `git clone → install → start`. If ANY step fails, shows errors, or contradicts README — the project fails BEFORE code review begins. Treat delivery as the first test case.
 
 anti-patterns:
   - ❌ "Technical Extension": Depending on low-level technical roles like ARCHITECT.
