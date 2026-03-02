@@ -1,0 +1,17 @@
+# S54-T5: API Data & Store Integration
+# S54-T5-ApiStoreIntegration.pd
+
+**Objective:** Fetch vehicles list via API and populate the app store.
+
+**Context:**
+- App currently misses vehicle display because the store/API is not pulling data properly.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Check `src/store` or API client logic for fetching the object (vehicle) list.
+2. Ensure data fetching triggered on app load or screen mount.
+3. Update the Zustand (or specific) store correctly with the vehicle array.
+
+**Acceptance Criteria:**
+- Data populates in the global store when testing or mocked.

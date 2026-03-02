@@ -1,0 +1,33 @@
+# Sprint 54: Bugs, Optimization, and UI Refinements
+# S54.ptl
+
+**Goal:** Address bugs and layout issues in the new React PWA, and continue migrating approved UI/UX from `src-client`. Broken down into atomic subtasks as requested.
+
+**Invariants:**
+- `totem/instances/navitrack/intel/TOTEM_INDEX.ti`
+
+**Gate:** OPEN
+
+## Track 1: Layout & Portals Bug Fixes
+- task: S54-T1-IndexHtmlPortals.pd
+- task: S54-T2-HeaderPortalReact.pd
+- task: S54-T3-FooterPortalReact.pd
+- task: S54-T4-ViewportAndCssFixes.pd
+
+## Track 2: API & Data Features
+- task: S54-T5-ApiStoreIntegration.pd
+- task: S54-T6-MapComponentMount.pd
+
+## Track 3: UI/UX Refactoring
+- task: S54-T7-DesignTokensSync.pd
+- task: S54-T8-GlassmorphismImplementation.pd
+- task: S54-T9-ObjectListUiAdaptation.pd
+- task: S54-T10-MapControlsUiAdaptation.pd
+
+---
+
+**Result (sprint outcome):** 
+1. React Header and Footer return null and properly collapse empty domains natively in index.html.
+2. iOS PWA viewport height properly initializes without displacing footer.
+3. Vehicles and Maps display properly using the integrated API.
+4. Old UI components from `src-client` are ported into the clean new PWA structure atomically.

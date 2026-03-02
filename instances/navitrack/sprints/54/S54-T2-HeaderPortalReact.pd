@@ -1,0 +1,17 @@
+# S54-T2: React Header Portal Refactor
+# S54-T2-HeaderPortalReact.pd
+
+**Objective:** Refactor `Header.tsx` to mount directly to `.app-header` and return `null` if empty.
+
+**Context:**
+- React needs to output `null` to leave the DOM empty if there's no header content.
+
+**Gate:** OPEN
+
+**Steps:**
+1. In `Header.tsx`, wrap the return value in a `div` that represents the removed `app-header-inner` class.
+2. Ensure `Header.tsx` targets `portal-header` as its portal root.
+3. Add a check: if no header should be shown (based on state/route), return `null` before portaling.
+
+**Acceptance Criteria:**
+- No empty header blocks in DOM when Header is hidden or empty.

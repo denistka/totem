@@ -1,0 +1,18 @@
+# S54-T1: index.html Portals Wrap Removal
+# S54-T1-IndexHtmlPortals.pd
+
+**Objective:** Remove redundant `<div class="app-header-inner(-content)">` wrappers from `index.html`.
+
+**Context:**
+- `app-header` and `app-footer` currently use nested `div`s. We want React to control its own internal wrappers.
+
+**Gate:** OPEN
+
+**Steps:**
+1. In `draft/pwa-react-app-clear/index.html`, strip the `app-header-inner` and `app-header-inner-content` tags.
+2. Add `id="portal-header"` directly to `<header class="app-header">`.
+3. Strip `app-footer-inner` and `app-footer-inner-content` tags.
+4. Add `id="portal-footer"` directly to `<footer class="app-footer">`.
+
+**Acceptance Criteria:**
+- `index.html` has only empty `<header>` and `<footer>` tags functioning as direct portals.

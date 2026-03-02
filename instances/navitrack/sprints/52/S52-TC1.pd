@@ -1,28 +1,27 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S52-TC1-Header-Parity
+objective:Header component parity with src-client mobile-header.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - Align draft/pwa-react-app-clear Header (components/layout/Header.tsx) with src-client mobile-header (glass, safe-area, title/back/actions).
+  - Same chrome height and z-index behavior.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - Header.tsx and styles matching src-client mobile-header.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Review src-client mobile-header.tsx and pwa-header usage.
+  2. Port structure and classes to clear app Header; use layout layer only.

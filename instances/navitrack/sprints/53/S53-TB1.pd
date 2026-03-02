@@ -1,0 +1,30 @@
+v:1
+mode:code
+role:developer
+task:S53-TB1-I18n-Wiring
+objective:Init and wire i18n in pwa-react-app-clear to match src-client.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add i18n init (config, resources, language detector) in pwa-react-app-clear.
+  - Use useTranslation (react-i18next) in App and screens where src-client uses it.
+  - Match namespace and key usage from src-client; do not change S51/S52 layout.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - i18n configured and wired; language switch works; screens use t() where src-client does.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Review src-client i18n.ts and usage across screens.
+  2. Port i18n config and resource files to pwa-react-app-clear.
+  3. Wrap app with I18nextProvider (or equivalent); add useTranslation to screens that need it.
+  4. Verify language change updates UI.

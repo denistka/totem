@@ -1,28 +1,28 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S53-TD2-MapScreen-Deep-Parity
+objective:MapScreen deep parity — controls, clustering, popups, playback if present.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - MapScreen and map components (ClusterMap, VehicleMarker, VehicleInfoPopup, playback) match src-client map-screen and features/map in detail.
+  - Use react-leaflet-markercluster per S53 deps; same controls and popup content.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - MapScreen and map components at parity with src-client.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Compare MapScreen, ClusterMap, VehicleMarker, VehicleInfoPopup with src-client.
+  2. Align controls, clustering behavior, popup layout and playback UI if present.
+  3. Verify in both themes.

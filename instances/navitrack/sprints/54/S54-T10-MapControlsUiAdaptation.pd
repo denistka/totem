@@ -1,0 +1,16 @@
+# S54-T10: Map Controls UI Adaptation
+# S54-T10-MapControlsUiAdaptation.pd
+
+**Objective:** Port the map overlay UI elements (zoom, layers, specific markers) from `src-client`.
+
+**Context:**
+- Map elements (overlays and buttons) need exact visual parity with the old client.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Port map control buttons (zoom in/out, focus, layers) from `src-client`.
+2. Re-style Leaflet (or the used map engine) tooltips and marker HTML components using the synced tokens and glass styles.
+
+**Acceptance Criteria:**
+- Map view matches the visual standard of `src-client` regarding buttons, overlays, and marker popups.

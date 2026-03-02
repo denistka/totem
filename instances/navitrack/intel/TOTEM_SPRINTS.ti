@@ -119,10 +119,18 @@ S48:
   scope:css-refactor,app-ui-kit-cleanup
   dep:S47
 
+S52:
+  name:Root-Layouting
+  path:sprints/52/
+  status:⬜ planned
+  priority:P0
+  scope:app-background,app-curtains,app-header,app-footer,root
+  dep:S48
+
 ###############################################################################
 # ORDER
 ###############################################################################
 
-order:[S48→S38→S39→S40]
+order:[S48→S52→S38→S39→S40]
 done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47]
 

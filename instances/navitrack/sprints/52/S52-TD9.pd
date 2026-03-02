@@ -1,28 +1,27 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S52-TD9-TwoFactorAuthScreen-Parity
+objective:TwoFactorAuthScreen parity with src-client.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - Align clear app TwoFactorAuthScreen with src-client two-factor-auth-screen (back, form, submit).
+  - Use Input and Button from components/ui.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - TwoFactorAuthScreen matching src-client.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Review src-client two-factor-auth-screen.tsx.
+  2. Port form and validation to clear app features/settings.

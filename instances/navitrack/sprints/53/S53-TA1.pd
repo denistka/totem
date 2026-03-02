@@ -1,0 +1,29 @@
+v:1
+mode:code
+role:developer
+task:S53-TA1-Radix-UI-Deps
+objective:Add Radix UI packages to pwa-react-app-clear package.json to match src-client.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add all @radix-ui/* packages used in src-client to draft/pwa-react-app-clear/package.json.
+  - Use versions from navitrack-apps/src-client/package.json (exact or compatible).
+  - No @tauri-apps or http-proxy in clear app.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Updated package.json with Radix UI deps; pnpm install succeeds; build passes.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. List Radix packages from src-client/package.json (accordion, alert-dialog, aspect-ratio, avatar, checkbox, collapsible, context-menu, dialog, dropdown-menu, hover-card, label, menubar, navigation-menu, popover, progress, radio-group, scroll-area, select, separator, slider, slot, switch, tabs, toast, toggle, toggle-group, tooltip).
+  2. Add each to pwa-react-app-clear/package.json dependencies with same version as src-client.
+  3. Run pnpm install in pwa-react-app-clear; fix any peer conflicts; ensure build passes.

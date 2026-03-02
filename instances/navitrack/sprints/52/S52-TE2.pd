@@ -1,0 +1,29 @@
+v:1
+mode:code
+role:developer
+task:S52-TE2-Main-Layout-Structure
+objective:Main.tsx layout structure and main-scroll usage after TA1.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - After TA1, Main.tsx (or layout) owns content area min-height and padding (main-scroll-content semantics).
+  - Single main-scroll container; map vs non-map handled via class or layout child.
+  - No re-introduction of content rules into app-layout.css.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Main.tsx and any layout CSS updated to own content rules; build and visuals correct.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Ensure Main.tsx applies content min-height/padding via class or inline layout (e.g. main-scroll-content wrapper with layout-scoped CSS).
+  2. Verify map screen still gets padding 0; others get padding and min-height.
+  3. Run build and spot-check screens.

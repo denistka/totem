@@ -1,0 +1,30 @@
+v:1
+mode:code
+role:developer
+task:S53-TE1-App-Shell-Store-Final
+objective:Store and Main — screen set, tabs, main-scroll and layout final alignment with src-client.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - App store (screen set, tabs) and Main layout (main-scroll usage) in pwa-react-app-clear aligned with src-client App, main.tsx, navigation.
+  - After TB2 router wiring, ensure store and router are consistent; no duplicate navigation logic.
+  - S52 TA1 layout CSS rules respected (no content rules in app-layout.css 115–124).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Store and Main/layout in final parity with src-client; build passes.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Review src-client App.tsx, main.tsx, navigation and store usage.
+  2. Align pwa-react-app-clear store (screen/tabs) with router; ensure single source of truth for navigation.
+  3. Verify Main and main-scroll structure; confirm app-layout.css has no content-area block per S52.
+  4. Full regression: all screens reachable and layout correct.

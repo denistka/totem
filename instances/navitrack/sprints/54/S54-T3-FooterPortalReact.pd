@@ -1,0 +1,17 @@
+# S54-T3: React Footer Portal Refactor
+# S54-T3-FooterPortalReact.pd
+
+**Objective:** Refactor `Footer.tsx` to mount directly to `.app-footer` and return `null` if empty.
+
+**Context:**
+- React needs to output `null` when the tab bar isn't on the screen.
+
+**Gate:** OPEN
+
+**Steps:**
+1. In `Footer.tsx`, wrap the return value in a `div` that represents the removed `app-footer-inner` class.
+2. Ensure `Footer.tsx` targets `portal-footer` as its portal root.
+3. The component already returns `null` if `!showTabs`, ensure this correctly hides the DOM element entirely.
+
+**Acceptance Criteria:**
+- No empty footer blocks in DOM when Footer is hidden (not a tab screen).

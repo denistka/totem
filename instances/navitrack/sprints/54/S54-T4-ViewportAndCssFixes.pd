@@ -1,0 +1,18 @@
+# S54-T4: Root Layout App Height & dvh
+# S54-T4-ViewportAndCssFixes.pd
+
+**Objective:** Address iOS Safari initialization bugs with PWA min-height and `#root` scrolling.
+
+**Context:**
+- The footer is out of place on reload until scrolled.
+
+**Gate:** OPEN
+
+**Steps:**
+1. In `index.css`, update layers (`app-background`, `app-curtains`, `body`, `#root`) to use `100dvh`, and verify `safe-area-inset-bottom`.
+2. Ensure `html, body` have `min-height: 100dvh` to push the layout correctly.
+3. Review flex/grid rules to ensure content that is shorter than device height still forces footer to bottom without relying exclusively on fixed bottom positioning.
+4. Verify PWA meta tags in `index.html`.
+
+**Acceptance Criteria:**
+- iOS installed PWA reload places footer accurately at the bottom without scroll triggering.

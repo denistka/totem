@@ -1,28 +1,28 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S53-TC2-Reports-Forms-Validation
+objective:Add zod + react-hook-form to ReportFormView and other forms where src-client uses them.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - ReportFormView and any other forms in clear app use zod + react-hook-form where src-client does.
+  - Validation and error display match src-client; use components/ui only.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - Report and other forms with validation parity.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Audit src-client ReportFormView and other form screens for zod/react-hook-form.
+  2. Port schemas and useForm to pwa-react-app-clear; align field names and validation.
+  3. Ensure submit and error states match src-client.

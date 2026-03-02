@@ -1,0 +1,137 @@
+v:1
+mode:agent
+role:lead
+sprint:S52-Visual-Logic-Parity
+objective:Full visual and logic parity of navitrack-apps/src-client in pwa-react-app-clear; refactor layout CSS; use pages, components/ui (no naive inputs/buttons), components/layout; many micro-tasks for parallelization and checkpoints.
+status:IN_PROGRESS
+gate:OPEN
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-04-ARCHITECTURE-MIGRATION
+priority:P0
+dep:S51
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/51/S51-INVARIANTS.md, sprints/52/S52-INVARIANTS.md
+max-file-lines:150
+atomic-limit:50-lines
+
+###############################################################################
+# SOURCE & TARGET
+###############################################################################
+source:navitrack-apps/src-client (approved design, canonical reference)
+target:navitrack-apps/draft/pwa-react-app-clear
+  pages: draft/pwa-react-app-clear/src/pages
+  ui: draft/pwa-react-app-clear/src/components/ui (no naive input/button elements; use shared components)
+  layout: draft/pwa-react-app-clear/src/components/layout (main app layers)
+
+###############################################################################
+# TRACKS (sequence: A → B → C → D → E; within B/C/D tasks parallelizable)
+###############################################################################
+track-a-layout-css:
+  desc:Layout and CSS cleanup; single discipline; remove redundant rules from app-layout.css.
+  tasks:[TA1]
+  gate:layout-css-done
+
+track-b-ui-components:
+  desc:UI components parity with src-client; no naive inputs/buttons.
+  tasks:[TB1, TB2, TB3, TB4, TB5, TB6, TB7, TB8]
+  gate:ui-parity-done
+  parallel:within-track
+
+track-c-layout-components:
+  desc:Layout layer components (Header, Footer, Background, Curtains).
+  tasks:[TC1, TC2, TC3, TC4]
+  gate:layout-components-done
+  parallel:within-track
+
+track-d-features:
+  desc:Feature screens visual and logic parity (one micro-task per screen or cohesive group).
+  tasks:[TD1, TD2, TD3, TD4, TD5, TD6, TD7, TD8, TD9, TD10]
+  gate:features-parity-done
+  parallel:within-track
+
+track-e-app-shell:
+  desc:App shell, store, routing final alignment.
+  tasks:[TE1, TE2]
+  gate:shell-done
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  TA1:
+    exec-order:1
+    desc:Refactor app-layout.css — remove .main-scroll-content block (lines 115–124); move min-height/padding responsibility to layout (Main or design tokens); no duplicate content rules in app-layout.
+  TB1:
+    desc:Button — full parity with src-client glass-button / glass-glow (variants, touch targets).
+  TB2:
+    desc:Input — full parity with src-client glass-input-wrapper; glass variant, states.
+  TB3:
+    desc:Modal/Dialog — parity with src-client bottom-modal, dialog.
+  TB4:
+    desc:Card — parity with src-client glass-card.
+  TB5:
+    desc:Toast — parity with src-client sonner/toast.
+  TB6:
+    desc:Dropdown/Select — parity with src-client select, popover.
+  TB7:
+    desc:LoadingOverlay — parity with src-client.
+  TB8:
+    desc:Logo, theme-toggle, header-icon-button — parity.
+  TC1:
+    desc:Header — parity with src-client mobile-header.
+  TC2:
+    desc:Footer / bottom nav — parity with src-client.
+  TC3:
+    desc:Background (AppBg) — parity with src-client app-bg.
+  TC4:
+    desc:Curtains — parity if used in src-client; else align with layout layers.
+  TD1:
+    desc:ObjectsScreen — visual and logic parity.
+  TD2:
+    desc:MapScreen — visual and logic parity.
+  TD3:
+    desc:TrackingScreen + TrackPreview — parity.
+  TD4:
+    desc:ReportsScreen + ReportFormView, ReportResultView, GeneratingReportView — parity.
+  TD5:
+    desc:ObjectDetailsScreen + HistoryTab, EventsTab — parity.
+  TD6:
+    desc:SettingsScreen — parity.
+  TD7:
+    desc:SelectObjectsScreen — parity.
+  TD8:
+    desc:AccountSecurityScreen — parity.
+  TD9:
+    desc:TwoFactorAuthScreen — parity.
+  TD10:
+    desc:LoginPage / login-screen — parity.
+  TE1:
+    desc:Store and navigation — screen set, setScreen, tabs parity with src-client.
+  TE2:
+    desc:Main.tsx — layout structure and main-scroll usage after TA1.
+
+###############################################################################
+# CHECKPOINTS (pause for verification)
+###############################################################################
+checkpoints:
+  - after:track-a-layout-css
+    action:Verify app-layout.css has no content-specific rules in 115–124 range; build passes.
+  - after:track-b-ui-components
+    action:Spot-check Button, Input, Modal in both themes.
+  - after:track-d-features
+    action:Full regression: all screens match old app visuals and behavior.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - app-layout.css does not contain .main-scroll-content min-height/padding block at 115–124; layout owns content area.
+  - All UI uses components/ui (Button, Input, Modal, etc.) — no raw <input>/<button> for primary actions.
+  - All screens in pwa-react-app-clear match src-client design and behavior.
+  - ARCHITECT and S51-INVARIANTS satisfied.

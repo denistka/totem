@@ -1,8 +1,8 @@
 v:1
 mode:code
 role:developer
-task:S51-T2-Foundation
-objective:Port foundation CSS variables, global styles, and tokens.
+task:S53-TD1-ObjectsScreen-Deep-Parity
+objective:ObjectsScreen deep parity with src-client — list behavior, filters, empty state, icons.
 gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
@@ -10,20 +10,19 @@ requires: [FRONTEND_DEV, ARCHITECT]
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Extract CSS variables from `navitrack-apps/src-client/src/index.css`.
-  - Integrate them into `draft/pwa-react-app-clear/public/css/design-tokens.css` or equivalent.
-  - Ensure single style-discipline constraint is followed.
+  - ObjectsScreen in pwa-react-app-clear matches src-client objects-screen in detail: list behavior, filters, empty state, vehicle icons.
+  - Use components/ui and layout; no naive elements.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - Updated design tokens CSS file.
-  - Global styles refactored for the new structure.
+  - ObjectsScreen matching src-client visuals and behavior.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Review `navitrack-apps/src-client/src/index.css` for color schemes and variables.
-  2. Migrate these definitions to the new clean structure.
+  1. Compare ObjectsScreen with src-client components/screens/objects-screen (ObjectsScreen, vehicle-icons, utils, ObjectVisibilityModal).
+  2. Align list rendering, filters, empty state, icon set and any modal behavior.
+  3. Spot-check in both themes.

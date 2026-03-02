@@ -22,7 +22,7 @@ pwa-gold-standard:
       - iOS standalone: one-time height fix (e.g. set height 100%+100px then 100%, apply no-scroll, lock html/body height and --app-height); do not set height on the scroll container.
     android:
       - Use `fullscreen` in manifest for an immersive experience (hides status/nav bars).
-      - Ensure `theme_color` in manifest matches the app's primary background color.
+      - Ensure `theme_color` and `background_color` in manifest are present; they are strictly required for Desktop Chromium installability.
       - Apply horizontal safe area (notch/camera) only when in fullscreen (Fullscreen API or installed fullscreen); otherwise use `data-notch-side: none` so browser chrome handles insets.
 
   layout:
@@ -35,6 +35,10 @@ pwa-gold-standard:
       - In landscape: keep horizontal safe area, e.g. `padding-left: max(12px, env(safe-area-inset-left));` (do not replace with fixed 12px or content can sit under notch).
       - Scroll container top/bottom padding = base + safe-area + observed chrome height. Set CSS vars (e.g. --pwa-header-height, --pwa-footer-height) from header/footer offsetHeight via ResizeObserver + MutationObserver + resize; use `var(--pwa-header-height, 48px)` in padding so content scrolls under the real chrome.
       - When header or footer are empty (no element children), reduce scroll padding to base + safe-area only (e.g. body.header-empty / body.footer-empty).
+
+  theme-and-color:
+    dynamic-updates: Android Chrome requires mutating the `content` attribute of the *existing* `<meta name="theme-color">` DOM node (`meta.setAttribute('content', color)`). Destroying and recreating the meta node breaks Android's internal reference, causing the address bar to freeze on the old color.
+    manifest-requirements: `background_color` and `theme_color` MUST be present in `manifest.json`. Removing them silently fails Chromium's strict Desktop PWA installability heuristics (the Install icon will not appear in the address bar).
     chrome-and-corners:
       - Header, footer, and any "corner" UI must be `position: fixed` and positioned with `env(safe-area-inset-*)` so they stay in viewport corners and do not scroll.
       - Do not put corner or chrome elements inside the scroll container (they would scroll with content).
@@ -72,6 +76,7 @@ pwa-gold-standard:
 
   desktop:
     not-controllable: OS app menu and browser chrome (address bar, extension icons, window menu) cannot be hidden from the page; only manifest `display` (fullscreen/standalone) affects the installed PWA window.
+    installability-criteria: Chromium requires `name`/`short_name`, `icons` (192 and 512), a Service Worker with a `fetch` handler, AND both `background_color` and `theme_color` in the manifest to trigger the installation prompt.
     optional: Config flag (e.g. disableContextMenu) to prevent default on `contextmenu` so the browser right-click menu is hidden for an app-like feel.
 
 anti-patterns:
@@ -79,6 +84,8 @@ anti-patterns:
   - ❌ Hardcoded 100vh (fails to account for mobile toolbars/notches).
   - ❌ Respecting safe-areas for background colors (causes letterboxing).
   - ❌ Forgetting `theme-color` meta tag (browser header won't match app).
+  - ❌ Destroying and recreating `<meta name="theme-color">` to force updates (breaks Android Chrome address bar painting; use `.setAttribute('content')` instead).
+  - ❌ Omitting `background_color` and `theme_color` from `manifest.json` (breaks Desktop Chromium installability).
   - ❌ Putting header, footer, or corner elements inside the scroll container (they scroll away; use position: fixed outside).
   - ❌ Setting height on the fixed scroll container from iOS height script (set only on html, body, #root, and --app-height).
   - ❌ Positioning overlays (e.g. debug panel) with raw px from viewport edges without safe-area insets.

@@ -1,28 +1,27 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S52-TB5-Toast-Parity
+objective:Toast parity with src-client sonner/toast.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - Align clear app Toast/ToastContext with src-client sonner and toast (position, glass styling).
+  - Single toast system used app-wide.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - Toast component and context matching src-client behavior and styling.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Review src-client sonner.tsx and toast.tsx.
+  2. Port styling and API to clear app Toast; ensure Toaster is mounted in layout.

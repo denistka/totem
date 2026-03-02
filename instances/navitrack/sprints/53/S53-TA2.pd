@@ -1,0 +1,30 @@
+v:1
+mode:code
+role:developer
+task:S53-TA2-Form-I18n-Router-Deps
+objective:Add form, i18n, router, sonner, dates, utils and align leaflet cluster in pwa-react-app-clear.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add to pwa-react-app-clear: @hookform/resolvers, react-hook-form, zod; i18next, i18next-browser-languagedetector, react-i18next; react-router-dom; sonner; date-fns, react-day-picker; class-variance-authority, clsx, tailwind-merge, tailwindcss-animate, vaul.
+  - Replace react-leaflet-cluster with react-leaflet-markercluster (match src-client).
+  - Versions from src-client or compatible; do not add @tauri-apps or http-proxy.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - package.json updated; pnpm install; build passes; map cluster uses same lib as src-client.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Add form/i18n/router/sonner/dates/utils deps from src-client package.json to pwa-react-app-clear.
+  2. Remove react-leaflet-cluster; add react-leaflet-markercluster at version from src-client.
+  3. Update any imports in pwa-react-app-clear that referenced react-leaflet-cluster to use react-leaflet-markercluster API.
+  4. Run pnpm install; fix peer deps; verify build.

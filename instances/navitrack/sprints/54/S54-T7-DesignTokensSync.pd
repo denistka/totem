@@ -1,0 +1,16 @@
+# S54-T7: Design Tokens & CSS Vars Sync 
+# S54-T7-DesignTokensSync.pd
+
+**Objective:** Audit and sync CSS tokens/vars from `src-client` to `pwa-react-app-clear`.
+
+**Context:**
+- The `src-client` has approved typography, colors, and global CSS parameters that need to be explicitly configured in the new PWA.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Perform deep analysis on `src-client`'s global CSS, Tailwind configs (or equivalents), and theme vars.
+2. Re-create or copy these tokens systematically inside the new app's `index.css` or Tailwind configuration (if used).
+
+**Acceptance Criteria:**
+- The new app uses the correct font definitions, color palettes (primary, background classes), and space tokens identical to the referenced ones.

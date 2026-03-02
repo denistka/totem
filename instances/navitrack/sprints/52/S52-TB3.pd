@@ -1,28 +1,28 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S52-TB3-Modal-Dialog-Parity
+objective:Modal/Dialog parity with src-client bottom-modal and dialog.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - Align clear app Modal with src-client bottom-modal and dialog (glass-strong, safe area, animations).
+  - Use for all overlay dialogs; no ad-hoc modal markup.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - Modal (and Dialog if separate) matching src-client behavior and look.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Audit src-client bottom-modal.tsx and dialog.tsx.
+  2. Port structure and styles to clear app Modal; ensure glass-strong and safe-bottom.
+  3. Verify focus and escape behavior.

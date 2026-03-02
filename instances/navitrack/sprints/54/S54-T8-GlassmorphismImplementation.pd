@@ -1,0 +1,16 @@
+# S54-T8: Glassmorphism Implementation
+# S54-T8-GlassmorphismImplementation.pd
+
+**Objective:** Establish core UI utility classes or wrappers for Glassmorphism.
+
+**Context:**
+- The approved design relies heavily on "glassmorphism-neumorphism" styling.
+
+**Gate:** OPEN
+
+**Steps:**
+1. Extract the glassmorphism CSS logic from `src-client` (e.g., backdrop-filter blur, border opacities, inner shadows).
+2. Create reusable React utility classes/components in `draft/pwa-react-app-clear/src/components/ui`.
+
+**Acceptance Criteria:**
+- Any component can apply a standard `.glass-panel` class or wrap itself in a `<Glass>` component and look identical to `src-client`.

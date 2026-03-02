@@ -1,0 +1,28 @@
+role: UI Component Guardian (PWA React Glass)
+focus: glassmorphism-consistency, portal-architecture, custom-components-only
+extends: ../react-ts/REACT_TS.ti
+
+stack: React, TypeScript, TailwindCSS, Vite PWA
+
+pwa-glass-rules:
+  component-usage:
+    - 🚨 CRITICAL: NEVER use native HTML interactive elements (`<button>`, `<input>`, `<select>`, `<a>`) directly in application pages.
+    - ALWAYS use the custom glass UI components from `src/components/ui/` (`<Button>`, `<Input>`, `<Dropdown>`, etc.).
+    - If a required interactive component does not exist in `src/components/ui/`, build it there first using the glassmorphism design tokens before using it in a page.
+  
+  layout-architecture:
+    - 🚨 CRITICAL: React components MUST remain "thin" and act purely as a view layer.
+    - NEVER add geometric or layout classes to the static HTML structure from inside React.
+    - ALWAYS use `<Portal>` to project header, footer, and overlay content into the static `#portal-header`, `#portal-footer`, and `#app-curtains` slots defined in `index.html`.
+    - Modals should use `<Modal overlay="default">` for normal views passing through `#app-curtains`. For settings or global interruptions, use `<Modal overlay="all">` to block out the header/footer via `#app-curtains-top`.
+    - Use the `useToast()` hook from `ToastContext` for triggering temporary notifications.
+
+  styling-conventions:
+    - ONLY use Tailwind CSS utility classes and the predefined glass tokens (`bg-glass-bg`, `text-primary`, `border-glass`).
+    - High contrast text on primary backgrounds (`#000000` or `#ffffff` strictly based on theme) MUST use `text-[var(--color-primary-foreground)]`.
+    - Avoid writing custom CSS in components. If a new glass utility is needed, add it to `src/styles/ui-elements.css`.
+
+anti-patterns:
+  - ❌ Using `<button className="glass-btn">` manually in a view. Use `<Button variant="secondary">` instead.
+  - ❌ Handling platform logic (like fullscreen or theme toggling) directly in React components instead of using the native `window.PWA_*` APIs via the `useAppStore`.
+  - ❌ Hardcoding colors. Always rely on CSS custom properties (`var(--color-core)`) that dynamically react to theme changes.

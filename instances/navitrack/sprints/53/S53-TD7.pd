@@ -1,28 +1,28 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S53-TD7-SelectObjectsScreen-Deep-Parity
+objective:SelectObjectsScreen deep parity with src-client.
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - SelectObjectsScreen in pwa-react-app-clear matches src-client select-objects-screen in detail.
+  - Use components/ui and layout.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - SelectObjectsScreen matching src-client.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. Compare clear app SelectObjectsScreen with src-client select-objects-screen.
+  2. Align list, selection state and navigation.
+  3. Spot-check both themes.

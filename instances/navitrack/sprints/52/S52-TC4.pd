@@ -1,32 +1,27 @@
 v:1
 mode:code
 role:developer
-task:S51-T5-RPi5-Release
-objective:Automate ARM64 .deb build and release for Raspberry Pi 5.
+task:S52-TC4-Curtains-Parity
+objective:Curtains layer parity; align with src-client if used, else layout layers.
 gate:LOCKED
+requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Cross-compile aarch64-unknown-linux-gnu on ubuntu-latest.
-  - Use `cargo-zigbuild` or `cross` for cross-compilation.
-  - Tauri bundle produces .deb package.
-  - Upload .deb to GitHub Releases on tag push.
+  - Curtains component (components/layout/Curtains.tsx) aligned with src-client overlay/curtain usage if any; otherwise ensure consistent z-index and layout layer semantics.
+  - No duplicate overlay logic.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - ARM64 cross-compile job in build.yml.
-  - .deb package uploaded to GitHub Releases.
-  - RPi5 deployment docs (install via dpkg).
+  - Curtains.tsx and styles consistent with layout layers and S51.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Install cross-compile toolchain in CI.
-  2. Build with `--target aarch64-unknown-linux-gnu`.
-  3. Upload .deb artifact on tag push.
-  4. Document RPi5 install steps.
+  1. Check src-client for curtain/overlay patterns.
+  2. Align clear app Curtains with that or with app-layout curtain layer; document in S52-INVARIANTS if new.

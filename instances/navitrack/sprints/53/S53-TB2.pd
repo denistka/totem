@@ -1,0 +1,30 @@
+v:1
+mode:code
+role:developer
+task:S53-TB2-Router-Wiring
+objective:Wire react-router-dom in pwa-react-app-clear to match src-client navigation.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Use react-router-dom for routes and navigation in pwa-react-app-clear.
+  - Align route set and setScreen vs Navigate/history with src-client (lib/navigation, ScreenRouter).
+  - Preserve store-driven screen state if used; integrate router where src-client uses it.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Router wired; navigation and back/forward match src-client behavior.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Review src-client lib/navigation.ts, ScreenRouter, and main/App routing.
+  2. Add BrowserRouter (or HashRouter) and routes in pwa-react-app-clear; map screens to routes.
+  3. Replace or align setScreen with router navigation; preserve deep-linking and back behavior.
+  4. Verify all screen transitions and back button work.

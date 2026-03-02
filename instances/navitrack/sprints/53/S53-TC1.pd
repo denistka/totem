@@ -1,8 +1,8 @@
 v:1
 mode:code
 role:developer
-task:S51-T2-Foundation
-objective:Port foundation CSS variables, global styles, and tokens.
+task:S53-TC1-Login-Form-Validation
+objective:Add zod and react-hook-form to LoginPage to match src-client login-screen.
 gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
@@ -10,20 +10,19 @@ requires: [FRONTEND_DEV, ARCHITECT]
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Extract CSS variables from `navitrack-apps/src-client/src/index.css`.
-  - Integrate them into `draft/pwa-react-app-clear/public/css/design-tokens.css` or equivalent.
-  - Ensure single style-discipline constraint is followed.
+  - Login form in pwa-react-app-clear uses zod schema and react-hook-form (with @hookform/resolvers/zod) as in src-client login-screen.
+  - Same validation rules and error display; use Button and Input from components/ui.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - Updated design tokens CSS file.
-  - Global styles refactored for the new structure.
+  - LoginPage with validated form matching src-client behavior.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Review `navitrack-apps/src-client/src/index.css` for color schemes and variables.
-  2. Migrate these definitions to the new clean structure.
+  1. Review src-client login-screen.tsx — schema, useForm, error handling.
+  2. Port schema and form setup to pwa-react-app-clear LoginPage.
+  3. Wire Button/Input and error messages; ensure submit and validation match.

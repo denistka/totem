@@ -1,0 +1,124 @@
+v:1
+mode:agent
+role:lead
+sprint:S53-Dependencies-Deep-Parity
+objective:Align pwa-react-app-clear dependencies with src-client (Radix UI, forms, i18n, router, sonner, dates); wire i18n and routing; add form validation; continue very detailed copy/refactor per screen.
+status:PLANNED
+gate:OPEN
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic:E-04-ARCHITECTURE-MIGRATION
+priority:P0
+dep:S52
+
+###############################################################################
+# STANDARDS
+###############################################################################
+invariants:sprints/51/S51-INVARIANTS.md, sprints/52/S52-INVARIANTS.md, sprints/53/S53-INVARIANTS.md
+max-file-lines:150
+atomic-limit:50-lines
+
+###############################################################################
+# SOURCE & TARGET
+###############################################################################
+source:navitrack-apps/src-client (canonical deps and behavior)
+target:navitrack-apps/draft/pwa-react-app-clear
+  package:draft/pwa-react-app-clear/package.json
+  pages: draft/pwa-react-app-clear/src/pages
+  ui: draft/pwa-react-app-clear/src/components/ui
+  layout: draft/pwa-react-app-clear/src/components/layout
+  features: draft/pwa-react-app-clear/src/features
+
+###############################################################################
+# TRACKS (sequence: A → B → C → D → E)
+###############################################################################
+track-a-dependencies:
+  desc:Align package.json with src-client — Radix UI, form libs, i18n, router, sonner, dates, utils; leaflet cluster package.
+  tasks:[TA1, TA2]
+  gate:deps-done
+
+track-b-wiring:
+  desc:Wire i18n and react-router-dom in clear app to match src-client usage.
+  tasks:[TB1, TB2]
+  gate:wiring-done
+  parallel:within-track
+
+track-c-forms:
+  desc:Form validation (zod + react-hook-form) on login and reports to match src-client.
+  tasks:[TC1, TC2]
+  gate:forms-done
+  parallel:within-track
+
+track-d-deep-parity:
+  desc:Very detailed copy/refactor per screen — visuals, behavior, edge cases.
+  tasks:[TD1, TD2, TD3, TD4, TD5, TD6, TD7, TD8, TD9, TD10]
+  gate:deep-parity-done
+  parallel:within-track
+
+track-e-shell:
+  desc:App shell and store — navigation set, main layout, final alignment.
+  tasks:[TE1]
+  gate:shell-done
+
+###############################################################################
+# DISPATCH
+###############################################################################
+dispatch:
+  TA1:
+    exec-order:1
+    desc:Add Radix UI packages to pwa-react-app-clear (accordion, alert-dialog, avatar, checkbox, collapsible, context-menu, dialog, dropdown-menu, hover-card, label, menubar, navigation-menu, popover, progress, radio-group, scroll-area, select, separator, slider, slot, switch, tabs, toast, toggle, toggle-group, tooltip, aspect-ratio) — versions from src-client package.json.
+  TA2:
+    exec-order:2
+    desc:Add form/i18n/router/sonner/dates/utils to pwa-react-app-clear — @hookform/resolvers, react-hook-form, zod; i18next, i18next-browser-languagedetector, react-i18next; react-router-dom; sonner; date-fns, react-day-picker; class-variance-authority, clsx, tailwind-merge, tailwindcss-animate, vaul. Replace react-leaflet-cluster with react-leaflet-markercluster to match src-client.
+  TB1:
+    desc:Init and wire i18n in pwa-react-app-clear (i18n config, resources, useTranslation in app and screens) to match src-client.
+  TB2:
+    desc:Wire react-router-dom in pwa-react-app-clear — routes, setScreen vs Navigate, history — to match src-client navigation model.
+  TC1:
+    desc:Login form validation — zod schema and react-hook-form in LoginPage to match src-client login-screen.
+  TC2:
+    desc:Reports and other forms — zod + react-hook-form where src-client uses them (ReportFormView, etc.).
+  TD1:
+    desc:ObjectsScreen — deep parity (list behavior, filters, empty state, icons).
+  TD2:
+    desc:MapScreen — deep parity (controls, clustering, popups, playback if present).
+  TD3:
+    desc:TrackingScreen + TrackPreview — deep parity.
+  TD4:
+    desc:ReportsScreen + ReportFormView, ReportResultView, GeneratingReportView — deep parity.
+  TD5:
+    desc:ObjectDetailsScreen + HistoryTab, EventsTab — deep parity.
+  TD6:
+    desc:SettingsScreen — deep parity.
+  TD7:
+    desc:SelectObjectsScreen — deep parity.
+  TD8:
+    desc:AccountSecurityScreen — deep parity.
+  TD9:
+    desc:TwoFactorAuthScreen — deep parity.
+  TD10:
+    desc:LoginPage / login-screen — deep parity (after TC1).
+  TE1:
+    desc:Store and Main — screen set, tabs, main-scroll and layout final alignment with src-client.
+
+###############################################################################
+# CHECKPOINTS
+###############################################################################
+checkpoints:
+  - after:track-a-dependencies
+    action:pnpm install in pwa-react-app-clear; build passes; no duplicate or conflicting Radix versions.
+  - after:track-b-wiring
+    action:Language switch and routing work; no regressions.
+  - after:track-d-deep-parity
+    action:Full regression — all screens match src-client visuals and behavior.
+
+###############################################################################
+# SUCCESS CRITERIA
+###############################################################################
+success:
+  - package.json in pwa-react-app-clear includes Radix UI (as used in src-client), form libs, i18n, router, sonner, dates, utils; leaflet cluster matches src-client.
+  - i18n and routing wired; forms use zod + react-hook-form where src-client does.
+  - All screens in pwa-react-app-clear match src-client design and behavior in detail.
+  - S51/S52/S53 invariants satisfied.

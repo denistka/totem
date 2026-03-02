@@ -1,0 +1,17 @@
+# S54-T9: Object List UI Adaptation
+# S54-T9-ObjectListUiAdaptation.pd
+
+**Objective:** Refactor the Objects list (vehicles screen) to match `src-client`.
+
+**Context:**
+- The current Objects list in the PWA is a placeholder. 
+
+**Gate:** OPEN
+
+**Steps:**
+1. Copy the item layout design from the `src-client` objects interface.
+2. Use the new Glassmorphism utilities and Design Tokens (T7 & T8) to style the vehicle cards (icons, status badges, titles).
+3. Ensure it functions within the PWA 5-layer scrolling paradigm without layout breaks.
+
+**Acceptance Criteria:**
+- The Objects list looks exactly like the approved `src-client` design and scrolls naturally within `#root`.

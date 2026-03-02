@@ -5,21 +5,18 @@ project:
   stack:
     - react
     - typescript
-    - vue3
     - tauri2
     - rust
-    - wgpu
-  # Canonical UI stack for React PWA (navitrack-apps/react-app). Tailwind + glass design system.
-  ui_stack_ref: refs/app-ui-kit
-  ui_stack_package: refs/app-ui-kit/package.json
-  # UI/design planning: see README.md "UI & design sprints", core/DESIGN_SPRINT_GUIDE.md
+    - webgpu
+  ui_stack_ref: null
+  ui_stack_package: null
   ui_design_docs:
     - README.md#ui--design-sprints
     - totem/core/DESIGN_SPRINT_GUIDE.md
 
 paths:
   code: ../navitrack-apps
-  react_app: ../navitrack-apps/src-client
+  react_app: ../navitrack-apps/draft/pwa-react-app-clear
   history: ../prompt-machine
   intel: ./intel
 

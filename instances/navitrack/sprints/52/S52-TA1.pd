@@ -1,0 +1,30 @@
+v:1
+mode:code
+role:developer
+task:S52-TA1-Layout-CSS-Refactor
+objective:Remove .main-scroll-content block from app-layout.css (lines 115–124); move content min-height/padding to layout.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Remove from navitrack-apps/draft/pwa-react-app-clear/src/styles/app-layout.css the block at lines 115–124 (`.main-scroll-content:not(.main-scroll-content--map)`, `.main-scroll-content.main-scroll-content--map`, `.main-scroll-content p`).
+  - Move min-height and padding responsibility to layout layer (e.g. Main.tsx or a dedicated layout/content class in a layout-scoped stylesheet) so content area rules are not in app-layout.css.
+  - Preserve behavior: non-map screens have minimum height and padding; map screen has padding 0.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - app-layout.css without the content-specific block at 115–124.
+  - Layout component or layout CSS that owns content min-height and padding.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Edit app-layout.css: delete the .main-scroll-content rules (min-height, padding, p margin).
+  2. Add equivalent rules to Main.tsx classNames or to a layout-specific CSS file imported by layout only.
+  3. Verify build and that map vs non-map content still render correctly.

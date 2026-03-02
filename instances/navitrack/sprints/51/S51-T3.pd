@@ -1,32 +1,28 @@
 v:1
 mode:code
 role:developer
-task:S51-T3-Mobile-Release
-objective:Configure mobile release pipelines — Android APK to GitHub Releases, iOS TestFlight docs.
+task:S51-T3-Components
+objective:Refactor primitive and composite UI components.
 gate:LOCKED
+requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Android: sign APK with keystore stored in GH Secrets.
-  - Android: upload signed APK to GitHub Releases on tag push.
-  - iOS: document TestFlight upload steps (requires Apple Developer account).
-  - iOS: optionally automate via fastlane in CI.
+  - Move component logic from old structure to the new layered logic.
+  - Strictly separate Hooks/Services from Presentation/Views.
+  - Avoid mixing global styles with component overrides.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - Android release job in build.yml.
-  - Signed APK uploaded to GitHub Releases.
-  - iOS deployment documentation.
+  - Shared UI components migrated to `draft/pwa-react-app-clear/src/components/ui/`.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Add Android signing step to CI workflow.
-  2. Configure GH Secrets for keystore.
-  3. Upload APK artifact on tag push.
-  4. Document iOS TestFlight steps in docs/.
+  1. Review `src/components/` in the old codebase.
+  2. Rebuild components, maintaining parity with the visual audit.

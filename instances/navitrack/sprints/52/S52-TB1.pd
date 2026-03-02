@@ -1,0 +1,29 @@
+v:1
+mode:code
+role:developer
+task:S52-TB1-Button-Parity
+objective:Button component full parity with src-client glass-button and glass-glow.
+gate:OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Align draft/pwa-react-app-clear/src/components/ui/Button.tsx with navitrack-apps/src-client design (glass-button, glass-glow, touch targets).
+  - No naive <button> usage for primary actions; use this Button component.
+  - Match variants and sizes to src-client (primary CTA = glass-glow; secondary = glass).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+deliverables:
+  - Updated Button.tsx with visual and API parity to src-client.
+
+###############################################################################
+# INSTRUCTIONS
+###############################################################################
+instructions:
+  1. Audit src-client glass-button.tsx and usage (touch-target-cta, glass-glow).
+  2. Update clear app Button variants/sizes and class names to match.
+  3. Ensure prefers-reduced-motion respected for glow animations.

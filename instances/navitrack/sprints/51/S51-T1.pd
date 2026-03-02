@@ -1,35 +1,30 @@
 v:1
 mode:code
 role:developer
-task:S51-T1-GH-Actions-Matrix
-objective:Create GitHub Actions workflow with matrix strategy for all platform builds.
-gate:LOCKED
+task:S51-T1-Visual-Audit
+objective:Perform visual audit of the old application and extract baseline screenshots.
+gate:OPEN
+requires: [QA, FRONTEND_DEV]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Create `.github/workflows/build.yml` in navitrack-apps repo.
-  - Matrix strategy: macOS (arm64), Ubuntu (x64), Windows (x64).
-  - Steps: checkout, setup-node, setup-rust, pnpm install, tauri build.
-  - Mobile builds (Android) on ubuntu-latest with Android SDK.
-  - iOS build on macos-latest with Xcode.
-  - ARM64 Linux via cross-compilation on ubuntu-latest.
-  - Cache: Cargo registry, node_modules, target dir.
-
+  - Identify all unique components in `navitrack-apps/src-client`.
+  - Take automated or manual screenshots of Buttons, Modals, Cards, and primary screens.
+  - Document the component hierarchy to prepare for migration.
+  
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - `.github/workflows/build.yml` with platform matrix.
-  - Caching for Rust and Node dependencies.
-  - Build artifacts uploaded via actions/upload-artifact.
+  - Screenshots saved or documented.
+  - List of components to migrate in `S51-T1-Audit.md`.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Create workflow file with trigger on push to main and pull_request.
-  2. Define matrix: os × target.
-  3. Use `tauri-apps/tauri-action` for build + bundle.
-  4. Upload artifacts per platform.
+  1. Boot the old application.
+  2. Navigate through the primary views.
+  3. Record the visual state.

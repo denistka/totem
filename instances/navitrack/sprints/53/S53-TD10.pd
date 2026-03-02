@@ -1,28 +1,28 @@
 v:1
 mode:code
 role:developer
-task:S51-T4-Features
-objective:Port primary screens and associate them with Store and App State.
-gate:LOCKED
+task:S53-TD10-LoginPage-Deep-Parity
+objective:LoginPage / login-screen deep parity after form validation (TC1).
+gate:OPEN
 requires: [FRONTEND_DEV, ARCHITECT]
 
 ###############################################################################
 # REQUIREMENTS
 ###############################################################################
 requirements:
-  - Migrate the Map, Objects, Quests, and Settings screens.
-  - Enforce single state access pattern (e.g., exclusively use hooks like `useStore`).
-  - Ensure Map/Chart observability is isolated to leaf components.
+  - LoginPage in pwa-react-app-clear matches src-client login-screen in full detail (layout, errors, loading, redirect).
+  - Form validation per TC1; use Button and Input from components/ui.
 
 ###############################################################################
 # DELIVERABLES
 ###############################################################################
 deliverables:
-  - All features migrated and rendered within the new 5-layer layout.
+  - LoginPage matching src-client in visuals and behavior.
 
 ###############################################################################
 # INSTRUCTIONS
 ###############################################################################
 instructions:
-  1. Adapt screens to React portals or layout system as needed.
-  2. Verify responsive padding/layering.
+  1. After TC1, compare LoginPage with src-client login-screen for layout, error placement, loading state, redirect.
+  2. Align any remaining differences.
+  3. Spot-check both themes.
