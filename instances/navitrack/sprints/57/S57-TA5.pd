@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S57-TA5-Replace-AppHeader-MobileHeader-With-Single-Header
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Replace all AppHeader and MobileHeader usage with the single configurable header.
+Preserve visual perception and existing UX.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Every screen uses single header; no MobileHeader/AppHeader imports for header UI.
+  - Props/config drive behavior per screen; consistent API.
+  - Visual appearance and density match current design (no unintended layout/color change).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Screen-level integration; removal of duplicate header components]
+done:
+  - Single header used everywhere; duplicate header logic removed.
+  - Visual regression avoided (per spec: preserve visual perception).
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TA2, S57-TA3, S57-TA4

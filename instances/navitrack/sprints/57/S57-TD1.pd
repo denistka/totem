@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S57-TD1-Modal-Unification
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Unify modals: objects selection modal outer shell (search + buttons) with
+reports/vehicle selection modal internals (list, multi-select). One pattern for
+object selection and vehicle/company selection.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Objects page: use unified modal (search + list + single/multi as needed).
+  - Reports/vehicle selection: same list and multi-select internals; consistent shell.
+  - Single SmartSelectableModal (or equivalent) pattern; a11y contract (e.g. Radix) consistent.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Unified modal component(s); objects and reports/vehicles use it]
+done:
+  - One modal pattern; objects and reports/vehicles migrated to it.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: S56-Entity-Audit.md, S56-Component-Reuse-Matrix.md (SmartSelectableModal).

@@ -1,0 +1,26 @@
+v:4
+role: dev
+task: S58-TD1-Header-Full-Click-Area-And-Icon-Style
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Entire header must be clickable (not only the icon). Settings icon: smaller,
+thinner lines, match PWA icon style and sizing.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Click area: whole header row opens header (expand); not just icon.
+  - Settings icon: reduced size, thinner stroke; consistent with PWA icon style.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Header component: full-row click target; updated settings icon]
+done:
+  - Clicking anywhere on header opens it; icon matches PWA style.
+ref: config/header.ts, app-header (CODE_MAP).

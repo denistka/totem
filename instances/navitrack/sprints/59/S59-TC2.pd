@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S59-TC2-Objects-Vehicle-List-Time-Filter-Format
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Objects page vehicle list: fix time filter interpretation; currently shows
+"seconds ago" stamps; show proper time format.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Time display: use proper date/time format (e.g. relative "5 min ago" or absolute time) instead of raw "seconds ago" where inappropriate.
+  - Apply to vehicle list time column or filter display consistently.
+  - No change to filter logic; display/formatting only.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Vehicle list time display: correct format]
+done:
+  - Time stamps show proper format; no misleading "seconds ago" where wrong.
+dep: S59-TC1

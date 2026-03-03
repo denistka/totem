@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TF2-Map-Popup-Z-Index-And-Positioning
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix small overlaps in map popups when clicking objects (e.g. close button
+overlapping parking labels). Review and fix all map popup z-index and positioning.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit map popups: close button, parking labels, other elements.
+  - Fix z-index and positioning so no overlapping of interactive/label elements.
+  - Consistent popup layout across object types.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map popups: correct z-index and positioning]
+done:
+  - No close button overlapping labels; popups readable and clickable.
+dep: S58-TF1

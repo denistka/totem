@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TD2-Objects-Screen-Initial-State-Search-Filter
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Objects screen: on first load and after authorization, display search and filter
+components as designed (no watermark-only state). Layout: settings icon on right,
+screen-relevant information on left.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Initial state: show search and filter UI immediately (or after auth), not watermark text only.
+  - Layout: right = settings icon; left = search/filter or screen-relevant content.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects screen: search/filter visible on load; correct layout]
+done:
+  - First load / post-auth shows search and filter; layout matches spec.
+dep: S58-TD1

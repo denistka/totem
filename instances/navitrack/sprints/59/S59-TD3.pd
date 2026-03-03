@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TD3-Object-Details-Scroll-Container-And-API
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object Details: events list scrolls in its own container; map, date selector,
+and general information remain fixed. Only the bottom list section scrolls.
+Check and fix API integration logic from old proposal.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Layout: map, date selector, general info fixed (no scroll).
+  - Scroll: only the bottom events list area scrolls in its own container.
+  - API: review and fix logic (history/events load) per old proposal or CODE_MAP.
+  - No full-page scroll for main content; fixed + scroll regions clear.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details: fixed top block + scrollable list; API fixes]
+done:
+  - Map/date/info fixed; list scrolls alone; API loads correctly.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S57-TF1/TF2.

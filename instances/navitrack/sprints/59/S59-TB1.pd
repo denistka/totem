@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S59-TB1-Map-Full-Height-Transparency-Popup-Margins
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Map fills full screen height with transparency under header and footer; popups
+have proper margins so they remain visible under transparent header.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Map extends under header and footer with transparency effect (max height).
+  - Popups: margins/positioning so fully visible (not cut by transparent header).
+  - No layout overlap; map layer and overlays respect safe areas.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map container and popup positioning for full height + transparency]
+done:
+  - Map fills height with transparency; all popups visible with margins.
+ref: @navitrack-apps/src-client/CODE_MAP.md

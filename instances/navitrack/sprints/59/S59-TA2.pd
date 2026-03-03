@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TA2-Date-Time-Modal-Remove-Time-Cancel
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Date/Time selection modal: fix content extending under footer, add padding; remove
+cancel button from time selection. Apply bottom-anchored rules.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Content does not extend under footer; proper padding.
+  - No full-height display; dynamic height per TA1.
+  - Remove cancel button from time selection step/subview only.
+  - Bottom-anchored; scroll with margins if needed.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [DateRangePicker / date-time modal: layout + no time cancel]
+done:
+  - Date/Time modal bottom-anchored with padding; time selection has no cancel.
+dep: S59-TA1
+ref: DateRangePicker (CODE_MAP).

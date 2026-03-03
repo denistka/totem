@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S57-TA2-Single-Configurable-Header-Component
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement one header component: expand/collapse (smart status bar behavior), single row
+collapsed with left slot + right slot (settings icon). Mount to #portal-header; preserve portals invariant.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Expanded state: animates to full menu/navigation; collapsed: single row.
+  - Left slot: dynamic content by screen (filled by TA3/TA4).
+  - Right slot: Settings icon.
+  - Smooth expand/collapse animation.
+  - Use header config from TA1 for mode; no hard-coded per-screen branches in this component.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Single Header component consuming config]
+done:
+  - One header component; expand/collapse works; slots accept children or render props.
+  - S54 portals invariant preserved (#portal-header).
+
+###############################################################################
+# INVARIANTS
+###############################################################################
+invariants: sprints/54/INVARIANTS.md (portals, glassmorphism).

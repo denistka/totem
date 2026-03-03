@@ -1,0 +1,37 @@
+v:4
+role: dev
+task: S56-TA2-Reverse-Analysis-iOS
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Reverse-analyze legacy iOS app to recover existing business logic as source of truth.
+No new logic design — restore and document what exists.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Analyze navigation flows and screen transitions.
+  - Analyze how requests are built (query formation).
+  - Analyze validation rules and lifecycle.
+  - Analyze loading lifecycle (when/what blocks UI).
+  - Analyze tracking player flow (playback, controls, map sync).
+  - Analyze report formation (params, period, companies, vehicles).
+  - Document source of truth for iOS behavior.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Reverse-iOS.md]
+done:
+  - Report describes navigation, query build, validation, loading, player, reports.
+  - Source-of-truth sections clearly identified for use in Track B/C.
+
+###############################################################################
+# ANTI-PATTERNS
+###############################################################################
+anti-patterns:
+  - Do not invent new business logic; only document existing iOS behavior.

@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S59-TC1-Objects-Search-Styling-Header-Height-Highlight
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Objects page search: remove rounded corners; match header height; 1px highlight
+only on bottom when focused; reduce distance between filter and settings icons;
+reduce left padding for settings icon.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Search input: no rounded corners; height matches header row.
+  - Focus: 1px bottom border/highlight only (no full border).
+  - Spacing: less distance between filter icon and settings icon; less left padding on settings icon.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects page search + header row styles]
+done:
+  - Search matches header height, square corners, bottom-only focus highlight; spacing updated.
+ref: @navitrack-apps/src-client/CODE_MAP.md

@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S56-TA3-Reverse-Analysis-Android
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Reverse-analyze legacy Android app; align with iOS findings. Single source of truth
+for cross-platform behavior.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Same dimensions as TA2: navigation, request formation, validation, loading lifecycle, tracking player, report formation.
+  - Document Android-specific behavior and any differences from iOS.
+  - Produce cross-platform consistency summary (where iOS/Android agree vs diverge).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Reverse-Android.md]
+done:
+  - Report describes Android behavior and cross-platform alignment.
+  - Source of truth for shared logic identified; divergences listed.
+
+###############################################################################
+# ANTI-PATTERNS
+###############################################################################
+anti-patterns:
+  - Do not invent new logic; only document existing Android behavior.

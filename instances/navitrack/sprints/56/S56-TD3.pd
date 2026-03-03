@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S56-TD3-Risk-Assessment
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce risk assessment for refactor: SSR, PWA, Tauri lifecycle, Leaflet re-render,
+Radix reuse, code quality (nesting, store proliferation, loading/query centralization).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Risks: SSR and PWA compatibility; Tauri lifecycle; Leaflet re-render on state changes; Radix UI reuse and accessibility.
+  - Code quality: minimize nesting; no new stores without cause; centralized loading and query builder.
+  - Mitigations or acceptance per risk; no implementation.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Risk-Assessment.md]
+done:
+  - Risk document exists; migration and implementation can account for it.
+  - Planning only.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TD1, S56-TD2

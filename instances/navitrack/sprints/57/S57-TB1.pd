@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TB1-Tracking-Player-Layout-Object-Details
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking Player for Object Details: split layout (map top, action bottom). Bottom:
+vehicle info, time, date selector, daily summary (travel time, distance, parking duration).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Top: map display; bottom: vehicle + time, date selector, daily summary.
+  - Layout responsive; map and action section share viewport (e.g. 50/50 or configurable).
+  - No timeline list yet (TB2); no playback controls (TB3).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking Player layout component; object-details content block]
+done:
+  - Split layout renders; summary stats placeholders or wired to data.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: S56-Consolidated-Roadmap.md (Tracking Player spec), S56-State-Architecture-Proposal.md (playerState).

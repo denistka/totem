@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TB3-Tracking-Action-Player-Controls-And-Stats
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking Action Player: control row (First event, Step back, Play, Pause, Step forward,
+Last event); below: vehicle, period dates, summary (distance, parking time, travel time, fuel).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Controls left-to-right: First, Step back, Play, Pause, Step forward, Last.
+  - Below: vehicle info, selected period dates, total distance, parking time, travel time, fuel consumption.
+  - Touch-friendly; state drives playback (playerState per S56).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Playback controls component; summary stats block for Tracking Action]
+done:
+  - Controls and stats render; wiring to playback state per architecture.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TB1

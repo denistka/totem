@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S56-TA1-API-Documentation-Verification
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Verify incoming API documentation before any architectural planning. If docs are
+incomplete, conflicting, or outdated — record gaps and do not start architecture.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Check API documentation currency and completeness.
+  - Verify request/response schemas, enum values, parameter names.
+  - Verify consistency across iOS, Android, Web.
+  - If incomplete, conflicting, or outdated → document gaps in a short report and block architectural planning until resolved.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-API-Doc-Gaps.md]
+done:
+  - Artifact lists verified items and any gaps (incomplete / conflicting / outdated).
+  - Decision recorded: "proceed with architecture" or "block until gaps fixed."
+
+###############################################################################
+# ANTI-PATTERNS
+###############################################################################
+anti-patterns:
+  - Do not start Header/Player/Query/Loader/Modal design without this step.

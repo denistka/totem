@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S57-TF1-Check-Fix-Object-Details-API-Call-fetchHistory
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Verify and fix API call for Object Details history. fetchHistory in
+ObjectDetailsScreen.tsx calls getDailyTrack (GET ws/track/daily/:vehicleId/:date);
+currently returns 500. Ensure correct request, error handling, and optional
+client resilience.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit fetchHistory (ObjectDetailsScreen.tsx ~L52); getDailyTrack (api.ts ~L325); http-adapter request/response.
+  - Identify cause of 500 (client params, backend contract, proxy/api-online routing).
+  - Fix request (URL, method, params, headers) or document backend fix required.
+  - Handle errors: avoid uncaught ApiError; show user-facing state (e.g. empty history or message) on Server error.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Working or documented API path; error handling in ObjectDetailsScreen]
+done:
+  - getDailyTrack call is correct per API contract; 500 resolved or documented.
+  - Failed fetch does not leave UI broken; user sees clear state.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: GET https://localhost:5173/api-online/ws/track/daily/1000000218/2026-03-03 500; ApiError at api.ts:288, getDailyTrack api.ts:325, fetchHistory ObjectDetailsScreen.tsx:52.

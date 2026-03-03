@@ -1,0 +1,85 @@
+# Sprint 57: PWA React — Header, Tracking Player, Loader, Modals (Implementation)
+# S57.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Implement unified Header (expand/collapse system bar, screen-specific left content),
+  Tracking Player (split map + action, timeline, controls), Logo/Loader (full-fill
+  and notification), modal unification, and animations. Verify API calls (Object Details
+  history, tracking execute, report build), map render for objects/history, and report
+  results (scrollable table with fixed first column). Preserve visual perception;
+  follow S56 roadmap and state architecture.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/54/INVARIANTS.md
+design-ref: sprints/56/artifacts/S56-Consolidated-Roadmap.md, sprints/56/artifacts/S56-State-Architecture-Proposal.md, sprints/56/artifacts/S56-Navigation-Flow.md, sprints/56/artifacts/S56-Loading-Lifecycle.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P0
+source: PWA React Sprint Planning Prompt (Header, Player, Loader, Modals)
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# IMPLEMENTATION NOTICE — CODE MAP & QUALITY
+###############################################################################
+# Use @navitrack-apps/src-client/CODE_MAP.md for quick search of dependencies and
+# to control code quality. Reference it when locating modules, APIs, and structure
+# before implementing or refactoring tasks in this sprint.
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E → F)
+###############################################################################
+
+track-a-header:
+  desc: Header config, single component, screen-specific left content; replace AppHeader/MobileHeader.
+  tasks: [S57-TA1, S57-TA2, S57-TA3, S57-TA4, S57-TA5]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-tracking-player:
+  desc: Tracking Player layout, timeline, controls; Tracking Action Player; map route display.
+  tasks: [S57-TB1, S57-TB2, S57-TB3, S57-TB4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-a-header
+
+track-c-loader:
+  desc: Logo/Loader component (full-fill, notification); integration per use case.
+  tasks: [S57-TC1, S57-TC2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-b-tracking-player
+
+track-d-modals-and-visual:
+  desc: Modal unification (objects shell + vehicle/selection internals); visual consistency; animations.
+  tasks: [S57-TD1, S57-TD2, S57-TD3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-c-loader
+
+track-e-state-and-validation:
+  desc: Header/screen/loading state; Tracking and Reports rows as query validators.
+  tasks: [S57-TE1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-d-modals-and-visual
+
+track-f-api-and-integration-checks:
+  desc: Verify/fix API calls (Object Details history, tracking execute, report build);
+        map render for objects/history; report results table (scrollable, fixed first column).
+  tasks: [S57-TF1, S57-TF2, S57-TF3, S57-TF4, S57-TF5]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-e-state-and-validation
+
+###############################################################################
+# PHILOSOPHY
+###############################################################################
+# Preserve visual perception. One configurable header; state-driven content.
+# S56 artifacts are design authority. Post-sprint: create S57-INVARIANTS.md.

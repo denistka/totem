@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TH1-Testing-Visual-Functional-Responsive
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Testing: visual (modals, map transparency, theme, loader); functional (API,
+Object Details scroll, modals, time filter); responsive (rotation, spacing, modal sizes).
+Validates refactored and optimized code.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Visual: modal positioning and scroll; map transparency; theme toggle cycle; loader animation.
+  - Functional: Tracking Player API; Object Details scroll behavior; all modal close/interactions; time filter display.
+  - Responsive: screen rotation; spacing across orientations; modal behavior at different sizes.
+  - Record failures; fix critical issues or file for follow-up.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Test pass or report; critical issues resolved]
+done:
+  - Visual, functional, and responsive checks done; blockers fixed.
+dep: S59-TA4, S59-TB1, S59-TC2, S59-TD3, S59-TE1, S59-TE3, S59-TF1, S59-TF2, S59-TG1, S59-TG2

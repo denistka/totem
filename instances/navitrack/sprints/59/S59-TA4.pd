@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S59-TA4-Objects-Filter-Modal-List-Match-Tracking-Reports
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Objects filter modal: internal list area should match modal styling from
+tracking and reports pages (consistent list presentation).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Objects filter modal list: same visual/styling as list in tracking and reports modals.
+  - No functional change to filter logic; styling alignment only.
+  - Bottom-anchored and scroll behavior per TA1/TA3.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects filter modal list styling aligned to tracking/reports]
+done:
+  - Filter modal list matches tracking/reports modal list style.
+dep: S59-TA1, S59-TA3

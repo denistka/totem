@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S59-TE2-Tracking-Event-Icons-And-Validation-Message
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking page: event icons — increase top padding and center alignment;
+validation message — change red "new wafer selected" to pulsating green
+"Please select vehicles" for softer UX.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Event icons: more top padding; vertically centered.
+  - Validation: replace red "new wafer selected" (or equivalent) with pulsating green "Please select vehicles".
+  - Softer, clearer message; no harsh red for this state.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking page: icon alignment; validation message styling]
+done:
+  - Event icons padded and centered; validation is green pulsating text.
+ref: Tracking screen (CODE_MAP).

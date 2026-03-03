@@ -1,0 +1,108 @@
+# Sprint 59: UI/UX Problems & Solutions
+# S59.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Modal system: bottom-anchored, dynamic height, scroll under footer with margins;
+  Date/Time modal (remove time cancel); Report/Vehicle modals same rules; Objects
+  filter list match tracking/reports. Map: full height with transparency under
+  header/footer; popup margins; layer switcher flatter. Objects search styling;
+  time filter proper format. History Events: restore tabs, back button; Object
+  Select history similar to tracking. Object Details: events scroll in own
+  container; map/date/info fixed; API check. Loader: circular pulsating,
+  increase size on disappear. Tracking: event icons padding, green pulsating
+  validation; Player analytics. Theme: single button cycle System→Light→Dark.
+  Settings accordion styling. PWA study: screen fill, rotation spacing.
+  Refactoring and optimizing code (structure, duplication, performance). Testing.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/54/INVARIANTS.md
+design-ref: sprints/56/artifacts/S56-Consolidated-Roadmap.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P0
+source: UI/UX Problems & Solutions Sprint Prompt
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# IMPLEMENTATION NOTICE — CODE MAP & QUALITY
+###############################################################################
+# Use @navitrack-apps/src-client/CODE_MAP.md for quick search of dependencies and
+# to control code quality. Reference it when locating modules, APIs, and structure.
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E → F → G → H)
+###############################################################################
+
+track-a-modal-system:
+  desc: Bottom-anchored modals; dynamic height; scroll under footer; Date/Time (remove time cancel); Report/Vehicle/Objects filter standardization.
+  tasks: [S59-TA1, S59-TA2, S59-TA3, S59-TA4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-map-enhancements:
+  desc: Map full height with transparency under header/footer; popup margins; layer switcher transparent and flat.
+  tasks: [S59-TB1, S59-TB2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-a-modal-system
+
+track-c-objects-page:
+  desc: Search styling (no rounded corners, header height, 1px bottom highlight, spacing); time filter proper format.
+  tasks: [S59-TC1, S59-TC2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-b-map-enhancements
+
+track-d-history-and-object-details:
+  desc: History Events tabs and back button; Object Select history like tracking; Object Details scroll logic and API.
+  tasks: [S59-TD1, S59-TD2, S59-TD3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-c-objects-page
+
+track-e-loader-tracking-theme-settings:
+  desc: Loader animation redesign; Tracking validation and icons; Theme cycle; Settings accordion styling.
+  tasks: [S59-TE1, S59-TE2, S59-TE3, S59-TE4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-d-history-and-object-details
+
+track-f-pwa-and-analytics:
+  desc: PWA behavior study (theme/tome); screen fill and rotation spacing; Tracking Player analytics from old apps.
+  tasks: [S59-TF1, S59-TF2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-e-loader-tracking-theme-settings
+
+track-g-refactoring-optimization:
+  desc: Refactoring and optimizing code; reduce duplication; improve structure and performance in touched areas.
+  tasks: [S59-TG1, S59-TG2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-f-pwa-and-analytics
+
+track-h-testing:
+  desc: Visual (modals, map, theme, loader); Functional (API, scroll, modals, time filter); Responsive (rotation, spacing).
+  tasks: [S59-TH1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-g-refactoring-optimization
+
+###############################################################################
+# PRIORITY (from prompt)
+###############################################################################
+# High: modal behavior/positioning, map transparency/sizing, Objects search, History tabs/back, Object Details scroll.
+# Medium: loader animation, Tracking validation, time filter, theme cycle.
+# Low: layer switcher, settings accordion, tracking analytics.
+
+###############################################################################
+# PHILOSOPHY
+###############################################################################
+# Align with BottomModal/accordion architecture (CODE_MAP). Post-sprint: S59-INVARIANTS.md.

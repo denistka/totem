@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TG3-Theme-Selector-Icons-Only
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Theme selector: remove background; show only icons with light highlighting for
+current theme.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Remove background from theme selector control.
+  - Display: icons only (e.g. light/dark/system).
+  - Current theme: light highlighting (border, glow, or subtle background) to indicate selection.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Theme toggle: no background; icons + current-theme highlight]
+done:
+  - Theme selector is icon-only with clear current selection.
+ref: theme-toggle, useThemeContext (CODE_MAP).

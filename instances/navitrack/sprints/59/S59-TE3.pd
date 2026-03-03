@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TE3-Theme-Toggle-Single-Button-Cycle
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Theme toggle: single button showing three icons; click cycles through themes
+sequentially. Sequence: System → Light → Dark → System. Current theme icon
+displayed; click advances to next.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - One button (not multiple separate theme buttons).
+  - One icon visible at a time (current theme).
+  - Click: cycle System → Light → Dark → System.
+  - Visual: clear which theme is active.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [ThemeToggle: single button, cycle behavior]
+done:
+  - Single theme button; cycle order and icon correct.
+ref: ThemeToggle, useThemeContext, AppHeader App Appearance (CODE_MAP).

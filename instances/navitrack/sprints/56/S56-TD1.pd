@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S56-TD1-Component-Reuse-Matrix
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce component reuse matrix: one AppHeader, one GlobalLoader, one SmartSelectableModal,
+one QueryValidator, one PlaybackControls, one MapEngine. Behavior by state, not multiple component variants.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Matrix maps system (Header / Loader / Modal / Query / Player / Map) to single component and state-driven behavior.
+  - No duplicate Headers per page; no duplicate Loaders; no duplicate modal patterns.
+  - Reference Entity Audit (TC1) and State Proposal (TC2). Check Radix UI reuse and Leaflet re-render impact where relevant.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Component-Reuse-Matrix.md]
+done:
+  - Matrix document exists; migration and implementation can reference it.
+  - Planning only.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TC2

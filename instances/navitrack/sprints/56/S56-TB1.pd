@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S56-TB1-Reverse-Documentation-Report
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce a single reverse documentation report that synthesizes TA1–TA3: API gaps,
+iOS/Android source of truth, and readiness for architectural planning.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Summarize API doc verification outcome (proceed vs block; gaps list).
+  - Summarize iOS and Android reverse-analysis findings.
+  - State consolidated source of truth for navigation, queries, validation, loading, player, reports.
+  - Reference artifacts S56-API-Doc-Gaps.md, S56-Reverse-iOS.md, S56-Reverse-Android.md.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Reverse-Documentation-Report.md]
+done:
+  - Single report exists; architecture planning can proceed from it.
+  - No new entities or logic — documentation only.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TA1, S56-TA2, S56-TA3

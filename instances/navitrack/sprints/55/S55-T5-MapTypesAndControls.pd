@@ -1,0 +1,11 @@
+# Task S55-T5: Map Types and Controls
+
+## Description
+1. Move the Map Type selection control to the right side of the screen (it's currently on the left). The client feels it's more familiar and easier to handle there.
+2. Add a simple "Google Map" visual type to the available tile layers.
+3. Return the "Settings (Gear)" icon to all tabs (it currently only exists on the Objects tab, but used to be on all tabs in the old app).
+
+## Acceptance Criteria
+- Map controls perfectly mirror expected alignment.
+- Google Map tile layer works alongside existing maps (e.g. standard vector/OSM).
+- Every major navigation tab exposes the gear icon with standard interactions.

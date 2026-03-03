@@ -1,0 +1,37 @@
+v:4
+role: dev
+task: S56-TE1-Consolidated-Roadmap
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce single consolidated roadmap document that references or embeds all S56
+deliverables: reverse report, navigation/query/loading diagrams, entity audit,
+state proposal, reuse matrix, migration strategy, risk assessment. Include or link
+Header, Tracking Player, Query Builder, Loader, Modal specs from the System Planning Prompt.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - One document (or index with linked artifacts) as the single reference for implementation planning.
+  - Header spec: collapsed/expanded, context per mode (Objects, Object Details, Map, Tracking, Tracking Action, Reports, Reports Results).
+  - Tracking Player spec: 50% map / 50% action zone; playback controls; summary stats.
+  - Loader spec: fullContent, fullScreen, notification.
+  - Modal spec: SmartSelectableModal (search + list + multi-select).
+  - All prior S56 artifacts linked or summarized; no new content that contradicts them.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Consolidated-Roadmap.md]
+done:
+  - Consolidated roadmap exists; implementation sprints (after gate OPEN) use this as master reference.
+  - Planning only — no code.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TB1, S56-TB2, S56-TB3, S56-TB4, S56-TC1, S56-TC2, S56-TD1, S56-TD2, S56-TD3

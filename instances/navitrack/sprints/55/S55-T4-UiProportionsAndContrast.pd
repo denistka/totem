@@ -1,0 +1,14 @@
+# Task S55-T4: UI Proportions and Contrast
+
+## Description
+1. Improve contrast between blocks. Make sure independent elements are visually separated (add appropriate shadows, borders, or background tint).
+2. The "black highlighted blocks" (possibly selected state or thick borders) should be made as thin as possible.
+3. Reduce the size of the Date selection block. It currently takes up too much vertical space.
+4. Make the Mileage/Distance info block below the date smaller (fit it strictly into single shorter line).
+5. On the map screen, guarantee a 50/50 vertical division between the Map and the bottom panel (Date/Distance settings).
+
+## Acceptance Criteria
+- UI elements do not blend together awkwardly.
+- Highlight borders are subtle (1px).
+- The map covers at least 50% of the screen real-estate height.
+- Date module is compact.

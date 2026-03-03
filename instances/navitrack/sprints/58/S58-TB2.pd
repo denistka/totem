@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TB2-Modal-List-Content-And-Hybrid-Shell
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Use better list implementation from vehicle selection modals. Combine Objects
+modal shell with vehicle selection modal internals (hybrid approach).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - List content: adopt vehicle selection modal list (single/multiple selection).
+  - Shell: Objects page modal structure (search, buttons, layout).
+  - One hybrid pattern for filter/selection modals.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Unified list+shell modal pattern]
+done:
+  - Objects shell + vehicle selection internals combined; list behavior consistent.
+dep: S58-TB1

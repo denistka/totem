@@ -1,0 +1,13 @@
+# Task S55-T3: Company & Vehicle Selection Logic
+
+## Description
+Standardize the primary selection hierarchy (Company -> Vehicle) across the application, specifically on the Tracking and Reports tabs.
+1. The selection flow must start with selecting a Company.
+2. After a Company is selected, the user selects Vehicle(s).
+3. Edge case: If the user only has access to a single Company, completely hide the Company selection field and show only the Vehicle selection directly.
+4. Apply this identical logic to both the `Tracking` tab and the `Reports` tab.
+
+## Acceptance Criteria
+- The hierarchy is enforced strictly.
+- Unnecessary fields are hidden when an array contains only 1 valid Company.
+- Both tabs use the exact same logic.

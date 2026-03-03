@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S57-TF3-Check-Tracking-Execute
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Check tracking execute flow: query build, validation, submit (e.g. POST /ws/track/get),
+response handling, and navigation/results display. Ensure end-to-end execution works.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Tracking screen: required selections (vehicle, date range, event types) validated; submit executes.
+  - API call (track/get or equivalent) succeeds or fails with clear handling.
+  - On success: transition to Tracking Action or results; data available for player/map.
+  - On failure: user sees error state; no silent fail.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Verified or fixed tracking execute path]
+done:
+  - Tracking execute flow works; submit and result handling verified.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: S56-Query-Lifecycle.md (Tracking); S56-State-Architecture-Proposal.md (queryState.tracking).

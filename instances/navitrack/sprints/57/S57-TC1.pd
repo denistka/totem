@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TC1-Logo-Loader-Component
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Async loader component with logo animation. Two display types: full fill (header to
+footer) and notification (small overlay).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Full fill: covers header-to-footer area; optional full screen (covers header/footer).
+  - Notification: small overlay style; does not block full view.
+  - Logo animation during loading; reusable for all loader use cases.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Loader component with display mode prop/variant]
+done:
+  - Component supports fullFill and notification modes; logo animation present.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: S56-Loading-Lifecycle.md (fullContent, fullScreen, notification); S56-State-Architecture-Proposal.md (loadingState).

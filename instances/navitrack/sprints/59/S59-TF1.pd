@@ -1,0 +1,30 @@
+v:4
+role: dev
+task: S59-TF1-PWA-Behavior-Study-Screen-Fill-Rotation-Spacing
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Review previous sprint PWA application behavior studies (find in theme/tome or
+project docs); apply findings. Fix: screen doesn't fully fill; no spacing system
+for screen rotations.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Locate prior PWA behavior studies (theme, tome, or similar artifacts).
+  - Apply recommendations to current app.
+  - Screen: ensure full fill (viewport, 100dvh or equivalent per S54).
+  - Rotation: define or apply spacing system so layout behaves correctly on rotate (portrait/landscape).
+  - Document or implement spacing tokens for rotation if missing.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [PWA full fill + rotation spacing; findings applied]
+done:
+  - Screen fills correctly; rotation does not break layout; spacing system in place or documented.
+ref: S54 INVARIANTS (100dvh); theme/tome or project PWA studies.

@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S56-TD2-Migration-Strategy
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce migration strategy: phased approach from current structure to target
+architecture (Header, Player, Query, Loader, Modal). No new entities without audit.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Phases from current state to consolidated architecture.
+  - Each phase scoped to avoid big-bang; checkpoints for gate approval.
+  - Respect invariants (S51, S52, S53); no duplicate components; state architecture approved before implementation.
+  - Consider Web + Desktop (Tauri) unification.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Migration-Strategy.md]
+done:
+  - Strategy document exists; implementation sprints can be derived from it after gate OPEN.
+  - Planning only.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TD1

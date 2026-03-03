@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S56-TC1-Entity-Audit
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce entity audit: existing Header, Loader, Modal, Player components across
+src-client and pwa-react-app-clear; identify duplication and consolidation targets.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - List current Header implementations (per-page vs shared); target one AppHeader.
+  - List Loader usage; target one GlobalLoader with modes.
+  - List modals (object selection, vehicle selection, report type); target one SmartSelectableModal pattern.
+  - List PlaybackControls / MapEngine / QueryValidator usage.
+  - No new entities; audit only. Align with "do not proliferate entities" constraint.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Entity-Audit.md]
+done:
+  - Document lists existing components and duplication map; consolidation targets clearly stated.
+  - Planning only — no code changes.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TB2, S56-TB3, S56-TB4

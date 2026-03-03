@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TD3-Header-Outside-Click-And-Accordion-Expand
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Header interaction: clicking outside expanded header closes it and prevents
+events from reaching lower layers. Expand header to footer height with
+accordion-style content; scroll if content overflows.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Outside click: close expanded header; stop propagation so lower layers do not receive click.
+  - Expanded state: height from header to footer; accordion-style sections (e.g. Settings, Account).
+  - Overflow: scrollable content when content exceeds viewport.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Header: outside click close + event block; accordion to footer; scroll]
+done:
+  - Outside click closes and blocks events; accordion to footer with scroll.
+dep: S58-TD1

@@ -1,0 +1,12 @@
+# Task S55-T7: Reports and Lists
+
+## Description
+1. Reports are wide 99% of the time. Ensure a reliable and easily discoverable horizontal scroll mechanism for data tables in the Reports tab.
+2. Add a "Download to File" button(s) (e.g., CSV, PDF, Excel) for generated reports.
+3. Clarify logic when switching to the List view: should the List cover the entire screen or an expanding portion? Implement a standard behavior where the list provides maximum readability.
+4. If a report fails to build, render an Error Screen that natively includes a "Restart" or "Retry" button.
+
+## Acceptance Criteria
+- Reports can be panned horizontally without breaking the main layout window.
+- Error states don't leave the user dead-ended; they can hit Restart.
+- Table export actions are clearly visible.

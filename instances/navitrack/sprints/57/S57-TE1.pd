@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S57-TE1-Header-Screen-Loading-State-And-Validation
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+State management: header state (expanded/collapsed), current screen context for
+dynamic header content, loading states per operation type. Tracking and Reports
+header rows act as query validators (display missing required selections).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Header state: expanded/collapsed; screen context drives left content (already used in TA3/TA4; centralize if needed).
+  - Loading state: per operation type (nav, player, report, tracking action); drives loader mode.
+  - Query validation: Tracking and Reports rows show missing required fields; state from query builder/state proposal.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [State slices or store updates; validator display in header]
+done:
+  - Header and loading state consistent with S56 state architecture.
+  - Tracking/Reports header rows show validation state.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TA4, S57-TC2
+ref: S56-State-Architecture-Proposal.md, S56-Query-Lifecycle.md.

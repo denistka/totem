@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S59-TD2-History-Events-From-Object-Select-Like-Tracking
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+History Events screen (from Object Select): should look very similar to tracking
+history events screen (layout, structure, styling alignment).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Compare History Events (object select entry) with Tracking history events screen.
+  - Align layout, components, and styling so both feel like same family.
+  - No functional regression; visual and structural alignment.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History Events from Object Select: aligned to tracking history events]
+done:
+  - Both screens look and behave consistently.
+dep: S59-TD1

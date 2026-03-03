@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S59-TE4-Settings-Accordion-Styling-Match-Operations
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+All accordion content accessible from header settings icon styled as neatly as
+the "operations" section (consistent spacing, hierarchy, visual weight).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit header expanded accordion: Main Settings, Account & Security, App Appearance.
+  - Style all sections to match the quality of "operations" section (or best-existing section).
+  - Use Accordion, AccordionItem, AccordionTrigger, AccordionContent (CODE_MAP); styling only.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Settings accordion: unified neat styling]
+done:
+  - All accordion sections match operations-level styling.
+ref: AppHeader, SettingsScreen, ui/accordion.tsx (CODE_MAP).

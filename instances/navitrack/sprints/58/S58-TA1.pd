@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TA1-Spacing-System-And-Audit
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement systematic spacing checks and a consistent spacing system. Geometry
+entities (loader, header, footer, content) must stay well separated; prevent
+constant overlapping during changes.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Define or align to a spacing system (tokens, margins, padding conventions).
+  - Audit key areas: header, footer, loader overlay, main content, modals.
+  - Document or apply rules so new changes do not break separation.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Spacing system/tokens; audit doc or inline rules]
+done:
+  - Consistent spacing system in use; audit complete.
+ref: @navitrack-apps/src-client/CODE_MAP.md

@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TC1-Fix-Object-Details-Screen-Display
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object Details page is broken when clicking object from Objects page. Map not
+visible; API appears to work. Investigate and fix display issues.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Reproduce: navigate from Objects to Object Details by clicking object.
+  - Fix: page renders correctly; map visible.
+  - Preserve API integration; fix layout/visibility/conditional render only.
+  - Reference S57-TF1/TF2 if history/API or map sync are involved.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details screen displays correctly; map visible]
+done:
+  - Clicking object opens Object Details with correct content and map.
+ref: @navitrack-apps/src-client/CODE_MAP.md

@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S59-TF2-Tracking-Player-API-And-Analytics
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking Player screen: review API interaction and implement analytics function
+from old applications (iOS/Android or reference implementation).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Review TrackingActionScreen API usage (getTrack, TrackRequest, etc.) per CODE_MAP.
+  - Compare with old app analytics/tracking logic.
+  - Implement or restore analytics function (events, playback stats, or product-defined metrics).
+  - Ensure API integration is correct; data displays and updates as expected.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking Player: API verified; analytics implemented or documented]
+done:
+  - API interaction correct; analytics from old apps implemented or gap documented.
+ref: TrackingActionScreen, getApiClient, Track, TrackRequest (CODE_MAP).

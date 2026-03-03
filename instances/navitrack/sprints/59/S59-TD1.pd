@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S59-TD1-History-Events-Restore-Tabs-Back-Button
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+History Events page: two tabs disappeared and cannot return; add back button
+to header and restore tabs.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Restore missing tabs so user can navigate back to History Events or equivalent views.
+  - Add back button to header on History Events (and related) screen(s).
+  - User can return to previous screen reliably.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History Events: tabs restored; header back button]
+done:
+  - Tabs visible and functional; back button in header.
+ref: @navitrack-apps/src-client/CODE_MAP.md

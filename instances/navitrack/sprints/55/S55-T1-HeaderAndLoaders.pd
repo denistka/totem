@@ -1,0 +1,12 @@
+# Task S55-T1: Header and Loaders
+
+## Description
+Adjust the header behavior and visuals:
+1. Fix the centered title alignment so it doesn't look slightly off due to the logo on the left.
+2. Ensure the logo is never completely removed from the header.
+3. Introduce an animated logo-based loader state (e.g. Netflix style) to be shown in the header when data is being retrieved (for objects, reports, etc.).
+4. Overall, add minor structural enhancements to ensure these actions happen cleanly.
+
+## Acceptance Criteria
+- Title spans centered correctly accounting for flexible elements around it.
+- Loading states cleanly transition the logo space to an animated logo loader instead of a static "retrieving data" text placeholder in the middle.

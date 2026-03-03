@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TG1-Loader-Animation-Light-Beam-Oval
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Redesign loader animation: replace blurred circle shadow with light beam
+impulse spreading left and right in oval pattern.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Remove: blurred circle behind logo (shadow effect).
+  - New: light beam impulse, oval pattern, spreading left and right.
+  - Keep logo visible; animation is secondary.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Loader component: new light-beam-oval animation]
+done:
+  - Loader shows light beam oval animation; no blurred circle shadow.
+ref: S57-TC1 (loader component).

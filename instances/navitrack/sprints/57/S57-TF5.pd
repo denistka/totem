@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S57-TF5-Report-Results-Render-Scrollable-Table-Fixed-First-Column
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Report results screen: proper report render and scrollable table with fixed
+first column. Table scrolls horizontally/vertically as needed; first column
+remains visible (sticky).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Report content renders correctly (data, formatting, structure).
+  - Table: scrollable (horizontal and vertical when content overflows).
+  - First column fixed/sticky while scrolling horizontally.
+  - Mobile-friendly or responsive where applicable.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Report results component: correct render + scrollable table, fixed first column]
+done:
+  - Report results display correctly; table scrolls with first column fixed.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TF4 (report build provides data for results).

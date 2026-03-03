@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S57-TA4-Header-Left-Content-Tracking-Reports
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Header left content for Tracking, Tracking Action, Reports, and Reports Results;
+include validation display for Tracking and Reports rows.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Tracking: date/time range, report type, vehicle (marquee), event types count (icon + number); show missing required selections (query validator).
+  - Tracking Action: back, vehicle (marquee), selected event date/time.
+  - Reports: date range, report type, period (icon), companies count, vehicles count; show missing selections (query validator).
+  - Reports Results: back + report type.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Left-content components for Tracking, Tracking Action, Reports, Reports Results]
+done:
+  - Four contexts implemented; validation state visible in header row where specified.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TA1, S57-TA2

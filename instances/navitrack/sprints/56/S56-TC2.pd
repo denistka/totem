@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S56-TC2-State-Architecture-Proposal
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Propose state architecture: UI driven by state (headerMode, headerViewState, queryState,
+playerState, loadingState, navigationState), not by route. Single source of truth for
+Header/Player/Query/Loader behavior.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Define state slices (or namespaces): headerMode, headerViewState, queryState, playerState, loadingState, navigationState.
+  - State-driven: UI depends on these states, not on route directly.
+  - Align with Header spec (collapsed/expanded, context per mode), Tracking Player, Query Builder, Loader modes.
+  - No new store layers without justification; centralize loading and query lifecycle.
+  - Document only; no implementation. Implementation forbidden until this is approved.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-State-Architecture-Proposal.md]
+done:
+  - Proposal document exists; implementation may not start until user approves (gate OPEN).
+  - No code — planning only.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TC1

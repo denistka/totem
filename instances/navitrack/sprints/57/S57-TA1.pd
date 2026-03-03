@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S57-TA1-Header-Configuration-System
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Create centralized header configuration: back-button visibility modes, screen-to-mode
+mapping, and types. No UI yet — constants/types only.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Define HEADER_MODES (or equivalent): WITH_BACK, WITHOUT_BACK, CUSTOM; map screens to mode.
+  - Screens: object-details, tracking-action, reports-results → back; objects, map, tracking, reports → no back.
+  - Types for header config (screen id, left content key, validation role where applicable).
+  - Single source of truth for header behavior per screen type.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [header config/constants file, types]
+done:
+  - Config and types exist; no duplicate header logic in components yet.
+  - All screens from spec mapped to a mode.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: S56-Navigation-Flow.md, S56-State-Architecture-Proposal.md (headerMode, headerViewState).

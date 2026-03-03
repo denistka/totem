@@ -1,0 +1,70 @@
+# Sprint 56: System Planning Prompt — Architecture Roadmap (Planning Only)
+# S56.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Prepare architectural roadmap for refactoring and unification of:
+  Header (collapsed/expanded system bar), Tracking Player, Query Builder (Tracking/Reports),
+  Loader System, Modal System. Work is planning and analysis only — no implementation.
+  Pre-planning is mandatory: verify API docs and reverse-analyze iOS/Android before any
+  architectural design.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/51/S51-INVARIANTS.md, sprints/52/S52-INVARIANTS.md, sprints/53/S53-INVARIANTS.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-SYSTEM-PLANNING
+priority: P0
+source: navitrack-apps/src-client (reference); legacy iOS/Android (reverse analysis)
+target: Planning artifacts only (.md reports, diagrams); no code changes in this sprint.
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E)
+###############################################################################
+
+track-a-pre-planning:
+  desc: Mandatory before any architecture. Verify docs; reverse-analyze iOS and Android. Find source of truth.
+  tasks: [S56-TA1, S56-TA2, S56-TA3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-reverse-docs-and-diagrams:
+  desc: Produce reverse documentation report and lifecycle/flow diagrams (navigation, query, loading).
+  tasks: [S56-TB1, S56-TB2, S56-TB3, S56-TB4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-a-pre-planning
+
+track-c-entity-and-state:
+  desc: Entity audit and state architecture proposal (state-driven, not page-driven).
+  tasks: [S56-TC1, S56-TC2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-b-reverse-docs-and-diagrams
+
+track-d-reuse-and-migration:
+  desc: Component reuse matrix, migration strategy, risk assessment.
+  tasks: [S56-TD1, S56-TD2, S56-TD3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-c-entity-and-state
+
+track-e-consolidation:
+  desc: Single consolidated roadmap document (Header/Player/Query/Loader/Modal specs).
+  tasks: [S56-TE1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-d-reuse-and-migration
+
+###############################################################################
+# PHILOSOPHY (from spec)
+###############################################################################
+# Not a redesign. Consolidation of logic, centralization of state, systemic
+# architecture, preparation for scale, unification Web + Desktop (Tauri).
+# Forbidden: plan UI without reverse analysis; new entities without audit;
+# duplicate components; implement before state architecture approval; page-driven Header.

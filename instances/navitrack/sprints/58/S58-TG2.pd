@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TG2-Search-And-Filter-Styling
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Search Object and filter button on Objects page: more transparent background,
+subtle unobtrusive design; filter icon matches style consistency with other icons.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Search/filter: more transparent background; subtle, unobtrusive.
+  - Filter icon: same style family as other app icons (size, stroke, weight).
+  - Do not change behavior; styling only.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Search and filter: updated styles and icon]
+done:
+  - Search/filter area transparent and subtle; filter icon consistent.
+ref: Objects screen (CODE_MAP).

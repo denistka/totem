@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TE2-Tracking-Screen-Visual-Improvements
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking screen visuals: event icons colorful (visible unselected, brighter
+selected); add "Time Interval Color Widths" labels; Vehicle and Events in two
+rows (Reports page styling).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Event icons: colorful; visible when unselected; brighter when selected.
+  - Labels: "Time Interval Color Widths" for tracking properties (Vehicle and Events sections).
+  - Layout: Select Vehicle and Select Events in two rows; style similar to Reports page.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking screen: icons, labels, two-row layout]
+done:
+  - Event icons and labels updated; two-row layout applied.
+dep: S58-TE1

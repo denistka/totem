@@ -1,0 +1,104 @@
+# Sprint 58: UI/UX Fixes & Improvements
+# S58.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Fix critical layout and spacing (loader/footer overlap, systematic spacing);
+  standardize modals (base design, unified system, interaction standards);
+  fix Object Details screen display; header improvements (full click area, icon,
+  Objects initial state, outside-click close, accordion to footer);
+  fix Tracking Execute API and visuals; map header and popup z-index;
+  loader animation (light beam oval), search/filter styling, theme selector;
+  testing (visual regression, spacing, API, responsive).
+
+requires: [FRONTEND_DEV]
+invariants: sprints/54/INVARIANTS.md
+design-ref: sprints/56/artifacts/S56-Consolidated-Roadmap.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P0
+source: UI/UX Fixes & Improvements Sprint Prompt
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# IMPLEMENTATION NOTICE — CODE MAP & QUALITY
+###############################################################################
+# Use @navitrack-apps/src-client/CODE_MAP.md for quick search of dependencies and
+# to control code quality. Reference it when locating modules, APIs, and structure.
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E → F → G → H)
+###############################################################################
+
+track-a-spacing-and-layout:
+  desc: Systematic spacing system; fix loader overlapping footer and geometry separation.
+  tasks: [S58-TA1, S58-TA2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-modal-standardization:
+  desc: Base modal from Objects; unified system (shell + vehicle selection internals); interaction standards.
+  tasks: [S58-TB1, S58-TB2, S58-TB3, S58-TB4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-a-spacing-and-layout
+
+track-c-object-details-display:
+  desc: Fix Object Details screen broken when clicking object; map not visible.
+  tasks: [S58-TC1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-b-modal-standardization
+
+track-d-header-improvements:
+  desc: Full header click area; icon size/style; Objects initial state; outside click close; accordion to footer.
+  tasks: [S58-TD1, S58-TD2, S58-TD3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-c-object-details-display
+
+track-e-tracking-screen:
+  desc: Tracking Execute API integration (iOS/Python reference); event icons, labels, two-row layout.
+  tasks: [S58-TE1, S58-TE2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-d-header-improvements
+
+track-f-map-screen:
+  desc: Map header (settings right, OSM/Google left); layer selection; popup z-index/positioning.
+  tasks: [S58-TF1, S58-TF2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-e-tracking-screen
+
+track-g-loader-search-theme:
+  desc: Loader animation (light beam oval); search/filter styling; theme selector (icons only).
+  tasks: [S58-TG1, S58-TG2, S58-TG3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-f-map-screen
+
+track-h-testing-validation:
+  desc: Visual regression, spacing validation, Tracking API verification, responsive testing.
+  tasks: [S58-TH1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-g-loader-search-theme
+
+###############################################################################
+# PRIORITY (from prompt)
+###############################################################################
+# High: spacing, modals, Object Details, header click area, Tracking API.
+# Medium: loader animation, search/filter, map popups, Tracking visuals.
+# Low: theme selector background, header animations, map layer selection.
+
+###############################################################################
+# PHILOSOPHY
+###############################################################################
+# Preserve existing behavior where not explicitly changed. Post-sprint: S58-INVARIANTS.md.

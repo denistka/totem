@@ -1,0 +1,15 @@
+# Task S55-T2: Form Actions and Inputs
+
+## Description
+Adjust basic form and selection UI logic as per client expectation:
+1. "OK" button should be on the left, "Cancel" on the right in all selection forms.
+2. The input field for selecting Vehicles should be enlarged.
+3. Add a "Select All" button for vehicles.
+4. Implement multi-select capability for vehicles.
+5. Add a top-level search input (by letters/numbers) inside the vehicle selection form.
+
+## Acceptance Criteria
+- Form action buttons follow the OK(left)-Cancel(right) order.
+- Vehicle selection provides adequate width/height.
+- Filtering is possible by text search inside the vehicle list.
+- Multi-selection and generic "Select All" options work seamlessly.

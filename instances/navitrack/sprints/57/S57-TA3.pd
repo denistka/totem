@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TA3-Header-Left-Content-Objects-Map-Details
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Header left content for Objects, Object Details, and Map screens.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Objects: search bar + modal trigger for object selection.
+  - Object Details: back button, vehicle info (marquee if overflow), selected event date/time.
+  - Map: quick toggle OpenStreet vs Google Maps.
+  - Components are presentational; state from store or props. Marquee for overflow text.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Left-content components or slots for Objects, Object Details, Map]
+done:
+  - Three screen contexts have correct left content; wired to header slot.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TA1, S57-TA2

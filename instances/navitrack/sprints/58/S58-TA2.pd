@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TA2-Fix-Loader-Footer-Overlap-And-Critical-Overlaps
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix loader overlapping footer and other critical overlapping areas. Ensure
+loader and other overlays respect margins and do not cover footer/content
+incorrectly.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Loader: does not overlap footer; clear spatial relationship (e.g. above footer or full-viewport with footer excluded).
+  - Fix any other reported overlaps between application areas.
+  - Use spacing system from TA1 where applicable.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Loader and overlay layout fixes]
+done:
+  - Loader no longer overlaps footer; critical overlaps resolved.
+dep: S58-TA1

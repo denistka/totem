@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TB1-Base-Modal-Design-From-Objects
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Establish base modal design using the well-styled modal from Objects page as
+foundation. All modals must follow this style: buttons, transparency,
+header/footer.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Extract or document Objects page modal style (buttons, transparency, header/footer).
+  - Create or refactor a base modal component that embodies this style.
+  - Buttons: Cancel left, Confirm right (per prompt).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Base modal component or style spec]
+done:
+  - Single base modal style; reusable for all modal types.
+ref: @navitrack-apps/src-client/CODE_MAP.md

@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TG1-Refactoring-Structure-And-Duplication
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Refactor code in areas touched by this sprint: improve structure, remove
+duplication, align with CODE_MAP and existing patterns. No behavior change.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Target: modal system, header/search, map components, Object Details, History Events, Tracking, loader, theme, settings accordion.
+  - Remove duplicate logic and redundant components where unified patterns exist.
+  - Extract shared types, constants, or hooks; consolidate similar UI patterns.
+  - Preserve invariants (S54); follow BottomModal/accordion/header architecture.
+  - One objective per file or module; logic change < 50 lines per .pd scope.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Refactored modules; reduced duplication; clearer structure]
+done:
+  - Touched areas refactored; no new duplication; structure improved.
+ref: @navitrack-apps/src-client/CODE_MAP.md; sprints/54/INVARIANTS.md.

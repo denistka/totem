@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TA1-Modal-Bottom-Anchored-Dynamic-Height-Scroll
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+General modal behavior: all modals anchored to bottom of screen; dynamic height
+based on content (not full screen); if content exceeds screen height, scroll
+within modal under footer with proper margins.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Positioning: bottom-anchored.
+  - Height: dynamic from content (not full screen).
+  - Scroll: content scrolls inside modal; proper margins so content does not extend under footer.
+  - Apply to unified modal system (BottomModal per CODE_MAP).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [BottomModal or base: bottom anchor, dynamic height, scroll with margins]
+done:
+  - All modals use bottom anchor; scroll respects footer margins.
+ref: @navitrack-apps/src-client/CODE_MAP.md (BottomModal, BottomModalHeader/Body/Footer).

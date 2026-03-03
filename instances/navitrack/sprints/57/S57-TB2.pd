@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TB2-Tracking-Player-Timeline-And-Map-Sync
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Scrollable timeline list: parking locations/times, routes between parking; selection
+triggers map rendering of parking points or routes.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Timeline: parking locations + times, routes between parkings.
+  - Interactive selection: chosen item drives map display (points or route).
+  - Map and list stay in sync (selection state); no new store unless in state proposal.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Timeline list component; map sync on selection]
+done:
+  - User can scroll timeline and select; map updates to show relevant segment/points.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TB1

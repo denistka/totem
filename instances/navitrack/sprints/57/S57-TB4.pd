@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TB4-Map-Period-Route-And-Transitions
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Map: period route display with path and direction indicators; map transition
+animations when context changes.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Period route drawn on map (path + direction indicators).
+  - Smooth map transition when switching segment/period or player state.
+  - Performance: efficient re-render; avoid unnecessary full map reload.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map route layer; transition behavior]
+done:
+  - Route and direction visible; transitions smooth per spec.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TB2, S57-TB3

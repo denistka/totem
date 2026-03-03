@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S57-TF2-Check-Map-Render-Objects-History
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Check map rendering for objects and history context: Object Details screen and
+history/timeline data driving map (points, route). Ensure map updates when
+object/history data loads or selection changes.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Object Details: map shows correct context (selected object, date, history points/route).
+  - Map updates when history data arrives (post fetchHistory) or date/selection changes.
+  - No stale or missing layer when switching objects or dates; viewport/center appropriate.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Verified or fixed map render for objects/history]
+done:
+  - Map renders correctly for Object Details and history; sync with data and selection.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TF1 (history data source); can run after TF1 or in parallel if map already wired.

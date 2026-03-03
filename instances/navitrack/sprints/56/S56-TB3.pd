@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S56-TB3-Query-Lifecycle-Diagram
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce query lifecycle diagram for Tracking and Reports: how queries are built,
+validated, and submitted. One QueryValidator / query-builder concept; no duplication.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Tracking: date range, report type, vehicle, event types + count; validation state.
+  - Reports: date range, period type, companies + count, vehicles + count; validation state.
+  - Show build → validate → submit flow; align with reverse docs and API.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Query-Lifecycle.md]
+done:
+  - Diagram or structured doc exists; feeds Query Builder consolidation and state proposal.
+  - No code — planning artifact only.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TB1

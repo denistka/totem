@@ -1,0 +1,26 @@
+v:4
+role: dev
+task: S59-TB2-Map-Layer-Switcher-Transparent-Flat
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Map layer switcher (OpenStreet/Google): more transparent, flatter appearance.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Reduce visual weight; more transparent background.
+  - Flatter design (no heavy borders/shadows).
+  - Keep functionality (layer switch); styling only.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Layer switcher component: updated styles]
+done:
+  - Layer switcher looks transparent and flat.
+dep: S59-TB1

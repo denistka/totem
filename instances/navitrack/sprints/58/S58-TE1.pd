@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TE1-Tracking-Execute-API-Integration
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking Execute button leads to screen that looks correct but API integration
+appears broken. Review old iOS app and Python institute logic for API calls and
+implementation; fix integration.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Compare PWA Tracking Execute flow with iOS and Python institute (API endpoints, params, response handling).
+  - Fix request/response handling so data loads and displays correctly.
+  - Screen may look correct but data or state wrong; fix API and state flow.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking Execute: correct API calls and data display]
+done:
+  - Execute flow uses correct API; data appears on Tracking Action/results screen.
+ref: S56-Query-Lifecycle.md, S57-TF3; @navitrack-apps/src-client/CODE_MAP.md

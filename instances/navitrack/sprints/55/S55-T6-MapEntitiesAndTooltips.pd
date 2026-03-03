@@ -1,0 +1,17 @@
+# Task S55-T6: Map Entities and Tooltips
+
+## Description
+1. Add Vehicle icons to the map layers (presently missing or not hooked up).
+2. Ensure Event Icons look exactly like they did in the previous app iteration.
+3. Above each vehicle icon, add a tooltip (or label) that displays:
+   - The Speed of the vehicle if it is moving.
+   - The letter "P" (Parking) if the vehicle is standing still/parked.
+4. Route visualization: If the vehicle is standing still, just render a point. If viewing a route, render a track/poly-line. Thick and colored track selections are already approved.
+5. Display the Total Amount of Objects somewhere on the screen (as it was in the old form).
+6. Fix the "seconds from last data" format, apparently it is incorrectly formatted.
+
+## Acceptance Criteria
+- Icons and events are distinctly visible on the map.
+- "P" vs "Speed" metric dynamically displays based on vehicle state.
+- Formatted timing (Last Data) uses simple/correct readable strings (e.g. `1m 20s` or `00:01:20`).
+- Total object count is seamlessly integrated into the header or list header.

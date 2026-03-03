@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S57-TD3-Animations-Header-Marquee-Loader-Map
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement animations: header expand/collapse, marquee for overflow text, loader
+logo animation, map transitions.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Header: smooth expand/collapse (already in TA2; tune if needed).
+  - Marquee: overflow content in header (vehicle, etc.) scrolls or marquees.
+  - Loader: logo animation (TC1); confirm smooth.
+  - Map: transition when context/route changes (TB4); confirm smooth.
+  - Performance: efficient; no jank on low-end devices.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Animation polish across header, marquee, loader, map]
+done:
+  - All four animation areas implemented and performant.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TA2, S57-TC1, S57-TB4

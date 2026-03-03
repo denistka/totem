@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S57-TC2-Loader-Integration-By-Use-Case
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Wire loader to each use case: footer nav (full fill, non-blocking), tracking player
+(notification), report generation (full screen block), tracking action nav (full fill, non-blocking).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Footer link navigation: full fill; do not block page transitions.
+  - Tracking Player: notification style during data load.
+  - Report generation: full screen covering entire UI; blocks during processing.
+  - Tracking Action navigation: full fill; do not block page transitions.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Loader usage at each integration point; correct mode and blocking behavior]
+done:
+  - Four use cases use loader with correct display and blocking semantics.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TC1

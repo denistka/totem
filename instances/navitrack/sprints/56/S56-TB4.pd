@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S56-TB4-Loading-Lifecycle-Diagram
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce loading lifecycle diagram: fullContent (header→footer), fullScreen, notification.
+When each mode is used (footer transitions, Tracking Player, report generation, Tracking Action).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Modes: fullContent (area header→footer, footer not blocked), fullScreen (whole screen), notification (non-blocking overlay).
+  - Map usage to flows: footer nav → fullContent; Tracking Player → notification; report generation → fullScreen; Tracking Action → fullContent.
+  - Single GlobalLoader concept; behavior by state, not multiple components.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Loading-Lifecycle.md]
+done:
+  - Diagram or structured doc exists; feeds Loader system spec and state proposal.
+  - No implementation.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TB1

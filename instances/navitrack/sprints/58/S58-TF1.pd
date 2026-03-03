@@ -1,0 +1,26 @@
+v:4
+role: dev
+task: S58-TF1-Map-Header-And-Layer-Selection
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Map screen: header right = settings icon; left = slider for OpenStreet/Google
+Maps. Map area: allow hybrid, satellite, or schematic display selection within map.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Header: right settings; left OSM/Google slider (per S57/spec).
+  - Map layer selection: user can choose hybrid, satellite, or schematic within map UI.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map header content; map layer selector]
+done:
+  - Map screen header correct; layer type selectable.
+ref: @navitrack-apps/src-client/CODE_MAP.md

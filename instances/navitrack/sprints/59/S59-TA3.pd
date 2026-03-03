@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TA3-Report-Vehicle-Modals-Bottom-Anchored-Unified
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Report type and Vehicle selection modals: same bottom-anchored rules; partial
+height for small content, extend to just below header for large content; click
+area above modal to close; content scrolls with transparency under header/footer; unified extensible entity.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Bottom-anchored; dynamic height (partial for small, up to below header for large).
+  - Close: click area above modal closes modal.
+  - Scroll: content scrolls with transparency effect under header and footer.
+  - All modals use same unified extensible component.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Report type + Vehicle modals on unified bottom-anchored system]
+done:
+  - Report and Vehicle modals follow spec; click above to close; transparent scroll.
+dep: S59-TA1

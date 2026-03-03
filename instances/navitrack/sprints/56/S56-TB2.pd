@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S56-TB2-Navigation-Flow-Diagram
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Produce navigation flow diagram: all entry points, header modes (Objects, Object Details, Map, Tracking, Tracking Action, Reports, Reports Results), and transitions. State-driven view of navigation, not page-driven.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Diagram covers: Objects, Object Details, Map, Tracking, Tracking Action, Reports, Reports Results.
+  - Show transitions and which header mode applies at each step.
+  - Align with reverse documentation (TA2/TA3) and Header spec (collapsed/expanded, context per mode).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [totem/instances/navitrack/sprints/56/artifacts/S56-Navigation-Flow.md]
+done:
+  - Diagram or structured doc exists; usable for Header and state architecture design.
+  - Format: Mermaid, text flowchart, or equivalent; no implementation.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S56-TB1

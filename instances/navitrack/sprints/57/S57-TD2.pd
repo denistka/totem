@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S57-TD2-Visual-Consistency-Dropdowns-Reports-Density
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Align visuals and content density with reports page; reduce contrast on dropdowns
+for better hierarchy.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Dropdown elements: reduced contrast where specified for visual hierarchy.
+  - Content density and styling aligned to reports page as reference.
+  - No functional change; visual polish only.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [CSS/token or component updates for dropdowns and density]
+done:
+  - Dropdowns and density match spec; reports page is reference.
+
+###############################################################################
+# DEPENDENCY
+###############################################################################
+dep: S57-TD1 (optional; can run in parallel if no shared components).

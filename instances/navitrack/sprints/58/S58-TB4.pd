@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S58-TB4-Modal-Interaction-Standards
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Modal interaction standards: button layout (Cancel left, Confirm right);
+clicking outside modal area closes modal.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Button layout: Cancel on left, Confirm on right (all modals).
+  - Outside click: close modal when user clicks outside modal area.
+  - Apply to unified modal system (TB3).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Consistent modal interaction across all modals]
+done:
+  - All modals: correct button order; outside click closes.
+dep: S58-TB3

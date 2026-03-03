@@ -1,0 +1,4 @@
+# S56 planning artifacts (reports, diagrams) are produced by executing S56-TA1 … S56-TE1.
+# Output paths: S56-API-Doc-Gaps.md, S56-Reverse-*.md, S56-*-Flow.md, S56-*-Lifecycle.md,
+# S56-Entity-Audit.md, S56-State-Architecture-Proposal.md, S56-Component-Reuse-Matrix.md,
+# S56-Migration-Strategy.md, S56-Risk-Assessment.md, S56-Consolidated-Roadmap.md.

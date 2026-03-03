@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S59-TE1-Loader-Animation-Circular-Pulsating-Disappear
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Loader animation redesign: keep circular design under logo; on disappear, circle
+greatly increases in size and temporarily changes shade; pulsating spot more
+blurred than current; strongly increases in size when disappearing.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Shape: circular under logo (no side blur that looks bad).
+  - Animation: pulsating blurred spot.
+  - Disappear: circle greatly increases in size; temporary shade change; strong size increase on exit.
+  - Replace current blur-to-side effect.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Loader component: new circular pulsating + disappear animation]
+done:
+  - Loader shows circular pulsating circle; exit animation scales up with shade change.
+ref: GlobalLoader (CODE_MAP).

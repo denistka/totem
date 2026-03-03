@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S58-TB3-Unified-Modal-System-Migrate-All-Modals
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Unified modal component system. Migrate all current modals to base style and
+pattern: Objects filter, Reports date/time, vehicle selection (single/multi),
+report type selection, company selection.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - All listed modals use same base design and interaction standards.
+  - System can expand for future modal types.
+  - Modals: Objects filter, Reports date/time, vehicle selection, report type, company selection.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [All modals migrated to unified system]
+done:
+  - Five modal use cases (or equivalents) on unified system.
+dep: S58-TB1, S58-TB2

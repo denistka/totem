@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S59-TG2-Optimizing-Performance
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Optimize code in areas touched by this sprint: reduce re-renders, lazy load
+where appropriate, improve animation and list performance. No behavior change.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Target: modals (scroll, mount/unmount); map (layer, popups); Object Details (scroll container, list); Tracking (icons, validation); loader (animation); theme toggle.
+  - Avoid unnecessary re-renders (memo, selectors, or effect deps).
+  - Lazy load heavy components or data where it fits (e.g. modals, map overlays).
+  - Animation: use CSS or RAF where appropriate; avoid layout thrash.
+  - List virtualization or efficient keys if long lists introduced or exposed.
+  - Preserve correctness; measure or validate that UX is not regressed.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Optimized components; no performance regressions]
+done:
+  - Touched areas optimized; animations and lists smooth; no new bottlenecks.
+dep: S59-TG1
+ref: @navitrack-apps/src-client/CODE_MAP.md.

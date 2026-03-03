@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S57-TF4-Check-Build-Reports
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Check report build flow: report type and params (companies, vehicles, date range,
+period), submit (e.g. POST /ws/doreport), and report generation lifecycle. Ensure
+build executes and loader/blocking behavior is correct.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Reports screen: required selections validated; build/submit executes.
+  - Report generation API called correctly; full-screen loader during processing (per TC2).
+  - On success: transition to report results or open report output.
+  - On failure: clear error; no stuck loader.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Verified or fixed report build path]
+done:
+  - Report build executes; loader and transition behavior correct.
+
+###############################################################################
+# REFERENCE
+###############################################################################
+ref: S56-Query-Lifecycle.md (Reports); S57-TC2 (full screen loader for report gen).
