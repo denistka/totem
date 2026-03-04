@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S60-TA2-Object-Details-Scroll-Fixed-Top-List-Only
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object Details: map, date selector, general information remain fixed. Only
+bottom list section scrolls. Scroll area from general info line to footer.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fixed: map, date selector, general info block.
+  - Scroll: single scroll container for events/list below general info down to footer.
+  - No full-page scroll; list scroll does not move map or date selector.
+  - Layout: clear fixed region vs scroll region.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details layout: fixed top + scroll list to footer]
+done:
+  - Map/date/info fixed; only list scrolls; scroll area to footer.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S59-TD3.

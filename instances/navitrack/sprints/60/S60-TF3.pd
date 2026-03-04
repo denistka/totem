@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S60-TF3-Comprehensive-API-Review-And-Migration
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Scan and analyze old iOS/Android applications; find documentation from previous
+implementations; focus on IP logic and application behavior; transfer detailed
+logic from old to new application.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Review old iOS and Android apps for API usage, endpoints, request/response shapes.
+  - Locate any API or behavior documentation from prior implementations.
+  - Document gaps: what old app does vs what PWA does; list endpoints and behaviors to align.
+  - Transfer or implement missing critical logic (tracking, reports, history, objects) into PWA.
+  - Prioritize by impact; can be phased (document first, then implement in TF2/TA5 or follow-up sprints).
+  - Object Details history logic: check and fix from original implementation (reference TA5, TB2, TB3).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [API review doc or checklist; transferred logic or implementation plan]
+done:
+  - Old app API and behavior documented; key logic transferred or plan in place.
+dep: S60-TF1, S60-TF2
+ref: @navitrack-apps/src-client/CODE_MAP.md; S56 artifacts (reverse docs).

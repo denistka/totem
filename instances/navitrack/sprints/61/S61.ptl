@@ -1,0 +1,99 @@
+# Sprint 61: Critical Bugs & Issues Sprint
+# S61.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Fix critical bugs across the NaviTrack PWA: button positioning consistency; iOS PWA 
+  loader safe area gaps; API request throttling in tracking player; loading state 
+  management with toast notifications; map header consolidation; persistent navigation 
+  restoration; layout and scrolling fixes; date/time formatting; data display issues; 
+  dropdown alignment; and UI/UX improvements. Followed by comprehensive refactoring:
+  eliminate code duplication, optimize component architecture, improve performance,
+  implement proper error boundaries, consolidate API patterns, optimize bundle size,
+  and enhance type safety.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/53/S53-INVARIANTS.md
+design-ref: sprints/56/artifacts/S56-Consolidated-Roadmap.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P0
+source: Critical Bugs & Issues Sprint Prompt
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# IMPLEMENTATION NOTICE — CODE MAP & QUALITY
+###############################################################################
+# Use @navitrack-apps/src-client/CODE_MAP.md for quick search of dependencies and
+# to control code quality. Reference existing components: useToast, store methods,
+# ui/vehicle-icons, and proper API client patterns.
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E → F → G → H → I)
+###############################################################################
+
+track-a-critical-fixes:
+  desc: Button positioning consistency; iOS PWA loader gaps; API throttling; toast loading states.
+  tasks: [S61-TA1, S61-TA2, S61-TA3, S61-TA4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-navigation-issues:
+  desc: History Events tabs restoration; Object Details back button; header button styling.
+  tasks: [S61-TB1, S61-TB2, S61-TB3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-c-layout-scrolling:
+  desc: Object Details contained scrolling; History page scroll behavior; drag to expand map.
+  tasks: [S61-TC1, S61-TC2, S61-TC3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-d-data-formatting:
+  desc: Date/time formatting in Objects list; Reports table fixed column; dropdown left alignment.
+  tasks: [S61-TD1, S61-TD2, S61-TD3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-e-map-header:
+  desc: Map controls consolidation in header; map provider switcher unification.
+  tasks: [S61-TE1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-e2-async-cleanup:
+  desc: Async operation cleanup on screen exit; memory optimization.
+  tasks: [S61-TE2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-f-ui-polish:
+  desc: Login input spacing; icon system implementation; Tracking player enhancements.
+  tasks: [S61-TF1, S61-TF2, S61-TF3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-g-code-cleanup:
+  desc: Remove dead code; eliminate hardcoded lists; consolidate duplicate components.
+  tasks: [S61-TG1, S61-TG2, S61-TG3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-h-component-optimization:
+  desc: Extract reusable components; implement proper composition patterns; optimize re-renders.
+  tasks: [S61-TH1, S61-TH2, S61-TH3]
+  requires: [FRONTEND_DEV, ARCHITECT]
+  gate: OPEN
+
+track-i-performance:
+  desc: Bundle size optimization; lazy loading; memoization; virtual scrolling.
+  tasks: [S61-TI1, S61-TI2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN

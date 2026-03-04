@@ -1,0 +1,55 @@
+v:4
+role: dev
+task: S63-TI3-Remove-Unused-Code
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Удалить весь неиспользуемый код, мертвые импорты, неиспользуемые компоненты,
+хуки, утилиты. Провести глубокую чистку проекта от мусора.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Удалить все неиспользуемые импорты
+  - Удалить мертвые компоненты (не импортируемые нигде)
+  - Удалить неиспользуемые хуки и утилиты
+  - Удалить закомментированный код
+  - Удалить неиспользуемые CSS классы
+  - Удалить неиспользуемые типы и интерфейсы
+  - Удалить избыточные зависимости из package.json
+  - Очистить console.log и debug код
+  - Удалить TODO комментарии (перенести в issues)
+
+###############################################################################
+# CLEANUP CHECKLIST
+###############################################################################
+cleanup:
+  - [ ] Unused imports (ESLint no-unused-vars)
+  - [ ] Dead components (not imported anywhere)
+  - [ ] Unused hooks (grep search for usage)
+  - [ ] Unused utilities (lib/utils analysis)
+  - [ ] Commented code blocks
+  - [ ] Unused CSS classes (PurgeCSS analysis)
+  - [ ] Unused types/interfaces
+  - [ ] Unused npm packages
+  - [ ] Debug console.logs
+  - [ ] Old TODO comments
+  - [ ] Duplicate files
+  - [ ] Test files for deleted components
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Clean codebase with no unused code]
+done:
+  - Весь мертвый код удален
+  - Нет неиспользуемых импортов
+  - package.json очищен от лишних зависимостей
+  - Нет закомментированного кода
+  - Bundle size уменьшен
+  - Отчет о удаленном коде в sprints/63/artifacts/Cleanup-Report.md
+ref: @navitrack-apps/src-client; ESLint; S63-TI1 audit report.

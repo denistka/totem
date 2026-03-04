@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S60-TC3-Tracking-Player-Controls-And-Map-Interaction
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking Player: map shows all stop-frame points for selected date. Navigation
+controls (left to right): First frame, Step back, Start/stop, Step forward, Last
+frame. Frame navigation updates map and highlights stop-frame point; popup shows
+vehicle name, event, sensor, speed. Click any map point → go to time snapshot
+details. Back button: more right margin.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Map: all stop-frame points for selected date visible.
+  - Controls: First, Step back, Play/Pause, Step forward, Last (left to right).
+  - Frame change: map updates; current point highlighted; popup (vehicle, event, sensor, speed).
+  - Click map point: navigate to time snapshot details.
+  - UI: back button has more right margin.
+  - API integration per TA5/TF2.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking Player: controls, map sync, popup, click→snapshot, back margin]
+done:
+  - Controls work; map and popup update; click to snapshot; back button spaced.
+dep: S60-TA5
+ref: @navitrack-apps/src-client/CODE_MAP.md (TrackingActionScreen).

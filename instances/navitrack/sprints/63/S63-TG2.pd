@@ -1,0 +1,36 @@
+v:4
+role: dev
+task: S63-TG2-Verify-New-App-API-Accuracy
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Verify new PWA application API implementation against old apps. Ensure all required
+parameters are included and request patterns match proven implementation.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Compare new app API calls with old app patterns from S63-TG1
+  - Verify all required parameters are included in new app requests
+  - Check authentication and header patterns match
+  - Identify missing parameters or incorrect request structures
+  - Test API responses match expected formats
+  - Verify error handling patterns
+  - Document discrepancies and required fixes
+  - Create checklist of API accuracy issues
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [API Verification Report with discrepancies and fixes]
+done:
+  - All API endpoints compared between old and new apps
+  - Missing parameters identified and documented
+  - Request structure discrepancies listed
+  - Verification report created in sprints/63/artifacts/API-Verification.md
+  - Checklist of required fixes created
+ref: @navitrack-apps/src-client/lib/api; sprints/63/artifacts/API-Analysis.md.

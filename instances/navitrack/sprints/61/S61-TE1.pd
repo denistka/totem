@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TE1-Map-Header-Consolidation
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Move all map controls including provider switcher (Open Street/Google) from map
+to header area. Consolidate all map-related controls in unified header location.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Move map provider switcher from map overlay to header
+  - Consolidate all map view controls in header area
+  - Maintain functional provider switching capability
+  - Ensure controls accessible without interfering with map interaction
+  - Use consistent header control styling
+  - Test with both map providers (Open Street and Google)
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Consolidated map controls in header]
+done:
+  - All map controls moved to header area
+  - Provider switcher functional and accessible
+  - Map interaction area clean without controls
+  - Consistent header styling maintained
+ref: @navitrack-apps/src-client/CODE_MAP.md (Header components, map controls).

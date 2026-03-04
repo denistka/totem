@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TD2-Fix-Tracking-Footer-Visibility
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Tracking screen layout where page overlaps footer. Footer must be visible
+and page content should not extend beyond footer top edge.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Adjust Tracking screen layout to respect footer height
+  - Use TrackingPlayer component with proper padding
+  - Apply pb-[calc(var(--footer-height)+env(safe-area-inset-bottom))]
+  - Ensure content scrolls within available space
+  - Test on iOS PWA with safe area insets
+  - Verify footer remains visible during scroll
+  - Check both portrait and landscape orientations
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking screen with visible footer]
+done:
+  - Footer visible on Tracking screen
+  - Page content does not overlap footer
+  - Layout works with safe area insets
+  - Scroll behavior correct in all orientations
+ref: @navitrack-apps/src-client/CODE_MAP.md (TrackingActionScreen, TrackingPlayer).

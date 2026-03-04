@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TF1-Map-Theme-Support
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement map theme support. When black theme is active, map should be colored
+in black/dark style.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Detect current theme (light/dark) from app state
+  - Apply dark map tiles when black theme is active
+  - Use appropriate dark map provider (e.g., CartoDB Dark Matter)
+  - Switch map style dynamically when theme changes
+  - Ensure map markers and overlays remain visible on dark map
+  - Test theme switching with map visible
+  - Preserve user's map provider preference
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map with theme-aware styling]
+done:
+  - Map uses dark tiles when black theme active
+  - Map switches style on theme change
+  - Markers and overlays visible on dark map
+  - Theme preference persisted correctly
+ref: @navitrack-apps/src-client/CODE_MAP.md (map-screen, theme system).

@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TE4-Toast-Messaging-System
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement toast messaging for user feedback. First use: Tracking screen "Data
+for this date does not exist" when no data. Extensible for other messages.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Toast component or use existing (e.g. Radix Toast, sonner, or minimal custom).
+  - Show message "Data for this date does not exist" on Tracking when no data for selected date/vehicle.
+  - API: show(message) or equivalent; non-blocking; auto-dismiss or close button.
+  - Position and style consistent with app; does not cover critical UI.
+  - Can be used from other screens later (e.g. report ready, errors).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Toast system; Tracking no-data uses it]
+done:
+  - Toast works; Tracking no-data shows toast; reusable for other messages.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S60-TC2 consumes this.

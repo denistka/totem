@@ -1,0 +1,30 @@
+v:4
+role: dev
+task: S60-TE2-Dropdown-Alignment-And-Tracking-Underline-Padding
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Reports page: dropdown content starts centered — align to left. Tracking page:
+second line always left-aligned (verify or fix). Align all dropdown content to
+left edge. Tracking page: reduce padding for underline that changes size and color.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Reports: dropdown content left-aligned (not centered).
+  - Tracking: second line left-aligned; ensure consistency.
+  - All dropdowns: content aligned to left edge.
+  - Tracking: reduce padding around underline (size/color change element).
+  - UI/UX only; no behavior change.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Dropdown alignment; Tracking underline padding]
+done:
+  - Dropdowns left-aligned; Tracking underline padding reduced.
+ref: @navitrack-apps/src-client/CODE_MAP.md.

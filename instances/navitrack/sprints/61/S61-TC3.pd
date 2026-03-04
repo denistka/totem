@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S61-TC3-Async-Operation-Cleanup
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement proper cleanup of async operations when leaving screens to optimize memory
+and prevent unnecessary requests.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Create cleanup utility for async operations (AbortController)
+  - Implement cleanup hooks for screen unmount/navigation
+  - Cancel pending API requests when leaving screen
+  - Clear timeouts and intervals on cleanup
+  - Remove event listeners to prevent memory leaks
+  - Log cleanup operations for debugging
+  - Apply to all major screens (Objects, History, Tracking, Reports)
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Async operation cleanup system]
+done:
+  - No API requests continue after screen exit
+  - Memory usage optimized with proper cleanup
+  - AbortController pattern implemented consistently
+  - Cleanup hooks integrated with React lifecycle
+ref: @navitrack-apps/src-client/CODE_MAP.md (API layer, screen components).

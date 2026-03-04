@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S63-TA1-Button-Footer-Anchoring
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Anchor all action buttons (Build Report, Execute, Tracking) to footer with identical
+positioning across all screens. Buttons must be consistently positioned at footer level.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Use ActionButton component from components/ui/action-button.tsx
+  - Position all action buttons at footer level with consistent spacing
+  - Apply fixed positioning relative to footer height
+  - Ensure buttons remain anchored during scroll
+  - Test on Tracking execute button and Reports BuildReport button
+  - Verify positioning on mobile and desktop viewports
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Action buttons anchored to footer across all screens]
+done:
+  - All action buttons positioned identically at footer level
+  - Consistent spacing and alignment verified
+  - Buttons remain fixed during scroll
+  - Mobile and desktop layouts tested
+ref: @navitrack-apps/src-client/CODE_MAP.md (ActionButton, TrackingScreen, ReportsScreen).

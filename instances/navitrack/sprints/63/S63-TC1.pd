@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TC1-Fix-Object-Details-Popup-Persistence
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Object Details map popup that appears and immediately disappears. Popup should
+remain constantly visible over vehicle point.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fix popup auto-close behavior on Object Details map
+  - Keep popup permanently open over vehicle marker
+  - Ensure popup displays vehicle information correctly
+  - Position popup centered above vehicle icon
+  - Prevent popup from closing on map interactions
+  - Use Leaflet popup options to control persistence
+  - Test popup visibility across different zoom levels
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details map with persistent popup]
+done:
+  - Popup remains visible over vehicle point
+  - Popup does not auto-close
+  - Vehicle information displayed correctly
+  - Popup positioned properly above marker
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectDetails, VehicleInfoPopup).

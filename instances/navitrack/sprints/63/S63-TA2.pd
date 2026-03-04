@@ -1,0 +1,55 @@
+v:4
+role: dev
+task: S63-TA2-iOS-PWA-Loader-Final-Fix
+gate: OPEN
+requires: [FRONTEND_DEV]
+priority: CRITICAL
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+🚨 CRITICAL: Final fix for iOS PWA loader positioning. Eliminate gaps between header 
+and loader blur background in installed iOS app. This is blocking client demos.
+Top edge pinned to header, bottom to footer.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Implement proper safe area insets for iOS PWA specifically
+  - Pin loader top edge to header bottom, bottom edge to footer top
+  - Test ONLY on installed iOS app (Add to Home Screen), not browser
+  - Use env(safe-area-inset-*) for iOS notch and home indicator
+  - Ensure loader covers full viewport in installed app
+  - Verify browser shell behavior remains unchanged
+
+###############################################################################
+# TECHNICAL SOLUTION (based on Sprint 50 success)
+###############################################################################
+solution:
+  1. Loader container positioning:
+     - Use fixed positioning with proper safe area calculations
+     - top: calc(var(--header-height) + env(safe-area-inset-top, 0px))
+     - bottom: calc(var(--footer-height) + env(safe-area-inset-bottom, 0px))
+     - left: env(safe-area-inset-left, 0px)
+     - right: env(safe-area-inset-right, 0px)
+  
+  2. Ensure viewport-fit=cover in index.html:
+     - <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+  3. Apply min-height: 100dvh on container
+  
+  4. Use backdrop-filter: blur() for blur effect
+  
+  5. Test specifically on installed iOS PWA (not Safari browser)
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [iOS PWA loader with no gaps, proper edge pinning]
+done:
+  - No gaps visible between header and loader in installed iOS app
+  - Loader edges properly pinned to header/footer
+  - Browser shell behavior unaffected
+  - Tested on actual iOS device with installed PWA
+ref: @navitrack-apps/src-client/CODE_MAP.md (GlobalLoader); iOS PWA safe area.

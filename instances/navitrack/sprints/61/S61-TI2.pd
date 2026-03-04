@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TI2-Performance-Optimizations
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement performance optimizations including virtual scrolling, image lazy loading,
+and efficient data fetching patterns.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Implement virtual scrolling for large lists (Objects, History events)
+  - Add image lazy loading with intersection observer
+  - Optimize API calls with proper caching strategies
+  - Implement skeleton loading states for better perceived performance
+  - Add service worker for caching static assets
+  - Monitor Core Web Vitals and optimize
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Performance-optimized application]
+done:
+  - Virtual scrolling handles large datasets efficiently
+  - Images load on demand reducing initial load
+  - API caching reduces redundant requests
+  - Core Web Vitals scores improved
+ref: @navitrack-apps/src-client/CODE_MAP.md; performance monitoring.

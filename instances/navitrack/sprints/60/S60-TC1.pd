@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S60-TC1-Reports-Table-Structure-Fixed-Vehicle-Column
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Reports table: Vehicle column fixed (non-scrolling, OPEN). Other columns scroll
+left/right. Columns: Vehicle, Day, Fuel CAN, Average Fuel Consumption (x2 if
+different), Mileage CAN, Engine Hours CAN. Bottom row: total summary highlighted
+in green.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Vehicle column: fixed/sticky; does not scroll horizontally.
+  - Other columns: scroll horizontally; verify column set (Fuel CAN, Avg Fuel Consumption, Mileage CAN, Engine Hours CAN, etc.).
+  - Bottom row: totals; green highlight.
+  - Table scrolls; first column always visible.
+  - Align with S57-TF5 (report results scrollable table, fixed first column) if same table.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Reports table: fixed Vehicle column, columns, green total row]
+done:
+  - Table structure and scrolling match spec; total row green.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S57-TF5.

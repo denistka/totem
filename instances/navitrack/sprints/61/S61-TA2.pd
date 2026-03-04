@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S61-TA2-iOS-PWA-Loader-Safe-Area
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix gaps between header and loader blur background in installed iOS Safari PWA.
+Loader must fill header-to-footer space completely without any visible gaps.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Implement proper safe area inset handling using env(safe-area-inset-*)
+  - Apply safe area margins to loader container to respect iOS notches and home indicator
+  - Ensure loader occupies full effective header-to-footer space
+  - Test on actual iOS PWA (Add to Home Screen) or iOS Simulator with safe area
+  - Preserve existing viewport invariants (100dvh where applicable)
+  - Do not break non-iOS browser behavior
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [iOS PWA loader with proper safe area handling]
+done:
+  - No gaps visible between header and loader in iOS PWA
+  - Loader respects safe area insets on all iOS devices
+  - Cross-browser compatibility maintained
+ref: @navitrack-apps/src-client/CODE_MAP.md (GlobalLoader); sprints/54/INVARIANTS.md.

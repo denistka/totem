@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TA4-Restore-Missing-Tabs
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Restore missing History and Events tabs on Object Details screen and History Events
+page. Ensure proper tab navigation and visibility.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Restore History and Events tabs under Object Details header
+  - Restore tabs on History Events page
+  - Implement proper tab switching functionality
+  - Position tabs correctly below header
+  - Ensure tab state persistence during navigation
+  - Use consistent tab styling from design system
+  - Make Events tab accessible for event filtering
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Restored tabs on Object Details and History Events]
+done:
+  - History and Events tabs visible on Object Details
+  - Tabs functional on History Events page
+  - Tab switching works correctly
+  - Events tab accessible for filtering
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectDetails, History components).

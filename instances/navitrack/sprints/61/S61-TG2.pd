@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TG2-Eliminate-Hardcoded-Lists
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Replace hardcoded data lists with dynamic data from API or configuration files.
+Ensure data is sourced properly and not duplicated in components.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Identify all hardcoded arrays and objects in components
+  - Create proper API endpoints or configuration for static data
+  - Implement data fetching with proper error handling
+  - Add loading states for dynamic data
+  - Cache static data appropriately
+  - Update CODE_MAP.md with data sources
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Dynamic data system replacing hardcoded lists]
+done:
+  - No hardcoded data lists remain in components
+  - All data sourced from API or configuration
+  - Proper error handling for data fetching
+  - Performance optimized with caching
+ref: @navitrack-apps/src-client/CODE_MAP.md; API layer.

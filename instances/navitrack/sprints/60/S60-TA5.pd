@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TA5-Tracking-Player-API-And-Analytics
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking player screen: review API interaction and implement analytics function
+from old applications (iOS/Android). Previously identified but not fixed.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Review TrackingActionScreen API (getTrack, TrackRequest, etc.) per CODE_MAP.
+  - Compare with old iOS/Android tracking and analytics logic.
+  - Implement analytics (events, playback stats, or product-defined metrics) from old apps.
+  - Ensure API calls and response handling match expected behavior.
+  - Reference old iOS application for correct API integration.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking Player: API verified; analytics implemented or documented]
+done:
+  - API integration correct; analytics from old apps in place or gap documented.
+ref: @navitrack-apps/src-client/CODE_MAP.md (TrackingActionScreen, getApiClient); S58-TE1, S59-TF2.

@@ -119,18 +119,54 @@ S48:
   scope:css-refactor,app-ui-kit-cleanup
   dep:S47
 
+S50:
+  name:Tauri-2-Multi-Platform
+  path:sprints/50/
+  status:✅ complete
+  priority:P0
+  scope:tauri2,multi-platform,build-matrix
+
+S51:
+  name:Foundation
+  path:sprints/51/
+  status:✅ complete
+  priority:P0
+  scope:glass-design-system,theme-colors,ui-components
+
 S52:
   name:Root-Layouting
   path:sprints/52/
-  status:⬜ planned
+  status:🟢 in-progress
   priority:P0
   scope:app-background,app-curtains,app-header,app-footer,root
   dep:S48
+
+S56:
+  name:Consolidated-Roadmap
+  path:sprints/56/
+  status:✅ complete
+  priority:P0
+  scope:architecture-consolidation,roadmap,artifacts
+
+S58:
+  name:Spacing-Audit
+  path:sprints/58/
+  status:✅ complete
+  priority:P1
+  scope:ui-layout,spacing-system,css-variables
+
+S63:
+  name:Map-UI-Polish
+  path:sprints/
+  status:✅ complete
+  priority:P1
+  scope:popup-fixes,map-padding,status-indicator,badge-positioning
+  dep:S47
 
 ###############################################################################
 # ORDER
 ###############################################################################
 
 order:[S48→S52→S38→S39→S40]
-done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47]
+done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S50→S51→S56→S58→S63]
 

@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TI1-Bundle-Size-Optimization
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Optimize application bundle size through code splitting, tree shaking, and
+removing unused dependencies.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Analyze bundle with webpack-bundle-analyzer
+  - Implement route-based code splitting with React.lazy
+  - Remove unused npm packages and dependencies
+  - Optimize imports (e.g., lodash individual modules)
+  - Implement dynamic imports for heavy components
+  - Add compression for production builds
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Optimized bundle with reduced size]
+done:
+  - Bundle size reduced by at least 20%
+  - Code splitting implemented for major routes
+  - Unused dependencies removed
+  - Bundle analysis report created
+ref: @navitrack-apps/src-client/CODE_MAP.md; webpack configuration.

@@ -1,0 +1,95 @@
+# Sprint 63: Unfixed Issues & New Bugs Sprint
+# S63.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Fix critical unfixed issues and new bugs in NaviTrack PWA: button positioning anchored 
+  to footer; iOS PWA loader safe area final fix; restore missing badges on Objects screen; 
+  fix missing tabs on Object Details and History Events; consolidate all map controls in 
+  header; restore zoom controls; fix Object Details popup persistence; optimize Tracking 
+  screen performance; fix footer visibility; implement toast notifications for map loading.
+  Analyze old iOS/Android applications to verify API implementation accuracy, extract all 
+  API parameters and request patterns, and ensure new app matches proven implementation.
+  Extract and integrate original vehicle icons from old apps into Objects list.
+  Final comprehensive refactoring: split large components (>150 lines), remove unused code,
+  simplify architecture, optimize structure based on holistic project review.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/53/S53-INVARIANTS.md
+design-ref: sprints/56/artifacts/S56-Consolidated-Roadmap.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P0
+source: Unfixed Issues & New Bugs Sprint Prompt
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# IMPLEMENTATION NOTICE — CODE MAP & QUALITY
+###############################################################################
+# Use @navitrack-apps/src-client/CODE_MAP.md for quick search of dependencies.
+# Reference new components: date-utils, api-throttler, use-async-cleanup, 
+# TrackingPlayer, HeaderSlots, ActionButton, VirtualizedReportTable.
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E → F → G → H → I)
+###############################################################################
+
+track-a-critical-unfixed:
+  desc: Button footer anchoring; iOS PWA loader final fix; restore Objects badges; restore tabs.
+  tasks: [S63-TA1, S63-TA2, S63-TA3, S63-TA4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-map-controls:
+  desc: Consolidate all map controls in header; restore zoom buttons; add map type selector.
+  tasks: [S63-TB1, S63-TB2, S63-TB3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-c-object-details-fixes:
+  desc: Fix popup persistence; restore route events; fix header positioning; add back button.
+  tasks: [S63-TC1, S63-TC2, S63-TC3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-d-tracking-optimization:
+  desc: Optimize loading performance; fix footer visibility; fix header badge positioning.
+  tasks: [S63-TD1, S63-TD2, S63-TD3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-e-navigation-fixes:
+  desc: Restore History Events tabs; add back buttons; fix header button styling.
+  tasks: [S63-TE1, S63-TE2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-f-enhancements:
+  desc: Map theme support; toast notifications; async cleanup implementation.
+  tasks: [S63-TF1, S63-TF2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-g-api-analysis:
+  desc: Analyze old iOS/Android apps API implementation; verify and optimize new app API calls; fix iOS safe areas.
+  tasks: [S63-TG1, S63-TG2, S63-TG3, S63-TG4]
+  requires: [FRONTEND_DEV, ARCHITECT]
+  gate: OPEN
+
+track-h-original-assets:
+  desc: Extract and integrate original vehicle icons from old iOS/Android apps.
+  tasks: [S63-TH1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-i-refactoring:
+  desc: Comprehensive refactoring and cleanup; component splitting; remove unused code.
+  tasks: [S63-TI1, S63-TI2, S63-TI3, S63-TI4]
+  requires: [FRONTEND_DEV, ARCHITECT]
+  gate: OPEN

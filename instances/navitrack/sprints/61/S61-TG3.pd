@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TG3-Consolidate-Duplicate-Components
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Identify and merge duplicate or near-duplicate components to reduce code duplication
+and improve maintainability.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit components for duplicate functionality
+  - Create shared components for common patterns
+  - Implement proper prop interfaces for flexibility
+  - Update all consuming components to use shared versions
+  - Remove old duplicate components
+  - Document shared component usage patterns
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Consolidated component library with no duplicates]
+done:
+  - Duplicate components merged into shared versions
+  - Component count reduced significantly
+  - Consistent patterns across application
+  - Documentation updated for shared components
+ref: @navitrack-apps/src-client/CODE_MAP.md; components directory.

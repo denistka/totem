@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TH3-Implement-Composition-Patterns
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Refactor complex components using composition patterns instead of inheritance or
+deep nesting for better flexibility and maintainability.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Identify complex components with tight coupling
+  - Break down into smaller, composable pieces
+  - Implement render prop and children prop patterns
+  - Create flexible component APIs with composition
+  - Remove prop drilling where appropriate
+  - Add TypeScript interfaces for composition contracts
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Composable component architecture]
+done:
+  - Complex components simplified through composition
+  - Component coupling reduced
+  - Flexible APIs implemented
+  - Code more testable and maintainable
+ref: @navitrack-apps/src-client/CODE_MAP.md; component architecture.

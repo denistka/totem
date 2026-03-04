@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TB1-History-Events-Tabs-Restoration
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Restore missing two tabs on History Events page and add back button to header.
+Fix navigation structure to match expected UI flow.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Investigate and restore missing tabs on History Events page
+  - Add back button to header with proper routing
+  - Ensure tabs are functional and switch between different views
+  - Implement tab state persistence when navigating
+  - Use existing tab component from design system
+  - Apply consistent styling with other tab implementations
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History Events page with restored tabs and back button]
+done:
+  - All tabs visible and functional on History Events page
+  - Back button navigates to previous screen correctly
+  - Tab state preserved during navigation
+  - Consistent styling with application tab patterns
+ref: @navitrack-apps/src-client/CODE_MAP.md (History components, tabs).

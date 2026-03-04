@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TB2-Object-Details-Back-Button
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Add back button to Object Details header when navigating from Objects to Object History.
+Enable proper navigation flow between screens.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add back button to Object Details screen header
+  - Implement proper navigation history tracking
+  - Style back button without background (just icon on footer background)
+  - Ensure back button appears only when navigating from Objects list
+  - Use consistent back button pattern across application
+  - Test navigation flow: Objects → Object Details → Object History
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details screen with functional back button]
+done:
+  - Back button appears in Object Details header when appropriate
+  - Navigation flows correctly back to Objects list
+  - Consistent styling with header button requirements
+  - Navigation history properly maintained
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectDetails, navigation).

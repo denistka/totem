@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S61-TB3-Header-Button-Styling
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+#
+###############################################################################
+Remove background from header buttons - buttons should appear as just icons on footer
+background. Ensure consistent header button styling across all screens.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit all header buttons across application
+  - Remove background colors/shadows from header buttons
+  - Ensure buttons inherit footer background color
+  - Maintain hover/active states for accessibility
+  - Apply consistent button size and spacing
+  - Test contrast and visibility in both light/dark modes
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Header buttons with no background, consistent styling]
+done:
+  - All header buttons have transparent background
+  - Buttons visible as icons on footer background
+  - Consistent styling applied across all screens
+  - Accessibility maintained with proper contrast
+ref: @navitrack-apps/src-client/CODE_MAP.md (Header components, buttons).

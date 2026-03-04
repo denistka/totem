@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TC3-Fix-Object-Details-Header
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Object Details header positioning. Vehicle name and date should be pinned to
+top-left corner, not floating. Add back button for navigation.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Pin vehicle name and date to top-left corner of header
+  - Fix floating behavior during screen opening animation
+  - Add back button to header for navigation to Objects page
+  - Use HeaderCenterSlot for vehicle name and date
+  - Ensure header elements remain fixed during scroll
+  - Apply consistent header styling (no background on buttons)
+  - Test header positioning on mobile and desktop
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details header with fixed positioning and back button]
+done:
+  - Vehicle name and date pinned to top-left corner
+  - No floating during opening animation
+  - Back button functional and properly positioned
+  - Header elements fixed during scroll
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectDetails, HeaderCenterSlot).

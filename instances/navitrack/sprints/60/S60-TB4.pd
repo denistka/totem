@@ -1,0 +1,30 @@
+v:4
+role: dev
+task: S60-TB4-History-Page-Scroll-And-Drag-Expand-Map
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+History page bottom section: date and general info lines fixed; list below
+scrolls in area between general info and footer. User can drag bottom edge to
+expand map to full screen.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fixed: date line, general info line.
+  - Scroll: list in region between general info and footer only (no full-page scroll).
+  - Drag: bottom edge of map (or divider) draggable to expand map to full screen.
+  - Correct scrolling behavior in lower information area.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History page: fixed top, scroll list, drag to expand map]
+done:
+  - Date/info fixed; list scrolls; drag expands map.
+dep: S60-TA2, S60-TB1
+ref: @navitrack-apps/src-client/CODE_MAP.md.

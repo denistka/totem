@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TE3-Icon-System-From-iOS-Vehicle-And-Map-Markers
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Find iOS app icons used for objects list and map vehicle markers. Copy to new
+application; create CSS-based icon system; apply consistently across app.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Locate icons in old iOS app (objects list, map vehicle markers).
+  - Copy or export icons into navitrack-apps assets.
+  - Define CSS-based icon system (classes or components) for reuse.
+  - Apply to objects list and map markers (and other agreed surfaces).
+  - Consistent look across application.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Icon assets + CSS icon system; applied to list and map]
+done:
+  - Icons from iOS in use; CSS system in place; applied consistently.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S58-TE2, S59 (icons).

@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TC2-Restore-Route-Events
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Object Details events list showing only parking events. Restore route events
+to display both parking and route event types.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Investigate why route events are filtered out
+  - Restore route event display in events list
+  - Ensure both parking and route events visible
+  - Implement proper event type filtering
+  - Add visual distinction between parking and route events
+  - Verify event data fetching includes all event types
+  - Test with vehicles having both event types
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details events list with parking and route events]
+done:
+  - Route events visible in events list
+  - Both parking and route events displayed
+  - Event types properly distinguished
+  - Event filtering working correctly
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectDetails, HistoryTab).

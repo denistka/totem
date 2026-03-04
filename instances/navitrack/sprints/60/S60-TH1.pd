@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S60-TH1-Testing-Functional-Platform-Visual
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Functional: API integrations match old app behavior; scrolling on all affected
+screens; date/time formatting; navigation and back buttons. Platform: iOS PWA
+installed app, safe area, responsive. Visual: icon consistency; table scroll and
+fixed column; popup and map interactions. Validates refactored code.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Functional: verify Tracking player API, Object Details history/events, Reports table, no-data toast, back buttons, date format.
+  - Platform: test iOS PWA (Add to Home Screen); safe area on different devices; responsive sizes.
+  - Visual: icons consistent; Reports table fixed column and scroll; popup positioning; map interactions.
+  - Record failures; fix critical issues or document for follow-up.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Test pass or report; critical issues resolved]
+done:
+  - Functional, platform, and visual checks done; blockers fixed.
+dep: S60-TA1 through S60-TF3, S60-TG1, S60-TG2
+ref: @navitrack-apps/src-client/CODE_MAP.md.

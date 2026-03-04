@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TF2-Icon-System-Implementation
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Find iOS app vehicle icons and create CSS-based icon system for consistent application
+use.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Research and locate iOS app vehicle icons
+  - Create CSS-based icon system using SVG or font icons
+  - Implement icon component with consistent sizing and colors
+  - Apply icons consistently across application
+  - Ensure icons are scalable and performant
+  - Add proper accessibility labels for screen readers
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [CSS-based vehicle icon system]
+done:
+  - Icon system created and documented
+  - Icons applied consistently across app
+  - Performance optimized with CSS/SVG
+  - Accessibility support implemented
+ref: @navitrack-apps/src-client/CODE_MAP.md (ui/vehicle-icons, VehicleIcon).

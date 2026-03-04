@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S61-TF3-Tracking-Player-Enhancements
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement tracking player navigation controls, map interaction, and no-data toast.
+Add comprehensive tracking player functionality.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add navigation controls (left to right): First frame, Step back, Start/stop, Step forward, Last frame
+  - Display all stop-frame points for selected date on map
+  - Implement frame navigation highlighting on map
+  - Show popup with vehicle name, event, sensor, speed on point click
+  - Add "Data for this date does not exist" toast when no data
+  - Increase right margin for back button
+  - Add more icons to information area
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Enhanced tracking player with full functionality]
+done:
+  - Navigation controls functional and properly positioned
+  - Map shows all tracking points with interaction
+  - Popups display correct information on click
+  - No-data toast shows when appropriate
+  - UI polished with proper spacing and icons
+ref: @navitrack-apps/src-client/CODE_MAP.md (TrackingActionScreen, TrackingPlayer).

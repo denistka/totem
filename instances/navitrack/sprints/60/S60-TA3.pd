@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S60-TA3-History-Events-Tabs-Back-Button-Header-Buttons-No-BG
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+History Events: restore two tabs and add back button to header. All header
+buttons should have no background — only button on footer background (visual).
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Restore disappeared tabs so user can return to History Events and related views.
+  - Add back button to header on History Events (and sibling) screens.
+  - Header buttons: no background; appear as buttons on footer background only (styling).
+  - Navigation and return path working.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History Events: tabs + back button; header buttons styling]
+done:
+  - Tabs visible and functional; back in header; header buttons match spec.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S59-TD1.

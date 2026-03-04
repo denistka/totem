@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S63-TF2-Implement-Toast-Map-Loading
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Replace full-screen loaders with toast notifications for map data loading. Toast
+should appear near map under header without blocking interaction.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Use useToast hook for map loading notifications
+  - Position toast below header, above map area
+  - Show non-blocking toast during map data updates
+  - Allow map interaction while data loads
+  - Include loading indicator in toast
+  - Auto-dismiss toast when loading completes
+  - Keep full-screen loader only for initial app load
+  - Apply to all map screens (Map, Object Details, Tracking)
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Toast-based loading for map data across all screens]
+done:
+  - Toast notifications replace full-screen loaders for map
+  - Map remains interactive during loading
+  - Toast positioned correctly under header
+  - Applied to Map, Object Details, and Tracking screens
+ref: @navitrack-apps/src-client/CODE_MAP.md (useToast, map screens).

@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S60-TD1-Object-List-Three-Line-Structure
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object list structure: Line 1 — vehicle name, green online indicator if active,
+date/time (minutes/hours ago). Line 2 — current speed or parking time. Line 3 —
+route with icon.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Line 1: vehicle name + green online indicator (when active) + date/time (e.g. "5 min ago").
+  - Line 2: current speed or parking time.
+  - Line 3: route with icon.
+  - Apply to Objects list; consistent with date formatting from TA4.
+  - Use icons from icon system (TE3) when available.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects list rows: 3-line structure per spec]
+done:
+  - Each row shows name/online/date, speed or parking, route with icon.
+dep: S60-TA4
+ref: @navitrack-apps/src-client/CODE_MAP.md.

@@ -1,0 +1,28 @@
+v:4
+role: dev
+task: S60-TF1-Global-API-Error-Handling-And-Vehicle-Cache
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement global API error handling and vehicle cache per CODE_MAP high priority.
+Centralize error handling for API failures; improve vehicle data caching.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Global API error handling: catch request failures (e.g. in http-adapter or api.ts); show user feedback (toast or inline) where appropriate; avoid uncaught errors.
+  - Vehicle cache: cache vehicle list or key fields so repeated screens do not over-fetch; invalidate on auth or explicit refresh.
+  - Use @/lib/api and useAppStore; no long prop chains.
+  - Align with CODE_MAP priority fixes.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Centralized API error handling; vehicle cache]
+done:
+  - API errors handled globally; vehicle cache reduces redundant calls.
+ref: @navitrack-apps/src-client/CODE_MAP.md (lib/api, useAppStore).

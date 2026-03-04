@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TB2-Restore-Map-Zoom-Controls
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Restore missing zoom in/out buttons on Map screen. Position controls appropriately
+for easy access without interfering with map interaction.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Add zoom in button with proper icon
+  - Add zoom out button with proper icon
+  - Position zoom controls on map (typically bottom-right or right side)
+  - Ensure controls are accessible on mobile and desktop
+  - Implement smooth zoom transitions
+  - Add proper touch/click handlers
+  - Style controls consistently with design system
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map screen with functional zoom controls]
+done:
+  - Zoom in/out buttons visible and functional
+  - Controls positioned for easy access
+  - Smooth zoom behavior implemented
+  - Mobile and desktop interactions working
+ref: @navitrack-apps/src-client/CODE_MAP.md (map-screen, Leaflet controls).

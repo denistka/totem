@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TH1-Extract-Reusable-Components
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Extract common UI patterns into reusable components to improve code organization
+and reduce duplication across screens.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Identify repeating UI patterns (cards, lists, forms, etc.)
+  - Create generic components with flexible prop interfaces
+  - Implement compound component patterns where appropriate
+  - Add comprehensive TypeScript types for props
+  - Create Storybook stories or examples for documentation
+  - Update existing screens to use new components
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Library of reusable UI components]
+done:
+  - Common patterns extracted into reusable components
+  - Component code significantly reduced
+  - Consistent UI across application
+  - Proper documentation and examples created
+ref: @navitrack-apps/src-client/CODE_MAP.md; components/ui directory.

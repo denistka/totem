@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TF1-Login-Input-Spacing
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+#
+###############################################################################
+Add proper spacing between input fields on login page to fix stuck-together appearance.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Increase vertical spacing between login form inputs
+  - Use consistent spacing tokens from design system
+  - Maintain responsive layout on mobile devices
+  - Ensure spacing works with validation error messages
+  - Test with different keyboard states on mobile
+  - Keep form accessible with proper focus management
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Login page with proper input spacing]
+done:
+  - Inputs have adequate vertical spacing
+  - No elements appear stuck together
+  - Consistent spacing with other forms in app
+  - Mobile keyboard behavior preserved
+ref: @navitrack-apps/src-client/CODE_MAP.md (Login page, form components).

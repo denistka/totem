@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TG1-Dead-Code-Removal
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Remove unused imports, components, functions, and styles throughout the application
+to reduce bundle size and improve maintainability.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit all components for unused imports and dependencies
+  - Remove unreachable code paths and commented-out code
+  - Clean up unused CSS classes and utility functions
+  - Update CODE_MAP.md to mark removed components
+  - Run build to verify no errors after cleanup
+  - Use ESLint unused variables rule to identify issues
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Clean codebase with no dead code]
+done:
+  - All unused imports and code removed
+  - Bundle size reduced
+  - Build passes without warnings
+  - CODE_MAP.md updated with current state
+ref: @navitrack-apps/src-client/CODE_MAP.md; build tools.

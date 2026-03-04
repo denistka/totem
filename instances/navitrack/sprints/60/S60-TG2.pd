@@ -1,0 +1,32 @@
+v:4
+role: dev
+task: S60-TG2-Refactoring-After-Implementation-Performance
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Optimize performance in areas touched by this sprint after implementation:
+reduce re-renders, lazy load where appropriate, improve list and animation
+performance. No behavior change.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Target: Object Details scroll/list, History list, Reports table, Tracking Player map and controls, modals, toast.
+  - Avoid unnecessary re-renders (memo, selectors, effect deps).
+  - Lazy load heavy components or data where it fits.
+  - List virtualization or efficient keys if long lists; smooth scroll.
+  - Animation and map updates: avoid layout thrash; use CSS or RAF where appropriate.
+  - Preserve correctness; validate that UX is not regressed.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Optimized components; no performance regressions]
+done:
+  - Touched areas optimized; lists and animations smooth; no new bottlenecks.
+dep: S60-TG1
+ref: @navitrack-apps/src-client/CODE_MAP.md.

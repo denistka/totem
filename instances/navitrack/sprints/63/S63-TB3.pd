@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TB3-Add-Map-Type-Selector
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Add map type selector to header with options for hybrid, schematic, and satellite
+views. Position next to provider selector in header.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Create map type selector component with three options
+  - Options: hybrid, schematic, satellite
+  - Position in header next to provider selector
+  - Implement map type switching functionality
+  - Update map tiles based on selected type
+  - Save user preference for map type
+  - Use consistent dropdown/selector styling
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Map type selector in header with functional switching]
+done:
+  - Map type selector visible in header
+  - Three map types selectable
+  - Map updates correctly on type change
+  - User preference persisted
+ref: @navitrack-apps/src-client/CODE_MAP.md (HeaderRightSlot, map-screen).

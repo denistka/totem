@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TG1-Refactoring-After-Implementation-Structure-Duplication
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Refactor code in areas touched by this sprint after implementation: improve
+structure, remove duplication, align with CODE_MAP and S54 invariants. No behavior change.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Target: loader, Object Details, History Events, Reports table, Tracking screens, Object list, Login, dropdowns, icons, toast, API layer.
+  - Remove duplicate logic and redundant components where unified patterns exist.
+  - Extract shared types, constants, or hooks; consolidate similar UI patterns.
+  - Preserve invariants (S54); follow ScreenRouter, config/header, BottomModal, @/lib/api.
+  - One objective per file or module; logic change < 50 lines per .pd scope.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Refactored modules; reduced duplication; clearer structure]
+done:
+  - Touched areas refactored; no new duplication; structure improved.
+ref: @navitrack-apps/src-client/CODE_MAP.md; sprints/54/INVARIANTS.md.

@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S60-TB3-Object-Details-History-Events-List-And-Interaction
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object Details History list: Route (green icon two pins, distance, time, avg speed);
+Parking (parking sign icon, time). Click route → draw route on map; click parking
+→ show point on map. Events tab: list with selectable events to show on History
+tab; styling matches modal with selection capability.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - History list: Route events (green 2-pin icon, distance, time, speed); Parking (sign icon, time).
+  - Click route event → draw route on map with start/end; click parking → show point on map.
+  - Events tab: list of events user can select; selection drives History tab display; modal-style list with selection.
+  - Check and fix history logic from original implementation; review old iOS API.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History list event types and map interaction; Events tab selectable list]
+done:
+  - Event types display correctly; click updates map; Events tab functional.
+dep: S60-TB1, S60-TB2
+ref: Old proposal; iOS API for history/events.

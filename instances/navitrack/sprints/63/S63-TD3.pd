@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S63-TD3-Fix-Tracking-Header-Badge-Positioning
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Tracking screen header badge positioning. Badge should be pinned to top-left
+corner, not floating incorrectly.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Pin header badge to top-left corner using HeaderCenterSlot
+  - Fix floating behavior during screen transitions
+  - Ensure badge remains fixed during scroll
+  - Apply consistent positioning with Object Details header
+  - Test badge positioning on mobile and desktop
+  - Verify safe area handling on iOS PWA
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking header badge pinned to top-left corner]
+done:
+  - Badge positioned correctly in top-left corner
+  - No floating during transitions
+  - Badge fixed during scroll
+  - Consistent with other screen headers
+ref: @navitrack-apps/src-client/CODE_MAP.md (TrackingActionScreen, HeaderCenterSlot).

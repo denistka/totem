@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S60-TF2-TrackingActionScreen-Report-API-Settings-Dead-Code
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Per CODE_MAP: fix TrackingActionScreen label and real report API; wire or
+remove Settings; replace or remove dead code; replace hardcoded lists with API data.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - TrackingActionScreen: correct labels and real report/track API usage (not stubs if applicable).
+  - Settings: wire to real flows or remove if not in scope.
+  - Dead code: identify and remove or replace with active code paths.
+  - Hardcoded lists: replace with data from API where lists are dynamic (vehicles, companies, report types, etc.).
+  - Optional (lower): derive header from screen config; route config/splits.
+  - Use CODE_MAP as reference for current architecture.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [TrackingActionScreen + report API; Settings; dead code; API-driven lists]
+done:
+  - Report/track API correct; Settings wired or removed; dead code reduced; lists from API.
+dep: S60-TA5, S60-TF1
+ref: @navitrack-apps/src-client/CODE_MAP.md (priority fixes).

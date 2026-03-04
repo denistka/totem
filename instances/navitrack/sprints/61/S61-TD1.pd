@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S61-TD1-Objects-List-Date-Time-Formatting
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix date formatting in Objects list showing "31071 851" instead of proper time.
+Display relative time (minutes/hours ago) with correct 3-line structure.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fix date parsing and formatting issue causing garbled display
+  - Implement relative time formatting (e.g., "5 minutes ago", "2 hours ago")
+  - Structure display as:
+    - Line 1: Vehicle name, green online indicator, date/time
+    - Line 2: Current speed or parking time
+    - Line 3: Route with icon
+  - Use date-fns or existing date utilities
+  - Update in real-time or on refresh
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects list with proper date/time formatting]
+done:
+  - Dates display as human-readable relative times
+  - 3-line structure correctly implemented
+  - Online indicator green and properly positioned
+  - Real-time updates working correctly
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectsScreen, date utilities).

@@ -1,0 +1,30 @@
+v:4
+role: dev
+task: S60-TB1-Object-Details-Tabs-And-Header-Content
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object Details: History and Events tabs disappeared under header — restore
+tabs functionality. Header content: vehicle name, time, and current information
+for selected date.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Restore History and Events tabs; visible and not hidden by header.
+  - Header left content: vehicle name, time, selected date info (per header config).
+  - Tabs switch between History and Events views; state preserved.
+  - Layout respects fixed header and scroll area (TA2).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details: tabs restored; header shows vehicle, time, date info]
+done:
+  - Tabs work and visible; header content complete.
+dep: S60-TA2
+ref: @navitrack-apps/src-client/CODE_MAP.md.

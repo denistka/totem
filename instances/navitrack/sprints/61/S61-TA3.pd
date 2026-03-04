@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S61-TA3-API-Request-Throttling
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement request throttling mechanism to prevent infinite API calls in tracking player
+that broke the server. Protect server from rapid repeated requests.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Create API request throttler/debouncer utility with configurable delay
+  - Apply throttling to tracking player API calls (position updates, frame navigation)
+  - Implement request deduplication to prevent identical concurrent requests
+  - Add visual feedback when requests are throttled
+  - Log throttled requests for debugging
+  - Ensure critical requests still pass through appropriately
+  - Use existing store API methods rather than direct getApiClient calls
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [API request throttling system]
+done:
+  - Tracking player no longer floods server with requests
+  - Throttling utility reusable across application
+  - Server protected from API abuse
+  - User experience remains responsive
+ref: @navitrack-apps/src-client/CODE_MAP.md (API layer); store methods.

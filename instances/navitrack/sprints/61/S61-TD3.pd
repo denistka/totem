@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TD3-Dropdown-Left-Alignment
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix dropdown content alignment from center to left-aligned on Reports and Tracking
+vehicle selection pages.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit all dropdown components in application
+  - Fix dropdown content alignment to left on Reports page
+  - Fix dropdown content alignment to left on Tracking vehicle selection
+  - Use existing design system dropdown component
+  - Ensure text alignment consistent with other form elements
+  - Test with varying text lengths and RTL languages
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Left-aligned dropdowns across application]
+done:
+  - All dropdown content left-aligned
+  - Consistent alignment with form labels
+  - No center-aligned dropdowns remain
+  - Text properly formatted for readability
+ref: @navitrack-apps/src-client/CODE_MAP.md (Dropdown components, ReportsScreen, TrackingScreen).

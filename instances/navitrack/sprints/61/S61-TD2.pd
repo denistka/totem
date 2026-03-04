@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TD2-Reports-Table-Fixed-Column
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Implement Reports table with fixed Vehicle column and scrollable other columns.
+Add green total summary row at bottom.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fix Vehicle column (non-scrolling, always visible)
+  - Make other columns horizontally scrollable: Day, Fuel CAN, Average Fuel Consumption (x2), Mileage CAN, Engine Hours CAN
+  - Add bottom row with total summary in green color
+  - Implement responsive behavior for mobile/tablet
+  - Add scroll indicators for better UX
+  - Maintain table performance with large datasets
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Reports table with fixed column and green totals]
+done:
+  - Vehicle column remains fixed during horizontal scroll
+  - Summary row highlighted in green
+  - Smooth scrolling performance
+  - Responsive design works across devices
+ref: @navitrack-apps/src-client/CODE_MAP.md (ReportsScreen, table components).

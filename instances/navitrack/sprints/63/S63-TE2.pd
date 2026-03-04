@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TE2-Fix-Objects-Screen-Header-Elements
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Objects screen header elements not displaying on first load. Search input and
+filter icon should be visible immediately.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fix search input visibility on Objects screen first load
+  - Fix filter icon visibility on first load
+  - Investigate lazy loading or rendering issues
+  - Ensure header elements render immediately
+  - Test on fresh app load and navigation to Objects
+  - Verify elements remain visible during scroll
+  - Apply proper z-index and positioning
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects screen header with visible search and filter]
+done:
+  - Search input visible on first load
+  - Filter icon visible on first load
+  - No rendering delay for header elements
+  - Elements remain visible during interactions
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectsScreen, header components).

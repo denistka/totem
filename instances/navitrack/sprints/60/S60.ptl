@@ -1,0 +1,109 @@
+# Sprint 60: Unfixed Problems & New Bugs
+# S60.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Critical: iOS PWA loader safe area; Object Details scroll (fixed top, list only);
+  History Events tabs and back button; header buttons no background; Object list
+  date/time formatting; Tracking player API and analytics. Object Details tabs
+  and header content; default behavior and map init; History list events and
+  Events tab; History page scroll and drag-expand map. Reports table (fixed Vehicle
+  column, green total); Tracking no-data toast and footer visibility; Tracking
+  Player controls and map interaction. Object list 3-line structure. Login spacing;
+  dropdown alignment; icon system; toast system. Global API error handling and
+  vehicle cache; report API and Settings; comprehensive API review. Refactoring
+  after implementation (structure, duplication, performance). Testing.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/54/INVARIANTS.md
+design-ref: sprints/56/artifacts/S56-Consolidated-Roadmap.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P0
+source: Unfixed Problems & New Bugs Sprint Prompt
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# IMPLEMENTATION NOTICE — CODE MAP & QUALITY
+###############################################################################
+# Use @navitrack-apps/src-client/CODE_MAP.md for quick search of dependencies and
+# to control code quality. Reference CODE_MAP priority fixes (TrackingActionScreen,
+# report API, global API error, vehicle cache, Settings, dead code, hardcoded lists).
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D → E → F → G → H)
+###############################################################################
+
+track-a-critical-fixes:
+  desc: iOS PWA loader safe area; Object Details scroll; History tabs and back; date format; Tracking API.
+  tasks: [S60-TA1, S60-TA2, S60-TA3, S60-TA4, S60-TA5]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+
+track-b-object-details-and-history:
+  desc: Object Details tabs and header content; default date and map init; History/Events list and interaction; History page scroll and expand map.
+  tasks: [S60-TB1, S60-TB2, S60-TB3, S60-TB4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-a-critical-fixes
+
+track-c-reports-and-tracking-screens:
+  desc: Reports table structure and fixed column; Tracking no-data toast and footer; Tracking Player controls and map.
+  tasks: [S60-TC1, S60-TC2, S60-TC3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-b-object-details-and-history
+
+track-d-object-list-structure:
+  desc: Object list 3-line structure (name/online/date, speed/parking, route with icon).
+  tasks: [S60-TD1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-c-reports-and-tracking-screens
+
+track-e-ui-and-icons:
+  desc: Login spacing; dropdown alignment; icon system from iOS; toast messaging.
+  tasks: [S60-TE1, S60-TE2, S60-TE3, S60-TE4]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-d-object-list-structure
+
+track-f-api-and-architecture:
+  desc: Global API error and vehicle cache; TrackingActionScreen report API; Settings; dead code; hardcoded→API; comprehensive API review.
+  tasks: [S60-TF1, S60-TF2, S60-TF3]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-e-ui-and-icons
+
+track-g-refactoring-after-implementation:
+  desc: Refactoring after implementation: structure, duplication removal, performance optimization in touched areas.
+  tasks: [S60-TG1, S60-TG2]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-f-api-and-architecture
+
+track-h-testing:
+  desc: Functional (API, scroll, format, navigation); Platform (iOS PWA, safe area); Visual (icons, table, popups).
+  tasks: [S60-TH1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+  dep: track-g-refactoring-after-implementation
+
+###############################################################################
+# PRIORITY (from prompt)
+###############################################################################
+# Critical: loader safe area, Object Details scroll, History tabs/back, date format, Tracking API.
+# High: Object Details default/map, Reports table, no-data handling, Login spacing, dropdowns.
+# Medium: Icon system, Tracking Player controls, Events tab, footer visibility, toast.
+# Low: API review, map interactions, scrolling behaviors, UI polish.
+
+###############################################################################
+# PHILOSOPHY
+###############################################################################
+# Align with CODE_MAP (ScreenRouter, config/header, BottomModal, @/lib/api). Post-sprint: S60-INVARIANTS.md.

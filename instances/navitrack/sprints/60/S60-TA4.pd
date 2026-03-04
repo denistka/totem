@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TA4-Object-List-Date-Time-Formatting
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix date/time display in Objects list: year shows as "31071 851" instead of
+proper time. Show minutes count or proper time indicator; consistent formatting
+across all displays.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fix parsing/formatting so no "31071 851" or corrupted output.
+  - Display: either minutes ago/hours ago or proper date/time string.
+  - Apply consistent format in Objects list and align with other date displays in app.
+  - No behavior change to filter logic; display only.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects list date/time: correct format everywhere]
+done:
+  - Dates/times show correctly; format consistent.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S59-TC2.

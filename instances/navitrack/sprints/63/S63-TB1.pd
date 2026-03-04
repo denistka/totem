@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S63-TB1-Consolidate-Map-Controls-In-Header
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Move ALL map controls to header including provider selector, map type selector, and
+other map-related controls. Remove controls from map overlay area.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Move provider selector (Open Street/Google) to header using HeaderRightSlot
+  - Move map type selector (hybrid, schematic, satellite) to header
+  - Position controls in header right slot for accessibility
+  - Remove all controls from map overlay area
+  - Ensure controls remain functional after move
+  - Use consistent header control styling
+  - Test control interactions don't interfere with map
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [All map controls consolidated in header]
+done:
+  - Provider selector in header right slot
+  - Map type selector in header
+  - No controls remain on map overlay
+  - All controls functional and accessible
+ref: @navitrack-apps/src-client/CODE_MAP.md (HeaderRightSlot, map-screen).

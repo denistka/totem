@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S63-TD1-Optimize-Tracking-Loading-Performance
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Optimize Tracking screen loading performance. Eliminate multiple long loading periods
+and interface freezing after vehicle selection.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Analyze current loading sequence and identify bottlenecks
+  - Reference old iOS implementation for optimization patterns
+  - Implement progressive data loading (show map first, then data)
+  - Use trackingThrottler from lib/api-throttler.ts
+  - Add proper loading states without blocking UI
+  - Implement data caching to prevent redundant requests
+  - Use async cleanup to cancel pending requests on unmount
+  - Show toast notifications instead of full-screen loaders
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Optimized Tracking screen with fast loading]
+done:
+  - Loading time reduced significantly
+  - No interface freezing during data load
+  - Progressive loading implemented
+  - Toast notifications used for feedback
+ref: @navitrack-apps/src-client/CODE_MAP.md (TrackingActionScreen, api-throttler).

@@ -1,0 +1,34 @@
+v:4
+role: dev
+task: S61-TA4-Toast-Loading-States
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Replace full-screen loader with toast notifications during map data loading.
+Toast should appear near map (under header) without blocking interaction.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Implement toast loading system using existing useToast hook
+  - Position toast notifications below header, above map area
+  - Show non-blocking toast during map data updates
+  - Allow user interaction with map while data loads
+  - Include loading indicator and descriptive text in toast
+  - Auto-dismiss toast when loading completes
+  - Keep full-screen loader only for initial app load
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Toast-based loading indicators for map data]
+done:
+  - Map remains interactive during data loading
+  - Toast notifications positioned correctly under header
+  - Full-screen loader removed for map data operations
+  - Loading feedback clear but non-intrusive
+ref: @navitrack-apps/src-client/CODE_MAP.md (useToast, GlobalLoader).

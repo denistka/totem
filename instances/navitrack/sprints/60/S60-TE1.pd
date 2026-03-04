@@ -1,0 +1,27 @@
+v:4
+role: dev
+task: S60-TE1-Login-Page-Input-Spacing
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Login page: input fields appear stuck together. Add proper spacing between
+input fields.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Increase spacing (margin or gap) between login form input fields.
+  - No functional change; layout only.
+  - Consistent with spacing system if one exists.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Login screen: input spacing updated]
+done:
+  - Inputs have clear separation; no "stuck together" appearance.
+ref: @navitrack-apps/src-client/CODE_MAP.md (LoginScreen).

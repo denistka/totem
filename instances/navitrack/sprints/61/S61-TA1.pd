@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S61-TA1-Button-Positioning-Consistency
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Build Report, Execute, and Tracking buttons must have absolutely identical positioning
+across all screens. Ensure visual consistency and professional UI appearance.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Audit all screens containing Build Report, Execute, and Tracking buttons
+  - Create or update a shared button component with consistent positioning
+  - Apply identical CSS classes and positioning styles to all three button types
+  - Verify alignment across different screen sizes and orientations
+  - Use existing design system tokens for spacing and positioning
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Consistent button positioning across all screens]
+done:
+  - All Build Report, Execute, and Tracking buttons have identical positioning
+  - Shared button component or utility class implemented
+  - Visual consistency verified across responsive breakpoints
+ref: @navitrack-apps/src-client/CODE_MAP.md (UI components); sprints/53/S53-INVARIANTS.md.

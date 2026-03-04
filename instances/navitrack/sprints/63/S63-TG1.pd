@@ -1,0 +1,37 @@
+v:4
+role: dev
+task: S63-TG1-Analyze-Old-Apps-API-Implementation
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Comprehensive analysis of old iOS and Android applications to extract complete API
+implementation patterns, parameters, request structures, and optimization techniques.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Analyze old iOS app API implementation (Swift code)
+  - Analyze old Android app API implementation (if available)
+  - Document all API endpoints used in old apps
+  - Extract complete request parameter sets for each endpoint
+  - Document request headers, authentication patterns
+  - Identify caching strategies and optimization techniques
+  - Map old app API calls to new app equivalents
+  - Create comprehensive API specification document
+  - Focus on: Objects, History, Tracking, Reports, Events APIs
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [API Analysis Document with complete old app API patterns]
+done:
+  - All API endpoints documented from old apps
+  - Complete parameter sets extracted for each endpoint
+  - Request patterns and optimizations identified
+  - Mapping created between old and new app APIs
+  - Document stored in sprints/63/artifacts/API-Analysis.md
+ref: @old-apps/navitrack-mobile-ios; @old-apps/navitrack-mobile-android.

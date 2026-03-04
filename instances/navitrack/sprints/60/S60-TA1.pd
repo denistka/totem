@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TA1-iOS-PWA-Loader-Safe-Area
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Loader must occupy header-to-footer space on installed iOS PWA. Root cause:
+safety area not accounted for — missing safe margins from screen edges. Implement
+proper safe area handling for iOS PWA.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Use env(safe-area-inset-*) or equivalent for loader container margins.
+  - Loader fills from effective header to effective footer (respecting notches, home indicator).
+  - Test on iOS PWA installed (Add to Home Screen) or simulator with safe area.
+  - Preserve S54 viewport invariants (100dvh where applicable).
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Loader component: safe area insets applied]
+done:
+  - Loader occupies full header-to-footer space on iOS PWA; no gap from safe area.
+ref: @navitrack-apps/src-client/CODE_MAP.md (GlobalLoader); sprints/54/INVARIANTS.md.

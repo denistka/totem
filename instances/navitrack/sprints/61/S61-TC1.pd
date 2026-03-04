@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TC1-Object-Details-Contained-Scrolling
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix Object Details History tab to scroll only events list area while keeping map,
+date selector, and general information fixed.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Restructure layout to have fixed top section (map, date selector, general info)
+  - Make only events list at bottom scrollable
+  - Define scroll area boundaries: from general info line to footer
+  - Maintain map visibility while scrolling events
+  - Ensure smooth scrolling performance
+  - Test with varying numbers of events
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details with contained scrolling area]
+done:
+  - Map and date selector remain fixed during scroll
+  - Only events list scrolls within defined area
+  - Layout stable across different content lengths
+  - No entire page scrolling occurs
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectDetails, HistoryTab).

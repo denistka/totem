@@ -1,0 +1,33 @@
+v:4
+role: dev
+task: S61-TC2-History-Page-Scroll-Behavior
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Fix History page bottom section scrolling: date and general info lines fixed,
+events list scrolls between general info and footer.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Fix date and general info lines at top of bottom section
+  - Make events list scrollable between fixed info and footer
+  - Implement drag bottom edge to expand map to full screen
+  - Maintain scroll position when switching tabs/dates
+  - Add visual indicator for draggable area
+  - Preserve map aspect ratio when expanding
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [History page with proper scroll behavior and expandable map]
+done:
+  - Date and general info remain fixed during scroll
+  - Events list scrolls within correct boundaries
+  - Map expands to full screen when bottom edge dragged
+  - Smooth transitions and visual feedback
+ref: @navitrack-apps/src-client/CODE_MAP.md (History page, scroll containers).

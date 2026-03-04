@@ -1,0 +1,35 @@
+v:4
+role: dev
+task: S63-TA3-Restore-Objects-Screen-Badges
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Restore missing badges on Objects screen vehicle icons. Implement three badge types:
+parking status, speed, and fuel amount.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Implement blue badge with "P" for parking status
+  - Implement green badge with current speed number
+  - Implement black badge with fuel amount
+  - Position badges correctly on vehicle icons
+  - Add online status indicator on right side
+  - Add parking/route indicator with fuel icon (contour)
+  - Use existing vehicle-icons system from ui/vehicle-icons
+  - Ensure badges scale properly with icon size
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Objects screen with restored badge system]
+done:
+  - All three badge types implemented and visible
+  - Badges positioned correctly on vehicle icons
+  - Online status and route indicators working
+  - Badges scale properly across devices
+ref: @navitrack-apps/src-client/CODE_MAP.md (ObjectsScreen, ui/vehicle-icons).

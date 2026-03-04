@@ -1,0 +1,49 @@
+v:4
+role: dev
+task: S63-TG4-Fix-iOS-Safe-Areas-And-Rounded-Corners
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Окончательно решить проблему с безопасными областями iOS и закругленными углами.
+Устранить "чехарду" с отступами при установленном iOS PWA приложении.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Применить решения из Sprint 50 для iOS PWA (не Tauri)
+  - Реализовать правильное использование env(safe-area-inset-*)
+  - Добавить viewport-fit=cover в index.html для PWA
+  - Создать .safe-bottom-pwa класс с padding-bottom: max(20px, env(safe-area-inset-bottom))
+  - Применить min-height: 100dvh на html/body/#root
+  - Добавить ::after псевдоэлемент на nav.glass для заполнения нижней safe area
+  - Использовать hsl(var(--background)) для заполнения gaps
+  - Проверить все закругленные углы (rounded-xl, rounded-lg) на корректность
+  - Убедиться что glass-эффекты не конфликтуют с safe areas
+  - Применить решения из S44-INVARIANTS.md и S51-INVARIANTS.md
+  - Тестировать ТОЛЬКО на установленном iOS PWA (Add to Home Screen)
+
+###############################################################################
+# CONTEXT FROM PREVIOUS SPRINTS
+###############################################################################
+context:
+  - Sprint 50: Решение для Tauri iOS с tauri-plugin-edge-to-edge
+  - Sprint 44: Glass design tokens и safe-bottom класс
+  - Sprint 51: Touch & safe area tokens (.safe-bottom, .safe-top, .pt-safe-header)
+  - Проблема: Белая полоса внизу, gaps между элементами, неправильные отступы
+  - Решение: viewport-fit=cover + env(safe-area-inset-*) + ::after заполнение
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [iOS PWA с правильными safe areas и закругленными углами]
+done:
+  - Нет белых полос или gaps в установленном iOS PWA
+  - Все элементы правильно позиционированы с учетом notch и home indicator
+  - Закругленные углы корректно отображаются
+  - Glass-эффекты работают без артефактов
+  - Решение задокументировано в sprints/63/artifacts/iOS-Safe-Areas-Solution.md
+ref: sprints/50/S50-Results.md; sprints/44/S44-INVARIANTS.md; sprints/51/S51-INVARIANTS.md.

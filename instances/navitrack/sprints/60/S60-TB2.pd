@@ -1,0 +1,31 @@
+v:4
+role: dev
+task: S60-TB2-Object-Details-Default-Behavior-And-Map-Init
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Object Details default: on entry select current date and show events for that
+date; initialize map with vehicle icon and popup (detailed info). Icon centered
+in lower part of map, popup centered above it. On date change: load data for
+selected date, select last event, update map.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - Entry: current date selected; events for that date loaded; map has vehicle icon + popup.
+  - Map: icon centered in lower part; popup centered above icon with details.
+  - Date change: fetch data for new date; select last event for that date; update map (point/route).
+  - Event types: Parking → point on map; Route → draw route between points.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Object Details: default date, map init, date-change behavior]
+done:
+  - Entry and date change behavior match spec; map updates correctly.
+dep: S60-TA2, S60-TB1
+ref: Object Details history logic from old proposal; iOS API.

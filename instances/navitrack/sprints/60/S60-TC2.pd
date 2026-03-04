@@ -1,0 +1,29 @@
+v:4
+role: dev
+task: S60-TC2-Tracking-No-Data-Toast-Footer-Visible-Icons
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+###############################################################################
+# OBJECTIVE
+###############################################################################
+Tracking screen: show toast "Data for this date does not exist" when no data
+for selected date/vehicle. Fix footer visibility (current screen overlaps footer).
+Add more icons to lower information area for events/vehicle data.
+
+###############################################################################
+# REQUIREMENTS
+###############################################################################
+requirements:
+  - No data: toast message "Data for this date does not exist" (use toast system from TE4 when ready or minimal implementation).
+  - Footer always visible on Tracking screen; fix overlap (layout/margin).
+  - Lower information area: more icons for events/vehicle data (per design).
+  - Footer visible on this screen.
+
+###############################################################################
+# DELIVERABLES
+###############################################################################
+out: [Tracking: no-data toast; footer visible; icons in lower area]
+done:
+  - Toast on no data; footer visible; icons added.
+ref: @navitrack-apps/src-client/CODE_MAP.md; S60-TE4 (toast).
