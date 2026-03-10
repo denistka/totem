@@ -1,0 +1,119 @@
+gate: OPEN
+task: S69-T01
+sprint: S69
+track: A
+name: Implement zones CRUD API
+requires: []
+scope: |
+  Add to ApiClient:
+  - getZoneTypes(): Promise<ZoneType[]>
+  - getZones(): Promise<Zone[]>
+  - saveZone(zone: Zone): Promise<void>
+  - deleteZone(id: number): Promise<void>
+  Add Zone, ZoneType, Point interfaces.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S69-T02
+sprint: S69
+track: A
+name: Zone display on map
+requires: [S69-T01]
+scope: |
+  Render geozones on the Leaflet map as polygons or circles.
+  Support zone color from Zone.color field.
+files: [src/features/map/]
+---
+gate: OPEN
+task: S69-T03
+sprint: S69
+track: A
+name: Zone management UI
+requires: [S69-T01]
+scope: |
+  Create geozone management screen with list, create, edit, delete.
+files: [src/components/screens/geozones-screen/ (NEW)]
+---
+gate: OPEN
+task: S69-T04
+sprint: S69
+track: B
+name: Implement drivers CRUD API
+requires: []
+scope: |
+  Add to ApiClient:
+  - getDrivers(): Promise<Driver[]>
+  - saveDriver(driver: Driver): Promise<Driver>
+  - deleteDriver(id: number): Promise<void>
+  Add Driver interface.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S69-T05
+sprint: S69
+track: B
+name: Driver management UI
+requires: [S69-T04]
+scope: |
+  Create driver management screen with list, create, edit, delete.
+files: [src/components/screens/drivers-screen/ (NEW)]
+---
+gate: OPEN
+task: S69-T06
+sprint: S69
+track: C
+name: Implement maintenance template CRUD
+requires: []
+scope: |
+  Add getMaintenanceList(), saveMaintenanceTemplate(), removeMaintenanceTemplate().
+  Add MaintenanceTypeItem interface.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S69-T07
+sprint: S69
+track: C
+name: Implement vehicle maintenance CRUD
+requires: [S69-T06]
+scope: |
+  Add getVehicleMaintenance(vehicleId), saveVehicleMaintenance(), removeVehicleMaintenance().
+  Add MaintenanceItem interface.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S69-T08
+sprint: S69
+track: C
+name: Implement maintenance journal
+requires: [S69-T06]
+scope: |
+  Add getMaintenanceJournal(vehicleId): Promise<JournalMaintenanceItem[]>
+  Add continueMaintenance(work: MaintenanceWork): Promise<void>
+  Add JournalMaintenanceItem, MaintenanceWork interfaces.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S69-T09
+sprint: S69
+track: C
+name: Implement nearest maintenance alerts
+requires: [S69-T07]
+scope: |
+  Add getNearestMaintenance(vehicleId): Promise<NearMaintenanceItem[]>
+  Add NearMaintenanceItem interface.
+  Show alert indicators on vehicle cards when maintenance is triggered.
+files: [src/lib/api.ts, src/components/screens/objects-screen/]
+---
+gate: OPEN
+task: S69-T10
+sprint: S69
+track: C
+name: Maintenance management UI
+requires: [S69-T06,S69-T07,S69-T08,S69-T09]
+scope: |
+  Create maintenance management screen with:
+  - Template list and editor
+  - Vehicle maintenance assignments
+  - Journal view
+  - Alert indicators
+files: [src/components/screens/maintenance-screen/ (NEW)]

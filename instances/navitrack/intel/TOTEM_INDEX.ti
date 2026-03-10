@@ -8,8 +8,8 @@ project:
   mission: universal solutions, satellite tech, monitoring, remote control
   tagline: NaviTrack — ВСЕГДА ВЫИГРЫШНОЕ РЕШЕНИЕ
   website: https://navitrack.com.ua
-  stack: [tauri2, vue3, ts, rust, vite, pinia, tailwind, leaflet]
-  status: ✅ Epic 0 + Epic 1 complete. Next: Epic 2 (Hardening).
+  stack: [react19, typescript, tauri2, vite, zustand, leaflet]
+  status: ✅ All sprints complete (S01–S64). See UNCOMPLETED_TASKS.md for open backlog.
 
 brand:
   primary: "#2D8A3E"
@@ -36,6 +36,8 @@ content:
   decisions: ./TOTEM_DECISIONS.ti
   sprints: ./TOTEM_SPRINTS.ti
   log: ./LOG.ti
+  uncompleted: ./UNCOMPLETED_TASKS.md
+  api-v6: ./API_V6_SPEC.ti
 
 ###############################################################################
 # MACHINE-ONLY REFS (MRPP 3.1)
@@ -46,4 +48,5 @@ machine-only:
   version: 3.1
   load-order: [TOTEM_INDEX.ti → content-files]
   audience: prompt-machine, agents
+  updated: 2026-03-10
 

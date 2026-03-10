@@ -1,0 +1,15 @@
+gate: OPEN
+task: S65-T07
+sprint: S65
+track: B
+name: Add email code input step to login screen
+requires: [S65-T05]
+
+scope: |
+  Add email code step to login flow:
+  - After signIn returns result="mail", show code input field
+  - Inform user that code was sent to their email
+  - Re-submit signIn with otp field containing the email code
+  - Handle result="wrong" with error message
+
+files: [src/components/screens/login-screen.tsx]

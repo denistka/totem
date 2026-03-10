@@ -1,0 +1,12 @@
+gate: OPEN
+task: S65-T13
+sprint: S65
+track: D
+name: Implement 2FA API methods
+requires: [S65-T04]
+scope: |
+  Add to ApiClient:
+  - enable2FA(req: 2FAEnableRequest): Promise<void>
+  - disable2FA(): Promise<void>
+  Add 2FAEnableRequest interface { mode: 'email'|'authenticator', token: string | null }
+files: [src/lib/api.ts]

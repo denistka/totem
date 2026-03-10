@@ -1,17 +1,21 @@
-v:2
+v:3
 format:totem-epics
 purpose:machine-only epics index
+updated:2026-03-10
 
 ###############################################################################
-# EPIC 0 / EPIC 1
+# EPIC 0 — All Completed Work
 ###############################################################################
-# All done work → Epic 0 (E-00). All to-do → Epic 1 (E-01-TO-DO).
 
 E-00:
   name:Epic-0-Done
   purpose:aggregate-all-completed-work
-  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S42,S43,S44,S45,S46]
+  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S42,S43,S44,S45,S46,S47,S48,S49,S50,S51,S52,S53,S54,S55,S56,S57,S58,S59,S60,S61,S63,S64]
   status:✅ complete
+
+###############################################################################
+# EPIC 1 — Original To-Do (skipped sprints)
+###############################################################################
 
 E-01-TO-DO:
   name:Epic-1-To-Do
@@ -19,12 +23,69 @@ E-01-TO-DO:
   sprints:[S38,S39,S40,S20,S21]
   scope:optional-S20-S21,async-reports-S38,feature-pack-S39,tech-debt-S40
   backlog-ref:TOTEM_BACKLOG.ti
-  status:⬜ ready
+  status:⏭️ skipped
+  note:S38/S39/S40 never started; 2FA/async-reports delivered in S47 instead
+
+###############################################################################
+# EPIC 2 — Architectural Hardening
+###############################################################################
 
 E-02-ACTIVE:
   name:Epic-2-Architectural-Hardening
   purpose:security-performance-and-structural-purity
-  sprints:[S42,S43,S44,S45,S46,S47]
-  active-sprint:S47
-  status:🟢 active
+  sprints:[S42,S43,S44,S45,S46,S47,S48]
+  status:✅ complete
+
+###############################################################################
+# EPIC 3 — Universal Build
+###############################################################################
+
+E-03-UNIVERSAL-BUILD:
+  name:Epic-3-Universal-Build
+  purpose:tauri2-multiplatform,runtime-http-adapter
+  sprints:[S49,S50]
+  status:✅ complete
+
+###############################################################################
+# EPIC 4 — Architecture Migration
+###############################################################################
+
+E-04-ARCHITECTURE-MIGRATION:
+  name:Epic-4-Architecture-Migration
+  purpose:migrate-to-pwa-react-app-clear,design-system,deep-parity
+  sprints:[S51,S52,S53,S54,S55]
+  status:✅ complete
+
+###############################################################################
+# EPIC 5 — PWA UI Implementation
+###############################################################################
+
+E-05-PWA-UI-IMPLEMENTATION:
+  name:Epic-5-PWA-UI-Implementation
+  purpose:system-planning,header,tracking-player,loader,modals,bugs,polish
+  sprints:[S56,S57,S58,S59,S60,S61,S63,S64]
+  status:✅ complete
+
+###############################################################################
+# EPIC 6 — Code Quality Optimization (locked)
+###############################################################################
+
+E-06-CODE-QUALITY-OPTIMIZATION:
+  name:Epic-6-Code-Quality-Optimization
+  purpose:refactoring,performance,type-safety,dev-experience
+  sprints:[S62]
+  status:🔒 locked (never executed)
+  note:Goals partially addressed in S61/S63 refactoring tracks
+
+###############################################################################
+# EPIC 7 — API v6 Migration
+###############################################################################
+
+E-07-API-V6-MIGRATION:
+  name:Epic-7-API-v6-Migration
+  purpose:jwt-auth,report-v2,data-model-fixes,new-endpoints
+  sprints:[S65,S66,S67,S68,S69]
+  status:🔒 locked
+  note:Full migration from Basic Auth + deprecated API to JWT + API v6
+  ref:intel/API_V6_SPEC.ti
 

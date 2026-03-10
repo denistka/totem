@@ -1,0 +1,36 @@
+gate: OPEN
+sprint: S65
+epic: E-07-API-V6-MIGRATION
+name: JWT Authentication & Data Model Fixes
+priority: P0
+dep: none
+updated: 2026-03-10
+
+description: |
+  Replace Basic Auth with JWT Bearer token authentication via /ws/auth/signin.
+  Add OTP support (authenticator + email code flows).
+  Fix data model bugs: pointId int32→int64, address nullable, distance float.
+
+tracks:
+  A:
+    name: JWT Auth Core
+    requires: []
+    tasks: [S65-T01,S65-T02,S65-T03,S65-T04,S65-T05]
+  B:
+    name: Auth UI
+    requires: [A]
+    tasks: [S65-T06,S65-T07,S65-T08,S65-T09]
+  C:
+    name: Data Model Fixes
+    requires: []
+    tasks: [S65-T10,S65-T11,S65-T12]
+  D:
+    name: Account Management
+    requires: [A]
+    tasks: [S65-T13,S65-T14,S65-T15,S65-T16]
+
+invariants:
+  - JWT token replaces Basic Auth header globally
+  - No raw passwords stored in sessionStorage after migration
+  - OTP flow must handle result codes: ok, otp, mail, wrong
+  - pointId must be safe for int64 values from server

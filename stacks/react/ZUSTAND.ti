@@ -1,5 +1,5 @@
 role: Zustand State Specialist
-focus: client-state, global-store, minimalist-store
+focus: client-state, global-store, minimalist-store, slicing, middleware
 
 stack: Zustand
 
@@ -8,17 +8,42 @@ zustand-gold-standard:
     - Lightweight, unopinionated, hooks-first state management for Global Client State.
     - Replaces Redux for 90% of use cases (except massive enterprise sync).
   architecture:
-    - Create a store: `create((set) => ({ count: 0, inc: () => set(state => ({ count: state.count + 1 })) }))`
+    - Create a store: `create((set, get) => ({ count: 0, inc: () => set(state => ({ count: state.count + 1 })) }))`
     - Stores exist *outside* React context tree = no wrapping `<Provider>` required.
+    - Use `get()` inside actions to access current state without closure staling.
+  slicing:
+    - Split large stores into slices for maintainability.
+    - Pattern: `createFooSlice(set, get) => ({ ... })` merged in main store via `create((...a) => ({ ...createFooSlice(...a), ...createBarSlice(...a) }))`.
+    - Each slice owns a domain: auth, vehicles, ui, tracking, etc.
   performance:
-    - **Selecting State:** Always select *only* what you need to prevent over-rendering: `const count = useStore((state) => state.count)`.
-    - Avoid returning entire objects from selectors unless using `useShallow` from `zustand/react/shallow`.
+    - **Selecting State:** Always select *only* what you need: `const count = useStore((state) => state.count)`.
+    - Avoid returning entire objects — use `useShallow` from `zustand/react/shallow` for multi-property selects.
+    - React Compiler makes manual `useCallback` for selectors unnecessary in React 19+.
+  middleware:
+    - `persist` — `localStorage` / `sessionStorage` sync for theme, auth tokens, user preferences.
+    - `devtools` — Enable in dev for Redux DevTools integration: `devtools(store, { name: 'AppStore' })`.
+    - `subscribeWithSelector` — Fine-grained subscriptions for derived/computed state outside React.
+    - Chain: `create(devtools(persist(subscribeWithSelector(store))))`.
+  computed-state:
+    - Derive values in selectors, not in store: `useStore(s => s.vehicles.filter(v => v.online))`.
+    - For expensive computations, use `subscribeWithSelector` + external cache.
   actions:
     - Keep actions inside the store to co-locate logic and state modifications.
-  persistence:
-    - Use `persist` middleware for trivial `localStorage` / `sessionStorage` sync.
+    - Async actions: `set` inside `.then()` or after `await` — Zustand handles it natively.
+
+integration-log:
+  navitrack:
+    date: 2026-03-10
+    target: navitrack-apps/src-client/src/store/useAppStore.ts
+    pattern: Single store with domain slices (screen, vehicles, tracking, ui, auth)
+    learnings:
+      - useShallow for multi-property header/footer state selects
+      - persist middleware for theme and auth token across sessions
+      - Screen navigation via store actions (setScreen) instead of react-router for PWA simplicity
 
 anti-patterns:
   - ❌ Managing Server/API data in Zustand (Use TanStack Query instead).
   - ❌ Selecting the whole store `const state = useStore()` (causes re-renders on ANY change).
   - ❌ Wrapping the app in a Context Provider just to pass a Zustand store (unnecessary).
+  - ❌ Duplicating derived state in store when a selector can compute it.
+  - ❌ Forgetting `devtools` middleware in development (lost debugging visibility).

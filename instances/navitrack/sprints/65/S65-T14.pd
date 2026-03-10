@@ -1,0 +1,11 @@
+gate: OPEN
+task: S65-T14
+sprint: S65
+track: D
+name: Implement email assign API method
+requires: [S65-T04]
+scope: |
+  Add to ApiClient:
+  - assignMail(req: AssignMailRequest): Promise<void>
+  Add AssignMailRequest interface { email: string }
+files: [src/lib/api.ts]

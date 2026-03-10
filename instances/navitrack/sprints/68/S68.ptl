@@ -1,0 +1,25 @@
+gate: OPEN
+sprint: S68
+epic: E-07-API-V6-MIGRATION
+name: Engine Lock/Unlock
+priority: P2
+dep: S65
+updated: 2026-03-10
+backlog-ref: F-001
+
+description: |
+  Implement engine lock/unlock functionality with safe and emergency modes.
+  Ties to backlog item F-001 (Engine Block, Safe+Emergency modes).
+  Requires rights check from /ws/right/current (dep on S67-T10 for full impl,
+  but can stub with permission check).
+
+tracks:
+  A:
+    name: Engine Lock API & UI
+    requires: []
+    tasks: [S68-T01,S68-T02,S68-T03,S68-T04]
+
+invariants:
+  - Engine lock must have confirmation dialog (safety critical)
+  - Emergency lock (lock-unsafe) must have double confirmation
+  - Must check user rights before showing lock/unlock controls

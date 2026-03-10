@@ -1,0 +1,12 @@
+gate: OPEN
+task: S65-T16
+sprint: S65
+track: D
+name: Account management UI components
+requires: [S65-T13,S65-T14,S65-T15]
+scope: |
+  Update user profile / settings screen to include:
+  - Change password form
+  - Enable/disable 2FA toggle (with authenticator setup flow)
+  - Email assignment/verification form
+files: [src/components/screens/settings-screen/UserProfile.tsx]

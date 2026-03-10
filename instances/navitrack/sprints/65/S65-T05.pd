@@ -1,0 +1,16 @@
+gate: OPEN
+task: S65-T05
+sprint: S65
+track: A
+name: Handle OTP flow in signIn
+requires: [S65-T02]
+
+scope: |
+  Extend signIn logic to handle multi-step auth:
+  - result="ok" → store token, proceed
+  - result="otp" → return to caller indicating OTP needed (authenticator)
+  - result="mail" → return to caller indicating email code needed
+  - result="wrong" → return error indicating wrong code
+  Re-call signIn with otp field populated on second attempt.
+
+files: [src/lib/api.ts]

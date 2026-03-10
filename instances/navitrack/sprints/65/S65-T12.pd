@@ -1,0 +1,14 @@
+gate: OPEN
+task: S65-T12
+sprint: S65
+track: C
+name: Fix distance float support in DailyTrack
+requires: []
+
+scope: |
+  DailyTrack.distance and DailyTrackEvent.distance are typed as `number`
+  which should already support float in TypeScript/JavaScript. Verify that
+  no parseInt() or integer-only formatting is applied to distance values.
+  Also verify the Track.distance field.
+
+files: [src/lib/api.ts, components using distance values]

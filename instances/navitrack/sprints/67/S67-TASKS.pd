@@ -1,0 +1,120 @@
+gate: OPEN
+task: S67-T01
+sprint: S67
+track: A
+name: Implement /ws/settings/getmain and /ws/settings/setmain
+requires: []
+scope: |
+  Add getMainSettings(): Promise<Settings> (POST with body {})
+  Add setMainSettings(settings: Settings): Promise<Settings>
+  Add full Settings interface with all fields.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T02
+sprint: S67
+track: A
+name: Replace current /ws/settings with new endpoints
+requires: [S67-T01]
+scope: |
+  Replace getSettings() call with getMainSettings().
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T03
+sprint: S67
+track: A
+name: Add Settings TypeScript type
+requires: []
+scope: |
+  Full Settings interface matching API spec with deprecated field markers.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T04
+sprint: S67
+track: B
+name: Implement vehicle settings getcommon/setcommon
+requires: []
+scope: |
+  Add getVehicleSettings(id: number): Promise<VehicleSettings>
+  Add setVehicleSettings(settings: VehicleSettings): Promise<void>
+  Add VehicleSettings interface.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T05
+sprint: S67
+track: B
+name: Implement vehicle info template get/set
+requires: []
+scope: |
+  Add getVehicleTemplate(id: number): Promise<VehicleTemplate>
+  Add setVehicleTemplate(payload: VehicleTemplatePayload): Promise<VehicleTemplate>
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T06
+sprint: S67
+track: B
+name: Add VehicleSettings and VehicleTemplate types
+requires: []
+scope: |
+  TypeScript interfaces for VehicleSettings, VehicleTemplate, VehicleTemplatePayload.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T07
+sprint: S67
+track: C
+name: Implement descriptions endpoints
+requires: []
+scope: |
+  Add getDescriptions(): Promise<string[]> (GET /ws/descriptions)
+  Add getDescriptionList(): Promise<Record<string, string>[]> (GET /ws/descriptionlist)
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T08
+sprint: S67
+track: C
+name: Implement events endpoints
+requires: []
+scope: |
+  Add getEvents(): Promise<CriticalEvent[]>
+  Add getEventsNewer(id: number): Promise<CriticalEvent[]>
+  Add CriticalEvent interface.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T09
+sprint: S67
+track: C
+name: Implement event configuration CRUD
+requires: []
+scope: |
+  Add getVehicleEventConfig(vehicleId: number): Promise<VehicleEventConfiguration>
+  Add saveVehicleEventConfig(config: VehicleEventConfiguration): Promise<void>
+  Add VehicleEventConfiguration interface.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T10
+sprint: S67
+track: C
+name: Implement GET /ws/right/current
+requires: []
+scope: |
+  Add getRights(): Promise<KeyValuePair<string,string>[]>
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S67-T11
+sprint: S67
+track: C
+name: Implement infrastructure endpoints
+requires: []
+scope: |
+  Add getVehicleDataTypes(): Promise<KeyValuePair<string,string>[]>
+  Add getVehicleInfoFields(): Promise<KeyValuePair<string,string>[]>
+files: [src/lib/api.ts]

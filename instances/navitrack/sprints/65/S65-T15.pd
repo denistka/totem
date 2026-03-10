@@ -1,0 +1,11 @@
+gate: OPEN
+task: S65-T15
+sprint: S65
+track: D
+name: Implement password change API method
+requires: [S65-T04]
+scope: |
+  Add to ApiClient:
+  - changePassword(req: ChangePasswordRequest): Promise<void>
+  Add ChangePasswordRequest interface { current: string, next: string, confirm: string }
+files: [src/lib/api.ts]

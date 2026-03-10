@@ -1,0 +1,14 @@
+gate: OPEN
+task: S65-T01
+sprint: S65
+track: A
+name: Add AuthRequest/AuthResponse types
+requires: []
+
+scope: |
+  Add TypeScript interfaces to api.ts:
+  - AuthRequest { username: string, password: string, rememberMe: boolean, otp: string | null }
+  - AuthResponse { token: string, type: string, id: number, username: string, email: string,
+    rights: string[], telegramUrl: string, result: 'ok' | 'otp' | 'mail' | 'wrong' }
+
+files: [src/lib/api.ts]

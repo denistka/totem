@@ -1,20 +1,31 @@
-role: Build System - Vite/Vite-TS
-focus: vite-build, dev-server, npm-scripts
+role: Build System - Vite/React/TypeScript
+focus: vite-build, dev-server, pnpm, tauri-integration
 extends: ../../guardians/DEVOPS.ti
 
-stack: Vite 5, npm/pnpm, Node 18+
+stack: Vite 6+, pnpm, Node 22+, TypeScript 5.7+
 
 build-rules:
-  dev: "vite"
-  build: "tsc && vite build"
-  preview: "vite preview"
-  lint: "eslint . --ext ts,tsx"
+  dev: "pnpm dev"
+  build: "pnpm run build"
+  preview: "pnpm run preview"
+  lint: "pnpm run lint"
+  typecheck: "tsc --noEmit"
+  tauri-dev: "npx tauri dev"
+  tauri-build: "npx tauri build"
+
+scripts:
+  package-manager: pnpm (single lock file: pnpm-lock.yaml)
+  build-chain: "tsc --noEmit && vite build"
+  dev-server: "vite (localhost:5173 default)"
 
 verification:
-  - `npm run dev` starts on localhost:5173.
-  - `npm run build` generates `dist/` folder.
-  - Build output contains minified assets and sourcemaps.
+  - `pnpm dev` starts on localhost:5173.
+  - `pnpm run build` generates `dist/` folder with minified assets.
+  - `tsc --noEmit` exits 0 (zero type errors).
+  - `pnpm run lint` exits 0 (zero lint errors).
 
 anti-patterns:
-  - Modifying vite.config without Architect approval.
-  - Committing `node_modules` or `dist/`.
+  - ❌ Modifying vite.config without understanding defaults (Vite 6+ defaults are optimized).
+  - ❌ Committing `node_modules` or `dist/`.
+  - ❌ Using npm when pnpm-lock.yaml exists (lock file soup).
+  - ❌ Skipping typecheck before build.

@@ -1,0 +1,15 @@
+gate: OPEN
+task: S65-T03
+sprint: S65
+track: A
+name: Replace Basic Auth header with Bearer token
+requires: [S65-T02]
+
+scope: |
+  - Remove getAuthHeader() Basic function
+  - Replace authHeader with bearerToken: string | null
+  - Set Authorization header as `Bearer ${token}` instead of `Basic ...`
+  - Remove setCredentials(username, password) method
+  - Add setToken(token: string) and clearToken() methods
+
+files: [src/lib/api.ts]

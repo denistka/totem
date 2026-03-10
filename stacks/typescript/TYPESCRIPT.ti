@@ -1,15 +1,35 @@
 role: TypeScript Specialist
-focus: strict-typing, static-analysis, type-safety
+focus: strict-typing, static-analysis, type-safety, developer-ergonomics
 
 typescript-gold-standard:
   strict-mode:
     - Always enable `strict: true` in `tsconfig.json`.
+    - Enable `noUncheckedIndexedAccess: true` — forces null checks on array/object indexing.
+    - Enable `noUnusedLocals: true` and `noUnusedParameters: true` — dead code = failed build.
+    - Enable `exactOptionalPropertyTypes: true` when team is ready — distinguishes `undefined` from missing.
   type-definitions:
-    - Prefer `interface` over `type` for object shapes as they are extensible.
-    - Use `type` for unions and intersections.
+    - Prefer `interface` over `type` for object shapes as they are extensible (declaration merging).
+    - Use `type` for unions, intersections, and mapped types.
+    - Use discriminated unions for state machines: `type State = { status: 'idle' } | { status: 'loading' } | { status: 'error'; error: string }`.
   null-checks:
     - Rely on optional chaining (`?.`) and nullish coalescing (`??`).
+    - Prefer `unknown` over `any` — forces type narrowing before use.
+  path-aliases:
+    - Configure `@/` alias in `tsconfig.json` paths: `"@/*": ["./src/*"]`.
+    - Mirror in build tool (Vite `resolve.alias`, Webpack `resolve.alias`).
+    - Consistent import pattern: `import { Button } from '@/components/ui/button'`.
+  barrel-exports:
+    - Use `index.ts` barrel files for feature modules: `export { VehicleMarker } from './VehicleMarker'`.
+    - Avoid barrel files in `components/ui/` if tree-shaking is critical — direct imports are lighter.
+  utility-types:
+    - Use built-in: `Partial<T>`, `Required<T>`, `Pick<T, K>`, `Omit<T, K>`, `Record<K, V>`.
+    - Use `satisfies` operator for type-safe object literals with inferred types.
+    - Use `as const` for literal types instead of `enum`.
 
 anti-patterns:
   - ❌ Using `any`. Use `unknown` if the type is truly not known until runtime.
-  - ❌ Using `enum` for lean code. Prefer standard objects with `as const` instead.
+  - ❌ Using `enum` for lean code. Prefer `as const` objects or union types.
+  - ❌ Inconsistent import paths — mixing relative `../../` with `@/` aliases.
+  - ❌ Barrel files that re-export entire libraries (kills tree-shaking).
+  - ❌ Type assertions (`as T`) to silence errors instead of proper narrowing.
+  - ❌ `// @ts-ignore` without documented justification.

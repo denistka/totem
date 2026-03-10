@@ -22,7 +22,7 @@ mobile-ux-checks:
   - Themes: Light/Dark parity check.
 
 component-integrity:
-  - Size Check: Max 100 lines. `splitIf > 100`.
+  - Size Check: Max 150 lines. `splitIf > 150`.
   - Dedup: 1 pattern = 1 component.
   - Props: Interface must be explicit and typed.
 

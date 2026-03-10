@@ -1,0 +1,148 @@
+gate: OPEN
+task: S66-T01
+sprint: S66
+track: A
+name: Add Report v2 types
+requires: []
+scope: |
+  Add TypeScript interfaces: ReportBuildItem, WSReportRequest, ReportProgressEvent,
+  ReportBunch, ReportParameter, ReportPresetItem, PartitionType enum.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T02
+sprint: S66
+track: A
+name: Implement POST /ws/reports/v2/request
+requires: [S66-T01]
+scope: |
+  Add requestReport(req: WSReportRequest): Promise<ReportBuildItem> to ApiClient.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T03
+sprint: S66
+track: A
+name: Implement GET /ws/reports/v2/list
+requires: [S66-T01]
+scope: |
+  Add listBuiltReports(): Promise<ReportBuildItem[]> to ApiClient.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T04
+sprint: S66
+track: A
+name: Implement DELETE /ws/reports/v2/{id}
+requires: [S66-T01]
+scope: |
+  Add cancelReport(id: string): Promise<void> to ApiClient.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T05
+sprint: S66
+track: A
+name: Implement GET /ws/reports/v2/{id}/{type}
+requires: [S66-T01]
+scope: |
+  Add downloadReport(id: string, type: 'json'|'xlsx'|'pdf'|'word'|'html'|'xml')
+  Returns blob for binary types, JSON for json type.
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T06
+sprint: S66
+track: A
+name: Implement SSE client for reports progress
+requires: [S66-T01]
+scope: |
+  Create src/lib/sse-client.ts:
+  - Connect to GET /ws/reports/v2/state?token={accessToken}
+  - Parse SSE events as ReportProgressEvent
+  - Expose observable/callback API for progress updates
+  - Handle reconnection and error states
+files: [src/lib/sse-client.ts (NEW)]
+---
+gate: OPEN
+task: S66-T07
+sprint: S66
+track: B
+name: Replace simulated progress with SSE
+requires: [S66-T06]
+scope: |
+  In ReportsScreen.tsx, replace setInterval progress simulation with
+  real SSE connection via sse-client.ts.
+files: [src/components/screens/reports-screen/ReportsScreen.tsx]
+---
+gate: OPEN
+task: S66-T08
+sprint: S66
+track: B
+name: Add report history list view
+requires: [S66-T03]
+scope: |
+  New component showing list of built/building reports from /ws/reports/v2/list.
+  Show status (queued, building %, completed, error, cancelled).
+files: [src/components/screens/reports-screen/ReportHistoryView.tsx (NEW)]
+---
+gate: OPEN
+task: S66-T09
+sprint: S66
+track: B
+name: Add download options for reports
+requires: [S66-T05]
+scope: |
+  Add download button with format selector (json, xlsx, pdf, word, html, xml).
+files: [src/components/screens/reports-screen/ReportResultView.tsx]
+---
+gate: OPEN
+task: S66-T10
+sprint: S66
+track: B
+name: Add cancel/delete action for reports
+requires: [S66-T04]
+scope: |
+  Add cancel button during report building and delete for completed reports.
+files: [src/components/screens/reports-screen/]
+---
+gate: OPEN
+task: S66-T11
+sprint: S66
+track: B
+name: Replace hardcoded companies with API
+requires: []
+scope: |
+  Implement GET /ws/getcompanies in ApiClient.
+  Replace hardcoded fallback in ReportsScreen.tsx with real API call.
+files: [src/lib/api.ts, src/components/screens/reports-screen/ReportsScreen.tsx]
+---
+gate: OPEN
+task: S66-T12
+sprint: S66
+track: C
+name: Implement ReportBunch CRUD
+requires: [S66-T01]
+scope: |
+  Add to ApiClient: getReportBunch(id), saveReportBunch(bunch).
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T13
+sprint: S66
+track: C
+name: Implement ReportPreset CRUD
+requires: [S66-T01]
+scope: |
+  Add to ApiClient: getReportPreset(id), saveReportPreset(id, items).
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S66-T14
+sprint: S66
+track: C
+name: Custom report management UI
+requires: [S66-T12,S66-T13]
+scope: |
+  UI for creating/editing custom report bunches and managing presets.
+files: [src/components/screens/reports-screen/ (NEW components)]

@@ -1,43 +1,48 @@
-role: Vue & Frontend Security Specialist
-focus: tree-shaking-risks, owasp, env-vars, xss, citizen-dev-guardrails
+role: Frontend Security Specialist
+focus: tree-shaking-risks, owasp, env-vars, xss, csp, citizen-dev-guardrails
+extends: none
 
 security-gold-standard:
   tree-shaking-is-not-security:
     - "Tree-shaking removes unused code, NOT sensitive code. It cannot distinguish secrets from app logic."
     - Server-only modules imported in client components WILL leak into production bundle.
-    - "`VITE_PUBLIC_` / `VUE_APP_` prefixed env vars are ALWAYS in client code — never use for secrets."
+    - "`VITE_` / `NEXT_PUBLIC_` / `VUE_APP_` prefixed env vars are ALWAYS in client code — never use for secrets."
     - All sensitive logic (auth, DB, API keys) must stay server-side, accessed only via API.
   code-separation:
     - Strict server/client boundary — never import from `server/` in client components.
-    - Use Nuxt `server/api/` or Nitro routes for all sensitive operations.
+    - Use framework server routes (Nuxt `server/api/`, Next.js Route Handlers, Express routes) for all sensitive operations.
     - Audit `import` chains regularly — one wrong import leaks the entire module tree.
-  owasp-for-vue:
-    - "**XSS:** Never use `v-html` with user input. Sanitize all dynamic content."
+  owasp-frontend:
+    - "**XSS:** Never use `v-html` (Vue), `dangerouslySetInnerHTML` (React), or `{@html}` (Svelte) with user input. Sanitize all dynamic content."
     - "**CSRF:** Use tokens for state-changing operations."
     - "**Injection:** Parameterize all queries. Never concatenate user input into SQL/commands."
     - "**Secrets:** Use `.env` files, never commit them. Rotate credentials regularly."
     - "**Dependencies:** Audit with `npm audit`. Update packages proactively."
   env-var-rules:
     - "`VITE_` prefix = public, baked into client bundle."
-    - "Server-only vars: NO prefix, access via `useRuntimeConfig().secret` (Nuxt) or `process.env` (Node)."
+    - "`NEXT_PUBLIC_` prefix = public in Next.js, same rule."
+    - "Server-only vars: NO prefix, access via `useRuntimeConfig().secret` (Nuxt), `process.env` (Node), or `option_env!` (Rust/Tauri)."
     - "Never log secrets in client-side code or error messages."
+  tauri-security:
+    - "Use `option_env!()` in Rust commands to inject API URLs at build time — secrets never reach the JS bundle."
+    - "Configure CSP in `tauri.conf.json` `security.csp` — whitelist only required API domains in `connect-src`."
+    - "Use Tauri's permission system (`capabilities/`) — grant only needed plugin permissions per window."
   citizen-developer-guardrails:
     - Schema-driven components: accessibility, brand rules, performance defaults baked in.
     - AI-generated code operates in safe boundaries — routing, logic, data flow are protected.
-    - Devs become platform enablers; citizen builders use visual editors + schema tools.
-    - Guardrail-based versioning: opinionated component design prevents architecture breakage.
     - Lightweight review processes for AI-generated/citizen-contributed code.
   backend-validation:
     - "NEVER trust client-side validation for security. All checks must be on server."
     - Auth and authorization must be server-enforced (middleware, API guards).
   production-mode:
-    - Deploy Vue apps in production mode — removes dev warnings and verbose debug info.
+    - Deploy apps in production mode — removes dev warnings and verbose debug info.
     - Enable source map generation in CI only, never serve to public.
 
 anti-patterns:
   - ❌ Trusting tree-shaking to remove sensitive server code.
-  - ❌ Using `VITE_` prefix for API keys or secrets.
-  - ❌ `v-html` with unsanitized user input.
+  - ❌ Using `VITE_` or `NEXT_PUBLIC_` prefix for API keys or secrets.
+  - ❌ `v-html` / `dangerouslySetInnerHTML` / `{@html}` with unsanitized user input.
   - ❌ Client-side only validation for security-critical operations.
   - ❌ Letting AI/citizen devs modify routing, data flow, or auth logic.
   - ❌ Serving source maps to production users.
+  - ❌ Hardcoding API domains in client bundle (use server-side injection or build-time env).

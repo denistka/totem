@@ -1,0 +1,55 @@
+role: Leaflet Map Specialist
+focus: tile-layers, clustering, markers, dark-mode-maps, performance
+extends: none
+
+stack: Leaflet, react-leaflet, react-leaflet-markercluster
+
+leaflet-gold-standard:
+  tile-providers:
+    - OSM standard: `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`
+    - OSM dark (CartoDB): `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png`
+    - Google maps: `https://mt0.google.com/vt/lyrs=${type}&x={x}&y={y}&z={z}` (m=map, s=satellite, y=hybrid)
+    - Google dark: Apply CSS `filter: invert(1) hue-rotate(180deg)` on tile layer for schematic dark mode.
+    - Satellite: ArcGIS `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}`
+  clustering:
+    - Use `react-leaflet-markercluster` (NOT `react-leaflet-cluster` — different package).
+    - Lazy load MarkerClusterGroup with `lazy()` + `Suspense` to reduce initial bundle.
+    - Configure: `chunkedLoading`, `maxClusterRadius: 50`, `spiderfyOnMaxZoom`, `showCoverageOnHover: false`.
+  markers:
+    - Use `L.divIcon` for custom HTML markers (vehicle icons, status badges).
+    - Sprite sheets for animated icons: 4 frames, `steps(4)` CSS animation, speed-driven.
+    - Status colors via CSS classes on divIcon container.
+  fitBounds:
+    - Filter outliers before fitting: compute median lat/lon, exclude points > 15° away.
+    - Use padding `[100, 100]` to avoid markers hidden under header/footer.
+    - Fit only once on initial load (ref flag: `hasFittedRef`).
+  react-integration:
+    - `useMap()` for imperative map control (zoom, pan, invalidateSize).
+    - `useMapEvents()` for event handling (locationfound, click).
+    - Invalidate size after CSS transitions: `setTimeout(() => map.invalidateSize(), 350)`.
+    - Isolate map from high-frequency state changes — wrap in `React.memo` or feature boundary.
+  dark-mode:
+    - Switch tile URL based on theme (light → OSM standard, dark → CartoDB dark_all).
+    - Use `key` prop on TileLayer to force remount on theme change.
+    - Google maps dark: CSS class `google-dark-invert` with `filter: invert(1) hue-rotate(180deg)`.
+  geolocation:
+    - Use `map.locate({ setView: true, maxZoom: 15 })`.
+    - Show user position with `L.circleMarker` (blue dot pattern).
+
+integration-log:
+  navitrack:
+    date: 2026-03-10
+    target: navitrack-apps/src-client/src/features/map/
+    files: ClusterMap.tsx, VehicleMarker.tsx, map.css
+    learnings:
+      - Outlier filtering with median + threshold before fitBounds
+      - Lazy MarkerClusterGroup cuts initial bundle ~30%
+      - Google dark mode via CSS invert (no server-side tile rendering)
+      - Provider switch (OSM/Google) via store state, not URL params
+
+anti-patterns:
+  - ❌ Using 100vh for map container (use h-full with flex parent or explicit height).
+  - ❌ Forgetting `invalidateSize()` after container resize or CSS transition.
+  - ❌ Subscribing map component to entire vehicle collection (re-renders full cluster tree).
+  - ❌ Fitting bounds on every data refresh (fit once, then let user control).
+  - ❌ Hardcoding tile URLs in components (use constants or config).

@@ -1,0 +1,16 @@
+gate: OPEN
+task: S65-T08
+sprint: S65
+track: B
+name: Update useAuth.ts to token-based auth
+requires: [S65-T04]
+
+scope: |
+  Rewrite useAuth.ts:
+  - Remove StoredCreds (username/password) from sessionStorage
+  - Store only JWT token (via api-auth.ts)
+  - login() calls signIn() and stores token on success
+  - Expose auth state including rights[] from AuthResponse
+  - logout() clears token
+
+files: [src/hooks/useAuth.ts, src/lib/api-auth.ts]

@@ -1,10 +1,11 @@
 role: React 19/20 Specialist
-focus: react-19, react-20, hooks, actions, server-first
+focus: react-19, react-20, hooks, actions, server-first, spa-pwa
 
 react-gold-standard:
   architecture:
-    - Server-First by default: React Server Components (RSC) are standard.
-    - Strict component boundaries using `'use client'` to opt into interactivity.
+    - Server-First by default: React Server Components (RSC) are standard for Next.js/Remix.
+    - SPA/PWA mode: For client-only apps (Vite + React), all components are client by default — no RSC overhead.
+    - Strict component boundaries using `'use client'` to opt into interactivity (RSC mode only).
   react-19-features:
     - **Actions:** Use `<form action={submitData}>` and `useActionState` to handle asynchronous updates natively.
     - **Optimistic Updates:** Use `useOptimistic` hook to render UI mutations instantly while server processes the action.
@@ -13,12 +14,37 @@ react-gold-standard:
     - **Document Metadata:** Manage `<title>` and `<meta>` tags natively inside components (React handles lifting them to `<head>`).
   performance:
     - Rely on **React Compiler** for automatic memoization (no manual `useMemo`/`useCallback`).
+    - Isolate expensive widgets (Map, Chart, Canvas) with `React.memo` at the leaf level.
+    - Use `lazy()` + `Suspense` for code-splitting heavy features (reports, map clustering).
   state-management:
     - Separate Server State (TanStack Query/React Router loaders) from Client State (Zustand/Jotai).
     - `useState` is for strictly local component state only.
+    - For SPA/PWA: Zustand for global client state; direct API calls for server data.
+  portal-architecture:
+    - For PWA apps with fixed header/footer: use `createPortal` to project React content into static DOM nodes outside `#root`.
+    - Pattern: `<header class="pwa-header">` in index.html → React renders via `createPortal(content, headerEl)`.
+    - Benefits: fixed chrome, single scroll container, safe areas handled by CSS — React manages only the content.
+  css-approach:
+    - Tailwind CSS (utility-first) is recommended for rapid development.
+    - Vanilla CSS with CSS custom properties is equally valid for design-system-driven apps.
+    - CSS modules for component-scoped styles when global concerns are minimal.
+    - Rule: pick ONE approach per project and enforce consistently.
+
+integration-log:
+  navitrack:
+    date: 2026-03-10
+    target: navitrack-apps/src-client
+    patterns:
+      - Portal-based PWA layout (createPortal for header/footer outside #root)
+      - Zustand store for screen navigation (setScreen) instead of react-router
+      - Lazy-loaded MarkerClusterGroup for map performance
+      - Feature-based structure (features/map/, features/tracking/)
+      - Glass design system with CSS custom properties (not Tailwind-only)
 
 anti-patterns:
   - ❌ Overusing `useEffect` for data fetching (use Suspense, `use()` or Actions).
   - ❌ Manual `forwardRef` boilerplate.
   - ❌ Managing Server State inside `useState` + `useEffect`.
-  - ❌ Using `'use client'` at the root layout (breaks RSC benefits).
+  - ❌ Using `'use client'` at the root layout (breaks RSC benefits — RSC mode only).
+  - ❌ Re-rendering entire Map/Chart because parent observes high-frequency state.
+  - ❌ Mixing CSS approaches (Tailwind + raw CSS + CSS modules in same project).

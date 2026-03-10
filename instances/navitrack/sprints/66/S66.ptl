@@ -1,0 +1,31 @@
+gate: OPEN
+sprint: S66
+epic: E-07-API-V6-MIGRATION
+name: Reports v2 Pipeline
+priority: P1
+dep: S65
+updated: 2026-03-10
+
+description: |
+  Replace deprecated /ws/doreport with the new /ws/reports/v2/* async pipeline.
+  Implement SSE-based progress tracking, report history, download in multiple formats,
+  cancel/delete, report bunches, and report presets.
+
+tracks:
+  A:
+    name: Report v2 API Layer
+    requires: []
+    tasks: [S66-T01,S66-T02,S66-T03,S66-T04,S66-T05,S66-T06]
+  B:
+    name: Reports UI
+    requires: [A]
+    tasks: [S66-T07,S66-T08,S66-T09,S66-T10,S66-T11]
+  C:
+    name: Report Bunches & Presets
+    requires: [A]
+    tasks: [S66-T12,S66-T13,S66-T14]
+
+invariants:
+  - Old /ws/doreport endpoint must be fully replaced
+  - SSE EventSource must be used for real progress (no simulated timers)
+  - Companies must come from /ws/getcompanies (no hardcoded fallbacks)

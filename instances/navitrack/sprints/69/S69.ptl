@@ -1,0 +1,30 @@
+gate: OPEN
+sprint: S69
+epic: E-07-API-V6-MIGRATION
+name: Maintenance, Geozones, Drivers
+priority: P3
+dep: S65
+updated: 2026-03-10
+backlog-ref: F-003
+
+description: |
+  Implement CRUD for geozones, drivers, and maintenance (templates, vehicle assignments,
+  journal, nearest alerts). Ties to backlog item F-003 (Technical Maintenance alerts).
+
+tracks:
+  A:
+    name: Geozones
+    requires: []
+    tasks: [S69-T01,S69-T02,S69-T03]
+  B:
+    name: Drivers
+    requires: []
+    tasks: [S69-T04,S69-T05]
+  C:
+    name: Maintenance
+    requires: []
+    tasks: [S69-T06,S69-T07,S69-T08,S69-T09,S69-T10]
+
+invariants:
+  - Zone CRUD must support circle (single center point + radius) and polygon types
+  - Maintenance alerts must check NearMaintenanceItem for triggered state

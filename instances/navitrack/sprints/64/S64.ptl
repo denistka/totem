@@ -1,0 +1,33 @@
+## Sprint 64: Header Portal & Title Fix
+# S64.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Fix the extra "NaviTrack" title appearing in the app header on first load of
+  the Objects screen. Ensure the static HTML shell header is an empty portal
+  and that only the React header controls screen titles across the PWA.
+
+requires: [FRONTEND_DEV]
+invariants: sprints/53/S53-INVARIANTS.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P1
+source: Header duplication bug – Objects screen first load
+target: navitrack-apps (paths.code per project.config.yml)
+
+###############################################################################
+# TRACKS
+###############################################################################
+
+track-a-header-portal-fix:
+  desc: Remove duplicate NaviTrack header text and enforce portal-only header shell.
+  tasks: [S64-TA1]
+  requires: [FRONTEND_DEV]
+  gate: OPEN
+

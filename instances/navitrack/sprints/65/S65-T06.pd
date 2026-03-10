@@ -1,0 +1,15 @@
+gate: OPEN
+task: S65-T06
+sprint: S65
+track: B
+name: Add OTP input step to login screen
+requires: [S65-T05]
+
+scope: |
+  Add a second step to the login flow in login-screen.tsx:
+  - After initial signIn returns result="otp", show OTP input field
+  - User enters 6-digit code from authenticator app
+  - Re-submit signIn with otp field populated
+  - Handle result="wrong" with error message
+
+files: [src/components/screens/login-screen.tsx]

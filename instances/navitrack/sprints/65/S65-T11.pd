@@ -1,0 +1,14 @@
+gate: OPEN
+task: S65-T11
+sprint: S65
+track: C
+name: Fix address nullable on Vehicle
+requires: []
+
+scope: |
+  Vehicle.address is currently typed as `string`.
+  API spec says it can be "none" or null.
+  Change to: address: string | null
+  Update any components that reference vehicle.address to handle null.
+
+files: [src/lib/api.ts, affected components]

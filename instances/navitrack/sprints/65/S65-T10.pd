@@ -1,0 +1,16 @@
+gate: OPEN
+task: S65-T10
+sprint: S65
+track: C
+name: Fix pointId int32→int64
+requires: []
+
+scope: |
+  pointId in TrackPoint, TrackEvent, TrackPointInfo interfaces is currently
+  typed as `number` (safe only to 2^53). The server uses int64.
+  Options:
+  - Use string type for pointId (safest, no precision loss)
+  - Use custom JSON parser with BigInt for pointId fields
+  Update all interfaces that contain pointId.
+
+files: [src/lib/api.ts]

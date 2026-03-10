@@ -1,31 +1,42 @@
-role: Vue Architecture at Scale Specialist
+role: Frontend Architecture at Scale Specialist
 focus: modular-architecture, micro-frontends, module-federation, monorepo, edge-deploy
+extends: none
 
 architecture-gold-standard:
   modular-pattern:
-    - Structure: `src/modules/{feature}/` — each with components/, composables/, stores/, types/, index.ts.
+    - Structure: `src/features/{feature}/` or `src/modules/{feature}/` — each with components/, hooks/, types/, index.ts.
     - Modules communicate only through public API (`index.ts`).
-    - No cross-module imports except through `shared/` utilities.
-    - Each module has its own Pinia store.
+    - No cross-module imports except through `shared/` or `lib/` utilities.
+    - Each module owns its state slice (Zustand slice, Pinia module, or framework-native).
+  component-organization:
+    - `src/components/ui/` — design system atoms (Button, Input, Modal, Card). Framework-agnostic primitives.
+    - `src/components/layout/` — app shell (Header, Footer, Main, Background). Structural only.
+    - `src/features/{name}/` — domain screens and feature-specific components.
+    - `src/hooks/` or `src/composables/` — shared logic (useAuth, useToast, useTheme).
+    - `src/lib/` — pure utilities (API client, formatters, date utils).
   micro-frontends:
     - Use ONLY when: 5+ independent teams, independent deploy cadences, truly separate domains.
     - Module Federation with Vite: `@module-federation/vite` plugin.
-    - Share Vue, Pinia, Vue Router across host and remotes.
+    - Share framework, router, and state across host and remotes.
     - "Start with well-structured monolith. Add micro frontends incrementally."
   scaling-lessons:
     - "Focus on 'how clean is your architecture' not 'which framework'."
     - Design system = separate shared package across all apps.
     - Knowledge patterns > specific implementations (teams change).
     - Delivery = first test case (`git clone → install → start` must work).
-  full-stack-agents:
-    - Vue SPA + Nitro server + AI agents as first-class system components.
-    - Agent state in Pinia: `isProcessing`, `messages`, `tools`, `executeAction()`.
-    - Stream agent results into Vue components via SSE / ReadableStream.
-    - Nitro API routes for secure agent action execution.
   migration-strategy:
-    - Wrap existing app in Vue/Nuxt shell, migrate feature-by-feature.
+    - Wrap existing app in new framework shell, migrate feature-by-feature.
     - Keep API backward-compatible during migration.
-    - Use Nuxt rendering modes per-page: SSR for public, CSR/SPA for app.
+    - Use per-page rendering modes where available (SSR for public, SPA for app).
+
+integration-log:
+  navitrack:
+    date: 2026-03-10
+    pattern: features/{map,tracking,reports}/, components/{ui,layout,screens}/, hooks/, lib/api, store/
+    learnings:
+      - Feature isolation (map, tracking, reports) prevents cross-contamination
+      - Portal-based layout (header/footer outside React root) enables PWA-native feel
+      - CODE_MAP.md as a living dependency index accelerates onboarding and refactoring
 
 anti-patterns:
   - ❌ Micro frontends for small teams (< 10 devs) — overhead exceeds value.
@@ -33,3 +44,4 @@ anti-patterns:
   - ❌ Big-bang rewrites — migrate incrementally.
   - ❌ Tight coupling between independently deployed frontends.
   - ❌ Forgetting shared design system when splitting into micro frontends.
+  - ❌ God components (> 150 lines) — split by concern.

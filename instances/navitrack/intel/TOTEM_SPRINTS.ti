@@ -1,17 +1,26 @@
-v:2
+v:3
 format:totem-sprints
 purpose:machine-only sprint index
+updated:2026-03-10
 
 ###############################################################################
-# DONE (Epic 0)
+# DONE (All Sprints)
 ###############################################################################
 
 done:E-00
   ref:TOTEM_EPICS.ti#E-00
-  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S44,S45,S46,S47,S48]
+  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S42,S43,S44,S45,S46,S47,S48,S49,S50,S51,S52,S53,S54,S55,S56,S57,S58,S59,S60,S61,S63,S64]
+
+skipped:E-01
+  ref:TOTEM_EPICS.ti#E-01-TO-DO
+  sprints:[S38,S39,S40]
+
+locked:E-06
+  ref:TOTEM_EPICS.ti#E-06
+  sprints:[S62]
 
 ###############################################################################
-# TO-DO (Epic 1)
+# SPRINT DETAILS
 ###############################################################################
 
 S34:
@@ -45,26 +54,29 @@ S37:
 S38:
   name:Async-Reports-2FA
   path:sprints/38/
-  status:⬜ planned
+  status:⏭️ skipped
   priority:P1
   scope:H-002,H-003,F-004
   dep:S37
+  note:2FA and async reports delivered in S47; F-004 remains open
 
 S39:
   name:Feature-Pack
   path:sprints/39/
-  status:⬜ planned
+  status:⏭️ skipped
   priority:P2
   scope:F-001,F-002,F-005,M-007,F-007
   dep:S38
+  note:Features remain in backlog; never started
 
 S40:
   name:Tech-Debt-Cleanup
   path:sprints/40/
-  status:⬜ planned
+  status:⏭️ skipped
   priority:P3
   scope:wgpu-update,static-mut-refactor,M-002
   dep:S39
+  note:Rust/WGPU debt deprecated by React PWA pivot; M-002 open
 
 S42:
   name:App-Ignition
@@ -114,10 +126,18 @@ S47:
 S48:
   name:Refactoring-Clean-UI
   path:sprints/48/
-  status:🟢 in-progress
+  status:✅ complete
   priority:P0
   scope:css-refactor,app-ui-kit-cleanup
   dep:S47
+
+S49:
+  name:Runtime-HTTP-Adapter
+  path:sprints/49/
+  status:✅ complete
+  priority:P0
+  scope:web-tauri-http-adapter,api-refactor,csp
+  dep:S48
 
 S50:
   name:Tauri-2-Multi-Platform
@@ -136,10 +156,32 @@ S51:
 S52:
   name:Root-Layouting
   path:sprints/52/
-  status:🟢 in-progress
+  status:✅ complete
   priority:P0
   scope:app-background,app-curtains,app-header,app-footer,root
   dep:S48
+
+S53:
+  name:Dependencies-Deep-Parity
+  path:sprints/53/
+  status:✅ complete
+  priority:P0
+  scope:radix-ui,forms,i18n,router,sonner,dates,deep-parity
+  dep:S52
+
+S54:
+  name:Bugs-Optimization-UI
+  path:sprints/54/
+  status:✅ complete
+  priority:P0
+  scope:layout-portals,api-store,glassmorphism,map-controls
+
+S55:
+  name:Client-Feedback
+  path:sprints/55/
+  status:✅ complete
+  priority:P0
+  scope:header-loaders,form-actions,company-vehicle-selection,map-types,reports
 
 S56:
   name:Consolidated-Roadmap
@@ -148,25 +190,69 @@ S56:
   priority:P0
   scope:architecture-consolidation,roadmap,artifacts
 
+S57:
+  name:Header-Player-Loader-Modals
+  path:sprints/57/
+  status:✅ complete
+  priority:P0
+  scope:unified-header,tracking-player,loader,modals,api-checks
+
 S58:
   name:Spacing-Audit
   path:sprints/58/
   status:✅ complete
   priority:P1
-  scope:ui-layout,spacing-system,css-variables
+  scope:ui-layout,spacing-system,css-variables,modals,tracking
+
+S59:
+  name:UI-UX-Problems-Solutions
+  path:sprints/59/
+  status:✅ complete
+  priority:P0
+  scope:modal-system,map-fullheight,objects-search,history-events,loader,tracking,theme,refactoring
+
+S60:
+  name:Unfixed-Problems-New-Bugs
+  path:sprints/60/
+  status:✅ complete
+  priority:P0
+  scope:ios-pwa,object-details,history,reports-table,tracking,login,api,icons,refactoring
+
+S61:
+  name:Critical-Bugs-Issues
+  path:sprints/61/
+  status:✅ complete
+  priority:P0
+  scope:button-positioning,ios-loader,api-throttling,toast,navigation,layout,formatting,map,refactoring
+
+S62:
+  name:Refactoring-Optimization
+  path:sprints/62/
+  status:🔒 locked (never executed)
+  priority:P1
+  scope:code-cleanup,component-architecture,api-consolidation,performance,type-safety,dev-experience
+  note:Standalone refactoring sprint; goals partially addressed in S61/S63
 
 S63:
   name:Map-UI-Polish
-  path:sprints/
+  path:sprints/63/
   status:✅ complete
   priority:P1
-  scope:popup-fixes,map-padding,status-indicator,badge-positioning
+  scope:popup-fixes,map-padding,status-indicator,badge-positioning,api-analysis,vehicle-icons,refactoring
   dep:S47
+
+S64:
+  name:Header-Portal-Title-Fix
+  path:sprints/64/
+  status:✅ complete
+  priority:P1
+  scope:header-duplication,portal-only-header
 
 ###############################################################################
 # ORDER
 ###############################################################################
 
-order:[S48→S52→S38→S39→S40]
-done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S50→S51→S56→S58→S63]
+done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S48→S49→S50→S51→S52→S53→S54→S55→S56→S57→S58→S59→S60→S61→S63→S64]
+skipped:[S38→S39→S40]
+locked:[S62]
 

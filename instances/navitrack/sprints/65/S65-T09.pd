@@ -1,0 +1,14 @@
+gate: OPEN
+task: S65-T09
+sprint: S65
+track: B
+name: Handle result="wrong" with user feedback
+requires: [S65-T06,S65-T07]
+
+scope: |
+  When OTP/email code is submitted and result="wrong":
+  - Show inline error on the code input field
+  - Do not clear the code input, allow retry
+  - After 3 failed attempts, show error and return to username/password step
+
+files: [src/components/screens/login-screen.tsx]

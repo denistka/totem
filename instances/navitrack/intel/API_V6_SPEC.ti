@@ -1,0 +1,181 @@
+v:1
+format:totem-intel
+purpose:api-v6-specification-memory
+source:APIv6-2026-03-05.md
+updated:2026-03-10
+
+###############################################################################
+# API V6 Specification — Machine Memory
+###############################################################################
+
+hosts:
+  production: http://online.navitrack.com.ua:2052/
+  test: https://navitrack.symbx.xyz/
+
+###############################################################################
+# AUTH
+###############################################################################
+
+auth:
+  jwt-endpoint: POST /ws/auth/signin
+  request: AuthRequest{username,password,rememberMe,otp}
+  response: AuthResponse{token,type:"Bearer",id,username,email,rights[],telegramUrl,result}
+  result-codes: [ok,otp,mail,wrong]
+  flow:
+    - 1. POST /ws/auth/signin with {username,password,otp:null}
+    - 2. If result="ok" → store token, use as Bearer
+    - 3. If result="otp" → prompt OTP from authenticator, re-send with otp value
+    - 4. If result="mail" → prompt code from email, re-send with otp value
+    - 5. If result="wrong" → submitted code incorrect
+  note: Basic Auth is deprecated and will be disabled!
+  2fa-enable: POST /ws/api/user/2fa/enable (body:2FAEnableRequest{mode,token})
+  2fa-disable: DELETE /ws/api/user/2fa/disable
+  mail-assign: POST /ws/api/user/mail/assign (body:AssignMailRequest{email})
+  password-change: POST /ws/user/settings/changepassword (body:ChangePasswordRequest{current,next,confirm})
+
+###############################################################################
+# VEHICLES
+###############################################################################
+
+vehicles:
+  all: GET /ws/allvehicles → SimpleVehicle[]
+  map-active: GET /ws/vehicles → Vehicle[]
+  short: GET /ws/vehicles-short?cols=... → VehicleShort[]
+  details: GET /ws/vehicledetails/<id> → VehicleInfo (extends Vehicle)
+  info: GET /ws/vehicle/info/<id> → VehicleState (extends Vehicle)
+  settings-get: POST /ws/vehicle/settings/getcommon (body:vehicleId) → VehicleSettings
+  settings-set: POST /ws/vehicle/settings/setcommon (body:VehicleSettings)
+  template-get: POST /ws/vehicle/settings/getinfotemplate (body:vehicleId) → VehicleTemplate
+  template-set: POST /ws/vehicle/settings/setinfotemplate (body:VehicleTemplatePayload) → VehicleTemplate
+  lock: GET /ws/vehicle/lock/<id>
+  lock-unsafe: GET /ws/vehicle/lock-unsafe/<id>
+  unlock: GET /ws/vehicle/unlock/<id>
+  unlock-redirect: GET /ws/vehicle/unlock-unlock/<id> (→ redirect to unlock)
+
+cols-values: [ICON,SHOW,COMPANY,IGNITION,FUEL_LEVEL,FUEL_LEVEL_PERCENTS,FUEL_SPACE,FUEL_VOLUME,DOOR_STATUS,ALARM,HOU,TEMPERATURE,NAME,LAST_DATA_DATE,SPEED,START_TIME,STOP_TIME,MOVE_TIME]
+
+###############################################################################
+# TRACKS
+###############################################################################
+
+tracks:
+  daily: GET /ws/track/daily/<vehicleId>/<yyyy-MM-dd> → DailyTrack
+  get: POST /ws/track/get (body:TrackRequest) → Track
+  point: POST /ws/track/point (headers:trackToken,pointId)
+  trackpoints-v1: POST /ws/trackpoints/get (body:TrackRequest) → TrackPointInfo[]
+  trackpoints-v2: POST /ws/v2/trackpoints/get?fields=... (body:TrackRequest, headers:trackToken) → WSTrackPointsDTO
+
+###############################################################################
+# REPORTS — V2 (NEW)
+###############################################################################
+
+reports:
+  list-available: GET /ws/reports → ReportItem[]
+  list-built: GET /ws/reports/v2/list → ReportBuildItem[]
+  request-build: POST /ws/reports/v2/request (body:WSReportRequest) → ReportBuildItem
+  delete-cancel: DELETE /ws/reports/v2/{id} (id=UUID)
+  get-result: GET /ws/reports/v2/{id}/{type} (type:json|xlsx|pdf|word|html|xml)
+  progress-sse: GET /ws/reports/v2/state?token={accessToken} → SSE stream of ReportProgressEvent
+  bunch-save: POST /ws/reportbunch (body:ReportBunch) → ReportItem[]
+  bunch-get: GET /ws/reportbunch/<id> → ReportBunch
+  preset-get: GET /ws/reportpreset/<id> → ReportPresetItem[]
+  preset-save: POST /ws/reportpreset/<id> (body:ReportPresetItem[]) → ReportPresetItem[]
+
+report-progress-states:
+  - -1: queued
+  - -2: build error
+  - -3: cancelled
+  - 0-10000: 0-100% progress
+  - 10001: completed
+
+partition-types: [UNDEFINED,PERIOD,DAYS,SHIFTS,ZONES,NONE]
+
+###############################################################################
+# EVENTS
+###############################################################################
+
+events:
+  get-all: GET /ws/events → CriticalEvent[]
+  get-newer: GET /ws/events/<id> → CriticalEvent[]
+  event-config-get: GET /ws/getvea/<vehicleId> → VehicleEventConfiguration
+  event-config-save: POST /ws/savevea (body:VehicleEventConfiguration)
+
+event-codes:
+  0:stop 1:start-move 2:enter-zone 3:exit-zone
+  4:find-satellites 5:loss-satellites 6:power-on
+  7:low-power 8:power-off 9:overspeed 10:SOS
+  11:fuel-charge 12:fuel-drain 13:vehicle-disconnect
+  14:door-open-outside-zone 15:engine-stop 16:engine-start
+  17:vehicle-connect 18:door-close 19:driver-change
+
+###############################################################################
+# COMPANIES / DESCRIPTIONS / RIGHTS
+###############################################################################
+
+companies: GET /ws/getcompanies → Company[]
+descriptions: GET /ws/descriptions → string[]
+description-list: GET /ws/descriptionlist → {vehicleId:description}[]
+rights: GET /ws/right/current → KeyValuePair[]
+infra-datatypes: GET /ws/infra/vehicledatatypes → KeyValuePair<String,String>[]
+infra-infofields: GET /ws/infra/vehicleinfofields → KeyValuePair[]
+
+###############################################################################
+# SETTINGS
+###############################################################################
+
+settings:
+  get: POST /ws/settings/getmain (body:{}) → Settings
+  set: POST /ws/settings/setmain (body:Settings) → Settings
+
+###############################################################################
+# GEOZONES
+###############################################################################
+
+zones:
+  get-types: GET /ws/zones/get-types → ZoneType[]
+  get-all: GET /ws/zones/get → Zone[]
+  delete: DELETE /ws/zones/{id}
+  save: POST /ws/zones/save (body:Zone)
+
+###############################################################################
+# DRIVERS
+###############################################################################
+
+drivers:
+  get: GET /ws/drivers/get → Driver[]
+  delete: DELETE /ws/drivers/{id}
+  save: POST /ws/drivers/save (body:Driver) → Driver
+
+###############################################################################
+# MAINTENANCE
+###############################################################################
+
+maintenance:
+  template-list: GET /ws/maintenance/list → MaintenanceTypeItem[]
+  template-save: POST /ws/maintenance/save (body:MaintenanceTypeItem)
+  template-remove: DELETE /ws/maintenance/remove/<id>
+  vehicle-list: GET /ws/maintenance/vehicle/<vehicleId> → MaintenanceItem[]
+  vehicle-save: POST /ws/maintenance/vehicle/save (body:MaintenanceItem)
+  vehicle-remove: DELETE /ws/maintenance/vehicle/<vehicleId>/<maintenanceId>
+  journal: GET /ws/maintenance/journal/<vehicleId> → JournalMaintenanceItem[]
+  nearest: GET /ws/maintenance/nearest/<vehicleId> → NearMaintenanceItem[]
+  continue: POST /ws/maintenance/continue (body:MaintenanceWork)
+
+###############################################################################
+# DATA MODEL BUGS (from server team)
+###############################################################################
+
+bugs:
+  B-001: pointId must be int64 (current model uses int32)
+  B-002: distance in DailyTrack must support decimal (float)
+  B-003: address field in Vehicle can be null/None
+
+###############################################################################
+# MIGRATION NOTES
+###############################################################################
+
+migration:
+  auth: Replace Basic Auth → JWT Bearer token via /ws/auth/signin
+  reports: Replace /ws/doreport (deprecated) → /ws/reports/v2/* pipeline
+  otp: Add OTP flow support (authenticator + email codes)
+  data-types: Fix pointId int32→int64, distance→float, address→nullable

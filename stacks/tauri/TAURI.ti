@@ -1,0 +1,54 @@
+role: Tauri 2 Multi-Platform Specialist
+focus: tauri2, multi-platform, native-bridge, security, deployment
+extends: none
+
+stack: Tauri 2, Rust, WebView
+
+tauri-gold-standard:
+  architecture:
+    - Tauri 2 = Rust backend + WebView frontend. Zero Electron-style bundled browser.
+    - Frontend is any web framework (React, Vue, Svelte) served in native WebView.
+    - Rust commands expose native functionality to frontend via `invoke()`.
+  multi-platform:
+    - Supported: macOS, Windows, Linux (x64/arm64), iOS, Android.
+    - Platform-specific configs: `tauri.ios.conf.json`, `tauri.android.conf.json` override base `tauri.conf.json`.
+    - Mobile init: `npx tauri android init`, `npx tauri ios init`.
+    - Cross-compile Linux ARM64 via `cross` crate (Raspberry Pi 5 target: `aarch64-unknown-linux-gnu`).
+  http-adapter:
+    - Web mode: API calls go through Vite proxy (`/api-*` → real server).
+    - Tauri mode: Direct HTTP via `@tauri-apps/plugin-http` — no proxy needed.
+    - Runtime detection: Check `window.__TAURI_INTERNALS__` to pick adapter.
+    - Keep ONE `api.ts` — adapter pattern handles the difference transparently.
+  security:
+    - CSP in `tauri.conf.json` `security.csp`: whitelist API domains in `connect-src`.
+    - API URLs via `option_env!()` in Rust — never bake real domains into JS bundle.
+    - Capabilities: Grant only needed permissions per window (file system, HTTP, clipboard).
+    - Theme: Use `core:window:allow-set-theme` to sync native title bar with app theme.
+  plugins:
+    - `tauri-plugin-http` — native HTTP client (bypasses CORS in native context).
+    - `tauri-plugin-edge-to-edge` — edge-to-edge viewport on mobile.
+    - `tauri-plugin-shell` — open URLs, run system commands.
+    - `tauri-plugin-store` — persistent key-value storage (native keychain).
+  build:
+    - Dev: `npx tauri dev` (runs Vite + Tauri concurrently).
+    - Build: `npx tauri build` (produces .app/.dmg/.msi/.deb/.apk/.ipa).
+    - Mobile: `npx tauri android build`, `npx tauri ios build`.
+    - Frontend build must complete before Tauri build — chain via `beforeBuildCommand`.
+
+integration-log:
+  navitrack:
+    date: 2026-03-10
+    target: navitrack-apps/src-client
+    learnings:
+      - Runtime HTTP adapter (web proxy vs Tauri direct) via single api.ts
+      - Platform configs (tauri.ios.conf.json, etc.) for clean modularity
+      - Theme sync (OS native title bar + CSS custom properties)
+      - Edge-to-edge + safe areas via tauri-plugin-edge-to-edge
+      - API URL injection via option_env! — JS bundle stays secret-free
+
+anti-patterns:
+  - ❌ Bundling API URLs in client JS (use Rust `option_env!` or Tauri commands).
+  - ❌ Using `fetch()` directly in Tauri context (CORS will block — use tauri-plugin-http).
+  - ❌ Single `tauri.conf.json` for all platforms (use platform-specific overrides).
+  - ❌ Granting all capabilities by default (principle of least privilege).
+  - ❌ Ignoring mobile safe areas (use edge-to-edge plugin + env(safe-area-inset-*)).

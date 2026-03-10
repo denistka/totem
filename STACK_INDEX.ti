@@ -56,8 +56,13 @@ This file serves as the master registry of all specialized `.ti` stacks and comb
 - `rust/RUST_DEV.ti` - Rust Specialist
 - `web3/WEB3.ti` - Web3 / Smart Contract Specialist
 
+### Maps
+
+- `leaflet/LEAFLET.ti` - Leaflet Map Specialist (Tiles, Clustering, Dark Mode)
+
 ### Platform & Deployment
 
+- `tauri/TAURI.ti` - Tauri 2 Multi-Platform Specialist (iOS, Android, macOS, Windows, Linux)
 - `vercel/VERCEL.ti` - Vercel Deployment Specialist
 - `pwa/PWA.ti` - PWA Immersion Specialist
 
@@ -82,6 +87,10 @@ Templates are pre-configured combinations of Stacks and Guardians meant for star
 - `react-ts/BUILD.ti`
 - `react-ts/FRONTEND_DEV.ti`
 - `react-ts/UI_UX.ti`
+
+### React PWA (Glass)
+
+- `pwa-react-ts/PWA_REACT_GLASS.ti` (React PWA + Glassmorphism + Portal Layout)
 
 ### Backend
 

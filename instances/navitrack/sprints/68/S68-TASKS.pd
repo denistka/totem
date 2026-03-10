@@ -1,0 +1,49 @@
+gate: OPEN
+task: S68-T01
+sprint: S68
+track: A
+name: Implement lock/unlock API methods
+requires: []
+scope: |
+  Add to ApiClient:
+  - lockVehicle(id: number): Promise<void> (GET /ws/vehicle/lock/<id>)
+  - lockVehicleUnsafe(id: number): Promise<void> (GET /ws/vehicle/lock-unsafe/<id>)
+  - unlockVehicle(id: number): Promise<void> (GET /ws/vehicle/unlock/<id>)
+files: [src/lib/api.ts]
+---
+gate: OPEN
+task: S68-T02
+sprint: S68
+track: A
+name: Engine block UI with confirmation
+requires: [S68-T01]
+scope: |
+  Create engine control component with:
+  - Lock button (safe mode) with confirmation dialog
+  - Emergency lock button with double confirmation
+  - Unlock button with confirmation
+  - Status indicator (OPEN/unOPEN)
+files: [src/components/screens/engine-screen/ (NEW)]
+---
+gate: OPEN
+task: S68-T03
+sprint: S68
+track: A
+name: Engine status on vehicle card
+requires: [S68-T01]
+scope: |
+  Add engine lock status indicator to vehicle detail cards.
+  Show OPEN/unOPEN icon.
+files: [src/components/screens/objects-screen/]
+---
+gate: OPEN
+task: S68-T04
+sprint: S68
+track: A
+name: Rights-based engine control visibility
+requires: []
+scope: |
+  Check europalette field from VehicleSettings (read-only indicator
+  for engine block capability). Hide lock controls if not available.
+  Check user rights from /ws/right/current for permission.
+files: [src/components/screens/engine-screen/]

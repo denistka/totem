@@ -1,0 +1,15 @@
+gate: OPEN
+task: S65-T04
+sprint: S65
+track: A
+name: Token storage and lifecycle management
+requires: [S65-T03]
+
+scope: |
+  Create src/lib/api-auth.ts:
+  - Store JWT token in memory (not sessionStorage with raw password)
+  - Persist encrypted token or use sessionStorage for token-only storage
+  - Handle 401 responses by clearing token and redirecting to login
+  - Export getToken(), setToken(), clearToken(), isAuthenticated()
+
+files: [src/lib/api-auth.ts (NEW), src/lib/api.ts]

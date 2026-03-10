@@ -5,6 +5,8 @@ includes:
   - ../../stacks/pwa/PWA.ti
   - ../../stacks/react/REACT_COMPILER.ti
   - ../../stacks/react/ZUSTAND.ti
+  - ../../stacks/leaflet/LEAFLET.ti
+  - ../../stacks/tauri/TAURI.ti
 
 stack: React 19+, TypeScript 5
 
@@ -23,9 +25,14 @@ implementation-rules:
     - Client State: Use Zustand for global UI state. Keep state as close to its usage as possible.
     - Do not use `useState` for Server State.
   services:
-    - Pure async functions in `src/services/`.
+    - Pure async functions in `src/lib/` or `src/services/`.
     - Standardized Entity Models: Shared interfaces between services and components.
     - Heavy workloads (e.g., large data exports, reports) MUST be executed asynchronously to avoid blocking the UI thread.
+  layout-architecture:
+    - Portal-based layout for PWA: header/footer are fixed DOM nodes outside `#root`; React uses `createPortal` to project content.
+    - Feature isolation: `src/features/{name}/` for domain screens (map, tracking, reports).
+    - Layout components in `src/components/layout/` (Header, Footer, Main, Background).
+    - UI primitives in `src/components/ui/` (Button, Input, Modal, Card) — no naive HTML elements.
   
   typescript-rules:
   - Unified Types: Defined in `src/types/` (or package-shared) for core entities.
@@ -39,3 +46,4 @@ anti-patterns:
   - ❌ Prop Drilling > 3 levels (use Context/Composition).
   - ❌ Hardcoded Magic Strings/Numbers: Use constants or design tokens.
   - ❌ Local CSS/Tailwind overrides that diverge from `UI_UX.ti`.
+  - ❌ Using native `<button>`/`<input>` in app pages instead of `components/ui` primitives.

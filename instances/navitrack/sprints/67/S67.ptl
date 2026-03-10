@@ -1,0 +1,30 @@
+gate: OPEN
+sprint: S67
+epic: E-07-API-V6-MIGRATION
+name: Vehicle Management & Settings API
+priority: P2
+dep: S65
+updated: 2026-03-10
+
+description: |
+  Implement user settings (getmain/setmain), vehicle settings (getcommon/setcommon),
+  vehicle info templates, companies endpoint, critical events, event configuration,
+  user rights, and infrastructure endpoints.
+
+tracks:
+  A:
+    name: Settings API
+    requires: []
+    tasks: [S67-T01,S67-T02,S67-T03]
+  B:
+    name: Vehicle Settings
+    requires: []
+    tasks: [S67-T04,S67-T05,S67-T06]
+  C:
+    name: Descriptions, Events, Rights
+    requires: []
+    tasks: [S67-T07,S67-T08,S67-T09,S67-T10,S67-T11]
+
+invariants:
+  - Settings must use /ws/settings/getmain and /ws/settings/setmain
+  - Full Settings type with all fields including deprecated markers

@@ -1,0 +1,13 @@
+gate: OPEN
+task: S65-T02
+sprint: S65
+track: A
+name: Implement POST /ws/auth/signin in ApiClient
+requires: [S65-T01]
+
+scope: |
+  Add signIn(req: AuthRequest): Promise<AuthResponse> method to ApiClient.
+  This calls POST /ws/auth/signin with JSON body.
+  Must handle status 200 (success) and status 418 (OTP required).
+
+files: [src/lib/api.ts]
