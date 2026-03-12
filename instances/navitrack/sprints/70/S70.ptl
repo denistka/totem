@@ -1,0 +1,65 @@
+## Sprint 70: Large Module Refactor & Dynamic Background Foundation
+# S70.ptl
+
+v:4
+role: planner
+gate: OPEN
+
+objective: |
+  Break the heaviest NaviTrack PWA modules (>100 LOC) into intentional, reusable
+  units with clear logic vs presentation boundaries. Improve performance of
+  screen-level rendering loops, then remove 38MB of legacy background assets
+  (public/bg-anim/*) while standing up a lightweight dynamic background
+  component.
+
+requires: [FRONTEND_DEV, ARCHITECT]
+invariants: sprints/53/S53-INVARIANTS.md
+
+###############################################################################
+# CONTEXT
+###############################################################################
+
+epic: E-05-PWA-UI-IMPLEMENTATION
+priority: P1
+date: 2026-03-10
+source:
+  - navitrack-apps/src-client/refactoring_map.md (files >100 LOC, refreshed 2026-03-10)
+  - Performance regressions on TrackingActionScreen + reports virtual tables
+  - Static background bundle bloat from public/bg-anim/{1,2,3,4}.webp (total 38,494 KB)
+target: navitrack-apps/src-client
+
+###############################################################################
+# TRACKS (sequential: A → B → C → D)
+###############################################################################
+
+track-a-api-and-state-decomposition:
+  desc: Split the 1072-line src/lib/api.ts and related store logic into scoped
+    service modules with typed boundaries and shared hooks.
+  tasks: [S70-T01, S70-T02]
+  requires: [FRONTEND_DEV, ARCHITECT]
+  gate: OPEN
+
+track-b-screen-composition:
+  desc: Decompose the top 3 oversized React screens (HistoryTab, TrackingActionScreen,
+    ReportsScreen + ReportHistoryView) into container/presentational pairs with
+    memoized props.
+  tasks: [S70-T03, S70-T04, S70-T05]
+  requires: [FRONTEND_DEV]
+  dep: track-a-api-and-state-decomposition
+  gate: OPEN
+
+track-c-performance-tightening:
+  desc: Introduce targeted perf instrumentation and derived selectors for Zustand
+    + map/report rendering hot paths.
+  tasks: [S70-T06, S70-T07]
+  requires: [FRONTEND_DEV, ARCHITECT]
+  dep: track-b-screen-composition
+  gate: OPEN
+
+track-d-background-modernization:
+  desc: Remove the oversized bg-anim assets and replace them with a configurable
+    dynamic background component (gradient + motion) that adapts to theme/screen.
+  tasks: [S70-T08, S70-T09]
+  requires: [FRONTEND_DEV]
+  dep: track-c-performance-tightening
+  gate: OPEN

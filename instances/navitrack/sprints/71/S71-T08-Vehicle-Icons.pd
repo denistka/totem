@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Map vehicle icons accurately based on system config, matching iOS app logic
+requires: [FRONTEND_DEV]
+out: [src-client/src/utils/iconMap.ts]
+cmd: []
+done: [Vehicle icons are correctly mapped]

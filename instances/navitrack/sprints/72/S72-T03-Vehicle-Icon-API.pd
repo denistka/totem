@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Vehicle icons from API — use imageurl field from /ws/vehicles and /ws/allvehicles responses. Map imageurl paths (e.g. "/assets/vehicle-icons/car.png") to actual icon files in public/assets/vehicle-icons/. Use this icon in vehicle list items, object details header, and object events header.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/objects-screen/ObjectsScreen.tsx, src-client/src/components/screens/object-details/ObjectDetailsScreen.tsx]
+cmd: []
+done: [Vehicle icon from API displayed in list and detail views]

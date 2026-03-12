@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S70-T06-Perf-Instrumentation
+objective:Add profiling hooks and console timers around map rendering, report table virtualization, and tracking playback reducers to capture current FPS and render cost.
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+requirements:
+  - Create src/lib/perf/withRenderTimer.ts to wrap components and log render duration (dev-only, stripped in prod build if possible).
+  - Instrument ClusterMap.tsx, VehicleInfoPopup.tsx, VirtualizedReportTable.tsx, and TrackingActionScreen container.
+  - Capture metrics in docs/perf/S70-baseline.md (initial FPS, worst-case render time) before optimizations.
+
+steps:
+  1. Implement lightweight render timer HOC or hook using performance.now().
+  2. Wrap target components conditionally (NODE_ENV !== 'production').
+  3. Run manual scenarios (objects map, tracking playback, large report) and log results into docs/perf/S70-baseline.md.

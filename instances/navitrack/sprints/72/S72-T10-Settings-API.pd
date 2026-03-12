@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Settings screen API integration — connect SettingsScreen to POST /ws/user/settings/getmain (load) and POST /ws/user/settings/setmain (save). Map Settings object fields to UI controls: locale, timezone, map type, vehicleListStyle, vehicleArrowColor, vehicleArrowShow, vehicleNameColor, traceColor, traceWidth, vechZoom, numberOfPoints, fullTrack, downloadArea, trackDoNotHide, showConsoleOnStart. Remove hardcoded state, replace with server data.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/settings-screen.tsx, src-client/src/lib/api/domains/settings.ts]
+cmd: []
+done: [Settings load from server on mount, save to server on change, all Settings fields mapped]

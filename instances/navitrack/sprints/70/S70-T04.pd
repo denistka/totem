@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S70-T04-TrackingActionScreen-Modularization
+objective:Break src/components/screens/tracking-screen/TrackingActionScreen.tsx (525 LOC) into player controls, map pane, and summary sidebar components with isolated state.
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+requirements:
+  - Create tracking-screen/components/ folder housing TrackingPlayerControls.tsx, TrackingRouteMap.tsx, TrackingSummaryPanel.tsx.
+  - Move playback timers and refs into hooks/useTrackingPlayback.ts with single interval lifecycle.
+  - Ensure map component consumes memoized track GeoJSON; avoid re-rendering when unrelated state changes.
+
+steps:
+  1. Identify stateful sections (player controls, timeline, stats) and lift shared state into TrackingActionScreenContainer.
+  2. Extract UI-only sections into presentational components receiving props; wrap expensive sections (map) with React.memo.
+  3. Write regression tests or stories verifying play/pause loop and map resizing still work.

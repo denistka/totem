@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Report progress — replace timeout-retry with proper SSE polling. Poll GET /ws/reports/v2/state?token={token}. Parse ReportProgressEvent {id, progress}. progress/100 = percent. Wait until progress=10001 (100%), then wait 500ms, then fetch JSON. Handle -2 (error) and -3 (cancelled).
+requires: [FRONTEND_DEV]
+out: [src-client/src/lib/sse-client.ts, src-client/src/components/screens/reports-screen/ReportsScreen.tsx, src-client/src/lib/api/domains/reports.ts]
+cmd: []
+done: [Report waits for SSE progress 10001 before fetching JSON, no blind retries]

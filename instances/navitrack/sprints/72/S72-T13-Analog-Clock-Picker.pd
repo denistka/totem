@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: New analog clock time picker — large interactive AnalogClock with scroll/wheel to change time. Single scroll parameter controls total minutes (0-1439). Scrolling up increases time, scrolling down decreases. Hour and minute hands animate as value changes. Clock face has tick marks for hours (12) and minutes (60). Display digital readout below. Touch: vertical drag to change time. Replace small AnalogClock in timeline with this as an alternative picker mode.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/date-range-picker/TimePickerAnalogWheel.tsx, src-client/src/components/date-range-picker/DateRangePicker.tsx]
+cmd: []
+done: [Analog clock picker works — scroll/drag changes time, hands animate, can be selected as alt picker]

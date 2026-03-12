@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Render vehicle icon inside animated map marker — replace default pin with vehicle icon image embedded inside the existing animated marker point. Keep current animation/pulse effects, embed the PNG icon from imageurl inside the marker center.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/map/*, src-client/src/features/map/*]
+cmd: []
+done: [Map shows vehicle icon inside animated marker instead of generic pin]

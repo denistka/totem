@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Initialize fully functional Settings menu utilizing APIv6
+requires: [FRONTEND_DEV]
+out: [src-client/src/screens/SettingsScreen.tsx]
+cmd: []
+done: [Settings menu is operational]

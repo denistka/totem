@@ -1,0 +1,8 @@
+v:4 c:$$ m:alias role:planner
+objective: Bugfixes and UI improvements for Tracking/Reports, Settings menu
+requires: [FRONTEND_DEV]
+invariants: @totem/instances/navitrack/project.config.yml
+track-_:
+  tasks: [S71-T01-Loader-Visibility, S71-T02-API-405-Fix, S71-T03-Tracking-Layout, S71-T04-Tracking-Controls-Order, S71-T05-Report-Styles, S71-T06-Report-Buttons, S71-T07-Object-List-Item, S71-T08-Vehicle-Icons, S71-T09-Settings-Menu]
+  requires: [FRONTEND_DEV]
+  gate: active

@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S70-T07-Derived-Selectors
+objective:Reduce unnecessary Zustand-driven renders by introducing derived selectors + memoized slices for tracking/report heavy lists.
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+requirements:
+  - Audit useAppStore selectors in TrackingScreen, ReportsScreen, ObjectsScreen to find arrays/objects causing deep compares.
+  - Implement createSelectors helper (or Zustand's shallow comparison) for keyed selectors returning primitive-friendly props.
+  - Add useMemo/useCallback boundaries inside containers where multiple selectors combine results.
+
+steps:
+  1. Create src/store/selectors.ts exporting reusable selectors (e.g., selectActiveTrack, selectReportFilters).
+  2. Update components to use selectors instead of full store slices; ensure equalityFn prevents re-renders.
+  3. Document before/after render counts in docs/perf/S70-derived-selectors.md.

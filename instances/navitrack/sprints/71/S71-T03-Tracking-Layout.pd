@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Adjust Tracking screen layout to 70% map, 30% controls/info with proper scrolling
+requires: [FRONTEND_DEV]
+out: [src-client/src/screens/TrackingScreen.tsx]
+cmd: []
+done: [Map is 70%, controls 30% and scrollable]

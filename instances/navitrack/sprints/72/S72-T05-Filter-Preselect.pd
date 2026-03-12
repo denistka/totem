@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Objects filter bug — on first load when all objects are visible, the filter should have all items pre-selected/checked. Currently no items are selected in the filter despite all items being shown.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/objects-screen/ObjectsScreen.tsx]
+cmd: []
+done: [Filter shows all items checked when all objects are displayed on first load]

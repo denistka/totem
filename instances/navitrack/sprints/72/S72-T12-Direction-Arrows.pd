@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Direction arrows on map paths — draw direction arrows along the track polyline approximately every 10px. Apply to both Tracking screen and Object History screen. Arrows should follow the heading/bearing of the path segment.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/map/*, src-client/src/features/map/*]
+cmd: []
+done: [Direction arrows drawn on track polylines for both tracking and history views]

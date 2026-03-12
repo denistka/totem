@@ -1,0 +1,47 @@
+gate: OPEN
+sprint: S72
+epic: E-07-API-V6-MIGRATION
+name: Backend Integration, i18n, Icons, UI Fixes
+priority: P0
+dep: S71
+updated: 2026-03-12
+
+description: |
+  Sprint based on backend developer conversation.
+  Auth 2FA flow finalization, report progress polling (SSE→100%→JSON),
+  vehicle icons from API on map, full i18n (en/ru/uk),
+  settings API integration, tracking direction arrows,
+  and misc UI fixes (filter pre-select, history dates, event icons).
+
+tracks:
+  A:
+    name: Auth & API Optimization
+    requires: []
+    tasks: [S72-T01-Auth-2FA-Flow, S72-T02-Report-Progress-Polling]
+  B:
+    name: Vehicle Icons on Map
+    requires: [A]
+    tasks: [S72-T03-Vehicle-Icon-API, S72-T04-Vehicle-Icon-Marker]
+  C:
+    name: UI Bugs & Fixes
+    requires: []
+    tasks: [S72-T05-Filter-Preselect, S72-T06-History-Dates, S72-T07-History-Red-Icon, S72-T08-Event-Icons, S72-T13-Analog-Clock-Picker]
+  D:
+    name: Internationalization
+    requires: [A]
+    tasks: [S72-T09-Full-i18n]
+  E:
+    name: Settings API
+    requires: [A]
+    tasks: [S72-T10-Settings-API]
+  F:
+    name: Tracking & Map Enhancements
+    requires: [B]
+    tasks: [S72-T11-Tracking-Two-Column, S72-T12-Direction-Arrows]
+
+invariants:
+  - Auth 2FA handles result codes: ok, otp, mail, wrong
+  - Report progress polled via SSE to 10001 before fetching JSON
+  - Vehicle icon from imageurl rendered inside animated map marker
+  - i18n covers en, ru, uk; server reports translated by custom flag
+  - Settings read/write via /ws/settings/getmain and /ws/settings/setmain

@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Style Report table first column as greenish/brand color with transparency for both themes
+requires: [FRONTEND_DEV]
+out: [src-client/src/screens/ReportScreen.tsx, src-client/index.css]
+cmd: []
+done: [First column visually distinct]

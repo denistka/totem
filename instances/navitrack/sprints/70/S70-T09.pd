@@ -1,0 +1,19 @@
+v:1
+mode:code
+role:developer
+task:S70-T09-Dynamic-Background-Component
+objective:Implement a reusable DynamicBackground component replacing the deleted bg-anim assets with GPU-friendly gradients, procedural noise, or CSS animations.
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+requirements:
+  - Create src/components/backgrounds/DynamicBackground.tsx with props for variant (login, objects, tracking), motion intensity, and theme.
+  - Use CSS Houdini-like approach (Canvas/WebGL optional) or layered gradients; keep bundle size minimal (<5 KB JS, no images).
+  - Expose hook/useDynamicBackground.ts to let screens configure variant + respond to state (e.g., loading vs playing track).
+  - Update App shell (App.tsx or MobileShell) to mount DynamicBackground once and animate via CSS variables.
+
+steps:
+  1. Design token map in theme.css for gradient stops + animation speeds (light/dark).
+  2. Build component with requestAnimationFrame loop or CSS keyframes (preferring CSS for battery).
+  3. Replace previous background references in login, objects, tracking screens with DynamicBackground usage.
+  4. Document usage in styles/design-system.md and update README backgrounds section.

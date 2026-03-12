@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S70-T08-Background-Asset-Removal
+objective:Delete oversized public/bg-anim/{1,2,3,4}.webp assets (total 38 MB) and scrub references across the PWA.
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+requirements:
+  - Remove files: public/bg-anim/1.webp, 2.webp, 3.webp, 4.webp from repo.
+  - Search for any imports/usages (CSS, Tailwind classes, inline styles) referencing bg-anim paths; replace with temporary gradient tokens defined in theme.css.
+  - Update refactoring_map.md Non-code artifacts section to note removal + replacement rationale.
+
+steps:
+  1. Delete assets and ensure git rm reflected.
+  2. Replace CSS/background references with `var(--dynamic-bg-fallback)` defined in theme.
+  3. Update documentation (README or design-system.md) explaining background strategy change.

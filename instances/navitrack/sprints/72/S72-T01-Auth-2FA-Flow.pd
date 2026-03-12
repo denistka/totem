@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Fix auth 2FA flow — handle result codes (otp, mail, wrong) from POST /ws/auth/signin. First request with otp:null. On 418 show OTP input (TOTP or email code). Re-submit with otp:"code". Handle "wrong" with retry prompt.
+requires: [FRONTEND_DEV]
+out: [src-client/src/hooks/useAuth.ts, src-client/src/components/screens/login-screen.tsx, src-client/src/lib/api/domains/auth.ts]
+cmd: []
+done: [2FA flow works — TOTP and email code paths, wrong code shows error, retry works]

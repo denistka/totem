@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Tracking color/width controls — restructure the color picker and width slider area into two columns. Column 1: sliders/controls. Column 2: preview of the resulting line (live preview of color and width). Verify these settings properly apply to map track rendering.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/tracking-screen/TrackingScreen.tsx]
+cmd: []
+done: [Two-column layout for track color/width with live line preview, settings applied on map]

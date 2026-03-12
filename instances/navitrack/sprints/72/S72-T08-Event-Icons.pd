@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Object events screen — make event icons on map semi-transparent so main vehicle icons remain prominent. Add vehicle icon (from imageurl) in the header next to the vehicle name. Events are notifications user can subscribe to and are marked on the map.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/object-details/ObjectDetailsScreen.tsx, src-client/src/components/map/*]
+cmd: []
+done: [Event map icons are semi-transparent, vehicle icon shown in events header]

@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S70-T02-Zustand-Service-Adapters
+objective:Introduce feature-specific hooks/selectors that consume the new api/ domain modules without leaking request logic into UI components.
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+requirements:
+  - Extend src/store/useAppStore.ts with derived slices (vehicles, tracking, reports) that expose read-only selectors + async actions.
+  - Locate all UI components that currently call ApiClient directly (e.g., TrackingActionScreen, ReportsScreen) and route them through the new store actions/hooks.
+  - Add unit-level tests or storybook mocks (if available) validating that UI sees only typed data, not raw responses.
+
+steps:
+  1. Create src/store/adapters/ with files per domain (vehicles.ts, reports.ts, etc.) that wrap api/ modules and update Zustand.
+  2. Replace direct ApiClient imports in components with `useAppStore` selectors or new hooks (useVehicles, useReportsQuery).
+  3. Document resulting data flow in refactoring_map.md (section: "API→Store pipeline").

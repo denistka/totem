@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Redesign Object list item (3 rows, online/offline, title, specific icon placements)
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/ObjectListItem.tsx]
+cmd: []
+done: [Object list item matches requested layout]

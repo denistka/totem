@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: History header cleanup — remove the red icon/badge in the right part of the header on the Object History page. It is not needed.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/object-details/ObjectDetailsScreen.tsx]
+cmd: []
+done: [Red icon removed from history header]

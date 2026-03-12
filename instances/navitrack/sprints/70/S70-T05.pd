@@ -1,0 +1,17 @@
+v:1
+mode:code
+role:developer
+task:S70-T05-ReportsScreen-View-Logic-Split
+objective:Refactor ReportsScreen.tsx (304 LOC) + ReportHistoryView.tsx (129 LOC) into composable view modules separating filters vs results grids.
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+requirements:
+  - Introduce src/components/screens/reports-screen/modules/ with FiltersPanel.tsx, ReportResultsView.tsx, and HistoryList.tsx.
+  - Move report execution logic into hooks/useReportRunner.ts and reuse between ReportsScreen + History view.
+  - Ensure DateRangePicker + table virtualization receive stable props to avoid rerenders.
+
+steps:
+  1. Identify context (forms, queries, table rendering) and move each into its module under modules/.
+  2. Use React Hook Form context provider to keep form state localized; pass memoized derived filters to results components.
+  3. Update ReportHistoryView to import HistoryList module and share useReportRunner hook.

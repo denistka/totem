@@ -1,0 +1,20 @@
+v:1
+mode:code
+role:developer
+task:S70-T01-API-Surface-Audit
+objective:Catalog and split src/lib/api.ts (1072 LOC) into domain-scoped service modules with typed request/response contracts.
+gate: OPEN
+requires: [FRONTEND_DEV, ARCHITECT]
+
+audit:
+  - Map every exported function in src/lib/api.ts to feature domains (auth, vehicles, tracking, reports, settings, misc).
+  - Record current types, shared helpers, and side effects (toasts, store writes) in refactoring_map.md appendix.
+
+outputs:
+  - src/lib/api/ (folder) housing domain modules (e.g., auth.ts, vehicles.ts, reports.ts) exporting typed clients.
+  - Shared ApiClient core (base config, interceptors, error mapping) extracted into src/lib/api/client.ts.
+
+steps:
+  1. Create src/lib/api/ directory tree; move ApiClient + common helpers to client.ts.
+  2. For each domain bucket, move functions into dedicated module, importing ApiClient instance.
+  3. Replace original src/lib/api.ts with re-export barrel or migration shim (no logic duplication) and update imports across src-client.

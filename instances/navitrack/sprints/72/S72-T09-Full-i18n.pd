@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Full internationalization — add Russian (ru) language, keep English (en) and Ukrainian (uk). Move i18n strings from inline to separate locale files. For server report names: translate only if custom:false from GET /ws/reports. Custom:true means user-defined name, do not translate. Respect locale from user settings (getmain). Supported locales: en, uk, ru.
+requires: [FRONTEND_DEV]
+out: [src-client/src/i18n.ts, src-client/src/locales/en.json, src-client/src/locales/ru.json, src-client/src/locales/uk.json]
+cmd: []
+done: [App fully i18n with en/ru/uk, report names translated by custom flag, locale synced with server settings]

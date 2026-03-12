@@ -248,11 +248,20 @@ S64:
   priority:P1
   scope:header-duplication,portal-only-header
 
+S71:
+  name:Bugfixes-UI-Settings
+  path:sprints/71/
+  status:🏃 active
+  priority:P1
+  scope:loader,api-fixes,tracking-ui,reports,object-list,settings
+  dep:S64
+
 ###############################################################################
 # ORDER
 ###############################################################################
 
 done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S48→S49→S50→S51→S52→S53→S54→S55→S56→S57→S58→S59→S60→S61→S63→S64]
+active-order:[S70,S71]
 skipped:[S38→S39→S40]
 locked:[S62]
 

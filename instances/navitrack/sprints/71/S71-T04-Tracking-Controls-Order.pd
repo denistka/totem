@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Reorder Tracking screen controls (Vehicle -> Time Interval -> Events -> Track Display)
+requires: [FRONTEND_DEV]
+out: [src-client/src/screens/TrackingScreen.tsx, src-client/src/components/TrackingControls.tsx]
+cmd: []
+done: [Controls are in the requested order]

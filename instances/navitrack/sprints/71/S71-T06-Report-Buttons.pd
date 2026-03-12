@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Make report action buttons wrap into two rows on smaller screens (e.g. iPhone SE)
+requires: [FRONTEND_DEV]
+out: [src-client/src/screens/ReportScreen.tsx]
+cmd: []
+done: [Buttons don't overflow on small screens]

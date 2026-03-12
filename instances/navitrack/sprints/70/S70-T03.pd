@@ -1,0 +1,18 @@
+v:1
+mode:code
+role:developer
+task:S70-T03-HistoryTab-Decomposition
+objective:Split src/components/screens/object-details/HistoryTab.tsx (597 LOC) into data container, timeline renderer, and detail cards with memoized props.
+gate: OPEN
+requires: [FRONTEND_DEV]
+
+scope:
+  - Container: hooks (vehicle selection, async fetch), loading/error handling.
+  - Presentational: Timeline list, entries, popovers, map preview card.
+  - Shared types live in src/components/screens/object-details/history-types.ts.
+
+steps:
+  1. Create src/components/screens/object-details/history/ directory with HistoryTabContainer.tsx, HistoryTimeline.tsx, HistoryDetailCard.tsx.
+  2. Move business logic (queries, derived stats) into hooks/useHistoryTimeline.ts.
+  3. Ensure memoized child components receive primitive props to minimize re-renders; add React.memo where lists are large.
+  4. Update imports in ObjectDetailsScreen to use the new container export.

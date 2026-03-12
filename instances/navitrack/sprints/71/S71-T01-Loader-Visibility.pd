@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Hide global loader on app start only when core data requests (like vehicles list) finish
+requires: [FRONTEND_DEV]
+out: [src-client/src/App.tsx, src-client/src/store/useAppStore.ts]
+cmd: []
+done: [Loader persists until objects load]

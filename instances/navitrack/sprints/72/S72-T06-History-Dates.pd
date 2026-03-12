@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: History dates — reorder date selectors left-to-right (past date on left, recent/current on right). Implement automatic scroll to the right-most (most recent) date on load.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/screens/object-details/ObjectDetailsScreen.tsx]
+cmd: []
+done: [History dates display left=past, right=recent, auto-scrolls to most recent]
