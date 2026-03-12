@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Implement comprehensive loading states — add skeleton screens, progress indicators, optimistic UI updates, loading spinners, empty states. Target: perceived performance improvement, clear feedback during operations, smooth transitions.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/ui/skeleton-loader.tsx, src-client/src/components/ui/progress-bar.tsx, src-client/src/hooks/use-optimistic-updates.ts, loading-states-guide.md]
+cmd: [pnpm run dev, pnpm run test:loading]
+done: [Loading skeletons implemented, progress indicators working, optimistic updates smooth, empty states handled]

@@ -27,3 +27,5 @@ anti-patterns:
   - ❌ Store Access Soup: Mixing useStore() hooks and direct store imports in same codebase.
   - ❌ Style Collision: MUI `sx`/`styled` alongside raw `.css` files targeting same components.
   - ❌ Expensive Re-render: Entire Map/Chart re-renders because parent observes a frequently-changing collection.
+  - ❌ Architectural Over-Engineering: Designing patterns or "future-proofing" without an immediate 10x strategic value (Return on Complexity).
+  - ❌ Narrow Scoping: Planning "atomic" UI tasks (e.g. "copy component X") without tying them to the full target stack (Types, API, Routes, Parity goal).

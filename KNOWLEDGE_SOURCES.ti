@@ -24,3 +24,14 @@ When updating stacks or creating new ones, refer back to the knowledge artifacts
 - **Topics Covered:** React 19/20, Server Components (RSC), React Compiler, Zustand/Jotai State Management, Meta-frameworks (Next.js/Remix), AI Agentic workflows (MCP, CopilotKit).
 - **Knowledge Artifact:** `~/.gemini/antigravity/brain/3881bd0d-1dca-47da-8013-fc3d8c954d76/react_2026_knowledge.md`
 - **Resulting Stacks:** `REACT.ti` (updated), `REACT_SERVER_COMPONENTS.ti`, `REACT_COMPILER.ti`, `ZUSTAND.ti`, `JOTAI.ti`.
+---
+
+## 2026 Core Protocols
+
+### Totem Orchestration Specification (March 2026)
+- **Status:** Integrated.
+- **Topics Covered:** DAG-based Task Graph, Event Bus Architecture, Sandbox Isolation, Brick-based Frontend Model, CI/CD Protocol Linting.
+- **Related Specs:**
+  - [Frontend Orchestration](file:///Users/denistka/Projects/totem/docs/FRONTEND_ORCHESTRATION_SPEC.md)
+  - [Backend Orchestration](file:///Users/denistka/Projects/totem/docs/BACKEND_ORCHESTRATION_SPEC.md)
+  - [CI/CD Orchestration](file:///Users/denistka/Projects/totem/docs/CICD_ORCHESTRATION_SPEC.md)

@@ -87,10 +87,11 @@ Templates are pre-configured combinations of Stacks and Guardians meant for star
 - `react-ts/BUILD.ti`
 - `react-ts/FRONTEND_DEV.ti`
 - `react-ts/UI_UX.ti`
+- `react-ts/PWA_REACT_GLASS.ti`
 
 ### React PWA (Glass)
 
-- `pwa-react-ts/PWA_REACT_GLASS.ti` (React PWA + Glassmorphism + Portal Layout)
+- `react-ts/PWA_REACT_GLASS.ti` (React PWA + Glassmorphism + Portal Layout)
 
 ### Backend
 

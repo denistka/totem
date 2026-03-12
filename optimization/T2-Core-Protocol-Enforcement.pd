@@ -1,0 +1,8 @@
+gate: LOCKED
+---
+v:4 c:S74 m:T2-Core-Protocol role:ARCHITECT x:totem
+task: Standardize core sprint definitions to dense v:4 format and enforce 15-30 line task sizes.
+requires: [T1-Core-Docs-Index.pd]
+out: [totem/core/PROTOCOL_SCHEMA.ti, totem/core/ITERATION_FLOW.ti]
+cmd: Edit core protocol schema files
+done: PROTOCOL_SCHEMA.ti requires v:4 layout, ITERATION_FLOW.ti demands 15-30 line minimums.

@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Implement the literal "House of Bricks" SVG/CSS visualization engine.
+requires: [FRONTEND_DEV]
+out: [client/src/components/modules/brickhouse/BrickHouse.vue]
+done: [Visualization displays bricks correctly]

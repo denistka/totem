@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Implement comprehensive unit tests — cover auth flow, API utilities, map components, i18n system, state management. Target: 90%+ coverage for critical paths. Use Vitest, testing-library, mock API responses, test utilities.
+requires: [FRONTEND_DEV]
+out: [src-client/src/__tests__/auth.test.ts, src-client/src/__tests__/map.test.ts, src-client/src/__tests__/i18n.test.ts, coverage-report.html]
+cmd: [pnpm run test:unit, pnpm run test:coverage]
+done: [90%+ coverage achieved, all critical flows tested, CI pipeline passing, coverage report generated]

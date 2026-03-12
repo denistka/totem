@@ -16,9 +16,9 @@ guardians:
     - ARCHITECT
 
   stack-adapters:
-    - totem/stacks/react-ts/FRONTEND_DEV
-    - totem/stacks/react-ts/UI_UX
-    - totem/stacks/react-ts/BUILD
+    - react-ts/FRONTEND_DEV
+    - react-ts/UI_UX
+    - react-ts/BUILD
 
 sprints:
   - id: S00

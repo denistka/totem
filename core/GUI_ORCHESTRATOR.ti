@@ -1,0 +1,29 @@
+role: GUI Orchestrator Core
+focus: dependency-visualizer, event-bus, state-propagation, brick-house-model
+extends: none
+
+description: |
+  Core logic for the Totem View GUI orchestrator.
+  Establishes the Directed Acyclic Graph (DAG) for project dependencies and
+  the central event bus for cross-component communication.
+
+gui-orchestrator-specs:
+  model: "Brick House (Modular Construction)"
+  logic:
+    - Directed Acyclic Graph (DAG): Every task (.pd) is a node; 'requires:' defines edges.
+    - Zero-Overlap Execution: Only independent nodes (in-degree 0) can be executed in parallel.
+    - Event Bus: Centralized observer pattern for status updates (LOCKED, IN-PROGRESS, COMPLETE).
+
+event-bus-definitions:
+  - TASK_STATUS_CHANGE: (task_id, new_status)
+  - INVARIANT_VIOLATION: (invariant_id, task_id)
+  - SPRINT_COMPLETE: (sprint_id)
+
+visual-metrics:
+  - Density: Visual representation of rule-to-token ratio.
+  - Purity: Compliance score with 100-line limit across all artifacts.
+  - Convergence: Proximity to "Parity" goal via DAG traversal.
+
+isolated-execution:
+  - Sandbox: GUI components must not have direct FS access; they communicate via the Orchestrator.
+  - Context: Only the current active task's context is loaded into the visualizer state.

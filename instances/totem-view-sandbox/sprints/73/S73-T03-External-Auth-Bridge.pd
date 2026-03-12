@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Build the API bridge for external OAuth providers (Google, GitHub).
+requires: [FRONTEND_DEV]
+out: [client/src/api/auth.ts]
+done: [External OAuth bridge is operational]

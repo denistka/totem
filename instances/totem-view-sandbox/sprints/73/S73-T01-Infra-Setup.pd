@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Core infrastructure and environment setup for the sandbox.
+requires: [FRONTEND_DEV]
+out: [client/src/main.ts]
+gate: LOCKED
+done: [Environment is stable]

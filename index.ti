@@ -15,8 +15,8 @@ includes:
   - ./KNOWLEDGE_SOURCES.ti
 
 description: |
-  Master entry point for the Totem V5 knowledge graph.
-  Protocol V5 Codename: AI-CRUD-OPERATION
+  Master entry point for the Totem V6 knowledge graph.
+  Protocol V6 Codename: SYSTEMATIC-EXCELLENCE
 
   FROZEN STACK FORMAT (GraphQL-ready Entities):
   All `.ti` files in `stacks/` represent database entities for Code-Generation CRUD logic.

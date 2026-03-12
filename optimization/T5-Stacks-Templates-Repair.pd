@@ -1,0 +1,8 @@
+gate: LOCKED
+---
+v:4 c:S74 m:T5-Stacks-Templates role:ARCHITECT x:totem
+task: Move broken react-ts to proper place or update references to react, solidify react+pwa stacks, update PROJECT_CONFIG.template.yml ui_stack_ref
+requires: [T4-Guardians-Audit.pd]
+out: [totem/templates/PROJECT_CONFIG.template.yml, totem/stacks/react/]
+cmd: Audit and correct paths in templates and stacks
+done: ui_stack_ref is clear in PROJECT_CONFIG, no broken template path references remain.

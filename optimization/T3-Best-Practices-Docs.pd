@@ -1,0 +1,8 @@
+gate: LOCKED
+---
+v:4 c:S74 m:T3-Best-Practices role:ARCHITECT x:totem
+task: Document S56 planning excellence (State-Driven architecture) and Architectural Memory (INVARIANTS.md) as official guides.
+requires: [T2-Core-Protocol-Enforcement.pd]
+out: [totem/docs/PLANNING_EXCELLENCE.md, totem/core/ARCHITECTURAL_MEMORY.md]
+cmd: Create reference markdown guides
+done: Both docs outline the best practices defined in quality analysis.

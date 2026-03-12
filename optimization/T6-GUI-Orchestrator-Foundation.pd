@@ -1,0 +1,8 @@
+gate: LOCKED
+---
+v:4 c:S74 m:T6-GUI-Orchestrator role:ARCHITECT x:totem
+task: Seed foundation for Totem View, establishing DAG for dependencies, event_bus definitions, and isolated execution specs.
+requires: [T5-Stacks-Templates-Repair.pd]
+out: [totem/core/GUI_ORCHESTRATOR.ti, totem/view/README.md]
+cmd: Create new core GUI definitions and view scaffolding
+done: New definitions clearly specify the brick-house DAG structure and dashboard visual representation metrics.

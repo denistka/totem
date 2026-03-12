@@ -36,6 +36,7 @@ multi-track-sprints:
   - Invariant-Gate: Before phase 3-DEVELOP, verify `INVARIANTS.md` from prior sprints.
   - Final-QA: Phase 4-VERIFY covers ALL tracks together (not per-track).
   - Incremental-Discipline: Visual changes applied one at a time; build after each.
+  - Granularity: Every `.pd` task MUST be between 15-30 lines of execution logic (excluding header). Small tasks ensure focus; large tasks increase perplexity.
 
 invariant-protection:
   - Post-Sprint: Create `<SPRINT>-INVARIANTS.md` documenting frozen decisions (tokens, APIs, animations).

@@ -1,0 +1,52 @@
+gate: LOCKED
+sprint: S73
+epic: E-08-POST-MIGRATION-POLISH
+name: Post-Migration Polish, Performance, & Testing
+priority: P0
+dep: S72
+updated: 2026-03-12
+
+description: |
+  Final polish sprint after API v6 migration completion.
+  Focus on performance optimization, comprehensive testing,
+  documentation consolidation, and preparation for production release.
+  Based on optimization lessons from 9.5/10 quality analysis.
+
+tracks:
+  A:
+    name: Performance Optimization
+    requires: []
+    tasks: [S73-TA1-Bundle-Optimization, S73-TA2-Map-Performance, S73-TA3-Memory-Leaks]
+  B:
+    name: Testing & Quality Assurance
+    requires: [A]
+    tasks: [S73-TB1-Unit-Tests, S73-TB2-E2E-Test-Suite, S73-TB3-Accessibility-Audit]
+  C:
+    name: Documentation & Release Prep
+    requires: []
+    tasks: [S73-TC1-API-Documentation, S73-TC2-Deployment-Guide, S73-TC3-Release-Notes]
+  D:
+    name: Final UI Polish
+    requires: [A]
+    tasks: [S73-TD1-Animation-Smoothing, S73-TD2-Error-Handling, S73-TD3-Loading-States]
+
+invariants:
+  - Bundle size under 2MB compressed, 95%+ Lighthouse performance
+  - Map renders 1000+ markers at 60fps with clustering
+  - 90%+ test coverage for critical user flows
+  - WCAG AA compliance with keyboard navigation
+  - Zero memory leaks in 2-hour stress testing
+  - Complete API documentation with examples
+  - Smooth animations (60fps) on all interactions
+
+quality-gates:
+  - Performance: Lighthouse score 95+ in all categories
+  - Testing: Cypress E2E suite passes 100% 
+  - Documentation: All endpoints documented with examples
+  - Accessibility: axe-devtools finds zero violations
+  - Bundle: Analyzer shows no duplicate dependencies
+
+archival:
+  - Create S73-INVARIANTS.md with final production decisions
+  - Consolidate S70-S72 learnings into H2-S70_S72-Summary.md
+  - Archive intermediate artifacts per optimizer phase-4

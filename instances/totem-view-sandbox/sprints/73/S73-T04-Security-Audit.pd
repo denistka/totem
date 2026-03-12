@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:security
+task: Comprehensive security audit and penetration testing for production readiness.
+requires: [SECURITY_STACK]
+out: [docs/SECURITY_AUDIT.md]
+done: [No critical vulnerabilities found]

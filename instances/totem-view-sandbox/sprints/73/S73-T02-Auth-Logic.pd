@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Implement business logic for project authentication and session management.
+requires: [FRONTEND_DEV]
+out: [client/src/composables/useAuth.ts]
+done: [Auth flows are functional]

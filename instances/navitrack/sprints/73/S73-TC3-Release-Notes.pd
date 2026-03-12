@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:pm x:docs
+task: Create comprehensive release notes — document API v6 migration, new features (2FA, i18n, vehicle icons), performance improvements, bug fixes, breaking changes. Include migration guide for existing users.
+requires: [PM]
+out: [docs/release-notes/v6.0.0.md, docs/migration/v5-to-v6.md, docs/whats-new/6.0-features.md, docs/whats-new/breaking-changes.md]
+cmd: [pnpm run docs:validate, pnpm run build]
+done: [Release notes complete, migration guide tested, feature documentation accurate, changelog updated]

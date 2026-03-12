@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Optimize map performance — implement marker clustering for 1000+ vehicles, virtualize off-screen markers, debounce map events, use Web Workers for geo-calculations. Target: 60fps with 1000 markers, <100ms interaction response. Test with real vehicle datasets.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/map/performance-optimized-map.tsx, src-client/src/workers/geo-calculations.ts, map-performance-benchmarks.md]
+cmd: [pnpm run test:performance, pnpm run build]
+done: [Map renders 1000+ markers at 60fps, clustering implemented, web workers running, benchmarks pass]

@@ -1,0 +1,8 @@
+v:4 c:$$ m:alias role:planner
+objective: Final polish sprint after API v6 migration and House of Bricks launch.
+requires: [FRONTEND_DEV]
+invariants: @totem/instances/totem-view-sandbox/project.config.yml
+track-_:
+  tasks: [S73-T01-Infra-Setup, S73-T02-Auth-Logic, S73-T03-External-Auth-Bridge, S73-T04-Security-Audit, S73-T05-State-Validation, S73-T06-UI-Polish, S73-T07-Relase-Docs]
+  requires: [FRONTEND_DEV]
+  gate: active

@@ -17,4 +17,7 @@ guardians:
     - QA
     - DEVOPS
     - ARCHITECT
-  stack_adapters: []
+  stack_adapters: [] # List of specific .ti files from /stacks (e.g. react/REACT)
+  
+  # UI Reference for GUI Orchestrator
+  ui_stack_ref: react/REACT # Default UI reference for dashboard generation

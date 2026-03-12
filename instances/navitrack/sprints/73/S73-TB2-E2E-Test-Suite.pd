@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Create E2E test suite — cover login flow, vehicle tracking, reports generation, settings management, i18n switching. Use Cypress with real API mock. Target: 100% pass rate, all user flows automated.
+requires: [FRONTEND_DEV]
+out: [cypress/e2e/login.cy.ts, cypress/e2e/tracking.cy.ts, cypress/e2e/reports.cy.ts, cypress/e2e/settings.cy.ts, test-results.html]
+cmd: [pnpm run test:e2e, pnpm run test:e2e:headed]
+done: [E2E suite passes 100%, all critical user flows covered, CI integration working, test reports generated]

@@ -1,0 +1,8 @@
+v:4 c:$$ m:alias role:planner
+objective: Implementation of the 7-stage "House of Bricks" visualization and Premium Visual Identity.
+requires: [FRONTEND_DEV]
+invariants: @totem/instances/totem-view-sandbox/project.config.yml
+track-_:
+  tasks: [S72-T01-House-Visualization, S72-T02-7-Stage-Logic, S72-T03-Premium-Glassmorphism, S72-T04-CSS-Animation-Engine]
+  requires: [FRONTEND_DEV]
+  gate: active

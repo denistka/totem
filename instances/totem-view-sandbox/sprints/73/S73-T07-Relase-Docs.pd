@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:docs
+task: Generate roof layer documentation and release notes for version 6.0.
+requires: [DOCS_STACK]
+out: [docs/RELEASE_NOTES_v6.md]
+done: [Documentation is complete and public]

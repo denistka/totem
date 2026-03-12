@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Fix memory leaks — audit with Chrome DevTools, fix event listener cleanup, component unmount issues, timer/interval cleanup, map marker disposal. Target: zero memory growth in 2-hour stress test. Implement proper cleanup patterns and leak detection.
+requires: [FRONTEND_DEV]
+out: [src-client/src/utils/cleanup-helpers.ts, memory-leak-audit-report.md, stress-test-results.md]
+cmd: [pnpm run test:memory, pnpm run dev]
+done: [Memory usage stable in 2-hour test, all leaks fixed, cleanup helpers implemented, audit passes]

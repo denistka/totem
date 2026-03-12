@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:docs
+task: Create comprehensive API documentation — document all /ws/* endpoints with request/response examples, error codes, authentication flows, i18n behavior. Use OpenAPI/Swagger format, include Postman collection, integration examples.
+requires: [BACKEND_DEV]
+out: [docs/api/openapi.yaml, docs/api/postman-collection.json, docs/api/integration-examples.md, docs/api/authentication-flows.md]
+cmd: [pnpm run docs:generate, pnpm run docs:validate]
+done: [All endpoints documented with examples, OpenAPI spec valid, Postman collection working, integration guide complete]

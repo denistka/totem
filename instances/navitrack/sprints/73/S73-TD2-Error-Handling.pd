@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Improve error handling — implement global error boundary, network error recovery, user-friendly error messages, retry mechanisms, offline support. Target: graceful failure handling, clear user feedback, auto-retry where appropriate.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/error-boundary.tsx, src-client/src/utils/error-handling.ts, src-client/src/hooks/use-error-recovery.ts, error-handling-guide.md]
+cmd: [pnpm run test:errors, pnpm run dev]
+done: [Error boundary implemented, network errors handled gracefully, user feedback clear, retry working]

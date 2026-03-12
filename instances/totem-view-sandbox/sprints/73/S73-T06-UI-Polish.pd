@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Wallpaper stage UI refinement and premium animation polish.
+requires: [FRONTEND_DEV]
+out: [client/src/theme.shared.css]
+done: [UI feels premium and responsive]

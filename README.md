@@ -44,10 +44,11 @@ If the project already has history and generated sprints, follow these steps to 
 
 ### 2. Register the Instance (The "Class vs Instance")
 
-**Difference between /templates and /instances:**
+**Difference between /stacks, /templates and /instances:**
 
-- **`/templates`**: The empty forms. You don't write here. (Like an empty Excel file).
-- **`/instances`**: THE REAL DATA. You copy a template here and fill it with your project's soul.
+- **`/stacks`**: **RUNTIME PATTERNS**. Tech-specific adapters (React, Vue, Rust). These provide the "how-to" rules for the AI during implementation.
+- **`/templates`**: **SCAFFOLDING/BLUEPRINTS**. The empty forms for project configuration. You don't write here. (Like an empty Excel file).
+- **`/instances`**: **THE REAL DATA**. You copy a template here and fill it with your project's soul.
 
 **Execution:**
 
@@ -134,7 +135,7 @@ _The binary output._
 
 ---
 
-**Protocol**: MRPP v4.0  
+**Protocol**: MRPP v6.0 (SYSTEMATIC-EXCELLENCE)  
 **Repo**: [denistka/totem](https://github.com/denistka/totem)
 
 _Accumulate power, one project at a time._

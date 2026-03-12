@@ -37,3 +37,5 @@ anti-patterns:
   - ❌ Logic Leak: Mentioning code structures (e.g. React, Tauri) in this guardian.
   - ❌ Fragmented Tasks: Overlapping work in parallel tracks.
   - ❌ Invariant Amnesia: Not linking frozen decisions from prior sprints.
+  - ❌ Ghost Tasks: Referencing or requiring `.pd` files that do not exist or haven't been created/allocated in the current sprint.
+  - ❌ Extension Confusion: Using legacy `.po` or generic `.md` for task definitions. Use `.pd` (Protocol Document) ONLY.

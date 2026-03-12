@@ -1,0 +1,8 @@
+gate: LOCKED
+---
+v:4 c:S74 m:T4-Guardians-Audit role:ARCHITECT x:totem
+task: Add explicit anti-patterns preventing over-engineering and referencing missing .po files in guardians.
+requires: [T3-Best-Practices-Docs.pd]
+out: [totem/guardians/PLANNER.ti, totem/guardians/ARCHITECT.ti]
+cmd: Update guardian rules
+done: PLANNER.ti explicitly forbids referencing non-existent tasks and confusing .po/.pd formats.

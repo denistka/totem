@@ -1,8 +1,8 @@
 role: Protocol Schema Definition
-focus: protocol-v4, file-extensions, sprint-structure
+focus: protocol-v6, file-extensions, sprint-structure
 extends: none
 
-description: "Canonical definition of core file structures, roles, and load order for V4."
+description: "Canonical definition of core file structures, roles, and load order for V6 (SYSTEMATIC-EXCELLENCE)."
 
 file-extensions:
   - `.ptl`: PLANNER/PM (Sprint) - **DEFAULT**. MUST use for orchestration. NOTE: Can be executed by `OPTIMIZER` for Global Cleanup Sprints.

@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Optimize bundle size — analyze with webpack-bundle-analyzer, remove unused dependencies, implement code splitting for routes and heavy components. Target: <2MB compressed, 95%+ Lighthouse performance. Use dynamic imports for screens, lazy load map libraries, tree-shake unused utilities.
+requires: [FRONTEND_DEV]
+out: [package.json, vite.config.ts, src-client/src/routes/lazy-routes.tsx, bundle-analysis-report.md]
+cmd: [pnpm run build, pnpm run analyze]
+done: [Bundle size reduced 40%, Lighthouse performance 96+, code splitting implemented, unused deps removed]

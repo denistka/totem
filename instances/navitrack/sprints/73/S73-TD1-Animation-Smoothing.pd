@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Smooth animations — optimize transitions, implement loading skeletons, reduce jank, add micro-interactions. Target: 60fps animations, smooth state changes, consistent motion design. Use CSS transforms, will-change, requestAnimationFrame.
+requires: [FRONTEND_DEV]
+out: [src-client/src/components/ui/loading-skeleton.tsx, src-client/src/styles/animations.css, animation-performance-report.md]
+cmd: [pnpm run dev, pnpm run test:performance]
+done: [All animations 60fps, loading skeletons implemented, micro-interactions smooth, performance optimized]

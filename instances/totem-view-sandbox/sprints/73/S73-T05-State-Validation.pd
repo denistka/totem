@@ -1,0 +1,5 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Interior logic and state validation for multi-agent contributions.
+requires: [FRONTEND_DEV]
+out: [client/src/store/useConstructionStore.ts]
+done: [State is consistent across all actors]

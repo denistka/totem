@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:devops
+task: Write deployment guide — document PWA deployment, Docker setup, environment variables, SSL configuration, CDN setup, monitoring. Include staging and production procedures, rollback steps, health checks.
+requires: [DEVOPS]
+out: [docs/deployment/docker-compose.yml, docs/deployment/environment.md, docs/deployment/ssl-setup.md, docs/deployment/monitoring.md, docs/deployment/rollback.md]
+cmd: [pnpm run docs:build, docker-compose -f docs/deployment/docker-compose.yml config]
+done: [Deployment guide complete, Docker compose working, environment documented, monitoring configured]

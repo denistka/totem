@@ -1,0 +1,8 @@
+gate: LOCKED
+---
+v:4 c:S74 m:T1-Core-Docs role:ARCHITECT x:totem
+task: Detail Protocol V6 syntax enforcement, bump version to V6 (codenname SYSTEMATIC-EXCELLENCE), define stacks/ vs templates/
+requires: []
+out: [totem/index.ti, totem/README.md]
+cmd: Edit index.ti and README.md
+done: index.ti declares V6 (SYSTEMATIC-EXCELLENCE), README.md explicitly differentiates stacks/ (runtime patterns) vs templates/ (scaffolding).

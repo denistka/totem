@@ -1,0 +1,20 @@
+gate: LOCKED
+---
+v:4 c:S74 m:S74-Framework-Polish role:PLANNER x:totem
+
+description: |
+  Global Optimization Sprint for the Totem framework, addressing Sprints Quality Analysis.
+  Upgrading to Protocol V6, fixing stack references, abstracting invariants, and creating Totem View GUI foundation.
+
+tracks:
+  - A: Knowledge Backfill & Documentation (T1, T3)
+  - B: Protocol Enforcement & Guardians (T2, T4)
+  - C: Repairs & GUI Orchestrator Foundation (T5, T6)
+
+exec-order:
+  - T1-Core-Docs-Index.pd
+  - T2-Core-Protocol-Enforcement.pd
+  - T3-Best-Practices-Docs.pd
+  - T4-Guardians-Audit.pd
+  - T5-Stacks-Templates-Repair.pd
+  - T6-GUI-Orchestrator-Foundation.pd

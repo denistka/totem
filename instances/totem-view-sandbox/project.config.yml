@@ -1,0 +1,22 @@
+project_name: "Totem View Sandbox"
+project_id: "totem-view-sandbox"
+version: "6.0.0"
+codename: "SYSTEMATIC-EXCELLENCE"
+
+base_path: "/Users/denistka/Projects/totem-view-sandbox"
+ui_stack_ref: "stacks/react-ts/pwa" # This is a placeholder, will be updated to Vue as implementation proceeds
+
+stack_adapters:
+  - id: "supabase-backend"
+    path: "stacks/supabase/backend"
+  - id: "vue-brickhouse"
+    path: "stacks/vue/brickhouse"
+
+environment:
+  type: "sandbox"
+  node_version: ">=18"
+  db_type: "supabase"
+
+active_sprint: "S73-Post-Migration-Polish"
+sprints_path: "sprints"
+sprint_active_id: "73"

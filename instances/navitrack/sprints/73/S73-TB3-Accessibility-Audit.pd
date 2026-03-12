@@ -1,0 +1,6 @@
+v:4 c:$ m:alias role:dev x:frontend
+task: Conduct accessibility audit — run axe-devtools, fix WCAG AA violations, implement keyboard navigation, ARIA labels, color contrast, focus management. Target: zero violations, full keyboard operability, screen reader support.
+requires: [FRONTEND_DEV]
+out: [src-client/src/utils/accessibility.ts, accessibility-audit-report.md, keyboard-navigation-guide.md]
+cmd: [pnpm run test:a11y, pnpm run dev]
+done: [Zero axe violations, WCAG AA compliance, full keyboard navigation, screen reader tested, audit passes]
