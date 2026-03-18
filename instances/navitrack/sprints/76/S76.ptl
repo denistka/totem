@@ -1,0 +1,88 @@
+gate: OPEN
+sprint: 76
+title: Full App i18n — Comprehensive Translation Coverage
+description: |
+  Complete translation audit and implementation sprint.
+  Every user-visible hardcoded string across all screens and components
+  must be replaced with t() calls and covered in en/ru/uk locale files.
+
+  AUDIT SUMMARY (from code review of src-client/src/):
+
+  S75-TB1 covered ONLY: language-selector.tsx, settings-screen.tsx (narrow).
+  S76 covers everything else — 14+ screens with raw English strings.
+
+  CRITICAL GAPS FOUND:
+  1. `objects.*` namespace entirely missing from ru.json + uk.json
+  2. `login.signingIn` + `login.otpRequired` missing from ru.json + uk.json
+  3. FiltersPanel.tsx uses t() with fallbacks for 8 keys not in any locale file
+  4. ObjectDetailsScreen: tabs 'History'/'Events', title fallback, toast messages
+  5. EventsTab: 'APPLY' button + EVENTS_CONFIG 12 event labels (constants.ts)
+  6. HistoryTimeline: 'Loading...', 'No data for this date'
+  7. TrackingScreen: 7 section labels + 'Execute' button + toast
+  8. TrackingActionScreen: analytics panel (Max Speed/Avg Speed/Stops/Fuel Efficiency)
+  9. AccountSecurityScreen: ALL content hardcoded (no t() used at all)
+  10. TwoFactorAuthScreen: ALL content hardcoded
+  11. EngineScreen: ALL content hardcoded
+  12. SettingsScreen: 'Loading settings...' + 'Retry'
+  13. DriversScreen + GeozonesScreen + MaintenanceScreen: headers/search/toasts/empty states
+  14. ReportHistoryView + ReportResultView: status texts, labels, toasts
+  15. ObjectsScreen + ObjectVisibilityModal + SelectObjectsScreen: labels + modals
+
+  SEQUENCE: TA (locale data) must complete before TB–TG (component wiring).
+
+dep-on-completed: S75-TB1, S75-TB2
+
+tracks:
+  - id: TA
+    title: Locale JSON Completion — All 3 Files
+    focus: Add all missing namespaces and keys to en.json, ru.json, uk.json
+    tasks:
+      - S76-TA1-Locale-JSON-Completion.pd
+
+  - id: TB
+    title: ObjectDetails — Tabs, States, Events Config
+    focus: ObjectDetailsScreen, EventsTab, HistoryTimeline, constants.ts
+    dep: TA
+    tasks:
+      - S76-TB1-ObjectDetails-i18n.pd
+
+  - id: TC
+    title: Tracking — Screen + Action Screen
+    focus: TrackingScreen, TrackingActionScreen
+    dep: TA
+    tasks:
+      - S76-TC1-Tracking-i18n.pd
+
+  - id: TD
+    title: Settings Sub-Screens — Account, 2FA, Engine
+    focus: AccountSecurityScreen, TwoFactorAuthScreen, EngineScreen, SettingsScreen loading
+    dep: TA
+    tasks:
+      - S76-TD1-Settings-Subscreens-i18n.pd
+
+  - id: TE
+    title: Management Screens — Drivers, Geozones, Maintenance
+    focus: DriversScreen, GeozonesScreen, MaintenanceScreen
+    dep: TA
+    tasks:
+      - S76-TE1-Management-Screens-i18n.pd
+
+  - id: TF
+    title: Reports — History View + Result View
+    focus: ReportHistoryView, ReportResultView
+    dep: TA
+    tasks:
+      - S76-TF1-Reports-i18n.pd
+
+  - id: TG
+    title: Objects + Modals — List, Visibility Modal, Select Screen
+    focus: ObjectsScreen, ObjectVisibilityModal, SelectObjectsScreen
+    dep: TA
+    tasks:
+      - S76-TG1-Objects-Modals-i18n.pd
+
+invariants: S73-INVARIANTS.md
+requires: [FRONTEND_DEV]
+priority: HIGH
+risk: LOW
+estimated: 2 days

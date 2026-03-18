@@ -1,0 +1,18 @@
+gate: OPEN
+task: S74-TA2
+title: Remove Maintenance API Calls from Object Screen
+description: |
+  Remove or disable the maintenance API calls that are not needed for the object screen:
+  - Remove maintenance API endpoints from API client if only used in object screen
+  - Remove maintenance data fetching hooks/components from object screen
+  - Clean up any related state management for maintenance data
+  - Ensure no regressions in object screen core functionality
+
+acceptance:
+  - Maintenance API calls no longer appear in network tab on object screen
+  - Object screen loads and functions normally without maintenance data
+  - No TypeScript errors after removal
+  - Object list displays correctly without maintenance info
+
+requires: []
+estimated: 4 hours

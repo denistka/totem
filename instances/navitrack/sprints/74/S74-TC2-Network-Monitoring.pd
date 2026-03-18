@@ -1,0 +1,18 @@
+gate: OPEN
+task: S74-TB2
+title: Network Traffic Verification
+description: |
+  Verify that maintenance API calls are completely eliminated:
+  - Use browser dev tools to monitor network traffic
+  - Confirm no maintenance endpoints are called on object screen
+  - Check for any cached or deferred maintenance requests
+  - Verify other screens still work correctly
+
+acceptance:
+  - Network tab shows zero maintenance API calls on object screen
+  - Other screens (if they need maintenance data) still work
+  - No 404 errors from missing endpoints
+  - Clean network request pattern documented
+
+requires: []
+estimated: 1 hour

@@ -1,0 +1,49 @@
+gate: OPEN
+sprint: 74
+title: Object Screen Performance - Remove Maintenance API Calls
+description: |
+  Sprint focused on eliminating unnecessary API calls from object screens:
+  1. Maintenance API calls on object screen (https://localhost:5173/api/ws/maintenance/vehicle/{id})
+  2. Track get API calls on object history (https://localhost:5173/api/ws/track/get)
+  The daily endpoint (https://localhost:5173/api/ws/track/daily/{id}/{date}) provides all needed data.
+
+tracks:
+  - id: TA
+    title: API Optimization - Object Screen
+    focus: Remove unnecessary maintenance calls from object screen
+    tasks:
+      - S74-TA1-Identify-Maintenance-Calls.pd
+      - S74-TA2-Remove-Maintenance-API.pd
+      - S74-TA3-Verify-Object-Screen.pd
+
+  - id: TB
+    title: API Optimization - Object History
+    focus: Remove unnecessary track/get calls from object history
+    tasks:
+      - S74-TB1-Identify-Track-Get-Calls.pd
+      - S74-TB2-Remove-Track-Get-API.pd
+      - S74-TB3-Verify-History-Screen.pd
+
+  - id: TC
+    title: Performance Validation
+    focus: Ensure performance improvements are working
+    tasks:
+      - S74-TC1-Load-Time-Testing.pd
+      - S74-TC2-Network-Monitoring.pd
+
+  - id: TD
+    title: Bug Fixes - i18n and Settings
+    focus: Fix non-functional internationalization and settings menu
+    tasks:
+      - S74-TD1-Fix-i18n-Implementation.pd
+      - S74-TD2-Fix-Settings-Menu.pd
+      - S74-TD3-Fix-History-Date-Padding.pd
+      - S74-TD4-Fix-Map-Arrow-Stroke.pd
+      - S74-TD5-Fix-Time-Popup-Behavior.pd
+      - S74-TD6-Fix-Track-Selection-Hang.pd
+
+invariants: S73-INVARIANTS.md
+requires: []
+priority: HIGH
+risk: LOW
+estimated: 2 days

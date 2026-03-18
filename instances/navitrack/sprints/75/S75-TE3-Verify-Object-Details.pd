@@ -1,0 +1,60 @@
+gate: OPEN
+task: S75-TE3
+title: Verify and Fix Object Details Screen End-to-End
+description: |
+  Verify the complete object details flow works against old app feature parity.
+
+  OLD APP OBJECT DETAILS FEATURES (iOS VehicleInfoModel + ContainerVC):
+    Info panel (popup data from GET /ws/vehicledetails/:id):
+      - Vehicle name
+      - Ignition status (on/off)
+      - Last date/time
+      - Speed
+      - Fuel level 1/2/3
+      - Satellites count
+      - Temperature sensor 1/2/3
+      - Odometer
+      - Address (reverse geocoded)
+
+    History tab (GET /ws/track/daily/:id/:date):
+      - Daily movement/stop log
+      - Each entry: type (driving/parking), start time, end time, duration, distance
+      - Mini-map snapshot showing the day's route
+      - Date picker to navigate between days
+
+    Events tab:
+      - List of events for the selected object
+      - Event type, time, description
+
+  VERIFICATION CHECKLIST:
+    1. Open Objects tab → tap a vehicle → ObjectDetailsScreen renders
+    2. Info tab shows: ignition, speed, fuel1/2/3, satellites, temperature, odometer
+       Data source: GET /ws/vehicledetails/:id
+       Check null handling for fuel2/3, temperature (only fuel1 may be present)
+    3. History tab:
+       a. Loads daily track for today via GET /ws/track/daily/:id/:date
+       b. Date format: YYYY-MM-DD — verify zero-padded (S74-TD3 fix)
+       c. Driving entries show distance (non-null, .toFixed(1) safe)
+       d. Parking entries show duration
+       e. Mini-map renders and is stable (key = 'history-map-{vehicleId}', not lat-lon)
+       f. Popup auto-opens on mount (useEffect with retry, not useLayoutEffect once)
+       g. Previous date navigation works (changes displayed day)
+    4. Events tab:
+       a. Shows event list for the vehicle
+       b. Event type labels are translated (use i18n keys)
+    5. Back navigation returns to Objects list
+
+  FIX ANY FAILURES found during verification.
+  Pay special attention to the null-safety fix from sprint 63:
+    (item.distance ?? 0).toFixed(1) — confirm still present and correct.
+
+acceptance:
+  - Object details opens and shows full vehicle info without errors
+  - History tab shows driving/parking log with correct distance and duration
+  - History mini-map renders stably (no destroy/recreate on data load)
+  - Events tab shows event list
+  - All numeric fields handle null/undefined safely
+  - Back button returns to Objects list correctly
+
+requires: [FRONTEND_DEV]
+estimated: 2 hours

@@ -1,0 +1,55 @@
+gate: OPEN
+task: S75-TB1
+title: Fix Hardcoded Strings — language-selector + settings-screen
+description: |
+  Several user-visible strings are hardcoded in English instead of using i18n keys.
+  Audit and fix all occurrences.
+
+  Known hardcoded strings:
+
+  1. language-selector.tsx line 38:
+       <span className="...">Language</span>
+     Fix: use t('settings.language')
+
+  2. language-selector.tsx lines 47, 79:
+       title="Select Language"
+     Fix: use t('settings.selectLanguage') — add key to all 3 locale files.
+
+  3. settings-screen.tsx line 187:
+       <SelectorRow label="Help & Support" ...
+     Fix: use t('settings.help')
+
+  4. settings-screen.tsx line 188:
+       <SelectorRow label="About NaviTrack" value="v1.0.0" ...
+     Fix: label → t('settings.about')
+
+  5. settings-screen.tsx line 192:
+       <span>Rate app</span>
+     Fix: use t('settings.rateApp')
+
+  6. settings-screen.tsx line 200:
+       <span>Log out</span>
+     Fix: use t('settings.logout')
+
+  New i18n keys to add across en.json / ru.json / uk.json:
+    settings.selectLanguage:
+      en: "Select Language"
+      ru: "Выберите язык"
+      uk: "Оберіть мову"
+    settings.rateApp: already exists in en.json ✓ — add to ru.json and uk.json
+    settings.logout: en: "Log out", ru: "Выйти", uk: "Вийти"
+    settings.help: already en.json ✓ — add ru/uk
+    settings.about: already en.json ✓ — add ru/uk
+
+  Also audit ru.json and uk.json for any missing keys that exist in en.json.
+  Add any missing keys with appropriate translations.
+
+acceptance:
+  - Zero hardcoded user-visible strings in language-selector.tsx
+  - Zero hardcoded user-visible strings in settings-screen.tsx
+  - Switching to Русский/Українська shows all settings labels translated
+  - ru.json and uk.json contain all keys present in en.json
+
+requires: [FRONTEND_DEV]
+estimated: 1.5 hours
+dep: S75-TA1

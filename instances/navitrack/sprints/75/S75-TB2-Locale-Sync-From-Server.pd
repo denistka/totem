@@ -1,0 +1,39 @@
+gate: OPEN
+task: S75-TB2
+title: Sync Locale from Server Settings on Login
+description: |
+  Currently the app uses browser language detection (i18next-browser-languagedetector)
+  but the server stores the user's preferred locale in Settings.locale.
+  After login the app should apply the server locale preference.
+
+  Steps:
+    1. In the login success flow (App.tsx or wherever fetchVehicles/post-login
+       bootstrap happens), add a call to useSettingsStore.fetchSettings() if not
+       already happening post-login.
+
+    2. After fetchSettings() resolves, read settings.locale:
+         const locale = settingsStore.getState().settings?.locale
+         if (locale && ['en', 'uk', 'ru'].includes(locale)) {
+           i18n.changeLanguage(locale)
+           localStorage.setItem('i18nextLng', locale)
+         }
+
+    3. Direction of sync on change:
+       - User changes language in app → updateSetting({ locale: code }) sends to server ✓ (already in language-selector)
+       - Server → app: on login only (see step 2 above).
+
+    4. Verify: log in as user with locale='ru' set on server → app switches to Russian
+       without requiring manual language selection.
+
+  Note: Do NOT call fetchSettings() on every vehicle refresh cycle.
+  It should only be called once on login / app bootstrap.
+
+acceptance:
+  - Logging in with a server-side locale='ru' → app displays Russian
+  - Logging in with locale='uk' → app displays Ukrainian
+  - Language change in app settings updates server locale via updateSetting()
+  - fetchSettings() is called once at login, not on every poll cycle
+
+requires: [FRONTEND_DEV]
+estimated: 1 hour
+dep: S75-TA1

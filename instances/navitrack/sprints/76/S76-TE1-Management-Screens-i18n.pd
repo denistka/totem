@@ -1,0 +1,56 @@
+gate: OPEN
+task: S76-TE1
+title: Management Screens i18n — Drivers, Geozones, Maintenance
+description: |
+  Replace hardcoded strings in the three management screens.
+
+  FILE: drivers-screen/DriversScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    setHeaderViewState title: 'Drivers Management' → t('settings.drivers')   [key exists ✓]
+    Input placeholder: 'Search drivers…'           → t('drivers.search')
+    Empty state: 'No drivers found'                → t('drivers.empty')
+    window.confirm: 'Delete this driver?'          → t('drivers.confirmDelete')
+    showToast: 'Driver deleted'                    → t('drivers.deleted')
+    showToast: 'Failed to delete driver'           → t('drivers.deleteFailed')
+    showToast: 'Failed to load drivers'            → t('drivers.loadFailed')
+    showToast: 'Create driver not implemented'     → t('drivers.createNotImpl')
+
+  FILE: geozones-screen/GeozonesScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    setHeaderViewState title: 'Geozones Management' → t('settings.geozones')  [key exists ✓]
+    Input placeholder: 'Search zones…'              → t('geozones.search')
+    Empty state: 'No geozones found'                → t('geozones.empty')
+    Zone description fallback: 'No description'     → t('common.noDescription')
+    window.confirm: 'Delete this geozone?'          → t('geozones.confirmDelete')
+    showToast: 'Geozone deleted'                    → t('geozones.deleted')
+    showToast: 'Failed to delete geozone'           → t('geozones.deleteFailed')
+    showToast: 'Failed to load geozones'            → t('geozones.loadFailed')
+    showToast: 'Create zone not implemented'        → t('geozones.createNotImpl')
+
+  FILE: maintenance-screen/MaintenanceScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    setHeaderViewState title: 'Maintenance & Alerts' → t('settings.maintenance')  [key exists ✓]
+    Tab 1 label: 'Templates'                         → t('maintenance.tabs.templates')
+    Tab 2 label: 'Journal'                           → t('maintenance.tabs.journal')
+    Input placeholder: 'Search templates…'           → t('maintenance.search')
+    Empty state: 'No templates found'                → t('maintenance.empty')
+    Badge: 'Active'                                  → t('common.active')
+    window.confirm: 'Delete this maintenance template?' → t('maintenance.confirmDelete')
+    showToast: 'Template removed'                    → t('maintenance.removed')
+    showToast: 'Failed to remove template'           → t('maintenance.removeFailed')
+    showToast: 'Failed to load maintenance templates'→ t('maintenance.loadFailed')
+    showToast: 'Create template not implemented'     → t('maintenance.createNotImpl')
+    showToast: 'Journal view not implemented'        → t('maintenance.journalNotImpl')
+
+acceptance:
+  - All three screens render titles, labels, toasts in ru/uk
+  - window.confirm dialogs use translated text
+  - Badge 'Active' renders 'Активный'/'Активний' in ru/uk
+  - tsc --noEmit exits 0
+
+requires: [FRONTEND_DEV]
+estimated: 1.5 hours
+dep: S76-TA1

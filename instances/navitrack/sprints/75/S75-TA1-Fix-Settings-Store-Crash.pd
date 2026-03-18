@@ -1,0 +1,39 @@
+gate: OPEN
+task: S75-TA1
+title: Fix Settings Store Reference Crash (Root Cause)
+description: |
+  ROOT CAUSE of settings being completely broken:
+
+  File: src/components/language-selector.tsx — line 20
+    `const updateSetting = useAppStore(state => state.updateSetting)`
+
+  `updateSetting` does NOT exist in useAppStore. It only exists in useSettingsStore.
+  useAppStore returns `undefined` for this selector, and calling it on language
+  change throws a TypeError at runtime, breaking the entire settings screen.
+
+  Fix steps:
+    1. In language-selector.tsx: replace
+         `import { useAppStore } from '@/store/useAppStore'`
+         `const updateSetting = useAppStore(state => state.updateSetting)`
+       with:
+         `import { useSettingsStore } from '@/store/useSettingsStore'`
+         `const updateSetting = useSettingsStore(state => state.updateSetting)`
+
+    2. Verify settings-screen.tsx itself mounts without error:
+       - useSettingsStore.fetchSettings() must be called on mount ✓ (already there)
+       - Confirm /ws/user/settings/getmain returns 200 when token is valid
+       - If API returns 401/500, surface error to user (not silent fail)
+
+    3. Add error boundary or isLoading/error display to SettingsScreen:
+       - If settings.isLoading → show skeleton rows
+       - If settings.error → show retry button with error message
+
+acceptance:
+  - Opening settings screen does NOT crash the app
+  - Language selector can be opened and a language selected without error
+  - Language change calls useSettingsStore.updateSetting({ locale: code }) successfully
+  - Settings screen shows loading state while fetchSettings() is in flight
+  - Settings screen shows error + retry if API fails
+
+requires: [FRONTEND_DEV]
+estimated: 1.5 hours

@@ -1,0 +1,19 @@
+gate: OPEN
+task: S74-TB3
+title: Verify History Screen Functionality
+description: |
+  Thoroughly test the object history screen after track/get API removal:
+  - Test history data loading and display
+  - Test date navigation and date selection
+  - Test track visualization on map
+  - Test playback controls if present
+  - Verify no console errors related to missing track data
+
+acceptance:
+  - History screen loads faster without track/get calls
+  - All history features work correctly with daily endpoint only
+  - No network errors in console
+  - Performance improvement measurable in dev tools
+
+requires: []
+estimated: 2 hours

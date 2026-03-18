@@ -256,12 +256,22 @@ S71:
   scope:loader,api-fixes,tracking-ui,reports,object-list,settings
   dep:S64
 
+S76:
+  name:Full-App-i18n-Translation-Coverage
+  path:sprints/76/
+  status:🔒 locked
+  priority:P1
+  scope:locale-json-completion,objectdetails,tracking,account-security,2fa,engine,drivers,geozones,maintenance,reports,objects-modals
+  dep:S75-TB1,S75-TB2
+  note:Comprehensive translation of all 14+ screens — S75-TB1 covered only language-selector+settings-screen
+
 ###############################################################################
 # ORDER
 ###############################################################################
 
 done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S48→S49→S50→S51→S52→S53→S54→S55→S56→S57→S58→S59→S60→S61→S63→S64]
 active-order:[S70,S71]
+planned:[S75,S76]
 skipped:[S38→S39→S40]
 locked:[S62]
 

@@ -1,0 +1,45 @@
+gate: OPEN
+task: S75-TE1
+title: Verify and Fix Tracking Screen End-to-End
+description: |
+  Verify the complete tracking flow works against old app feature parity.
+
+  OLD APP TRACKING FEATURES (iOS TrackerVC + Android TrackingFragment):
+    - Select vehicle from list (with search)
+    - Set date range: From / Until (date+time pickers)
+    - Set track color (6 colors: light blue, orange, yellow, green, blue, red, purple)
+    - Set track width (2px / 4px / 6px / 8px)
+    - Select event types (multi-select: fuel-fill, parking, overspeed, fuel-drain)
+    - Press "Build track" → show route on map with event markers
+    - Playback controls: play/pause, speed, scrubber
+    - Max range allowed: 7 days (show error if exceeded)
+
+  VERIFICATION CHECKLIST:
+    1. Open Tracking tab → TrackingScreen renders without error
+    2. Vehicle selector opens and shows all vehicles from API
+    3. From/Until date pickers work and update displayed dates
+    4. "Build track" button triggers POST /ws/track/get with correct payload:
+         vehicleId, fromDate (epoch ms), toDate (epoch ms), eventIds [0,9,11,12]
+    5. Track renders on map (polyline visible)
+    6. Event markers appear at correct positions
+    7. Playback (play/pause/speed) animates the track correctly
+    8. Error handling: >7 day range shows user-readable error
+    9. Error handling: empty track (no GPS data) shows user-readable message
+    10. Color and width selectors update the rendered track color/width
+
+  FIX ANY FAILURES found during verification.
+  Special attention to:
+    - Track color: queryState.tracking.trackColor must be passed to TrackingActionScreen
+    - Track width: queryState.tracking.trackWidth must be passed through
+    - Event IDs: must use API codes [0, 9, 11, 12] not UI enum [1, 2, 3, 4]
+      (verified fixed in sprint 63, confirm still correct)
+
+acceptance:
+  - Full tracking flow works from vehicle selection to playback
+  - Track renders with selected color and width
+  - Event markers appear for selected event types
+  - 7-day range limit is enforced with user-visible error
+  - No console errors during normal tracking flow
+
+requires: [FRONTEND_DEV]
+estimated: 2.5 hours

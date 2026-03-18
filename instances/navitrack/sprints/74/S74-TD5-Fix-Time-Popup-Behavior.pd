@@ -1,0 +1,20 @@
+gate: OPEN
+task: S74-TD5
+title: Fix Time Selection Popup Behavior
+description: |
+  Fix the time selection popup to show clock by default and improve UX:
+  - Change default view from slider to clock
+  - Keep popup open after drag-end on slider
+  - Allow user to select time and review before confirming
+  - Add/ensure Done button for final confirmation
+  - Make slider secondary/optional option
+
+acceptance:
+  - Time popup opens with clock view by default
+  - Popup remains open after slider interaction
+  - User can review selected time before confirming
+  - Done button properly closes popup with selected time
+  - Slider is available as secondary option
+
+requires: []
+estimated: 2 hours

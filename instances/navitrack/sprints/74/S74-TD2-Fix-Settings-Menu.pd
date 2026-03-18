@@ -1,0 +1,21 @@
+gate: OPEN
+task: S74-TD2
+title: Fix Settings Menu Functionality
+description: |
+  The settings menu from S71-T09 is not properly functional. Fix all issues:
+  - Verify SettingsScreen.tsx is properly integrated
+  - Check that settings API endpoints are working (GET/POST /ws/settings)
+  - Ensure settings persistence works across app restarts
+  - Test all settings controls (language, theme, notifications, etc.)
+  - Verify proper navigation to/from settings
+  - Fix any broken settings UI components or forms
+
+acceptance:
+  - Settings menu opens correctly from all entry points
+  - All settings options are functional and persist
+  - Settings changes take effect immediately
+  - No console errors when accessing settings
+  - Settings are properly synchronized with server
+
+requires: []
+estimated: 4 hours

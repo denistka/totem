@@ -1,0 +1,53 @@
+gate: OPEN
+task: S75-TC1
+title: Apply Map Type Setting to MapScreen
+description: |
+  The settings screen has a "Map type" selector (settings?.map field from API,
+  options: Open Street / Google Normal / Google Hybrid / Google Satellite).
+  MapScreen has its own independent localStorage keys (map_layer, map_provider)
+  set by its own UI buttons.
+  These two systems are disconnected. The user's settings choice must be reflected
+  in MapScreen.
+
+  Current MapScreen layer/provider values:
+    - provider: 'osm' | 'google'  → localStorage 'map_provider'
+    - layer: LayerType ('osm' | 'satellite' | 'hybrid' | ...)  → localStorage 'map_layer'
+
+  Mapping from Settings.map to MapScreen (map_layer / map_provider):
+    'Open Street'      → provider: 'osm',    layer: 'osm'
+    'GoogleNormal'     → provider: 'google',  layer: 'normal'
+    'GoogleHybrid'     → provider: 'google',  layer: 'hybrid'
+    'GoogleSatellite'  → provider: 'google',  layer: 'satellite'
+
+  Steps:
+    1. After settings are fetched (useSettingsStore.settings available),
+       if settings.map is set and differs from current map_provider/map_layer,
+       write the correct values to localStorage AND update MapScreen state.
+
+    2. The cleanest approach: in MapScreen useEffect, subscribe to
+       useSettingsStore state changes. When settings.map changes, derive
+       provider+layer and apply them (call setProvider + setLayer + persist).
+
+    3. Alternative (simpler): on MapScreen mount, read settings.map from
+       useSettingsStore.getState() and initialize provider/layer from it
+       (falling back to map_provider/map_layer localStorage if settings.map is null).
+
+    4. When user changes map type in settings-screen TA3, the change must
+       propagate to MapScreen on next visit (localStorage is sufficient for this).
+
+    5. Remove the MapScreen layer-switcher UI buttons IF the design decision is
+       that map type is managed only from Settings. OR keep them in sync (write
+       to localStorage AND call updateSetting({ map: ... })).
+       Decision: keep MapScreen buttons, but also update Settings when used
+       (call useSettingsStore.updateSetting({ map: derivedValue }) from MapScreen
+       handleLayerChange and handleProviderChange callbacks).
+
+acceptance:
+  - Selecting "Open Street" in settings → MapScreen shows OSM tiles
+  - Selecting "Google Hybrid" in settings → MapScreen shows Google Hybrid tiles
+  - MapScreen layer buttons also update the settings value (bidirectional sync)
+  - After page reload, map type matches what was last selected (persisted)
+
+requires: [FRONTEND_DEV]
+estimated: 2 hours
+dep: S75-TA3

@@ -1,0 +1,40 @@
+gate: OPEN
+task: S75-TA4
+title: Settings — Load Persisted Local Values on Mount
+description: |
+  After TA2 and TA3 introduce useLocalSettings hook and persist values,
+  the settings screen must correctly initialize all local toggles and selectors
+  from persisted values when it mounts (or remounts after navigation).
+
+  Steps:
+    1. In settings-screen.tsx — replace the 3 useState(true) initializers:
+         objectNames, geolocation, defaultMapScale
+       with values read from useLocalSettings():
+         const { values, set } = useLocalSettings()
+         // use values.local_show_names, values.local_show_geo, values.local_default_zoom
+
+    2. Replace the handleLocalToggle pattern for these 3 with:
+         (val) => set('local_show_names', val)   // etc.
+       This removes the need for separate local state entirely.
+
+    3. InputRow displayed values for zoom/step:
+         eventDisplay:  'x' + values.local_zoom_event
+         objectDisplay: 'x' + values.local_zoom_object
+         scrollStep:    String(values.local_scroll_step)
+       These should be read from useLocalSettings on every render.
+
+    4. Verify settings screen shows the correct persisted values immediately
+       on first render after a page reload (no flicker from default → persisted).
+
+    5. Remove the now-redundant useState calls for objectNames, geolocation,
+       defaultMapScale from settings-screen.tsx entirely.
+
+acceptance:
+  - After toggling "Object names" and navigating away + back, toggle is in correct state
+  - After selecting zoom level and refreshing page, zoom selector shows correct value
+  - No double-render flash (default then persisted) for any settings control
+  - settings-screen.tsx has no useState for objectNames / geolocation / defaultMapScale
+
+requires: [FRONTEND_DEV]
+estimated: 1 hour
+dep: S75-TA2, S75-TA3

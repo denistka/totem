@@ -1,0 +1,21 @@
+gate: OPEN
+task: S74-TD1
+title: Fix Internationalization Implementation
+description: |
+  The i18n implementation from S72-T09 is not working properly. Fix all issues:
+  - Verify i18n.ts is properly initialized with react-i18next
+  - Check that locale files (en.json, ru.json, uk.json) are properly loaded
+  - Ensure language switching works in the UI
+  - Verify server locale sync from GET /ws/settings
+  - Test all UI components are using translation keys
+  - Fix any missing translations or broken i18n hooks
+
+acceptance:
+  - Language switching works seamlessly in the app
+  - All UI text is translated when switching languages
+  - Server locale preference is respected on app start
+  - No hardcoded strings remain in the UI
+  - Console shows no i18n-related errors
+
+requires: []
+estimated: 4 hours

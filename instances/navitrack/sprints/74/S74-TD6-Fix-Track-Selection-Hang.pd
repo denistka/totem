@@ -1,0 +1,20 @@
+gate: OPEN
+task: S74-TD6
+title: Fix Track Selection Execute Hang
+description: |
+  Investigate and fix the app hang when clicking execute on track selection:
+  - Find where track selection, display, color, and width controls are implemented
+  - Identify the cause of the hang when execute is pressed
+  - Check for infinite loops, blocking operations, or memory issues
+  - Ensure the UI matches the history screen design
+  - Fix the track rendering with proper color and width
+
+acceptance:
+  - Execute button no longer hangs the application
+  - Track selection works properly
+  - Track display shows correctly with chosen color and width
+  - UI matches history screen design
+  - No console errors or performance issues
+
+requires: []
+estimated: 3 hours

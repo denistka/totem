@@ -1,0 +1,46 @@
+gate: OPEN
+task: S75-TE2
+title: Verify and Fix Reports Screen End-to-End
+description: |
+  Verify the complete reports flow works against old app feature parity.
+
+  OLD APP REPORTS FEATURES (iOS ReportVC + Android ReportFragment):
+    - Select report type (from API: GET /ws/reports returns ReportItem[] with bunchId)
+    - Select company (GET /ws/getcompanies)
+    - Select vehicle(s) — multi-select, filtered by company
+    - Set date range: From / Until
+    - Press "Generate" → POST /ws/reports/v2/request
+    - Show progress via SSE: GET /ws/reports/v2/state?token=
+    - Show completed report (download / view as JSON)
+    - Report history: GET /ws/reports/v2/list
+    - Delete report: DELETE /ws/reports/v2/:id
+    - Download: GET /ws/reports/v2/:id/:type (json/xlsx/pdf)
+
+  VERIFICATION CHECKLIST:
+    1. Open Reports tab → ReportsScreen renders without error
+    2. Report type dropdown populates from GET /ws/reports (not hardcoded list)
+    3. Company dropdown populates from GET /ws/getcompanies
+       IMPORTANT: API returns {key, value} objects — map key→id, value→name
+       (Bug previously in sprint 69: raw response caused companyIds:[null])
+    4. Vehicle dropdown filters to selected company (or shows all if no company)
+    5. Date pickers work
+    6. "Generate" sends correct payload to POST /ws/reports/v2/request:
+         { bunchId, vehicleIds, companyIds, fromDate, toDate }
+       companyIds must NOT be null/undefined — use company.key values
+    7. SSE progress stream connects and shows progress % to user
+    8. Report completes and result is displayed / downloadable
+    9. Report history list shows previously generated reports
+    10. Delete button removes a report from the list
+
+  FIX ANY FAILURES found during verification.
+
+acceptance:
+  - Report type list loads from API dynamically
+  - Company and vehicle selectors are populated and functional
+  - Report generation sends valid payload and receives response
+  - SSE progress indicator updates while report is building
+  - Completed report can be viewed or downloaded
+  - Report history is displayed and deletable
+
+requires: [FRONTEND_DEV]
+estimated: 2.5 hours

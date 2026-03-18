@@ -1,0 +1,50 @@
+gate: OPEN
+task: S75-TA3
+title: Implement Selector Pickers for Settings (Zoom, Step, Map Type)
+description: |
+  All selector/picker rows in settings-screen.tsx currently call handleSelectorLog()
+  which just fires a "Not yet functional" toast. Implement real pickers using the
+  existing BottomSelectModal component.
+
+  Fields to implement (all use BottomSelectModal):
+
+  1. MAP TYPE selector
+     Current value source: settings?.map || 'Open Street'
+     Options: ['Open Street', 'Google Normal', 'Google Hybrid', 'Google Satellite']
+     On select: call updateSetting({ map: value })
+     Also sync to MapScreen localStorage keys (see TC1 task).
+
+  2. EVENT DISPLAY ZOOM (zoom when clicking an event)
+     Options: ['x5','x6','x7','x8','x9','x10','x11','x12','x13','x14','x15','x16','x17','x18','x19','x20']
+     Persisted via useLocalSettings key: local_zoom_event (number, strip 'x')
+     Displayed as current value in InputRow.
+
+  3. OBJECT DISPLAY ZOOM (zoom when clicking a vehicle/object)
+     Options: same list as event display zoom
+     Persisted via useLocalSettings key: local_zoom_object
+     Displayed as current value in InputRow.
+
+  4. SCROLL STEP (playback scroll step in tracking)
+     Options: ['1','2','3','4','5','6','7','8','9','10']
+     Persisted via useLocalSettings key: local_scroll_step
+     Displayed as current value in InputRow.
+
+  Implementation pattern for each:
+    - Replace handleSelectorLog with a state flag: showXxxPicker
+    - Render BottomSelectModal when flag is true
+    - On select: update value via appropriate store/hook, close modal
+
+  Note: InputRow already has onClick prop — just replace the handler.
+  Note: SelectorRow for mapType already has onClick prop — just replace.
+
+acceptance:
+  - Tapping "Map type" opens BottomSelectModal with 4 options
+  - Selecting a map type updates the displayed value and persists it
+  - Tapping "Event display" opens picker, selection updates displayed value
+  - Tapping "Object display" opens picker, selection updates displayed value
+  - Tapping "Scroll step" opens picker, selection updates displayed value
+  - No "Not yet functional" toasts appear for these fields
+
+requires: [FRONTEND_DEV]
+estimated: 2 hours
+dep: S75-TA2

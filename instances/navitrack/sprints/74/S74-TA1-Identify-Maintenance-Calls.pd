@@ -1,0 +1,16 @@
+gate: OPEN
+task: S74-TA1
+title: Identify Maintenance API Calls in Object Screen
+description: |
+  Locate all maintenance API calls being made from the object screen, specifically:
+  - Find where https://localhost:5173/api/ws/maintenance/vehicle/{id} is being called
+  - Identify the components or hooks triggering these calls
+  - Document the current call pattern and frequency
+
+acceptance:
+  - List all locations where maintenance API is called
+  - Identify trigger conditions for these calls
+  - Confirm these calls are not needed for object screen functionality
+
+requires: []
+estimated: 2 hours

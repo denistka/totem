@@ -1,0 +1,81 @@
+gate: OPEN
+sprint: 75
+title: Full App Functional Baseline — Settings Fix + Feature Parity
+description: |
+  Checkpoint sprint. Goal: every visible feature in the app works end-to-end.
+
+  ANALYSIS SUMMARY (from deep audit of old-apps/ vs current src-client/):
+
+  CRITICAL BUG — Root cause of settings crash:
+    language-selector.tsx line 20:
+      `const updateSetting = useAppStore(state => state.updateSetting)`
+    `updateSetting` does NOT exist in useAppStore — it lives in useSettingsStore.
+    This returns undefined and throws on any language change, breaking the entire
+    settings session.
+
+  SECONDARY BUGS IN SETTINGS:
+    - objectNames / geolocation / defaultMapScale are local-only React state, never
+      persisted to localStorage or API.
+    - All zoom/step/mapType selectors call handleSelectorLog() → "Not yet functional".
+    - downloadArea API field is incorrectly mapped to "Group objects" (downloadArea
+      means offline area download, not clustering).
+    - MapScreen stores its tile layer in localStorage independently (map_layer,
+      map_provider) — completely disconnected from settings-screen mapType selector.
+
+  FEATURE PARITY GAPS (vs old iOS + Android apps):
+    - Object names visible on map: local state in settings, never applied to ClusterMap.
+    - Geolocation dot on map: local state, never applied.
+    - Map type (OSM / Google / Satellite): settings stub — MapScreen ignores it.
+    - Event/object display zoom selectors: stubs.
+    - Scroll step selector: stub.
+    - Group objects (clustering): wrong API field mapping.
+
+  S74 CARRY-OVER (TD3–TD6 unresolved):
+    - TD3: History date padding
+    - TD4: Map arrow stroke outline
+    - TD5: Time popup behavior (should close on track-select, not linger)
+    - TD6: Track selection hang
+
+tracks:
+  - id: TA
+    title: Settings Menu — Critical Repair
+    focus: Fix crash, wire all API fields, implement selector UIs
+    tasks:
+      - S75-TA1-Fix-Settings-Store-Crash.pd
+      - S75-TA2-Wire-Settings-API-Fields.pd
+      - S75-TA3-Implement-Selector-Pickers.pd
+      - S75-TA4-Persist-Local-Settings.pd
+
+  - id: TB
+    title: i18n — Hardcoded Strings + Server Locale Sync
+    focus: Remove hardcoded text, sync locale field from API on login
+    tasks:
+      - S75-TB1-Fix-Hardcoded-Strings.pd
+      - S75-TB2-Locale-Sync-From-Server.pd
+
+  - id: TC
+    title: Map — Apply Settings to Runtime Behavior
+    focus: Connect settings toggles and mapType to MapScreen/ClusterMap
+    tasks:
+      - S75-TC1-Apply-MapType-Settings.pd
+      - S75-TC2-Apply-Map-Behavior-Settings.pd
+
+  - id: TD
+    title: S74 Carry-Over Bug Fixes
+    focus: History date padding, map arrow stroke, time popup, track hang
+    tasks:
+      - S75-TD1-Fix-S74-Carryover-Bugs.pd
+
+  - id: TE
+    title: End-to-End Feature Verification
+    focus: Tracking, Reports, Object Details — verify and fix
+    tasks:
+      - S75-TE1-Verify-Tracking-Flow.pd
+      - S75-TE2-Verify-Reports-Flow.pd
+      - S75-TE3-Verify-Object-Details.pd
+
+invariants: S73-INVARIANTS.md
+requires: [FRONTEND_DEV]
+priority: CRITICAL
+risk: MEDIUM
+estimated: 4 days

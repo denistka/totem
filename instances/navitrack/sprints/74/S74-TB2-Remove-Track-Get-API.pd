@@ -1,0 +1,18 @@
+gate: OPEN
+task: S74-TB2
+title: Remove Track Get API Calls from Object History
+description: |
+  Remove or disable the track/get API calls that are redundant with daily endpoint:
+  - Remove track/get API calls from history screen components
+  - Update data fetching to use only daily endpoint
+  - Remove any duplicate state management for track data
+  - Ensure data transformation from daily endpoint matches UI requirements
+
+acceptance:
+  - Track/get API calls no longer appear in network tab on history screen
+  - History screen displays correctly using only daily endpoint data
+  - No TypeScript errors after removal
+  - All history features work without track/get calls
+
+requires: []
+estimated: 4 hours

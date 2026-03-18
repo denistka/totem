@@ -1,0 +1,48 @@
+gate: OPEN
+task: S75-TD1
+title: Fix S74 Carry-Over Bugs (TD3, TD4, TD5, TD6)
+description: |
+  Four bugs from S74 were planned but not resolved. Fix all four in this task.
+
+  BUG 1 — S74-TD3: History Date Padding
+    Symptom: date strings in HistoryTab display without zero-padding
+    (e.g. "1.3.2026" instead of "01.03.2026").
+    Location: src/components/screens/object-details/history/
+    Fix: ensure date formatting uses padStart(2,'0') or a date-utils formatter
+    for day and month fields. Check all date/time rendering in HistoryTab cells.
+
+  BUG 2 — S74-TD4: Map Arrow Stroke Outline
+    Symptom: vehicle arrow icons on the map have an unwanted dark stroke/outline
+    that looks wrong at small sizes or on certain tile backgrounds.
+    Location: src/features/map/ClusterMap.tsx (or vehicle marker icon definition).
+    Fix: find SVG/icon definition for the vehicle arrow, remove or adjust the
+    stroke attribute. If using DivIcon with SVG, target the stroke style.
+
+  BUG 3 — S74-TD5: Time Popup Behavior
+    Symptom: the time range popup (date-range-picker used in TrackingScreen or
+    HistoryTab) stays open or re-opens unexpectedly after a track is selected /
+    confirmed.
+    Location: likely src/components/date-range-picker/ or TrackingScreen.tsx.
+    Fix: ensure the popup is closed when the user selects a track or confirms
+    the date range. Verify the dismiss/close callback is called at the right time.
+
+  BUG 4 — S74-TD6: Track Selection Hang
+    Symptom: after selecting a vehicle and date range in TrackingScreen and pressing
+    "Build track", the UI hangs or shows a perpetual loader without resolving.
+    Location: TrackingScreen.tsx → TrackingActionScreen.tsx, hook useTrackData or
+    equivalent.
+    Root cause candidates:
+      a) Promise not resolving due to missing await or unhandled rejection
+      b) Loading state not reset on error (setLoading(false) missing in catch)
+      c) Race condition between vehicle select and date range state
+    Fix: inspect the track request flow, ensure loading state is always cleared
+    in both success and error paths, and add error display to the user.
+
+acceptance:
+  - History dates display with zero-padded day and month (01.03.2026)
+  - Vehicle arrows on map have no unwanted stroke outline
+  - Time picker popup closes after user confirms date selection
+  - Building a track never hangs indefinitely — either succeeds or shows error
+
+requires: [FRONTEND_DEV]
+estimated: 3 hours

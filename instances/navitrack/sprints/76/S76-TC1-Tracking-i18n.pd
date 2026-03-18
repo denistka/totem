@@ -1,0 +1,55 @@
+gate: OPEN
+task: S76-TC1
+title: Tracking i18n — TrackingScreen + TrackingActionScreen
+description: |
+  Replace all hardcoded English strings in tracking screens with t() calls.
+
+  FILE: TrackingScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()  (inside component)
+
+    Line ~31:  setHeaderViewState({ title: 'Tracking' })
+               → setHeaderViewState({ title: t('nav.tracking') })   [key exists ✓]
+
+    Line ~84:  'Please select vehicles'   → t('tracking.selectVehicles')
+    Line ~108: label 'Vehicle'            → t('tracking.vehicle')
+    Line ~121: 'Select vehicle'           → t('tracking.selectVehiclePlaceholder')
+    Line ~136: label 'Time Interval'      → t('tracking.timeInterval')
+    Line ~151: label 'Events'             → t('tracking.events')
+    Line ~99:  `${selectedEvents.length} events`  → t('tracking.eventsCount', { count: selectedEvents.length })
+    Line ~203: label 'Track Display'      → t('tracking.trackDisplay')
+    Line ~208: sub-label 'Color'          → t('tracking.color')
+    Line ~224: sub-label 'Width'          → t('tracking.width')
+    Line ~247: BottomSelectModal title='Vehicle'  → t('tracking.vehicle')
+    Line ~264: showToast('Date range exceeds 7-day limit', 'error')
+               → showToast(t('tracking.errors.dateRange'), 'error')
+    Line ~285: ActionButton children 'Execute'  → t('tracking.execute')
+
+  FILE: TrackingActionScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    In TrackingActionScreenBase: const { t } = useTranslation()
+
+    Line ~146: setHeaderViewState({ title: 'Tracking Action', ... })
+               → setHeaderViewState({ title: t('tracking.actionTitle'), ... })
+
+    Line ~154: vehicleName fallback 'Unknown Vehicle'
+               → vehicleName fallback t('tracking.unknownVehicle')
+
+    AnalyticsPanel component:
+    Add: const { t } = useTranslation()   (inside AnalyticsPanel function)
+    Add: import { useTranslation } from 'react-i18next'  (at top of file)
+    Line ~30:  'Max Speed'         → t('tracking.analytics.maxSpeed')
+    Line ~41:  'Avg Speed'         → t('tracking.analytics.avgSpeed')
+    Line ~52:  'Stops'             → t('tracking.analytics.stops')
+    Line ~60:  'Fuel Efficiency'   → t('tracking.analytics.fuelEff')
+
+acceptance:
+  - Tracking screen section labels render in ru/uk
+  - 'Execute' button shows 'Показать' / 'Показати'
+  - AnalyticsPanel shows translated stat labels
+  - Header title 'Маршруты'/'Маршрути' (reuses nav.tracking)
+  - tsc --noEmit exits 0
+
+requires: [FRONTEND_DEV]
+estimated: 1 hour
+dep: S76-TA1

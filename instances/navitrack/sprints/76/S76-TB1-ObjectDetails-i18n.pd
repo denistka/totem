@@ -1,0 +1,51 @@
+gate: OPEN
+task: S76-TB1
+title: ObjectDetails i18n — Tabs, States, Events Config
+description: |
+  Replace all hardcoded strings in ObjectDetails-related files with t() calls.
+  Locale keys must exist in all 3 files after S76-TA1 completes.
+
+  FILE: ObjectDetailsScreen.tsx
+    Line ~58:  'Object Details'      → t('objectDetails.title')
+    Line ~75:  'Failed to load object details' → t('objectDetails.errors.loadFailed')  [showToast]
+    Line ~118: 'Failed to load history'        → t('objectDetails.errors.historyFailed') [showToast]
+    Line ~150: 'Loading...'           → t('common.loading')
+    Line ~170: 'History'  (tab label) → t('objectDetails.tabs.history')
+    Line ~180: 'Events'   (tab label) → t('objectDetails.tabs.events')
+    Add: const { t } = useTranslation()   [if not already present]
+
+  FILE: EventsTab.tsx
+    Line ~78:  'APPLY' (Button text)  → t('common.apply')
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+
+  FILE: HistoryTimeline.tsx
+    Line ~46:  'Loading...'           → t('common.loading')
+    Line ~141: 'No data for this date'→ t('objectDetails.noData')
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+
+  FILE: constants.ts — EVENTS_CONFIG labels
+    Problem: labels are static strings in a plain array, outside React, cannot use t().
+    Solution: Change `label` field to a translation KEY instead of display text.
+      e.g. label: 'speeding' → lookup via t(`events.${event.id}`) in the component.
+    In EventsTab.tsx, render: t(`events.${event.id}`, event.label)
+    This keeps backward compat via fallback while enabling translation.
+
+  EVENTS_CONFIG id → new key mapping (all ids already match events.* namespace in TA1):
+    speeding, out-geofence→outGeofence, stop, geofence-in→geofenceIn,
+    geofence-out→geofenceOut, fuel-discharge→fuelDischarge, fuel-charge→fuelCharge,
+    sos, ignition-on→ignitionOn, ignition-off→ignitionOff, power-off→powerOff, power-on→powerOn
+    Note: id contains hyphens, locale key uses camelCase — use mapping helper or direct id→key map.
+    Simplest: t(`events.${event.id.replace(/-([a-z])/g, (_, c) => c.toUpperCase())}`, event.label)
+
+acceptance:
+  - Switching to Russian shows 'История'/'События' tabs in ObjectDetails
+  - 'APPLY' button shows 'Применить' / 'Застосувати' in ru/uk
+  - Event labels in EventsTab render translated names in ru/uk
+  - 'No data for this date' translates in history view
+  - tsc --noEmit exits 0
+
+requires: [FRONTEND_DEV]
+estimated: 1.5 hours
+dep: S76-TA1

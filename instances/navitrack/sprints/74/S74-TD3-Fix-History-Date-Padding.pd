@@ -1,0 +1,18 @@
+gate: OPEN
+task: S74-TD3
+title: Fix Object History Date Row Padding
+description: |
+  Add left padding to the date selection row in object history screen:
+  - Locate the date selection component in object history
+  - Add appropriate left padding to prevent edge touching
+  - Ensure the padding is responsive and looks good on all screen sizes
+  - Test the UI maintains consistency with other screens
+
+acceptance:
+  - Date selection row has proper left padding
+  - No UI elements touch the screen edge
+  - Padding is consistent across different device sizes
+  - Visual improvement is noticeable and polished
+
+requires: []
+estimated: 30 minutes

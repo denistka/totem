@@ -1,0 +1,19 @@
+gate: OPEN
+task: S74-TD4
+title: Remove Outline from Map Direction Arrows
+description: |
+  Remove the outline/stroke from direction arrows on maps:
+  - Locate the arrow components used for vehicle/track direction
+  - Remove or set stroke/outline to transparent
+  - Ensure arrows use only the track color fill
+  - Test on all map instances (object screen, tracking, history)
+  - Verify arrows remain visible and clear without outline
+
+acceptance:
+  - Direction arrows have no outline or stroke
+  - Arrows use solid fill with track color only
+  - Arrows remain clearly visible on all map backgrounds
+  - Consistent appearance across all map screens
+
+requires: []
+estimated: 1 hour

@@ -1,0 +1,54 @@
+gate: OPEN
+task: S75-TA2
+title: Fix Settings Field Mappings — Correct API Bindings
+description: |
+  Several settings fields in settings-screen.tsx are incorrectly mapped or
+  completely unmapped from the API. Fix all field bindings:
+
+  1. WRONG MAPPING — "Group objects" toggle:
+     Currently mapped to `downloadArea` (API field meaning: download offline map area).
+     This is semantically incorrect. Fix:
+       - Remap to a localStorage-persisted key `local_group_objects` (boolean).
+       - On mount: read from localStorage, default true.
+       - On change: persist to localStorage, broadcast via a small local-settings
+         context/hook (useLocalSettings) so ClusterMap can react.
+       - Remove `downloadArea` from "groupObjects" toggle handler.
+
+  2. UNMAPPED — objectNames toggle:
+     Currently `useState(true)` — local React state only, lost on remount.
+     Fix: persist to localStorage key `local_show_names`, default true.
+
+  3. UNMAPPED — geolocation toggle:
+     Currently `useState(true)` — local React state only.
+     Fix: persist to localStorage key `local_show_geo`, default true.
+
+  4. UNMAPPED — defaultMapScale toggle:
+     Currently `useState(true)` — local React state only.
+     Fix: persist to localStorage key `local_default_zoom`, default true.
+
+  5. Create hook: `useLocalSettings()`
+     Location: src/hooks/useLocalSettings.ts
+     Reads/writes the following keys from localStorage with typed defaults:
+       - local_group_objects: boolean (default: true)
+       - local_show_names: boolean (default: true)
+       - local_show_geo: boolean (default: true)
+       - local_default_zoom: boolean (default: true)
+       - local_zoom_event: number (default: 15)
+       - local_zoom_object: number (default: 15)
+       - local_scroll_step: number (default: 5)
+     Exposes: { values, set(key, value) }
+     On set: writes to localStorage and updates in-memory state.
+
+  6. Wire all 4 local toggles in settings-screen.tsx to useLocalSettings().
+
+acceptance:
+  - "Group objects" toggle persists across navigations and page refreshes
+  - "Object names" toggle persists across navigations and page refreshes
+  - "Geolocation" toggle persists across navigations and page refreshes
+  - "Default map scale" toggle persists across navigations and page refreshes
+  - downloadArea API field is NOT used for "Group objects" anymore
+  - useLocalSettings hook is exported from src/hooks/
+
+requires: [FRONTEND_DEV]
+estimated: 2 hours
+dep: S75-TA1

@@ -1,0 +1,37 @@
+gate: OPEN
+task: S76-TG1
+title: Objects + Modals i18n — ObjectsScreen, ObjectVisibilityModal, SelectObjectsScreen
+description: |
+  Replace hardcoded strings in object list and selection screens/modals.
+
+  FILE: objects-screen/ObjectsScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    Input placeholder: 'Search objects…'   → t('objects.search')   [key exists in en.json ✓]
+    Empty state: 'No vehicles found'        → t('objects.noVehicles')
+
+  FILE: objects-screen/ObjectVisibilityModal.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    h3 title: 'Select Objects'              → t('objects.selectTitle')
+    Input placeholder: 'Search objects…'   → t('objects.search')
+    ModalSecondaryButton: 'Cancel'          → t('common.cancel')
+    Button: 'Save Changes'                  → t('common.saveChanges')
+
+  FILE: screens/select-objects-screen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    setHeaderViewState title: 'Select objects' → t('objects.selectTitle')
+    Input placeholder: 'Search'                → t('common.search')
+    Button span: 'Save'                        → t('common.save')   [key exists in en.json ✓]
+
+acceptance:
+  - Object list search placeholder translates in ru/uk
+  - 'No vehicles found' renders 'Объекты не найдены'/'Об'єкти не знайдено'
+  - ObjectVisibilityModal title + buttons translated
+  - SelectObjectsScreen header + Save button translated
+  - tsc --noEmit exits 0
+
+requires: [FRONTEND_DEV]
+estimated: 45 minutes
+dep: S76-TA1

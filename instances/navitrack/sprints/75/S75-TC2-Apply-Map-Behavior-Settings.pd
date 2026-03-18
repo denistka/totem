@@ -1,0 +1,47 @@
+gate: OPEN
+task: S75-TC2
+title: Apply Map Behavior Settings to ClusterMap (Names, Clustering, Geolocation)
+description: |
+  Three settings toggles must actually affect MapScreen runtime behavior.
+  Currently they are persisted to localStorage (after TA2) but nothing reads them.
+
+  1. "Show icons" (settings.vehicleArrowShow — API field):
+     ClusterMap already renders vehicle markers. If vehicleArrowShow=false, hide
+     vehicle arrow/icon and show only a dot or name label.
+     Implementation: pass vehicleArrowShow from useSettingsStore to ClusterMap prop.
+     ClusterMap should conditionally render arrow icon or fallback marker.
+
+  2. "Object names" (local_show_names — localStorage via useLocalSettings):
+     Show/hide vehicle name label on the map marker.
+     Implementation: pass showNames prop to ClusterMap. When false, omit name label
+     in marker tooltip/popup.
+
+  3. "Group objects" (local_group_objects — localStorage via useLocalSettings):
+     Enable/disable Leaflet marker clustering.
+     ClusterMap likely uses MarkerClusterGroup. When local_group_objects=false,
+     render plain Marker instances instead of a cluster group.
+     Implementation: pass clusterEnabled prop to ClusterMap.
+
+  4. "Geolocation" (local_show_geo — localStorage via useLocalSettings):
+     Show/hide the user's own geolocation dot on the map.
+     MapScreen already has a geoTrigger and handleGeolocate handler. The geolocation
+     toggle should start/stop continuous location watching:
+       - toggle ON: call navigator.geolocation.watchPosition, render user dot
+       - toggle OFF: clearWatch, remove user dot from map
+     Implementation: ClusterMap or MapScreen reads local_show_geo and auto-activates
+     geolocation on mount if the setting is on.
+
+  All four props should be read from their sources in MapScreen and passed down to
+  ClusterMap. MapScreen should subscribe to useSettingsStore for vehicleArrowShow
+  and to useLocalSettings for the other three.
+
+acceptance:
+  - Turning off "Show icons" in settings → vehicle arrows disappear from map
+  - Turning off "Object names" → vehicle name labels disappear from map markers
+  - Turning off "Group objects" → markers no longer cluster, each shown individually
+  - Turning on "Geolocation" → blue dot appears at user's GPS position on map
+  - All changes apply without requiring app restart or page reload
+
+requires: [FRONTEND_DEV]
+estimated: 3 hours
+dep: S75-TA2

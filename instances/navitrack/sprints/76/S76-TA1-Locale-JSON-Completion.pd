@@ -1,0 +1,80 @@
+gate: OPEN
+task: S76-TA1
+title: Locale JSON Completion — en/ru/uk All Namespaces
+description: |
+  Add all missing translation keys to src/locales/en.json, ru.json, uk.json.
+  No component code changes in this task — data only.
+
+  PATCH ru.json + uk.json (keys exist in en.json but MISSING in ru/uk):
+    login.signingIn / login.otpRequired
+    objects.* (entire namespace — title, search, noVehicles, selectTitle)
+
+  ADD to all 3 files (new namespaces, used by TB–TG tasks):
+
+  common (extend):
+    apply / retry / saveChanges / enabled / disabled / active / noDescription / goBack / search
+
+  reports (extend):
+    reportType, period, periodWhole, periodDaily, company, vehicles,
+    noneSelected, vehiclesSelected, buildReport, vehicleSelection, noType,
+    noReports, report_label, from, to, downloading,
+    status.queued / status.error / status.cancelled / status.completed / status.building,
+    errors.loadFailed / errors.deleteFailed / errors.deleted / errors.downloadFailed
+
+  objectDetails (new):
+    title, tabs.history, tabs.events, noData,
+    errors.loadFailed, errors.historyFailed
+
+  events (new — maps to EVENTS_CONFIG ids):
+    speeding, outGeofence, stop, geofenceIn, geofenceOut,
+    fuelDischarge, fuelCharge, sos, ignitionOn, ignitionOff, powerOff, powerOn
+
+  tracking (new):
+    title, actionTitle, selectVehicles, vehicle, selectVehiclePlaceholder,
+    timeInterval, events, eventsCount, trackDisplay, color, width,
+    execute, unknownVehicle, errors.dateRange,
+    analytics.maxSpeed, analytics.avgSpeed, analytics.stops, analytics.fuelEff
+
+  accountSecurity (new):
+    title, region, email, emailLinked, thirdPartyVoice, changePassword,
+    faceId, patternLock, multiDevice, twoFactor, twoFactorSub,
+    userCode, deleteAccount, outOfSync, notSet, statusOff,
+    assignEmail, emailPlaceholder, saveChanges,
+    errors.emailRequired, errors.emailSaved, errors.emailFailed,
+    errors.fieldsRequired, errors.passwordMismatch, errors.passwordSaved, errors.passwordFailed
+
+  twoFactor (new):
+    title, subtitle, googleAuth, googleAuthSub, enabled, disabled,
+    howItWorks, step1, step2, step3,
+    errors.toggleFailed
+
+  engine (new):
+    title, notAvailable, noPermission, notEquipped, goBack,
+    statusUnOPEN, statusOPEN, connectionInfo,
+    lockSafe, emergencyBlock, unlock,
+    confirm.lock, confirm.emergency, confirm.emergencyFinal, confirm.unlock,
+    errors.checkFailed,
+    success.OPEN, success.emergencyOPEN, success.unOPEN, errors.actionFailed
+
+  settings (extend):
+    loading, retry
+
+  drivers (new):
+    search, empty, confirmDelete, deleted, deleteFailed, loadFailed, createNotImpl
+
+  geozones (new):
+    search, empty, noDescription, confirmDelete, deleted, deleteFailed, loadFailed, createNotImpl
+
+  maintenance (new):
+    search, empty, confirmDelete, removed, removeFailed, loadFailed, createNotImpl,
+    tabs.templates, tabs.journal
+
+  See S76-TRANSLATIONS-REFERENCE.md (optional companion) for full en/ru/uk string values.
+
+acceptance:
+  - All 3 locale files contain identical key sets (no missing keys)
+  - ru.json and uk.json have no English fallback strings in the new namespaces
+  - tsc --noEmit exits 0 (no type errors from changed locale structure)
+
+requires: [FRONTEND_DEV]
+estimated: 3 hours

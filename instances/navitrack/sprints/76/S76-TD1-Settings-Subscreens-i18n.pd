@@ -1,0 +1,99 @@
+gate: OPEN
+task: S76-TD1
+title: Settings Sub-Screens i18n — AccountSecurity, 2FA, Engine, Settings Loading
+description: |
+  Replace all hardcoded strings in settings-related sub-screens.
+
+  FILE: account-security-screen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()  inside component
+    Note: SETTINGS_ROWS is a static const array outside component — move it INSIDE
+    the component function so t() can be called, OR replace label strings with
+    t() calls at render time by mapping row.labelKey → t(row.labelKey).
+    Recommended: add `labelKey` field to each row object and render t(row.labelKey).
+
+    SETTINGS_ROWS label keys:
+      'Region'                    → accountSecurity.region
+      'Email Address'             → accountSecurity.email
+      'Third-Party Voice…'        → accountSecurity.thirdPartyVoice
+      'tuya_voice_openapi'        → (keep as-is, technical name)
+      'Change Login Password'     → accountSecurity.changePassword
+      'Face ID'                   → accountSecurity.faceId
+      'Pattern Lock'              → accountSecurity.patternLock
+      'Multi-Device Login…'       → accountSecurity.multiDevice
+      'Two-Factor Authentication' → accountSecurity.twoFactor
+      'User Code'                 → accountSecurity.userCode
+      'Delete Account'            → accountSecurity.deleteAccount
+
+    Static values to translate:
+      'Ukraine'     (value) → keep as-is (proper noun)
+      'Linked'      (value) → t('accountSecurity.emailLinked')
+      'Out of Sync' (value) → t('accountSecurity.outOfSync')
+      'Not Set'     (value) → t('accountSecurity.notSet')
+      'Off'         (value) → t('accountSecurity.statusOff')
+
+    setHeaderViewState title: 'Account and Security' → t('accountSecurity.title')
+
+    handleRowClick string comparisons: update to use labelKey or id checks (not label string).
+
+    Dialog — Assign Email:
+      DialogTitle 'Assign Email'        → t('accountSecurity.assignEmail')
+      Input placeholder 'New Email Address' → t('accountSecurity.emailPlaceholder')
+      Button 'Cancel'                   → t('common.cancel')
+      Button 'Save changes'             → t('accountSecurity.saveChanges')
+      toast.error('Email is required')  → t('accountSecurity.errors.emailRequired')
+      toast.success('Email assigned…')  → t('accountSecurity.errors.emailSaved')
+      toast.error('Failed to assign…')  → t('accountSecurity.errors.emailFailed')
+
+    Dialog — Change Password:
+      DialogTitle 'Change Password'     → t('accountSecurity.changePassword')
+      Placeholders: current/new/confirm → t('accountSecurity.currentPassword') etc.
+      Buttons: Cancel / Save changes    → t('common.cancel') / t('accountSecurity.saveChanges')
+      Toasts: all 4 → accountSecurity.errors.*
+
+  FILE: two-factor-auth-screen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    setHeaderViewState title → t('settings.twoFactorAuth')   [key exists ✓]
+    'Enhance Your Security'  → t('twoFactor.title')
+    Description paragraph    → t('twoFactor.subtitle')
+    'Google Authenticator'   → t('twoFactor.googleAuth')
+    'Use Google App…'        → t('twoFactor.googleAuthSub')
+    'Enabled'/'Disabled'     → t('common.enabled') / t('common.disabled')
+    'How it works'           → t('twoFactor.howItWorks')
+    Step 1/2/3 spans         → t('twoFactor.step1') / t('twoFactor.step2') / t('twoFactor.step3')
+    toast.success/error msgs → t('twoFactor.errors.toggleFailed') etc.
+
+  FILE: engine-screen/EngineScreen.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+    Header title → t('engine.title') (use vehicle.name interpolation: t('engine.title') + ': ' + name)
+    'Not Available' h2        → t('engine.notAvailable')
+    No-permission message     → t('engine.noPermission')
+    Not-equipped message      → t('engine.notEquipped')
+    'Go Back' button          → t('common.goBack')
+    'Engine is UNOPEN/OPEN' → t('engine.statusUnOPEN') / t('engine.statusOPEN')
+    'Current connection…'     → t('engine.connectionInfo')
+    'Lock Engine (Safe Mode)' → t('engine.lockSafe')
+    'Emergency Block!'        → t('engine.emergencyBlock')
+    'Unlock Engine'           → t('engine.unlock')
+    window.confirm strings    → t('engine.confirm.lock') / t('engine.confirm.emergency') etc.
+    showToast messages        → t('engine.success.OPEN') / t('engine.errors.actionFailed') etc.
+    'Failed to check permissions' → t('engine.errors.checkFailed')
+
+  FILE: settings-screen.tsx
+    Lines 273-274: 'Loading settings…' → t('settings.loading')
+    Line 284: 'Retry'                  → t('common.retry')
+    (useTranslation already imported ✓)
+
+acceptance:
+  - AccountSecurityScreen renders all labels in ru/uk
+  - 2FA screen fully translated in ru/uk
+  - Engine screen fully translated in ru/uk
+  - Settings loading/retry strings translated
+  - No window.confirm with hardcoded English in engine screen
+  - tsc --noEmit exits 0
+
+requires: [FRONTEND_DEV]
+estimated: 2 hours
+dep: S76-TA1

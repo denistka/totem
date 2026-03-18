@@ -1,0 +1,19 @@
+gate: OPEN
+task: S74-TA3
+title: Verify Object Screen Functionality
+description: |
+  Thoroughly test the object screen after maintenance API removal:
+  - Test object list loading and display
+  - Test search and filter functionality
+  - Test object details navigation
+  - Test refresh/pull-to-refresh if present
+  - Verify no console errors related to missing maintenance data
+
+acceptance:
+  - Object screen loads faster without maintenance calls
+  - All object screen features work correctly
+  - No network errors in console
+  - Performance improvement measurable in dev tools
+
+requires: []
+estimated: 2 hours

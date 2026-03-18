@@ -1,0 +1,18 @@
+gate: OPEN
+task: S74-TB1
+title: Identify Track Get API Calls in Object History
+description: |
+  Locate all track/get API calls being made from the object history screen:
+  - Find where https://localhost:5173/api/ws/track/get is being called
+  - Identify the components or hooks triggering these calls
+  - Document how the daily endpoint is already providing the same data
+  - Map the data flow from daily endpoint to UI components
+
+acceptance:
+  - List all locations where track/get API is called in history
+  - Document data mapping between daily endpoint and UI needs
+  - Confirm daily endpoint provides all required data
+  - Identify any redundant data processing
+
+requires: []
+estimated: 2 hours

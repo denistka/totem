@@ -1,0 +1,49 @@
+gate: OPEN
+task: S76-TF1
+title: Reports i18n — ReportHistoryView + ReportResultView
+description: |
+  Replace hardcoded strings in the two report display modules.
+
+  FILE: reports-screen/modules/ReportHistoryView.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+
+    getStatusText() function — replace all return strings:
+      return 'Queued'               → return t('reports.status.queued')
+      return 'Error'                → return t('reports.status.error')
+      return 'Cancelled'            → return t('reports.status.cancelled')
+      return 'Completed'            → return t('reports.status.completed')
+      return `Building ${pct}%`     → return t('reports.status.building', { pct: Math.floor(state/100) })
+    Note: t() is not accessible inside getStatusText if it is a plain function outside the component.
+    Move getStatusText INSIDE the component body after const { t } = useTranslation().
+
+    Empty state: 'No recent reports found'          → t('reports.noReports')
+    Report label: 'Report '                         → t('reports.report_label') + ' '
+    toast.error('Failed to load reports')           → t('reports.errors.loadFailed')
+    toast.success('Report deleted')                 → t('reports.errors.deleted')
+    toast.error('Failed to delete report')          → t('reports.errors.deleteFailed')
+    toast.info(`Downloading ${format} report…`)     → t('reports.downloading', { fmt: format })
+    toast.error('Failed to download report')        → t('reports.errors.downloadFailed')
+
+  FILE: reports-screen/modules/ReportResultView.tsx
+    Add: import { useTranslation } from 'react-i18next'
+    Add: const { t } = useTranslation()
+
+    Line ~69: 'Company: {company};'
+      → <h2>…{t('reports.company_label')}: {company};</h2>
+
+    Line ~73: 'From: … - To: …'
+      → {t('reports.from')}: {formatShortDate(startDate)} 00:00 - {t('reports.to')}: …
+
+    toast.error(`Failed to download ${format.toUpperCase()} report`)
+      → t('reports.errors.downloadFailed')
+
+acceptance:
+  - Report status badges ('Queued', 'Completed', etc.) render in ru/uk
+  - 'No recent reports found' translates in ru/uk
+  - 'Company:' / 'From:' / 'To:' labels translate in result view
+  - tsc --noEmit exits 0
+
+requires: [FRONTEND_DEV]
+estimated: 1 hour
+dep: S76-TA1
