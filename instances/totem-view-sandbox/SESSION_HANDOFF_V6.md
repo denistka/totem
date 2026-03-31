@@ -23,10 +23,10 @@
 ---
 
 ### [Phase 1 - Breakthrough Recap]
-- **SDUI Recursive Engine**: The house is no longer static. Components are rendered via a recursive `UiNode` engine driven by JSON.
-- **House Engine Refactor**: `BrickHouse.vue` is now a shell that maps 7 construction stages to `UiNodeModel[]`.
-- **Time-Machine Prototype**: History scrubbing UI is ready. The logic for state reconstruction needs to be finalized.
-- **Totem V6 Integration**: Current sprints (S72-S73) are physically persisted in the `totem` hierarchy.
+- **SDUI Recursive Engine**: [COMPLETE] The house is no longer static. Components are rendered via a recursive `UiNode` engine driven by JSON.
+- **House Engine Refactor**: [COMPLETE] `BrickHouse.vue` is established as the construction layer shell.
+- **Time-Machine Prototype**: [COMPLETE] History scrubbing logic and construction forecasting are fully synchronized.
+- **Totem V6 Integration**: [COMPLETE] Sandbox logic pushed to GitHub and linked as the "Implementation Plan".
 
 ---
 

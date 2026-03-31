@@ -1,0 +1,18 @@
+project:
+  name: totem-v7-app
+  version: 0.1.0
+  description: React + TypeScript frontend app serving as the UI dashboard for the Totem V7 Protocol operations.
+  stack: 
+    - typescript
+    - react
+    - nodejs
+
+paths:
+  code: /Users/denistka/Projects/totem/totem-v7-app
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - ARCHITECT

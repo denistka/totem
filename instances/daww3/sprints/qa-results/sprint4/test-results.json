@@ -1,0 +1,395 @@
+{
+  "timestamp": "2026-01-28T02:07:00Z",
+  "testRun": {
+    "api": {
+      "suite": "API Unit Tests",
+      "status": "partial",
+      "summary": {
+        "totalTestFiles": 16,
+        "passedTestFiles": 14,
+        "failedTestFiles": 2,
+        "totalTests": 244,
+        "passedTests": 210,
+        "skippedTests": 34,
+        "failedTests": 0,
+        "passRate": 86.07,
+        "duration": "12.63s"
+      },
+      "testFiles": [
+        {
+          "file": "src/modules/throttler/redis-throttler.storage.spec.ts",
+          "status": "passed",
+          "tests": 6,
+          "duration": "11ms"
+        },
+        {
+          "file": "src/modules/metrics/__tests__/metrics.service.test.ts",
+          "status": "passed",
+          "tests": 20,
+          "duration": "44ms"
+        },
+        {
+          "file": "test/platform-services.spec.ts",
+          "status": "passed",
+          "tests": 22,
+          "duration": "5ms"
+        },
+        {
+          "file": "src/modules/rating/__tests__/track-state-machine.test.ts",
+          "status": "passed",
+          "tests": 28,
+          "duration": "8ms"
+        },
+        {
+          "file": "src/modules/upload/upload.service.spec.ts",
+          "status": "passed",
+          "tests": 9,
+          "duration": "29ms"
+        },
+        {
+          "file": "src/modules/gamification/__tests__/badge-system.test.ts",
+          "status": "passed",
+          "tests": 20,
+          "duration": "4ms"
+        },
+        {
+          "file": "src/modules/collaboration/__tests__/collaboration.service.test.ts",
+          "status": "passed",
+          "tests": 15,
+          "duration": "24ms"
+        },
+        {
+          "file": "src/modules/gamification/__tests__/xp-system.test.ts",
+          "status": "passed",
+          "tests": 26,
+          "duration": "4ms"
+        },
+        {
+          "file": "src/modules/email/__tests__/email-template.service.test.ts",
+          "status": "passed",
+          "tests": 9,
+          "duration": "45ms"
+        },
+        {
+          "file": "src/modules/rating/__tests__/rating-calculator.test.ts",
+          "status": "passed",
+          "tests": 25,
+          "duration": "4ms"
+        },
+        {
+          "file": "src/modules/search/__tests__/search.service.test.ts",
+          "status": "passed",
+          "tests": 7,
+          "duration": "3ms"
+        },
+        {
+          "file": "src/modules/stripe/__tests__/stripe.service.test.ts",
+          "status": "passed",
+          "tests": 7,
+          "duration": "3ms"
+        },
+        {
+          "file": "src/modules/jobs/jobs.service.spec.ts",
+          "status": "passed",
+          "tests": 10,
+          "duration": "18ms",
+          "note": "Fixed in E23 - added missing queue mocks"
+        },
+        {
+          "file": "test/deployment.spec.ts",
+          "status": "passed",
+          "tests": 13,
+          "skipped": 7,
+          "duration": "12376ms"
+        },
+        {
+          "file": "test/rating-integration.spec.ts",
+          "status": "failed",
+          "tests": 11,
+          "skipped": 11,
+          "duration": "12ms",
+          "error": {
+            "type": "CircularDependencyError",
+            "message": "A circular dependency has been detected inside JobsModule. Please, make sure that each side of a bidirectional relationships are decorated with \"forwardRef()\".",
+            "location": "test/rating-integration.spec.ts:27"
+          },
+          "note": "Integration test - requires AppModule which has circular dependency"
+        },
+        {
+          "file": "src/common/tests/security.test.ts",
+          "status": "failed",
+          "tests": 16,
+          "skipped": 16,
+          "duration": "12ms",
+          "error": {
+            "type": "CircularDependencyError",
+            "message": "A circular dependency has been detected inside JobsModule. Please, make sure that each side of a bidirectional relationships are decorated with \"forwardRef()\".",
+            "location": "src/common/tests/security.test.ts:12"
+          },
+          "note": "Integration test - requires AppModule which has circular dependency"
+        }
+      ],
+      "errors": [
+        {
+          "file": "test/rating-integration.spec.ts",
+          "type": "CircularDependencyError",
+          "message": "A circular dependency has been detected inside JobsModule",
+          "impact": "Cannot load AppModule for integration tests"
+        },
+        {
+          "file": "src/common/tests/security.test.ts",
+          "type": "CircularDependencyError",
+          "message": "A circular dependency has been detected inside JobsModule",
+          "impact": "Cannot load AppModule for integration tests"
+        }
+      ],
+      "fixes": {
+        "e23": {
+          "jobsService": {
+            "status": "fixed",
+            "tests": 10,
+            "fix": "Added missing queue mocks (state-transition, leaderboard, xp-levelup)"
+          },
+          "expressImports": {
+            "status": "fixed",
+            "files": [
+              "src/modules/streaming/http-fallback/http-fallback.controller.ts",
+              "src/modules/streaming/turn/turn-credentials.controller.ts",
+              "src/modules/feedback/feedback.controller.ts"
+            ],
+            "fix": "Replaced Express types with Fastify types"
+          }
+        }
+      }
+    },
+    "web": {
+      "suite": "Web Unit Tests",
+      "status": "passed",
+      "summary": {
+        "totalTestFiles": 31,
+        "passedTestFiles": 31,
+        "failedTestFiles": 0,
+        "totalTests": 517,
+        "passedTests": 517,
+        "skippedTests": 0,
+        "failedTests": 0,
+        "passRate": 100.0,
+        "duration": "2.71s"
+      },
+      "testFiles": [
+        {
+          "file": "src/core/history/__tests__/history-manager.test.ts",
+          "status": "passed",
+          "tests": 16,
+          "duration": "6ms"
+        },
+        {
+          "file": "src/core/audio/__tests__/plugin-chain.test.ts",
+          "status": "passed",
+          "tests": 12,
+          "duration": "10ms"
+        },
+        {
+          "file": "src/core/audio/__tests__/wasm-dsp.test.ts",
+          "status": "passed",
+          "tests": 13,
+          "duration": "13ms"
+        },
+        {
+          "file": "src/core/audio/__tests__/metering.test.ts",
+          "status": "passed",
+          "tests": 14,
+          "duration": "27ms"
+        },
+        {
+          "file": "src/core/pwa/__tests__/safari-optimizations.test.ts",
+          "status": "passed",
+          "tests": 14,
+          "duration": "15ms",
+          "warnings": [
+            "performance.now is not a function (handled gracefully)"
+          ]
+        },
+        {
+          "file": "src/core/audio/__tests__/mixer.test.ts",
+          "status": "passed",
+          "tests": 34,
+          "duration": "22ms"
+        },
+        {
+          "file": "src/core/audio/__tests__/offline-export.test.ts",
+          "status": "passed",
+          "tests": 10,
+          "duration": "202ms"
+        },
+        {
+          "file": "src/core/pwa/__tests__/service-worker.test.ts",
+          "status": "passed",
+          "tests": 17,
+          "duration": "7ms"
+        },
+        {
+          "file": "src/core/collaboration/__tests__/version-history.test.ts",
+          "status": "passed",
+          "tests": 13,
+          "duration": "17ms"
+        },
+        {
+          "file": "src/core/audio/__tests__/latency.test.ts",
+          "status": "passed",
+          "tests": 26,
+          "duration": "11ms"
+        },
+        {
+          "file": "src/core/pwa/__tests__/offline-storage.test.ts",
+          "status": "passed",
+          "tests": 6,
+          "duration": "28ms"
+        },
+        {
+          "file": "src/core/midi/__tests__/midi-output.test.ts",
+          "status": "passed",
+          "tests": 10,
+          "duration": "5ms"
+        },
+        {
+          "file": "src/core/audio/__tests__/recording-engine.test.ts",
+          "status": "passed",
+          "tests": 10,
+          "duration": "8ms"
+        },
+        {
+          "file": "src/core/debug/__tests__/metrics-collector.test.ts",
+          "status": "passed",
+          "tests": 15,
+          "duration": "1522ms",
+          "note": "Fixed in E23 - added performance.now mock"
+        },
+        {
+          "file": "src/core/p2p/__tests__/fallback-manager.test.ts",
+          "status": "passed",
+          "tests": 20,
+          "duration": "1517ms"
+        }
+      ],
+      "fixes": {
+        "e23": {
+          "performanceMock": {
+            "status": "fixed",
+            "file": "src/core/debug/__tests__/metrics-collector.test.ts",
+            "fix": "Added performance.now() mock to prevent unhandled errors"
+          }
+        }
+      }
+    }
+  },
+  "overall": {
+    "totalTestFiles": 47,
+    "passedTestFiles": 45,
+    "failedTestFiles": 2,
+    "totalTests": 761,
+    "passedTests": 727,
+    "skippedTests": 34,
+    "failedTests": 0,
+    "passRate": 95.53,
+    "unitTestPassRate": 100.0,
+    "integrationTestPassRate": 0.0,
+    "totalDuration": "15.34s"
+  },
+  "epicStatus": {
+    "e23": {
+      "name": "Test Fixes",
+      "status": "completed",
+      "objectives": [
+        {
+          "objective": "Fix Jobs Service tests (10 failures)",
+          "status": "completed",
+          "result": "10/10 tests passing"
+        },
+        {
+          "objective": "Fix Express import errors",
+          "status": "completed",
+          "result": "All Express types replaced with Fastify"
+        },
+        {
+          "objective": "Fix performance.now mock warnings",
+          "status": "completed",
+          "result": "Zero unhandled errors"
+        }
+      ],
+      "summary": "All E23 objectives completed successfully. Unit tests at 100% pass rate."
+    },
+    "e25": {
+      "name": "TOTEM Validation",
+      "status": "blocked",
+      "blockers": [
+        {
+          "type": "API Infrastructure",
+          "issue": "API won't start due to Prisma schema type mismatches",
+          "errors": 30,
+          "missingEnums": [
+            "TrackStatus",
+            "SubscriptionPlan",
+            "SubscriptionStatus"
+          ]
+        }
+      ],
+      "progress": {
+        "fixtures": "completed",
+        "testFiles": "ready",
+        "api": "blocked"
+      }
+    }
+  },
+  "issues": {
+    "critical": [
+      {
+        "type": "Circular Dependency",
+        "location": "JobsModule",
+        "impact": "Integration tests cannot load AppModule",
+        "affectedTests": [
+          "test/rating-integration.spec.ts",
+          "src/common/tests/security.test.ts"
+        ],
+        "priority": "high",
+        "recommendation": "Add forwardRef() or restructure module dependencies"
+      }
+    ],
+    "blockers": [
+      {
+        "type": "Prisma Schema",
+        "issue": "Missing enums in schema",
+        "impact": "API won't compile/start",
+        "priority": "critical",
+        "recommendation": "Add missing enums to schema.prisma and regenerate client"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "priority": "P0",
+      "action": "Fix Prisma schema enums (TrackStatus, SubscriptionPlan, SubscriptionStatus)",
+      "impact": "Unblocks API startup and E25 TOTEM validation"
+    },
+    {
+      "priority": "P1",
+      "action": "Fix circular dependency in JobsModule",
+      "impact": "Enables integration tests to run"
+    },
+    {
+      "priority": "P2",
+      "action": "Add performance.now mock to safari-optimizations.test.ts",
+      "impact": "Eliminates remaining warning (non-blocking)"
+    }
+  ],
+  "metadata": {
+    "testFramework": {
+      "api": "Vitest v4.0.18",
+      "web": "Vitest v1.6.1"
+    },
+    "nodeVersion": "v20+",
+    "os": "darwin 25.1.0",
+    "generatedBy": "Claude Sonnet 4.5",
+    "generatedAt": "2026-01-28T02:10:00Z"
+  }
+}

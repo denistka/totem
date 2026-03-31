@@ -1,0 +1,31 @@
+# Sprint S01: Jam Sandbox UI Stabilization
+role: task-plan-list
+status: COMPLETED
+date: 2026-03-29
+
+## Context
+The Jam Sandbox was in an experimental state with a fragmented UI and non-functional console controls.
+
+## Goals
+1.  **Aesthetic Overhaul**: Standardize on "Quantum Glass" dark-mode.
+2.  **Piano Roll Restoration**: Fix responsiveness and visual clarity.
+3.  **Log Infrastructure**: Enable real-time P2P monitoring.
+
+## Changelog
+
+### UI/UX
+- `[x]` Standardize global CSS variables and glassmorphism tokens.
+- `[x]` Refactor `JamHeader` with RTT and Peer indicators.
+- `[x]` Fix `PianoRollView` canvas scaling and high-contrast grid.
+- `[x]` Upgrade `LogDrawer` to a slide-up fixed component.
+- `[x]` Make window control dots functional (Close, Clear, Expand).
+
+### Logic
+- `[x]` Extend `useLogger` with `clearLogs` capability.
+- `[x]` Implement dynamic padding-bottom for the main layout to prevent console overlap.
+- `[x]` Normalize component prop and event names (hyphenation).
+
+---
+
+## Reflections
+The combination of `backdrop-filter` and `v-html` (for colored logs) provides a high-density clinical feel suitable for real-time networking tools.

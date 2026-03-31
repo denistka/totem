@@ -2,11 +2,19 @@ project:
   name: DAWW3
   version: 0.1.0
   description: Web-based Digital Audio Workstation with P2P streaming and Web3 monetization.
+  structure: pnpm-workspace monorepo (apps: web, api, contracts, subgraph, seed; packages: dsp, plugin-spec, shared)
   stack:
     - vue3
     - typescript
     - turbo
-    - web3
+    - web3 (wagmi, viem)
+    - nestjs (fastify)
+    - prisma
+    - bullmq
+    - socket.io
+    - vite (pwa)
+    - tailwind
+    - pinia
   ui_stack_ref: refs/app-ui-kit
 
 paths:
@@ -24,4 +32,7 @@ guardians:
     - ARCHITECT
   stack_adapters:
     - FRONTEND_DEV
+    - BACKEND_DEV
+    - NODE
     - WEB3
+

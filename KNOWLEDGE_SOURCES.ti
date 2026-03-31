@@ -26,6 +26,16 @@ When updating stacks or creating new ones, refer back to the knowledge artifacts
 - **Resulting Stacks:** `REACT.ti` (updated), `REACT_SERVER_COMPONENTS.ti`, `REACT_COMPILER.ti`, `ZUSTAND.ti`, `JOTAI.ti`.
 ---
 
+## 2026 Architectural Patterns
+
+### DAWW3 P2P Web DAW Architecture (March 2026)
+- **Status:** Integrated.
+- **Topics Covered:** Nexus-Pulse Networking (Broadcast + WebRTC), Quantum Glass Aesthetics (Design System), Real-time Canvas Rendering (Piano Roll), Agentic MIDI Orchestration.
+- **Knowledge Artifact:** `~/.gemini/antigravity/brain/f965a931-fc04-4b5c-9c34-eb4b5ff345a7/walkthrough.md`
+- **Resulting Stacks:** `VUE.ti` (Design tokens), `VITE.ti` (P2P optimizations), `WEB_AUDIO_ORCHESTRATION.pi` (New).
+
+---
+
 ## 2026 Core Protocols
 
 ### Totem Orchestration Specification (March 2026)

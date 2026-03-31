@@ -1,0 +1,17 @@
+project:
+  name: vova-help
+  version: 0.1.0
+  description: An embedded C programming project managing ATtiny24A-based modular attenuator firmware.
+  stack: 
+    - typescript
+    - react
+
+paths:
+  code: /Users/denistka/Projects/vova-help
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - ARCHITECT

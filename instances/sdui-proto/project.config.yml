@@ -1,0 +1,27 @@
+project:
+  name: sdui-proto
+  version: 0.1.0
+  description: A Server-Driven UI (SDUI) demo built with Vue 3 + TypeScript + Vite, sharing a rendering engine across multiple mock apps.
+  stack:
+    - vue3
+    - typescript
+    - vite
+    - leaflet
+  ui_design_docs:
+    - totem/core/DESIGN_SPRINT_GUIDE.md
+
+paths:
+  code: /Users/denistka/Projects/sdui-proto
+  history: ./sprints
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - ARCHITECT
+    - UI_UX
+  stack_adapters:
+    - VUE_DEV
+    - FRONTEND_DEV

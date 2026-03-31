@@ -1,0 +1,18 @@
+project:
+  name: totem-v7
+  version: 0.1.0
+  description: Totem V7 — AI-Orchestrated Development Service Protocol (visual-first, agent-agnostic, DB-ready JSON models).
+  stack: 
+    - typescript
+    - react
+    - nodejs
+
+paths:
+  code: /Users/denistka/Projects/totem/totem-v7
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - ARCHITECT
