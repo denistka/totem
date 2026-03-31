@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R5: Split large files >300 LOC
+status: pending
+
+context: |
+  Break down components/date-range-picker/DateRangePicker.tsx, components/screens/settings-screen.tsx, and lib/api/domains/reports.ts to reduce their lines of code below 300.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Files successfully split into smaller sub-components/modules
+  - No functional regressions
+
+out: []

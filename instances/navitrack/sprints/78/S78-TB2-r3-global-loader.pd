@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R3: Store logic in global-loader.tsx
+status: pending
+
+context: |
+  Move store logic out of components/global-loader.tsx into a dedicated store/.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - global-loader.tsx refactored
+  - R3 resolved
+
+out: []

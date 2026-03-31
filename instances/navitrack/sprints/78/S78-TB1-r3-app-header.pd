@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R3: Store logic in app-header.tsx
+status: pending
+
+context: |
+  Move store logic out of components/app-header.tsx into a dedicated store/.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - app-header.tsx refactored to use dedicated store
+  - R3 resolved
+
+out: []

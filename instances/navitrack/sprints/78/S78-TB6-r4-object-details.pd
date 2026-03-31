@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R4: Direct API import in ObjectDetailsScreen
+status: pending
+
+context: |
+  Remove direct API domain imports in components/screens/object-details/ObjectDetailsScreen.tsx.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Changed to standard API access
+  - R4 resolved
+
+out: []

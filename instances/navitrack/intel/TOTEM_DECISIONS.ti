@@ -50,6 +50,11 @@ purpose:machine-only key decisions
   - [Priority-Shift-Architecture,S44-legacy-quality-issues-make-refactoring-P0]
   - [Atomic-Task-Hardening,tasks-must-be-under-50-lines-to-prevent-regression]
   - [Suspicion-First,agents-warn-user-before-adding-redundant-logic]
+2026-03-19:
+  - [ESLint-root-config,navitrack-apps-eslint-config-js-moved-to-root-from-src-client-to-ensure-correct-detection-by-package-json-lint-scripts]
+  - [Bulk-Sprint-Completion-S65-S76,sprints-S65-to-S76-marked-complete-to-synchronize-totem-with-actual-filesystem-state]
+  - [Zero-Debt-Baseline,backlog-tasks-archived-and-UNCOMPLETED_TASKS-md-cleared-to-focus-strictly-on-S77-execution]
+  - [S77-Activation,gate-OPEN-in-S77-ptl-and-active-order-in-TOTEM_SPRINTS-reflect-start-of-regression-fix-cycle]
 
 ###############################################################################
 # HUMAN SOURCE

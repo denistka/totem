@@ -1,0 +1,29 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Memoize track.points → [lat,lon][] conversion in TrackingActionScreen
+
+context: |
+  TrackingActionScreen.tsx passes track points to TrackingRouteMap as:
+    track.points.map(p => [p.latitude, p.longitude])
+
+  This inline .map() creates a new array reference on every render of
+  TrackingActionScreen, which causes ImperativePlaybackMarker (a map child)
+  to see changed props and potentially re-run its useEffect even when the
+  track data hasn't changed.
+
+  The conversion belongs in a useMemo with [track] dependency, not inline JSX.
+
+steps:
+  - In TrackingActionScreen.tsx: add useMemo for playbackPoints:
+      const playbackPoints = useMemo(
+        () => track?.points.map(p => [p.latitude, p.longitude] as [number, number]) ?? [],
+        [track]
+      )
+  - Pass playbackPoints to TrackingRouteMap instead of inline map()
+  - Update TrackingRouteMap props interface if the prop name differs
+  - Run tsc --noEmit
+
+done: [playbackPoints memoized, tsc exits 0]
+out:
+  - src-client/src/components/screens/tracking-screen/TrackingActionScreen.tsx
+  - src-client/src/components/screens/tracking-screen/components/TrackingRouteMap.tsx

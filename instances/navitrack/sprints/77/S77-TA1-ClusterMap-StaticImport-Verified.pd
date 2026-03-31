@@ -1,0 +1,22 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Verify ClusterMap static import fix is complete and clean
+status: done
+
+context: |
+  react-leaflet-markercluster was wrapped in React.lazy() which caused
+  "TypeError: Cannot read properties of undefined (reading 'include')"
+  because the library calls L.SomeClass.include({}) at module init time.
+  Lazy/async loading means Leaflet's class chain may not be ready at that point.
+
+  Fix applied in branch qf-18032026:
+  - Removed: lazy(() => import('react-leaflet-markercluster')) + Suspense wrapper
+  - Added: import MarkerClusterGroup from 'react-leaflet-markercluster'
+  - Static import = bundled synchronously = init order guaranteed
+
+done:
+  - Static import replaces lazy() in ClusterMap.tsx
+  - Suspense wrapper removed from JSX
+  - tsc --noEmit exits 0
+
+out: [src-client/src/features/map/ClusterMap.tsx]

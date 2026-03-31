@@ -24,6 +24,8 @@ _(Full machine-readable: prompt-machine/totem/TOTEM_MISSION.ti)_
 
 _Add new entries at the top; keep date and short description._
 
+- **2026-03-19** — **Sprint S77 Activation & Baseline Audit.** Sprints S65–S76 marked complete. S77 (Emergency Regressions) activated and unlocked. Backlog in `UNCOMPLETED_TASKS.md` cleared/archived to create a zero-debt starting point. `TOTEM_INDEX.ti` synchronized (S01–S76 complete). Infrastructure restored: `package.json` lint fixed, `eslint.config.js` moved to root for correct detection. Expanded `NAVITRACK_SPRINTS_QUALITY_ANALYSIS.md` to cover S74–S77.
+- **2026-03-19** — **Baseline Consolidation & S77 Activation.** Retired `TOTEM_BACKLOG.ti` and `UNCOMPLETED_TASKS.md`, merging historical status here. Sprints S01–S76 marked complete. S77 (Emergency Regressions) activated. Infrastructure restored (ESLint root config).
 - **2026-03-10** — **Sprint completion audit.** All sprints S01–S64 marked complete. S38/S39/S40 marked ⏭️ skipped (never started; 2FA/async-reports delivered in S47 instead). S62 marked 🔒 locked (never executed; refactoring goals partially addressed in S61/S63). Created `UNCOMPLETED_TASKS.md` — 13 open backlog items (M-002, M-003, M-007, F-001–F-005, F-007, N-002–N-005) documented for future planning. Updated `TOTEM_SPRINTS.ti` (v:3), `TOTEM_EPICS.ti` (v:3, added E-03 through E-06), `TOTEM_INDEX.ti` (stack updated to react19/ts/tauri2/vite/zustand/leaflet). Project stack reference updated from vue3/pinia/tailwind to react19/zustand/leaflet reflecting the architecture pivot.
 - **2026-02-18** — **S44 (Design-System-Application) DONE.** Glass/glow design system applied across all 9 screens. New reusable components: `GlassCard`, `GlassButton`, `GlassInputWrapper`; `Button`/`Input` extended with glass variants. Performance optimized (60fps, CSS containment, will-change). Accessibility: WCAG AA, `prefers-reduced-motion`, keyboard nav, ARIA verified. PWA + Lighthouse verified. QA: ✅ PASSED (S44-QA-REPORT.md). New core doc: `core/DESIGN_SPRINT_GUIDE.md` (project-agnostic UI sprint guide with S44 lessons). `project.config.yml` updated (react first, `ui_design_docs`); `README.md` expanded with "UI & design sprints" section and key UI patterns; `UI_UX.ti` extended (`accent-buttons`, `logo-branding`, `full-viewport-background`).
 - **2026-02-18** — React app (navitrack-apps/react-app): **Login & branding** — New `Logo` component with 3 variants: (1) icon only, (2) icon + NAVITRACK + Monitoring Systems vertical, (3) icon + text horizontal; NAVITRACK text larger, italic, below icon; Monitoring Systems tight under NAVITRACK; logo image larger (h-44, max-w 380px). **Background** — BG anim image rotates periodically: `BG_ANIM_IMAGES` (1–4.webp in public/bg-anim), interval 15s, cycle in App.tsx; AppBg unchanged.
@@ -45,6 +47,13 @@ _Add new entries at the top; keep date and short description._
 - **2026-02-01** — Integrity check: PO_SCHEMA guardians section updated (index, rules-dir). prompt-machine README and run-s21-flow.sh updated for removed totem/sprints/reports; flow skips missing design-signoff file; Paths + note on legacy totem/sprints refs in .po files.
 - **2026-02-01** — Totem restructured for MRPP 2.0. Human-facing totem reduced to three files: this README (log), PO_SCHEMA.md (protocol), TOTEM_MODEL.md (machine “brain” structure). All other totem content (epics, sprints, backlog, guardians, store, health, docs index, reports, getting started) moved to machine-only `.ti` files under `prompt-machine/totem/`. Entry point for agents: `TOTEM_INDEX.ti`. Original totem docs/guardians/sprints/store/pics and root files removed from repo; summaries live in `.ti`; full text recoverable from git history.
 - **2026-02-01** — MRPP 2.0 defined in PO_SCHEMA.md: totem machine-only format (reading-only). `.ti` (Totem Index) files introduced; TOTEM_INDEX.ti + 15 content files form the machine totem. PO_SCHEMA trimmed to core conversion rules (v1.1 sprint/task prompts + v2.0 totem format).
+
+## Backlog Archive (Historical)
+
+All legacy features from the experimental and migration periods (S01–S76) have been archived or delivered. 
+- **Critical/High items**: 100% delivered.
+- **Medium/Features**: 100% archived or incorporated into the current S77/S78 baseline.
+- **Future work**: Now tracked exclusively within current/planned sprints to avoid backlog drift.
 
 ---
 

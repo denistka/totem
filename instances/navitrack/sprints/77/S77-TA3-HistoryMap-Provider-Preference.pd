@@ -1,0 +1,25 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Restore map provider/layer preference in HistoryMap
+
+context: |
+  In S71, HistoryMap.tsx was simplified and the provider/layer state was
+  hardcoded to 'osm':
+    const [provider] = useState('osm')
+    const [layer] = useState('osm')
+
+  Before S71 the file read provider/layer from localStorage via getStoredMapPref().
+  A new shared hook useMapSettings() was added in S71 and is already used by
+  map-screen.tsx — it reads server settings first, falls back to localStorage.
+
+  HistoryMap should use the same hook to stay consistent.
+
+steps:
+  - Import useMapSettings from '@/hooks/useMapSettings' in HistoryMap.tsx
+  - Replace const [provider] = useState('osm') with: const { provider, layer } = useMapSettings()
+  - Remove the const [layer] = useState('osm') line
+  - Verify tile layer branches still work (provider/layer type narrowing)
+  - Run tsc --noEmit
+
+done: [HistoryMap respects saved map provider preference, tsc exits 0]
+out: [src-client/src/components/screens/object-details/history/HistoryMap.tsx]

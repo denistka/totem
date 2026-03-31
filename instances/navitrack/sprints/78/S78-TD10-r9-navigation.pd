@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R9: Extract types from navigation
+status: pending
+
+context: |
+  Extract types from lib/navigation.ts into types/.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Types extracted and imports updated
+
+out: []

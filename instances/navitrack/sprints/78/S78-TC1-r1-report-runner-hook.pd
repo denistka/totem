@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R1: Move useReportRunner.ts
+status: pending
+
+context: |
+  Move components/screens/reports-screen/modules/useReportRunner.ts to the hooks/ or feature hooks folder.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - File moved
+  - Imports updated
+  - R1 resolved
+
+out: []

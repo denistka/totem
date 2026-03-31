@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R2: Extract createContext from MarkerTickContext
+status: pending
+
+context: |
+  Extract createContext out of features/map/MarkerTickContext.tsx into contexts/ folder.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Context moved
+  - Imports updated
+  - R2 resolved
+
+out: []

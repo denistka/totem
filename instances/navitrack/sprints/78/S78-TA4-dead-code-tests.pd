@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Delete dead tests
+status: pending
+
+context: |
+  Cleanup dead code/tests as identified by CODEMAP.md (where they are no longer referencing active components).
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Dead test files removed
+
+out: []

@@ -1,0 +1,14 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Final tsc --noEmit + lint clean verification for all S77 changes
+
+context: |
+  After all TA + TB tasks complete, run full TypeScript check and
+  ESLint pass to confirm the branch is clean before merge.
+
+steps:
+  - pnpm tsc --noEmit (must exit 0)
+  - pnpm lint (must exit 0 or only pre-existing warnings)
+
+done: [tsc exits 0, lint clean]
+out: []

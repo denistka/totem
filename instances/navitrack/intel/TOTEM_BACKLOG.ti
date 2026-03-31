@@ -34,12 +34,12 @@ high:
 
 medium:
   M-001:[✅,iOS-keyboard-dismiss-after-search,S33-useKeyboardDismiss]
-  M-002:[⬜,iOS-clustering-zoom-level]
-  M-003:[⬜,iOS-track-arrows,like-Android]
+  M-002:[✅,iOS-clustering-zoom-level,ARCHIVED]
+  M-003:[✅,iOS-track-arrows,ARCHIVED]
   M-004:[✅,Android-Ukrainian-language,S33-detectLocale]
   M-005:[✅,UI-small-screens,S33-responsive]
   M-006:[✅,report-no-data-message,S33-nt-empty-state]
-  M-007:[⬜,event-sound,both-platforms]
+  M-007:[✅,event-sound,ARCHIVED]
   M-008:[✅,login-error-invalid-creds,S33-login-form]
 
 ###############################################################################
@@ -47,13 +47,13 @@ medium:
 ###############################################################################
 
 features:
-  F-001:[⬜,Engine-Block,Safe+Emergency-modes]
-  F-002:[⬜,Event-Journal-last-3-days,expandable-date-range]
-  F-003:[⬜,Technical-Maintenance-alerts,TC-highlighting]
-  F-004:[⬜,Report-sharing,Email-Telegram-Viber-WhatsApp]
-  F-005:[⬜,Vehicle-search-Tracking-Reports,filter-by-name]
+  F-001:[✅,Engine-Block,ARCHIVED]
+  F-002:[✅,Event-Journal-last-3-days,ARCHIVED]
+  F-003:[✅,Technical-Maintenance-alerts,ARCHIVED]
+  F-004:[✅,Report-sharing,ARCHIVED]
+  F-005:[✅,Vehicle-search-Tracking-Reports,ARCHIVED]
   F-006:[✅,Vehicle-label-color,S-08-settings-store-labelColor]
-  F-007:[⬜,new-push-format,larger-richer]
+  F-007:[✅,new-push-format,ARCHIVED]
 
 ###############################################################################
 # NICE TO HAVE
@@ -61,8 +61,8 @@ features:
 
 nice:
   N-001:[✅,Dark-mode,S-19-useTheme-Settings-toggle]
-  N-002:[⬜,Widgets-Android-iOS]
-  N-003:[⬜,Apple-Watch-Wear-OS]
-  N-004:[⬜,Offline-maps]
-  N-005:[⬜,Messages-Chat,future]
+  N-002:[✅,Widgets-Android-iOS,ARCHIVED]
+  N-003:[✅,Apple-Watch-Wear-OS,ARCHIVED]
+  N-004:[✅,Offline-maps,ARCHIVED]
+  N-005:[✅,Messages-Chat,ARCHIVED]
 

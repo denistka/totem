@@ -1,0 +1,42 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Replace per-marker currentTime intervals with a single shared tick
+
+context: |
+  VehicleMarker.tsx sets up an individual setInterval per marker:
+    const [currentTime, setCurrentTime] = useState(() => Date.now())
+    useEffect(() => {
+      const interval = setInterval(() => setCurrentTime(Date.now()), 60000)
+      return () => clearInterval(interval)
+    }, [])
+
+  With 20–100 vehicles visible, this creates 20–100 simultaneous timers.
+  When they fire (roughly simultaneously after first render), ALL markers
+  re-render at once → 20–100 renderToStaticMarkup() calls → frame spike.
+
+  Fix: expose a shared React context (or a Zustand-computed value) with
+  a single 60-second ticker that all VehicleMarker instances subscribe to.
+  This way all markers re-render in the same batch from one state update,
+  which React reconciles efficiently, and there is only 1 interval total.
+
+approach:
+  - Create src/features/map/MarkerTickContext.tsx:
+      export const MarkerTickContext = React.createContext(Date.now())
+      export function MarkerTickProvider({ children }) {
+        const [tick, setTick] = useState(Date.now)
+        useEffect(() => {
+          const id = setInterval(() => setTick(Date.now()), 60000)
+          return () => clearInterval(id)
+        }, [])
+        return <MarkerTickContext.Provider value={tick}>{children}</MarkerTickContext.Provider>
+      }
+  - Wrap ClusterMap's MapContainer children in <MarkerTickProvider>
+  - In VehicleMarker: replace useState+useEffect timer with
+      const currentTime = useContext(MarkerTickContext)
+  - Run tsc --noEmit
+
+done: [Single 60s interval for all markers, tsc exits 0]
+out:
+  - src-client/src/features/map/MarkerTickContext.tsx (new)
+  - src-client/src/features/map/VehicleMarker.tsx
+  - src-client/src/features/map/ClusterMap.tsx

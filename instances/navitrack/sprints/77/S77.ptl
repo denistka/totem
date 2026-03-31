@@ -1,0 +1,62 @@
+gate: OPEN
+sprint: S77
+title: Post-S71 Regressions, Map/History Fixes & Rendering Optimization
+priority: P0
+dep: S76
+
+description: |
+  Emergency bugfix + optimization sprint triggered by post-S71 regressions.
+
+  CRITICAL REGRESSION (already fixed in branch qf-18032026):
+  - ClusterMap crash: react-leaflet-markercluster lazy() caused
+    "TypeError: Cannot read properties of undefined (reading 'include')"
+    at lib init time. Fixed by replacing React.lazy() with static import.
+
+  REMAINING ISSUES found in S71 tracking-map audit (git diff main HEAD):
+  1. Dead leaflet-polylinedecorator imports in HistoryMap + TrackingRouteMap
+     (imported but decorator() never called — leftover from refactor)
+  2. HistoryMap: provider/layer hardcoded to 'osm' — lost map preference
+     support that existed before S71; useMapSettings hook is available but
+     not wired into HistoryMap
+  3. HistoryTabContainer: initial mapHeight changed 35→80vh in S71 — leaves
+     only ~20vh for the timeline on mobile; needs to revert to ~40vh
+  4. TrackingRouteMap/TrackingActionScreen: track.points.map(p => [lat,lon])
+     computed inline on every render — creates a new array reference each
+     render cycle, which re-mounts ImperativePlaybackMarker unnecessarily
+  5. VehicleMarker: icon is recreated every 60s for ALL visible vehicles
+     when currentTime state updates (timer fires simultaneously on all markers)
+
+  OPTIMIZATION SCOPE:
+  - Memoize polylinePositions (track.points → [lat,lon][]) in a useMemo
+    in TrackingActionScreen, not inline at JSX call site
+  - VehicleMarker currentTime: use a shared global tick from a singleton
+    interval or context, not individual per-marker intervals
+  - ClusterMap groupObjects toggle: verify react-leaflet re-mounts cleanly
+    after lazy→static fix (no stale Suspense fallback artifacts)
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 1-2 days
+
+tracks:
+  - id: TA
+    title: Regression Fixes (P0)
+    tasks:
+      - S77-TA1-ClusterMap-StaticImport-Verified.pd
+      - S77-TA2-HistoryMap-Dead-Import-Cleanup.pd
+      - S77-TA3-HistoryMap-Provider-Preference.pd
+      - S77-TA4-HistoryContainer-MapHeight-Revert.pd
+
+  - id: TB
+    title: Rendering Optimizations
+    dep: TA
+    tasks:
+      - S77-TB1-TrackingRouteMap-PositionsMemo.pd
+      - S77-TB2-VehicleMarker-SharedTick.pd
+
+  - id: TC
+    title: Stability Verification
+    dep: TB
+    tasks:
+      - S77-TC1-ClusterMap-Toggle-Verify.pd
+      - S77-TC2-TSC-Build-Clean.pd

@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Delete dead UI components
+status: pending
+
+context: |
+  Remove unused UI components identified as 0-import dead code in CODEMAP.md: TimePicker2DSlider, PlaybackControl, two-factor-auth-screen, calendar, card, header, ui/index, popover, select, separator, sheet, toast.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Deleted the listed unused components
+  - tsc runs cleanly
+
+out: []

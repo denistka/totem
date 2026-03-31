@@ -1,0 +1,26 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Revert HistoryTabContainer initial mapHeight from 80vh to 40vh
+
+context: |
+  S71 changed the initial mapHeight in HistoryTabContainer from 35vh → 80vh
+  and the drag minimum from 15vh → 50vh:
+
+    const [mapHeight, setMapHeight] = useState(80) // was 35
+    const newH = Math.min(90, Math.max(50, ...)) // min was 15
+
+  On a typical mobile screen (667px / 812px):
+  - 80vh map = ~534px / ~650px for map alone
+  - ~134px / ~162px left for the timeline list → too cramped to be usable
+  - The drag handle still works but the default state is unusable
+
+  Better default: 40vh map, min drag 20vh (enough for a few timeline items
+  to peek, user can drag up if they want more map).
+
+steps:
+  - In HistoryTabContainer.tsx: change useState(80) → useState(40)
+  - Change Math.max(50, ...) → Math.max(20, ...)
+  - Keep Math.min(90, ...) as-is (max drag still 90vh is fine)
+
+done: [Initial map height 40vh, drag min 20vh, tsc exits 0]
+out: [src-client/src/components/screens/object-details/history/HistoryTabContainer.tsx]

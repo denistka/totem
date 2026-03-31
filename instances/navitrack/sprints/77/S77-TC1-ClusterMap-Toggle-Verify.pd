@@ -1,0 +1,17 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Verify groupObjects toggle works correctly after lazy→static import fix
+
+context: |
+  After replacing React.lazy()/Suspense with static import for
+  react-leaflet-markercluster, verify the groupObjects toggle in ClusterMap
+  works as expected — switching between MarkerClusterGroup and flat markers
+  should cleanly unmount/remount without stale Suspense state artifacts.
+
+  Test scenarios:
+  1. groupObjects=true → markers cluster correctly
+  2. groupObjects=false → flat individual markers shown
+  3. Toggle groupObjects while vehicles are visible → no crash, smooth transition
+
+done: [groupObjects toggle verified, no stale artifacts]
+out: []

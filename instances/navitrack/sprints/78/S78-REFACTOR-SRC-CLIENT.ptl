@@ -1,0 +1,68 @@
+gate: OPEN
+sprint: S78
+title: src-client Architecture Clean-up & Refactoring
+priority: P1
+dep: S77
+
+description: |
+  Comprehensive clean-up of src-client based on CODEMAP.md analysis.
+  Designed for execution by SWE agent. All tasks are highly granular.
+  
+  Goals:
+  - Remove dead code (0-import files)
+  - Resolve R3 (Store outside store/)
+  - Resolve R4 (Direct API domain import in component)
+  - Resolve R1, R2 (Hooks/Contexts location)
+  - Resolve R9 (Types in functional files)
+  - Resolve R5 (Large file splitting)
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 2-3 days
+
+tracks:
+  - id: TA
+    title: Dead Code Deletion
+    tasks:
+      - S78-TA1-dead-code-ui.pd
+      - S78-TA2-dead-code-store-lib.pd
+      - S78-TA3-dead-code-features-hooks.pd
+      - S78-TA4-dead-code-tests.pd
+
+  - id: TB
+    title: Critical Validation Issues (R3 & R4)
+    tasks:
+      - S78-TB1-r3-app-header.pd
+      - S78-TB2-r3-global-loader.pd
+      - S78-TB3-r4-drivers-screen.pd
+      - S78-TB4-r4-geozones-screen.pd
+      - S78-TB5-r4-maintenance-screen.pd
+      - S78-TB6-r4-object-details.pd
+      - S78-TB7-r4-reports-screen.pd
+
+  - id: TC
+    title: Hook & Context Location Issues (R1 & R2)
+    tasks:
+      - S78-TC1-r1-report-runner-hook.pd
+      - S78-TC2-r2-accordion-context.pd
+      - S78-TC3-r2-marker-tick-context.pd
+
+  - id: TD
+    title: Types Restructuring (R9)
+    tasks:
+      - S78-TD1-r9-map-config.pd
+      - S78-TD2-r9-use-auth.pd
+      - S78-TD3-r9-use-sorted-items.pd
+      - S78-TD4-r9-use-theme.pd
+      - S78-TD5-r9-api-maintenance.pd
+      - S78-TD6-r9-api-misc.pd
+      - S78-TD7-r9-api-reports.pd
+      - S78-TD8-r9-api-tracking.pd
+      - S78-TD9-r9-api-vehicles.pd
+      - S78-TD10-r9-navigation.pd
+      - S78-TD11-r9-use-app-store.pd
+
+  - id: TE
+    title: Large File Splitting (R5)
+    tasks:
+      - S78-TE1-r5-split-large-files.pd

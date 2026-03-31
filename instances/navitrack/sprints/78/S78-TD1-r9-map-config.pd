@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R9: Extract types from map-config
+status: pending
+
+context: |
+  Extract TypeScript interfaces from features/map/map-config.ts into types/.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Types extracted
+  - Imports updated
+  - R9 resolved
+
+out: []

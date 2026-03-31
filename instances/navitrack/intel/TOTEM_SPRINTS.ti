@@ -251,27 +251,102 @@ S64:
 S71:
   name:Bugfixes-UI-Settings
   path:sprints/71/
-  status:🏃 active
+  status:✅ complete
   priority:P1
   scope:loader,api-fixes,tracking-ui,reports,object-list,settings
   dep:S64
 
+S65:
+  name:JWT-Auth-Data-Model
+  path:sprints/65/
+  status:✅ complete
+  priority:P0
+  scope:jwt-auth,2fa,api-v6-types
+
+S66:
+  name:Reports-v2-Pipeline
+  path:sprints/66/
+  status:✅ complete
+  priority:P0
+  scope:report-generation,async-polling,json-export
+
+S67:
+  name:Vehicle-Management-Settings
+  path:sprints/67/
+  status:✅ complete
+  priority:P1
+  scope:vehicle-settings,metadata-storage,ui-sync
+
+S68:
+  name:Engine-Lock-Unlock
+  path:sprints/68/
+  status:✅ complete
+  priority:P0
+  scope:engine-block,safe-mode,api-v6
+
+S69:
+  name:Maintenance-Geozones-Drivers
+  path:sprints/69/
+  status:✅ complete
+  priority:P1
+  scope:drivers,geozones,maintenance-ui
+
+S70:
+  name:Large-Module-Refactor
+  path:sprints/70/
+  status:✅ complete
+  priority:P1
+  scope:module-unification,api-surface-clean
+
+S72:
+  name:Backend-Integration-i18n-Icons
+  path:sprints/72/
+  status:✅ complete
+  priority:P0
+  scope:auth-2fa,sse-polling,vehicle-icons,i18n
+
+S73:
+  name:Post-Migration-Polish
+  path:sprints/73/
+  status:✅ complete
+  priority:P0
+  scope:performance,tests,bundle-optimization
+
+S74:
+  name:API-Optimization-Object-Screen
+  path:sprints/74/
+  status:✅ complete
+  priority:P1
+  scope:api-call-reduction,loading-time
+
+S75:
+  name:Full-App-Functional-Baseline
+  path:sprints/75/
+  status:✅ complete
+  priority:P0
+  scope:settings-fix,feature-parity,map-bugfixes
+
 S76:
   name:Full-App-i18n-Translation-Coverage
   path:sprints/76/
-  status:🔒 locked
+  status:✅ complete
   priority:P1
-  scope:locale-json-completion,objectdetails,tracking,account-security,2fa,engine,drivers,geozones,maintenance,reports,objects-modals
-  dep:S75-TB1,S75-TB2
-  note:Comprehensive translation of all 14+ screens — S75-TB1 covered only language-selector+settings-screen
+  scope:translation-audit,14-screens-i18n
+
+S77:
+  name:Emergency-Regressions-Fix
+  path:sprints/77/
+  status:🏃 active
+  priority:P0
+  scope:map-history-fixes,rendering-optimization
 
 ###############################################################################
 # ORDER
 ###############################################################################
 
-done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S48→S49→S50→S51→S52→S53→S54→S55→S56→S57→S58→S59→S60→S61→S63→S64]
-active-order:[S70,S71]
-planned:[S75,S76]
-skipped:[S38→S39→S40]
-locked:[S62]
+done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S48→S49→S50→S51→S52→S53→S54→S55→S56→S57→S58→S59→S60→S61→S63→S64→S65→S66→S67→S68→S69→S70→S71→S72→S73→S74→S75→S76]
+active-order:[S77]
+planned:[S78]
+skipped:[]
+locked:[S38→S39→S40,S62]
 

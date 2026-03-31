@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Delete dead features and hooks
+status: pending
+
+context: |
+  Remove unused feature components and hooks: EngineBlock, map/index, ReportTable, use-async-cleanup, useTrackingPlayer.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Deleted dead files
+  - tsc runs cleanly
+
+out: []

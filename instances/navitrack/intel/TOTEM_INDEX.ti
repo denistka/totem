@@ -9,7 +9,7 @@ project:
   tagline: NaviTrack — ВСЕГДА ВЫИГРЫШНОЕ РЕШЕНИЕ
   website: https://navitrack.com.ua
   stack: [react19, typescript, tauri2, vite, zustand, leaflet]
-  status: ✅ All sprints complete (S01–S64). See UNCOMPLETED_TASKS.md for open backlog.
+  status: ✅ All sprints complete (S01–S76). See LOG.ti for historical archive.
 
 brand:
   primary: "#2D8A3E"

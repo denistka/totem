@@ -1,0 +1,28 @@
+gate: LOCKED
+v:4 role:dev x:frontend
+task: Remove dead leaflet-polylinedecorator imports from HistoryMap and TrackingRouteMap
+
+context: |
+  S71 introduced leaflet-polylinedecorator as a direct import in two files.
+  The library is imported but decorator() is never called in either component.
+  The associated `declare module 'leaflet'` augmentations are also dead code.
+  Additionally, the same augmentation is duplicated in both files — if ever
+  needed, it belongs in a shared types file.
+
+  Files affected:
+  - src/components/screens/object-details/history/HistoryMap.tsx
+    Lines: import 'leaflet-polylinedecorator' + declare module 'leaflet' block
+  - src/components/screens/tracking-screen/components/TrackingRouteMap.tsx
+    Lines: import 'leaflet-polylinedecorator' + declare module 'leaflet' block
+
+steps:
+  - Remove `import 'leaflet-polylinedecorator'` from HistoryMap.tsx
+  - Remove `declare module 'leaflet' { interface Polyline { decorator ... } }` from HistoryMap.tsx
+  - Remove `import 'leaflet-polylinedecorator'` from TrackingRouteMap.tsx
+  - Remove `declare module 'leaflet' { interface Polyline { decorator ... } }` from TrackingRouteMap.tsx
+  - Run tsc --noEmit to verify
+
+done: [both files clean, tsc exits 0]
+out:
+  - src-client/src/components/screens/object-details/history/HistoryMap.tsx
+  - src-client/src/components/screens/tracking-screen/components/TrackingRouteMap.tsx

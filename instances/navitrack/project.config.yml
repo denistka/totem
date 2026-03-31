@@ -16,7 +16,7 @@ project:
 
 paths:
   code: ../navitrack-apps
-  react_app: ../navitrack-apps/draft/pwa-react-app-clear
+  react_app: ../navitrack-apps
   history: ../prompt-machine
   intel: ./intel
 

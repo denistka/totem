@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Fix R9: Extract types from useAppStore
+status: pending
+
+context: |
+  Extract types from store/useAppStore.ts into types/. This file has high blast radius.
+  
+  Please execute this refactoring step accurately and perform full TypeScript type checking.
+
+done:
+  - Types extracted and imports updated
+  - Zero TS errors
+
+out: []
