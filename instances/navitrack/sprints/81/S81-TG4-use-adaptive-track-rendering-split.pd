@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Split useAdaptiveTrackRendering.ts
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `useAdaptiveTrackRendering.ts` (~181 LOC). Extract strategy helpers or
+  sub-hooks (density tiers, simplification) without changing map output.
+
+done:
+  - Strategies testable in isolation; main hook <~100 lines
+
+out:
+  - src/screens/tracking/hooks/trackAdaptiveConfig.ts
+  - src/screens/tracking/hooks/trackAdaptiveSampling.ts

@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TS1 — semantic duplication matrix (cross-feature behavior)
+requires: [FRONTEND_DEV]
+
+context: |
+  Start from `intel/S82_ARCHITECT_V4_BASELINE.md` §3 (jscpd pairs). Beyond that:
+  map hooks, state machines, filters, headers, and transform pipelines that
+  behave alike but live under different features. Use codemap exports + manual
+  review. Output prioritized merge targets (shared/hooks, entities/*/model). Do
+  not change runtime behavior in this task — matrix only.
+
+out: [totem/instances/navitrack/intel/S82_SEMANTIC_DUPLICATION_MATRIX.md]
+
+done:
+  - Table: feature A vs B, behavior, files, proposed SSOT location, risk
+  - No ghost paths; every row references existing files

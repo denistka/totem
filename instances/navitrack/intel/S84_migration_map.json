@@ -1,0 +1,20 @@
+{
+  "sprint": "S84",
+  "applied": [
+    { "from": "src/modules/date-range-picker", "to": "src/features/date-range-picker" },
+    { "from": "src/modules/map", "to": "src/features/map" },
+    { "from": "src/modules/notifications", "to": "src/features/notifications" },
+    { "from": "src/modules/vehicle-icons", "to": "src/entities/vehicle/icons" },
+    { "from": "src/modules/reports/reportColumnKeys.ts", "to": "src/entities/report/reportColumnKeys.ts" },
+    { "from": "src/modules/reports/reportGrandTotalSentinel.ts", "to": "src/entities/report/reportGrandTotalSentinel.ts" },
+    { "from": "src/modules/reports/humanizeReportColumnKey.ts", "to": "src/entities/report/humanizeReportColumnKey.ts" },
+    { "from": "src/modules/reports/reportTableModel.ts", "to": "src/entities/report/report-table-model.ts" },
+    { "from": "src/modules/reports/VirtualizedReportTable.tsx", "to": "src/features/report-table/VirtualizedReportTable.tsx" },
+    { "from": "src/modules/reports/ReportTableCellValue.tsx", "to": "src/features/report-table/ReportTableCellValue.tsx" },
+    { "from": "src/hooks/useMapSettings.ts", "to": "src/features/map/useMapSettings.ts" },
+    { "from": "src/hooks/useNotificationInit.ts", "to": "src/features/notifications/useNotificationInit.ts" },
+    { "from": "src/store/adapters/reports.ts", "to": null, "note": "removed — unused dead adapter" },
+    { "from": "src/store/adapters/vehicles.ts", "to": null, "note": "removed — unused dead adapter" },
+    { "from": "src/store/adapters/zones.ts", "to": null, "note": "removed — unused dead adapter" }
+  ]
+}

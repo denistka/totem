@@ -1,0 +1,47 @@
+{
+  "sprint": "S85",
+  "generatedAt": "2026-04-08T00:00:00.000Z",
+  "codemapCommand": "pnpm codemap",
+  "codemapCwd": "navitrack-apps/src-client",
+  "note": "Pre-S85 snapshot from codemap/codemap-surface.json (same day as edits).",
+  "modules": [
+    {
+      "path": "src/api/index.ts",
+      "referencesFromOtherFiles": 59,
+      "importsFromProjectTsCount": 10
+    },
+    {
+      "path": "src/store/useAppStore.ts",
+      "referencesFromOtherFiles": 20,
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/app/ScreenRouter.tsx",
+      "importsFromProjectTsCount": 14
+    },
+    {
+      "path": "src/screens/tracking/TrackingScreen.tsx",
+      "importsFromProjectTsCount": 13
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingState.ts",
+      "importsFromProjectTsCount": 12
+    },
+    {
+      "path": "src/screens/reports/ReportsScreen.tsx",
+      "importsFromProjectTsCount": 12
+    },
+    {
+      "path": "src/screens/object-details/history/HistoryMap.tsx",
+      "importsFromProjectTsCount": 11
+    },
+    {
+      "path": "src/screens/objects/ObjectsScreen.tsx",
+      "importsFromProjectTsCount": 11
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingRouteMap.tsx",
+      "importsFromProjectTsCount": 11
+    }
+  ]
+}

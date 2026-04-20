@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S85 T1 — domain imports batch one
+requires: [FRONTEND_DEV]
+sprint: S85
+dep: [S85-T0-codemap-baseline-snapshot.pd]
+
+context: |
+  Replace src/api/index.ts imports with direct src/api/domains/<domain>.ts (or
+  narrower) in a first batch of modules (e.g. store adapters, one feature).
+  No public API contract changes.
+
+out:
+  - List of touched paths in S85_codemap_hub_baseline.json sibling note or PR desc
+
+done:
+  - Typecheck green; pnpm codemap; referencesFromOtherFiles on api/index.ts ≤ baseline

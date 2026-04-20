@@ -1,0 +1,221 @@
+gate: OPEN
+sprint: S84
+title: Constrained architectural repair — deterministic FSD convergence
+priority: P1
+dep: S82
+
+role: architectural_refactor_engine
+mode: constrained_repair_deterministic
+
+description: |
+  Deterministic architectural convergence for hybrid FSD + legacy `modules/` in
+  `navitrack-apps/src-client/src`. Core rule: every domain has exactly ONE
+  structural owner after migration.
+
+  Ground truth: `codemap-src-paths.json`, `codemap.json` (repo root: src-client).
+
+  Immutability: NO UI behavior, NO backend API contract, NO business logic,
+  NO state model changes — ONLY ownership, file location, import graph.
+
+# =========================
+# FOCUS LOCK (NO TESTING / NO BEHAVIOR WORK)
+# =========================
+
+focus_lock:
+  primary_objective: "Bring codebase to architectural perfection state ONLY"
+  explicitly_forbidden_work:
+    - unit_tests_creation_or_modification
+    - integration_tests_work
+    - e2e_tests_work
+    - test_mocks_or_fixtures_changes
+    - performance_optimizations
+    - runtime_behavior_refactors
+    - bug_fixes_unrelated_to_architecture
+    - code_style_only_refactors_without_movement_or_ownership_change
+  allowed_work:
+    - file relocation
+    - ownership correction
+    - import graph correction
+    - dependency direction enforcement
+    - entity SSOT extraction
+    - api/store boundary enforcement
+    - modules elimination
+    - hooks re-scoping
+    - lib purification (domain removal only)
+  rule: "If a change does not improve architectural structure, it is OUT OF SCOPE."
+  enforcement:
+    - "Any test-related task automatically INVALIDATES the step"
+    - "Any behavior change is treated as architecture violation unless required for import/ownership correction"
+
+# =========================
+# TARGET STATE (STRICT FSD) — do not reinterpret mid-sprint
+# =========================
+
+target_state:
+  modules_layer:
+    status: REMOVED
+    rule: "All modules/* migrated or absorbed; modules_layer_exists == false"
+  entities:
+    status: SSOT_DOMAIN_LAYER
+    rule: "All domain models live here exclusively"
+  api:
+    status: SINGLE_ENTRY_LAYER
+    rule: "All HTTP + transforms via api/domains; no api → features dependency"
+  store:
+    status: STATE_ONLY
+    rule: "No business logic, no fetch orchestration"
+  hooks:
+    shared: "generic reusable hooks only in src/hooks"
+    domain: "inside features/*/ or screens/*/hooks"
+  lib:
+    rule: "pure functions only; no domain knowledge"
+
+# =========================
+# EXECUTION ORDER (HARD SEQUENCE — no parallel ambiguity for gated steps)
+# =========================
+
+execution_order:
+  STEP_1:
+    name: ownership_resolution
+    rule: "Resolve duplicates BEFORE moving files"
+    output: ownership_map.json
+    dependency: []
+  STEP_2:
+    name: api_store_boundary_fix
+    rule: "Eliminate store-side fetch orchestration first"
+    dependency: [STEP_1]
+  STEP_3:
+    name: entities_ssot_build
+    rule: "Extract domain models from all layers; merge duplicates (no copy-fix)"
+    dependency: [STEP_1]
+  STEP_4:
+    name: modules_to_features_migration
+    rule: "Physical migration only after SSOT + api/store boundary addressed"
+    dependency: [STEP_2, STEP_3]
+  STEP_5:
+    name: hooks_sanitization
+    dependency: [STEP_4]
+  STEP_6:
+    name: lib_cleanup
+    rule: "After domain extraction (STEP_3); if lib still imports modules/, gate STEP_4 first"
+    dependency: [STEP_3]
+  STEP_7:
+    name: graph_verification
+    dependency: [STEP_5, STEP_6]
+
+# =========================
+# HOTSPOT BINDINGS (architectural compiler)
+# =========================
+
+hotspots:
+  report_transforms:
+    violation: "api → modules dependency"
+    fix: "entities/report + api/domains/report-* only"
+  store_tracking_adapter:
+    violation: "store orchestration"
+    fix: "thin state adapter; logic → api facade"
+  vehicle_icons:
+    violation: "lib → modules"
+    fix: "features/vehicle/* or entities/vehicle/* per ownership_map"
+  global_hooks:
+    violation: "cross-module coupling"
+    fix: "feature-scoped hooks or shared/hooks"
+
+# =========================
+# DECISION ENGINE
+# =========================
+
+decision_engine:
+  duplicate_domain_logic: { action: MERGE_SINGLE_OWNER, forbidden: copy_fix }
+  module_overlaps_feature: { action: collapse_into_features }
+  store_contains_logic: { action: extract_to_api_facade }
+  hook_crosses_domain: { action: split_or_relocate_feature_scope }
+  lib_domain_knowledge: { action: move_to_entities_or_features }
+
+# =========================
+# CONSTRAINTS (ENFORCEMENT)
+# =========================
+
+constraints:
+  - no_new_architecture_layers
+  - no_parallel_domain_implementations
+  - no_duplicate_domain_logic_allowed
+  - no_cross_domain_feature_imports_except_via_entities_or_api
+  - no_silent_duplication_resolve_or_document
+
+# =========================
+# OUTPUT CONTRACT (required artifacts)
+# =========================
+
+output:
+  ownership_map: totem/instances/navitrack/intel/S84_ownership_map.json
+  migration_map: totem/instances/navitrack/intel/S84_migration_map.json
+  deleted_duplicates_list: totem/instances/navitrack/intel/S84_deleted_duplicates.json
+  api_store_boundary_report: totem/instances/navitrack/intel/S84_api_store_boundary_report.md
+  final_dependency_graph_notes: totem/instances/navitrack/intel/S84_dependency_graph_notes.md
+
+# =========================
+# QUALITY GATES (NON-NEGOTIABLE)
+# =========================
+
+quality_gates:
+  dependency: { madge_cycles: 0 }
+  duplication: { jscpd_ratio: "<= baseline S82 TW1" }
+  structure: { modules_layer_exists: false }
+  ownership: { each_domain_single_owner: true }
+  codemap: { reflects_actual_fs_tree: true }
+  focus_lock: { no_test_or_behavior_work: true }
+
+# =========================
+# SUCCESS CRITERIA (DETERMINISTIC)
+# =========================
+
+success_criteria:
+  - modules/ eliminated as active layer
+  - entities/ SSOT for domain models
+  - api/domains single entry per domain
+  - store pure state container
+  - no hidden cross-domain coupling
+  - dependency graph acyclic and directional
+  - codemap matches filesystem
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV, ARCHITECT]
+estimated: 3–5 weeks
+
+tracks:
+  - id: S1
+    title: STEP_1 — ownership resolution
+    tasks: [S84-STEP1-ownership-resolution.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+  - id: S2
+    title: STEP_2 — api/store boundary
+    tasks: [S84-STEP2-api-store-boundary.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+  - id: S3
+    title: STEP_3 — entities SSOT build
+    tasks: [S84-STEP3-entities-ssot-build.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+  - id: S4
+    title: STEP_4 — modules → features migration
+    tasks: [S84-STEP4-modules-to-features-migration.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+  - id: S5
+    title: STEP_5 — hooks sanitization
+    tasks: [S84-STEP5-hooks-sanitization.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+  - id: S6
+    title: STEP_6 — lib cleanup
+    tasks: [S84-STEP6-lib-cleanup.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+  - id: S7
+    title: STEP_7 — graph verification + output consolidation
+    tasks: [S84-STEP7-graph-verification.pd]
+    requires: [FRONTEND_DEV]
+    gate: OPEN

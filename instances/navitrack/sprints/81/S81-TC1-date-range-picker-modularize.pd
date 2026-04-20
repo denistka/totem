@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Modularize DateRangePicker.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `DateRangePicker.tsx` (~340 LOC). Split into module folder:
+  - `src/modules/date-range-picker/DateInput.tsx`
+  - `src/modules/date-range-picker/TimePicker.tsx` (or time sub-UI only)
+  - `src/modules/date-range-picker/useDateRange.ts`
+  Keep public API stable for callers.
+
+done:
+  - Barrel export; parent component thin; visual/keyboard behavior preserved
+
+out:
+  - src/modules/date-range-picker/

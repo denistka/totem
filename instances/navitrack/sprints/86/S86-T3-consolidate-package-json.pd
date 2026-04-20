@@ -1,0 +1,22 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S86 T3 — consolidate package.json
+requires: [FRONTEND_DEV]
+sprint: S86
+
+context: |
+  Merge dependencies and scripts from 'navitrack-apps/src-client/package.json' 
+  and the template 'package.json'.
+  Goal:
+  - Keep React 19 and latest Vite.
+  - Add Tauri 2.0 CLI and API dependencies.
+  - Ensure all mobile-specific deps (@tauri-apps/api, plugins) are present.
+  - Remove legacy or unused scripts.
+
+out:
+  - navitrack-mobile-apps/package.json
+
+done:
+  - Single package.json at root.
+  - 'pnpm install' succeeds.
+  - No duplicate dependencies with different versions.

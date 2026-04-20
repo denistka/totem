@@ -1,0 +1,52 @@
+gate: OPEN
+sprint: S86
+title: Mobile Apps Unification — Migration to Tauri 2 dedicated repo
+priority: P0
+dep: S85
+
+description: |
+  Establishes 'navitrack-mobile-apps' as the dedicated repository for mobile builds.
+  Migrates React 19 source (src-client) and Tauri 2 configuration (src-tauri) into
+   a unified structure based on 'tauri2-clean-template'.
+  Configures consolidated package.json with unified build pipelines for iOS and Android.
+
+ground_truth:
+  - navitrack-apps/src-client
+  - navitrack-apps/src-tauri
+  - tauri2-clean-template
+
+success_metrics:
+  - 'navitrack-mobile-apps' follows 'tauri2-clean-template' structure.
+  - Unified package.json exists at root with all necessary dependencies.
+  - 'pnpm dev' starts the React app.
+  - Mobile build commands (ios, android) are configured and valid.
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV, DEVOPS]
+estimated: 1 week
+
+tracks:
+  - id: T0
+    title: Foundation & Migration
+    tasks:
+      - S86-T0-scaffold-mobile-repo.pd
+      - S86-T1-migrate-react-source.pd
+      - S86-T2-migrate-tauri-source.pd
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  - id: T1
+    title: Integration & Configuration
+    tasks:
+      - S86-T3-consolidate-package-json.pd
+      - S86-T4-update-tauri-config.pd
+    requires: [FRONTEND_DEV, DEVOPS]
+    gate: LOCKED
+
+  - id: T2
+    title: Build Pipeline
+    tasks:
+      - S86-T5-configure-mobile-scripts.pd
+      - S86-T6-verification-build.pd
+    requires: [DEVOPS]
+    gate: LOCKED

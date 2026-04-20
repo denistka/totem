@@ -1,0 +1,21 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_7 — graph verification
+requires: [FRONTEND_DEV]
+sprint: S84
+dep: [S84-STEP5-hooks-sanitization.pd, S84-STEP6-lib-cleanup.pd]
+
+context: |
+  S84 focus_lock: NO new/changed tests, mocks, fixtures, e2e, perf work, or
+  behavior refactors — verification is structural only (madge, jscpd, codemap,
+  typecheck/lint as CI already defines). If S82 TM4 ESLint boundary rules exist,
+  confirm P0 clean. Final quality gates: madge_cycles == 0,
+  jscpd <= S82 TW1 baseline, codemap matches FS, manual 10s ownership spot-check.
+
+out:
+  - totem/instances/navitrack/intel/S84_dependency_graph_notes.md
+    (cycles, risky edges, exceptions with owner)
+  - Reconcile S84_migration_map.json if drift; ensure all output contract files present
+
+done:
+  - quality_gates + success_criteria in PTL satisfied or documented blocker with gate

@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Leaflet event colors policy vs theme.css
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  `src/styles/event-colors.ts` uses hex for inline Leaflet HTML while semantic
+  HSL lives in `theme.css`. Either document hex as OPEN equivalents of
+  `--semantic-*` (table in comment or design-system) or refactor so one
+  derivation path exists (e.g. shared palette constants). No user-visible color
+  drift vs current map markers.
+
+done:
+  - Policy documented; hex values justified or generated from one source
+  - Map event/route markers still readable in light context
+
+out: []

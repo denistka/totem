@@ -1,0 +1,19 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Deduplicate src/index.css
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  `src/index.css` currently repeats the same Tailwind layers, scrollbar rules,
+  keyframes, glass component blocks, and base styles twice. Consolidate to a
+  single sequence: one `@import` of `theme.css`, one `@tailwind` base/components/
+  utilities trio, one copy of each `@layer`, then unique trailing blocks once
+  (e.g. PWA landscape `.content-wrapper` spacing, `.content-wrapper` component).
+  Verify dev build and visual parity (glass, safe areas).
+
+done:
+  - No duplicated block in index.css; build succeeds
+  - Spot-check light/dark and a map screen
+
+out: []

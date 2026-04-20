@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TP4 — React render audit (profiler, props identity, effect deps)
+requires: [FRONTEND_DEV]
+
+context: |
+  React DevTools Profiler or dev-only `why-did-you-render` on P0 screens
+  (tracking, reports, map shell). Fix high-impact avoidable re-renders; document
+  intentional churn. Coordinates with TP2/TP3; see TP track order in sprint `.ptl`.
+
+done:
+  - Audit note (fixes or WONTFIX) committed; measurable improvement on ≥1 hot path or baseline recorded
+
+out: []

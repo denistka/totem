@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Glass CSS — variants and dedupe
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Review `glass.css` (~264 LOC). Extract reusable variants; semantic names;
+  remove duplication. Coordinate with S80 TF work — extend, do not re-break
+  consolidated index.css.
+
+done:
+  - Fewer repeated glass blocks; visual parity light/dark
+
+out: [src/styles/glass.css]

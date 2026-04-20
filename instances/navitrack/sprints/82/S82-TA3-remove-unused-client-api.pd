@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TA3 — remove unused client API (stop_conditions.unused_api_surface)
+requires: [FRONTEND_DEV]
+
+context: |
+  From `S82_API_TYPE_SSOT_AUDIT.md` (TA2): delete or deprecate unused client
+  functions and dead route constants only if no references remain. Do not remove
+  server endpoints. Small PRs per domain.
+
+done:
+  - Unused client surface removed or `@deprecated` with migration note
+  - Contributes to `ta_definition_of_done` and sprint quality_gates
+
+out: []

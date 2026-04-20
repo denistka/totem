@@ -1,0 +1,63 @@
+{
+  "sprint": "S84",
+  "baseline": {
+    "madge_cycles": 0,
+    "madge_command": "pnpm run deps:cycles (madge --circular --extensions ts,tsx src)",
+    "jscpd": "0 clones (pnpm run dupes:jscpd)",
+    "recorded_at": "2026-04-08"
+  },
+  "domains": {
+    "map": {
+      "owner_layer": "features",
+      "owner_path": "src/features/map",
+      "consumers": [
+        "screens/map",
+        "screens/tracking",
+        "screens/object-details/history",
+        "features/map/useMapSettings"
+      ],
+      "duplicates": []
+    },
+    "date_range_picker": {
+      "owner_layer": "features",
+      "owner_path": "src/features/date-range-picker",
+      "consumers": ["screens/tracking", "screens/reports/modules"],
+      "duplicates": []
+    },
+    "notifications_platform": {
+      "owner_layer": "features",
+      "owner_path": "src/features/notifications",
+      "consumers": ["app/useMobileShell", "store/useNotificationStore", "screens/notification-settings", "features/notifications/useNotificationInit"],
+      "duplicates": []
+    },
+    "vehicle_icons": {
+      "owner_layer": "entities",
+      "owner_path": "src/entities/vehicle/icons",
+      "consumers": [
+        "features/map (VehicleIconRegistry re-export)",
+        "screens/objects",
+        "screens/object-details",
+        "lib/playback-icon"
+      ],
+      "duplicates": []
+    },
+    "report_table_model": {
+      "owner_layer": "entities",
+      "owner_path": "src/entities/report",
+      "consumers": ["api/domains/report-transforms", "features/report-table"],
+      "duplicates": []
+    },
+    "report_table_ui": {
+      "owner_layer": "features",
+      "owner_path": "src/features/report-table",
+      "consumers": ["screens/reports/modules/ReportResultView"],
+      "duplicates": []
+    },
+    "tracking_fetch": {
+      "owner_layer": "api",
+      "owner_path": "src/api/domains/tracking.ts + tracking-types.ts + tracking-transforms.ts",
+      "consumers": ["store/adapters/tracking"],
+      "duplicates": []
+    }
+  }
+}

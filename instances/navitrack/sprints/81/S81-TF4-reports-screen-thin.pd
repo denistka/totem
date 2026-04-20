@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin ReportsScreen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `ReportsScreen.tsx` (~256 LOC). Split data loading vs table chrome vs filters
+  wiring; align with report domain split (S81-TA1) if same PR stack.
+
+done:
+  - Screen orchestrates only; report runner integration clear
+
+out: []

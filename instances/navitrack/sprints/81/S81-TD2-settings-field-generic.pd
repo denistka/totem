@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Generic SettingsField component
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Introduce `SettingsField.tsx` (variant prop: input | selector | toggle)
+  replacing repetitive layout in `SettingsInputRow.tsx`, `SettingsSelectorRow.tsx`,
+  `SettingsToggleRow.tsx`. Migrate callers incrementally; keep old exports as
+  thin wrappers until unused, then remove.
+
+done:
+  - Shared layout/styles in one place; row files deleted or deprecated
+  - Settings screens compile; visual parity
+
+out: [src/screens/settings/components/SettingsField.tsx]

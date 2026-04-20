@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TW2 — final architecture review pack (post_sprint_guards)
+requires: [FRONTEND_DEV]
+
+context: |
+  Single index linking S82 baseline (`S82_ARCHITECT_V4_BASELINE.md` — codemap,
+  lint, jscpd), TS0/TL0 remediation status, semantic matrix, FSD map, API audit,
+  quality gates, and S81-TK4 brief if present. Executive summary: constraints,
+  layering, SSOT status, open risks. No new analysis — assembly only.
+
+out: [totem/instances/navitrack/intel/S82_ARCHITECTURE_REVIEW_PACK.md]
+
+done:
+  - Pack file links all intel artifacts; dated; ready for handoff

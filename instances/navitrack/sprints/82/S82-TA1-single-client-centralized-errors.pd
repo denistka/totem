@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TA1 — single client + centralized errors (API SSOT entry)
+requires: [FRONTEND_DEV]
+
+context: |
+  Ensure all HTTP goes through one module (extend existing adapter if present).
+  Normalize errors (mapping, logging hooks) in one place. No fetch in
+  presentation components after migration slice; route call sites through
+  services. Incremental; do not change server contracts.
+
+done:
+  - Documented entry point; error type/helper used by ≥2 domains
+  - No new direct fetch in components touched in this task
+
+out: []

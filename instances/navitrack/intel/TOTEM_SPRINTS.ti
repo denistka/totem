@@ -1,7 +1,7 @@
 v:3
 format:totem-sprints
 purpose:machine-only sprint index
-updated:2026-03-10
+updated:2026-04-08
 
 ###############################################################################
 # DONE (All Sprints)
@@ -340,13 +340,54 @@ S77:
   priority:P0
   scope:map-history-fixes,rendering-optimization
 
+S80:
+  name:Deep-Refactor-Consistency-Dedup
+  path:sprints/80/
+  status:📋 planned
+  priority:P1
+  scope:app-logic-snapshot,dead-code,demo-data,shared-ui,tokens,registry,bundle,lists,css-dedupe,theme-pwa,leaflet-colors,vite-single,tests-removal
+  dep:S78
+
+S81:
+  name:Codemap-God-Objects-Architecture
+  path:sprints/81/
+  status:📋 planned
+  priority:P1
+  scope:codemap-god-objects,dedup-audit,cycles-imports,dead-code-sweep,review-brief,reports-split,tracking-action,date-datetime,map-popup-factory,settings-thin,screens-thin,hooks-split,css-glass,api-transforms,vehicle-icon-registry,jscpd
+  dep:S80
+
+S82:
+  name:Architect-V4-1-Deterministic-Refactor-System
+  path:sprints/82/
+  status:📋 planned
+  priority:P1
+  scope:v4-1-determinism,metric-lock,architecture-compiler,import-policy,execution-model,migration-safety,stop-conditions,semantic-rule-engine,anti-scope-creep,post-sprint-guarantee,canonical-contract,owners-escalation,jscpd-baseline-immutable,S82_ARCHITECT_V4_BASELINE,TS-TM-TA-TL-TP-TQ-TR-TW,jscpd-burn-TS0,sonarjs-TL0,FSD-TM,api-TA,eslint-TL,perf-TP,tests-TQ,css-TR,metrics-TW,codemap
+  dep:S81
+
+S84:
+  name:Constrained-Architectural-Repair-FSD
+  path:sprints/84/
+  status:🏃 active
+  priority:P1
+  scope:ownership-resolution,api-store-boundary,entities-ssot,modules-to-features,hooks-sanitization,lib-cleanup,graph-verification,madge,jscpd
+  dep:S82
+
+S85:
+  name:Codemap-Hub-Reduction
+  path:sprints/85/
+  status:📋 planned
+  priority:P1
+  scope:codemap-baseline,api-barrel,domain-imports,useAppStore-fanin,screenrouter-lazy,screen-edge-reduction,report-transforms-split,closeout-metrics
+  dep:S84
+  note:Grounded in CODEMAP_QUALITY_ADVISOR; gate LOCKED until scope-approved
+
 ###############################################################################
 # ORDER
 ###############################################################################
 
 done-order:[S34→S35→S36→S37→S27,S42→S43→S44→S45→S46→S47→S48→S49→S50→S51→S52→S53→S54→S55→S56→S57→S58→S59→S60→S61→S63→S64→S65→S66→S67→S68→S69→S70→S71→S72→S73→S74→S75→S76]
-active-order:[S77]
-planned:[S78]
+active-order:[S77,S84]
+planned:[S78,S80,S81,S82,S85]
 skipped:[]
 locked:[S38→S39→S40,S62]
 

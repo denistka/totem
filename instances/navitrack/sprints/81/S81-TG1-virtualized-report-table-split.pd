@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Split VirtualizedReportTable.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `VirtualizedReportTable.tsx` (~240 LOC). Extract column defs, row renderer,
+  and scroll/measure hook into colocated files under same module folder.
+
+done:
+  - Parent <~120 lines; virtualization behavior unchanged
+
+out: []

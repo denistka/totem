@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Unified VehicleIconRegistry
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Consolidate `vehicle-png-icons.ts`, `vehicle-type-icons.ts`, and `icon-svg.tsx`
+  into `VehicleIconRegistry.ts` (or folder) with one lookup API for map and
+  lists. Migrate callers; remove duplicate mappings.
+
+done:
+  - Single source for vehicle → icon resolution; types exported
+
+out: [src/modules/map/VehicleIconRegistry.ts]

@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin settings-screen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `settings-screen.tsx` (~300 LOC). Extract:
+  - `src/screens/settings/SettingsSections.tsx`
+  - `src/screens/settings/hooks/useSettingsState.ts`
+  Screen orchestrates sections only.
+
+done:
+  - settings-screen.tsx <~100 lines; section boundaries clear
+
+out:
+  - src/screens/settings/SettingsSections.tsx
+  - src/screens/settings/hooks/useSettingsState.ts

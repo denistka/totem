@@ -1,0 +1,24 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Аудит дублирования по codemap + инструментам
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Вход: @navitrack-apps/src-client/codemap.json и (после S81-T0) jscpd/sonarjs.
+  Найти: дублирующиеся и похожие функции; сущности (модели, утилиты, хуки);
+  частично совпадающую логику; semantic overlap по именам файлов и экспортов.
+  Сверить с уже запланированными разбиениями (TA–TI) — не дублировать работу,
+  а дополнять бэклог.
+
+  Выходной артефакт (обязательно):
+  `totem/instances/navitrack/intel/S81_DUPLICATION_AND_UNIFICATION.md` —
+  таблица находок, приоритет, предлагаемый shared-слой (`lib/`, `hooks/`,
+  `api/` домены), механизмы переиспользования (barrels, фабрики, общие типы).
+  Бизнес-логику не менять; только план и помеченные кандидаты на рефакторинг.
+
+done:
+  - Документ в intel закоммичен; есть план унификации с приоритетами
+  - Упомянуты инструменты и команды воспроизведения
+
+out: [totem/instances/navitrack/intel/S81_DUPLICATION_AND_UNIFICATION.md]

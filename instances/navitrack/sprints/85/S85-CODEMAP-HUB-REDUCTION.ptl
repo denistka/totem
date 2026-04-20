@@ -1,0 +1,83 @@
+gate: OPEN
+sprint: S85
+title: Codemap hub reduction — API facade, store fan-in, screen edges
+priority: P1
+dep: S84
+
+description: |
+  Executes the CODEMAP_QUALITY_ADVISOR verdict (2026-04-08 codemap snapshot):
+  reduce change amplification from src/api/index.ts and src/store/useAppStore.ts,
+  lower importsFromProjectTsCount on orchestrator screens, keep madge/jscpd/codemap
+  gates green. Complements S81 (god objects) and S84 (FSD ownership); assumes S84
+  structural outputs exist or are in flight.
+
+ground_truth:
+  - navitrack-apps/src-client/codemap/AGENT-GUIDE.md
+  - navitrack-apps/src-client/codemap/codemap-surface.json
+  - navitrack-apps/src-client/codemap/codemap-import-refs.json
+
+success_metrics:
+  - codemap regenerated; unresolved imports remain 0
+  - referencesFromOtherFiles on api/index.ts trends down vs S85-T0 baseline
+  - Target screens show lower importsFromProjectTsCount or documented exception
+  - report-transforms split or bounded with stable public exports
+  - No new madge cycles; typecheck/lint per existing CI
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 2–3 weeks
+
+tracks:
+  - id: T0
+    title: Baseline — codemap metrics snapshot
+    tasks:
+      - S85-T0-codemap-baseline-snapshot.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T1
+    title: API — domain imports and barrel pressure
+    tasks:
+      - S85-T1-domain-imports-batch-one.pd
+      - S85-T2-domain-imports-batch-two.pd
+      - S85-T3-api-import-convention-note.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T2
+    title: Store — useAppStore fan-in
+    tasks:
+      - S85-T4-app-store-fanin-audit.pd
+      - S85-T5-app-store-extract-slice.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T3
+    title: App shell — router and lazy boundaries
+    tasks:
+      - S85-T6-screenrouter-lazy-verify.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T4
+    title: Screens — thin integration hotspots
+    tasks:
+      - S85-T7-tracking-screen-edge-reduction.pd
+      - S85-T8-reports-screen-edge-reduction.pd
+      - S85-T9-history-objects-map-edge-reduction.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T5
+    title: API domain — report transforms boundary
+    tasks:
+      - S85-T10-report-transforms-split.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T6
+    title: Closeout — codemap regression gate
+    tasks:
+      - S85-T11-codemap-closeout-metrics.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN

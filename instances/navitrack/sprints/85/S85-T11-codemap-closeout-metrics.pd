@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S85 T11 — codemap closeout metrics
+requires: [FRONTEND_DEV]
+sprint: S85
+dep: [S85-T1-domain-imports-batch-one.pd, S85-T5-app-store-extract-slice.pd, S85-T7-tracking-screen-edge-reduction.pd, S85-T10-report-transforms-split.pd]
+
+context: |
+  pnpm codemap from src-client. Append closeout metrics to
+  S85_codemap_hub_baseline.json or S85_codemap_hub_closeout.json: same keys as
+  T0 plus madge/jscpd summary if available.
+
+out:
+  - totem/instances/navitrack/intel/S85_codemap_hub_closeout.json
+
+done:
+  - unresolved == 0; success_metrics in PTL checked or blockers documented

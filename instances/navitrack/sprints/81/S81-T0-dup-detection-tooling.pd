@@ -1,0 +1,21 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Wire duplicate-detection and size guardrails (optional CI)
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Add devDependencies and scripts for `jscpd` and `eslint-plugin-sonarjs` (or
+  existing eslint extend) under `navitrack-apps/src-client`. Document one-liner
+  commands in package.json scripts: scan duplicates, eslint with cognitive
+  complexity / duplicate rules where compatible. Do not block unrelated work;
+  keep rules warn-first unless repo already strict.
+
+done:
+  - Scripts or docs allow `npx jscpd` / eslint duplicate-related rules on src
+  - No regression in default `npm run build` / lint pipeline
+
+out:
+  - navitrack-apps/src-client/package.json
+  - navitrack-apps/src-client/eslint.config.js
+  - navitrack-apps/src-client/.jscpdrc.json

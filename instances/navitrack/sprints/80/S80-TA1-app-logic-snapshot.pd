@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: App logic snapshot (what the app actually does)
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Produce a concise machine-readable snapshot of runtime behavior: bootstrap
+  (main → App), auth gating, core data load, MobileShell / routing, how screens
+  get vehicles/reports/map state. List features that are real vs stub/toast
+  ("not implemented"). Output file:
+  `totem/instances/navitrack/intel/APP_LOGIC_SNAPSHOT.md` (or update existing
+  CODEMAP if that is the single source of truth — pick one and reference it
+  from the other in one line).
+
+done:
+  - Snapshot committed under intel (or CODEMAP cross-linked)
+  - No application code changes required for this task alone
+
+out: []

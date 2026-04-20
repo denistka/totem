@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S85 T0 — codemap baseline snapshot
+requires: [FRONTEND_DEV]
+sprint: S85
+
+context: |
+  Capture advisor ground truth before edits. From codemap-surface.json record
+  referencesFromOtherFiles for src/api/index.ts and src/store/useAppStore.ts;
+  record importsFromProjectTsCount for ScreenRouter, TrackingScreen,
+  useTrackingState, ReportsScreen, HistoryMap, ObjectsScreen, TrackingRouteMap.
+
+out:
+  - totem/instances/navitrack/intel/S85_codemap_hub_baseline.json
+    (generatedAt, modules[].path + metrics above, note command: pnpm codemap)
+
+done:
+  - Baseline file committed; codemap folder regenerated same day as snapshot

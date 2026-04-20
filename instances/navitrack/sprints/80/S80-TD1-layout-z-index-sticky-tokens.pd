@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Layout tokens — z-index and sticky offsets
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Replace scattered magic `z-[20]`, `z-[21]`, `top-[45px]` (and similar) with
+  CSS variables or Tailwind theme extension so stacking order is documented in
+  one place (header vs sticky bars vs map overlays). Align with design-system
+  docs if present.
+
+done:
+  - Token definitions in one file (e.g. `dynamic-background.css` sibling or
+    `globals`) and usages updated
+  - No visual stacking regressions on map + header + modals
+
+out: []

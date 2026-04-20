@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Prune or flag code that contradicts the snapshot
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Using S80-TA1 snapshot, mark modules that are unreachable, duplicate
+  alternate implementations, or demo-only. Create a short checklist in the same
+  doc or a sibling `APP_LOGIC_PRUNE_CHECKLIST.md`. Execute only removals that
+  are obviously safe (zero imports, unused exports confirmed by tsc); defer
+  risky deletes to S80-TB1.
+
+done:
+  - Checklist exists and references snapshot sections
+  - Obvious safe removals merged or explicitly deferred with reason
+
+out: []

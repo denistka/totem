@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TM4 — layer enforcement on P0 paths (architecture_rules)
+requires: [FRONTEND_DEV]
+
+context: |
+  Canonical rules: `layer_rules` in this sprint `.ptl`. Repeat in short ADR or
+  intel. Refactor worst violations (UI importing API directly, etc.); full-repo
+  sweep optional follow-up.
+
+done:
+  - `layer_rules` cited in intel; ≥2 modules refactored; P0 paths UI → hooks/services → api
+
+out: []

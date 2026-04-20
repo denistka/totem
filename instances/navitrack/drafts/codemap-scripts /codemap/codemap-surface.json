@@ -1,0 +1,5643 @@
+{
+  "version": 1,
+  "generatedAt": "2026-04-08T23:38:23.468Z",
+  "root": "/Users/denistka/Projects/navitrack/navitrack-apps/src-client",
+  "mapGuide": {
+    "intent": "Progressive map: use higher levels for layout and hot spots, drill into lower levels for exact lines and file size.",
+    "zoomLevels": [
+      {
+        "id": "paths",
+        "file": "codemap/codemap-src-paths.json",
+        "contains": "Sorted list of paths under src/"
+      },
+      {
+        "id": "surface",
+        "file": "codemap/codemap-surface.json",
+        "contains": "Per TS/TSX module: exported names/kinds, count of incoming references, unique imports of other TS/TSX files in src/"
+      },
+      {
+        "id": "importSites",
+        "file": "codemap/codemap-import-refs.json",
+        "contains": "Every import/export-from/dynamic import with from-file, line, specifier"
+      },
+      {
+        "id": "inventory",
+        "file": "codemap/codemap.json",
+        "contains": "Full repo tree with line/byte counts (codemap/ excluded from tree)"
+      }
+    ]
+  },
+  "summary": {
+    "modules": 238,
+    "totalExports": 703,
+    "totalOutgoingEdgesTs": 550
+  },
+  "modules": [
+    {
+      "path": "src/api/domains/auth-contracts.ts",
+      "exports": [
+        {
+          "name": "AuthRequest",
+          "kind": "interface"
+        },
+        {
+          "name": "AuthResponse",
+          "kind": "interface"
+        },
+        {
+          "name": "TwoFAEnableRequest",
+          "kind": "interface"
+        },
+        {
+          "name": "AssignMailRequest",
+          "kind": "interface"
+        },
+        {
+          "name": "ChangePasswordRequest",
+          "kind": "interface"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/api/domains/auth.ts",
+      "exports": [
+        {
+          "name": "AuthRequest",
+          "kind": "re-export-type",
+          "from": "./auth-contracts"
+        },
+        {
+          "name": "AuthResponse",
+          "kind": "re-export-type",
+          "from": "./auth-contracts"
+        },
+        {
+          "name": "TwoFAEnableRequest",
+          "kind": "re-export-type",
+          "from": "./auth-contracts"
+        },
+        {
+          "name": "AssignMailRequest",
+          "kind": "re-export-type",
+          "from": "./auth-contracts"
+        },
+        {
+          "name": "ChangePasswordRequest",
+          "kind": "re-export-type",
+          "from": "./auth-contracts"
+        },
+        {
+          "name": "signIn",
+          "kind": "function"
+        },
+        {
+          "name": "enable2FA",
+          "kind": "function"
+        },
+        {
+          "name": "disable2FA",
+          "kind": "function"
+        },
+        {
+          "name": "assignMail",
+          "kind": "function"
+        },
+        {
+          "name": "changePassword",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 10,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/auth-contracts.ts",
+        "src/api/lib/client.ts",
+        "src/api/lib/http-adapter.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/api/domains/events.ts",
+      "exports": [
+        {
+          "name": "CriticalEvent",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleEventConfiguration",
+          "kind": "interface"
+        },
+        {
+          "name": "getEvents",
+          "kind": "function"
+        },
+        {
+          "name": "getEventsNewer",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleEventConfig",
+          "kind": "function"
+        },
+        {
+          "name": "saveVehicleEventConfig",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 6,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": ["src/api/lib/client.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/domains/misc.ts",
+      "exports": [
+        {
+          "name": "KeyValuePair",
+          "kind": "interface"
+        },
+        {
+          "name": "Company",
+          "kind": "interface"
+        },
+        {
+          "name": "getDescriptions",
+          "kind": "function"
+        },
+        {
+          "name": "getDescriptionList",
+          "kind": "function"
+        },
+        {
+          "name": "getRights",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleDataTypes",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleInfoFields",
+          "kind": "function"
+        },
+        {
+          "name": "getCompanies",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": ["src/api/lib/client.ts", "src/api/lib/single-flight.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/api/domains/notifications.ts",
+      "exports": [
+        {
+          "name": "UpdateTokenRequest",
+          "kind": "interface"
+        },
+        {
+          "name": "PushPayload",
+          "kind": "interface"
+        },
+        {
+          "name": "registerPushToken",
+          "kind": "function"
+        },
+        {
+          "name": "unregisterPushToken",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/api/lib/client.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/domains/reports/index.ts",
+      "exports": [
+        {
+          "name": "ReportItem",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportParameter",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportPresetItem",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportBunch",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "WSReportRequest",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportBuildItem",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportProgressEvent",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportCell",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportRow",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportGroup",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "ReportResponse",
+          "kind": "re-export-type",
+          "from": "./report-types"
+        },
+        {
+          "name": "PartitionType",
+          "kind": "re-export",
+          "from": "./report-types"
+        },
+        {
+          "name": "getReportList",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "requestReport",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "listBuiltReports",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "cancelReport",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "downloadReport",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "getReportBunch",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "saveReportBunch",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "getReportPreset",
+          "kind": "re-export",
+          "from": "./report-api"
+        },
+        {
+          "name": "saveReportPreset",
+          "kind": "re-export",
+          "from": "./report-api"
+        }
+      ],
+      "exportCount": 21,
+      "referencesFromOtherFiles": 6,
+      "importsFromProjectTs": [
+        "src/api/domains/reports/report-api.ts",
+        "src/api/domains/reports/report-types.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/api/domains/reports/report-api.ts",
+      "exports": [
+        {
+          "name": "getReportList",
+          "kind": "function"
+        },
+        {
+          "name": "requestReport",
+          "kind": "function"
+        },
+        {
+          "name": "listBuiltReports",
+          "kind": "function"
+        },
+        {
+          "name": "cancelReport",
+          "kind": "function"
+        },
+        {
+          "name": "downloadReport",
+          "kind": "function"
+        },
+        {
+          "name": "getReportBunch",
+          "kind": "function"
+        },
+        {
+          "name": "saveReportBunch",
+          "kind": "function"
+        },
+        {
+          "name": "getReportPreset",
+          "kind": "function"
+        },
+        {
+          "name": "saveReportPreset",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 9,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/reports/report-transforms.ts",
+        "src/api/domains/reports/report-types.ts",
+        "src/api/lib/client.ts",
+        "src/api/lib/http-adapter.ts",
+        "src/api/lib/single-flight.ts",
+        "src/api/lib/transforms/coerce.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/api/domains/reports/report-transforms.ts",
+      "exports": [
+        {
+          "name": "transformReportResponse",
+          "kind": "function"
+        },
+        {
+          "name": "RawReportResponse",
+          "kind": "export-type"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/reports/report-types.ts",
+        "src/entities/report/index.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/api/domains/reports/report-types.ts",
+      "exports": [
+        {
+          "name": "ReportItem",
+          "kind": "interface"
+        },
+        {
+          "name": "PartitionType",
+          "kind": "enum"
+        },
+        {
+          "name": "ReportParameter",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportPresetItem",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportBunch",
+          "kind": "interface"
+        },
+        {
+          "name": "WSReportRequest",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportBuildItem",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportProgressEvent",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportCell",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportRow",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportGroup",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportResponse",
+          "kind": "interface"
+        }
+      ],
+      "exportCount": 12,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/api/domains/settings.ts",
+      "exports": [
+        {
+          "name": "UserConfigurationItem",
+          "kind": "interface"
+        },
+        {
+          "name": "Settings",
+          "kind": "interface"
+        },
+        {
+          "name": "getMainSettings",
+          "kind": "function"
+        },
+        {
+          "name": "setMainSettings",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/lib/client.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/domains/tracking/index.ts",
+      "exports": [
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./tracking"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./tracking-transforms"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/api/domains/tracking/tracking-transforms.ts",
+        "src/api/domains/tracking/tracking.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/api/domains/tracking/tracking-transforms.ts",
+      "exports": [
+        {
+          "name": "convertDailyTrackToTrackEvents",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/api/domains/tracking/tracking-types.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/domains/tracking/tracking-types.ts",
+      "exports": [
+        {
+          "name": "VehicleState",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackPoint",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackPointInfo",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackEvent",
+          "kind": "interface"
+        },
+        {
+          "name": "DailyTrackEvent",
+          "kind": "interface"
+        },
+        {
+          "name": "DailyTrack",
+          "kind": "interface"
+        },
+        {
+          "name": "Track",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackRequest",
+          "kind": "interface"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/api/domains/misc.ts", "src/api/domains/vehicles/index.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/api/domains/tracking/tracking.ts",
+      "exports": [
+        {
+          "name": "VehicleState",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "TrackPoint",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "TrackPointInfo",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "TrackEvent",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "DailyTrackEvent",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "DailyTrack",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "Track",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "TrackRequest",
+          "kind": "re-export-type",
+          "from": "./tracking-types"
+        },
+        {
+          "name": "getDailyTrack",
+          "kind": "function"
+        },
+        {
+          "name": "getTrack",
+          "kind": "function"
+        },
+        {
+          "name": "fetchTrackWithFallback",
+          "kind": "function"
+        },
+        {
+          "name": "fetchDailyTrackForDay",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 12,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/tracking/tracking-transforms.ts",
+        "src/api/domains/tracking/tracking-types.ts",
+        "src/api/lib/client.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/api/domains/vehicles/index.ts",
+      "exports": [
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./vehicles"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/api/domains/vehicles/vehicles.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/domains/vehicles/vehicle-types.ts",
+      "exports": [
+        {
+          "name": "Vehicle",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleInfo",
+          "kind": "interface"
+        },
+        {
+          "name": "SimpleVehicle",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleSettings",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleTemplate",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleTemplatePayload",
+          "kind": "interface"
+        }
+      ],
+      "exportCount": 6,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/api/domains/misc.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/domains/vehicles/vehicles.ts",
+      "exports": [
+        {
+          "name": "Vehicle",
+          "kind": "re-export-type",
+          "from": "./vehicle-types"
+        },
+        {
+          "name": "VehicleInfo",
+          "kind": "re-export-type",
+          "from": "./vehicle-types"
+        },
+        {
+          "name": "SimpleVehicle",
+          "kind": "re-export-type",
+          "from": "./vehicle-types"
+        },
+        {
+          "name": "VehicleSettings",
+          "kind": "re-export-type",
+          "from": "./vehicle-types"
+        },
+        {
+          "name": "VehicleTemplate",
+          "kind": "re-export-type",
+          "from": "./vehicle-types"
+        },
+        {
+          "name": "VehicleTemplatePayload",
+          "kind": "re-export-type",
+          "from": "./vehicle-types"
+        },
+        {
+          "name": "getVehicles",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleDetails",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleSettings",
+          "kind": "function"
+        },
+        {
+          "name": "setVehicleSettings",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleTemplate",
+          "kind": "function"
+        },
+        {
+          "name": "setVehicleTemplate",
+          "kind": "function"
+        },
+        {
+          "name": "lockVehicle",
+          "kind": "function"
+        },
+        {
+          "name": "lockVehicleUnsafe",
+          "kind": "function"
+        },
+        {
+          "name": "unlockVehicle",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 15,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/vehicles/vehicle-types.ts",
+        "src/api/lib/client.ts",
+        "src/api/lib/transforms/coerce.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/api/domains/zones.ts",
+      "exports": [
+        {
+          "name": "Point",
+          "kind": "interface"
+        },
+        {
+          "name": "ZoneType",
+          "kind": "interface"
+        },
+        {
+          "name": "Zone",
+          "kind": "interface"
+        },
+        {
+          "name": "getZoneTypes",
+          "kind": "function"
+        },
+        {
+          "name": "getZones",
+          "kind": "function"
+        },
+        {
+          "name": "saveZone",
+          "kind": "function"
+        },
+        {
+          "name": "deleteZone",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 7,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/lib/client.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/index.ts",
+      "exports": [
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./lib/client.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/auth.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/vehicles/index.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/tracking/index.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/reports/index.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/zones.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/settings.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/events.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/notifications.ts"
+        },
+        {
+          "name": "*",
+          "kind": "re-export-all",
+          "from": "./domains/misc.ts"
+        }
+      ],
+      "exportCount": 10,
+      "referencesFromOtherFiles": 59,
+      "importsFromProjectTs": [
+        "src/api/domains/auth.ts",
+        "src/api/domains/events.ts",
+        "src/api/domains/misc.ts",
+        "src/api/domains/notifications.ts",
+        "src/api/domains/reports/index.ts",
+        "src/api/domains/settings.ts",
+        "src/api/domains/tracking/index.ts",
+        "src/api/domains/vehicles/index.ts",
+        "src/api/domains/zones.ts",
+        "src/api/lib/client.ts"
+      ],
+      "importsFromProjectTsCount": 10
+    },
+    {
+      "path": "src/api/lib/client.ts",
+      "exports": [
+        {
+          "name": "BASE_ONLINE",
+          "kind": "const"
+        },
+        {
+          "name": "BASE_API",
+          "kind": "const"
+        },
+        {
+          "name": "ApiError",
+          "kind": "class"
+        },
+        {
+          "name": "ApiClientOptions",
+          "kind": "interface"
+        },
+        {
+          "name": "ApiClient",
+          "kind": "class"
+        },
+        {
+          "name": "getApiClient",
+          "kind": "function"
+        },
+        {
+          "name": "default",
+          "kind": "default"
+        }
+      ],
+      "exportCount": 7,
+      "referencesFromOtherFiles": 12,
+      "importsFromProjectTs": ["src/api/lib/http-adapter.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/api/lib/http-adapter.ts",
+      "exports": [
+        {
+          "name": "httpFetch",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/api/lib/single-flight.ts",
+      "exports": [
+        {
+          "name": "runSingleFlight",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/api/lib/transforms/coerce.ts",
+      "exports": [
+        {
+          "name": "JsonObject",
+          "kind": "type"
+        },
+        {
+          "name": "isPositiveFiniteId",
+          "kind": "function"
+        },
+        {
+          "name": "rowBunchId",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "exports": [
+        {
+          "name": "default",
+          "kind": "default"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/shell/components/app-header/index.ts",
+        "src/shell/components/GlobalLoader.tsx",
+        "src/shell/components/MobileShell.tsx",
+        "src/store/useAppStore.ts",
+        "src/store/useAuthStore.ts",
+        "src/ui/Sonner.tsx"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/config/lib/header.ts",
+      "exports": [
+        {
+          "name": "HeaderVisibilityMode",
+          "kind": "enum"
+        },
+        {
+          "name": "LeftContentKey",
+          "kind": "type"
+        },
+        {
+          "name": "HeaderConfig",
+          "kind": "interface"
+        },
+        {
+          "name": "HEADER_CONFIG",
+          "kind": "const"
+        },
+        {
+          "name": "getHeaderConfig",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/store/useAppStore.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/config/lib/i18n.ts",
+      "exports": [
+        {
+          "name": "default",
+          "kind": "default"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/config/lib/navigation.ts",
+      "exports": [
+        {
+          "name": "AppScreen",
+          "kind": "type"
+        },
+        {
+          "name": "TabId",
+          "kind": "type"
+        },
+        {
+          "name": "TABS",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/report/index.ts",
+      "exports": [
+        {
+          "name": "canonicalReportColumnKey",
+          "kind": "re-export",
+          "from": "./lib/report-column-keys"
+        },
+        {
+          "name": "orderedCanonicalReportKeys",
+          "kind": "re-export",
+          "from": "./lib/report-column-keys"
+        },
+        {
+          "name": "buildCanonicalHeaderIndex",
+          "kind": "re-export",
+          "from": "./lib/report-column-keys"
+        },
+        {
+          "name": "REPORT_GRAND_TOTAL_CELL_SENTINEL",
+          "kind": "re-export",
+          "from": "./lib/report-grand-total-sentinel"
+        },
+        {
+          "name": "humanizeReportColumnKey",
+          "kind": "re-export",
+          "from": "./lib/humanize-report-column-key"
+        },
+        {
+          "name": "reportTableHeaderLabel",
+          "kind": "re-export",
+          "from": "./lib/report-table-model"
+        },
+        {
+          "name": "isRowEmpty",
+          "kind": "re-export",
+          "from": "./lib/report-table-model"
+        },
+        {
+          "name": "nextNonEmptyRow",
+          "kind": "re-export",
+          "from": "./lib/report-table-model"
+        },
+        {
+          "name": "flattenReportRows",
+          "kind": "re-export",
+          "from": "./lib/report-table-model"
+        }
+      ],
+      "exportCount": 9,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/entities/report/lib/humanize-report-column-key.ts",
+        "src/entities/report/lib/report-column-keys.ts",
+        "src/entities/report/lib/report-grand-total-sentinel.ts",
+        "src/entities/report/lib/report-table-model.ts"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/entities/report/lib/humanize-report-column-key.ts",
+      "exports": [
+        {
+          "name": "humanizeReportColumnKey",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/report/lib/report-column-keys.ts",
+      "exports": [
+        {
+          "name": "canonicalReportColumnKey",
+          "kind": "function"
+        },
+        {
+          "name": "orderedCanonicalReportKeys",
+          "kind": "function"
+        },
+        {
+          "name": "buildCanonicalHeaderIndex",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/report/lib/report-grand-total-sentinel.ts",
+      "exports": [
+        {
+          "name": "REPORT_GRAND_TOTAL_CELL_SENTINEL",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/report/lib/report-table-model.ts",
+      "exports": [
+        {
+          "name": "reportTableHeaderLabel",
+          "kind": "function"
+        },
+        {
+          "name": "isRowEmpty",
+          "kind": "function"
+        },
+        {
+          "name": "nextNonEmptyRow",
+          "kind": "function"
+        },
+        {
+          "name": "flattenReportRows",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/reports/index.ts",
+        "src/entities/report/lib/humanize-report-column-key.ts",
+        "src/entities/report/lib/report-grand-total-sentinel.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/entities/vehicle/icons/components/IconSvg.tsx",
+      "exports": [
+        {
+          "name": "TruckIcon",
+          "kind": "function"
+        },
+        {
+          "name": "CarIcon",
+          "kind": "function"
+        },
+        {
+          "name": "VanIcon",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/vehicle/icons/components/VehicleIcon.tsx",
+      "exports": [
+        {
+          "name": "VehicleIcon",
+          "kind": "function"
+        },
+        {
+          "name": "VehicleMapMarker",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/entities/vehicle/icons/lib/types.ts", "src/lib/utils.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/entities/vehicle/icons/index.ts",
+      "exports": [
+        {
+          "name": "VehicleType",
+          "kind": "re-export",
+          "from": "./lib/types"
+        },
+        {
+          "name": "VehicleIconType",
+          "kind": "re-export",
+          "from": "./lib/types"
+        },
+        {
+          "name": "TruckIcon",
+          "kind": "re-export",
+          "from": "./components/IconSvg"
+        },
+        {
+          "name": "CarIcon",
+          "kind": "re-export",
+          "from": "./components/IconSvg"
+        },
+        {
+          "name": "VanIcon",
+          "kind": "re-export",
+          "from": "./components/IconSvg"
+        },
+        {
+          "name": "VEHICLE_TYPE_ICONS",
+          "kind": "re-export",
+          "from": "./lib/vehicle-type-icons"
+        },
+        {
+          "name": "VEHICLE_PNG_ICONS",
+          "kind": "re-export",
+          "from": "./lib/vehicle-png-icons"
+        },
+        {
+          "name": "resolveVehicleIconUrl",
+          "kind": "re-export",
+          "from": "./lib/vehicle-icon-utils"
+        },
+        {
+          "name": "inferVehicleType",
+          "kind": "re-export",
+          "from": "./lib/vehicle-icon-utils"
+        },
+        {
+          "name": "VehicleIcon",
+          "kind": "re-export",
+          "from": "./components/VehicleIcon"
+        },
+        {
+          "name": "VehicleMapMarker",
+          "kind": "re-export",
+          "from": "./components/VehicleIcon"
+        }
+      ],
+      "exportCount": 11,
+      "referencesFromOtherFiles": 8,
+      "importsFromProjectTs": [
+        "src/entities/vehicle/icons/components/IconSvg.tsx",
+        "src/entities/vehicle/icons/components/VehicleIcon.tsx",
+        "src/entities/vehicle/icons/lib/types.ts",
+        "src/entities/vehicle/icons/lib/vehicle-icon-utils.ts",
+        "src/entities/vehicle/icons/lib/vehicle-png-icons.ts",
+        "src/entities/vehicle/icons/lib/vehicle-type-icons.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/types.ts",
+      "exports": [
+        {
+          "name": "VehicleType",
+          "kind": "type"
+        },
+        {
+          "name": "VehicleIconType",
+          "kind": "type"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/vehicle-icon-utils.ts",
+      "exports": [
+        {
+          "name": "resolveVehicleIconUrl",
+          "kind": "function"
+        },
+        {
+          "name": "inferVehicleType",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/entities/vehicle/icons/lib/types.ts",
+        "src/entities/vehicle/icons/lib/vehicle-png-icons.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/vehicle-png-icons.ts",
+      "exports": [
+        {
+          "name": "VEHICLE_PNG_ICONS",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/vehicle-type-icons.ts",
+      "exports": [
+        {
+          "name": "VEHICLE_TYPE_ICONS",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/entities/vehicle/icons/components/IconSvg.tsx",
+        "src/entities/vehicle/icons/lib/types.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/entities/vehicle/lib/model.ts",
+      "exports": [
+        {
+          "name": "Vehicle",
+          "kind": "re-export-type",
+          "from": "@/api/domains/vehicles"
+        },
+        {
+          "name": "VehicleInfo",
+          "kind": "re-export-type",
+          "from": "@/api/domains/vehicles"
+        },
+        {
+          "name": "SimpleVehicle",
+          "kind": "re-export-type",
+          "from": "@/api/domains/vehicles"
+        },
+        {
+          "name": "VehicleSettings",
+          "kind": "re-export-type",
+          "from": "@/api/domains/vehicles"
+        },
+        {
+          "name": "VehicleTemplate",
+          "kind": "re-export-type",
+          "from": "@/api/domains/vehicles"
+        },
+        {
+          "name": "VehicleTemplatePayload",
+          "kind": "re-export-type",
+          "from": "@/api/domains/vehicles"
+        }
+      ],
+      "exportCount": 6,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/api/domains/vehicles/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/date-range-picker/components/AnalogClockFaceSvg.tsx",
+      "exports": [
+        {
+          "name": "AnalogClockFaceSvgProps",
+          "kind": "interface"
+        },
+        {
+          "name": "AnalogClockFaceSvg",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/date-range-picker/components/DateInput.tsx",
+      "exports": [
+        {
+          "name": "DateInputProps",
+          "kind": "interface"
+        },
+        {
+          "name": "DateInput",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/date-range-picker/lib/utils.ts",
+        "src/ui/BottomModal.tsx",
+        "src/ui/Button.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/features/date-range-picker/components/DateRangePicker.tsx",
+      "exports": [
+        {
+          "name": "DateRangePickerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "DateRangePicker",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/features/date-range-picker/components/DateInput.tsx",
+        "src/features/date-range-picker/components/TimePicker.tsx",
+        "src/features/date-range-picker/hooks/useDateRange.ts",
+        "src/features/date-range-picker/lib/utils.ts",
+        "src/ui/BottomModal.tsx"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/features/date-range-picker/components/TimePicker.tsx",
+      "exports": [
+        {
+          "name": "DateRangeTimePickerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TimePicker",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/date-range-picker/components/TimePickerAnalogWheel.tsx",
+        "src/ui/BottomModal.tsx",
+        "src/ui/Button.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/features/date-range-picker/components/TimePickerAnalogWheel.tsx",
+      "exports": [
+        {
+          "name": "TimePickerAnalogWheelProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TimePickerAnalogWheel",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/date-range-picker/components/AnalogClockFaceSvg.tsx",
+        "src/features/date-range-picker/hooks/useAnalogWheelMinutes.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/features/date-range-picker/hooks/useAnalogWheelMinutes.ts",
+      "exports": [
+        {
+          "name": "UseAnalogWheelMinutesArgs",
+          "kind": "interface"
+        },
+        {
+          "name": "useAnalogWheelMinutes",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/date-range-picker/hooks/useDateRange.ts",
+      "exports": [
+        {
+          "name": "DatePopupMode",
+          "kind": "type"
+        },
+        {
+          "name": "UseDateRangeArgs",
+          "kind": "interface"
+        },
+        {
+          "name": "useDateRange",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/date-range-picker/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/date-range-picker/index.ts",
+      "exports": [
+        {
+          "name": "DateRangePicker",
+          "kind": "re-export",
+          "from": "./components/DateRangePicker"
+        },
+        {
+          "name": "DateRangePickerProps",
+          "kind": "re-export-type",
+          "from": "./components/DateRangePicker"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/features/date-range-picker/components/DateRangePicker.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/date-range-picker/lib/utils.ts",
+      "exports": [
+        {
+          "name": "getDaysInMonth",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "getFirstDayOfMonth",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "isSameDay",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "isInRange",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "WEEKDAYS",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "MONTHS",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "formatDate",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        },
+        {
+          "name": "formatTime",
+          "kind": "re-export",
+          "from": "@/lib/datetime"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/lib/datetime.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/components/ActiveTileLayer.tsx",
+      "exports": [
+        {
+          "name": "ActiveTileLayer",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/map/lib/map-config.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/components/cluster-map/ClusterMapLeafletEffects.tsx",
+      "exports": [
+        {
+          "name": "FitBounds",
+          "kind": "function"
+        },
+        {
+          "name": "GeolocateHandler",
+          "kind": "function"
+        },
+        {
+          "name": "ZoomHandler",
+          "kind": "function"
+        },
+        {
+          "name": "InvalidateSizeOnMount",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx",
+      "exports": [
+        {
+          "name": "ClusterMapVehicleLayerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ClusterMapVehicleLayer",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/features/map/components/VehicleMarker.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/features/map/components/cluster-map/ClusterMapZoneLayers.tsx",
+      "exports": [
+        {
+          "name": "ClusterMapZoneLayersProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ClusterMapZoneLayers",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/components/ClusterMap.tsx",
+      "exports": [
+        {
+          "name": "LayerType",
+          "kind": "re-export-type",
+          "from": "../lib/map-config"
+        },
+        {
+          "name": "ClusterMapProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ClusterMap",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/cluster-map/ClusterMapLeafletEffects.tsx",
+        "src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx",
+        "src/features/map/components/cluster-map/ClusterMapZoneLayers.tsx",
+        "src/features/map/components/MapShell.tsx",
+        "src/features/map/components/MarkerTickContext.tsx",
+        "src/features/map/lib/map-config.ts"
+      ],
+      "importsFromProjectTsCount": 7
+    },
+    {
+      "path": "src/features/map/components/MapPopupFactory.tsx",
+      "exports": [
+        {
+          "name": "buildVehiclePopupRows",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/PopupRow.tsx",
+        "src/features/map/lib/popup-address.ts",
+        "src/features/map/lib/popup-fuel.ts",
+        "src/features/map/lib/popup-ignition.ts",
+        "src/features/map/lib/popup-telemetry.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/features/map/components/MapShell.tsx",
+      "exports": [
+        {
+          "name": "MapShellProps",
+          "kind": "interface"
+        },
+        {
+          "name": "MapShell",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/features/map/components/ActiveTileLayer.tsx",
+        "src/features/map/lib/leaflet-setup.ts",
+        "src/features/map/lib/map-config.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/features/map/components/MarkerTickContext.tsx",
+      "exports": [
+        {
+          "name": "MarkerTickProvider",
+          "kind": "function"
+        },
+        {
+          "name": "useMarkerTick",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/components/PolylineDecorator.tsx",
+      "exports": [
+        {
+          "name": "PolylineDecorator",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/components/PopupRow.tsx",
+      "exports": [
+        {
+          "name": "PopupRowModel",
+          "kind": "interface"
+        },
+        {
+          "name": "PopupRow",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/components/VehicleInfoPopup.tsx",
+      "exports": [
+        {
+          "name": "VehicleInfoPopupProps",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleInfoPopup",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/MapPopupFactory.tsx",
+        "src/features/map/components/PopupRow.tsx",
+        "src/features/map/hooks/useVehicleDetails.ts",
+        "src/lib/vehicle-name.ts"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/features/map/components/VehicleMarker.tsx",
+      "exports": [
+        {
+          "name": "VehicleMarkerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "VehicleMarker",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/MarkerTickContext.tsx",
+        "src/features/map/components/VehicleInfoPopup.tsx",
+        "src/features/map/lib/leaflet-icons.ts",
+        "src/hooks/useTheme.ts"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/features/map/hooks/useLocalMapTypePreference.ts",
+      "exports": [
+        {
+          "name": "useLocalMapTypePreference",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/map/lib/map-type-preference.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/hooks/useMapSettings.ts",
+      "exports": [
+        {
+          "name": "MapProvider",
+          "kind": "export-type"
+        },
+        {
+          "name": "LayerType",
+          "kind": "export-type"
+        },
+        {
+          "name": "useMapSettings",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": [
+        "src/features/map/lib/map-config.ts",
+        "src/features/map/lib/map-type-preference.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/features/map/hooks/useVehicleDetails.ts",
+      "exports": [
+        {
+          "name": "useVehicleDetails",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/lib/leaflet-icons.ts",
+      "exports": [
+        {
+          "name": "circleLetterIcon",
+          "kind": "function"
+        },
+        {
+          "name": "circleEmojiIcon",
+          "kind": "function"
+        },
+        {
+          "name": "dotIcon",
+          "kind": "function"
+        },
+        {
+          "name": "createVehicleIcon",
+          "kind": "function"
+        },
+        {
+          "name": "createHistoryVehicleIcon",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/entities/vehicle/icons/index.ts",
+        "src/lib/vehicle-telemetry.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/features/map/lib/leaflet-setup.ts",
+      "exports": [],
+      "exportCount": 0,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/lib/map-config.ts",
+      "exports": [
+        {
+          "name": "LayerType",
+          "kind": "type"
+        },
+        {
+          "name": "MapProvider",
+          "kind": "type"
+        },
+        {
+          "name": "MAP_TILES",
+          "kind": "const"
+        },
+        {
+          "name": "googleLyrs",
+          "kind": "function"
+        },
+        {
+          "name": "DEFAULT_MAP_CENTER",
+          "kind": "const"
+        },
+        {
+          "name": "DEFAULT_MAP_ZOOM",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 6,
+      "referencesFromOtherFiles": 11,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/lib/map-type-preference.ts",
+      "exports": [
+        {
+          "name": "MAP_TYPE_STORAGE_KEY",
+          "kind": "const"
+        },
+        {
+          "name": "DEFAULT_MAP_TYPE",
+          "kind": "const"
+        },
+        {
+          "name": "mapTypeStringToProviderLayer",
+          "kind": "function"
+        },
+        {
+          "name": "providerLayerToSettingsMap",
+          "kind": "function"
+        },
+        {
+          "name": "getStoredMapType",
+          "kind": "function"
+        },
+        {
+          "name": "setStoredMapType",
+          "kind": "function"
+        },
+        {
+          "name": "subscribeMapType",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 7,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/features/map/lib/map-config.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/lib/popup-address.ts",
+      "exports": [
+        {
+          "name": "isMeaningfulAddress",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/lib/popup-fuel.ts",
+      "exports": [
+        {
+          "name": "buildFuelDisplay",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/features/map/lib/popup-telemetry.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/features/map/lib/popup-ignition.ts",
+      "exports": [
+        {
+          "name": "getIgnition",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/map/lib/popup-telemetry.ts",
+      "exports": [
+        {
+          "name": "extractKVFromVehicleDatas",
+          "kind": "function"
+        },
+        {
+          "name": "pickTelemetry",
+          "kind": "function"
+        },
+        {
+          "name": "readNum",
+          "kind": "function"
+        },
+        {
+          "name": "fmtDate",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/map/lib/vehicle-icon-registry.ts",
+      "exports": [
+        {
+          "name": "VehicleType",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "VehicleIconType",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "VEHICLE_TYPE_ICONS",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "VEHICLE_PNG_ICONS",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "resolveVehicleIconUrl",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "inferVehicleType",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "VehicleIcon",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        },
+        {
+          "name": "VehicleMapMarker",
+          "kind": "re-export",
+          "from": "@/entities/vehicle/icons"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/entities/vehicle/icons/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/notifications/hooks/useNotificationInit.ts",
+      "exports": [
+        {
+          "name": "useNotificationInit",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/notifications.ts",
+        "src/features/notifications/lib/notification-service.ts",
+        "src/features/notifications/lib/platform.ts",
+        "src/store/useNotificationStore.ts"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/features/notifications/index.ts",
+      "exports": [
+        {
+          "name": "getNotificationService",
+          "kind": "re-export",
+          "from": "./lib/notification-service"
+        },
+        {
+          "name": "handleNotificationTap",
+          "kind": "re-export",
+          "from": "./lib/notification-service"
+        },
+        {
+          "name": "NotificationService",
+          "kind": "re-export-type",
+          "from": "./lib/notification-service"
+        },
+        {
+          "name": "PushPermissionStatus",
+          "kind": "re-export-type",
+          "from": "./lib/notification-service"
+        },
+        {
+          "name": "isTauri",
+          "kind": "re-export",
+          "from": "./lib/platform"
+        },
+        {
+          "name": "getDeviceId",
+          "kind": "re-export",
+          "from": "./lib/platform"
+        }
+      ],
+      "exportCount": 6,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": [
+        "src/features/notifications/lib/notification-service.ts",
+        "src/features/notifications/lib/platform.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/features/notifications/lib/notification-service.ts",
+      "exports": [
+        {
+          "name": "PushPermissionStatus",
+          "kind": "type"
+        },
+        {
+          "name": "NotificationService",
+          "kind": "interface"
+        },
+        {
+          "name": "handleNotificationTap",
+          "kind": "function"
+        },
+        {
+          "name": "getNotificationService",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/api/domains/notifications.ts",
+        "src/features/notifications/lib/platform.ts",
+        "src/features/notifications/lib/tauri-push-adapter.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/features/notifications/lib/platform.ts",
+      "exports": [
+        {
+          "name": "isTauri",
+          "kind": "function"
+        },
+        {
+          "name": "getDeviceId",
+          "kind": "function"
+        },
+        {
+          "name": "getTimezone",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/features/notifications/lib/tauri-push-adapter.ts",
+      "exports": [
+        {
+          "name": "isTauriPushSupported",
+          "kind": "function"
+        },
+        {
+          "name": "requestTauriPushPermission",
+          "kind": "function"
+        },
+        {
+          "name": "getTauriPushToken",
+          "kind": "function"
+        },
+        {
+          "name": "registerTauriPushHandler",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/notifications/lib/platform.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/features/report-table/components/ReportTableCellValue.tsx",
+      "exports": [
+        {
+          "name": "ReportTableCellValue",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/entities/report/index.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/features/report-table/components/VirtualizedReportTable.tsx",
+      "exports": [
+        {
+          "name": "VirtualizedReportTable",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/entities/report/index.ts",
+        "src/features/report-table/components/ReportTableCellValue.tsx",
+        "src/lib/utils.ts",
+        "src/ui/Table.tsx"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/features/report-table/index.ts",
+      "exports": [
+        {
+          "name": "VirtualizedReportTable",
+          "kind": "re-export",
+          "from": "./components/VirtualizedReportTable"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/report-table/components/VirtualizedReportTable.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/hooks/useAuth.ts",
+      "exports": [
+        {
+          "name": "LoginStatus",
+          "kind": "re-export-type",
+          "from": "@/store/useAuthStore"
+        },
+        {
+          "name": "AuthState",
+          "kind": "re-export-type",
+          "from": "@/store/useAuthStore"
+        },
+        {
+          "name": "useAuth",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/lib/api-auth.ts",
+        "src/store/useAuthStore.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/hooks/useDynamicBackground.ts",
+      "exports": [
+        {
+          "name": "useDynamicBackground",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/store/useAppStore.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/hooks/useFormatDurationFromMs.ts",
+      "exports": [
+        {
+          "name": "useFormatDurationFromMs",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/hooks/useHeaderSetup.ts",
+      "exports": [
+        {
+          "name": "useHeaderSetup",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/store/useAppStore.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/hooks/useLocalSettings.ts",
+      "exports": [
+        {
+          "name": "LocalSettingsValues",
+          "kind": "interface"
+        },
+        {
+          "name": "useLocalSettings",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 7,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/hooks/useSortedItems.ts",
+      "exports": [
+        {
+          "name": "SortableItem",
+          "kind": "interface"
+        },
+        {
+          "name": "SortField",
+          "kind": "type"
+        },
+        {
+          "name": "UseSortedItemsOptions",
+          "kind": "interface"
+        },
+        {
+          "name": "useSortedItems",
+          "kind": "function"
+        },
+        {
+          "name": "useSortedVehicles",
+          "kind": "function"
+        },
+        {
+          "name": "useSortedDrivers",
+          "kind": "function"
+        },
+        {
+          "name": "useSortedByName",
+          "kind": "function"
+        },
+        {
+          "name": "useSortedByValue",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": ["src/lib/sorting.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/hooks/useTheme.ts",
+      "exports": [
+        {
+          "name": "Theme",
+          "kind": "type"
+        },
+        {
+          "name": "ResolvedTheme",
+          "kind": "type"
+        },
+        {
+          "name": "getStoredTheme",
+          "kind": "function"
+        },
+        {
+          "name": "applyTheme",
+          "kind": "function"
+        },
+        {
+          "name": "setStoredTheme",
+          "kind": "function"
+        },
+        {
+          "name": "getResolvedTheme",
+          "kind": "function"
+        },
+        {
+          "name": "useThemeContext",
+          "kind": "function"
+        },
+        {
+          "name": "useTheme",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/hooks/useToast.ts",
+      "exports": [
+        {
+          "name": "useToast",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 6,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/api-auth.ts",
+      "exports": [
+        {
+          "name": "inMemoryToken",
+          "kind": "let"
+        },
+        {
+          "name": "setToken",
+          "kind": "function"
+        },
+        {
+          "name": "getToken",
+          "kind": "function"
+        },
+        {
+          "name": "clearToken",
+          "kind": "function"
+        },
+        {
+          "name": "isAuthenticated",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/api-throttler.ts",
+      "exports": [
+        {
+          "name": "ApiThrottler",
+          "kind": "class"
+        },
+        {
+          "name": "defaultThrottler",
+          "kind": "const"
+        },
+        {
+          "name": "trackingThrottler",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/lib/logger.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/lib/datetime.ts",
+      "exports": [
+        {
+          "name": "formatDate",
+          "kind": "function"
+        },
+        {
+          "name": "formatTime",
+          "kind": "function"
+        },
+        {
+          "name": "formatDateTime",
+          "kind": "function"
+        },
+        {
+          "name": "formatDateForApi",
+          "kind": "function"
+        },
+        {
+          "name": "formatDateForApi",
+          "kind": "function"
+        },
+        {
+          "name": "formatDateForApi",
+          "kind": "function"
+        },
+        {
+          "name": "getDaysInMonth",
+          "kind": "function"
+        },
+        {
+          "name": "getFirstDayOfMonth",
+          "kind": "function"
+        },
+        {
+          "name": "isSameDay",
+          "kind": "function"
+        },
+        {
+          "name": "isInRange",
+          "kind": "function"
+        },
+        {
+          "name": "WEEKDAYS",
+          "kind": "const"
+        },
+        {
+          "name": "MONTHS",
+          "kind": "const"
+        },
+        {
+          "name": "formatTimeAgo",
+          "kind": "function"
+        },
+        {
+          "name": "formatTimeAgoWithI18n",
+          "kind": "function"
+        },
+        {
+          "name": "formatLastUpdate",
+          "kind": "function"
+        },
+        {
+          "name": "formatParkingDuration",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 16,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/lib/vehicle-telemetry.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/lib/format-header-date-span.ts",
+      "exports": [
+        {
+          "name": "formatHeaderDateSpan",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/logger.ts",
+      "exports": [
+        {
+          "name": "log",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/screen-date-range-init.ts",
+      "exports": [
+        {
+          "name": "initialRangeStartMidnight",
+          "kind": "function"
+        },
+        {
+          "name": "initialRangeEndEndOfDay",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/sorting.ts",
+      "exports": [
+        {
+          "name": "filterBySearch",
+          "kind": "function"
+        },
+        {
+          "name": "sortByLocaleFields",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/sse-client.ts",
+      "exports": [
+        {
+          "name": "ReportSSEClient",
+          "kind": "class"
+        },
+        {
+          "name": "getSSEClient",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/api/index.ts", "src/lib/api-auth.ts", "src/lib/logger.ts"],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/lib/track-ew-filter.ts",
+      "exports": [
+        {
+          "name": "RegionPolygon",
+          "kind": "type"
+        },
+        {
+          "name": "DEFAULT_ERROR_FILTER_MAX_SPEED_KMH",
+          "kind": "const"
+        },
+        {
+          "name": "filterByPolygon",
+          "kind": "function"
+        },
+        {
+          "name": "pruneKeptByMaxSpeed",
+          "kind": "function"
+        },
+        {
+          "name": "buildKeptContiguousPolylines",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "exports": [
+        {
+          "name": "cn",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 15,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/lib/vehicle-name.ts",
+      "exports": [
+        {
+          "name": "ParsedVehicleName",
+          "kind": "interface"
+        },
+        {
+          "name": "extractVehicleId",
+          "kind": "function"
+        },
+        {
+          "name": "extractVehicleIdString",
+          "kind": "function"
+        },
+        {
+          "name": "parseVehicleName",
+          "kind": "function"
+        },
+        {
+          "name": "createVehicleDisplayName",
+          "kind": "function"
+        },
+        {
+          "name": "stripVehicleId",
+          "kind": "function"
+        },
+        {
+          "name": "isValidVehicleDisplayName",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 7,
+      "referencesFromOtherFiles": 6,
+      "importsFromProjectTs": ["src/types/lib/common.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/lib/vehicle-telemetry.ts",
+      "exports": [
+        {
+          "name": "VEHICLE_OFFLINE_THRESHOLD_MS",
+          "kind": "const"
+        },
+        {
+          "name": "lastTransmitToMs",
+          "kind": "function"
+        },
+        {
+          "name": "isVehicleTelemetryFresh",
+          "kind": "function"
+        },
+        {
+          "name": "getVehicleStatus",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/main.tsx",
+      "exports": [],
+      "exportCount": 0,
+      "referencesFromOtherFiles": 0,
+      "importsFromProjectTs": [
+        "src/App.tsx",
+        "src/config/lib/i18n.ts",
+        "src/hooks/useTheme.ts",
+        "src/shell/components/ErrorBoundary.tsx"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/screens/index.ts",
+      "exports": [
+        {
+          "name": "LoginScreen",
+          "kind": "re-export",
+          "from": "./login/LoginScreen"
+        },
+        {
+          "name": "LoginScreenProps",
+          "kind": "re-export-type",
+          "from": "./login/LoginScreen"
+        },
+        {
+          "name": "MapScreen",
+          "kind": "re-export",
+          "from": "./map/MapScreen"
+        },
+        {
+          "name": "MapScreenProps",
+          "kind": "re-export-type",
+          "from": "./map/MapScreen"
+        },
+        {
+          "name": "ObjectsScreen",
+          "kind": "re-export",
+          "from": "./objects"
+        },
+        {
+          "name": "ObjectsScreenProps",
+          "kind": "re-export-type",
+          "from": "./objects"
+        },
+        {
+          "name": "ObjectDetailsScreen",
+          "kind": "re-export",
+          "from": "./object-details"
+        },
+        {
+          "name": "ObjectDetailsScreenProps",
+          "kind": "re-export-type",
+          "from": "./object-details"
+        },
+        {
+          "name": "TrackingScreen",
+          "kind": "re-export",
+          "from": "./tracking/TrackingScreen"
+        },
+        {
+          "name": "ReportsScreen",
+          "kind": "re-export",
+          "from": "./reports"
+        },
+        {
+          "name": "SettingsScreen",
+          "kind": "re-export",
+          "from": "./settings/SettingsScreen"
+        },
+        {
+          "name": "SettingsScreenProps",
+          "kind": "re-export-type",
+          "from": "./settings/SettingsScreen"
+        },
+        {
+          "name": "NotificationSettingsScreen",
+          "kind": "re-export",
+          "from": "./notification-settings"
+        },
+        {
+          "name": "NotificationSettingsScreenProps",
+          "kind": "re-export-type",
+          "from": "./notification-settings"
+        }
+      ],
+      "exportCount": 14,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/screens/login/LoginScreen.tsx",
+        "src/screens/map/MapScreen.tsx",
+        "src/screens/notification-settings/index.ts",
+        "src/screens/object-details/index.ts",
+        "src/screens/objects/index.ts",
+        "src/screens/reports/index.ts",
+        "src/screens/settings/SettingsScreen.tsx",
+        "src/screens/tracking/TrackingScreen.tsx"
+      ],
+      "importsFromProjectTsCount": 8
+    },
+    {
+      "path": "src/screens/login/components/LoginFormFields.tsx",
+      "exports": [
+        {
+          "name": "LoginFormFieldsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "LoginFormFields",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/Button.tsx", "src/ui/Input.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/login/hooks/useLoginFlow.ts",
+      "exports": [
+        {
+          "name": "UseLoginFlowArgs",
+          "kind": "interface"
+        },
+        {
+          "name": "useLoginFlow",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/hooks/useAuth.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/login/LoginScreen.tsx",
+      "exports": [
+        {
+          "name": "LoginScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "LoginScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/hooks/useAuth.ts",
+        "src/hooks/useDynamicBackground.ts",
+        "src/hooks/useHeaderSetup.ts",
+        "src/screens/login/components/LoginFormFields.tsx",
+        "src/screens/login/hooks/useLoginFlow.ts",
+        "src/ui/Button.tsx",
+        "src/ui/LoadingOverlay.tsx",
+        "src/ui/Logo.tsx"
+      ],
+      "importsFromProjectTsCount": 8
+    },
+    {
+      "path": "src/screens/map/components/MapScreenClusterStack.tsx",
+      "exports": [
+        {
+          "name": "MapScreenClusterStackProps",
+          "kind": "interface"
+        },
+        {
+          "name": "MapScreenClusterStack",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/ClusterMap.tsx",
+        "src/features/map/hooks/useMapSettings.ts",
+        "src/features/map/lib/map-config.ts"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/screens/map/components/MapScreenToolbars.tsx",
+      "exports": [
+        {
+          "name": "MapScreenToolbarsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "MapScreenToolbars",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/map/hooks/useMapSettings.ts",
+        "src/features/map/lib/map-config.ts",
+        "src/ui/HeaderLeftSlot.tsx",
+        "src/ui/HeaderRightSlot.tsx"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/screens/map/lib/map-screen-utils.ts",
+      "exports": [
+        {
+          "name": "providerLayerToSettingsMap",
+          "kind": "re-export",
+          "from": "@/features/map/lib/map-type-preference"
+        },
+        {
+          "name": "MAP_REFRESH_INTERVAL_MS",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/map/lib/map-type-preference.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/map/MapScreen.tsx",
+      "exports": [
+        {
+          "name": "MapScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "MapScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/entities/vehicle/lib/model.ts",
+        "src/features/map/hooks/useMapSettings.ts",
+        "src/features/map/lib/map-config.ts",
+        "src/features/map/lib/map-type-preference.ts",
+        "src/hooks/useHeaderSetup.ts",
+        "src/hooks/useLocalSettings.ts",
+        "src/screens/map/components/MapScreenClusterStack.tsx",
+        "src/screens/map/components/MapScreenToolbars.tsx",
+        "src/screens/map/lib/map-screen-utils.ts",
+        "src/store/useAppStore.ts"
+      ],
+      "importsFromProjectTsCount": 10
+    },
+    {
+      "path": "src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx",
+      "exports": [
+        {
+          "name": "NotificationEventTogglesPanelProps",
+          "kind": "interface"
+        },
+        {
+          "name": "NotificationEventTogglesPanel",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/events.ts",
+        "src/screens/notification-settings/lib/notification-event-keys.ts",
+        "src/ui/ToggleLabelSwitchRow.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/notification-settings/components/NotificationSettingsPushSection.tsx",
+      "exports": [
+        {
+          "name": "NotificationSettingsPushSectionProps",
+          "kind": "interface"
+        },
+        {
+          "name": "NotificationSettingsPushSection",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/features/notifications/index.ts", "src/ui/Switch.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/notification-settings/components/NotificationSettingsVehicleSection.tsx",
+      "exports": [
+        {
+          "name": "NotificationSettingsVehicleSectionProps",
+          "kind": "interface"
+        },
+        {
+          "name": "NotificationSettingsVehicleSection",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+      "exports": [
+        {
+          "name": "useNotificationSettingsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/hooks/useToast.ts",
+        "src/screens/notification-settings/lib/notification-event-keys.ts",
+        "src/store/useAppStore.ts",
+        "src/store/useNotificationStore.ts"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/screens/notification-settings/index.ts",
+      "exports": [
+        {
+          "name": "NotificationSettingsScreen",
+          "kind": "re-export",
+          "from": "./NotificationSettingsScreen"
+        },
+        {
+          "name": "NotificationSettingsScreenProps",
+          "kind": "re-export-type",
+          "from": "./NotificationSettingsScreen"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/screens/notification-settings/NotificationSettingsScreen.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/notification-settings/lib/notification-event-keys.ts",
+      "exports": [
+        {
+          "name": "NotificationEventConfigKey",
+          "kind": "type"
+        },
+        {
+          "name": "NOTIFICATION_EVENT_KEYS",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/api/domains/events.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+      "exports": [
+        {
+          "name": "NotificationSettingsScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "NotificationSettingsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/features/notifications/index.ts",
+        "src/hooks/useDynamicBackground.ts",
+        "src/hooks/useHeaderSetup.ts",
+        "src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx",
+        "src/screens/notification-settings/components/NotificationSettingsPushSection.tsx",
+        "src/screens/notification-settings/components/NotificationSettingsVehicleSection.tsx",
+        "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+        "src/ui/BottomSelectModal.tsx"
+      ],
+      "importsFromProjectTsCount": 8
+    },
+    {
+      "path": "src/screens/object-details/components/EventsTab.tsx",
+      "exports": [
+        {
+          "name": "EventsTabProps",
+          "kind": "interface"
+        },
+        {
+          "name": "EventsTab",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/entities/vehicle/icons/index.ts",
+        "src/screens/object-details/constants.ts",
+        "src/ui/Button.tsx"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/screens/object-details/components/ObjectDetailsHeaderLeft.tsx",
+      "exports": [
+        {
+          "name": "ObjectDetailsHeaderLeftProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ObjectDetailsHeaderLeft",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/entities/vehicle/icons/index.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/object-details/components/ObjectDetailsTabBar.tsx",
+      "exports": [
+        {
+          "name": "ObjectDetailsTabBarProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ObjectDetailsTabBar",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/object-details/constants.ts",
+      "exports": [
+        {
+          "name": "generateDateTabs",
+          "kind": "const"
+        },
+        {
+          "name": "DATE_TABS",
+          "kind": "const"
+        },
+        {
+          "name": "HistoryEntry",
+          "kind": "type"
+        },
+        {
+          "name": "EVENTS_CONFIG",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 7,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryEventMarkers.tsx",
+      "exports": [
+        {
+          "name": "HistoryEventMarkersProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryEventMarkers",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/screens/object-details/history/lib/map-event-data.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryEventRow.tsx",
+      "exports": [
+        {
+          "name": "HistoryEventRowProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryEventRow",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/screens/object-details/constants.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryMap.tsx",
+      "exports": [
+        {
+          "name": "HistoryMapProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryMap",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/MapShell.tsx",
+        "src/features/map/components/PolylineDecorator.tsx",
+        "src/features/map/components/VehicleInfoPopup.tsx",
+        "src/features/map/hooks/useMapSettings.ts",
+        "src/features/map/lib/leaflet-icons.ts",
+        "src/hooks/useLocalSettings.ts",
+        "src/screens/object-details/history/components/HistoryEventMarkers.tsx",
+        "src/screens/object-details/history/components/HistoryMapHandlers.tsx",
+        "src/screens/object-details/history/lib/map-event-data.ts",
+        "src/screens/tracking/constants.ts"
+      ],
+      "importsFromProjectTsCount": 11
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryMapHandlers.tsx",
+      "exports": [
+        {
+          "name": "MapResizeHandler",
+          "kind": "function"
+        },
+        {
+          "name": "MapBoundsHandler",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+      "exports": [
+        {
+          "name": "HistoryTabProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryTabContainer",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/screens/object-details/history/components/HistoryMap.tsx",
+        "src/screens/object-details/history/components/HistoryTimeline.tsx",
+        "src/screens/object-details/hooks/useHistoryMapState.ts",
+        "src/screens/object-details/hooks/useHistoryTimeline.ts"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+      "exports": [
+        {
+          "name": "HistoryTimelineProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryTimeline",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/screens/object-details/constants.ts",
+        "src/screens/object-details/history/components/HistoryTimelineDateTabs.tsx",
+        "src/screens/object-details/history/components/HistoryTimelineEventList.tsx",
+        "src/screens/object-details/history/components/HistoryTimelineLoadingOverlay.tsx",
+        "src/screens/object-details/history/components/HistoryTimelineSummaryStrip.tsx",
+        "src/screens/object-details/hooks/useHistoryTimelineDateScroll.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineDateTabs.tsx",
+      "exports": [
+        {
+          "name": "HistoryTimelineDateTabsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryTimelineDateTabs",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/screens/object-details/constants.ts",
+        "src/screens/object-details/history/lib/history-timeline-utils.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineEventList.tsx",
+      "exports": [
+        {
+          "name": "HistoryTimelineEventListProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryTimelineEventList",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/screens/object-details/constants.ts",
+        "src/screens/object-details/history/components/HistoryEventRow.tsx"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineLoadingOverlay.tsx",
+      "exports": [
+        {
+          "name": "HistoryTimelineLoadingOverlayProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryTimelineLoadingOverlay",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/LogoLoader.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineSummaryStrip.tsx",
+      "exports": [
+        {
+          "name": "HistoryTimelineSummaryStripProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HistoryTimelineSummaryStrip",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/object-details/history/lib/history-timeline-utils.ts",
+      "exports": [
+        {
+          "name": "formatHistoryTabDate",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/object-details/history/lib/map-event-data.ts",
+      "exports": [
+        {
+          "name": "MappedTrackEvent",
+          "kind": "interface"
+        },
+        {
+          "name": "mapTrackEvents",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/api/index.ts", "src/features/map/lib/leaflet-icons.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/object-details/hooks/useHistoryMapState.ts",
+      "exports": [
+        {
+          "name": "useHistoryMapState",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/lib/vehicle-telemetry.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/object-details/hooks/useHistoryTimeline.ts",
+      "exports": [
+        {
+          "name": "useHistoryTimeline",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/hooks/useFormatDurationFromMs.ts",
+        "src/screens/object-details/constants.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/object-details/hooks/useHistoryTimelineDateScroll.ts",
+      "exports": [
+        {
+          "name": "useHistoryTimelineDateScroll",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+      "exports": [
+        {
+          "name": "useObjectDetailsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/tracking/index.ts",
+        "src/api/index.ts",
+        "src/hooks/useToast.ts",
+        "src/screens/object-details/constants.ts",
+        "src/store/useAppStore.ts",
+        "src/types/lib/common.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/screens/object-details/index.ts",
+      "exports": [
+        {
+          "name": "ObjectDetailsScreen",
+          "kind": "re-export",
+          "from": "./ObjectDetailsScreen"
+        },
+        {
+          "name": "ObjectDetailsScreenProps",
+          "kind": "re-export-type",
+          "from": "./ObjectDetailsScreen"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/screens/object-details/ObjectDetailsScreen.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/object-details/ObjectDetailsScreen.tsx",
+      "exports": [
+        {
+          "name": "ObjectDetailsScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ObjectDetailsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/screens/object-details/components/EventsTab.tsx",
+        "src/screens/object-details/components/ObjectDetailsHeaderLeft.tsx",
+        "src/screens/object-details/components/ObjectDetailsTabBar.tsx",
+        "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+        "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+        "src/types/lib/common.ts",
+        "src/ui/HeaderLeftSlot.tsx"
+      ],
+      "importsFromProjectTsCount": 7
+    },
+    {
+      "path": "src/screens/objects/components/ObjectListItem.tsx",
+      "exports": [
+        {
+          "name": "ObjectListItem",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/entities/vehicle/icons/index.ts",
+        "src/screens/objects/lib/utils.ts",
+        "src/types/lib/common.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+      "exports": [
+        {
+          "name": "ObjectVisibilityModalProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ObjectVisibilityModal",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/hooks/useSortedItems.ts",
+        "src/ui/BottomModal.tsx",
+        "src/ui/Button.tsx",
+        "src/ui/Input.tsx",
+        "src/ui/ModalSecondaryButton.tsx"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/screens/objects/index.ts",
+      "exports": [
+        {
+          "name": "ObjectsScreen",
+          "kind": "re-export",
+          "from": "./ObjectsScreen"
+        },
+        {
+          "name": "ObjectsScreenProps",
+          "kind": "re-export-type",
+          "from": "./ObjectsScreen"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/screens/objects/ObjectsScreen.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/objects/lib/utils.ts",
+      "exports": [
+        {
+          "name": "formatTimeAgo",
+          "kind": "export"
+        },
+        {
+          "name": "formatTimeAgoWithI18n",
+          "kind": "export"
+        },
+        {
+          "name": "formatLastUpdate",
+          "kind": "export"
+        },
+        {
+          "name": "formatParkingDuration",
+          "kind": "export"
+        },
+        {
+          "name": "VehicleListItem",
+          "kind": "interface"
+        },
+        {
+          "name": "vehicleToListItem",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 6,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/entities/vehicle/icons/index.ts",
+        "src/lib/datetime.ts",
+        "src/lib/vehicle-name.ts",
+        "src/lib/vehicle-telemetry.ts"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/screens/objects/ObjectsScreen.tsx",
+      "exports": [
+        {
+          "name": "ObjectsScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ObjectsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/entities/vehicle/lib/model.ts",
+        "src/hooks/useDynamicBackground.ts",
+        "src/hooks/useHeaderSetup.ts",
+        "src/screens/objects/components/ObjectListItem.tsx",
+        "src/screens/objects/components/ObjectVisibilityModal.tsx",
+        "src/screens/objects/lib/utils.ts",
+        "src/store/lib/selectors.ts",
+        "src/store/useAppStore.ts",
+        "src/types/lib/common.ts",
+        "src/ui/HeaderLeftSlot.tsx",
+        "src/ui/Input.tsx"
+      ],
+      "importsFromProjectTsCount": 11
+    },
+    {
+      "path": "src/screens/reports/components/FiltersPanel.tsx",
+      "exports": [
+        {
+          "name": "FiltersPanelProps",
+          "kind": "interface"
+        },
+        {
+          "name": "FiltersPanel",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/screens/reports/components/FiltersPanelHeader.tsx",
+        "src/screens/reports/components/FiltersPanelSections.tsx",
+        "src/ui/BottomSelectModal.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/reports/components/FiltersPanelHeader.tsx",
+      "exports": [
+        {
+          "name": "FiltersPanelHeaderProps",
+          "kind": "interface"
+        },
+        {
+          "name": "FiltersPanelHeader",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/lib/format-header-date-span.ts", "src/ui/HeaderLeftSlot.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/reports/components/FiltersPanelSections.tsx",
+      "exports": [
+        {
+          "name": "FiltersPanelSectionsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "FiltersPanelSections",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/date-range-picker/index.ts",
+        "src/ui/ActionButton.tsx",
+        "src/ui/Button.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/reports/components/GeneratingReportView.tsx",
+      "exports": [
+        {
+          "name": "GeneratingReportViewProps",
+          "kind": "interface"
+        },
+        {
+          "name": "GeneratingReportView",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/Button.tsx", "src/ui/LogoLoader.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/reports/components/ReportCustomManagement.tsx",
+      "exports": [
+        {
+          "name": "ReportCustomManagement",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/reports/index.ts",
+        "src/ui/Button.tsx",
+        "src/ui/Input.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/reports/components/ReportHistoryView.tsx",
+      "exports": [
+        {
+          "name": "ReportHistoryView",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/domains/reports/index.ts", "src/ui/Button.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/reports/components/ReportResultView.tsx",
+      "exports": [
+        {
+          "name": "ReportResultViewProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ReportResultView",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/report-table/index.ts",
+        "src/ui/HeaderCenterSlot.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/reports/constants.ts",
+      "exports": [
+        {
+          "name": "View",
+          "kind": "type"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/reports/hooks/useReportRunner.ts",
+      "exports": [
+        {
+          "name": "UseReportRunnerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "useReportRunner",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/hooks/useToast.ts",
+        "src/lib/sse-client.ts",
+        "src/screens/reports/constants.ts",
+        "src/screens/reports/lib/build-ws-report-request.ts",
+        "src/screens/reports/lib/report-build-subscription.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/screens/reports/hooks/useReportsFormState.ts",
+      "exports": [
+        {
+          "name": "useReportsFormState",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/misc.ts",
+        "src/api/domains/reports/index.ts",
+        "src/api/index.ts",
+        "src/hooks/useSortedItems.ts",
+        "src/lib/screen-date-range-init.ts",
+        "src/store/lib/selectors.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/screens/reports/index.ts",
+      "exports": [
+        {
+          "name": "ReportsScreen",
+          "kind": "re-export",
+          "from": "./ReportsScreen"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/screens/reports/ReportsScreen.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/reports/lib/build-ws-report-request.ts",
+      "exports": [
+        {
+          "name": "BuildWsReportRequestParams",
+          "kind": "interface"
+        },
+        {
+          "name": "buildWsReportRequest",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/reports/lib/report-build-subscription.ts",
+      "exports": [
+        {
+          "name": "ReportBuildSubscriptionOptions",
+          "kind": "interface"
+        },
+        {
+          "name": "attachReportBuildSubscription",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/lib/sse-client.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/reports/ReportsScreen.tsx",
+      "exports": [
+        {
+          "name": "ReportsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/reports/index.ts",
+        "src/hooks/useDynamicBackground.ts",
+        "src/screens/reports/components/FiltersPanel.tsx",
+        "src/screens/reports/components/GeneratingReportView.tsx",
+        "src/screens/reports/components/ReportCustomManagement.tsx",
+        "src/screens/reports/components/ReportHistoryView.tsx",
+        "src/screens/reports/components/ReportResultView.tsx",
+        "src/screens/reports/constants.ts",
+        "src/screens/reports/hooks/useReportRunner.ts",
+        "src/screens/reports/hooks/useReportsFormState.ts",
+        "src/store/useAppStore.ts",
+        "src/ui/Button.tsx"
+      ],
+      "importsFromProjectTsCount": 12
+    },
+    {
+      "path": "src/screens/settings/components/SettingsField.tsx",
+      "exports": [
+        {
+          "name": "SettingsFieldProps",
+          "kind": "type"
+        },
+        {
+          "name": "SettingsField",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/ToggleLabelSwitchRow.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/settings/components/SettingsSections.tsx",
+      "exports": [
+        {
+          "name": "SettingsSectionsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "SettingsSections",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/map/hooks/useLocalMapTypePreference.ts",
+        "src/features/map/lib/map-type-preference.ts",
+        "src/screens/settings/components/SettingsField.tsx",
+        "src/screens/settings/constants.ts",
+        "src/screens/settings/hooks/useSettingsState.ts",
+        "src/ui/BottomSelectModal.tsx",
+        "src/ui/Button.tsx",
+        "src/ui/LanguageSelector.tsx"
+      ],
+      "importsFromProjectTsCount": 8
+    },
+    {
+      "path": "src/screens/settings/constants.ts",
+      "exports": [
+        {
+          "name": "ZOOM_OPTIONS",
+          "kind": "const"
+        },
+        {
+          "name": "SCROLL_OPTIONS",
+          "kind": "const"
+        },
+        {
+          "name": "MAP_TYPE_OPTIONS",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/settings/hooks/useSettingsState.ts",
+      "exports": [
+        {
+          "name": "useSettingsState",
+          "kind": "function"
+        },
+        {
+          "name": "SettingsScreenState",
+          "kind": "type"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/hooks/useLocalSettings.ts", "src/store/useAppStore.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/settings/SettingsScreen.tsx",
+      "exports": [
+        {
+          "name": "SettingsScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "SettingsScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 4,
+      "importsFromProjectTs": [
+        "src/screens/settings/components/SettingsSections.tsx",
+        "src/screens/settings/hooks/useSettingsState.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/components/MapZoomTracker.tsx",
+      "exports": [
+        {
+          "name": "MapZoomTracker",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/DrawRegionLayer.tsx",
+      "exports": [
+        {
+          "name": "DrawRegionLayerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "DrawRegionLayer",
+          "kind": "function"
+        },
+        {
+          "name": "ActivePolygonOverlayProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ActivePolygonOverlay",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/lib/track-ew-filter.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/FitBoundsOnLoad.tsx",
+      "exports": [
+        {
+          "name": "FitBoundsOnLoadProps",
+          "kind": "interface"
+        },
+        {
+          "name": "FitBoundsOnLoad",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/ImperativePlaybackMarker.tsx",
+      "exports": [
+        {
+          "name": "ImperativePlaybackMarkerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ImperativePlaybackMarker",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/ui/PlaybackIcon.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/StaticTrackLayer.tsx",
+      "exports": [
+        {
+          "name": "StaticTrackLayerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "StaticTrackLayer",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/PolylineDecorator.tsx",
+        "src/ui/PlaybackIcon.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/TrackPlaybackLayer.tsx",
+      "exports": [
+        {
+          "name": "TrackPlaybackLayerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackPlaybackLayer",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/screens/tracking/components/track-layers/FitBoundsOnLoad.tsx",
+        "src/screens/tracking/components/track-layers/ImperativePlaybackMarker.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingControls.tsx",
+      "exports": [
+        {
+          "name": "TrackingControlsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingControls",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts", "src/ui/TrackingPlayer.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingEventPicker.tsx",
+      "exports": [
+        {
+          "name": "TrackingEventPickerProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingEventPicker",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/screens/tracking/constants.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingMap.tsx",
+      "exports": [
+        {
+          "name": "TrackingMapProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingMap",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/lib/track-ew-filter.ts",
+        "src/screens/tracking/components/TrackingRouteMap.tsx",
+        "src/screens/tracking/hooks/useRegionFilter.ts"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingRouteMap.tsx",
+      "exports": [
+        {
+          "name": "TrackingRouteMapProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingRouteMap",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/components/MapShell.tsx",
+        "src/hooks/useLocalSettings.ts",
+        "src/lib/track-ew-filter.ts",
+        "src/screens/tracking/components/MapZoomTracker.tsx",
+        "src/screens/tracking/components/track-layers/DrawRegionLayer.tsx",
+        "src/screens/tracking/components/track-layers/StaticTrackLayer.tsx",
+        "src/screens/tracking/components/track-layers/TrackPlaybackLayer.tsx",
+        "src/screens/tracking/components/TrackingRouteMapChrome.tsx",
+        "src/screens/tracking/hooks/useRegionFilter.ts",
+        "src/screens/tracking/lib/tracking-route-map-utils.ts"
+      ],
+      "importsFromProjectTsCount": 11
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingRouteMapChrome.tsx",
+      "exports": [
+        {
+          "name": "TrackingRouteMapChromeProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingRouteMapChrome",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/screens/tracking/hooks/useRegionFilter.ts",
+        "src/ui/LogoLoader.tsx"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingScreenHeader.tsx",
+      "exports": [
+        {
+          "name": "TrackingScreenHeaderProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingScreenHeader",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/lib/format-header-date-span.ts",
+        "src/lib/vehicle-name.ts",
+        "src/ui/HeaderLeftSlot.tsx"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/screens/tracking/components/TrackPreview.tsx",
+      "exports": [
+        {
+          "name": "TrackPreviewProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackPreview",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/tracking/components/TrackStyleSettings.tsx",
+      "exports": [
+        {
+          "name": "TrackStyleSettings",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/hooks/useLocalSettings.ts",
+        "src/screens/tracking/components/TrackPreview.tsx",
+        "src/screens/tracking/constants.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/screens/tracking/constants.ts",
+      "exports": [
+        {
+          "name": "COLORS",
+          "kind": "const"
+        },
+        {
+          "name": "TrackingColor",
+          "kind": "type"
+        },
+        {
+          "name": "WIDTH_MIN",
+          "kind": "const"
+        },
+        {
+          "name": "WIDTH_MAX",
+          "kind": "const"
+        },
+        {
+          "name": "WIDTH_STEP",
+          "kind": "const"
+        },
+        {
+          "name": "EVENTS",
+          "kind": "const"
+        },
+        {
+          "name": "TRACKING_EVENT_API_CODE",
+          "kind": "const"
+        },
+        {
+          "name": "trackingSelectionToEventIds",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 6,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts",
+      "exports": [
+        {
+          "name": "decimateLatLngPath",
+          "kind": "re-export",
+          "from": "../lib/track-adaptive-sampling"
+        },
+        {
+          "name": "useAdaptiveTrackRendering",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/screens/tracking/lib/track-adaptive-sampling.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/hooks/useRegionFilter.ts",
+      "exports": [
+        {
+          "name": "FilterMode",
+          "kind": "type"
+        },
+        {
+          "name": "useRegionFilter",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/api/index.ts", "src/lib/track-ew-filter.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingPlayback.ts",
+      "exports": [
+        {
+          "name": "UseTrackingPlaybackProps",
+          "kind": "interface"
+        },
+        {
+          "name": "useTrackingPlayback",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+      "exports": [
+        {
+          "name": "useTrackingScreenForm",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/hooks/useLocalSettings.ts",
+        "src/hooks/useSortedItems.ts",
+        "src/lib/screen-date-range-init.ts",
+        "src/lib/vehicle-name.ts",
+        "src/screens/tracking/constants.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+      "exports": [
+        {
+          "name": "UseTrackingScreenLaunchArgs",
+          "kind": "interface"
+        },
+        {
+          "name": "useTrackingScreenLaunch",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/hooks/useToast.ts",
+        "src/screens/tracking/constants.ts",
+        "src/store/useAppStore.ts",
+        "src/types/lib/common.ts"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingState.ts",
+      "exports": [
+        {
+          "name": "UseTrackingStateArgs",
+          "kind": "interface"
+        },
+        {
+          "name": "useTrackingState",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/map/lib/vehicle-icon-registry.ts",
+        "src/hooks/useFormatDurationFromMs.ts",
+        "src/hooks/useLocalSettings.ts",
+        "src/hooks/useToast.ts",
+        "src/lib/api-throttler.ts",
+        "src/screens/tracking/constants.ts",
+        "src/screens/tracking/hooks/useRegionFilter.ts",
+        "src/store/lib/adapters/tracking.ts",
+        "src/store/lib/selectors.ts",
+        "src/store/useAppStore.ts",
+        "src/types/lib/common.ts"
+      ],
+      "importsFromProjectTsCount": 12
+    },
+    {
+      "path": "src/screens/tracking/index.ts",
+      "exports": [
+        {
+          "name": "TrackingScreen",
+          "kind": "re-export",
+          "from": "./TrackingScreen"
+        },
+        {
+          "name": "TrackingActionScreen",
+          "kind": "re-export",
+          "from": "./TrackingActionScreen"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 0,
+      "importsFromProjectTs": [
+        "src/screens/tracking/TrackingActionScreen.tsx",
+        "src/screens/tracking/TrackingScreen.tsx"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/lib/track-adaptive-config.ts",
+      "exports": [
+        {
+          "name": "ZOOM_THRESHOLDS",
+          "kind": "const"
+        },
+        {
+          "name": "MAX_POINTS_PER_ZOOM",
+          "kind": "const"
+        },
+        {
+          "name": "MAX_DOTS_PER_ZOOM",
+          "kind": "const"
+        },
+        {
+          "name": "ZoomCategory",
+          "kind": "type"
+        },
+        {
+          "name": "zoomCategory",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/screens/tracking/lib/track-adaptive-sampling.ts",
+      "exports": [
+        {
+          "name": "getDownsampleStep",
+          "kind": "function"
+        },
+        {
+          "name": "decimateLatLngPath",
+          "kind": "function"
+        },
+        {
+          "name": "computeAdaptivePolylinePositions",
+          "kind": "function"
+        },
+        {
+          "name": "computeAdaptiveDots",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/screens/tracking/lib/track-adaptive-config.ts"
+      ],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/screens/tracking/lib/tracking-route-map-utils.ts",
+      "exports": [
+        {
+          "name": "trackingRouteFitBoundsOnceKey",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/screens/tracking/hooks/useRegionFilter.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/screens/tracking/TrackingActionScreen.tsx",
+      "exports": [
+        {
+          "name": "TrackingActionScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingActionScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": [
+        "src/features/map/lib/vehicle-icon-registry.ts",
+        "src/lib/vehicle-name.ts",
+        "src/screens/tracking/components/TrackingControls.tsx",
+        "src/screens/tracking/components/TrackingMap.tsx",
+        "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts",
+        "src/screens/tracking/hooks/useTrackingPlayback.ts",
+        "src/screens/tracking/hooks/useTrackingState.ts",
+        "src/store/useAppStore.ts",
+        "src/types/lib/common.ts",
+        "src/ui/HeaderLeftSlot.tsx"
+      ],
+      "importsFromProjectTsCount": 10
+    },
+    {
+      "path": "src/screens/tracking/TrackingScreen.tsx",
+      "exports": [
+        {
+          "name": "TrackingScreenProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingScreen",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/features/date-range-picker/index.ts",
+        "src/hooks/useDynamicBackground.ts",
+        "src/hooks/useHeaderSetup.ts",
+        "src/lib/vehicle-name.ts",
+        "src/screens/tracking/components/TrackingEventPicker.tsx",
+        "src/screens/tracking/components/TrackingScreenHeader.tsx",
+        "src/screens/tracking/components/TrackStyleSettings.tsx",
+        "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+        "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+        "src/ui/ActionButton.tsx",
+        "src/ui/BottomSelectModal.tsx",
+        "src/ui/Button.tsx"
+      ],
+      "importsFromProjectTsCount": 13
+    },
+    {
+      "path": "src/shell/components/app-header/AppHeader.tsx",
+      "exports": [
+        {
+          "name": "AppHeader",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/lib/utils.ts",
+        "src/shell/components/app-header/AppHeaderCollapsedRow.tsx",
+        "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+        "src/shell/hooks/useAppHeader.ts",
+        "src/ui/SettingsButton.tsx",
+        "src/ui/ThemeToggle.tsx"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/shell/components/app-header/AppHeaderCollapsedRow.tsx",
+      "exports": [
+        {
+          "name": "AppHeaderCollapsedRow",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/HeaderIconButton.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+      "exports": [
+        {
+          "name": "AppHeaderExpandedMenu",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/lib/utils.ts",
+        "src/screens/settings/SettingsScreen.tsx",
+        "src/screens/tracking/components/TrackStyleSettings.tsx",
+        "src/ui/Accordion.tsx",
+        "src/ui/Button.tsx",
+        "src/ui/ThemeToggle.tsx"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/shell/components/app-header/index.ts",
+      "exports": [
+        {
+          "name": "AppHeader",
+          "kind": "re-export",
+          "from": "./AppHeader"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/shell/components/app-header/AppHeader.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/shell/components/ErrorBoundary.tsx",
+      "exports": [
+        {
+          "name": "ErrorBoundary",
+          "kind": "class"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/shell/components/GlobalLoader.tsx",
+      "exports": [
+        {
+          "name": "GlobalLoader",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/store/useUIStore.ts", "src/ui/LogoLoader.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/shell/components/MobileShell.tsx",
+      "exports": [
+        {
+          "name": "MobileShell",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/shell/components/MobileShellTabBar.tsx",
+        "src/shell/components/ScreenRouter.tsx",
+        "src/shell/hooks/useMobileShell.ts"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/shell/components/MobileShellTabBar.tsx",
+      "exports": [
+        {
+          "name": "MobileShellTabBarProps",
+          "kind": "interface"
+        },
+        {
+          "name": "MobileShellTabBar",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/config/lib/navigation.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/shell/components/ScreenRouter.tsx",
+      "exports": [
+        {
+          "name": "ScreenRouterProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ScreenRouter",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/config/lib/navigation.ts",
+        "src/entities/vehicle/lib/model.ts",
+        "src/hooks/useAuth.ts",
+        "src/screens/index.ts",
+        "src/screens/login/LoginScreen.tsx",
+        "src/screens/map/MapScreen.tsx",
+        "src/screens/notification-settings/index.ts",
+        "src/screens/object-details/index.ts",
+        "src/screens/objects/index.ts",
+        "src/screens/reports/index.ts",
+        "src/screens/settings/SettingsScreen.tsx",
+        "src/screens/tracking/TrackingActionScreen.tsx",
+        "src/screens/tracking/TrackingScreen.tsx",
+        "src/types/lib/common.ts"
+      ],
+      "importsFromProjectTsCount": 14
+    },
+    {
+      "path": "src/shell/hooks/useAppHeader.ts",
+      "exports": [
+        {
+          "name": "useAppHeader",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/config/lib/header.ts",
+        "src/store/useAppStore.ts",
+        "src/store/useAuthStore.ts",
+        "src/store/useUIStore.ts"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/shell/hooks/useAuthFlow.ts",
+      "exports": [
+        {
+          "name": "useAuthFlow",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/features/notifications/index.ts",
+        "src/store/useAppStore.ts",
+        "src/store/useAuthStore.ts",
+        "src/store/useNavigationStore.ts",
+        "src/store/useNotificationStore.ts",
+        "src/store/useUIStore.ts"
+      ],
+      "importsFromProjectTsCount": 6
+    },
+    {
+      "path": "src/shell/hooks/useGlobalErrorHandler.ts",
+      "exports": [
+        {
+          "name": "useGlobalErrorHandler",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/hooks/useToast.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/shell/hooks/useMobileShell.ts",
+      "exports": [
+        {
+          "name": "useMobileShell",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/domains/notifications.ts",
+        "src/config/lib/navigation.ts",
+        "src/features/notifications/hooks/useNotificationInit.ts",
+        "src/shell/hooks/useAuthFlow.ts",
+        "src/shell/hooks/useGlobalErrorHandler.ts",
+        "src/shell/hooks/useScreenTransition.ts",
+        "src/store/useAppStore.ts",
+        "src/store/useNavigationStore.ts"
+      ],
+      "importsFromProjectTsCount": 8
+    },
+    {
+      "path": "src/shell/hooks/useScreenTransition.ts",
+      "exports": [
+        {
+          "name": "useScreenTransition",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/store/useNavigationStore.ts", "src/store/useUIStore.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/store/lib/adapters/tracking.ts",
+      "exports": [
+        {
+          "name": "useTracking",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/domains/tracking/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/store/lib/selectors.ts",
+      "exports": [
+        {
+          "name": "selectObjectsSearch",
+          "kind": "const"
+        },
+        {
+          "name": "selectSelectedObjectId",
+          "kind": "const"
+        },
+        {
+          "name": "selectScreen",
+          "kind": "const"
+        },
+        {
+          "name": "selectZones",
+          "kind": "const"
+        },
+        {
+          "name": "useObjectsSearch",
+          "kind": "const"
+        },
+        {
+          "name": "selectVehicles",
+          "kind": "const"
+        },
+        {
+          "name": "selectTrackingQuery",
+          "kind": "const"
+        },
+        {
+          "name": "useVehiclesStore",
+          "kind": "const"
+        },
+        {
+          "name": "useTrackingQuery",
+          "kind": "const"
+        },
+        {
+          "name": "selectSelectedVehicle",
+          "kind": "const"
+        },
+        {
+          "name": "useSelectedVehicle",
+          "kind": "const"
+        },
+        {
+          "name": "useVehiclesMap",
+          "kind": "const"
+        },
+        {
+          "name": "useVehicleById",
+          "kind": "const"
+        },
+        {
+          "name": "useActiveVehicles",
+          "kind": "const"
+        },
+        {
+          "name": "useParkedVehicles",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 15,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/api/index.ts", "src/store/useAppStore.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/store/useAppStore.ts",
+      "exports": [
+        {
+          "name": "HeaderMode",
+          "kind": "re-export-type",
+          "from": "./useUIStore"
+        },
+        {
+          "name": "BackgroundVariant",
+          "kind": "re-export-type",
+          "from": "./useUIStore"
+        },
+        {
+          "name": "LoaderMode",
+          "kind": "re-export-type",
+          "from": "./useUIStore"
+        },
+        {
+          "name": "HeaderViewState",
+          "kind": "re-export-type",
+          "from": "./useUIStore"
+        },
+        {
+          "name": "useNavigationStore",
+          "kind": "re-export",
+          "from": "./useNavigationStore"
+        },
+        {
+          "name": "useUIStore",
+          "kind": "re-export",
+          "from": "./useUIStore"
+        },
+        {
+          "name": "AppStateValues",
+          "kind": "interface"
+        },
+        {
+          "name": "AppState",
+          "kind": "interface"
+        },
+        {
+          "name": "useAppStore",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 9,
+      "referencesFromOtherFiles": 20,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/store/useNavigationStore.ts",
+        "src/store/useUIStore.ts",
+        "src/types/lib/common.ts"
+      ],
+      "importsFromProjectTsCount": 4
+    },
+    {
+      "path": "src/store/useAuthStore.ts",
+      "exports": [
+        {
+          "name": "LoginStatus",
+          "kind": "type"
+        },
+        {
+          "name": "AuthState",
+          "kind": "interface"
+        },
+        {
+          "name": "useAuthStore",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/api/index.ts", "src/lib/api-auth.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/store/useNavigationStore.ts",
+      "exports": [
+        {
+          "name": "useNavigationStore",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/config/lib/navigation.ts", "src/types/lib/common.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/store/useNotificationStore.ts",
+      "exports": [
+        {
+          "name": "useNotificationStore",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 3,
+      "importsFromProjectTs": ["src/api/domains/events.ts", "src/features/notifications/index.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/store/useUIStore.ts",
+      "exports": [
+        {
+          "name": "HeaderMode",
+          "kind": "type"
+        },
+        {
+          "name": "BackgroundVariant",
+          "kind": "type"
+        },
+        {
+          "name": "LoaderMode",
+          "kind": "type"
+        },
+        {
+          "name": "HeaderViewState",
+          "kind": "interface"
+        },
+        {
+          "name": "useUIStore",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 7,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/types/lib/common.ts",
+      "exports": [
+        {
+          "name": "VehicleId",
+          "kind": "type"
+        },
+        {
+          "name": "VehicleId",
+          "kind": "const"
+        },
+        {
+          "name": "VehicleIdString",
+          "kind": "type"
+        },
+        {
+          "name": "VehicleIdString",
+          "kind": "const"
+        },
+        {
+          "name": "EntityId",
+          "kind": "type"
+        },
+        {
+          "name": "EntityIdString",
+          "kind": "type"
+        },
+        {
+          "name": "EntityId",
+          "kind": "const"
+        },
+        {
+          "name": "EntityIdString",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 11,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/Accordion.tsx",
+      "exports": [
+        {
+          "name": "Accordion",
+          "kind": "function"
+        },
+        {
+          "name": "AccordionItem",
+          "kind": "function"
+        },
+        {
+          "name": "AccordionTrigger",
+          "kind": "function"
+        },
+        {
+          "name": "AccordionContent",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 4,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/ActionButton.tsx",
+      "exports": [
+        {
+          "name": "ActionButton",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/lib/utils.ts", "src/ui/Button.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/ui/Badge.tsx",
+      "exports": [
+        {
+          "name": "BadgeProps",
+          "kind": "interface"
+        },
+        {
+          "name": "Badge",
+          "kind": "export"
+        },
+        {
+          "name": "badgeVariants",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 0,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/BottomModal.tsx",
+      "exports": [
+        {
+          "name": "BottomModalProps",
+          "kind": "interface"
+        },
+        {
+          "name": "BottomModal",
+          "kind": "function"
+        },
+        {
+          "name": "BottomModalHeader",
+          "kind": "function"
+        },
+        {
+          "name": "BottomModalBody",
+          "kind": "function"
+        },
+        {
+          "name": "BottomModalFooter",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 5,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/BottomSelectModal.tsx",
+      "exports": [
+        {
+          "name": "SelectItem",
+          "kind": "interface"
+        },
+        {
+          "name": "BottomSelectModalProps",
+          "kind": "interface"
+        },
+        {
+          "name": "BottomSelectModal",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": [
+        "src/hooks/useSortedItems.ts",
+        "src/ui/BottomModal.tsx",
+        "src/ui/Button.tsx",
+        "src/ui/Input.tsx",
+        "src/ui/ModalSecondaryButton.tsx"
+      ],
+      "importsFromProjectTsCount": 5
+    },
+    {
+      "path": "src/ui/Button.tsx",
+      "exports": [
+        {
+          "name": "ButtonProps",
+          "kind": "interface"
+        },
+        {
+          "name": "Button",
+          "kind": "export"
+        },
+        {
+          "name": "buttonVariants",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 16,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/HeaderCenterSlot.tsx",
+      "exports": [
+        {
+          "name": "HeaderCenterSlot",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/HeaderIconButton.tsx",
+      "exports": [
+        {
+          "name": "HeaderIconButtonProps",
+          "kind": "interface"
+        },
+        {
+          "name": "HeaderIconButton",
+          "kind": "const"
+        },
+        {
+          "name": "HeaderMinimalIconButton",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/HeaderLeftSlot.tsx",
+      "exports": [
+        {
+          "name": "HeaderLeftSlot",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 6,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/HeaderRightSlot.tsx",
+      "exports": [
+        {
+          "name": "HeaderRightSlot",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/Input.tsx",
+      "exports": [
+        {
+          "name": "InputProps",
+          "kind": "interface"
+        },
+        {
+          "name": "Input",
+          "kind": "export"
+        },
+        {
+          "name": "inputVariants",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/LanguageSelector.tsx",
+      "exports": [
+        {
+          "name": "LanguageSelector",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/BottomSelectModal.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/LoadingOverlay.tsx",
+      "exports": [
+        {
+          "name": "LoadingOverlayProps",
+          "kind": "interface"
+        },
+        {
+          "name": "LoadingOverlay",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/ui/LogoLoader.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/Logo.tsx",
+      "exports": [
+        {
+          "name": "LogoVariant",
+          "kind": "type"
+        },
+        {
+          "name": "LogoProps",
+          "kind": "interface"
+        },
+        {
+          "name": "Logo",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/LogoLoader.tsx",
+      "exports": [
+        {
+          "name": "LogoLoader",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 5,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/ModalSecondaryButton.tsx",
+      "exports": [
+        {
+          "name": "ModalSecondaryButtonProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ModalSecondaryButton",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/PlaybackIcon.tsx",
+      "exports": [
+        {
+          "name": "bearingDegBetween",
+          "kind": "function"
+        },
+        {
+          "name": "getPlaybackIcon",
+          "kind": "function"
+        },
+        {
+          "name": "getEventIcon",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 3,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/entities/vehicle/icons/index.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/SettingsButton.tsx",
+      "exports": [
+        {
+          "name": "SettingsButtonProps",
+          "kind": "interface"
+        },
+        {
+          "name": "SettingsButton",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/lib/utils.ts", "src/ui/HeaderIconButton.tsx"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/ui/Sonner.tsx",
+      "exports": [
+        {
+          "name": "Toaster",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/Switch.tsx",
+      "exports": [
+        {
+          "name": "Switch",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/Table.tsx",
+      "exports": [
+        {
+          "name": "Table",
+          "kind": "export"
+        },
+        {
+          "name": "TableHeader",
+          "kind": "export"
+        },
+        {
+          "name": "TableBody",
+          "kind": "export"
+        },
+        {
+          "name": "TableFooter",
+          "kind": "export"
+        },
+        {
+          "name": "TableHead",
+          "kind": "export"
+        },
+        {
+          "name": "TableRow",
+          "kind": "export"
+        },
+        {
+          "name": "TableCell",
+          "kind": "export"
+        },
+        {
+          "name": "TableCaption",
+          "kind": "export"
+        }
+      ],
+      "exportCount": 8,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/lib/utils.ts"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/ThemeToggle.tsx",
+      "exports": [
+        {
+          "name": "ThemeToggle",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/hooks/useTheme.ts", "src/lib/utils.ts"],
+      "importsFromProjectTsCount": 2
+    },
+    {
+      "path": "src/ui/ToggleLabelSwitchRow.tsx",
+      "exports": [
+        {
+          "name": "ToggleLabelSwitchRowProps",
+          "kind": "interface"
+        },
+        {
+          "name": "ToggleLabelSwitchRow",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 2,
+      "importsFromProjectTs": ["src/ui/Switch.tsx"],
+      "importsFromProjectTsCount": 1
+    },
+    {
+      "path": "src/ui/TrackingPlayer.tsx",
+      "exports": [
+        {
+          "name": "TrackingPlayer",
+          "kind": "function"
+        }
+      ],
+      "exportCount": 1,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [
+        "src/api/index.ts",
+        "src/ui/TrackingPlayerControls.tsx",
+        "src/ui/TrackingSummaryStats.tsx"
+      ],
+      "importsFromProjectTsCount": 3
+    },
+    {
+      "path": "src/ui/TrackingPlayerControls.tsx",
+      "exports": [
+        {
+          "name": "TrackingPlayerControlsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingPlayerControls",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": [],
+      "importsFromProjectTsCount": 0
+    },
+    {
+      "path": "src/ui/TrackingSummaryStats.tsx",
+      "exports": [
+        {
+          "name": "TrackingSummaryStatsProps",
+          "kind": "interface"
+        },
+        {
+          "name": "TrackingSummaryStats",
+          "kind": "const"
+        }
+      ],
+      "exportCount": 2,
+      "referencesFromOtherFiles": 1,
+      "importsFromProjectTs": ["src/api/index.ts"],
+      "importsFromProjectTsCount": 1
+    }
+  ]
+}

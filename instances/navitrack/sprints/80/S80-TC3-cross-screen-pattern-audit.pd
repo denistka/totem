@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Cross-screen duplication audit (final pass)
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Grep and review for duplicated hooks (e.g. identical useEffect fetch
+  patterns), duplicated formatters, and copy-pasted modal footers. Either
+  merge into existing `hooks/`, `lib/`, or `components/ui` or add one new
+  module with a clear name. Document remaining intentional duplication in
+  `APP_LOGIC_SNAPSHOT.md` appendix if any.
+
+done:
+  - Audit notes ≤40 lines in intel or CODEMAP
+  - High-value dupes removed; leftovers documented
+
+out: []

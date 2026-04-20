@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Split TimePickerAnalogWheel.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `TimePickerAnalogWheel.tsx` (~196 LOC). Separate wheel UI, gesture math, and
+  value sync; align with date-range-picker time piece if shared.
+
+done:
+  - Wheel behavior unchanged; reusable pieces identified
+
+out:
+  - src/modules/date-range-picker/useAnalogWheelMinutes.ts
+  - src/modules/date-range-picker/AnalogClockFaceSvg.tsx

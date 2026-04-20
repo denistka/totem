@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin TrackingScreen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `TrackingScreen.tsx` (~255 LOC). Extract hooks to `hooks/tracking/` and
+  layout pieces to `components/tracking/`.
+
+done:
+  - Tracking flow unchanged; expensive subtrees isolated at leaves
+
+out:
+  - src/screens/tracking/components/TrackingScreenHeader.tsx
+  - src/screens/tracking/components/TrackingEventPicker.tsx
+  - src/screens/tracking/hooks/useTrackingScreenLaunch.ts

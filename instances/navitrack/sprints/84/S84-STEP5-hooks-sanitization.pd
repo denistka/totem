@@ -1,0 +1,19 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_5 — hooks sanitization
+requires: [FRONTEND_DEV]
+sprint: S84
+dep: [S84-STEP4-modules-to-features-migration.pd]
+
+context: |
+  Classify global hooks: `src/hooks/*` and any `app/*.ts` / `app/**/*.ts` shell
+  hooks (e.g. mobile shell, notification init wiring) — shared generic only.
+  Move domain coupling to features/*/hooks or screens/*/hooks per
+  decision_engine.global_hooks.
+
+hotspots:
+  - global_hooks
+
+done:
+  - No hook mixes unrelated domains without shared indirection
+  - Imports use new feature paths only (no @/modules)

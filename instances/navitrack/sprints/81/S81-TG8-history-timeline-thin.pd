@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin HistoryTimeline.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `HistoryTimeline.tsx` (~132 LOC). Extract scrubber state and tick rendering if
+  mixed; keep public props stable.
+
+done:
+  - Timeline readable; history screen integration intact
+
+out:
+  - src/screens/object-details/history/historyTimelineUtils.ts
+  - src/screens/object-details/history/useHistoryTimelineDateScroll.ts
+  - src/screens/object-details/history/HistoryTimelineDateTabs.tsx
+  - src/screens/object-details/history/HistoryTimelineSummaryStrip.tsx
+  - src/screens/object-details/history/HistoryTimelineLoadingOverlay.tsx
+  - src/screens/object-details/history/HistoryTimelineEventList.tsx

@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Single Vite config file
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Remove duplicate `vite.config.js` if it mirrors `vite.config.ts`. Keep one
+  canonical config (prefer `.ts`). Confirm `pnpm dev` / `pnpm build` and any
+  CI use the surviving file.
+
+done:
+  - Only one vite config remains; no duplicate drift
+  - Build and dev verified
+
+out: []

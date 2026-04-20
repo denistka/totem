@@ -40,7 +40,7 @@ If the project already has history and generated sprints, follow these steps to 
 2.  **Context Sync**: Point the AI to `totem/instances/{your-project}/README.md`.
 3.  **Ground Truth**: Run the build/dev command (e.g., `npm run build`) to verify current state.
 4.  **History Check**: Review the latest `.ptl` (Sprint) and `.pd` (Task) files in the configured history path.
-5.  **Role Alignment**: Load the appropriate Guardian from `totem/guardians/`.
+5.  **Role Alignment**: Load the appropriate Guardian from `totem/guardians/` (see [How to call Totem](#how-to-call-totem)).
 
 ### 2. Register the Instance (The "Class vs Instance")
 
@@ -64,33 +64,89 @@ If the project already has history and generated sprints, follow these steps to 
 
 ---
 
-## 💡 Example Prompts (V4 Context Flow)
+## How to call Totem
 
-The V4 protocol uses **Just-In-Time (JIT) Context Loading** to keep the agent's memory clean. You should always start by loading the master protocol, the specific project instance, and then the required role.
+Totem has **no CLI**. You “call” it by instructing the AI (or using editor references) so the right files are in context.
 
-**1. Sprint Planning (PLANNER)**
+### Load order (recommended)
+
+1. **Master index** — `totem/index.ti`  
+   Establishes protocol axioms, includes core schema and `ROOT` orchestration. In Cursor you can use `@totem/index.ti` in the chat input to attach it.
+
+2. **Project instance** — `totem/instances/<your-project>/`  
+   Point the model at `README.md` and **`project.config.yml`** there. That file defines `paths.code`, default **guardians**, and **stack adapters** (e.g. `FRONTEND_DEV`). Example: `navitrack` → `totem/instances/navitrack/`.
+
+3. **Role / guardian** — `totem/guardians/<NAME>.ti` (or a core module under `totem/core/` when applicable).  
+   Replace `<your-project>` and paths in prompts with your real instance folder and file locations.
+
+### Critical protocol gates (read `index.ti`)
+
+- **Planning vs execution**: The planner role is not supposed to execute implementation; generated `.ptl` / `.pd` often ship with `gate: LOCKED` until you change it.
+- **User approval for execution**: Treat execution as **blocked** until your **latest** message contains an explicit **`LGTM`** or **`Go`** (per `index.ti`). Do not assume approval.
+- **Tasks with `gate: LOCKED`**: Unexecutable until the human opens the gate in the file.
+
+### `project.config.yml` (per instance)
+
+- **`guardians.default`**: Roles loaded for general project work (e.g. `ROOT`, `PM`, `QA`, `DEVOPS`, `ARCHITECT`). Instances may add **`CODEMAP_QUALITY_ADVISOR`** for codemap-driven structural verdicts and refactor roadmaps (see NaviTrack `project.config.yml`).
+- **`guardians.stack_adapters`**: Tech-specific stacks from `totem/stacks/`; individual `.pd` tasks list what they need via `requires: [FRONTEND_DEV, …]`.
+
+### Guardian files (universal roles)
+
+| Prompt name   | File |
+|---------------|------|
+| `ROOT`        | `guardians/ROOT.ti` |
+| `PM`          | `guardians/PM.ti` |
+| `PLANNER`     | `guardians/PLANNER.ti` |
+| `ARCHITECT`   | `guardians/ARCHITECT.ti` |
+| `QA`          | `guardians/QA.ti` |
+| `CODEMAP_QUALITY_ADVISOR` | `guardians/CODEMAP_QUALITY_ADVISOR.ti` |
+| `DEVOPS`      | `guardians/DEVOPS.ti` |
+
+Other protocol modules live under `totem/core/` (e.g. `OPTIMIZER.ti`).
+
+#### `CODEMAP_QUALITY_ADVISOR` (codemap verdict + optional refactor roadmap)
+
+**Codemap-first advisor** for generated JSON under the client package (e.g. `navitrack-apps/src-client/codemap/`, see `AGENT-GUIDE.md` there). Produces a short structural quality verdict and **3–7 ordered refactor steps** unless the prompt asks for **report only** (then verdict without roadmap). Grounded in surface/path/import metrics; **no** training datasets or scoring grids as formal deliverables.
+
+### Where `.ptl` / `.pd` sprints live
+
+Sprints and tasks can live **inside the instance** (e.g. `totem/instances/navitrack/sprints/<n>/`) or in a separate **history** repo pointed to by `paths.history` in `project.config.yml`. Check the instance config before assuming `prompt-machine/` paths.
+
+---
+
+## 💡 Example prompts (JIT context flow)
+
+Use **Just-In-Time (JIT) context**: load index → instance → one role → concrete goal. Swap `navitrack` and paths for your instance.
+
+**1. Sprint planning (`PLANNER`)**
 
 ```text
-read totem/index.ti, load instance navitrack, load PLANNER and plan sprint for [feature description].
+Read totem/index.ti, load instance navitrack, load PLANNER, and plan a sprint for: [feature description].
 ```
 
-_(The agent will load the core protocols, read the project config, and generate `.ptl` and `.pd` files. It will explicitly assign specific tech stacks to each `.pd` task using the `requires:` field)._
+The agent should read `project.config.yml`, emit `.ptl` / `.pd`, and set `requires:` on tasks. Expect `gate: LOCKED` until you open it.
 
-**2. Task Execution (PM)**
+**2. Task execution (`PM` or role named in the task)**
 
 ```text
-read totem/index.ti, load instance navitrack, load PM and execute sprints/46/S46-T1-ServerAuth.pd
+Read totem/index.ti, load instance navitrack, load PM. LGTM — execute <paths.history>/sprints/46/S46-T1-ServerAuth.pd
 ```
 
-_(The agent will load the task file, see exactly which tech stacks are required via the `requires:` field, and load **ONLY** those specific rules before writing code)._
+(`paths.history` is in `totem/instances/<project>/project.config.yml`—often a `prompt-machine` repo or a folder under the instance.) Include **`LGTM`** or **`Go`** in the same message when you want implementation to proceed. The agent should load only the stacks listed in that `.pd`’s `requires:`.
 
-**3. Cleanup & Knowledge Extraction (OPTIMIZER)**
+**3. Codemap quality + refactor roadmap (`CODEMAP_QUALITY_ADVISOR`)**
 
 ```text
-read totem/index.ti, load instance navitrack, load OPTIMIZER and optimize totem (extract lessons from last 20 sprints).
+Read totem/index.ti, load instance navitrack, load CODEMAP_QUALITY_ADVISOR. Using codemap JSON under [path from paths.code to your codemap folder], produce a structural quality verdict and ordered refactor steps (or report-only if asked).
 ```
 
-_(The agent will audit recent work, abstract new "world best practices" into the global `/stacks/`, create a dense historical digest, and securely delete intermediate logs to keep the instance clean)._
+**4. Cleanup and knowledge extraction (`OPTIMIZER`)**
+
+```text
+Read totem/index.ti, load instance navitrack, read totem/core/OPTIMIZER.ti and optimize totem (extract lessons from the last 20 sprints).
+```
+
+Audits recent work and may update global stacks and digests; path to `OPTIMIZER.ti` is `totem/core/OPTIMIZER.ti`.
 
 ---
 
@@ -101,7 +157,7 @@ _(The agent will audit recent work, abstract new "world best practices" into the
 _The shared intelligence across ALL your projects._
 
 - **`/core`**: Protocol rules (MRPP 3.0), iteration flow, design sprint guide, invariant management. How the agents talk and protect prior decisions.
-- **`/guardians`**: Universal roles (PM, Architect, TL, QA, DevOps, Root). How the agents think. Includes: component size limits, dedup enforcement, multi-track sprint management, touch target verification, invariant protection.
+- **`/guardians`**: Universal roles (ROOT, PM, PLANNER, ARCHITECT, QA, CODEMAP_QUALITY_ADVISOR, DEVOPS). How the agents think—planning, architecture, quality, codemap verdict + refactor roadmap (ADVISOR, optional per instance), DevOps. Stack-specific behavior is layered from `/stacks` via `requires:` on tasks.
 - **`/stacks`**: Tech-specific adapters (React+TS, Vue+Tauri, Rust+WGPU). What the agents know about specific technologies. These extend universal guardians with stack-specific rules.
 - **`/templates`**: Blueprints for new projects.
 - **`/instances`**: **Registry of active projects.** (One folder per project).
@@ -123,13 +179,22 @@ _The binary output._
 
 - `src/`, `tests/`, `dist/`, etc.
 
+### NaviTrack (example instance)
+
+Path: **`totem/instances/navitrack/`**.
+
+- **Config**: `project.config.yml` — `paths.code` → `navitrack-apps`, `intel` → `./intel`.
+- **Sprints (in-repo)**: `sprints/84/` (constrained FSD / architectural repair).
+- **Intel**: `intel/*.md`, `*.json`, `TOTEM_SPRINTS.ti` (machine-oriented sprint index for this instance).
+- **Codemap** (generated): under `navitrack-apps/src-client/codemap/` — see `AGENT-GUIDE.md` there for levels and `pnpm codemap`.
+
 ---
 
 **Philosophy:** See [docs/HUMAN_AI_TANDEM_PHILOSOPHY.md](docs/HUMAN_AI_TANDEM_PHILOSOPHY.md) for the Human–AI tandem principles and "new way" tenets.
 
 ## 🚀 Why this way?
 
-1.  **Shared Knowledge**: Improvements to `guardians/ARCHITECT.ti` in Project A automatically benefit Project B.
+1.  **Shared Knowledge**: Improvements to `guardians/ARCHITECT.ti`, `CODEMAP_QUALITY_ADVISOR.ti`, and other universal guardians in Project A automatically benefit Project B.
 2.  **Clean History**: Code repo stays for code. `prompt-machine` stores the AI's "thought process".
 3.  **Global Search**: Since `totem/instances` stores all project metadata, you can grep one folder to see your entire portfolio.
 

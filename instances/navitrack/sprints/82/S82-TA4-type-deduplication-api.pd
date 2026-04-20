@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TA4 — DTO / type deduplication (quality_gates)
+requires: [FRONTEND_DEV]
+
+context: |
+  Duplicate interfaces for the same payload: merge into shared `api/interfaces`
+  or domain types; `import type` at boundaries. Incremental; tsc strict clean.
+  Coordinate with S81-TI1 where domains already use transforms.
+
+done:
+  - ≥2 duplicate type families unified; barrel exports updated
+  - Remainder tracked for TA5 if any
+
+out: []

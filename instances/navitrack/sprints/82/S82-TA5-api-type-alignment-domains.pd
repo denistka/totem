@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TA5 — domain API ↔ type alignment (ta_definition_of_done)
+requires: [FRONTEND_DEV]
+
+context: |
+  Each active endpoint family: single canonical request/response type for
+  transforms and UI. Fix naming drift (`FooDto` vs `FooResponse`). Align with
+  navigation/API registry if present in codebase. No runtime behavior change.
+
+done:
+  - P0 flows aligned; `ta_definition_of_done` satisfied for scoped domains
+
+out: []

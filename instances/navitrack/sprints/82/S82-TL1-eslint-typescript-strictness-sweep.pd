@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TL1 — ESLint + TypeScript strictness (after TL0)
+requires: [FRONTEND_DEV]
+
+context: |
+  Prefer starting after `S82-TL0` so SonarJS noise is gone. Tighten eslint/tsconfig
+  incrementally (no big-bang). Target new violations in touched modules; file
+  follow-up intel for remaining `any` hotspots. Prettier must remain single
+  formatter. CI should stay green after each increment.
+
+done:
+  - Config change documented; measurable reduction in `any` or stricter rule on
+  - No unrelated formatting churn across whole repo in one commit
+
+out: []

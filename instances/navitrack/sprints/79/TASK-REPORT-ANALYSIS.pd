@@ -1,0 +1,14 @@
+---
+title: Analyze Legacy iOS Report Logic
+gate: OPEN
+type: task
+requires: [ARCHITECT, FRONTEND_DEV]
+---
+
+# Task Objective
+Thoroughly analyze the legacy iOS application (`/Users/denistka/Projects/navitrack/old-apps/navitrack-mobile-ios`) to understand the exact logic for report generation and rendering, and document (save) this knowledge.
+
+# Detailed Steps
+1. **Analyze `ReportConvertor.swift`**: Understand how data from the API is parsed, how keys are grouped, how columns are ordered (e.g., `vehicleName`, `type`, `number`), and how the "Общий Итог" (Total) row is formed.
+2. **Analyze `ReportViewController.swift`**: Analyze how the SpreadsheetView is configured, what the column widths, frozen rows/columns, and cell styling behaviors are.
+3. **Document Findings**: Create a knowledge document (e.g., in `totem/instances/navitrack/intel/`) describing the exact rules and transformations the legacy app applies to turn raw API JSON into a spreadsheet table.

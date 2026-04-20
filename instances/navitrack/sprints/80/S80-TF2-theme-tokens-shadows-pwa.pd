@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Neutral/shadow tokens + PWA colors aligned to theme
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Replace raw `rgba(0,0,0,…)` and `rgba(255,255,255,…)` in `index.css` glass/
+  shimmer/glow rules with variables defined in `src/styles/theme.css` (light
+  and `.dark`), e.g. shadow depth, glass highlights. Align `vite.config.ts`
+  PWA `theme_color` / `background_color` with the same dark shell token (or
+  document a single source). Update `index.html` meta theme-color if it drifts.
+
+done:
+  - theme.css holds neutral/shadow tokens; index.css references them
+  - Manifest/meta colors match documented token choice
+
+out: []

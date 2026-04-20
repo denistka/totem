@@ -1,0 +1,60 @@
+gate: OPEN
+sprint: S80
+title: Deep Refactor — Consistency, Deduplication, Config, Performance
+priority: P1
+dep: S78
+
+description: |
+  Second-wave refactor after S78 structural cleanup. Ground work in a short
+  "app logic" conclusion so only necessary code remains. Eliminate duplication,
+  pull hardcoded UI/layout/API fragments into shared abstractions, delete dead
+  paths, and optimize hot lists and bundle edges. Track TF: global CSS health
+  (dedupe index.css, tokenized neutrals, Leaflet color policy), single Vite
+  config, removal of legacy src/__tests__ and aligned tooling.
+
+  Code root: navitrack-apps/src-client (per project.config.yml).
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 5–8 days
+
+tracks:
+  - id: TA
+    title: App logic map & keep/delete conclusion
+    tasks:
+      - S80-TA1-app-logic-snapshot.pd
+      - S80-TA2-align-codemap-with-snapshot.pd
+
+  - id: TB
+    title: Dead code & demo fixtures
+    tasks:
+      - S80-TB1-dead-code-second-pass.pd
+      - S80-TB2-demo-and-placeholder-data.pd
+
+  - id: TC
+    title: Reusable UI — kill duplication
+    tasks:
+      - S80-TC1-screen-sticky-toolbar-pattern.pd
+      - S80-TC2-list-states-and-rows.pd
+      - S80-TC3-cross-screen-pattern-audit.pd
+
+  - id: TD
+    title: Hardcoded → tokens & registries
+    tasks:
+      - S80-TD1-layout-z-index-sticky-tokens.pd
+      - S80-TD2-navigation-and-api-surface-registry.pd
+
+  - id: TE
+    title: Optimization
+    tasks:
+      - S80-TE1-lazy-imports-and-heavy-deps.pd
+      - S80-TE2-list-render-hot-paths.pd
+
+  - id: TF
+    title: Global CSS, theme tokens & tooling
+    tasks:
+      - S80-TF1-index-css-dedupe.pd
+      - S80-TF2-theme-tokens-shadows-pwa.pd
+      - S80-TF3-event-colors-leaflet-policy.pd
+      - S80-TF4-vite-config-single-source.pd
+      - S80-TF5-remove-src-tests-tooling.pd

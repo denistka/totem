@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:devops
+task: S86 T5 — configure mobile scripts
+requires: [DEVOPS]
+sprint: S86
+
+context: |
+  Add explicit scripts for mobile development and building to 'package.json'.
+  - "ios:dev": "tauri ios dev"
+  - "ios:build": "tauri ios build"
+  - "android:dev": "tauri android dev"
+  - "android:build": "tauri android build"
+  Ensure these scripts work with the unified root package.json.
+
+out:
+  - navitrack-mobile-apps/package.json (updated scripts)
+
+done:
+  - Mobile scripts added to 'package.json'.
+  - Verify if 'tauri ios init' and 'tauri android init' have been run or need to be run (usually done manually once).

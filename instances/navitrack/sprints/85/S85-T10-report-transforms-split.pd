@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S85 T10 — report-transforms split
+requires: [FRONTEND_DEV]
+sprint: S85
+dep: [S85-T2-domain-imports-batch-two.pd]
+
+context: |
+  Split src/api/domains/report-transforms.ts by concern (e.g. row/column vs
+  stream vs table model). Preserve public exports via re-export file or
+  explicit imports; no API response shape change.
+
+out:
+  - New module paths listed; consumers updated
+
+done:
+  - Line count per file < 225 for former monolith chunk; tests green

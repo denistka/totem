@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Split FiltersPanel.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `FiltersPanel.tsx` (~241 LOC). Separate filter groups, state hook, and layout
+  shell.
+
+done:
+  - Clear props boundary for report vs map consumers if shared
+
+out: []

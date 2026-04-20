@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S86 T0 — scaffold mobile repo
+requires: [FRONTEND_DEV]
+sprint: S86
+
+context: |
+  Initialize 'navitrack-mobile-apps' using the structure from 'tauri2-clean-template'.
+  Empty the target directory if needed (it should already be empty) and copy all
+  template files (.gitignore, README, index.html, package.json, src, src-tauri,
+  tsconfig.json, vite.config.ts).
+
+out:
+  - navitrack-mobile-apps/ (scaffolded structure)
+
+done:
+  - Repository contains all template files.
+  - 'pnpm install' (or npm) runs without errors in the new directory.

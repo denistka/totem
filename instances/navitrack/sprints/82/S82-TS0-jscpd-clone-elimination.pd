@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TS0 — jscpd clone elimination (syntactic dedupe; §3 baseline)
+requires: [FRONTEND_DEV]
+
+context: |
+  Source list: `totem/instances/navitrack/intel/S82_ARCHITECT_V4_BASELINE.md` §3.
+  Cross-file: FiltersPanelHeader ↔ TrackingScreenHeader; useReportsFormState ↔
+  useTrackingScreenForm; useHistoryTimeline ↔ useTrackingState chunk;
+  NotificationEventTogglesPanel ↔ SettingsField. Internal dupes: SettingsSections,
+  icon-svg, reportTableModel, DateRangePicker, report-transforms, language-selector,
+  theme.css. Extract shared hooks/components/utilities; dedupe CSS with variables
+  or @layer — UI must stay pixel-identical. Update baseline §3 + changelog after.
+
+done:
+  - `pnpm dupes:jscpd` shows 0 new actionable clones, or remaining hits listed in
+    baseline with suppress/explain one-liners
+  - `pnpm lint` and tsc still green
+
+out: []

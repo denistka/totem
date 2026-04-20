@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin login-screen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `login-screen.tsx` (~212 LOC). Extract form state + validation hook and
+  presentational blocks.
+
+done:
+  - Auth flow unchanged; no secrets in client
+
+out:
+  - src/screens/login/hooks/useLoginFlow.ts
+  - src/screens/login/components/LoginFormFields.tsx

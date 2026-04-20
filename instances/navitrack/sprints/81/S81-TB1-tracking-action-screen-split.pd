@@ -1,0 +1,21 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Decompose TrackingActionScreen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `TrackingActionScreen.tsx` (~395 LOC). Extract:
+  - `src/screens/tracking/hooks/useTrackingState.ts`
+  - `src/screens/tracking/components/TrackingMap.tsx`
+  - `src/screens/tracking/components/TrackingControls.tsx`
+  Screen file becomes thin orchestrator; preserve props and routing contracts.
+
+done:
+  - Screen <~120 lines; behavior and map parity unchanged
+  - No new god hook; state split is testable
+
+out:
+  - src/screens/tracking/hooks/useTrackingState.ts
+  - src/screens/tracking/components/TrackingMap.tsx
+  - src/screens/tracking/components/TrackingControls.tsx

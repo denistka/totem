@@ -1,0 +1,66 @@
+{
+  "sprint": "S85",
+  "generatedAt": "2026-04-08T12:00:00.000Z",
+  "codemapCommand": "pnpm codemap",
+  "codemapCwd": "navitrack-apps/src-client",
+  "codemapImportRefs": {
+    "unresolved": 0
+  },
+  "jscpd": {
+    "clonesFound": 0,
+    "note": "Summary from pnpm codemap (jscpd src) after S85"
+  },
+  "madge": {
+    "circularDependencies": 0
+  },
+  "baselineRef": "totem/instances/navitrack/intel/S85_codemap_hub_baseline.json",
+  "deltasVsBaseline": {
+    "src/api/index.ts": {
+      "referencesFromOtherFiles": { "before": 59, "after": 0 },
+      "importsFromProjectTsCount": { "before": 10, "after": 10 }
+    },
+    "src/store/useAppStore.ts": {
+      "referencesFromOtherFiles": { "before": 20, "after": 19 },
+      "importsFromProjectTsCount": { "before": 4, "after": 5 }
+    },
+    "src/app/ScreenRouter.tsx": {
+      "importsFromProjectTsCount": { "before": 14, "after": 14 }
+    },
+    "src/screens/tracking/TrackingScreen.tsx": {
+      "importsFromProjectTsCount": { "before": 13, "after": 13 },
+      "note": "Vehicle type from @/entities/vehicle/model; no api barrel"
+    },
+    "src/screens/tracking/hooks/useTrackingState.ts": {
+      "importsFromProjectTsCount": { "before": 12, "after": 12 },
+      "note": "Types from @/api/domains/tracking"
+    },
+    "src/screens/reports/ReportsScreen.tsx": {
+      "importsFromProjectTsCount": { "before": 12, "after": 12 },
+      "note": "Header wiring moved to useReportsScreenHeader; edge count flat"
+    },
+    "src/screens/object-details/history/HistoryMap.tsx": {
+      "importsFromProjectTsCount": { "before": 11, "after": 12 },
+      "note": "+1 after splitting @/api into vehicle-types + tracking-types"
+    },
+    "src/screens/objects/ObjectsScreen.tsx": {
+      "importsFromProjectTsCount": { "before": 11, "after": 10 }
+    },
+    "src/screens/tracking/components/TrackingRouteMap.tsx": {
+      "importsFromProjectTsCount": { "before": 11, "after": 11 },
+      "note": "Types from tracking-types; barrel relieved"
+    }
+  },
+  "successMetricsFromPtl": {
+    "codemapRegeneratedUnresolvedZero": true,
+    "apiIndexReferencesTrend": "59 → 0 (no remaining @/api barrel imports in src/)",
+    "screenEdges": "ObjectsScreen −1 import; HistoryMap +1 trade for barrel removal",
+    "reportTransforms": "Split into report-transforms.ts, report-transforms-model.ts, report-transforms-format.ts; all <225 lines",
+    "madgeCycles": 0
+  },
+  "newStoreModules": ["src/store/useObjectsUiStore.ts"],
+  "reportTransformModules": [
+    "src/api/domains/report-transforms.ts",
+    "src/api/domains/report-transforms-model.ts",
+    "src/api/domains/report-transforms-format.ts"
+  ]
+}

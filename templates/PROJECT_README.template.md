@@ -34,7 +34,7 @@
 
 ## Guardians Selection
 
-Universal Process: `ROOT`, `PM`, `QA`, `DEVOPS`, `ARCHITECT`
+Universal process: `ROOT`, `PM`, `QA`, `DEVOPS`, `ARCHITECT`. Add `CODEMAP_QUALITY_ADVISOR` to `guardians.default` or task `requires:` when you want codemap-driven structural verdicts and refactor roadmaps (see `guardians/CODEMAP_QUALITY_ADVISOR.ti`).
 
 Stack Adapters (Categorized for JIT Loading):
 

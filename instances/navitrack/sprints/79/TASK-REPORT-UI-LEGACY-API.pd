@@ -1,0 +1,16 @@
+---
+title: Implement Identical Frontend Reporting (Legacy API)
+gate: OPEN
+type: task
+requires: [FRONTEND_DEV]
+depends_on: [TASK-REPORT-ANALYSIS.pd]
+---
+
+# Task Objective
+Achieve 100% data and visual parity with the legacy app for reports, using the *old API*, while adapting to the new application's style guide.
+
+# Detailed Steps
+1. Implement the data transformation logic discovered in `TASK-REPORT-ANALYSIS.pd` on the frontend for the old API response.
+2. Ensure columns are ordered exactly as in the legacy app (`ТС`, `День`, etc.).
+3. Ensure the "Общий Итог" (Total) row appears identically.
+4. Apply the new application's styles while maintaining the exact structural and visual layout (frozen column, cell spacing, headers) as seen in the user's provided screenshots.

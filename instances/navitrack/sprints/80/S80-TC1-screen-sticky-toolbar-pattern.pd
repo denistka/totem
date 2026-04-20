@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Unify sticky tab + search/action toolbar
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Multiple screens repeat sticky headers with `border-b`, search `Input` +
+  icon, and primary actions. Extract one or two composable components (props:
+  tabs optional, search value/onChange, right slot) in `src/components/` and
+  migrate maintenance, drivers, geozones, objects, or others that match the
+  pattern. Remove copy-pasted class stacks; keep visual parity.
+
+done:
+  - Shared component(s) used in ≥3 call sites or justified if fewer
+  - Visual regression checked on affected screens
+
+out: []

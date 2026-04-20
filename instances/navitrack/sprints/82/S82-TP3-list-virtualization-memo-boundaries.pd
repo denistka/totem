@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TP3 — list virtualization + memo-boundary checklist (v4.1 TP order)
+requires: [FRONTEND_DEV]
+
+context: |
+  Document which large lists use virtualization (reports, objects, history) vs
+  other windowing. Memo boundaries (row, cell, group header) — checklist in
+  intel or PR. Coordinate with TP2 (memo hot paths) and TP4 (profiler); execute
+  order is defined in `S82-ARCHITECT-V4-FULL-OPTIMIZATION.ptl` TP track list.
+
+done:
+  - Checklist committed; hotspots optimized or explicitly OK-as-is
+
+out: []

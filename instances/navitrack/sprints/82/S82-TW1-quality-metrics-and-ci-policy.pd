@@ -1,0 +1,19 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TW1 — metric_lock numerics + CI policy + LOC gates
+requires: [FRONTEND_DEV]
+
+context: |
+  Implement **`metric_lock`** from `S82-ARCHITECT-V4-FULL-OPTIMIZATION.ptl`:
+  `duplication_metric` = jscpd duplicated **lines** ratio (numerator/denominator
+  from jscpd report), `dependency_metric` = madge cycle count, `api_metric` =
+  TA2 coverage table (endpoints vs canonical types). Same definitions for the
+  whole sprint — no redefinition without sponsor intel note. Max file size 150
+  LOC for new code; optional CI. Align with `quality_gates` and
+  `post_sprint_guards`.
+
+out: [totem/instances/navitrack/intel/S82_QUALITY_GATES.md]
+
+done:
+  - Policy doc + scripts or CI snippet referenced
+  - `dupes:jscpd` and `codemap` commands documented for reviewers

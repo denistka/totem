@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TP2 — memo / rerender hot paths (evidence-based; last in TP track per .ptl)
+requires: [FRONTEND_DEV]
+
+context: |
+  Profile or reason from hot paths (reports table, map layers). Add memo/useMemo
+  / callback stability only with evidence; avoid blanket memo noise. Document
+  what was measured.
+
+done:
+  - 1–3 justified optimizations; before/after note in task comment or intel
+  - No regressions in interactions
+
+out: []

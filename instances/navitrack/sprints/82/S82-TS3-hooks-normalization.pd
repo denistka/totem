@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TS3 — hooks normalization (architecture_rules, naming, scope)
+requires: [FRONTEND_DEV]
+
+context: |
+  Apply `hooks_rules` in this sprint `.ptl`: shared/agnostic OR single
+  feature/entity scope — no undeclared hybrid hooks. Naming (`use*Screen`,
+  `use*Form`); extract shared effects where behavior matches. Pairs with TS1/TS2.
+
+done:
+  - Guidelines in intel; ≥2 hooks renamed or split; duplicates merged or listed per semantic gate
+
+out: []

@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Dead code second pass (tools + manual)
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  After S78, run unused export / dependency analysis (e.g. knip, ts-prune, or
+  eslint unused-imports) on `navitrack-apps/src-client`. Remove dead files,
+  exports, and types. Ensure `tsc --noEmit` and test script still pass.
+
+done:
+  - Tool output summarized in one paragraph in sprint notes or task footer
+  - Dead code removed with green CI locally
+
+out: []

@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TQ1 — unit tests for hooks & services (testability layer)
+requires: [FRONTEND_DEV]
+
+context: |
+  After S81/S82 extractions, add focused tests for pure functions, reducers,
+  mappers, and hook logic testable without full DOM. Prefer existing test
+  runner in package.json. No snapshot spam for UI.
+
+done:
+  - New tests cover ≥2 critical modules; CI green
+  - Listed in intel which areas still lack coverage (backlog)
+
+out: []

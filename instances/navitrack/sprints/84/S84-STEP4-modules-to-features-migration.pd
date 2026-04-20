@@ -1,0 +1,19 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_4 — modules → features migration
+requires: [FRONTEND_DEV]
+sprint: S84
+dep: [S84-STEP2-api-store-boundary.pd, S84-STEP3-entities-ssot-build.pd]
+
+context: |
+  Execute planned moves from ownership_map + migration_map. Absorb `src/modules/*`
+  into features/* (and entities/* only where map says model-only).
+  Update barrels and @/ imports; remove empty `src/modules` tree.
+  If ownership_map flags it: resolve the duplicate naming `screens/*/modules/*`
+  (e.g. reports) by merging into `features/*` or renaming to components/parts —
+  structural clarity only, no UI change.
+
+done:
+  - modules_layer_exists == false (no active src/modules or documented exception with LGTM)
+  - totem/instances/navitrack/intel/S84_migration_map.json lists every from→to applied
+  - Runtime parity; typecheck + lint pass

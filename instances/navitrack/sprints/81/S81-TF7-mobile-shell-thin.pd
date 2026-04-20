@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin mobile-shell.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `mobile-shell.tsx` (~223 LOC). Extract navigation chrome, outlet layout, and
+  header coordination (respect S64 header portal invariants if still active).
+
+done:
+  - Shell composes smaller units; portal/header contract preserved
+
+out:
+  - src/app/useMobileShell.ts
+  - src/app/MobileShellTabBar.tsx

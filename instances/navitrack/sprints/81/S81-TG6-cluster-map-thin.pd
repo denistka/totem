@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin ClusterMap.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `ClusterMap.tsx` (~201 LOC). Extract marker lifecycle, cluster options, and
+  event wiring to hooks/subcomponents.
+
+done:
+  - Map performance unchanged; Leaflet deps isolated
+
+out:
+  - src/modules/map/cluster-map/ClusterMapLeafletEffects.tsx
+  - src/modules/map/cluster-map/ClusterMapZoneLayers.tsx
+  - src/modules/map/cluster-map/ClusterMapVehicleLayer.tsx

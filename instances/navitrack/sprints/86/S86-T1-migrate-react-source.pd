@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S86 T1 — migrate react source
+requires: [FRONTEND_DEV]
+sprint: S86
+
+context: |
+  Migrate the React application source from 'navitrack-apps/src-client' to the 
+  new 'navitrack-mobile-apps' repo. 
+  Steps:
+  1. Overwrite 'src/' in mobile repo with 'src-client/src/'.
+  2. Copy 'public/' from 'navitrack-apps/src-client/public/' (if exists).
+  3. Overwrite 'index.html' and 'vite.config.ts' with versions from 'src-client'.
+  4. Bring 'tsconfig.json' and any other config files (.prettierrc, etc).
+
+out:
+  - navitrack-mobile-apps/src/
+  - navitrack-mobile-apps/index.html
+  - navitrack-mobile-apps/vite.config.ts
+
+done:
+  - All source files moved.
+  - Paths in vite.config.ts adjusted if they reference parent directories.

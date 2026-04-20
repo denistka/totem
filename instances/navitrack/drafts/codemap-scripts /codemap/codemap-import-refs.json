@@ -1,0 +1,5084 @@
+{
+  "version": 1,
+  "generatedAt": "2026-04-08T23:38:23.468Z",
+  "root": "/Users/denistka/Projects/navitrack/navitrack-apps/src-client",
+  "summary": {
+    "srcFiles": 251,
+    "referenceSites": 596,
+    "unresolved": 0
+  },
+  "targets": [
+    {
+      "path": "src/api/domains/auth-contracts.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/auth.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./auth-contracts"
+        },
+        {
+          "from": "src/api/domains/auth.ts",
+          "line": 12,
+          "kind": "export-from",
+          "specifier": "./auth-contracts"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/auth.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./domains/auth.ts"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/events.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 8,
+          "kind": "export-from",
+          "specifier": "./domains/events.ts"
+        },
+        {
+          "from": "src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api/domains/events"
+        },
+        {
+          "from": "src/screens/notification-settings/lib/notification-event-keys.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api/domains/events"
+        },
+        {
+          "from": "src/store/useNotificationStore.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api/domains/events"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/misc.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/tracking/tracking-types.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../misc"
+        },
+        {
+          "from": "src/api/domains/vehicles/vehicle-types.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../misc"
+        },
+        {
+          "from": "src/api/index.ts",
+          "line": 10,
+          "kind": "export-from",
+          "specifier": "./domains/misc.ts"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportsFormState.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api/domains/misc"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/notifications.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 9,
+          "kind": "export-from",
+          "specifier": "./domains/notifications.ts"
+        },
+        {
+          "from": "src/features/notifications/hooks/useNotificationInit.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/api/domains/notifications"
+        },
+        {
+          "from": "src/features/notifications/lib/notification-service.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api/domains/notifications"
+        },
+        {
+          "from": "src/features/notifications/lib/notification-service.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/api/domains/notifications"
+        },
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api/domains/notifications"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/reports/index.ts",
+      "referenceCount": 6,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 5,
+          "kind": "export-from",
+          "specifier": "./domains/reports/index.ts"
+        },
+        {
+          "from": "src/entities/report/lib/report-table-model.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api/domains/reports"
+        },
+        {
+          "from": "src/screens/reports/components/ReportCustomManagement.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api/domains/reports"
+        },
+        {
+          "from": "src/screens/reports/components/ReportHistoryView.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api/domains/reports"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportsFormState.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api/domains/reports"
+        },
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "@/api/domains/reports"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/reports/report-api.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/reports/index.ts",
+          "line": 19,
+          "kind": "export-from",
+          "specifier": "./report-api"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/reports/report-transforms.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./report-transforms"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/reports/report-types.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/reports/index.ts",
+          "line": 3,
+          "kind": "export-from",
+          "specifier": "./report-types"
+        },
+        {
+          "from": "src/api/domains/reports/index.ts",
+          "line": 17,
+          "kind": "export-from",
+          "specifier": "./report-types"
+        },
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./report-types"
+        },
+        {
+          "from": "src/api/domains/reports/report-transforms.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./report-types"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/settings.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 7,
+          "kind": "export-from",
+          "specifier": "./domains/settings.ts"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/tracking/index.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 4,
+          "kind": "export-from",
+          "specifier": "./domains/tracking/index.ts"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api/domains/tracking"
+        },
+        {
+          "from": "src/store/lib/adapters/tracking.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api/domains/tracking"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/tracking/tracking-transforms.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/tracking/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./tracking-transforms"
+        },
+        {
+          "from": "src/api/domains/tracking/tracking.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./tracking-transforms"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/tracking/tracking-types.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/tracking/tracking-transforms.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./tracking-types"
+        },
+        {
+          "from": "src/api/domains/tracking/tracking.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./tracking-types"
+        },
+        {
+          "from": "src/api/domains/tracking/tracking.ts",
+          "line": 5,
+          "kind": "export-from",
+          "specifier": "./tracking-types"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/tracking/tracking.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/tracking/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./tracking"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/vehicles/index.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/tracking/tracking-types.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../vehicles"
+        },
+        {
+          "from": "src/api/index.ts",
+          "line": 3,
+          "kind": "export-from",
+          "specifier": "./domains/vehicles/index.ts"
+        },
+        {
+          "from": "src/entities/vehicle/lib/model.ts",
+          "line": 5,
+          "kind": "export-from",
+          "specifier": "@/api/domains/vehicles"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/vehicles/vehicle-types.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/vehicles/vehicles.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./vehicle-types"
+        },
+        {
+          "from": "src/api/domains/vehicles/vehicles.ts",
+          "line": 11,
+          "kind": "export-from",
+          "specifier": "./vehicle-types"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/vehicles/vehicles.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/vehicles/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./vehicles"
+        }
+      ]
+    },
+    {
+      "path": "src/api/domains/zones.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/api/index.ts",
+          "line": 6,
+          "kind": "export-from",
+          "specifier": "./domains/zones.ts"
+        }
+      ]
+    },
+    {
+      "path": "src/api/index.ts",
+      "referenceCount": 59,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/cluster-map/ClusterMapLeafletEffects.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/components/cluster-map/ClusterMapZoneLayers.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/components/MapPopupFactory.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/components/VehicleInfoPopup.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/components/VehicleMarker.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/hooks/useVehicleDetails.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/hooks/useVehicleDetails.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/lib/leaflet-icons.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/lib/popup-fuel.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/map/lib/popup-ignition.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/report-table/components/ReportTableCellValue.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/features/report-table/components/VirtualizedReportTable.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/hooks/useAuth.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/lib/sse-client.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/lib/track-ew-filter.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/map/components/MapScreenClusterStack.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/map/components/MapScreenClusterStack.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/components/EventsTab.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/components/ObjectDetailsHeaderLeft.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/history/lib/map-event-data.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useHistoryMapState.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useHistoryMapState.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useHistoryTimeline.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/objects/lib/utils.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/components/ReportResultView.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportsFormState.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/lib/build-ws-report-request.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/lib/report-build-subscription.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/reports/lib/report-build-subscription.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/track-layers/ImperativePlaybackMarker.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/track-layers/StaticTrackLayer.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/track-layers/TrackPlaybackLayer.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingControls.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingMap.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingScreenHeader.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useRegionFilter.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingPlayback.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/lib/track-adaptive-sampling.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/store/lib/selectors.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/store/useAuthStore.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/ui/TrackingPlayer.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/api"
+        },
+        {
+          "from": "src/ui/TrackingSummaryStats.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/api"
+        }
+      ]
+    },
+    {
+      "path": "src/api/lib/client.ts",
+      "referenceCount": 12,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/auth.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/domains/auth.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/domains/events.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/domains/misc.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/domains/notifications.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../../lib/client"
+        },
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../../lib/client"
+        },
+        {
+          "from": "src/api/domains/settings.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/domains/tracking/tracking.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../../lib/client"
+        },
+        {
+          "from": "src/api/domains/vehicles/vehicles.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../../lib/client"
+        },
+        {
+          "from": "src/api/domains/zones.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/client"
+        },
+        {
+          "from": "src/api/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./lib/client.ts"
+        }
+      ]
+    },
+    {
+      "path": "src/api/lib/http-adapter.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/auth.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/http-adapter"
+        },
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../../lib/http-adapter"
+        },
+        {
+          "from": "src/api/lib/client.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./http-adapter"
+        }
+      ]
+    },
+    {
+      "path": "src/api/lib/single-flight.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/misc.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/single-flight"
+        },
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../../lib/single-flight"
+        }
+      ]
+    },
+    {
+      "path": "src/api/lib/transforms/coerce.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/reports/report-api.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../../lib/transforms/coerce"
+        },
+        {
+          "from": "src/api/domains/vehicles/vehicles.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../../lib/transforms/coerce"
+        }
+      ]
+    },
+    {
+      "path": "src/App.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/main.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./App"
+        }
+      ]
+    },
+    {
+      "path": "src/config/lib/header.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/hooks/useAppHeader.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/config/lib/header"
+        }
+      ]
+    },
+    {
+      "path": "src/config/lib/i18n.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/main.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/config/lib/i18n"
+        }
+      ]
+    },
+    {
+      "path": "src/config/lib/navigation.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/MobileShellTabBar.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/config/lib/navigation"
+        },
+        {
+          "from": "src/shell/components/MobileShellTabBar.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/config/lib/navigation"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/config/lib/navigation"
+        },
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/config/lib/navigation"
+        },
+        {
+          "from": "src/store/useNavigationStore.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/config/lib/navigation"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/report/index.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/api/domains/reports/report-transforms.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/entities/report"
+        },
+        {
+          "from": "src/features/report-table/components/ReportTableCellValue.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/entities/report"
+        },
+        {
+          "from": "src/features/report-table/components/VirtualizedReportTable.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/entities/report"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/report/lib/humanize-report-column-key.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/entities/report/index.ts",
+          "line": 7,
+          "kind": "export-from",
+          "specifier": "./lib/humanize-report-column-key"
+        },
+        {
+          "from": "src/entities/report/lib/report-table-model.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./humanize-report-column-key"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/report/lib/report-column-keys.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/entities/report/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./lib/report-column-keys"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/report/lib/report-grand-total-sentinel.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/entities/report/index.ts",
+          "line": 6,
+          "kind": "export-from",
+          "specifier": "./lib/report-grand-total-sentinel"
+        },
+        {
+          "from": "src/entities/report/lib/report-table-model.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./report-grand-total-sentinel"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/report/lib/report-table-model.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/entities/report/index.ts",
+          "line": 8,
+          "kind": "export-from",
+          "specifier": "./lib/report-table-model"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/components/IconSvg.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/index.ts",
+          "line": 7,
+          "kind": "export-from",
+          "specifier": "./components/IconSvg"
+        },
+        {
+          "from": "src/entities/vehicle/icons/lib/vehicle-type-icons.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../components/IconSvg"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/components/VehicleIcon.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/index.ts",
+          "line": 12,
+          "kind": "export-from",
+          "specifier": "./components/VehicleIcon"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/index.ts",
+      "referenceCount": 8,
+      "referencedBy": [
+        {
+          "from": "src/features/map/lib/leaflet-icons.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/features/map/lib/leaflet-icons.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/features/map/lib/vehicle-icon-registry.ts",
+          "line": 5,
+          "kind": "export-from",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/screens/object-details/components/EventsTab.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/screens/object-details/components/ObjectDetailsHeaderLeft.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/screens/objects/components/ObjectListItem.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/screens/objects/lib/utils.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        },
+        {
+          "from": "src/ui/PlaybackIcon.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/icons"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/types.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/components/VehicleIcon.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "../lib/types"
+        },
+        {
+          "from": "src/entities/vehicle/icons/index.ts",
+          "line": 6,
+          "kind": "export-from",
+          "specifier": "./lib/types"
+        },
+        {
+          "from": "src/entities/vehicle/icons/lib/vehicle-icon-utils.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./types"
+        },
+        {
+          "from": "src/entities/vehicle/icons/lib/vehicle-type-icons.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./types"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/vehicle-icon-utils.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/index.ts",
+          "line": 10,
+          "kind": "export-from",
+          "specifier": "./lib/vehicle-icon-utils"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/vehicle-png-icons.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/index.ts",
+          "line": 9,
+          "kind": "export-from",
+          "specifier": "./lib/vehicle-png-icons"
+        },
+        {
+          "from": "src/entities/vehicle/icons/lib/vehicle-icon-utils.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./vehicle-png-icons"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/icons/lib/vehicle-type-icons.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/index.ts",
+          "line": 8,
+          "kind": "export-from",
+          "specifier": "./lib/vehicle-type-icons"
+        }
+      ]
+    },
+    {
+      "path": "src/entities/vehicle/lib/model.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/lib/model"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/lib/model"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/entities/vehicle/lib/model"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/components/AnalogClockFaceSvg.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/TimePickerAnalogWheel.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./AnalogClockFaceSvg"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/components/DateInput.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/DateRangePicker.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./DateInput"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/components/DateRangePicker.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./components/DateRangePicker"
+        },
+        {
+          "from": "src/features/date-range-picker/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./components/DateRangePicker"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/components/TimePicker.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/DateRangePicker.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./TimePicker"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/components/TimePickerAnalogWheel.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/TimePicker.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./TimePickerAnalogWheel"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/hooks/useAnalogWheelMinutes.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/TimePickerAnalogWheel.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../hooks/useAnalogWheelMinutes"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/hooks/useDateRange.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/DateRangePicker.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../hooks/useDateRange"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/index.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/FiltersPanelSections.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/features/date-range-picker"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/features/date-range-picker"
+        }
+      ]
+    },
+    {
+      "path": "src/features/date-range-picker/lib/utils.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/DateInput.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../lib/utils"
+        },
+        {
+          "from": "src/features/date-range-picker/components/DateRangePicker.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/utils"
+        },
+        {
+          "from": "src/features/date-range-picker/hooks/useDateRange.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../lib/utils"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/ActiveTileLayer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapShell.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./ActiveTileLayer"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/cluster-map/ClusterMapLeafletEffects.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./cluster-map/ClusterMapLeafletEffects"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 16,
+          "kind": "import",
+          "specifier": "./cluster-map/ClusterMapVehicleLayer"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/cluster-map/ClusterMapZoneLayers.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 15,
+          "kind": "import",
+          "specifier": "./cluster-map/ClusterMapZoneLayers"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/ClusterMap.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/components/MapScreenClusterStack.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/features/map/components/ClusterMap"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/MapPopupFactory.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/VehicleInfoPopup.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./MapPopupFactory"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/MapShell.tsx",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./MapShell"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/features/map/components/MapShell"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/features/map/components/MapShell"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/MarkerTickContext.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./MarkerTickContext"
+        },
+        {
+          "from": "src/features/map/components/VehicleMarker.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./MarkerTickContext"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/PolylineDecorator.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/features/map/components/PolylineDecorator"
+        },
+        {
+          "from": "src/screens/tracking/components/track-layers/StaticTrackLayer.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/features/map/components/PolylineDecorator"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/PopupRow.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapPopupFactory.tsx",
+          "line": 16,
+          "kind": "import",
+          "specifier": "./PopupRow"
+        },
+        {
+          "from": "src/features/map/components/VehicleInfoPopup.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./PopupRow"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/VehicleInfoPopup.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/VehicleMarker.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./VehicleInfoPopup"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/features/map/components/VehicleInfoPopup"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/components/VehicleMarker.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../VehicleMarker"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/hooks/useLocalMapTypePreference.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/features/map/hooks/useLocalMapTypePreference"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/hooks/useMapSettings.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/components/MapScreenClusterStack.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/features/map/hooks/useMapSettings"
+        },
+        {
+          "from": "src/screens/map/components/MapScreenToolbars.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/features/map/hooks/useMapSettings"
+        },
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/features/map/hooks/useMapSettings"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "@/features/map/hooks/useMapSettings"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/hooks/useVehicleDetails.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/VehicleInfoPopup.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../hooks/useVehicleDetails"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/leaflet-icons.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/VehicleMarker.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "../lib/leaflet-icons"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/features/map/lib/leaflet-icons"
+        },
+        {
+          "from": "src/screens/object-details/history/lib/map-event-data.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/features/map/lib/leaflet-icons"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/leaflet-setup.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapShell.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "../lib/leaflet-setup"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/map-config.ts",
+      "referenceCount": 11,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/ActiveTileLayer.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/components/ActiveTileLayer.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/components/ClusterMap.tsx",
+          "line": 18,
+          "kind": "export-from",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/components/MapShell.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/hooks/useMapSettings.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "../lib/map-config"
+        },
+        {
+          "from": "src/features/map/lib/map-type-preference.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./map-config"
+        },
+        {
+          "from": "src/screens/map/components/MapScreenClusterStack.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/features/map/lib/map-config"
+        },
+        {
+          "from": "src/screens/map/components/MapScreenToolbars.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/features/map/lib/map-config"
+        },
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/features/map/lib/map-config"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/map-type-preference.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/features/map/hooks/useLocalMapTypePreference.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/map-type-preference"
+        },
+        {
+          "from": "src/features/map/hooks/useMapSettings.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/map-type-preference"
+        },
+        {
+          "from": "src/screens/map/lib/map-screen-utils.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "@/features/map/lib/map-type-preference"
+        },
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/features/map/lib/map-type-preference"
+        },
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/features/map/lib/map-type-preference"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/popup-address.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapPopupFactory.tsx",
+          "line": 15,
+          "kind": "import",
+          "specifier": "../lib/popup-address"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/popup-fuel.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapPopupFactory.tsx",
+          "line": 14,
+          "kind": "import",
+          "specifier": "../lib/popup-fuel"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/popup-ignition.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapPopupFactory.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "../lib/popup-ignition"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/popup-telemetry.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapPopupFactory.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "../lib/popup-telemetry"
+        },
+        {
+          "from": "src/features/map/lib/popup-fuel.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./popup-telemetry"
+        }
+      ]
+    },
+    {
+      "path": "src/features/map/lib/vehicle-icon-registry.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 13,
+          "kind": "import",
+          "specifier": "@/features/map/lib/vehicle-icon-registry"
+        },
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/features/map/lib/vehicle-icon-registry"
+        }
+      ]
+    },
+    {
+      "path": "src/features/notifications/hooks/useNotificationInit.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/features/notifications/hooks/useNotificationInit"
+        }
+      ]
+    },
+    {
+      "path": "src/features/notifications/index.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/components/NotificationSettingsPushSection.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/features/notifications"
+        },
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/features/notifications"
+        },
+        {
+          "from": "src/shell/hooks/useAuthFlow.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/features/notifications"
+        },
+        {
+          "from": "src/store/useNotificationStore.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/features/notifications"
+        },
+        {
+          "from": "src/store/useNotificationStore.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/features/notifications"
+        }
+      ]
+    },
+    {
+      "path": "src/features/notifications/lib/notification-service.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/features/notifications/hooks/useNotificationInit.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/notification-service"
+        },
+        {
+          "from": "src/features/notifications/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./lib/notification-service"
+        },
+        {
+          "from": "src/features/notifications/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./lib/notification-service"
+        }
+      ]
+    },
+    {
+      "path": "src/features/notifications/lib/platform.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/features/notifications/hooks/useNotificationInit.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../lib/platform"
+        },
+        {
+          "from": "src/features/notifications/index.ts",
+          "line": 3,
+          "kind": "export-from",
+          "specifier": "./lib/platform"
+        },
+        {
+          "from": "src/features/notifications/lib/notification-service.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "./platform"
+        },
+        {
+          "from": "src/features/notifications/lib/tauri-push-adapter.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./platform"
+        }
+      ]
+    },
+    {
+      "path": "src/features/notifications/lib/tauri-push-adapter.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/notifications/lib/notification-service.ts",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./tauri-push-adapter"
+        }
+      ]
+    },
+    {
+      "path": "src/features/report-table/components/ReportTableCellValue.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/report-table/components/VirtualizedReportTable.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "./ReportTableCellValue"
+        }
+      ]
+    },
+    {
+      "path": "src/features/report-table/components/VirtualizedReportTable.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/report-table/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./components/VirtualizedReportTable"
+        }
+      ]
+    },
+    {
+      "path": "src/features/report-table/index.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/ReportResultView.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/features/report-table"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useAuth.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/hooks/useLoginFlow.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/hooks/useAuth"
+        },
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/hooks/useAuth"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/hooks/useAuth"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useDynamicBackground.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/hooks/useDynamicBackground"
+        },
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/hooks/useDynamicBackground"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "@/hooks/useDynamicBackground"
+        },
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/hooks/useDynamicBackground"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "@/hooks/useDynamicBackground"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useFormatDurationFromMs.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/hooks/useHistoryTimeline.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/hooks/useFormatDurationFromMs"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/hooks/useFormatDurationFromMs"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useHeaderSetup.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/hooks/useHeaderSetup"
+        },
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/hooks/useHeaderSetup"
+        },
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/hooks/useHeaderSetup"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "@/hooks/useHeaderSetup"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/hooks/useHeaderSetup"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useLocalSettings.ts",
+      "referenceCount": 7,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        },
+        {
+          "from": "src/screens/settings/hooks/useSettingsState.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackStyleSettings.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/hooks/useLocalSettings"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useSortedItems.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "@/hooks/useSortedItems"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportsFormState.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/hooks/useSortedItems"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/hooks/useSortedItems"
+        },
+        {
+          "from": "src/ui/BottomSelectModal.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "@/hooks/useSortedItems"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useTheme.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/VehicleMarker.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/hooks/useTheme"
+        },
+        {
+          "from": "src/main.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/hooks/useTheme"
+        },
+        {
+          "from": "src/ui/ThemeToggle.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/hooks/useTheme"
+        }
+      ]
+    },
+    {
+      "path": "src/hooks/useToast.ts",
+      "referenceCount": 6,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/hooks/useToast"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/hooks/useToast"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/hooks/useToast"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/hooks/useToast"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 10,
+          "kind": "import",
+          "specifier": "@/hooks/useToast"
+        },
+        {
+          "from": "src/shell/hooks/useGlobalErrorHandler.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/hooks/useToast"
+        }
+      ]
+    },
+    {
+      "path": "src/index.css",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/main.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/index.css"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/api-auth.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/hooks/useAuth.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/api-auth"
+        },
+        {
+          "from": "src/lib/sse-client.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./api-auth"
+        },
+        {
+          "from": "src/store/useAuthStore.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/api-auth"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/api-throttler.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/lib/api-throttler"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/datetime.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/lib/utils.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "@/lib/datetime"
+        },
+        {
+          "from": "src/screens/objects/lib/utils.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/lib/datetime"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/format-header-date-span.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/FiltersPanelHeader.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/format-header-date-span"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingScreenHeader.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/lib/format-header-date-span"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/logger.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/lib/api-throttler.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./logger"
+        },
+        {
+          "from": "src/lib/sse-client.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./logger"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/screen-date-range-init.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/hooks/useReportsFormState.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/lib/screen-date-range-init"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/screen-date-range-init"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/sorting.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/hooks/useSortedItems.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/lib/sorting"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/sse-client.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/sse-client"
+        },
+        {
+          "from": "src/screens/reports/lib/report-build-subscription.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/sse-client"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/track-ew-filter.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/track-layers/DrawRegionLayer.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/track-ew-filter"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingMap.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/track-ew-filter"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/lib/track-ew-filter"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useRegionFilter.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/track-ew-filter"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "referenceCount": 15,
+      "referencedBy": [
+        {
+          "from": "src/entities/vehicle/icons/components/VehicleIcon.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/features/report-table/components/VirtualizedReportTable.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/shell/components/app-header/AppHeader.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/Accordion.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/ActionButton.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/Badge.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/Button.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/HeaderIconButton.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/Input.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/ModalSecondaryButton.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/SettingsButton.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/Switch.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/Table.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        },
+        {
+          "from": "src/ui/ThemeToggle.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/lib/utils"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/vehicle-name.ts",
+      "referenceCount": 6,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/VehicleInfoPopup.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-name"
+        },
+        {
+          "from": "src/screens/objects/lib/utils.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-name"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingScreenHeader.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-name"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-name"
+        },
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-name"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-name"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/vehicle-telemetry.ts",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/features/map/lib/leaflet-icons.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-telemetry"
+        },
+        {
+          "from": "src/lib/datetime.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./vehicle-telemetry"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useHistoryMapState.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-telemetry"
+        },
+        {
+          "from": "src/screens/objects/lib/utils.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/lib/vehicle-telemetry"
+        }
+      ]
+    },
+    {
+      "path": "src/locales/en.json",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/config/lib/i18n.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/locales/en.json"
+        }
+      ]
+    },
+    {
+      "path": "src/locales/ru.json",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/config/lib/i18n.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/locales/ru.json"
+        }
+      ]
+    },
+    {
+      "path": "src/locales/uk.json",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/config/lib/i18n.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/locales/uk.json"
+        }
+      ]
+    },
+    {
+      "path": "src/main.tsx",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/screens/index.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/screens/index"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/login/components/LoginFormFields.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "./components/LoginFormFields"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/login/hooks/useLoginFlow.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "./hooks/useLoginFlow"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/login/LoginScreen.tsx",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./login/LoginScreen"
+        },
+        {
+          "from": "src/screens/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./login/LoginScreen"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "@/screens/login/LoginScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/map/components/MapScreenClusterStack.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "./components/MapScreenClusterStack"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/map/components/MapScreenToolbars.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "./components/MapScreenToolbars"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/map/lib/map-screen-utils.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "./lib/map-screen-utils"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/map/MapScreen.tsx",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 3,
+          "kind": "export-from",
+          "specifier": "./map/MapScreen"
+        },
+        {
+          "from": "src/screens/index.ts",
+          "line": 4,
+          "kind": "export-from",
+          "specifier": "./map/MapScreen"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 16,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/map/MapScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "./components/NotificationEventTogglesPanel"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/components/NotificationSettingsPushSection.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./components/NotificationSettingsPushSection"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/components/NotificationSettingsVehicleSection.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./components/NotificationSettingsVehicleSection"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./hooks/useNotificationSettingsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/index.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 14,
+          "kind": "export-from",
+          "specifier": "./notification-settings"
+        },
+        {
+          "from": "src/screens/index.ts",
+          "line": 15,
+          "kind": "export-from",
+          "specifier": "./notification-settings"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 41,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/notification-settings"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/lib/notification-event-keys.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../lib/notification-event-keys"
+        },
+        {
+          "from": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "../lib/notification-event-keys"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./NotificationSettingsScreen"
+        },
+        {
+          "from": "src/screens/notification-settings/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./NotificationSettingsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/components/EventsTab.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./components/EventsTab"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/components/ObjectDetailsHeaderLeft.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./components/ObjectDetailsHeaderLeft"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/components/ObjectDetailsTabBar.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./components/ObjectDetailsTabBar"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/constants.ts",
+      "referenceCount": 7,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/components/EventsTab.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryEventRow.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../../constants"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../../constants"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimelineDateTabs.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../../constants"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimelineEventList.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../../constants"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useHistoryTimeline.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../constants"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryEventMarkers.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 14,
+          "kind": "import",
+          "specifier": "./HistoryEventMarkers"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryEventRow.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimelineEventList.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./HistoryEventRow"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryMap.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./HistoryMap"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryMapHandlers.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "./HistoryMapHandlers"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./history/components/HistoryTabContainer"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./HistoryTimeline"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineDateTabs.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./HistoryTimelineDateTabs"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineEventList.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./HistoryTimelineEventList"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineLoadingOverlay.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./HistoryTimelineLoadingOverlay"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/components/HistoryTimelineSummaryStrip.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./HistoryTimelineSummaryStrip"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/history-map.css",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 16,
+          "kind": "import",
+          "specifier": "../history-map.css"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/lib/history-timeline-utils.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimelineDateTabs.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../lib/history-timeline-utils"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/history/lib/map-event-data.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryEventMarkers.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../lib/map-event-data"
+        },
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 15,
+          "kind": "import",
+          "specifier": "../lib/map-event-data"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/hooks/useHistoryMapState.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../../hooks/useHistoryMapState"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/hooks/useHistoryTimeline.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTabContainer.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../../hooks/useHistoryTimeline"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/hooks/useHistoryTimelineDateScroll.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimeline.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "../../hooks/useHistoryTimelineDateScroll"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./hooks/useObjectDetailsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/index.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 7,
+          "kind": "export-from",
+          "specifier": "./object-details"
+        },
+        {
+          "from": "src/screens/index.ts",
+          "line": 8,
+          "kind": "export-from",
+          "specifier": "./object-details"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 33,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/object-details"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/object-details/ObjectDetailsScreen.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./ObjectDetailsScreen"
+        },
+        {
+          "from": "src/screens/object-details/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./ObjectDetailsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/objects/components/ObjectListItem.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./components/ObjectListItem"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./components/ObjectVisibilityModal"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/objects/index.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 5,
+          "kind": "export-from",
+          "specifier": "./objects"
+        },
+        {
+          "from": "src/screens/index.ts",
+          "line": 6,
+          "kind": "export-from",
+          "specifier": "./objects"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "@/screens/objects"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/objects/lib/utils.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/components/ObjectListItem.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../lib/utils"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./lib/utils"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/objects/ObjectsScreen.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./ObjectsScreen"
+        },
+        {
+          "from": "src/screens/objects/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./ObjectsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/FiltersPanel.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./components/FiltersPanel"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/FiltersPanelHeader.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/FiltersPanel.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./FiltersPanelHeader"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/FiltersPanelSections.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/FiltersPanel.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./FiltersPanelSections"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/GeneratingReportView.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "./components/GeneratingReportView"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/ReportCustomManagement.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "./components/ReportCustomManagement"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/ReportHistoryView.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./components/ReportHistoryView"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/components/ReportResultView.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./components/ReportResultView"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/constants.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 15,
+          "kind": "import",
+          "specifier": "./constants"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/hooks/useReportRunner.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./hooks/useReportRunner"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/hooks/useReportsFormState.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "./hooks/useReportsFormState"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/index.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 11,
+          "kind": "export-from",
+          "specifier": "./reports"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 30,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/reports"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/lib/build-ws-report-request.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "../lib/build-ws-report-request"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/lib/report-build-subscription.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/hooks/useReportRunner.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "../lib/report-build-subscription"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/reports/ReportsScreen.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./ReportsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/settings/components/SettingsField.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./SettingsField"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/settings/components/SettingsSections.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/settings/SettingsScreen.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./components/SettingsSections"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/settings/constants.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "../constants"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/settings/hooks/useSettingsState.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "../hooks/useSettingsState"
+        },
+        {
+          "from": "src/screens/settings/SettingsScreen.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./hooks/useSettingsState"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/settings/SettingsScreen.tsx",
+      "referenceCount": 4,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 12,
+          "kind": "export-from",
+          "specifier": "./settings/SettingsScreen"
+        },
+        {
+          "from": "src/screens/index.ts",
+          "line": 13,
+          "kind": "export-from",
+          "specifier": "./settings/SettingsScreen"
+        },
+        {
+          "from": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/screens/settings/SettingsScreen"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 37,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/settings/SettingsScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/MapZoomTracker.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "./MapZoomTracker"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/DrawRegionLayer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "./track-layers/DrawRegionLayer"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/FitBoundsOnLoad.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/track-layers/TrackPlaybackLayer.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./FitBoundsOnLoad"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/ImperativePlaybackMarker.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/track-layers/TrackPlaybackLayer.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./ImperativePlaybackMarker"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/StaticTrackLayer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./track-layers/StaticTrackLayer"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/track-layers/TrackPlaybackLayer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "./track-layers/TrackPlaybackLayer"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingControls.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "./components/TrackingControls"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingEventPicker.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 15,
+          "kind": "import",
+          "specifier": "./components/TrackingEventPicker"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingMap.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "./components/TrackingMap"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingRouteMap.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingMap.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "./TrackingRouteMap"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingRouteMapChrome.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "./TrackingRouteMapChrome"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackingScreenHeader.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 14,
+          "kind": "import",
+          "specifier": "./components/TrackingScreenHeader"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackPreview.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackStyleSettings.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "./TrackPreview"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/components/TrackStyleSettings.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./components/TrackStyleSettings"
+        },
+        {
+          "from": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/screens/tracking/components/TrackStyleSettings"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/constants.ts",
+      "referenceCount": 6,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryMap.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "@/screens/tracking/constants"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingEventPicker.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackStyleSettings.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "../constants"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 9,
+          "kind": "import",
+          "specifier": "../constants"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/hooks/useTrackingPlayback.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./useAdaptiveTrackRendering"
+        },
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./hooks/useAdaptiveTrackRendering"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/hooks/useRegionFilter.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingMap.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../hooks/useRegionFilter"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "../hooks/useRegionFilter"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMapChrome.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../hooks/useRegionFilter"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 12,
+          "kind": "import",
+          "specifier": "./useRegionFilter"
+        },
+        {
+          "from": "src/screens/tracking/lib/tracking-route-map-utils.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "../hooks/useRegionFilter"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingPlayback.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./hooks/useTrackingPlayback"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingScreenForm.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "./hooks/useTrackingScreenForm"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "./hooks/useTrackingScreenLaunch"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/hooks/useTrackingState.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "./hooks/useTrackingState"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/index.ts",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/screens/tracking/lib/track-adaptive-config.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/lib/track-adaptive-sampling.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./track-adaptive-config"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/lib/track-adaptive-sampling.ts",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../lib/track-adaptive-sampling"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useAdaptiveTrackRendering.ts",
+          "line": 5,
+          "kind": "export-from",
+          "specifier": "../lib/track-adaptive-sampling"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/lib/tracking-route-map-utils.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 13,
+          "kind": "import",
+          "specifier": "../lib/tracking-route-map-utils"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/TrackingActionScreen.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/index.ts",
+          "line": 2,
+          "kind": "export-from",
+          "specifier": "./TrackingActionScreen"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 25,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/tracking/TrackingActionScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/screens/tracking/TrackingScreen.tsx",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/index.ts",
+          "line": 10,
+          "kind": "export-from",
+          "specifier": "./tracking/TrackingScreen"
+        },
+        {
+          "from": "src/screens/tracking/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./TrackingScreen"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 20,
+          "kind": "dynamic-import",
+          "specifier": "@/screens/tracking/TrackingScreen"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/app-header/AppHeader.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/index.ts",
+          "line": 1,
+          "kind": "export-from",
+          "specifier": "./AppHeader"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/app-header/AppHeaderCollapsedRow.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeader.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./AppHeaderCollapsedRow"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeader.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./AppHeaderExpandedMenu"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/app-header/index.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/App.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/shell/components/app-header"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/ErrorBoundary.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/main.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/shell/components/ErrorBoundary"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/GlobalLoader.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/App.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/shell/components/GlobalLoader"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/MobileShell.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/App.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/shell/components/MobileShell"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/MobileShellTabBar.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/MobileShell.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/shell/components/MobileShellTabBar"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/components/ScreenRouter.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/MobileShell.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/shell/components/ScreenRouter"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/hooks/useAppHeader.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeader.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/shell/hooks/useAppHeader"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/hooks/useAuthFlow.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "./useAuthFlow"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/hooks/useGlobalErrorHandler.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 9,
+          "kind": "import",
+          "specifier": "./useGlobalErrorHandler"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/hooks/useMobileShell.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/MobileShell.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/shell/hooks/useMobileShell"
+        }
+      ]
+    },
+    {
+      "path": "src/shell/hooks/useScreenTransition.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 8,
+          "kind": "import",
+          "specifier": "./useScreenTransition"
+        }
+      ]
+    },
+    {
+      "path": "src/store/lib/adapters/tracking.ts",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/store/lib/adapters/tracking"
+        }
+      ]
+    },
+    {
+      "path": "src/store/lib/selectors.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/store/lib/selectors"
+        },
+        {
+          "from": "src/screens/reports/hooks/useReportsFormState.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/store/lib/selectors"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/lib/selectors"
+        }
+      ]
+    },
+    {
+      "path": "src/store/useAppStore.ts",
+      "referenceCount": 20,
+      "referencedBy": [
+        {
+          "from": "src/App.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/config/lib/header.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/hooks/useDynamicBackground.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/hooks/useDynamicBackground.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/hooks/useHeaderSetup.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/hooks/useHeaderSetup.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/map/MapScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/settings/hooks/useSettingsState.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/shell/hooks/useAppHeader.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/shell/hooks/useAuthFlow.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useAppStore"
+        },
+        {
+          "from": "src/store/lib/selectors.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "../useAppStore"
+        },
+        {
+          "from": "src/store/lib/selectors.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "../useAppStore"
+        }
+      ]
+    },
+    {
+      "path": "src/store/useAuthStore.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/App.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/store/useAuthStore"
+        },
+        {
+          "from": "src/hooks/useAuth.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useAuthStore"
+        },
+        {
+          "from": "src/hooks/useAuth.ts",
+          "line": 6,
+          "kind": "export-from",
+          "specifier": "@/store/useAuthStore"
+        },
+        {
+          "from": "src/shell/hooks/useAppHeader.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/store/useAuthStore"
+        },
+        {
+          "from": "src/shell/hooks/useAuthFlow.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useAuthStore"
+        }
+      ]
+    },
+    {
+      "path": "src/store/useNavigationStore.ts",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/shell/hooks/useAuthFlow.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useNavigationStore"
+        },
+        {
+          "from": "src/shell/hooks/useMobileShell.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useNavigationStore"
+        },
+        {
+          "from": "src/shell/hooks/useScreenTransition.ts",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/store/useNavigationStore"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "./useNavigationStore"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 11,
+          "kind": "export-from",
+          "specifier": "./useNavigationStore"
+        }
+      ]
+    },
+    {
+      "path": "src/store/useNotificationStore.ts",
+      "referenceCount": 3,
+      "referencedBy": [
+        {
+          "from": "src/features/notifications/hooks/useNotificationInit.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/store/useNotificationStore"
+        },
+        {
+          "from": "src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/store/useNotificationStore"
+        },
+        {
+          "from": "src/shell/hooks/useAuthFlow.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/store/useNotificationStore"
+        }
+      ]
+    },
+    {
+      "path": "src/store/useUIStore.ts",
+      "referenceCount": 7,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/GlobalLoader.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/store/useUIStore"
+        },
+        {
+          "from": "src/shell/hooks/useAppHeader.ts",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/store/useUIStore"
+        },
+        {
+          "from": "src/shell/hooks/useAuthFlow.ts",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/store/useUIStore"
+        },
+        {
+          "from": "src/shell/hooks/useScreenTransition.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/store/useUIStore"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "./useUIStore"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 10,
+          "kind": "export-from",
+          "specifier": "./useUIStore"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 12,
+          "kind": "export-from",
+          "specifier": "./useUIStore"
+        }
+      ]
+    },
+    {
+      "path": "src/styles/animations.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/styles/components.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/styles/glass.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/styles/layout.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/styles/map.css",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/features/map/components/MapShell.tsx",
+          "line": 7,
+          "kind": "import",
+          "specifier": "@/styles/map.css"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMap.tsx",
+          "line": 14,
+          "kind": "import",
+          "specifier": "@/styles/map.css"
+        }
+      ]
+    },
+    {
+      "path": "src/styles/screen-layout.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/styles/theme.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/styles/touch.css",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/types/lib/common.ts",
+      "referenceCount": 11,
+      "referencedBy": [
+        {
+          "from": "src/lib/vehicle-name.ts",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/object-details/hooks/useObjectDetailsScreen.ts",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/objects/components/ObjectListItem.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 14,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingScreenLaunch.ts",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/tracking/hooks/useTrackingState.ts",
+          "line": 14,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 8,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/shell/components/ScreenRouter.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/store/useAppStore.ts",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        },
+        {
+          "from": "src/store/useNavigationStore.ts",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/types/lib/common"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Accordion.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/ui/Accordion"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/ActionButton.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/FiltersPanelSections.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/ActionButton"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/ActionButton"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Badge.tsx",
+      "referenceCount": 0,
+      "referencedBy": []
+    },
+    {
+      "path": "src/ui/BottomModal.tsx",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/DateInput.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/BottomModal"
+        },
+        {
+          "from": "src/features/date-range-picker/components/DateRangePicker.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/BottomModal"
+        },
+        {
+          "from": "src/features/date-range-picker/components/TimePicker.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/BottomModal"
+        },
+        {
+          "from": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/ui/BottomModal"
+        },
+        {
+          "from": "src/ui/BottomSelectModal.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/BottomModal"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/BottomSelectModal.tsx",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/NotificationSettingsScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/BottomSelectModal"
+        },
+        {
+          "from": "src/screens/reports/components/FiltersPanel.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/BottomSelectModal"
+        },
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/BottomSelectModal"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/ui/BottomSelectModal"
+        },
+        {
+          "from": "src/ui/LanguageSelector.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/BottomSelectModal"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Button.tsx",
+      "referenceCount": 16,
+      "referencedBy": [
+        {
+          "from": "src/features/date-range-picker/components/DateInput.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/features/date-range-picker/components/TimePicker.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/login/components/LoginFormFields.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/object-details/components/EventsTab.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/reports/components/FiltersPanelSections.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/reports/components/GeneratingReportView.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/reports/components/ReportCustomManagement.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/reports/components/ReportHistoryView.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/reports/ReportsScreen.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/screens/tracking/TrackingScreen.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/ui/ActionButton.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        },
+        {
+          "from": "src/ui/BottomSelectModal.tsx",
+          "line": 10,
+          "kind": "import",
+          "specifier": "@/ui/Button"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/HeaderCenterSlot.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/reports/components/ReportResultView.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/ui/HeaderCenterSlot"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/HeaderIconButton.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeaderCollapsedRow.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/HeaderIconButton"
+        },
+        {
+          "from": "src/ui/SettingsButton.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/HeaderIconButton"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/HeaderLeftSlot.tsx",
+      "referenceCount": 6,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/components/MapScreenToolbars.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/HeaderLeftSlot"
+        },
+        {
+          "from": "src/screens/object-details/ObjectDetailsScreen.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/ui/HeaderLeftSlot"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/ui/HeaderLeftSlot"
+        },
+        {
+          "from": "src/screens/reports/components/FiltersPanelHeader.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/HeaderLeftSlot"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingScreenHeader.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/HeaderLeftSlot"
+        },
+        {
+          "from": "src/screens/tracking/TrackingActionScreen.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/HeaderLeftSlot"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/HeaderRightSlot.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/map/components/MapScreenToolbars.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/HeaderRightSlot"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Input.tsx",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/components/LoginFormFields.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/Input"
+        },
+        {
+          "from": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/Input"
+        },
+        {
+          "from": "src/screens/objects/ObjectsScreen.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "@/ui/Input"
+        },
+        {
+          "from": "src/screens/reports/components/ReportCustomManagement.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/ui/Input"
+        },
+        {
+          "from": "src/ui/BottomSelectModal.tsx",
+          "line": 11,
+          "kind": "import",
+          "specifier": "@/ui/Input"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/LanguageSelector.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/settings/components/SettingsSections.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/LanguageSelector"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/LoadingOverlay.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 6,
+          "kind": "import",
+          "specifier": "@/ui/LoadingOverlay"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Logo.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/login/LoginScreen.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/Logo"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/LogoLoader.tsx",
+      "referenceCount": 5,
+      "referencedBy": [
+        {
+          "from": "src/screens/object-details/history/components/HistoryTimelineLoadingOverlay.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/LogoLoader"
+        },
+        {
+          "from": "src/screens/reports/components/GeneratingReportView.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/LogoLoader"
+        },
+        {
+          "from": "src/screens/tracking/components/TrackingRouteMapChrome.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/LogoLoader"
+        },
+        {
+          "from": "src/shell/components/GlobalLoader.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/LogoLoader"
+        },
+        {
+          "from": "src/ui/LoadingOverlay.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./LogoLoader"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/ModalSecondaryButton.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/objects/components/ObjectVisibilityModal.tsx",
+          "line": 12,
+          "kind": "import",
+          "specifier": "@/ui/ModalSecondaryButton"
+        },
+        {
+          "from": "src/ui/BottomSelectModal.tsx",
+          "line": 9,
+          "kind": "import",
+          "specifier": "@/ui/ModalSecondaryButton"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/PlaybackIcon.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/track-layers/ImperativePlaybackMarker.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/PlaybackIcon"
+        },
+        {
+          "from": "src/screens/tracking/components/track-layers/StaticTrackLayer.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/PlaybackIcon"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/SettingsButton.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeader.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "@/ui/SettingsButton"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Sonner.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/App.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/Sonner"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Switch.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/components/NotificationSettingsPushSection.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/Switch"
+        },
+        {
+          "from": "src/ui/ToggleLabelSwitchRow.tsx",
+          "line": 1,
+          "kind": "import",
+          "specifier": "@/ui/Switch"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/Table.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/features/report-table/components/VirtualizedReportTable.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/Table"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/ThemeToggle.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/shell/components/app-header/AppHeader.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/ThemeToggle"
+        },
+        {
+          "from": "src/shell/components/app-header/AppHeaderExpandedMenu.tsx",
+          "line": 5,
+          "kind": "import",
+          "specifier": "@/ui/ThemeToggle"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/ToggleLabelSwitchRow.tsx",
+      "referenceCount": 2,
+      "referencedBy": [
+        {
+          "from": "src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/ToggleLabelSwitchRow"
+        },
+        {
+          "from": "src/screens/settings/components/SettingsField.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "@/ui/ToggleLabelSwitchRow"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/TrackingPlayer.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/screens/tracking/components/TrackingControls.tsx",
+          "line": 4,
+          "kind": "import",
+          "specifier": "@/ui/TrackingPlayer"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/TrackingPlayerControls.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/ui/TrackingPlayer.tsx",
+          "line": 2,
+          "kind": "import",
+          "specifier": "./TrackingPlayerControls"
+        }
+      ]
+    },
+    {
+      "path": "src/ui/TrackingSummaryStats.tsx",
+      "referenceCount": 1,
+      "referencedBy": [
+        {
+          "from": "src/ui/TrackingPlayer.tsx",
+          "line": 3,
+          "kind": "import",
+          "specifier": "./TrackingSummaryStats"
+        }
+      ]
+    }
+  ]
+}

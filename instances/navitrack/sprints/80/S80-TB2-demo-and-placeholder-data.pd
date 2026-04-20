@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Demo fixtures and placeholder credentials
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Audit hardcoded mock lists (e.g. dev object pickers), fake emails/codes in
+  settings/security UI, and any placeholder strings that should be API-driven
+  or behind `import.meta.env.DEV`. Replace with empty states + real data hooks,
+  or isolate in `fixtures/` with explicit dev-only guards. No duplicated mock
+  arrays across screens — single source if mocks stay.
+
+done:
+  - No production path shows obvious fake PII unless documented as demo
+  - Mocks centralized or removed
+
+out: []

@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_3 — entities SSOT build
+requires: [FRONTEND_DEV]
+sprint: S84
+dep: [S84-STEP1-ownership-resolution.pd]
+
+context: |
+  Extract domain models/constants from modules, api duplicates, lib, and
+  cross-cutting helpers (e.g. `utils/vehicle-name.ts` vs `entities/vehicle`)
+  per ownership_map. Merge into entities/*; api imports entities for report keys etc.
+
+hotspots:
+  - report_transforms (api must not depend on modules after STEP_4; prep types/keys here)
+
+out:
+  - totem/instances/navitrack/intel/S84_deleted_duplicates.json
+    ([{ removed_path, merged_into, reason }] — empty array if none)
+
+done:
+  - entities/ is sole SSOT for declared domain models in map
+  - report-transforms imports only api + entities + shared (no modules/)
+  - Single owner per domain; duplicates removed or documented in deleted_duplicates

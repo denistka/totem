@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin ObjectDetailsScreen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `ObjectDetailsScreen.tsx` (~222 LOC). Extract hooks and presentational
+  sections; keep routing and store wiring in screen.
+
+done:
+  - File size under ARCHITECT target; sections reusable where duplicated elsewhere
+
+out:
+  - src/screens/object-details/hooks/useObjectDetailsScreen.ts
+  - src/screens/object-details/components/ObjectDetailsHeaderLeft.tsx
+  - src/screens/object-details/components/ObjectDetailsTabBar.tsx

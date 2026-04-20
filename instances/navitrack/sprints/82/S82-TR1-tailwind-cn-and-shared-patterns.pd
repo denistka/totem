@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TR1 — Tailwind / cn / shared style patterns (no visual drift)
+requires: [FRONTEND_DEV]
+
+context: |
+  Extract repeated tailwind clusters into shared helpers or small components
+  without visual change. Complements S81-TH*. Visual diff or side-by-side check
+  on touched screens.
+
+done:
+  - Repeated patterns consolidated; screenshots or checklist in PR
+  - No user-visible style regression
+
+out: []

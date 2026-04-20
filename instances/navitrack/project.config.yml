@@ -25,6 +25,7 @@ guardians:
     - ROOT
     - PM
     - QA
+    - CODEMAP_QUALITY_ADVISOR
     - DEVOPS
     - ARCHITECT
   stack_adapters:

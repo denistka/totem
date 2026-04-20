@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TL0 — SonarJS sweep (baseline §2 → 0 warnings in scope)
+requires: [FRONTEND_DEV]
+
+context: |
+  Inventory: `totem/instances/navitrack/intel/S82_ARCHITECT_V4_BASELINE.md` §2.
+  Fix nested ternaries, reduce cognitive complexity (extract helpers), address
+  slow-regex / concise-regex, void-use, duplicated branches, nested functions,
+  type alias where flagged. No `eslint-disable` unless paired with comment and
+  ticket ref. Preserve behavior and UI.
+
+done:
+  - `pnpm lint` exits with **0** warnings for listed rules, or doc in baseline why
+    a narrow exception remains
+  - Baseline §2 + changelog updated
+
+out: []

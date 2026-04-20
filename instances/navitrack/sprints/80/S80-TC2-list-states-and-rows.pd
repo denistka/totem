@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Shared list empty / loading / error states
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Deduplicate repeated "no data", spinner-in-list, and retry patterns across
+  list screens. Prefer small primitives: `ListStateBoundary`, `EmptyList`, or
+  extend existing UI kit. Do not change API contracts.
+
+done:
+  - At least two screens migrated to shared primitives
+  - i18n keys preserved or consolidated without losing languages
+
+out: []

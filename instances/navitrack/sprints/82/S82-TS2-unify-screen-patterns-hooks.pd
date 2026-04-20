@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TS2 — pattern unification (shared hooks / components)
+requires: [FRONTEND_DEV]
+
+context: |
+  Implement highest-P0 rows from S82-TS1 (or S81 duplication doc) where
+  consolidation is low-risk: e.g. shared toolbar/filter shells, form state
+  helpers. Incremental PRs; snapshot or manual QA for identical UI. No business
+  rule changes.
+
+done:
+  - At least two concrete unifications merged; imports updated; tsc green
+  - TS1 matrix updated with status column or follow-up intel note
+
+out: []

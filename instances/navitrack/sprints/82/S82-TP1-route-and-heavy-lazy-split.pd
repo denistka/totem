@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TP1 — lazy routes & heavy chunk splits (perf track)
+requires: [FRONTEND_DEV]
+
+context: |
+  Identify largest chunks via build analyzer or codemap size hints. Apply
+  React.lazy / route-level splits for non-critical screens. Verify loading
+  states match prior UX (no layout jump). No behavior change.
+
+done:
+  - At least one route or heavy subtree lazy-loaded; bundle metric noted
+  - Manual smoke on affected navigation
+
+out: []

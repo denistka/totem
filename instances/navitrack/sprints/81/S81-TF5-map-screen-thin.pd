@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin map-screen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `map-screen.tsx` (~224 LOC). Extract map-specific hooks and panels; coordinate
+  with TE popup factory if same release train.
+
+done:
+  - Map screen readable; cluster/legend concerns separated
+
+out:
+  - src/screens/map/mapScreenUtils.ts
+  - src/screens/map/MapScreenToolbars.tsx
+  - src/screens/map/MapScreenClusterStack.tsx

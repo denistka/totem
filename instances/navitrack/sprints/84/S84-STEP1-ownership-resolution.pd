@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_1 — ownership resolution
+requires: [FRONTEND_DEV]
+sprint: S84
+
+context: |
+  Resolve every path under src/modules/* and every duplicate domain touchpoint
+  BEFORE any file moves. Merge decisions only — no copy-paste fixes.
+
+out:
+  - totem/instances/navitrack/intel/S84_ownership_map.json
+    (schema: domain_id → { owner_layer, owner_path, consumers[], duplicates[] })
+  - Draft totem/instances/navitrack/intel/S84_migration_map.json
+    (planned from→to only; finalize as-built in STEP_7)
+
+done:
+  - ownership_map.json committed; each domain has exactly one structural owner declared
+  - madge + jscpd baseline numbers recorded inside S84_ownership_map.json or sibling note
+  - No src/ moves except intel JSON if needed

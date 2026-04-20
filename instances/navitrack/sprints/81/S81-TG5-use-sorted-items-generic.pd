@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Refactor useSortedItems.ts toward generic sort utility
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `useSortedItems.ts` (~120 LOC). Move pure sort/compare to `lib/` or
+  `utils/sorting.ts`; hook stays thin and reusable.
+
+done:
+  - No duplicate sort logic across list screens
+
+out: []

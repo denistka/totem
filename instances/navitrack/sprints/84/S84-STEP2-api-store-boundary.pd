@@ -1,0 +1,25 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_2 — api/store boundary fix
+requires: [FRONTEND_DEV]
+sprint: S84
+dep: [S84-STEP1-ownership-resolution.pd]
+
+context: |
+  Eliminate store-side fetch orchestration per ownership_map and hotspots:
+  all `store/adapters/*` (tracking, reports, vehicles, zones) must become
+  state-only or thin delegates; orchestration lives in `api/domains/*` facades.
+  Primary hotspot: tracking; audit siblings for the same pattern.
+
+hotspots:
+  - store_tracking_adapter
+  - store adapters reports / vehicles / zones (audit per ownership_map)
+
+out:
+  - totem/instances/navitrack/intel/S84_api_store_boundary_report.md
+    (what moved, signatures preserved, verification checklist)
+
+done:
+  - store adapters state-only; orchestration in api/domains
+  - No backend contract change; no UI behavior change
+  - madge no worse than STEP_1 baseline

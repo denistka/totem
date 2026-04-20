@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S86 T4 — update tauri config
+requires: [FRONTEND_DEV]
+sprint: S86
+
+context: |
+  Review and update 'src-tauri/tauri.conf.json'.
+  - Verify 'build.beforeDevCommand' and 'build.beforeBuildCommand' point to root scripts.
+  - Verify 'build.frontendDist' matches Vite's output (usually '../dist').
+  - Ensure 'identifier' and 'productName' are correct for NaviTrack.
+
+out:
+  - navitrack-mobile-apps/src-tauri/tauri.conf.json
+
+done:
+  - Config file validated.
+  - 'pnpm tauri dev' (or similar) can theoretically start with correct paths.

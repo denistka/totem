@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TM2 — entities pilot (entities/<domain>/{api,model})
+requires: [FRONTEND_DEV]
+
+context: |
+  Pick smallest coherent domain (e.g. vehicles or zones). Move or re-export
+  api + model types into entities/<name>/api and entities/<name>/model per
+  S82-TM1 map. Update imports; preserve public API behavior. Coordinate with
+  S81-TI1 if same domain touched.
+
+done:
+  - Pilot domain compiles; no circular deps; UI unchanged
+  - Short note in intel: template for rolling remaining domains
+
+out: []

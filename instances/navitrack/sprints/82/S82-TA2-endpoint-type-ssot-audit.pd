@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TA2 — endpoint & type audit (S82_API_TYPE_SSOT_AUDIT.md; metric_lock api)
+requires: [FRONTEND_DEV]
+
+context: |
+  Map client calls to endpoints (grep / codemap / domain modules). Cross-check
+  vs OpenAPI/types if available. List unused client wrappers, duplicate shapes,
+  and mismatched names. Plan merges into one type per endpoint family;
+  implementation in TA3–TA5. This task delivers the audit artifact only.
+
+out: [totem/instances/navitrack/intel/S82_API_TYPE_SSOT_AUDIT.md]
+
+done:
+  - Audit file committed; P0/P1/P2 remediation list present
+  - Aligns with S81-TI1 transforms where domains already refactored

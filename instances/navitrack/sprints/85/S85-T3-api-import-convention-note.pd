@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S85 T3 — API import convention note
+requires: [FRONTEND_DEV]
+sprint: S85
+dep: [S85-T1-domain-imports-batch-one.pd]
+
+context: |
+  Short machine-oriented note: when to use api/index vs api/domains/* so future
+  edits do not re-expand the barrel. File under totem intel, not product README.
+
+out:
+  - totem/instances/navitrack/intel/S85_api_import_convention.md
+
+done:
+  - Note lists barrel role + domain import preference + exception process

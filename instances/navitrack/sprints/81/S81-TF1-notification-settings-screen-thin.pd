@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin NotificationSettingsScreen.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `NotificationSettingsScreen.tsx` (~273 LOC). Extract data hook under
+  `hooks/notification-settings/` and subcomponents under
+  `components/notification-settings/`. Screen <~100 lines.
+
+done:
+  - Orchestrator-only screen; no logic leak in JSX blocks
+
+out:
+  - src/screens/notification-settings/notificationEventKeys.ts
+  - src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts
+  - src/screens/notification-settings/components/NotificationSettingsPushSection.tsx
+  - src/screens/notification-settings/components/NotificationSettingsVehicleSection.tsx
+  - src/screens/notification-settings/components/NotificationEventTogglesPanel.tsx

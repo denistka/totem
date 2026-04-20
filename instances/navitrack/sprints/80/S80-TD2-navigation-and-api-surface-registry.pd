@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Single registry for routes / screen ids / API domains
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  If screen keys, route names, or API path prefixes are duplicated as string
+  literals across files, consolidate into typed constants (e.g. `navigation.ts`,
+  `api/endpoints.ts`) without changing runtime URLs. Background variants tied
+  to screens should reference the same registry as navigation where possible.
+
+done:
+  - New constants imported from call sites; tsc clean
+  - No behavior change to HTTP paths
+
+out: []

@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: List render hot paths (memo, keys, virtualization)
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Profile or reason about largest lists (objects, reports rows, history events).
+  Add `memo`/`useCallback` only where profiling or clear re-render churn
+  indicates need; fix unstable keys. Consider virtualization only if lists are
+  very large — do not add dependency without justification.
+
+done:
+  - Changes justified in PR/sprint note (what list, what symptom)
+  - Tests and tsc pass
+
+out: []

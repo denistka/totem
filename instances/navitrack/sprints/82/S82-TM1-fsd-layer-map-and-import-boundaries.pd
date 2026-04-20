@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TM1 — FSD layer map + import boundaries
+requires: [FRONTEND_DEV]
+
+context: |
+  Define target tree: app/, pages/, features/, entities/, shared/ (align with
+  existing src-client; incremental migration, no big-bang). Document allowed
+  import directions and forbidden edges. Prefer eslint-plugin-import boundaries
+  or equivalent if already in stack; otherwise ADR-style rules in intel.
+
+out: [totem/instances/navitrack/intel/S82_FSD_LAYER_MAP.md]
+
+done:
+  - Written map + dependency rules; optional human/architect sign-off note in doc
+  - No mass moves in this task unless trivial barrel fixes

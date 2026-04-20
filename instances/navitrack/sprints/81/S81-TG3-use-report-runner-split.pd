@@ -1,0 +1,15 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Split useReportRunner.ts
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `useReportRunner.ts` (~185 LOC). Split into e.g. `useReportGeneration.ts` and
+  `useReportPolling.ts` (names per repo convention); compose in thin facade if
+  needed.
+
+done:
+  - Single responsibility per hook; ReportsScreen imports simplified
+
+out: []

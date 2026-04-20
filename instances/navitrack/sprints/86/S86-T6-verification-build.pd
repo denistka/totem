@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:devops
+task: S86 T6 — verification build
+requires: [DEVOPS]
+sprint: S86
+
+context: |
+  Perform a final smoke test of the new repository.
+  - Run 'pnpm install'.
+  - Run 'pnpm dev' and check if the React app loads in browser.
+  - Run 'pnpm tauri build' (desktop) to ensure basic Tauri health.
+  - Check 'tauri ios build' (dry run or check if targets are ready).
+
+out:
+  - Final repository state confirmation.
+
+done:
+  - Repository is functional and ready for mobile-specific development.

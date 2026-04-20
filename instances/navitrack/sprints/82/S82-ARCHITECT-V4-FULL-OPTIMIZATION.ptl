@@ -1,0 +1,242 @@
+gate: OPEN
+sprint: S82
+title: Architect v4.1 — Deterministic Refactor System & Architectural Optimization
+priority: P1
+dep: S81
+
+description: |
+  Post-S81 **deterministic** architectural refactor sprint.
+  Objective: eliminate semantic + syntactic duplication, enforce FSD boundaries,
+  achieve single API/type SSOT, stabilize performance and tooling.
+
+  Ground truth:
+    - @navitrack-apps/src-client/codemap.json
+    - `pnpm dupes:jscpd`
+    - `pnpm codemap`
+    - `pnpm lint` (SonarJS)
+
+  **Baseline snapshot (immutable reference — extend via changelog only):**
+  `totem/instances/navitrack/intel/S82_ARCHITECT_V4_BASELINE.md`
+  (377 codemap files, 40 lint warnings, 12 jscpd clones as of 2026-04-08).
+
+  S82 is **not** a redesign sprint — it is **structural convergence**.
+  Policy + tasks below; **metric_lock** defines the only allowed scoreboard.
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 5–8 weeks
+
+# =========================
+# EXECUTION MODEL (STRICT)
+# =========================
+
+execution_model:
+  mode: incremental_refactor
+  determinism_rule: "Same input repo state + same task scope must yield the same class of structural outcome (no ad-hoc one-off patterns)."
+  daily_scope_limit: "1–2 tasks max per engineer context"
+  coupling_rule: "No cross-track edits without explicit dependency declaration in PR or intel"
+  sequencing_hint: "T0 → TS → TM → TA → TL → TP → TQ → TR → TW (overlap allowed only where declared)."
+  anti_scope_creep:
+    rule: "Any non-P0 finding becomes an intel note, NOT sprint expansion"
+  over_governance_guard: "Non-P0 policy nits: follow-up in intel; do not block merge."
+
+# =========================
+# MIGRATION SAFETY
+# =========================
+
+migration_safety:
+  - No feature rewrites
+  - No behavior change
+  - No API contract mutation without TA track + owner
+  - UI must remain visually and behaviorally identical
+  - Only structural, dependency, and abstraction changes allowed
+
+# =========================
+# STOP CONDITIONS (FINALIZED METRICS)
+# =========================
+
+stop_conditions:
+  duplication_reduction: ">=30% vs S82-T0 baseline per metric_lock.duplication_metric"
+  circular_dependencies: "0 (madge enforced, TM3)"
+  layer_violations_P0: "0 (TM4 + architecture_rules)"
+  api_ssot_compliance: "100% in TA2-scoped domains (ta_definition_of_done)"
+  unused_api_surface: "0 in TA scope after TA3"
+  exit_rule: "If all satisfied early → TW2 hardening only, no new refactor scope"
+
+metric_lock:
+  duplication_metric: "jscpd_duplicated_lines_ratio"
+  dependency_metric: "madge_cycle_count"
+  api_metric: "ta_endpoint_contract_coverage"
+  note: "These three names are fixed for S82 — quantify each in TW1; no mid-sprint redefinition without sponsor note in intel."
+
+# =========================
+# SEMANTIC RULE ENGINE
+# =========================
+
+semantic_rule:
+  rule: "No duplicate behavior without explicit justification"
+  resolution_order:
+    "1": merge_into_shared_abstraction
+    "2": convert_into_domain_facade
+    "3": document_exception_with_owner
+  forbidden: "silent_duplication"
+
+semantic_definition_of_done:
+  - TS1 matrix lists every in-scope duplicate; TS0–TS3 resolve per resolution_order
+
+# =========================
+# ARCHITECTURE COMPILER (DECISION RULES)
+# =========================
+
+architecture_rules:
+  - UI → must never import API directly (hooks/services only)
+  - API → must never import UI
+  - screens → composition + thin wiring only
+  - hooks → domain-scoped OR shared; never undeclared hybrid
+  - DTO / contract → single SSOT per endpoint family in scoped domain (TA)
+  - Client HTTP → single entry per domain (TA1 + barrels/facades)
+
+import_policy:
+  max_relative_depth: 2
+  required_aliases: true
+
+# =========================
+# API SSOT (TA TRACK)
+# =========================
+
+ta_definition_of_done:
+  - Every used endpoint has exactly one typed contract in the client model for that domain
+  - No orphan API domain modules after TA3 scope
+  - One obvious import path per domain (facade or documented barrel)
+
+# =========================
+# QUALITY GATES (NON-NEGOTIABLE)
+# =========================
+
+quality_gates:
+  - no_cycles — dependency_metric == 0
+  - no_new_duplication_regression — jscpd vs immutable baseline + stop_conditions.duplication_reduction
+  - no_p0_layer_violations — architecture_rules + TM4
+  - no_orphan_api_modules — ta_definition_of_done
+  - no_duplicate_dtos_per_domain — TA4/TA5
+  - no_new_files_over_150_loc — new/changed code only; legacy grandfathered per TW1
+
+# =========================
+# POST-SPRINT GUARANTEE
+# =========================
+
+post_sprint_guards:
+  - codemap reproducible (`pnpm codemap` from locked toolchain)
+  - dependency graph acyclic (madge in CI or npm script)
+  - API single-entry per domain in scoped surfaces
+  - duplication must not increase vs post-S82 baseline in follow-up commits
+  - architecture review pack (TW2) reproducible from repo + intel + CI artifacts
+  - ESLint layer rules where wired; else documented convention + review checklist
+
+# =========================
+# OWNERSHIP
+# =========================
+
+owners:
+  primary: FRONTEND_DEV
+  escalation: "Backend/API contract owner only for server or OpenAPI changes affecting TA"
+
+# =========================
+# SUCCESS METRICS (FINAL CONTRACT)
+# =========================
+
+success_metrics:
+  - stop_conditions satisfied or sponsor-approved revision in intel
+  - duplication_reduction >= 30% per metric_lock
+  - circular_dependencies == 0
+  - p0_layer_violations == 0
+  - api_ssot_coverage == 100% in TA2-scoped domains
+  - unused_api_surface == 0 in TA scope
+  - codemap_stability — same scripts produce comparable tree summary post-merge
+  - lint_debt_reduction — SonarJS warnings cleared or reduced with TW1 baseline note
+  - TW1 encodes metric_lock numerators/denominators; TW2 review pack complete
+
+# =========================
+# TRACKS (execution units — .pd filenames unchanged)
+# =========================
+
+tracks:
+  - id: T0
+    title: Baseline — deterministic V4 snapshot
+    tasks:
+      - S82-T0-v4-baseline-report.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TS
+    title: Semantic duplication elimination
+    tasks:
+      - S82-TS0-jscpd-clone-elimination.pd
+      - S82-TS1-semantic-dup-matrix-cross-feature.pd
+      - S82-TS2-unify-screen-patterns-hooks.pd
+      - S82-TS3-hooks-normalization.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TM
+    title: FSD migration & dependency system
+    tasks:
+      - S82-TM1-fsd-layer-map-and-import-boundaries.pd
+      - S82-TM2-entities-pilot-api-model-layout.pd
+      - S82-TM3-dependency-boundaries-madge.pd
+      - S82-TM4-layer-separation-enforcement.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TA
+    title: API SSOT + type system convergence
+    tasks:
+      - S82-TA1-single-client-centralized-errors.pd
+      - S82-TA2-endpoint-type-ssot-audit.pd
+      - S82-TA3-remove-unused-client-api.pd
+      - S82-TA4-type-deduplication-api.pd
+      - S82-TA5-api-type-alignment-domains.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TL
+    title: Tooling hardening
+    tasks:
+      - S82-TL0-sonarjs-warnings-sweep.pd
+      - S82-TL1-eslint-typescript-strictness-sweep.pd
+      - S82-TL2-path-alias-consistency.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TP
+    title: Performance optimization
+    tasks:
+      # v4.1 preferred order: lazy → render audit → virtualization → memo/hot paths
+      - S82-TP1-route-and-heavy-lazy-split.pd
+      - S82-TP4-react-render-audit.pd
+      - S82-TP3-list-virtualization-memo-boundaries.pd
+      - S82-TP2-memo-and-rerender-audit.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TQ
+    title: Testability layer
+    tasks:
+      - S82-TQ1-unit-tests-hooks-services.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TR
+    title: CSS + design system normalization
+    tasks:
+      - S82-TR1-tailwind-cn-and-shared-patterns.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TW
+    title: Final validation & architecture report
+    tasks:
+      - S82-TW1-quality-metrics-and-ci-policy.pd
+      - S82-TW2-architecture-review-ready-pack.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN

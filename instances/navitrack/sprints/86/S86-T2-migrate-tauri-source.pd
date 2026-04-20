@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S86 T2 — migrate tauri source
+requires: [FRONTEND_DEV]
+sprint: S86
+
+context: |
+  Migrate the Tauri configuration and Rust code from 'navitrack-apps/src-tauri'
+  to 'navitrack-mobile-apps/src-tauri'.
+  Note: Preserve the mobile-ready capabilities if the template had specific 
+  ios/android setup, but prefer the 'src-tauri' logic for app features.
+  Ensure 'tauri.conf.json' is updated to reflect the new project structure.
+
+out:
+  - navitrack-mobile-apps/src-tauri/
+
+done:
+  - Rust source files and Cargo.toml migrated.
+  - icons/ folder migrated or generated.
+  - 'src-tauri' compiles (cargo check).

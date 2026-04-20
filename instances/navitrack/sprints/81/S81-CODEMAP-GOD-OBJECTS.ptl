@@ -1,0 +1,123 @@
+gate: OPEN
+sprint: S81
+title: Codemap God Objects — Decomposition, Deduplication, Architecture
+priority: P1
+dep: S80
+
+description: |
+  Ground truth: @navitrack-apps/src-client/codemap.json (319 files). Eliminate
+  20+ god objects (>150 lines), dedupe date/map/settings/icon layers, thin
+  screens to orchestrators, align with ARCHITECT (SoC, interfaces, no circular
+  deps). Continues S80; does not re-litigate completed S80 TF/CSS unless scope
+  overlaps — prefer incremental verification.
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 4–6 weeks
+
+success_metrics:
+  - Written audit: duplicates, >150 LOC inventory, dead/unused candidates, cycles
+  - Large files decomposed with stable imports and tests green
+  - Date/time single module; map popups behind factory + shared row
+  - Screens >200 lines reduced via hooks + colocated components
+  - Dup tooling (jscpd / sonarjs) wired for CI or local gate
+  - Shared-layer plan (utils/hooks/services) + архитектурный бриф для ревью
+
+tracks:
+  - id: T0
+    title: Baseline — duplication metrics & branch hygiene
+    tasks:
+      - S81-T0-dup-detection-tooling.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TK
+    title: Аудит и deliverables (дубли, граф, мёртвый код, ревью)
+    tasks:
+      - S81-TK1-codemap-duplication-audit.pd
+      - S81-TK2-circular-deps-import-structure.pd
+      - S81-TK3-dead-code-unused-sweep.pd
+      - S81-TK4-architecture-review-brief.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TA
+    title: API — reports domain split
+    tasks:
+      - S81-TA1-reports-domain-split.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TB
+    title: Tracking action screen decomposition
+    tasks:
+      - S81-TB1-tracking-action-screen-split.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TC
+    title: Date/time — picker module + lib merge
+    tasks:
+      - S81-TC1-date-range-picker-modularize.pd
+      - S81-TC2-datetime-lib-unify.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TD
+    title: Settings — thin screen + generic field + vehicle icons
+    tasks:
+      - S81-TD1-settings-screen-thin.pd
+      - S81-TD2-settings-field-generic.pd
+      - S81-TD3-vehicle-icon-registry.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TE
+    title: Map — popup factory
+    tasks:
+      - S81-TE1-map-popup-factory.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TF
+    title: Thin screens (>200 lines)
+    tasks:
+      - S81-TF1-notification-settings-screen-thin.pd
+      - S81-TF2-object-details-screen-thin.pd
+      - S81-TF3-tracking-screen-thin.pd
+      - S81-TF4-reports-screen-thin.pd
+      - S81-TF5-map-screen-thin.pd
+      - S81-TF6-login-screen-thin.pd
+      - S81-TF7-mobile-shell-thin.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TG
+    title: Large modules, hooks, map widgets
+    tasks:
+      - S81-TG1-virtualized-report-table-split.pd
+      - S81-TG2-filters-panel-split.pd
+      - S81-TG3-use-report-runner-split.pd
+      - S81-TG4-use-adaptive-track-rendering-split.pd
+      - S81-TG5-use-sorted-items-generic.pd
+      - S81-TG6-cluster-map-thin.pd
+      - S81-TG7-tracking-route-map-thin.pd
+      - S81-TG8-history-timeline-thin.pd
+      - S81-TG9-time-picker-analog-wheel-split.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TH
+    title: CSS — Tailwind composition & glass
+    tasks:
+      - S81-TH1-tailwind-component-classes.pd
+      - S81-TH2-glass-css-variants.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: TI
+    title: API boundaries & response shaping
+    tasks:
+      - S81-TI1-api-transforms-interfaces.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN

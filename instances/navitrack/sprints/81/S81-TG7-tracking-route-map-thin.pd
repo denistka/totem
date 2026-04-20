@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Thin TrackingRouteMap.tsx
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `TrackingRouteMap.tsx` (~200 LOC). Split polyline logic, viewport fitting, and
+  layer toggles.
+
+done:
+  - Consistent with TG6 patterns where overlap exists
+
+out:
+  - src/screens/tracking/components/TrackingRouteMapChrome.tsx
+  - src/screens/tracking/components/trackingRouteMapUtils.ts

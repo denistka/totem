@@ -1,0 +1,18 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Lazy routes and heavy dependency boundaries
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Audit `ScreenRouter` (or equivalent) and large screens (tracking, reports,
+  maps). Apply `React.lazy` + `Suspense` where missing for non-critical
+  screens; ensure leaflet/map chunks stay out of initial bundle if feasible.
+  Record before/after bundle stats (vite build --report or analyzer) in one
+  line in task notes.
+
+done:
+  - Measurable chunk improvement or documented blocker
+  - No broken navigation during lazy load
+
+out: []

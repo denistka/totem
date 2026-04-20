@@ -1,0 +1,15 @@
+---
+title: Implement Identical Frontend Reporting (New API)
+gate: OPEN
+type: task
+requires: [FRONTEND_DEV]
+depends_on: [TASK-REPORT-UI-LEGACY-API.pd]
+---
+
+# Task Objective
+After debugging and achieving 100% visual parity with the old API, ensure the new app can form the exact same identical report utilizing the *new API*.
+
+# Detailed Steps
+1. Adapt the frontend report data parser to consume the new API.
+2. Ensure the resulting parsed data structure perfectly matches the structure used to render the legacy-identical view.
+3. Verify that the final visual output remains identical to the screenshots across the new API integration.

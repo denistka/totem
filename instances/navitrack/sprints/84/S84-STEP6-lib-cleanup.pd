@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S84 STEP_6 — lib cleanup
+requires: [FRONTEND_DEV]
+sprint: S84
+dep: [S84-STEP3-entities-ssot-build.pd]
+
+context: |
+  Contract: dependency STEP_3. If any lib file still imports modules/,
+  complete STEP_4 first (build safety), then execute this task.
+
+  Relocate domain knowledge from lib/* to entities or features per ownership_map.
+  lib/* ends pure utilities only.
+
+hotspots:
+  - vehicle_icons (e.g. playback-icon)
+
+done:
+  - lib/* has no domain semantics (no feature UI imports unless exception documented)
+  - vehicle_icons violation cleared

@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TL2 — path alias policy (@/, import_policy.max_relative_depth)
+requires: [FRONTEND_DEV]
+
+context: |
+  Audit tsconfig paths, vite resolve.alias, and vitest/jest if used. Prefer
+  `@/` for src-internal imports; migrate high-churn dirs incrementally. Add
+  eslint `no-restricted-imports` or cap relative depth (max **2** `../` per
+  `import_policy` in `S82-ARCHITECT-V4-FULL-OPTIMIZATION.ptl`) for
+  new/changed files; document grandfathered paths. Avoid breaking Tauri/build.
+
+done:
+  - Configs aligned; doc in intel or README snippet for contributors
+  - Representative modules use alias; build and test pass
+
+out: []

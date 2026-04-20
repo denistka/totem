@@ -1,0 +1,25 @@
+---
+title: "Sprint: Report Parity with Legacy iOS App"
+gate: OPEN
+type: sprint
+---
+
+# Sprint Objective
+Ensure the new React application generates and renders reports exactly identical to the legacy iOS application `navitrack-mobile-ios`.
+
+# Context
+The user has provided screenshots showing how the reports must look. The generated reports in the new app often do not match the old app's output. The primary goal is properly formed data in reports and identical appearance.
+
+# Tracks
+
+## Track A: Legacy Analysis
+- **Task**: `TASK-REPORT-ANALYSIS.pd`
+- **Goal**: Thoroughly analyze the legacy iOS application (`/Users/denistka/Projects/navitrack/old-apps/navitrack-mobile-ios`) regarding report generation (specifically `ReportConvertor.swift` and `ReportViewController.swift`) and document this knowledge.
+
+## Track B: Legacy API UI Parity
+- **Task**: `TASK-REPORT-UI-LEGACY-API.pd`
+- **Goal**: Using the new application's styling system, achieve 100% data and visual parity with the legacy app based on the *old API*.
+
+## Track C: New API UI Parity
+- **Task**: `TASK-REPORT-UI-NEW-API.pd`
+- **Goal**: After achieving identity with the old API, adapt the identical appearance and data formation logic to work with the *new API*.

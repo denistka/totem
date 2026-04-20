@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: API layer — shared transforms and interfaces
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Across domains (auth, events, misc, notifications, reports, settings,
+  tracking, vehicles, zones): extract shared response mappers to
+  `src/api/transforms/`, shared contracts to `src/api/interfaces/`, and apply
+  a consistent adapter pattern at domain boundaries. Incremental PRs per domain
+  acceptable; avoid big-bang. Do not change server contracts.
+
+done:
+  - At least two domains migrated to shared transform/helpers as proof
+  - No circular imports; tsc clean
+
+out:
+  - src/api/transforms/
+  - src/api/interfaces/

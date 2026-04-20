@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Unify date/time utilities
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Merge `src/lib/date-utils.ts` and `src/lib/format-time.ts` into
+  `src/lib/datetime.ts` with a single documented API. Update all imports;
+  delete or re-export deprecations briefly if needed for safety.
+
+done:
+  - One canonical module; no duplicate format helpers
+  - Grep shows no stale imports to removed files
+
+out: [src/lib/datetime.ts]

@@ -1,0 +1,17 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Tailwind @apply component classes
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Add `src/styles/components.css` (or extend existing pattern) with semantic
+  classes for repeated long `className` strings (e.g. primary button, modal
+  overlay). Migrate high-churn patterns only; avoid @apply explosion — prefer
+  cva/tokens where already used.
+
+done:
+  - Build includes new stylesheet; spot-check key screens
+  - No duplicate @apply blocks across CSS files
+
+out: [src/styles/components.css]

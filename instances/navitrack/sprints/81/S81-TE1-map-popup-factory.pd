@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Map popup factory + shared row
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  Consolidate:
+  - `src/modules/map/popup-fuel.ts`
+  - `src/modules/map/popup-rows.tsx`
+  - `src/modules/map/popup-telemetry.ts`
+  - `src/modules/map/popup-ignition.ts`
+  - `src/modules/map/popup-address.ts`
+  Into `MapPopupFactory.tsx` + shared `PopupRow.tsx`. Preserve Leaflet popup
+  HTML contract and i18n keys.
+
+done:
+  - Single registration path for popup kinds; duplication removed
+  - Map markers still show correct popups
+
+out:
+  - src/modules/map/MapPopupFactory.tsx
+  - src/modules/map/PopupRow.tsx

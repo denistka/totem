@@ -1,0 +1,14 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S82 TM3 — madge zero cycles + import direction (metric_lock)
+requires: [FRONTEND_DEV]
+
+context: |
+  Run `madge --circular` on `src`. Document allowed import flow consistent with
+  TM1 FSD map. Wire eslint boundaries if feasible; else ADR + CI madge. Fix
+  cycles introduced during S81/S82 work.
+
+done:
+  - madge exit 0; direction rules in intel; violations fixed or gated with note
+
+out: []

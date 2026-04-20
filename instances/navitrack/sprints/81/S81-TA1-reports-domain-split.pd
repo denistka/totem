@@ -1,0 +1,24 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Split reports API domain (god object)
+status: done
+requires: [FRONTEND_DEV]
+
+context: |
+  `src/api/domains/reports.ts` (~462 LOC per codemap). Split without behavior
+  change:
+  - `src/api/domains/report-types.ts` — types only
+  - `src/api/domains/report-api.ts` — fetch/client calls
+  - `src/api/domains/report-transforms.ts` — mappers/normalizers
+  Re-export from a thin `reports.ts` barrel if needed for stable imports.
+  Reconcile with `src/store/adapters/reports.ts` if it duplicates domain logic.
+
+done:
+  - No file in split set remains a monolith; imports updated; tests/build pass
+  - Store adapter uses shared types/transforms where overlap existed
+
+out:
+  - src/api/domains/report-types.ts
+  - src/api/domains/report-api.ts
+  - src/api/domains/report-transforms.ts
+  - src/api/domains/reports.ts

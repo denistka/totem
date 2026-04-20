@@ -1,0 +1,16 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S85 T9 — history / objects / route map edges
+requires: [FRONTEND_DEV]
+sprint: S85
+dep: [S85-T0-codemap-baseline-snapshot.pd]
+
+context: |
+  Reduce importsFromProjectTsCount on at least one of: HistoryMap.tsx,
+  ObjectsScreen.tsx, TrackingRouteMap.tsx via hook or subcomponent extraction.
+
+out:
+  - Metric delta for touched files
+
+done:
+  - No new cycles; codemap clean

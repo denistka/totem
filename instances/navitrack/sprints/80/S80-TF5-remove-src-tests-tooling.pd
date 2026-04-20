@@ -1,0 +1,20 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: Remove src/__tests__ and align test tooling
+status: pending
+requires: [FRONTEND_DEV]
+
+context: |
+  Delete `navitrack-apps/src-client/src/__tests__` (unit + e2e under that tree).
+  If Playwright should continue, relocate specs/snapshots to e.g. `e2e/` at
+  project root and update `playwright.config.ts` paths; otherwise remove or
+  adjust `test:e2e` scripts. Update `vitest.config.ts` (remove setup path to
+  deleted setup), `package.json` test scripts, CI, and `tsconfig` excludes.
+  Resolve `vitest run` behavior when zero tests (document or remove vitest until
+  tests return).
+
+done:
+  - No references to deleted __tests__ paths
+  - Documented test story in README (or explicit “no unit tests”)
+
+out: []
