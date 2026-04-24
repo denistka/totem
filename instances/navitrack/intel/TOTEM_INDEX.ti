@@ -8,8 +8,8 @@ project:
   mission: universal solutions, satellite tech, monitoring, remote control
   tagline: NaviTrack — ВСЕГДА ВЫИГРЫШНОЕ РЕШЕНИЕ
   website: https://navitrack.com.ua
-  stack: [react19, typescript, tauri2, vite, zustand, leaflet]
-  status: ✅ All sprints complete (S01–S76). See LOG.ti for historical archive.
+  stack: [react19, typescript, tauri2, vite, zustand, leaflet, firebase-fcm, biometrics]
+  status: ✅ All sprints complete (S01–S86). Project fully migrated to Tauri 2 Mobile.
 
 brand:
   primary: "#2D8A3E"

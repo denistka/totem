@@ -10,7 +10,7 @@ updated:2026-03-10
 E-00:
   name:Epic-0-Done
   purpose:aggregate-all-completed-work
-  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S42,S43,S44,S45,S46,S47,S48,S49,S50,S51,S52,S53,S54,S55,S56,S57,S58,S59,S60,S61,S63,S64,S65,S66,S67,S68,S69,S70,S73,S74,S75,S76]
+  sprints:[S01,S02,S03,S04,S05,S06,S07,S08,S09,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S22,S23,S24,S25,S26,S28,S29,S30,S31,S32,S33,S34,S35,S36,S37,S27,S42,S43,S44,S45,S46,S47,S48,S49,S50,S51,S52,S53,S54,S55,S56,S57,S58,S59,S60,S61,S63,S64,S65,S66,S67,S68,S69,S70,S73,S74,S75,S76,S77,S78,S80,S81,S82,S84,S85,S86]
   status:✅ complete
 
 ###############################################################################
@@ -84,7 +84,7 @@ E-06-CODE-QUALITY-OPTIMIZATION:
 E-07-API-V6-MIGRATION:
   name:Epic-7-API-v6-Migration
   purpose:jwt-auth,report-v2,data-model-fixes,new-endpoints
-  sprints:[S65,S66,S67,S68,S69,S72,S76]
+  sprints:[S65,S66,S67,S68,S69,S72,S76,S77,S78,S80,S81,S82,S84,S85,S86]
   status:✅ complete
   note:Full migration from Basic Auth + deprecated API to JWT + API v6
   ref:intel/API_V6_SPEC.ti
@@ -97,5 +97,16 @@ E-08-POST-MIGRATION-POLISH:
   name:Epic-8-Post-Migration-Polish
   purpose:performance,testing,accessibility,final-ui-tuning
   sprints:[S73]
+  status:✅ complete
+
+
+###############################################################################
+# EPIC 9 — Mobile Native Integrations & Release Preparation
+###############################################################################
+
+E-09-MOBILE-NATIVE:
+  name:Epic-9-Mobile-Native-Integrations
+  purpose:firebase-push-notifications,biometric-auth,keystore-security,ios-entitlements,android-gradle-config,release-targets
+  sprints:[S86]
   status:✅ complete
 

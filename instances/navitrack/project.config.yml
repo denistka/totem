@@ -1,13 +1,17 @@
 project:
   name: NaviTrack
   version: 1.0.0
-  description: Fleet tracking PWA — React 19 PWA (primary), optional Tauri 2 desktop, WebGPU/WASM.
+  description: Fleet tracking mobile application — React 19 + Tauri 2 (iOS/Android).
   stack:
-    - react
+    - react19
     - typescript
     - tauri2
     - rust
-    - webgpu
+    - firebase-fcm
+    - biometrics
+    - tailwindcss
+    - zustand
+    - leaflet
   ui_stack_ref: null
   ui_stack_package: null
   ui_design_docs:
@@ -15,8 +19,8 @@ project:
     - totem/core/DESIGN_SPRINT_GUIDE.md
 
 paths:
-  code: ../navitrack-apps
-  react_app: ../navitrack-apps
+  code: ../../../navitrack-mobile-apps
+  react_app: ../../../navitrack-mobile-apps
   history: ../prompt-machine
   intel: ./intel
 
@@ -31,6 +35,4 @@ guardians:
   stack_adapters:
     - FRONTEND_DEV
     - RUST_DEV
-    - WEBGL
-    - WGPU
-    - SLANG
+    - MOBILE_TAURI

@@ -1,0 +1,28 @@
+v:3
+format:totem-report
+sprint:S86
+name:Mobile-Native-Integrations
+status:✅ complete
+date:2026-04-24
+
+# SUMMARY
+Блок работ по глубокой интеграции Tauri v2 с нативными мобильными платформами (iOS/Android).
+Все задачи реализованы и протестированы на актуальной кодовой базе в `/navitrack-mobile-apps`.
+
+# DELIVERABLES
+- [x] **iOS Push Notifications:** Настроены Entitlements, добавлен `GoogleService-Info.plist`, активированы Remote Notifications.
+- [x] **Android Push Notifications:** Подключен Google Services плагин, настроен `build.gradle.kts`, добавлен `google-services.json`.
+- [x] **Secure Storage:** Интегрирован `tauri-plugin-keystore` для безопасного хранения токенов.
+- [x] **Biometrics:** Настроен `@tauri-apps/plugin-biometric` для FaceID/Fingerprint.
+- [x] **Git Infrastructure:** Папки `src-tauri/gen/android` и `apple` исключены из `.gitignore` для сохранения нативных настроек.
+- [x] **Cleanup:** Удалены устаревшие файлы настроек из корня `src-tauri`.
+- [x] **Project Handover:** Обновлен `README.md` с инструкциями по сборке и инкременту версий.
+
+# VERIFICATION
+- Проверка Android Build: APK/AAB генерируются корректно с поддержкой Firebase.
+- Проверка iOS Build: Xcode проект корректно видит Entitlements и конфиги.
+- Firebase integration: Токены FCM успешно генерируются и логируются.
+
+# ARCHITECTURAL_DECISION
+- Использование `src-tauri/gen` как части репозитория признано необходимым ввиду кастомных правок в нативном коде (Gradle, Plist).
+- Единый источник версии — `tauri.conf.json`.
