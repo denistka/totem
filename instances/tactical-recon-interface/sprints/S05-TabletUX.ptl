@@ -1,0 +1,29 @@
+---
+id: S05
+name: Touch-first Tablet UX
+status: PLANNING
+gate: LOCKED
+requires: [react/REACT.ti, pwa/PWA.ti]
+---
+
+# S05: Touch-first Tablet UX
+
+## Objective
+Build military-grade tablet interaction system with gesture engine, responsive layout, and kiosk mode.
+
+## Tasks
+- [ ] S05-T01-TabletLayout.pd — Responsive tablet-first layout (landscape primary)
+- [ ] S05-T02-GestureEngine.pd — Touch gesture engine (pointer events abstraction)
+- [ ] S05-T03-PinchZoom.pd — Pinch-to-zoom on video/map areas
+- [ ] S05-T04-SwipePanels.pd — Swipe panels for HUD slot show/hide
+- [ ] S05-T05-LongPress.pd — Long-press interactions (context menu, waypoints)
+- [ ] S05-T06-DragDropWidgets.pd — Drag/drop HUD widget repositioning
+- [ ] S05-T07-TouchSafeControls.pd — Touch-safe controls (min 44x44px targets, no hover-only)
+- [ ] S05-T08-AdaptiveScaling.pd — Adaptive HUD scaling based on screen size
+- [ ] S05-T09-KioskMode.pd — Kiosk fullscreen mode (cage/Wayland integration)
+
+## Invariants
+- All interactive elements: minimum 44x44px touch targets
+- No hover-only states — all interactions accessible via touch
+- Landscape-optimized layout as default
+- Safe area support for notched tablets

@@ -1,0 +1,42 @@
+---
+id: S01-T07
+name: Priority-based Render Scheduler
+status: TODO
+gate: LOCKED
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S01-T07: Priority-based Shared Rendering Scheduler
+
+## Objective
+Port and enhance the AnimationManager from drone-interface/6 into a priority-based rendering scheduler for React. NOT one rAF per component — a central frame scheduler with priority rendering and adaptive pipeline.
+
+## Acceptance Criteria
+- `src/services/RenderScheduler.ts` — Singleton class with:
+  - Single rAF loop shared across all consumers
+  - **Priority levels**: CRITICAL (attitude gauges, compass), NORMAL (radar, graphs), LOW (decorative effects)
+  - CRITICAL callbacks run every frame
+  - NORMAL callbacks run at 30 FPS (every other frame at 60hz)
+  - LOW callbacks run at 15 FPS (every 4th frame at 60hz)
+  - Adaptive: when FPS drops below threshold, LOW callbacks are suspended, then NORMAL reduced
+  - Frame budget monitoring: warns if callbacks exceed 16ms total
+  - MUST mutate Canvas Context directly via `ref` and NOT trigger React `setState` for CRITICAL drawings
+  - register(callback, priority) / unregister(id) API
+  - Drift compensation
+  - Auto-start/stop lifecycle
+- `src/shared/hooks/useRenderCallback.ts` — React hook wrapping register/unregister:
+  - `useRenderCallback(drawFn, priority)` — auto-cleanup on unmount
+  - Returns `{ isActive, fps }` state
+- `src/shared/hooks/useAnimationFrame.ts` — Simpler hook for one-off animations (non-Canvas)
+
+## Reference
+- Source: `drone-interface/6/src/composables/useAnimationManager.ts` (128 lines, singleton pattern)
+- Enhancement: priority scheduling is NEW — not in drone-interface/6
+
+## Steps
+1. Port AnimationManager class from drone-interface/6
+2. Add priority enum: CRITICAL, NORMAL, LOW
+3. Implement per-priority frame skipping logic
+4. Add frame budget monitoring
+5. Create useRenderCallback hook with auto-cleanup
+6. Create useAnimationFrame hook for simple cases

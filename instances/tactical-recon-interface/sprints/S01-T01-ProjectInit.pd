@@ -1,0 +1,49 @@
+---
+id: S01-T01
+name: React 19 Project Initialization
+status: DONE
+gate: OPEN
+requires: [react/REACT.ti, vite/VITE.ti, typescript/TYPESCRIPT.ti, tailwind/TAILWIND.ti]
+reference: navitrack-mobile-apps/package.json, navitrack-mobile-apps/vite.config.ts
+---
+
+# S01-T01: React 19 + TypeScript + Vite + Full Stack Init
+
+## Objective
+Initialize the React 19 + TypeScript + Vite project in `/Projects/tactical-recon-interface` with all core dependencies. Use navitrack's proven dependency versions where possible.
+
+## Acceptance Criteria
+- `pnpm create vite . --template react-ts` executed
+- React 19 installed (`react@^19`, `react-dom@^19`)
+- Core dependencies:
+  - `zustand@^5` — client state (navitrack version)
+  - `@tanstack/react-query` — async state / transport cache
+  - `react-router-dom@^7` — routing
+  - `framer-motion@^12` — animations (navitrack version)
+  - `tailwindcss@^3.4` + `postcss` + `autoprefixer` — styling (**Tailwind 3, NOT 4**)
+  - `tailwindcss-animate` — animation utilities (navitrack uses this)
+  - `clsx` + `tailwind-merge` — className utils (navitrack pattern)
+  - `class-variance-authority` — variant components (navitrack pattern)
+  - `lucide-react` — icons (navitrack uses this)
+- DevDeps: `@types/react@^19`, `@types/react-dom@^19`
+- `pnpm dev` starts successfully on port 1420
+- `tsconfig.json`: strict mode, path aliases (`@/` → `src/`)
+- `vite.config.ts`: port 1420, path aliases, dual-mode Tauri/web detection (navitrack pattern)
+  - Separate caches: `.vite-tauri` vs `.vite-web`
+  - Manual chunks for code splitting
+
+## Why Tailwind 3 (not 4)
+- navitrack ships to iOS/Android App Store with Tailwind 3 — production-proven
+- `tailwind.config.ts` gives TypeScript control over theme
+- Mature plugin ecosystem (`tailwindcss-animate`)
+- HSL CSS variables → Tailwind config mapping is the proven pattern
+
+## Steps
+1. Initialize Vite project using `pnpm create vite . --template react-ts`
+2. Upgrade to React 19
+3. Install all core dependencies (match navitrack versions)
+4. Create `tailwind.config.ts`, `postcss.config.js`
+5. Configure tsconfig paths and vite aliases
+6. Setup dual-mode vite config (Tauri/web)
+7. Initialize git, set remote to `https://github.com/denistka/tactical-recon-interface.git`
+8. Verify build

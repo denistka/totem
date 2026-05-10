@@ -1,0 +1,36 @@
+---
+id: S01-T05
+name: Tauri 2 + Rust Backend Setup
+status: TODO
+gate: LOCKED
+requires: [tauri/TAURI.ti, rust/RUST_DEV.ti]
+---
+
+# S01-T05: Tauri 2 + Rust Backend Scaffold
+
+## Objective
+Initialize Tauri 2 with the existing React frontend and port the Rust backend modules from drone-interface/6.
+
+## Acceptance Criteria
+- `npx tauri init` completed inside the project
+- `Cargo.toml` with: tauri 2.0, tokio, tokio-tungstenite, serde, serde_json, anyhow, rand, futures-util
+- `tauri.conf.json` configured for transparent window, fullscreen, port 1420
+- Rust modules ported from drone-interface/6:
+  - `src-tauri/src/telemetry_server.rs` — WebSocket server on :8080
+  - `src-tauri/src/telemetry_simulator.rs` — 6-DOF flight simulator
+  - `src-tauri/src/video_manager.rs` — FFplay process manager
+  - `src-tauri/src/window_manager.rs` — WebKit layer management
+- Tauri commands registered: `start_video`, `stop_video`, `is_playing`, `get_config`
+- Build features: `pi5` (default), `macos`
+- `pnpm tauri dev` starts successfully
+
+## Reference
+- Source: `drone-interface/6/src/main.rs` (380 lines, 14 commands)
+- Source: `drone-interface/6/Cargo.toml` (build profiles)
+
+## Steps
+1. Run `npx tauri init`
+2. Configure Cargo.toml with dependencies
+3. Copy and adapt Rust modules from drone-interface/6
+4. Register Tauri commands
+5. Verify `pnpm tauri dev` works

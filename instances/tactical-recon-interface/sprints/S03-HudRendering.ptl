@@ -1,0 +1,47 @@
+---
+id: S03
+name: Tactical HUD Rendering
+status: PLANNING
+gate: LOCKED
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti, tailwind/TAILWIND.ti]
+---
+
+# S03: Tactical HUD Rendering System
+
+## Objective
+Build GPU-efficient realtime tactical overlay system with Canvas-based instruments, ported from drone-interface/6 and enhanced with OffscreenCanvas Workers, target tracking, and Framer Motion transitions.
+
+## Tasks
+- [ ] S03-T01-RadarEngine.pd — Canvas radar rendering engine (sweep, fading blips history, trajectory vectors, crosshairs)
+- [ ] S03-T02-AttitudeGauges.pd — Roll/Pitch/Yaw gauges (bar indicators + compass)
+- [ ] S03-T03-TelemetryWidgets.pd — Battery, Connection Status widgets (Tailwind + Framer Motion)
+- [ ] S03-T04-GraphSystem.pd — Canvas line chart system with gradient fills
+- [ ] S03-T05-TargetTracking.pd — Target tracking overlay (motion detection, fake AI threat classification, bounding boxes, intercept time estimation)
+- [ ] S03-T06-TacticalGrid.pd — Tactical grid/crosshair overlay
+- [ ] S03-T07-WidgetLayout.pd — Modular drag-and-drop widget layout system
+- [ ] S03-T08-HudPresets.pd — HUD visibility presets (combat/nav/diagnostics/minimal)
+- [ ] S03-T09-OffscreenCanvas.pd — Move radar + graph rendering to OffscreenCanvas in Workers
+- [ ] S03-T10-FullscreenMode.pd — Fullscreen tactical mode
+
+## Invariants
+- All Canvas rendering uses priority-based RenderScheduler (from S01-T07)
+- Canvas components isolated with React.memo at leaf level
+- OffscreenCanvas used for heavy rendering when browser supports it
+- Graceful fallback to main-thread Canvas when OffscreenCanvas unavailable
+- Non-Canvas widgets use Tailwind CSS + Framer Motion
+- Target tracking: even primitive = huge WOW impact
+
+## Reference
+- Radar: `drone-interface/6/src/components/Radar.vue` (187 lines, Canvas 2D)
+- Gauges: `drone-interface/6/src/components/AttitudeGauges.vue` (201 lines, CSS → Tailwind)
+- Graph: `drone-interface/6/src/components/Graph.vue` (153 lines, Canvas 2D)
+- Battery: `drone-interface/6/src/components/BatteryIndicator.vue` (188 lines, CSS → Tailwind + Framer)
+
+## S03-T05 Detail: Experimental Target Tracking
+Even primitive implementation creates massive interview impact:
+- Frame differencing for motion detection (Canvas pixel comparison)
+- Colored bounding boxes around "detected" movement regions (threat classification colors)
+- Acquisition labels ("TGT-001", "THREAT-LVL", "INTERCEPT") with distance/bearing
+- Animated lock-on indicator (pulsing ring) on selected target
+- Status text: "ACQUIRING...", "LOCKED", "TRACKING"
+- All rendering in OffscreenCanvas Worker (S03-T09)
