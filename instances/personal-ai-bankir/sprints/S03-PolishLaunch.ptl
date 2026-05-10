@@ -1,0 +1,23 @@
+---
+id: S03
+name: Polish & Launch
+status: PLANNING
+gate: LOCKED
+requires: [vue/VUE.ti, node/NODE.ti, supabase/SUPABASE.ti]
+---
+
+# S03: Polish & Launch [DONE]
+
+## Objective
+Finalize monetization, accessibility features, and prepare for public launch.
+
+## Tasks
+- [x] S03-T01-Subscription.pd
+- [x] S03-T02-PushNotifications.pd
+- [x] S03-T03-AgeAdaptation.pd
+- [x] S03-T04-VoiceInput.pd
+- [x] S03-T05-ViralSharing.pd
+
+## Invariants
+- Legal: Consent for push notifications.
+- Accessibility: Minimum contrast and font sizes for 55+.

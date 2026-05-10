@@ -1,0 +1,24 @@
+---
+title: UI Evolution & Interactivity
+requires: [React, Vite, CSS]
+---
+
+# UI Evolution & Interactivity
+
+## Objective
+Transform the Totem V7 App from a static DAG visualization client into a fully interactive execution orchestrator interface.
+
+## Tasks
+1. **Dynamic Project Creation:** Implement a `+ New Project` button in the Sidebar and an `AddProjectModal` to define target paths, IDs, and query technology stacks via `/api/stacks`.
+2. **Animation Tracking (`depends_on`):** Animate dependent child bricks with a pulsed CSS effect, recursively computed so that cascades are visualized sequentially by depth.
+3. **Agent & Execution Commands:** Expose `Execute Brick` and `Execute Queue` triggers for the currently selected node directly within the `ChatView` Inspector pane.
+4. **Terminal Formatting:** If the `agent` outputs a successful run log, display the message in a monospaced terminal UI wrapper with a green success banner (`[✓] PROMPT EXECUTED`).
+5. **Time Machine Functionality:** Bind the `TIME MACHINE` slider to the absolute React state of `ChatSession`, mapping the 0-100 index to array truncation, allowing the user to scrub backward and forward through history states instantly.
+
+## Result
+**STATUS: COMPLETED**
+- `App.tsx` now uses `fetch` hooks to dynamically load `projectIds` at runtime.
+- The `getDescendants` depth-first search computes all sub-tasks mathematically on click, passing an `impactIndex` that feeds direct `animationDelay` into `index.css`.
+- The `ChatView.tsx` interface now splits user prompt inputs from systemic UI execution buttons, formatting successful outputs with CSS monospace containers for visual clarity.
+- Time machine history scrubber implements `Math.ceil(length * (index / 100))` to smoothly hide timeline events without deleting JSON node context.
+- Zero violations of `INVARIANTS.md`; the backend retains total authority over state logic mapping.

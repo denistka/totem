@@ -1,0 +1,23 @@
+---
+id: S02-T02
+name: Commission Scanner
+status: TODO
+gate: LOCKED
+requires: [vue/VUE.ti, node/NODE.ti]
+---
+
+# S02-T02: Commission Scanner
+
+## Objective
+Implement bank commission comparison tool with live rates.
+
+## Acceptance Criteria
+- `Scanner.vue` implemented.
+- Backend endpoint `/api/rates` provides current bank tariffs.
+- Sorting banks by fee amount.
+- "Best Choice" badge for cheapest bank.
+
+## Steps
+1. Populate `bank_rates` in DB.
+2. Create backend route to fetch rates.
+3. Build frontend comparison list.

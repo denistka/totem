@@ -1,0 +1,22 @@
+---
+id: S02-T05
+name: Telegram Bot & Mini App
+status: TODO
+gate: LOCKED
+requires: [node/NODE.ti]
+---
+
+# S02-T05: Telegram Bot & Mini App
+
+## Objective
+Set up Telegraf bot and configure Telegram Web App integration.
+
+## Acceptance Criteria
+- `/start` command opens Mini App.
+- `initData` verification on backend.
+- `useTelegram.js` composable for UI interaction (back button, main button).
+
+## Steps
+1. Register bot in BotFather.
+2. Implement HMAC-SHA256 verification.
+3. Configure Mini App URL.

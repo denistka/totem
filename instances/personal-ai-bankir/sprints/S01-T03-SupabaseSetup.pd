@@ -1,0 +1,23 @@
+---
+id: S01-T03
+name: Supabase Database Setup
+status: TODO
+gate: LOCKED
+requires: [supabase/SUPABASE.ti]
+---
+
+# S01-T03: Supabase Database Setup
+
+## Objective
+Configure Supabase project and apply SQL migrations for MVP.
+
+## Acceptance Criteria
+- Supabase project created/identified.
+- Tables `users`, `conversations`, `debts`, `bank_rates`, `push_subscriptions` created.
+- RLS enabled where appropriate.
+- Connection string added to server `.env`.
+
+## Steps
+1. Create tables using schema from `bankir-master-doc.md`.
+2. Configure initial `bank_rates` data.
+3. Test connection from backend.

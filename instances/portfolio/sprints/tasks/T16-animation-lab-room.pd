@@ -1,0 +1,52 @@
+v:4 c:$ m:portfolio role:dev x:gsap-timeline-editor
+gate: LOCKED
+
+task: Build the Animation Lab — a mini Flash-style timeline editor. Visitor adds keyframes, scrubs the timeline, watches an SVG character animate. This is the direct echo of Denis's Life.io editor work — the strongest signal that he can BUILD animation tools, not just use them.
+
+requires: [vue, gsap]
+out:
+  - app/src/rooms/animation-lab/room.config.ts
+  - app/src/rooms/animation-lab/Room.vue
+  - app/src/rooms/animation-lab/Stage.vue
+  - app/src/rooms/animation-lab/Timeline.vue
+  - app/src/rooms/animation-lab/Keyframe.vue
+  - app/src/rooms/animation-lab/useTimelineEditor.ts
+  - app/src/rooms/animation-lab/presets.ts
+
+room-manifest:
+  - slug: 'animation-lab'
+  - title: 'Animation Lab'
+  - summary: 'Drop keyframes, scrub the timeline, watch it animate. Built from scratch.'
+  - tags: ['animation', 'gsap', 'svg', 'tooling']
+  - skillsDemoed: ['design', 'animation', 'frontend']
+
+ui-anatomy:
+  - Top: Stage (SVG canvas with the animated subject — a stylised character/blob)
+  - Bottom-left: Tracks panel (x, y, scale, rotate, color tracks for the subject)
+  - Bottom-center: Timeline ruler (0-5s, scrubbable, snappable to 100ms)
+  - Bottom-right: Transport (play/pause, loop, speed 0.5x/1x/2x)
+  - Sidebar: Presets (load/save 3 demo timelines)
+
+editor-mechanics:
+  - Click track row at time T → adds keyframe at (track, T) with current Stage value.
+  - Drag keyframe horizontally → reschedule.
+  - Right-click keyframe → ease picker (5 options from motion tokens).
+  - GSAP timeline rebuilt incrementally on edits (no full teardown).
+  - Scrub head jumps timeline.seek() with throttling.
+
+constraints:
+  - SVG-based subject (echoes SVG.js work — no Canvas this room).
+  - GSAP timeline is the SOURCE OF TRUTH; UI reads from `tl.totalTime()` etc.
+  - No persistence to Supabase initially — purely in-memory + localStorage for "save preset".
+  - Mobile fallback: read-only playback of preset timelines (full editor disabled < 768px).
+
+constraints-perf:
+  - Keyframe nodes virtualised if >50 (unlikely in demo, but coded defensively).
+  - Stage animation 60fps even with 5 active tracks.
+
+done:
+  - Add 3 keyframes on x track + play → subject moves with eases.
+  - Drag a keyframe → animation re-times instantly.
+  - "Save preset" stores to localStorage; "Load" restores.
+  - 3 built-in presets demonstrate range (bounce / morph / sequence).
+  - Reduced-motion: presets play in 0.1s timescale (snap-through).

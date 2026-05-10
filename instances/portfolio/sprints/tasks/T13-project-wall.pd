@@ -1,0 +1,43 @@
+v:4 c:$ m:portfolio role:dev x:vue-glass-grid
+gate: LOCKED
+
+task: Build the Project Wall — the `/work` view showing all `visibility:'public'` rooms as glass-entity cards. Hover-expand reveals tags, skill chips, and a "Open room →" CTA. Reads exclusively from the registry (T10).
+
+requires: [vue, gsap, tailwind]
+out:
+  - app/src/views/Work.vue (extend placeholder from T06)
+  - app/src/components/wall/RoomCard.vue
+  - app/src/components/wall/RoomCardHero.vue
+  - app/src/components/wall/SkillChip.vue
+  - app/src/components/wall/wall.css
+
+layout:
+  - CSS Grid responsive: 1 col mobile, 2 col tablet, 3 col desktop, 4 col wide.
+  - Each card uses GlassEntity (T03) with status varying by tag (motion→'dream', backend→'notify', etc.).
+  - Stagger reveal on mount: cardEnter timeline (T07) with delay = index * 60ms.
+
+card-anatomy:
+  - hero: from manifest.hero (gradient/image/canvas slot — RoomCardHero)
+  - title + summary
+  - tag-strip: SkillChip[] (color-coded by skill cluster)
+  - meta: builtAt (relative: "3 months ago"), tag count overflow "+2"
+  - on hover (≥md): expand using grid 0fr→1fr trick (sdui.css L440-454) → reveals "Open room →" + skillsDemoed bar
+  - on tap (mobile): navigate immediately
+
+filters:
+  - tag pill row above grid: All / Motion / Backend / Animation / Fullstack / Pitch (only if pitch rooms exist & dev mode)
+  - URL param `?tag=motion` survives reload
+  - empty state: "Nothing here yet" with CTA back to Hero
+
+constraints:
+  - Pitch rooms (visibility==='pitch') NEVER render here regardless of filter.
+  - Wall reads ONLY from getPublicRooms() — direct registry import, no Supabase round-trip.
+  - Card hover prefetches room chunk (T12 prefetch hint).
+  - No layout shift during hover-expand (grid trick handles it).
+
+done:
+  - 5 demo rooms (T14-T17 placeholders) render as cards with stagger entry.
+  - Tag filter narrows grid live, URL stays in sync.
+  - Hover-expand smooth at 60fps; click navigates to `/rooms/<slug>`.
+  - Pitch room added via CLI does NOT appear here.
+  - Lighthouse a11y ≥ 95 on /work.

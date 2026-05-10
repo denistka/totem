@@ -1,0 +1,35 @@
+v:4 c:$ m:portfolio role:dev x:gsap-motion-architecture
+gate: OPEN
+
+task: Establish a centralised motion system: GSAP + ScrollTrigger registry, named timeline catalogue, prefers-reduced-motion gate, and a Vue directive for declarative entry animations.
+
+requires: [vue, vite]
+out:
+  - app/src/motion/index.ts          (GSAP register + plugin imports)
+  - app/src/motion/timelines.ts      (named timeline factory: heroIntro, cardEnter, sectionScroll, flashAlarm)
+  - app/src/motion/easings.ts        (named eases: emphasis, gentle, snap, overshoot)
+  - app/src/motion/useMotion.ts      (composable: ctx.add / ctx.revert pattern)
+  - app/src/directives/v-enter.ts    (auto-runs `cardEnter(el, opts)` on mount)
+  - app/src/motion/a11y.ts           (prefers-reduced-motion observer + global timescale)
+
+cmd:
+  - cd app && pnpm add gsap
+
+constraints:
+  - Single GSAP context per route (auto-reverted in onBeforeUnmount).
+  - No inline `gsap.to(...)` in components — must call a named timeline.
+  - All durations/eases reference tokens from T02 motion.css (single source of truth).
+  - When prefers-reduced-motion: timescale=0 (snap-to-end), no scroll-triggers.
+  - Free-tier GSAP only (no SplitText / MorphSVG / DrawSVG).
+
+contract:
+  timelines.heroIntro(el): root entry choreography — bg pan, title stagger, ambient glow ramp.
+  timelines.cardEnter(el, {delay}): single glass-entity reveal (translateY+scale, matches sdui entity-enter L56-59).
+  timelines.sectionScroll(el): ScrollTrigger pin/parallax for project rows.
+  timelines.flashAlarm(el): exposes core-dot breaking-news-flash imperatively.
+
+done:
+  - `v-enter` directive on any element runs cardEnter without per-component imports.
+  - DevTools shows zero zombie GSAP tweens after route change (ctx.revert verified).
+  - Toggling OS reduced-motion preference instantly disables animations live.
+  - All 4 timelines listed in `timelines.ts` and individually unit-callable.

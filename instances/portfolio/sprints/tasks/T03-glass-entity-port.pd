@@ -1,0 +1,38 @@
+v:4 c:$ m:portfolio role:dev x:vue-css-layered-fx
+gate: OPEN
+
+task: Port the multi-layer `.glass-entity` recursive component from sdui-proto into a Vue 3 SFC. Preserve layer contract (bg / ambient::before / glass-body / wash / center-glow / core-dot / content / bevel / bottom-glow) and status-driven animations (calm / alert / notify / warn / alarm / dim / dream).
+
+requires: [vue, tailwind]
+source: /Users/denistka/Projects/sdui-proto/src/assets/styles/sdui.css#L1-L267
+out:
+  - app/src/components/glass/GlassEntity.vue
+  - app/src/components/glass/glass-entity.css
+  - app/src/components/glass/types.ts
+  - app/src/components/glass/__demo__/GlassPlayground.vue
+
+api-contract:
+  props:
+    - status: 'calm' | 'alert' | 'notify' | 'warn' | 'alarm' | 'dim' | 'dream' (default 'calm')
+    - radius?: string (default var(--e-radius))
+    - delay?: string (entry stagger)
+    - intensity?: number 0-1 (default 0.6)
+    - interactive?: boolean
+    - hideAmbient?: boolean
+    - hideBottom?: boolean
+    - hideWash?: boolean
+    - pureLayout?: boolean (decoupler mode for SDUI wrappers)
+  slots:
+    - default → layer-content
+    - bg → layer-bg (custom dynamic background, e.g. canvas/gradient)
+
+constraints:
+  - DOM order must match sdui-proto: layer-bg → layer-glass(::before bevel, layer-content(::before wash, ::after corner, slot, layer-center-glow, layer-core-dot)) → ::before ambient → ::after bottom-glow.
+  - `is-pure-layout` mode strips containing/animation/pointer-events (sdui.css L26-54).
+  - `breaking-news-flash` (core-dot) exposed as imperative method `flash()` via defineExpose.
+
+done:
+  - GlassPlayground.vue renders 7 cards (one per status) — pulse/wash/glow visible.
+  - Toggling `pureLayout` collapses card to display:contents (verified in DevTools).
+  - `flash()` triggers 1s breaking-news-flash and self-resolves.
+  - No console warnings; passes Vue strict template typecheck.

@@ -1,0 +1,155 @@
+---
+id: S01-T03
+name: Design System — CSS Token Architecture
+status: TODO
+gate: LOCKED
+requires: [react/REACT.ti, tailwind/TAILWIND.ti]
+regulation: UI_REGULATION.ti
+reference: navitrack-mobile-apps/src/styles/theme.css
+---
+
+# S01-T03: Flexible CSS Token Design System
+
+## Objective
+Build a flexible, token-driven design system using the proven navitrack pattern: **CSS variables (HSL) as single source of truth → Tailwind config mapping → component classes**. All tokens from `UI_REGULATION.ti`, architecture from navitrack.
+
+## Architecture Pattern (from navitrack)
+```
+index.css (entry point)
+  @import './styles/tokens.css'      ← HSL CSS variables (THE source of truth)
+  @import './styles/tactical.css'    ← HUD-specific component classes
+  @import './styles/touch.css'       ← Touch utilities (port from navitrack)
+  @import './styles/layout.css'      ← Global html/body/root reset
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+```
+
+## Acceptance Criteria
+
+### 1. CSS Tokens (`src/shared/styles/tokens.css`)
+Single source of truth. ALL design decisions as CSS custom properties:
+
+```css
+:root {
+  /* === Background Scale === */
+  --hud-bg-dark: 163 55% 7%;         /* #071D1B */
+  --hud-bg-medium: 163 45% 9%;       /* #0B2522 */
+  --hud-bg-light: 163 36% 12%;       /* #102F2B */
+
+  /* === Primary Accent (Cyan) === */
+  --hud-cyan: 164 78% 45%;           /* #1ACDB3 */
+  --hud-cyan-bright: 164 90% 55%;    /* #27F5D1 */
+  --hud-cyan-dim: 164 78% 45% / 0.3;
+
+  /* === Alert (Pink) === */
+  --hud-pink: 340 75% 40%;           /* #B31A5A */
+  --hud-pink-bright: 340 100% 65%;   /* #FF4D94 */
+
+  /* === Warning (Amber) === */
+  --hud-amber: 32 100% 65%;          /* #FFB84D */
+
+  /* === Success (Green) === */
+  --hud-green: 155 100% 65%;         /* #4DFFB8 */
+
+  /* === Semantic === */
+  --background: var(--hud-bg-dark);
+  --foreground: 155 22% 76%;         /* muted green-white text */
+  --primary: var(--hud-cyan);
+  --primary-foreground: var(--hud-bg-dark);
+  --destructive: var(--hud-pink);
+  --border: var(--hud-cyan-dim);
+
+  /* === Component Tokens === */
+  --hud-panel-bg: 163 42% 7% / 0.9;  /* rgba(10,30,28,0.9) */
+  --hud-border: 164 78% 45% / 0.3;   /* rgba(26,205,179,0.3) */
+  --hud-border-hover: 164 78% 45% / 0.5;
+  --hud-glow-cyan: 0 0 10px hsl(164 78% 45% / 0.6);
+  --hud-glow-pink: 0 0 10px hsl(340 75% 40% / 0.6);
+
+  /* === Touch (from navitrack) === */
+  --touch-min: 48px;
+  --touch-target-rec: 56px;
+  --touch-icon: 24px;
+
+  /* === Layout === */
+  --radius: 4px;
+  --radius-lg: 8px;
+
+  /* === Motion === */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 200ms ease-out;
+  --transition-slow: 260ms ease-out;
+}
+```
+
+### 2. Tailwind Config (`tailwind.config.ts`)
+Map CSS variables to Tailwind utilities (navitrack pattern):
+
+```typescript
+colors: {
+  background: 'hsl(var(--background))',
+  foreground: 'hsl(var(--foreground))',
+  primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+  destructive: { DEFAULT: 'hsl(var(--destructive))' },
+  hud: {
+    'bg-dark': 'hsl(var(--hud-bg-dark))',
+    'bg-medium': 'hsl(var(--hud-bg-medium))',
+    'bg-light': 'hsl(var(--hud-bg-light))',
+    cyan: 'hsl(var(--hud-cyan))',
+    'cyan-bright': 'hsl(var(--hud-cyan-bright))',
+    pink: 'hsl(var(--hud-pink))',
+    'pink-bright': 'hsl(var(--hud-pink-bright))',
+    amber: 'hsl(var(--hud-amber))',
+    green: 'hsl(var(--hud-green))',
+    panel: 'hsl(var(--hud-panel-bg))',
+  },
+  border: 'hsl(var(--border))',
+}
+```
+
+### 3. Touch Utilities (`src/shared/styles/touch.css`)
+Port from navitrack's touch.css (137 lines):
+- `.touch-min`, `.touch-target`, `.touch-target-rec` classes
+- `.safe-bottom`, `.safe-top` utilities
+- Touch area expander (`::before` trick)
+- Momentum scrolling, scrollbar-hide
+
+### 4. Layout Reset (`src/shared/styles/layout.css`)
+Port from navitrack:
+- Hidden scrollbars globally
+- `html, body`: 100dvh, overflow hidden, no overscroll
+- `#root`: flex column, relative
+- `touch-action: manipulation` on buttons
+- `user-select: none` on body (except inputs)
+
+### 5. Typography
+JetBrains Mono + IBM Plex Mono loaded via Google Fonts link in `index.html`.
+Set as Tailwind `fontFamily.mono`.
+
+### 6. GPU Utility
+```css
+.gpu { transform: translateZ(0); will-change: transform; backface-visibility: hidden; }
+```
+
+### Why This Is Better Than Tailwind 4 CSS-only
+- **navitrack ships to iOS/Android App Store** with this exact pattern — production-proven
+- `tailwind.config.ts` gives full TypeScript control over the theme
+- HSL CSS variables enable runtime theme changes (future: day/night modes)
+- Mature plugin ecosystem (`tailwindcss-animate`)
+- Components use clean Tailwind classes: `bg-hud-cyan text-foreground border-border`
+
+## Anti-Patterns (from UI_REGULATION.ti)
+- ❌ No glassmorphism / backdrop-blur on HUD panels (navitrack's glass.css NOT ported)
+- ❌ No rounded-xl or rounded-full on panels
+- ❌ No gradient backgrounds on panels
+- ❌ No thick shadows
+
+## Steps
+1. Create `src/shared/styles/tokens.css` with all HSL variables
+2. Create `tailwind.config.ts` with variable mapping
+3. Port `touch.css` from navitrack (adjust min targets to 48px)
+4. Port `layout.css` from navitrack (adjust for HUD transparent bg)
+5. Create `index.css` with import chain
+6. Add JetBrains Mono font in `index.html`
+7. Verify all `bg-hud-*`, `text-hud-*`, `border-hud-*` classes work in browser

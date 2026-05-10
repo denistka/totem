@@ -1,0 +1,9 @@
+# Sprint 01: Totem V7 App UI Evolution
+
+**Goal:** Transform the Totem V7 frontend into a fully interactive Orchestrator interface, supporting dynamic project creation, task dependency animations, agent command execution, and a history time machine.
+
+**Invariants:**
+- `INVARIANTS.md` (Strict thin client constraints enforced)
+
+## Track 1: Setup & Integrations
+- task: S01-T1-UIEvolution.pd

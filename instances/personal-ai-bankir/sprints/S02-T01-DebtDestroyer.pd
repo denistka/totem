@@ -1,0 +1,23 @@
+---
+id: S02-T01
+name: Debt Destroyer Tool
+status: TODO
+gate: LOCKED
+requires: [vue/VUE.ti]
+---
+
+# S02-T01: Debt Destroyer Tool
+
+## Objective
+Implement the interactive debt repayment calculator with sliders and live results.
+
+## Acceptance Criteria
+- `DebtDestroyer.vue` implemented.
+- `debtCalc.js` library for financial logic.
+- Real-time updates on slider change.
+- CTA to Chat with context.
+
+## Steps
+1. Implement financial logic for months/overpay/savings.
+2. Build UI with range sliders and results chips.
+3. Integrate with User Store for pre-filling data.

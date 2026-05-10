@@ -1,0 +1,22 @@
+---
+id: S01-T04
+name: CI/CD Pipeline
+status: TODO
+gate: LOCKED
+requires: [vercel/VERCEL.ti]
+---
+
+# S01-T04: CI/CD Pipeline
+
+## Objective
+Set up automatic deployment for Frontend (Vercel) and Backend (Railway/Vercel).
+
+## Acceptance Criteria
+- `vercel.json` configured in root/client.
+- Automatic deploy on push to `main`.
+- Environment variables configured in deployment platforms.
+
+## Steps
+1. Connect GitHub repo to Vercel.
+2. Configure `vercel.json` rewrites for API.
+3. Verify live URL.

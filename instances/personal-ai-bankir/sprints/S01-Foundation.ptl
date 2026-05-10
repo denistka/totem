@@ -1,0 +1,27 @@
+---
+id: S01
+name: Foundation & AI Core
+status: DONE
+gate: LOCKED
+requires: [vue/VUE.ti, node/NODE.ti, supabase/SUPABASE.ti, vite/VITE.ti, pwa/PWA.ti]
+---
+
+# S01: Foundation & AI Core [DONE]
+
+## Objective
+Initialize the project structure, set up the AI proxy backend, and establish the primary Chat interface.
+
+## Tasks
+- [x] S01-T01-FrontendInit.pd
+- [x] S01-T02-BackendInit.pd
+- [x] S01-T03-SupabaseSetup.pd
+- [x] S01-T04-CICDPipeline.pd
+- [x] S01-T05-PWAConfig.pd
+- [x] S01-T06-ChatAPIProxy.pd
+- [x] S01-T07-ChatUI.pd
+
+## Invariants
+- UI: Unbounded (headers), Geologica (body).
+- Aesthetics: Premium Glassmorphism (see `./docs/glass-design-system.css`).
+- Colors: #0a0f0d (bg), #2eff7a (green).
+- AI Tone: Warm, honest elder brother, simple Ukrainian.

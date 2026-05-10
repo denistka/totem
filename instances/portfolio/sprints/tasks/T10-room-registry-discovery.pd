@@ -1,0 +1,44 @@
+v:4 c:$ m:portfolio role:dev x:vite-glob-imports
+gate: LOCKED
+
+task: Build the Room registry — auto-discovers every `src/rooms/*/room.config.ts` at build time, validates each manifest, sorts, and exposes typed accessors. Single source of truth for Wall, router (T12), and Supabase analytics.
+
+requires: [vite, typescript]
+out:
+  - app/src/rooms/_sdk/registry.ts
+  - app/src/rooms/_sdk/loader.ts
+  - app/src/rooms/_sdk/__tests__/registry.spec.ts
+  - app/src/rooms/index.ts (public barrel)
+
+discovery:
+  - manifests: import.meta.glob('/src/rooms/*/room.config.ts', { eager: true })
+  - components: import.meta.glob('/src/rooms/*/Room.vue')   (lazy, NOT eager)
+  - keyed by directory name (must equal manifest.slug — registry asserts this).
+
+api:
+  - getAllRooms(): RoomManifest[]                         (filtered by env: drops draft in prod)
+  - getPublicRooms(): RoomManifest[]                      (visibility==='public', for Wall)
+  - getRoomBySlug(slug): RoomManifest | null
+  - loadRoomComponent(slug): () => Promise<Component>     (returns dynamic import)
+  - isPitchRoom(slug): boolean
+
+filters:
+  - import.meta.env.PROD: drop status==='draft' AND visibility==='draft'
+  - dev: include everything
+
+validation (run once at module init):
+  - all manifests must pass RoomManifestSchema (T09)
+  - slug-to-dir match enforced (manifest.slug must equal containing folder name)
+  - no duplicate slugs across folders
+  - on failure: throw at boot — better to crash dev than ship a broken Wall
+
+constraints:
+  - Registry module is import-once (cached at module level).
+  - No async work in getters — only at boot.
+  - Public barrel `rooms/index.ts` re-exports api + types from `_sdk/`.
+
+done:
+  - Adding a new dir `src/rooms/foo/` with valid manifest auto-appears in `getAllRooms()`.
+  - Invalid manifest fails build with clear path + zod error.
+  - Vitest covers: discovery, slug-mismatch, duplicate-slug, env filtering.
+  - Tree-shaking verified: prod bundle excludes draft rooms (check dist).

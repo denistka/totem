@@ -1,0 +1,29 @@
+---
+id: S01-T09
+name: Error Boundary + Crash Recovery
+status: TODO
+gate: LOCKED
+requires: [react/REACT.ti]
+---
+
+# S01-T09: Error Boundary + Crash Recovery
+
+## Objective
+Implement React error boundaries with crash recovery for mission-critical HUD stability.
+
+## Acceptance Criteria
+- `src/app/ErrorBoundary.tsx` — Root error boundary with:
+  - Fallback UI showing error details
+  - Auto-retry mechanism (3 attempts with exponential backoff)
+  - Error logging to console (extensible for remote telemetry)
+- `src/shared/ui/WidgetErrorBoundary.tsx` — Per-widget error boundary:
+  - Isolates crashes to individual HUD widgets
+  - Shows minimal "Widget Error" placeholder
+  - Does not crash entire HUD when one widget fails
+- Global unhandled rejection/error handlers registered
+
+## Steps
+1. Create root ErrorBoundary class component
+2. Create WidgetErrorBoundary for individual HUD slots
+3. Register global error handlers in main.tsx
+4. Add fallback UI with retry button

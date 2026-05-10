@@ -1,0 +1,24 @@
+---
+id: S01-T07
+name: Chat UI & Logic
+status: TODO
+gate: LOCKED
+requires: [vue/VUE.ti]
+design: ./docs/glass-design-system.css
+---
+
+# S01-T07: Chat UI & Logic
+
+## Objective
+Implement the main Chat screen with message history and typing indicators.
+
+## Acceptance Criteria
+- `Chat.vue` view implemented.
+- `useChat.js` composable for state management.
+- Message bubbles for AI and User.
+- Auto-scroll to bottom on new messages.
+
+## Steps
+1. Port UI from `bankir-vue-mvp.html`.
+2. Implement `useChat` composable.
+3. Add markdown rendering for AI responses.

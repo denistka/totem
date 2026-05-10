@@ -1,0 +1,52 @@
+v:4 c:$ m:portfolio role:dev x:node-cli-scaffolder
+gate: LOCKED
+
+task: Build `pnpm room:new` CLI — scaffolds a complete room directory with manifest, component, README, and (for pitch rooms) JD metadata. THIS is the load-bearing tool for fast pitch-deploys.
+
+requires: [typescript]
+out:
+  - app/scripts/room-new.mjs
+  - app/scripts/templates/room.config.ts.tpl
+  - app/scripts/templates/Room.vue.tpl
+  - app/scripts/templates/Room.pitch.vue.tpl
+  - app/scripts/templates/README.md.tpl
+
+cmd:
+  - cd app && pnpm pkg set scripts.room:new="node scripts/room-new.mjs"
+
+cli-spec:
+  basic:    pnpm room:new <slug>
+  pitch:    pnpm room:new <slug> --pitch --jd-role "<role>" [--jd-company "<co>"] [--jd-link "<url>"] [--jd-deadline "<ISO>"]
+  options:
+    --title "<...>"          (default: humanise slug)
+    --summary "<...>"
+    --tags motion,vue,...    (csv → string[])
+    --visibility public|unlisted|pitch  (default: public; auto pitch when --pitch)
+    --dry-run                (print files, don't write)
+    --force                  (overwrite if exists)
+
+flow:
+  1. Validate slug against schema regex (reject early).
+  2. Check no existing dir at src/rooms/<slug>/ (unless --force).
+  3. Render templates with replacements: {{slug}}, {{title}}, {{summary}}, {{builtAt}}, {{jdBlock}}.
+  4. Write room.config.ts + Room.vue (or Room.pitch.vue.tpl when --pitch) + README.md.
+  5. Print next-steps: dev URL, deploy hint.
+
+pitch-template extras:
+  - JD callout block at top (role, company, link, deadline)
+  - Pre-wired analytics tag `pitch:<slug>` for room_dwell entries
+  - Visibility:'pitch' baked in
+  - Default tags include 'pitch' (filterable in registry)
+
+constraints:
+  - Pure Node ESM, zero runtime deps beyond Node 20 stdlib (commander acceptable; nothing heavier).
+  - Templates are .tpl files (not .ts) so they don't accidentally type-check.
+  - Output files include manifestVersion: 1 explicitly.
+  - JD ISO date validation — reject obvious typos.
+
+done:
+  - `pnpm room:new test-room` creates 3 files; `pnpm dev` shows it at /rooms/test-room.
+  - `pnpm room:new pitch-x --pitch --jd-role "FE Eng" --jd-company "ACME"` creates a pitch room with JD callout visible in browser.
+  - `--dry-run` prints diff without filesystem writes.
+  - Existing slug + no `--force` exits with code 1 and clear error.
+  - End-to-end smoke: scaffold → boot dev → render → < 60 seconds wall-clock.

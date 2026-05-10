@@ -1,0 +1,24 @@
+---
+id: S02
+name: Tools & Telegram
+status: PLANNING
+gate: LOCKED
+requires: [vue/VUE.ti, node/NODE.ti, supabase/SUPABASE.ti]
+---
+
+# S02: Tools & Telegram [DONE]
+
+## Objective
+Implement interactive financial tools (Debt Destroyer, Scanner) and integrate with Telegram ecosystem.
+
+## Tasks
+- [x] S02-T01-DebtDestroyer.pd
+- [x] S02-T02-Scanner.pd
+- [x] S02-T03-SurvivalMode.pd
+- [x] S02-T04-HealthScore.pd
+- [x] S02-T05-TelegramBot.pd
+- [x] S02-T06-ChatWidgets.pd
+
+## Invariants
+- Data Privacy: No PII sent to AI.
+- Calculations: Must match `debtCalc.js` logic exactly.

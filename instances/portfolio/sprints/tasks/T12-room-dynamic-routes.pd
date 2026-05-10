@@ -1,0 +1,47 @@
+v:4 c:$ m:portfolio role:dev x:vue-router-dynamic
+gate: LOCKED
+
+task: Wire the registry (T10) into vue-router as dynamic, lazy-loaded routes. Each room gets `/rooms/<slug>` URL with code-splitting. Includes 404 handler for unknown slugs and pitch-aware analytics tagging.
+
+requires: [vue, vite, typescript]
+out:
+  - app/src/router/rooms.ts
+  - app/src/router/index.ts (extend from T06)
+  - app/src/views/RoomNotFound.vue
+  - app/src/composables/useRoomAnalytics.ts
+
+route-shape:
+  base: /rooms/:slug
+  meta:
+    - layout: 'room'         (full-screen, no bottom-nav padding)
+    - kind: 'room'           (vs 'system' for app shell pages)
+    - room: RoomManifest     (resolved at navigation guard, attached to route)
+  component: () => loadRoomComponent(slug)  (from registry T10)
+  beforeEnter:
+    - resolve manifest via getRoomBySlug
+    - if null → redirect to /rooms/__not-found__
+    - if status==='archived' → render Room with archived banner
+    - log to room_dwell on leave (pitch rooms tagged `pitch:<slug>`)
+
+dynamic-import-strategy:
+  - Vite chunk naming: `room-<slug>.[hash].js`
+  - prefetch hint on Wall hover (link rel=prefetch)
+  - error boundary: if chunk fails, show RoomNotFound with retry
+
+constraints:
+  - Routes registered ONCE at app boot, derived from getAllRooms() (T10).
+  - Hot-reload: adding a new room dir + restart dev = route appears.
+  - Pitch rooms: route exists but NOT linked from Wall (T13 enforces).
+  - Sitemap helper: `getSitemapPaths()` returns ONLY visibility==='public' slugs.
+
+constraints-on-room-component:
+  - Default-export the Vue component (not named).
+  - Component receives no props — accesses manifest via `useRoute().meta.room`.
+  - Free to override layout via `defineOptions({ inheritAttrs: false })`.
+
+done:
+  - Adding a room via T11 CLI → boot dev → URL /rooms/<slug> renders without manual edits.
+  - Unknown slug shows RoomNotFound with link back to /work.
+  - Each room loads as separate chunk (verified in Network tab).
+  - Pitch room visit logs `pitch:<slug>` event in room_dwell (Supabase Studio check).
+  - Reduced-motion preference still honored across all room transitions.

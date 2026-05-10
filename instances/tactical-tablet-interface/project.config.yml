@@ -1,0 +1,51 @@
+project:
+  name: tactical-tablet-interface
+  codename: TRI (Tactical Recon Interface)
+  version: 0.1.0
+  description: Production-grade tablet-first realtime tactical HUD for live camera/video, telemetry, tactical overlays, and native deployment. Stack demo for DefTech Frontend Developer vacancy.
+  stack: [React 19, TypeScript, Vite, Zustand, React Query, Tailwind CSS, Framer Motion, React Router, Tauri 2, Rust, PWA]
+
+paths:
+  # /Projects/totem/totem-v6/instances/tactical-tablet-interface/ -> ../../../../tactical-tablet-interface -> /Projects/tactical-tablet-interface
+  code: ../../../../tactical-tablet-interface
+  history: .
+  reference: ../../../../drone-interface/6
+  reference-react: ../../../../navitrack/navitrack-mobile-apps
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - react/REACT.ti
+    - react/ZUSTAND.ti
+    - tailwind/TAILWIND.ti
+    - rust/RUST_DEV.ti
+    - tauri/TAURI.ti
+    - pwa/PWA.ti
+    - vite/VITE.ti
+    - typescript/TYPESCRIPT.ti
+
+  ui_stack_ref: react/REACT
+
+design-regulation: UI_REGULATION.ti (FROZEN — all visual tasks MUST comply)
+
+invariants:
+  design-reference: drone-interface/6 (Vue 3 implementation — port design concepts to React)
+  color-palette: "#071D1B/#0B2522/#102F2B bg, #1ACDB3 cyan, #B31A5A pink, #FFB84D amber, #4DFFB8 green"
+  font: '"JetBrains Mono", "IBM Plex Mono", monospace'
+  labels: UPPERCASE abbreviated (ALT, SPD, SIG, BAT, ROLL, PITCH, YAW)
+  rendering-target: 30 FPS minimum on Raspberry Pi 5
+  architecture: Feature-driven (app/features/entities/shared/workers/services)
+  state-pattern: Zustand for client state, React Query for async/server state
+  css-approach: Tailwind 3 + HSL CSS variables (navitrack pattern). Tokens in CSS → mapped in tailwind.config.ts
+  animations: Framer Motion — state communication only, NOT decoration. 120-260ms. No bounce/spring/elastic.
+  borders: 1px solid rgba(26,205,179,0.3). Corners 4-8px max. No huge rounding.
+  touch-first: Min 48x48px targets (prefer 56x56). No hover-only states.
+  video-primacy: Video is primary, UI is secondary. HUD must not block center targeting area.
+  loading-states: Signal acquisition style (ACQUIRING VIDEO SIGNAL...). NO spinners.
+  performance-ux: Show PERFORMANCE MODE ACTIVE when FPS degrades.
+  git-protocol: "Every task MUST end with: git add . && git commit -m 'task_id: description' && git push origin head"

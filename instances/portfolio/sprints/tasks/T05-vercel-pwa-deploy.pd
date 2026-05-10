@@ -1,0 +1,45 @@
+v:4 c:$ m:portfolio role:dev x:vercel-pwa
+gate: OPEN
+
+task: Configure Vercel deploy + PWA manifest + service-worker. PWA must be installable on iOS/Android and survive Lighthouse PWA audit ≥ 90.
+
+requires: [vercel, pwa, vite]
+out:
+  - app/vercel.json
+  - app/public/manifest.webmanifest
+  - app/public/icons/ (192, 256, 384, 512 + maskable 512)
+  - app/public/favicon.svg
+  - app/vite.config.ts (extended with vite-plugin-pwa)
+  - app/src/registerSW.ts
+  - portfolio/.vercel/project.json (after `vercel link`)
+
+cmd:
+  - cd app && pnpm add -D vite-plugin-pwa workbox-window
+  - cd app && pnpm dlx vercel link
+  - cd app && pnpm dlx vercel env pull .env.local
+
+vercel.json:
+  - framework: "vite"
+  - buildCommand: "pnpm build"
+  - outputDirectory: "dist"
+  - headers: aggressive cache for /assets/* (1y immutable), no-cache for /sw.js + /manifest.webmanifest
+  - rewrites: SPA fallback to /index.html
+
+manifest:
+  - name: "Denis Baranov — Motion & Fullstack Portfolio"
+  - short_name: "DB Portfolio"
+  - display: "standalone"
+  - theme_color: "#060a12"  (matches loader bg)
+  - background_color: "#060a12"
+  - icons: 192/512 + maskable 512
+  - shortcuts: [Projects, Animation Lab, Contact]
+
+constraints:
+  - SW: precache app shell + runtime-cache fonts/images (StaleWhileRevalidate).
+  - Skip-waiting + clients-claim ON (avoid stale UI).
+  - Vercel preview deploys on every PR; production only on main.
+
+done:
+  - `pnpm build && pnpm preview` shows installable prompt on supported browsers.
+  - Lighthouse PWA score ≥ 90 in production preview.
+  - Vercel preview URL renders correctly with env vars from T04.

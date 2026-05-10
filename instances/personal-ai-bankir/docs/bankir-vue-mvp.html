@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Банкір">
+<meta name="theme-color" content="#0a0f0d">
+<title>Банкір.ai</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#080c0a;--surface:#0f1712;--card:#141f16;--border:#1c2e1f;--border2:#243528;
+  --green:#2eff7a;--green-dim:#1db857;--green-glow:rgba(46,255,122,0.1);
+  --amber:#ffc94d;--red:#ff5555;--text:#e4ede6;--muted:#5a7a61;--muted2:#3d5440;
+  --fh:'Unbounded',sans-serif;--fb:'Geologica',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);height:100dvh;overflow:hidden;position:fixed;width:100%}
+
+/* ── APP SHELL ── */
+#app{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.screen{display:none;flex-direction:column;flex:1;overflow:hidden}
+.screen.active{display:flex}
+
+/* ── ONBOARDING ── */
+.ob-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px 24px;gap:0}
+.ob-logo{font-family:var(--fh);font-size:24px;font-weight:900;color:var(--green);margin-bottom:6px;letter-spacing:-0.5px}
+.ob-logo span{color:var(--muted)}
+.ob-tag{font-size:12px;color:var(--muted);margin-bottom:44px;text-align:center;line-height:1.5}
+.ob-q{font-family:var(--fh);font-size:17px;font-weight:700;text-align:center;margin-bottom:28px;line-height:1.4;letter-spacing:-0.3px}
+.ob-opts{display:flex;flex-direction:column;gap:10px;width:100%;max-width:380px}
+.ob-opt{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:15px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.ob-opt:hover{border-color:var(--green-dim);background:rgba(46,255,122,.05);transform:translateX(4px)}
+.ob-icon{font-size:22px;flex-shrink:0}
+.ob-tt strong{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.ob-tt span{font-size:11px;color:var(--muted)}
+
+/* ── HEADER ── */
+.hdr{padding:14px 18px;padding-top:max(14px,env(safe-area-inset-top));background:rgba(8,12,10,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;z-index:10}
+.hdr-av{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#1db857,#2eff7a);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 14px rgba(46,255,122,.3);flex-shrink:0}
+.hdr-name{font-family:var(--fh);font-size:14px;font-weight:700;letter-spacing:-.3px}
+.hdr-status{font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px}
+.hdr-status::before{content:'';width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdr-btn{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:7px 12px;font-size:11px;color:var(--muted);cursor:pointer;font-family:var(--fb);transition:all .2s;margin-left:auto}
+.hdr-btn:hover{border-color:var(--green-dim);color:var(--text)}
+.back-btn{background:var(--card);border:1px solid var(--border);border-radius:10px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0}
+
+/* ── MESSAGES ── */
+.msgs{flex:1;overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.msgs::-webkit-scrollbar{display:none}
+.msg{display:flex;gap:10px;align-items:flex-end}
+.msg.user{flex-direction:row-reverse}
+.m-av{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#1db857,#2eff7a);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.m-av.u{background:var(--border2);font-size:11px}
+.m-bub{max-width:83%;padding:11px 15px;border-radius:18px;font-size:14px;line-height:1.65;animation:msgIn .3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.m-bub.ai{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px}
+.m-bub.usr{background:rgba(46,255,122,.1);border:1px solid rgba(46,255,122,.2);border-bottom-right-radius:4px}
+
+/* widget in chat */
+.w-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px;margin-top:10px;font-size:12px}
+.w-title{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.w-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}
+.w-row:last-child{border:none}
+.w-lbl{color:var(--muted);font-size:11px}
+.w-val{font-weight:600;font-size:12px}
+.g{color:var(--green)}.a{color:var(--amber)}.r{color:var(--red)}
+
+/* typing */
+.typing{display:flex;gap:10px;align-items:flex-end}
+.t-bub{background:var(--card);border:1px solid var(--border);border-radius:18px;border-bottom-left-radius:4px;padding:13px 16px;display:flex;gap:5px;align-items:center}
+.t-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:td 1.2s infinite}
+.t-dot:nth-child(2){animation-delay:.2s}
+.t-dot:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+
+/* quick replies */
+.qr-wrap{display:flex;gap:8px;overflow-x:auto;padding:4px 0;flex-shrink:0}
+.qr-wrap::-webkit-scrollbar{display:none}
+.qr-btn{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 13px;font-size:12px;color:var(--text);white-space:nowrap;cursor:pointer;flex-shrink:0;font-family:var(--fb);transition:all .15s}
+.qr-btn:hover{border-color:var(--green-dim);color:var(--green)}
+
+/* input */
+.inp-area{padding:10px 14px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:rgba(8,12,10,.98);border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.inp-row{display:flex;gap:10px;align-items:flex-end}
+.inp-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:11px 16px;color:var(--text);font-family:var(--fb);font-size:14px;resize:none;outline:none;max-height:100px;line-height:1.5;transition:border-color .2s}
+.inp-box:focus{border-color:var(--green-dim)}
+.inp-box::placeholder{color:var(--muted)}
+.send-btn{width:42px;height:42px;border-radius:13px;background:var(--green);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:17px;transition:all .2s;box-shadow:0 4px 14px rgba(46,255,122,.3)}
+.send-btn:hover{transform:scale(1.05)}
+.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.loading-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);padding:2px 4px}
+.spin{width:12px;height:12px;border:2px solid var(--border2);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── TOOLS ── */
+.health-card{background:linear-gradient(135deg,var(--card),var(--surface));border:1px solid var(--border2);border-radius:20px;padding:22px;margin:14px;text-align:center}
+.h-num{font-family:var(--fh);font-size:60px;font-weight:900;letter-spacing:-3px;line-height:1;margin-bottom:4px}
+.h-lbl{font-size:11px;color:var(--muted);margin-bottom:14px}
+.h-bar-wrap{height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.h-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));transition:width 1s ease}
+.h-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.h-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 11px;font-size:11px;text-align:left}
+.h-item strong{display:block;color:var(--muted);margin-bottom:2px;font-weight:500;font-size:10px}
+.tools-list{flex:1;overflow-y:auto;padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s}
+.t-card:hover{border-color:var(--green-dim);transform:translateX(4px)}
+.t-ico{width:46px;height:46px;border-radius:13px;background:var(--surface);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.t-info{flex:1}
+.t-name{font-weight:600;font-size:13px;margin-bottom:3px}
+.t-desc{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* ── SURVIVAL ── */
+.sv-banner{background:rgba(255,85,85,.08);border:1px solid rgba(255,85,85,.2);border-radius:12px;padding:12px 14px;margin:14px 14px 10px;font-size:12px;color:var(--red)}
+.sv-list{padding:0 14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;flex:1}
+.sv-task{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:all .2s}
+.sv-task.done{opacity:.5;border-color:var(--green-dim)}
+.t-chk{width:22px;height:22px;border-radius:7px;border:2px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s}
+.sv-task.done .t-chk{background:var(--green);border-color:var(--green);color:var(--bg)}
+.t-body strong{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.t-body span{font-size:11px;color:var(--muted)}
+.tag{font-size:9px;padding:2px 7px;border-radius:5px;font-weight:700;margin-left:5px}
+.tag-s{background:rgba(46,255,122,.1);color:var(--green)}
+.tag-a{background:rgba(255,201,77,.1);color:var(--amber)}
+
+/* ── DEBT ── */
+.debt-wrap{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.sl-wrap{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.sl-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.sl-lbl strong{color:var(--green);font-size:14px}
+input[type=range]{width:100%;accent-color:var(--green);height:4px;border-radius:2px}
+.sl-chips{display:flex;gap:8px;flex-wrap:wrap}
+.sl-chip{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:11px;flex:1;text-align:center}
+.sl-chip strong{display:block;font-size:15px;font-weight:700;margin-bottom:2px}
+.sl-chip.best{border-color:var(--green-dim)}
+.sl-chip.best strong{color:var(--green)}
+.action-btn{background:var(--green);color:var(--bg);border:none;border-radius:14px;padding:15px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--fb);width:100%;transition:all .2s}
+.action-btn:hover{box-shadow:0 4px 20px rgba(46,255,122,.3)}
+
+/* ── SCANNER ── */
+.sc-wrap{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.sc-lbl{font-size:12px;color:var(--muted)}
+.sc-inp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:20px;font-weight:700;color:var(--text);font-family:var(--fh);width:100%;outline:none;letter-spacing:-.5px;transition:border-color .2s}
+.sc-inp:focus{border-color:var(--green-dim)}
+.sc-results{display:flex;flex-direction:column;gap:8px}
+.b-row{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:12px;transition:all .2s}
+.b-row.win{border-color:var(--green)}
+.b-em{font-size:20px;flex-shrink:0}
+.b-name{flex:1;font-weight:600;font-size:13px}
+.b-note{font-size:10px;color:var(--muted);margin-top:2px}
+.b-fee{font-family:var(--fh);font-size:15px;font-weight:700}
+.win-badge{font-size:9px;font-weight:800;letter-spacing:.5px;background:var(--green);color:var(--bg);padding:2px 6px;border-radius:4px;margin-left:5px}
+
+/* ── INSTALL BANNER ── */
+.inst-banner{position:fixed;bottom:14px;left:12px;right:12px;background:var(--card);border:1px solid var(--green-dim);border-radius:16px;padding:13px 15px;display:flex;align-items:center;gap:12px;z-index:1000;box-shadow:0 8px 28px rgba(46,255,122,.15);animation:slideUp .4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.inst-text strong{display:block;font-size:13px;margin-bottom:2px}
+.inst-text span{font-size:11px;color:var(--muted)}
+.inst-btn{background:var(--green);color:var(--bg);border:none;border-radius:9px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--fb);white-space:nowrap;margin-left:auto}
+.inst-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:4px;flex-shrink:0}
+
+/* scrollable tool screens */
+.sc-scroll{flex:1;overflow-y:auto}
+.sc-scroll::-webkit-scrollbar{display:none}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══ ONBOARDING ══ -->
+  <div class="screen" :class="{active: screen === 'onboarding'}">
+    <div class="ob-wrap">
+      <div class="ob-logo">банкір<span>.ai</span></div>
+      <div class="ob-tag">Чесний фінансовий друг<br>у твоєму телефоні</div>
+      <div class="ob-q">Що зараз відбувається<br>з твоїми грошима?</div>
+      <div class="ob-opts">
+        <button class="ob-opt" v-for="o in scenarios" :key="o.id" @click="startChat(o.id)">
+          <span class="ob-icon">{{ o.icon }}</span>
+          <div class="ob-tt">
+            <strong>{{ o.title }}</strong>
+            <span>{{ o.sub }}</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHAT ══ -->
+  <div class="screen" :class="{active: screen === 'chat'}">
+    <div class="hdr">
+      <div class="hdr-av">🏦</div>
+      <div>
+        <div class="hdr-name">Банкір</div>
+        <div class="hdr-status">онлайн · завжди чесно</div>
+      </div>
+      <button class="hdr-btn" @click="screen = 'tools'">🛠 Інструменти</button>
+    </div>
+
+    <div class="msgs" ref="msgsEl">
+      <template v-for="(m, i) in messages" :key="i">
+        <div class="msg" :class="{user: m.role === 'user'}">
+          <div class="m-av" :class="{u: m.role === 'user'}">
+            {{ m.role === 'user' ? '👤' : '🏦' }}
+          </div>
+          <div class="m-bub" :class="m.role === 'user' ? 'usr' : 'ai'" v-html="m.html"></div>
+        </div>
+      </template>
+      <div class="typing" v-if="loading">
+        <div class="m-av">🏦</div>
+        <div class="t-bub">
+          <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inp-area">
+      <div class="qr-wrap">
+        <button class="qr-btn" v-for="r in quickReplies" :key="r" @click="sendText(r)">{{ r }}</button>
+      </div>
+      <div class="loading-row" v-if="loading">
+        <div class="spin"></div> Банкір думає...
+      </div>
+      <div class="inp-row">
+        <textarea class="inp-box" v-model="inputText" ref="inputEl"
+          placeholder="Напиши що турбує..."
+          rows="1"
+          @keydown.enter.exact.prevent="sendMessage"
+          @input="autoResize"></textarea>
+        <button class="send-btn" @click="sendMessage" :disabled="loading || !inputText.trim()">↑</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOOLS ══ -->
+  <div class="screen" :class="{active: screen === 'tools'}">
+    <div class="hdr">
+      <button class="back-btn" @click="screen = 'chat'">←</button>
+      <div class="hdr-name">Інструменти</div>
+    </div>
+    <div class="sc-scroll">
+      <div class="health-card">
+        <div class="h-num" :style="{color: healthColor}">{{ health }}</div>
+        <div class="h-lbl">Фінансове здоров'я · {{ healthLabel }}</div>
+        <div class="h-bar-wrap"><div class="h-bar" :style="{width: health + '%'}"></div></div>
+        <div class="h-grid">
+          <div class="h-item"><strong>Знижує</strong>Борг після ЛП</div>
+          <div class="h-item"><strong>Знижує</strong>Немає подушки</div>
+          <div class="h-item"><strong>Підніме</strong>Перший платіж</div>
+          <div class="h-item"><strong>Підніме</strong>Бюджет на місяць</div>
+        </div>
+      </div>
+      <div class="tools-list">
+        <div class="t-card" v-for="t in tools" :key="t.id" @click="screen = t.id">
+          <div class="t-ico">{{ t.icon }}</div>
+          <div class="t-info">
+            <div class="t-name">{{ t.name }}</div>
+            <div class="t-desc">{{ t.desc }}</div>
+          </div>
+          <span style="color:var(--muted);font-size:18px">›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SURVIVAL ══ -->
+  <div class="screen" :class="{active: screen === 'survival'}">
+    <div class="hdr">
+      <button class="back-btn" @click="screen = 'tools'">←</button>
+      <div class="hdr-name">🆘 Режим виживання</div>
+    </div>
+    <div class="sv-banner">⚡️ Три дії які варто зробити вже сьогодні</div>
+    <div class="sv-list">
+      <div class="sv-task" :class="{done: t.done}" v-for="t in survivalTasks" :key="t.id" @click="t.done = !t.done">
+        <div class="t-chk">{{ t.done ? '✓' : '' }}</div>
+        <div class="t-body">
+          <strong>{{ t.title }} <span class="tag" :class="t.tagClass">{{ t.tag }}</span></strong>
+          <span>{{ t.desc }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DEBT ══ -->
+  <div class="screen" :class="{active: screen === 'debt'}">
+    <div class="hdr">
+      <button class="back-btn" @click="screen = 'tools'">←</button>
+      <div class="hdr-name">💸 Debt Destroyer</div>
+    </div>
+    <div class="debt-wrap">
+      <div class="w-box">
+        <div class="w-title">Твій борг</div>
+        <div class="w-row"><span class="w-lbl">Сума</span><span class="w-val r">63 000 ₴</span></div>
+        <div class="w-row"><span class="w-lbl">Банк</span><span class="w-val">Monobank</span></div>
+        <div class="w-row"><span class="w-lbl">Ставка</span><span class="w-val a">3.5% / міс</span></div>
+        <div class="w-row"><span class="w-lbl">Коштує зараз</span><span class="w-val r">≈ 94 ₴/день</span></div>
+      </div>
+      <div class="sl-wrap">
+        <div class="w-title">Скільки можеш платити?</div>
+        <div class="sl-lbl">
+          <span>Мінімум</span>
+          <strong>{{ debtPayment.toLocaleString('uk') }} ₴/міс</strong>
+          <span>Максимум</span>
+        </div>
+        <input type="range" v-model.number="debtPayment" min="1000" max="10000" step="500">
+        <div class="sl-chips">
+          <div class="sl-chip">
+            <strong>{{ debtResult.months === 999 ? '∞' : debtResult.months }}</strong>
+            місяців
+          </div>
+          <div class="sl-chip">
+            <strong>{{ debtResult.overpay }}</strong>
+            переплата
+          </div>
+          <div class="sl-chip best">
+            <strong>{{ debtResult.save }}</strong>
+            економія
+          </div>
+        </div>
+      </div>
+      <button class="action-btn" @click="sendToChat(`Допоможи знайти ${debtPayment.toLocaleString('uk')} ₴ на місяць для погашення боргу`)">
+        💬 Знайти гроші на платіж разом з Банкіром
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ SCANNER ══ -->
+  <div class="screen" :class="{active: screen === 'scanner'}">
+    <div class="hdr">
+      <button class="back-btn" @click="screen = 'tools'">←</button>
+      <div class="hdr-name">🔍 Сканер комісій</div>
+    </div>
+    <div class="sc-wrap">
+      <div class="sc-lbl">Скільки переказати на Monobank?</div>
+      <input type="number" class="sc-inp" v-model.number="scanAmount" placeholder="5000">
+      <div class="sc-results">
+        <div class="b-row" :class="{win: i === 0}" v-for="(b, i) in scannerResults" :key="b.name">
+          <div class="b-em">{{ b.emoji }}</div>
+          <div style="flex:1">
+            <div class="b-name">
+              {{ b.name }}
+              <span class="win-badge" v-if="i === 0">КРАЩЕ</span>
+            </div>
+            <div class="b-note">{{ b.note }}</div>
+          </div>
+          <div class="b-fee" :class="b.fee === 0 ? 'g' : i < 2 ? 'a' : 'r'">
+            {{ b.fee === 0 ? '0 ₴' : Math.round(b.fee) + ' ₴' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ INSTALL BANNER ══ -->
+  <div class="inst-banner" v-if="showInstall">
+    <span style="font-size:26px">💚</span>
+    <div class="inst-text">
+      <strong>Встанови Банкір</strong>
+      <span>Додай на екран телефону</span>
+    </div>
+    <button class="inst-btn" @click="installPWA">Встановити</button>
+    <button class="inst-x" @click="showInstall = false">✕</button>
+  </div>
+
+</div>
+
+<script>
+const { createApp, ref, computed, watch, nextTick, onMounted } = Vue
+
+const SYSTEM_PROMPT = `Ти — Банкір, персональний фінансовий друг українця.
+
+ХАРАКТЕР: чесний як старший брат, теплий, конкретний, без осуду
+МОВА: проста, без жаргону, українська
+ФОРМАТ: 2-4 речення, цифри та конкретні дії, без зайвих слів
+
+ПРАВИЛА:
+- Ніколи не рекламуй банківські продукти
+- Якщо не знаєш точно — чесно скажи
+- Перше повідомлення: зрозуміти ситуацію
+- Складні терміни одразу пояснюй в дужках
+- Ніяких "Звісно!", "Чудово!", "Безумовно!"`
+
+const SCENARIOS = [
+  { id:'debt',    icon:'😰', title:'Є борг і не знаю що робити',      sub:'Кредит, овердрафт, прострочення' },
+  { id:'budget',  icon:'📊', title:'Хочу розібратись з бюджетом',      sub:'Куди йдуть гроші і як зекономити' },
+  { id:'fop',     icon:'💼', title:'Я ФОП, треба з податками',         sub:'Єдиний податок, ЄСВ, звітність' },
+  { id:'goal',    icon:'🎯', title:'Хочу накопичити на ціль',          sub:'Депозит, ОВДП, накопичення' },
+  { id:'general', icon:'🤝', title:'Просто хочу фінансового друга',    sub:'Запитати, розібратись, порадитись' },
+]
+
+const SCENARIO_MSG = {
+  debt:    'У мене є борг і я не знаю що робити. Допоможи розібратись.',
+  budget:  'Хочу розібратись куди йдуть мої гроші і як скласти бюджет.',
+  fop:     'Я ФОП і мені потрібна допомога з податками і фінансами.',
+  goal:    'Хочу накопичити на конкретну ціль. Допоможи скласти план.',
+  general: 'Хочу мати фінансового друга який допоможе приймати правильні рішення.',
+}
+
+const QUICK_REPLIES = {
+  debt:    ['Скільки мінімум платити?', 'Як реструктуризувати?', 'Знайди де зекономити', 'Порівняй комісії'],
+  budget:  ['Куди йдуть мої гроші?', 'Склади бюджет', 'Де зекономити зараз?', 'Фінансова подушка'],
+  fop:     ['Коли платити ЄП?', 'Скільки на податки?', 'Що таке ЄСВ?', 'Як вести облік?'],
+  goal:    ['Скільки відкладати?', 'ОВДП чи депозит?', 'Побудуй план', 'Коли досягну цілі?'],
+  general: ['Порівняй банки', 'Що таке ОВДП?', 'Як почати копити?', 'Поради по кредиту'],
+}
+
+const BANKS = [
+  { name:'А-Банк',     emoji:'🔵', rate:0,     note:'до 5 000 ₴/міс безкоштовно' },
+  { name:'Sense Bank', emoji:'💙', rate:0,     note:'P2P без комісії' },
+  { name:'monobank',   emoji:'🐱', rate:0,     note:'власні кошти безкоштовно' },
+  { name:'Укргазбанк', emoji:'🟡', rate:0.003, note:'0.3%, мін. 5 ₴' },
+  { name:'ПриватБанк', emoji:'🟢', rate:0.005, note:'0.5%, мін. 5 ₴' },
+  { name:'Ощадбанк',   emoji:'🔷', rate:0.01,  note:'1%, мін. 10 ₴' },
+]
+
+createApp({
+  setup() {
+    const screen = ref('onboarding')
+    const messages = ref([])
+    const inputText = ref('')
+    const loading = ref(false)
+    const scenario = ref('general')
+    const quickReplies = ref([])
+    const msgsEl = ref(null)
+    const inputEl = ref(null)
+    const showInstall = ref(false)
+    let deferredPrompt = null
+
+    // Tools data
+    const health = ref(34)
+    const debtPayment = ref(2000)
+    const scanAmount = ref(5000)
+
+    const tools = [
+      { id:'survival', icon:'🆘', name:'Режим виживання',  desc:'3 конкретні дії на сьогодні' },
+      { id:'debt',     icon:'💸', name:'Debt Destroyer',   desc:'Розрахуй як швидко закрити борг' },
+      { id:'scanner',  icon:'🔍', name:'Сканер комісій',   desc:'Де дешевше переказати гроші' },
+    ]
+
+    const scenarios = SCENARIOS
+
+    const survivalTasks = ref([
+      { id:1, done:false, title:'Переказати з А-Банку на Mono', tag:'-0 ₴ комісії', tagClass:'tag-s', desc:'А-Банк зараз не бере комісію — використай це' },
+      { id:2, done:false, title:'Написати в Mono про реструктуризацію', tag:'важливо', tagClass:'tag-a', desc:'Банк зобов\'язаний розглянути. Зроби в чаті додатку.' },
+      { id:3, done:false, title:'Скасувати 1 підписку', tag:'від 99 ₴', tagClass:'tag-s', desc:'Netflix, Spotify, ChatGPT — чи використовуєш все?' },
+      { id:4, done:false, title:'Зняти готівку в А-Банку', tag:'без комісії', tagClass:'tag-s', desc:'Перші 5 000 ₴/міс без комісії. У Mono — 0.9%' },
+    ])
+
+    // Computed
+    const healthColor = computed(() => {
+      if (health.value < 30) return 'var(--red)'
+      if (health.value < 60) return 'var(--amber)'
+      return 'var(--green)'
+    })
+
+    const healthLabel = computed(() => {
+      if (health.value < 30) return '⚠️ Критично'
+      if (health.value < 60) return '📊 Стабільно'
+      return '💚 Добре'
+    })
+
+    const debtResult = computed(() => {
+      const p = debtPayment.value
+      const debt = 63000
+      const rate = 0.035
+      if (p <= debt * rate) return { months: 999, overpay: 'борг росте', save: '—' }
+      let bal = debt, months = 0, total = 0
+      while (bal > 0 && months < 999) {
+        const int = bal * rate
+        bal -= (p - int)
+        total += p
+        months++
+      }
+      const overpay = Math.max(0, Math.round(total - debt))
+      const vsMin = Math.round((debt * rate * 60) - overpay)
+      return {
+        months,
+        overpay: overpay.toLocaleString('uk') + ' ₴',
+        save: vsMin > 0 ? '+' + vsMin.toLocaleString('uk') + ' ₴' : '—'
+      }
+    })
+
+    const scannerResults = computed(() => {
+      const amt = scanAmount.value || 5000
+      return BANKS.map(b => ({
+        ...b,
+        fee: b.rate === 0 ? 0 : Math.max(amt * b.rate, b.name === 'ПриватБанк' ? 5 : 10)
+      })).sort((a, b) => a.fee - b.fee)
+    })
+
+    // Methods
+    function fmt(text) {
+      return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>')
+    }
+
+    async function scrollDown() {
+      await nextTick()
+      if (msgsEl.value) msgsEl.value.scrollTop = msgsEl.value.scrollHeight
+    }
+
+    function setQuickReplies(s) {
+      quickReplies.value = QUICK_REPLIES[s] || QUICK_REPLIES.general
+    }
+
+    async function callClaude(userText, isFirst) {
+      if (loading.value) return
+      loading.value = true
+
+      if (!isFirst) {
+        messages.value.push({ role:'user', html: fmt(userText) })
+        await scrollDown()
+      }
+
+      const history = messages.value
+        .filter(m => m.role === 'user' || m.role === 'assistant')
+        .map(m => ({ role: m.role, content: m.content || m.html.replace(/<[^>]+>/g, '') }))
+
+      history.push({ role:'user', content: userText })
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            system: SYSTEM_PROMPT,
+            messages: history
+          })
+        })
+        const data = await res.json()
+        const reply = data.content?.[0]?.text || 'Вибач, щось пішло не так.'
+
+        // Add debt widget on first debt message
+        let html = fmt(reply)
+        if (isFirst && scenario.value === 'debt') {
+          html += `<div class="w-box" style="margin-top:10px">
+            <div class="w-title">Поточна ситуація</div>
+            <div class="w-row"><span class="w-lbl">Вартість боргу сьогодні</span><span class="w-val r">≈ 94 ₴/день</span></div>
+            <div class="w-row"><span class="w-lbl">За місяць</span><span class="w-val a">≈ 2 820 ₴</span></div>
+            <div class="w-row" style="cursor:pointer" onclick="document.querySelector('[data-tool=debt]')?.click()">
+              <span class="w-lbl">Розрахувати план →</span><span class="w-val g">Debt Destroyer</span>
+            </div>
+          </div>`
+        }
+
+        messages.value.push({ role:'assistant', content: reply, html })
+        setQuickReplies(scenario.value)
+        await scrollDown()
+      } catch {
+        messages.value.push({ role:'assistant', html:'Немає з\'єднання. Перевір інтернет.' })
+      }
+
+      loading.value = false
+    }
+
+    async function startChat(s) {
+      scenario.value = s
+      screen.value = 'chat'
+      messages.value = []
+      await callClaude(SCENARIO_MSG[s], true)
+    }
+
+    async function sendMessage() {
+      const text = inputText.value.trim()
+      if (!text || loading.value) return
+      inputText.value = ''
+      await nextTick()
+      if (inputEl.value) inputEl.value.style.height = 'auto'
+      await callClaude(text, false)
+    }
+
+    function sendText(text) {
+      inputText.value = text
+      sendMessage()
+    }
+
+    function sendToChat(text) {
+      screen.value = 'chat'
+      setTimeout(() => sendText(text), 100)
+    }
+
+    function autoResize(e) {
+      e.target.style.height = 'auto'
+      e.target.style.height = Math.min(e.target.scrollHeight, 100) + 'px'
+    }
+
+    async function installPWA() {
+      if (!deferredPrompt) return
+      deferredPrompt.prompt()
+      const { outcome } = await deferredPrompt.userChoice
+      if (outcome === 'accepted') showInstall.value = false
+      deferredPrompt = null
+    }
+
+    onMounted(() => {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault()
+        deferredPrompt = e
+        if (!localStorage.getItem('pwa-dismissed')) {
+          setTimeout(() => showInstall.value = true, 4000)
+        }
+      })
+    })
+
+    return {
+      screen, messages, inputText, loading, quickReplies,
+      msgsEl, inputEl, showInstall, health, healthColor, healthLabel,
+      debtPayment, debtResult, scanAmount, scannerResults,
+      tools, scenarios, survivalTasks,
+      startChat, sendMessage, sendText, sendToChat, autoResize, installPWA
+    }
+  }
+}).mount('#app')
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+v:4 c:$ m:portfolio role:dev x:tailwind-css-tokens
+gate: OPEN
+
+task: Port glass-stack design tokens from sdui-proto into a centralised theme layer (Tailwind v4 + CSS variables). Establish the `--e-*` entity-contract and `--sdui-*` surface-contract so glass-entity in T03 can consume them.
+
+requires: [tailwind, typescript]
+source: /Users/denistka/Projects/sdui-proto/src/assets/styles/sdui.css
+out:
+  - app/src/styles/index.css
+  - app/src/styles/tokens.css
+  - app/src/styles/themes/dark.css
+  - app/src/styles/themes/flat.css
+  - app/src/styles/motion.css
+  - app/tailwind.config.ts (or v4 inline if Tailwind 4)
+
+cmd:
+  - cd app && pnpm add -D tailwindcss @tailwindcss/vite postcss autoprefixer
+
+token-contract:
+  entity:    --e-radius, --e-delay, --e-primary, --e-ambient, --e-pulse, --e-wash, --e-intensity, --e-pulse-speed, --e-wash-speed
+  surface:   --sdui-card-bg, --sdui-card-backdrop, --sdui-card-border, --sdui-card-shadow, --sdui-card-bevel, --sdui-card-radius, --sdui-card-padding
+  search:    --sdui-search-bg, --sdui-search-border, --sdui-search-shadow, --sdui-search-text, --sdui-search-icon
+  nav/modal: --sdui-nav-*, --sdui-modal-*
+  motion:    --motion-fast, --motion-base, --motion-slow, --ease-emphasis (cubic-bezier(0.16,1,0.3,1))
+
+constraints:
+  - Three themes: dark (default, glass), flat (light), mixed (warm). Source tokens from sdui.css L313-412.
+  - Tokens MUST be CSS custom properties (no Tailwind theme() calls inside layers).
+  - tokens.css imported once in index.css; never inlined into components.
+
+done:
+  - `data-theme="dark"` on <html> swaps every glass surface live (no rebuild).
+  - DevTools shows tokens resolved on :root and on each [data-theme] override.
+  - No Tailwind class duplicates a token (e.g. no `bg-white/10` where `--sdui-card-bg` exists).

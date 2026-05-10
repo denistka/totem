@@ -1,0 +1,65 @@
+project:
+  name: portfolio
+  version: 0.1.0
+  codename: live-showroom
+  description: |
+    Denis Baranov's WOW-tier interactive portfolio PWA.
+    Concept: "Live Showroom" — multi-room PWA where each room demonstrates
+    a distinct skill (motion playground / project wall / live Supabase demo /
+    animation lab). Reuses sdui-proto glass-stack as visual foundation.
+  stack:
+    - vue3
+    - typescript
+    - vite
+    - tailwind
+    - gsap
+    - supabase
+    - vercel
+    - pwa
+  ui_design_docs:
+    - ../../core/DESIGN_SPRINT_GUIDE.ti
+  ui_stack_ref: ../sdui-proto
+  context_refs:
+    cv: /Users/denistka/Projects/portfolio/Denis Baranov CV.pdf
+    stack_analysis: /Users/denistka/Projects/portfolio/TECH_STACK_ANALYSIS.md
+    job_match: /Users/denistka/Projects/portfolio/JOB_MATCH_MILTECH.md
+    glass_source: /Users/denistka/Projects/sdui-proto/src/assets/styles/sdui.css
+
+paths:
+  code: /Users/denistka/Projects/portfolio/app
+  workspace: /Users/denistka/Projects/portfolio
+  history: ./sprints
+  intel: ./intel
+  invariants: ./sprints
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - PLANNER
+    - ARCHITECT
+    - QA
+    - DEVOPS
+  stack_adapters:
+    - VUE_DEV
+    - FRONTEND_DEV
+    - SUPABASE
+    - VERCEL
+    - PWA
+    - TAILWIND
+    - GSAP_MOTION
+
+concept:
+  chosen: C-live-showroom
+  alternatives_considered: [A-living-resume, B-project-constellation]
+  rooms:
+    - hero-playground   # drag/throw/morph — proves animation chops
+    - project-wall      # glass-card grid with hover-expand telemetry
+    - live-demos        # embedded Supabase real-time mini-app
+    - animation-lab     # mini timeline editor (Life.io echo)
+    - contact           # form → contact_msgs (Supabase RLS)
+
+deployment:
+  primary: vercel
+  preview_per_branch: true
+  custom_domain: TBD

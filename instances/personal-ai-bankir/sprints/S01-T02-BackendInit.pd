@@ -1,0 +1,24 @@
+---
+id: S01-T02
+name: Backend Initialization
+status: TODO
+gate: LOCKED
+requires: [node/NODE.ti]
+---
+
+# S01-T02: Backend Initialization
+
+## Objective
+Set up the Node.js Express server in `/server` with core middleware.
+
+## Acceptance Criteria
+- `npm init -y` in `server/`.
+- Dependencies: `express`, `cors`, `dotenv`, `@anthropic-ai/sdk`, `ws`.
+- `index.js` with basic Express setup and a `/api/health` endpoint.
+- `.env.example` created.
+
+## Steps
+1. Initialize Node project.
+2. Install dependencies.
+3. Implement basic Express server.
+4. Verify health check endpoint.

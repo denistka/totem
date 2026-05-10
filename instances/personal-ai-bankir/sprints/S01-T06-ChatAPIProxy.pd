@@ -1,0 +1,23 @@
+---
+id: S01-T06
+name: Chat API Proxy (Claude)
+status: TODO
+gate: LOCKED
+requires: [node/NODE.ti]
+---
+
+# S01-T06: Chat API Proxy (Claude)
+
+## Objective
+Implement secure backend endpoint for Claude API interaction.
+
+## Acceptance Criteria
+- `POST /api/chat` endpoint working.
+- System prompt dynamically built with user context.
+- API key hidden from client.
+- Error handling for API timeouts/failures.
+
+## Steps
+1. Create `server/lib/claude.js` wrapper.
+2. Implement `systemPrompt.js` logic.
+3. Hook up route in `server/index.js`.

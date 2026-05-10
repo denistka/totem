@@ -1,0 +1,195 @@
+---
+id: UI-REGULATION
+type: invariant
+status: FROZEN
+---
+
+# Tactical Recon Interface — UI/UX Design Regulation
+
+## Core Design Philosophy
+Interface must feel: military-grade, industrial, tactical, mission-critical, realtime, low-latency, hardware-oriented.
+
+**Main UX Principle**: Information clarity > visual beauty.
+
+Every element: has purpose, reads instantly, doesn't distract, doesn't block video, works under stress.
+
+## Anti-Patterns (NEVER)
+- ❌ SaaS dashboard / glassmorphism overload / dribbble UI
+- ❌ Rounded bubbly UI / marketing gradients / cute animations
+- ❌ Overly smooth transitions / excessive shadows
+- ❌ Bouncing / springy / elastic / overshooting motion
+- ❌ Fancy loaders / spinners everywhere
+- ❌ chart.js corporate look / pie charts / business analytics vibe
+- ❌ Hover-only interactions / tiny controls / nested menus
+- ❌ Arcade sounds
+
+## Target Feel
+Drone ground station × avionics display × DJI tactical × aircraft HUD × industrial embedded console × radar workstation × modern military tablet × cyberpunk minimalism WITHOUT cringe.
+
+---
+
+## 1. Color System
+
+### Primary Palette
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `bg-dark` | `#071D1B` | Deepest background |
+| `bg-medium` | `#0B2522` | Panel backgrounds |
+| `bg-light` | `#102F2B` | Elevated surfaces |
+| `cyan-primary` | `#1ACDB3` | HUD accent — telemetry, active systems, targeting, grid, radar, nav |
+| `cyan-bright` | `#27F5D1` | Highlighted values, glow |
+| `pink-primary` | `#B31A5A` | Alerts, targets, critical states, tracking locks, low battery, disconnects |
+| `pink-bright` | `#FF4D94` | Active danger states |
+| `amber` | `#FFB84D` | Warnings, unstable states, degraded performance |
+| `green` | `#4DFFB8` | Success, healthy states |
+
+### Color Rules
+- **Cyan**: telemetry, active systems, targeting, grid lines, radar, navigation
+- **Pink**: ONLY for alerts, targets, critical states, tracking locks, low battery, disconnects
+- **Amber**: warnings, unstable states, degraded performance
+- **Green**: success, healthy confirmations
+
+---
+
+## 2. Typography
+
+**Font**: `"JetBrains Mono", "IBM Plex Mono", monospace`
+
+### Rules
+- Monospaced telemetry values ALWAYS
+- UPPERCASE labels
+- Tight letter-spacing
+- Short abbreviated labels
+
+### Label Convention
+| ✅ GOOD | ❌ BAD |
+|---------|--------|
+| `ALT` | `Altitude Indicator` |
+| `SPD` | `Current Speed` |
+| `SIG` | `Signal Quality` |
+| `BAT` | `Battery Level` |
+| `ROLL` | `Roll Angle` |
+| `PITCH` | `Pitch Indicator` |
+| `YAW` | `Yaw Direction` |
+
+---
+
+## 3. Layout
+
+### Target Resolutions (priority order)
+1. `1920×1080` landscape (primary)
+2. `1366×768`
+3. `1280×800`
+4. iPad landscape
+
+### Structure
+- **TOP**: System status / controls
+- **CENTER**: Video + HUD overlays
+- **BOTTOM**: Realtime telemetry graphs
+
+### Golden Rule
+> **Video is primary. UI is secondary.**
+
+### Safe Zones
+HUD MUST NOT: block center targeting area, overlap video excessively, create clutter.
+
+---
+
+## 4. HUD Rendering
+
+### Must use
+- `transform`, `opacity`, `translate3d`, GPU compositing
+
+### Must avoid
+- Expensive blur, huge box-shadows, layout thrashing, repaint-heavy effects
+
+---
+
+## 5. Motion Design
+
+**Motion communicates state. NOT decoration.**
+
+### Timing
+| Type | Duration |
+|------|----------|
+| Fast interactions | 120ms–180ms |
+| Panel transitions | 200ms–260ms |
+| Alerts | Sharp + immediate |
+
+### Allowed Animations
+- ✅ Radar sweep, blinking alerts, subtle telemetry updates, target acquisition pulse, signal fluctuations, panel slide-ins
+
+### Forbidden
+- ❌ Bouncing, springy UI, elastic movement, overshooting transitions, fancy loaders
+
+---
+
+## 6. Visual Components
+
+### Borders
+`1px solid rgba(26, 205, 179, 0.3)` — minimal, technical.
+
+### Corners
+`4px–8px max` — NO huge rounding.
+
+### Panels
+Feel: modular, attachable, system-oriented. Like avionics modules.
+
+### Buttons
+```
+background: rgba(10, 30, 28, 0.9)
+border: 1px solid rgba(26, 205, 179, 0.35)
+```
+- Hover: slight glow increase
+- Active: immediate response
+- Disabled: low-opacity gray-green
+
+---
+
+## 7. Radar
+- Circular tactical radar, rotating sweep, concentric rings, crosshair center, subtle glow
+- Sweep: smooth, continuous, semi-transparent, no flashy neon
+
+---
+
+## 8. Graphs
+- Diagnostic, engineering-grade, minimal
+- Thin lines, subtle fills, low-opacity grid
+- NO thick gradients, pie charts, business analytics vibe
+
+---
+
+## 9. Touch UX
+| Requirement | Value |
+|-------------|-------|
+| Minimum touch target | 48×48px |
+| Preferred touch target | 56×56px |
+| Allowed gestures | Pinch zoom, swipe, long press, drag, double tap |
+
+---
+
+## 10. Performance UX
+If FPS drops: reduce effects → disable glow → throttle graphs → simplify radar.
+
+Show: `PERFORMANCE MODE ACTIVE`
+
+---
+
+## 11. Loading States
+```
+ACQUIRING VIDEO SIGNAL...
+SYNCING TELEMETRY...
+RECONNECTING STREAM...
+```
+NO spinners. Signal acquisition / telemetry sync style.
+
+---
+
+## 12. Audio (Optional)
+Very subtle: lock acquired, reconnect beep, warning tone. NO arcade sounds.
+
+---
+
+## 13. Final Emotional Target
+> User should think: "This looks like real embedded defense software."
+> Interviewer should think: "This developer understands systems, not just React components."

@@ -1,0 +1,31 @@
+---
+id: S01-T04b
+name: React Query Transport Cache
+status: TODO
+gate: LOCKED
+requires: [react/REACT.ti]
+---
+
+# S01-T04b: Setup React Query Transport Cache Layer
+
+## Objective
+Configure React Query as the async state management layer for Tauri command responses, config fetching, and stream status.
+
+## Acceptance Criteria
+- `src/app/providers.tsx` — QueryClientProvider wrapping the app with sensible defaults
+- QueryClient config: `staleTime: 30s`, `retry: 2`, `refetchOnWindowFocus: false`
+- `src/services/hooks/useConfig.ts` — `useQuery` wrapper for `invoke('get_config')`
+- `src/services/hooks/useVideoStatus.ts` — `useQuery` wrapper for `invoke('is_playing')` with 5s polling
+- `src/services/hooks/useAvailableModes.ts` — `useQuery` wrapper for `invoke('get_available_modes')`
+- Mutation hooks:
+  - `useStartVideo` — `useMutation` for `invoke('start_video')`
+  - `useStopVideo` — `useMutation` for `invoke('stop_video')`
+  - `useUpdateConfig` — `useMutation` for `invoke('update_config')` with cache invalidation
+- All hooks use the bridge from S01-T06 (not direct Tauri calls)
+- Works gracefully in browser mode (returns mock data)
+
+## Steps
+1. Create QueryClientProvider in providers.tsx
+2. Create query hooks for read operations
+3. Create mutation hooks for write operations
+4. Wire through runtime bridge for Tauri/browser abstraction

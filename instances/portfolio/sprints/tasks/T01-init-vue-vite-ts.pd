@@ -1,0 +1,32 @@
+v:4 c:$ m:portfolio role:dev x:vue-vite-ts
+gate: OPEN
+
+task: Initialise Vue 3 + Vite + TypeScript project at portfolio/app with strict TS, pnpm, ESLint flat-config.
+
+requires: [vue, vite, typescript]
+out:
+  - app/package.json
+  - app/vite.config.ts
+  - app/tsconfig.json
+  - app/tsconfig.app.json
+  - app/tsconfig.node.json
+  - app/src/main.ts
+  - app/src/App.vue
+  - app/eslint.config.js
+  - app/.gitignore
+
+cmd:
+  - cd /Users/denistka/Projects/portfolio && pnpm create vite@latest app -- --template vue-ts
+  - cd app && pnpm install
+  - cd app && pnpm add -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-vue
+
+constraints:
+  - tsconfig.app.json: strict:true, noUncheckedIndexedAccess:true, exactOptionalPropertyTypes:true.
+  - vite.config.ts: alias `@` → src, define server.port=5173.
+  - main.ts: only mount + import './styles/index.css' placeholder (created in T02).
+  - App.vue: empty `<router-view/>` placeholder (router lands in T06).
+
+done:
+  - `pnpm dev` boots without errors at :5173.
+  - `pnpm build` produces dist/ with no TS errors.
+  - `pnpm lint` runs clean.

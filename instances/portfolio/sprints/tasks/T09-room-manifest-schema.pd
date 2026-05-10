@@ -1,0 +1,49 @@
+v:4 c:$ m:portfolio role:dev x:typescript-zod-schema
+gate: LOCKED
+
+task: Define the Room manifest contract — the canonical TypeScript + runtime-validated schema every room must export. This is THE invariant of the Room SDK; Wall, router, CLI, and Supabase analytics all read from it.
+
+requires: [typescript]
+out:
+  - app/src/rooms/_sdk/room.types.ts
+  - app/src/rooms/_sdk/room.schema.ts
+  - app/src/rooms/_sdk/index.ts
+  - app/src/rooms/_sdk/__tests__/manifest.spec.ts
+
+cmd:
+  - cd app && pnpm add zod
+  - cd app && pnpm add -D vitest
+
+manifest-fields:
+  required:
+    - manifestVersion: 1                    (schema version)
+    - slug: string                          (regex /^[a-z0-9][a-z0-9-]{1,40}$/)
+    - title: string                         (max 60 chars)
+    - summary: string                       (max 160 chars)
+    - tags: string[]                        (skill tags: motion, vue, supabase, etc.)
+    - status: 'live' | 'draft' | 'archived'
+    - visibility: 'public' | 'unlisted' | 'draft' | 'pitch'
+    - builtAt: ISO date
+  optional:
+    - hero: { type: 'gradient' | 'image' | 'canvas', value: string }
+    - skillsDemoed: ('design'|'frontend'|'animation'|'backend'|'fullstack')[]
+    - jd: { company?: string, role?: string, link?: string, deadline?: ISO }
+    - lcpHint: string                       (path to preload)
+    - hideFromWall: boolean
+
+api:
+  - export type RoomManifest                (TS interface)
+  - export const RoomManifestSchema (zod)
+  - export function defineRoom(m): RoomManifest  (helper for type-narrowing in room.config.ts)
+  - export function validateManifest(input): { ok, errors }
+
+constraints:
+  - manifestVersion is a literal — bumping requires migration plan in S03+.
+  - Pitch rooms MUST set visibility:'pitch' AND populate jd.role at minimum (validated).
+  - Slug uniqueness validated at registry-load (T10), not here.
+
+done:
+  - `defineRoom({...})` gives autocomplete + type-error on missing required fields.
+  - `validateManifest()` returns structured errors for invalid input (10+ test cases).
+  - `pnpm test rooms/_sdk` passes.
+  - Schema exported from `_sdk/index.ts` barrel.

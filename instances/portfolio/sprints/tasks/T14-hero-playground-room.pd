@@ -1,0 +1,49 @@
+v:4 c:$ m:portfolio role:dev x:gsap-physics-interaction
+gate: LOCKED
+
+task: Build the Hero Playground — the landing room that visitors hit first. Pure motion-design proof: visitor drags, throws, morphs interactive shapes; everything responds with GSAP physics. NO text-heavy intro — the motion IS the introduction.
+
+requires: [vue, gsap]
+out:
+  - app/src/rooms/hero-playground/room.config.ts
+  - app/src/rooms/hero-playground/Room.vue
+  - app/src/rooms/hero-playground/Playground.vue
+  - app/src/rooms/hero-playground/InteractiveBlob.vue
+  - app/src/rooms/hero-playground/playground.css
+  - app/src/rooms/hero-playground/hint.ts
+
+room-manifest:
+  - slug: 'hero-playground'
+  - title: 'Hero Playground'
+  - summary: 'Drag, throw, morph. The intro that doesn't read.'
+  - tags: ['motion', 'gsap', 'interaction']
+  - status: 'live'
+  - visibility: 'public'
+  - skillsDemoed: ['design', 'animation', 'frontend']
+  - hideFromWall: false
+
+interactions:
+  - 5-7 floating blob/glass shapes anchored loosely with GSAP InertiaPlugin-FREE alternative (manual velocity tracking via Pointer events).
+  - Drag: throw with momentum, blob bounces inside viewport bounds with damping.
+  - Long-press: blob morphs through preset shape sequence (circle → squircle → star → blob).
+  - Idle 8s: blobs drift back to "rest" arrangement with ease-emphasis.
+  - One central headline that subtly responds to nearest blob (parallax-like).
+
+constraints:
+  - GSAP free tier ONLY — no InertiaPlugin. Hand-roll friction loop using gsap.ticker.
+  - All easings + durations from motion tokens (T07 motion.ts).
+  - Blobs are SVG (not Canvas) for accessibility/text-selection coexistence.
+  - Reduced-motion: blobs static, drag still works but no momentum/morph.
+  - Fully keyboard-navigable: Tab focuses one blob, arrow keys nudge it.
+
+constraints-perf:
+  - Single GSAP context per room (T07 useMotion); ctx.revert on unmount.
+  - 60fps on 4-year-old MacBook Air baseline.
+  - First interactive frame < 200ms after route enter (RoomLoad mark).
+
+done:
+  - Drag-throw feels physical (visitor reactions: "wow").
+  - Long-press morph sequence smooth, no SVG-path snap-back glitches.
+  - Idle return choreographed, doesn't fight user input.
+  - Reduced-motion path tested.
+  - Lighthouse perf score ≥ 90 on /rooms/hero-playground.

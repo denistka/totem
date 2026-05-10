@@ -1,0 +1,38 @@
+v:4 c:$ m:portfolio role:dev x:vue-router-transitions
+gate: OPEN
+
+task: Build app shell with vue-router and animated page-transitions. Shell hosts loader (T08), bottom-nav (port from sdui-proto L631-654), and `<router-view>` with view-transition + GSAP enter/leave.
+
+requires: [vue, vite]
+out:
+  - app/src/router/index.ts
+  - app/src/router/routes.ts
+  - app/src/layouts/AppShell.vue
+  - app/src/layouts/BottomNav.vue
+  - app/src/transitions/PageTransition.vue
+  - app/src/views/Hero.vue (placeholder)
+  - app/src/views/Work.vue (placeholder)
+  - app/src/views/Lab.vue (placeholder)
+  - app/src/views/Contact.vue (placeholder)
+
+cmd:
+  - cd app && pnpm add vue-router@4
+
+routes (concept-agnostic skeleton):
+  - / → Hero
+  - /work → Work
+  - /lab → Lab
+  - /contact → Contact
+  (concept A/B/C will repurpose these in S02 — Hero == playground/timeline/constellation)
+
+constraints:
+  - Use View Transitions API where supported, fallback to GSAP fade+blur.
+  - BottomNav active-indicator uses `nav-indicator` keyframe from sdui.css L649-654.
+  - AppShell layout: `app-content-wrapper` → `app-router-wrapper` → `<router-view>` → `BottomNav` (matches sdui.css L622-637).
+  - Route changes log to `room_dwell` (T04 schema) on unmount with elapsed ms.
+
+done:
+  - All 4 routes navigate without flash; transition < 400ms.
+  - BottomNav highlights active route with glow-indicator.
+  - Tab switching writes a row to `room_dwell` (verified in Studio).
+  - Reduced-motion preference disables GSAP transition (a11y).

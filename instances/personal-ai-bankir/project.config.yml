@@ -1,0 +1,29 @@
+project:
+  name: personal-ai-bankir
+  version: 1.0.0
+  description: Personal AI financial friend for Ukrainians.
+  stack: [Vue 3, Node.js, Supabase, PWA, Vite, Tauri 2]
+
+paths:
+  # CRITICAL: This explicit relative path enforces that the agent writes OUTSIDE the totem/ history directory.
+  # /Projects/totem/totem-v6/instances/personal-ai-bankir/ -> ../../../../personal-ai-bankir -> /Projects/personal-ai-bankir
+  code: ../../../../personal-ai-bankir
+  history: .
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters: 
+    - vue/VUE.ti
+    - node/NODE.ti
+    - supabase/SUPABASE.ti
+    - pwa/PWA.ti
+    - vite/VITE.ti
+    - tauri/TAURI.ti
+  
+  # UI Reference for GUI Orchestrator
+  ui_stack_ref: vue/VUE

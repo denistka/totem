@@ -1,15 +1,17 @@
 project:
   name: totem-v7
   version: 0.1.0
-  description: Totem V7 — AI-Orchestrated Development Service Protocol (visual-first, agent-agnostic, DB-ready JSON models).
+  description: Totem Engine — Node.js Core Backend Service. Manages Websocket connections, JSON schema validations, and orchestrates LLM interactions.
   stack: 
     - typescript
-    - react
     - nodejs
+    - express
+    - ws
 
 paths:
   code: /Users/denistka/Projects/totem/totem-v7
   intel: ./intel
+  instances: /Users/denistka/Projects/totem/totem-v7/instances
 
 guardians:
   default:

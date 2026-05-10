@@ -1,0 +1,23 @@
+---
+id: S01-T05
+name: PWA Configuration
+status: TODO
+gate: LOCKED
+requires: [pwa/PWA.ti, vite/VITE.ti]
+---
+
+# S01-T05: PWA Configuration
+
+## Objective
+Enable PWA features: manifest, service worker, and install banner.
+
+## Acceptance Criteria
+- `vite-plugin-pwa` configured.
+- `manifest.json` and `sw.js` working.
+- `InstallBanner.vue` component implemented.
+- Lighthouse PWA score > 90.
+
+## Steps
+1. Setup `vite-plugin-pwa` in `vite.config.js`.
+2. Add assets (icons).
+3. Port `usePWA.js` and `InstallBanner.vue` from prototype.

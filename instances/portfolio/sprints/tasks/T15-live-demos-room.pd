@@ -1,0 +1,52 @@
+v:4 c:$ m:portfolio role:dev x:supabase-realtime-vue
+gate: LOCKED
+
+task: Build the Live Demos room — embeds a working real-time mini-taskboard powered by Supabase. Visitor sees other live visitors' cursors / actions. THIS is the backend proof: clients stop asking "do you do real-time?" because they're literally inside a real-time session.
+
+requires: [vue, supabase, gsap]
+out:
+  - app/src/rooms/live-demos/room.config.ts
+  - app/src/rooms/live-demos/Room.vue
+  - app/src/rooms/live-demos/Taskboard.vue
+  - app/src/rooms/live-demos/CursorOverlay.vue
+  - app/src/rooms/live-demos/useRealtimeBoard.ts
+  - portfolio/supabase/migrations/0002_room_live_demos.sql
+
+room-manifest:
+  - slug: 'live-demos'
+  - title: 'Live Demos'
+  - summary: 'A working real-time taskboard. You're already in the session.'
+  - tags: ['supabase', 'realtime', 'fullstack']
+  - skillsDemoed: ['backend', 'fullstack']
+
+supabase-schema (0002):
+  - table room_live_demos_tasks (id uuid pk, board text, title text, status text, x int, y int, updated_at timestamptz)
+  - table room_live_demos_presence (handled via Supabase Realtime presence channel — no table)
+  - RLS: anon select+insert+update on room_live_demos_tasks (board='public-demo' only)
+  - Cleanup: cron deletes tasks older than 24h (Supabase scheduled function or app-side TTL)
+
+realtime-channels:
+  - tasks: supabase.channel('lr:tasks').on('postgres_changes', ...) → reactive map
+  - presence: supabase.channel('lr:presence').on('presence', ...) → cursors + ephemeral users
+  - throttle cursor broadcasts to 30Hz max
+
+ui:
+  - 3 columns (Todo / Doing / Done), task cards = mini glass-entity.
+  - Drag task between columns → optimistic update + Supabase write.
+  - Other visitors' cursors render as colored dots with name/initial chip.
+  - Sidebar: "N people in this room right now" (presence count).
+  - Empty-room helper: seed 3 demo tasks if board is empty on join.
+
+constraints:
+  - Anonymous identity: random adjective+animal name + color (sessionStorage).
+  - Disconnect handling: presence auto-leave + reconnect with same identity within 30s.
+  - Anti-abuse: rate-limit task creation per session (max 20/min, soft cap).
+  - Task input sanitised (HTML stripped before insert).
+  - On unmount: leave channel cleanly, no zombie subscriptions.
+
+done:
+  - Two browser tabs see each other's cursors moving in real time.
+  - Drag-drop in tab A reflects in tab B within 200ms.
+  - Presence count accurate even after refresh.
+  - RLS verified via Studio: anonymous role can only touch board='public-demo'.
+  - Lighthouse perf score ≥ 85 (real-time inherently has some overhead).

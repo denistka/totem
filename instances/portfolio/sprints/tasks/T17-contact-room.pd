@@ -1,0 +1,54 @@
+v:4 c:$ m:portfolio role:dev x:vue-form-supabase-rls
+gate: LOCKED
+
+task: Build the Contact room — a friendly form that writes to Supabase contact_msgs (S01/T04 schema) via an edge function. Includes anti-spam (Turnstile or honeypot), success animation, and links to Telegram/LinkedIn/GitHub from CV.
+
+requires: [vue, supabase]
+out:
+  - app/src/rooms/contact/room.config.ts
+  - app/src/rooms/contact/Room.vue
+  - app/src/rooms/contact/ContactForm.vue
+  - app/src/rooms/contact/SuccessSplash.vue
+  - app/src/rooms/contact/useContactSubmit.ts
+  - portfolio/supabase/functions/submit-contact/index.ts (edge function)
+  - portfolio/supabase/migrations/0003_contact_rls.sql
+
+room-manifest:
+  - slug: 'contact'
+  - title: 'Contact'
+  - summary: 'Drop a line — Telegram, GitHub, LinkedIn, or just leave a message.'
+  - tags: ['fullstack', 'forms']
+  - skillsDemoed: ['fullstack']
+
+form-fields:
+  - name (required, 2-80)
+  - email (required, RFC-light validation)
+  - body (required, 10-2000)
+  - honeypot field "company_url" (must stay empty)
+
+submit-flow:
+  - Client validates → POST to /functions/v1/submit-contact with anon key.
+  - Edge function: re-validate, check honeypot, rate-limit by IP (5/hour), insert with service-role.
+  - Success: SuccessSplash with GSAP burst (uses core-dot flash from glass-entity T03).
+  - Error: inline error, form preserved.
+
+constraints:
+  - contact_msgs RLS: NO direct anon insert (only edge function with service-role).
+  - Rate limit: in-memory or via Supabase counter table (decide in DEV).
+  - Honeypot is the primary anti-spam (Turnstile deferred unless abuse seen).
+  - Email NOT required to be deliverable (just well-formed).
+  - GDPR-light: footnote "Stored to reply, never shared."
+
+socials-row (above form):
+  - Telegram: t.me/denistka
+  - GitHub: github.com/denistka
+  - LinkedIn: linkedin.com/in/denisbaranov
+  - Email: mailto:denistka@gmail.com
+  - All as glass-entity buttons with hover wash.
+
+done:
+  - Submit success path: form → edge fn → row in contact_msgs → splash → reset.
+  - Honeypot filled: silently fakes success, no DB write (logged for analysis).
+  - 6th submission within an hour from same IP returns 429.
+  - Reduced-motion: success animation degraded to fade only.
+  - Direct table-insert from anon key REJECTED (RLS verified in Studio).

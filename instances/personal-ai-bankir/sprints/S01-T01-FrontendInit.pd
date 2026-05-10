@@ -1,0 +1,24 @@
+---
+id: S01-T01
+name: Frontend Initialization
+status: TODO
+gate: LOCKED
+requires: [vue/VUE.ti, vite/VITE.ti]
+---
+
+# S01-T01: Frontend Initialization
+
+## Objective
+Create the Vue 3 + Vite project structure in `/client` and configure basic dependencies.
+
+## Acceptance Criteria
+- `npm create vite@latest client -- --template vue` executed.
+- Dependencies installed: `axios`, `pinia`, `@vueuse/core`.
+- Folders created: `src/views`, `src/composables`, `src/stores`, `src/lib`, `src/components`.
+- App runs with `npm run dev`.
+
+## Steps
+1. Initialize Vite project in `client/`.
+2. Install base dependencies.
+3. Create the directory structure as defined in `bankir-vue-structure.md`.
+4. Verify build.

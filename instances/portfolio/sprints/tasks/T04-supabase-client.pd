@@ -1,0 +1,41 @@
+v:4 c:$ m:portfolio role:dev x:supabase-vue
+gate: OPEN
+
+task: Wire Supabase client into Vue app with typed schema, env config, and a single composable. Backend will host: visitor analytics (page-views, room-dwell), live demo tables for "Live Showroom" room, contact-form submissions.
+
+requires: [supabase, vue, typescript]
+out:
+  - app/src/lib/supabase.ts
+  - app/src/composables/useSupabase.ts
+  - app/src/types/database.types.ts
+  - app/.env.example
+  - app/.env.local (gitignored — local dev only)
+  - portfolio/supabase/migrations/0001_init.sql (schema)
+  - portfolio/supabase/README.md (one-page setup notes)
+
+cmd:
+  - cd app && pnpm add @supabase/supabase-js
+  - cd app && pnpm add -D supabase
+  - cd portfolio && pnpm dlx supabase init
+  - cd portfolio && pnpm dlx supabase gen types typescript --local > app/src/types/database.types.ts
+
+env-contract:
+  - VITE_SUPABASE_URL
+  - VITE_SUPABASE_ANON_KEY
+  (service-role key NEVER ships to client; reserved for Vercel edge functions if needed)
+
+initial-schema (0001_init.sql):
+  - table page_visits (id uuid pk, path text, ts timestamptz default now(), session_hash text)
+  - table room_dwell  (id uuid pk, room text, dwell_ms int, ts timestamptz default now())
+  - table contact_msgs (id uuid pk, name text, email text, body text, ts timestamptz default now())
+  - RLS: anon insert-only on page_visits/room_dwell; contact_msgs insert via edge fn only.
+
+constraints:
+  - Single client instance (singleton in lib/supabase.ts).
+  - useSupabase() returns typed client; never `any`.
+  - No hardcoded URLs/keys outside .env.
+
+done:
+  - `import { supabase } from '@/lib/supabase'` resolves with full type inference.
+  - Local `supabase start` boots; `supabase db reset` applies migration cleanly.
+  - Insert from app dev console writes a row visible in Studio.

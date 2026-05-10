@@ -1,0 +1,93 @@
+v:4 c:$$ m:portfolio role:planner
+gate: LOCKED
+
+objective: Build the "Live Showroom" on top of S01 foundation. Critical extensibility requirement — Room SDK must let Denis scaffold a NEW pitch-room for a specific job vacancy within minutes (CLI + auto-discovery + per-room URL), deploy it via Vercel preview, and share the link with the recruiter while awaiting reply.
+
+requires: [vue, vite, typescript, tailwind, supabase, vercel, gsap]
+invariants: @./S01-INVARIANTS.md  (depends on S01 close — frozen tokens, motion timings, glass contract, supabase schema)
+depends-on: S01-FOUNDATION
+
+paths:
+  code: /Users/denistka/Projects/portfolio/app
+  rooms-dir: /Users/denistka/Projects/portfolio/app/src/rooms
+  cli-dir: /Users/denistka/Projects/portfolio/app/scripts
+
+room-sdk-contract:
+  every-room:
+    - file: src/rooms/<slug>/room.config.ts (manifest: slug, title, summary, tags[], status, visibility, hero, builtAt)
+    - file: src/rooms/<slug>/Room.vue       (full-screen component, default-export)
+    - optional: src/rooms/<slug>/migrations.sql  (per-room Supabase tables, prefixed `room_<slug>_*`)
+    - optional: src/rooms/<slug>/assets/    (room-local media)
+  auto-discovery: Vite `import.meta.glob('/src/rooms/*/room.config.ts', { eager: true })`
+  routes: /rooms/<slug> generated dynamically; lazy-loaded chunks per room
+  visibility:
+    - public:    appears on Project Wall, indexed
+    - unlisted:  reachable by URL only (default for pitch rooms)
+    - draft:     dev-only, excluded from prod build
+    - pitch:     unlisted + carries jd metadata (jd_company, jd_role, jd_link)
+
+track-A-room-sdk:
+  focus: extensibility skeleton — manifest, registry, CLI, dynamic routes
+  sequential: true
+  requires: [vue, vite, typescript]
+  tasks:
+    - T09-room-manifest-schema.pd
+    - T10-room-registry-discovery.pd
+    - T11-room-scaffolder-cli.pd
+    - T12-room-dynamic-routes.pd
+  gate: track-a-sdk-ready
+
+track-B-showroom-surface:
+  focus: project wall + hero playground (use registry from Track A)
+  sequential: false
+  depends-on: [track-A]
+  requires: [vue, gsap, tailwind]
+  tasks:
+    - T13-project-wall.pd
+    - T14-hero-playground-room.pd
+  gate: track-b-showroom-renders
+
+track-C-demo-rooms:
+  focus: three concrete demo rooms (one per skill cluster — backend / animation / contact)
+  sequential: false  (parallel with Track B once A done)
+  depends-on: [track-A]
+  requires: [vue, supabase, gsap]
+  tasks:
+    - T15-live-demos-room.pd
+    - T16-animation-lab-room.pd
+    - T17-contact-room.pd
+  gate: track-c-demos-live
+
+pitch-flow (enabled by Track A — no extra tasks needed):
+  - cmd:   pnpm room:new --pitch miltech-2026 --jd-link "https://..." --jd-role "Frontend Engineer"
+  - effect: scaffolds src/rooms/miltech-2026/ with pitch-template (visibility:pitch, jd metadata)
+  - dev:   pnpm dev → http://localhost:5173/rooms/miltech-2026
+  - ship:  git push branch → Vercel preview URL → share with recruiter
+  - target lead-time: scaffold + first deploy < 30 min (excluding actual demo content)
+
+risks (PM):
+  - Room slug collisions (must validate at CLI + build).
+  - Per-room Supabase migrations bloat schema — namespace `room_<slug>_*` mandatory.
+  - Lazy chunks must not regress LCP — keep room.config.ts cheap (no heavy imports).
+  - Pitch rooms shipped to prod must NOT leak into Wall or sitemap.
+
+design-gates (ARCHITECT):
+  - Single source of truth: room registry. Wall, router, sitemap all read from it.
+  - Room components MUST consume motion tokens (T07) + glass-entity (T03) — no inline styles.
+  - CLI is plain Node script, no heavy frameworks (keeps DX fast for Denis).
+  - Prod build excludes status:draft and visibility:draft via Vite plugin filter.
+
+invariants-to-freeze (post-sprint S02-INVARIANTS.md):
+  - Room manifest schema (versioned — `manifestVersion: 1`)
+  - Slug regex `/^[a-z0-9][a-z0-9-]{1,40}$/`
+  - Per-room Supabase namespace `room_<slug>_*`
+  - Pitch URL format `/rooms/<slug>` (no `/pitch/` prefix — keeps URLs neutral for recruiters)
+
+deferred-to-S03 (do NOT pull into S02):
+  - Pitch analytics dashboard (per-pitch view counts, dwell heatmap)
+  - Auto-deploy script (one-command branch+push+open preview URL)
+  - Pitch expiry / archival workflow
+  - Theming overrides per pitch (e.g. company colors)
+
+scope-approved-gate: LOCKED
+note: Per PLANNER protocol — generation halts. Reply LGTM/Go to unlock S02 DEV-phase. Reply "tweak" to adjust scope before unlock.

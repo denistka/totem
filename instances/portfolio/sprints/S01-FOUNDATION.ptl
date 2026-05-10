@@ -1,0 +1,57 @@
+v:4 c:$$ m:portfolio role:planner
+gate: OPEN
+
+objective: Bootstrap WOW-tier portfolio PWA foundation (Vue 3 + Vite + Tailwind + Supabase + Vercel) with sdui-proto glass-stack ported and motion system wired. Concept-agnostic — supports A/B/C concepts in S02.
+
+requires: [vue, vite, typescript, tailwind, supabase, vercel, pwa]
+invariants: @./S01-INVARIANTS.md  (created at sprint close — frozen design tokens, motion timings, glass layer contract)
+
+paths:
+  code: /Users/denistka/Projects/portfolio/app
+  source-glass: /Users/denistka/Projects/sdui-proto/src/assets/styles/sdui.css
+  cv-context: /Users/denistka/Projects/portfolio/Denis Baranov CV.pdf
+  stack-doc: /Users/denistka/Projects/portfolio/TECH_STACK_ANALYSIS.md
+
+track-A-bootstrap:
+  focus: project skeleton, design tokens, glass primitive
+  sequential: true
+  requires: [vue, vite, typescript, tailwind]
+  tasks:
+    - T01-init-vue-vite-ts.pd
+    - T02-design-tokens-glass.pd
+    - T03-glass-entity-port.pd
+  gate: track-a-build-passes
+
+track-B-backend-deploy:
+  focus: Supabase wiring, Vercel + PWA shell
+  sequential: true
+  parallel-with: track-A
+  requires: [supabase, vercel, pwa]
+  tasks:
+    - T04-supabase-client.pd
+    - T05-vercel-pwa-deploy.pd
+  gate: track-b-deploy-green
+
+track-C-app-shell:
+  focus: router, motion system, loader
+  sequential: true
+  depends-on: [track-A]
+  requires: [vue, vite]
+  tasks:
+    - T06-app-shell-router.pd
+    - T07-gsap-motion-system.pd
+    - T08-loader-screen.pd
+  gate: track-c-shell-renders
+
+risks (PM):
+  - Glass-stack uses CSS custom-property contract (--e-*) — must port tokens FIRST, components SECOND.
+  - Vercel PWA service-worker can break HMR — keep dev/prod split clean.
+  - GSAP licence — use free club tier only (no SplitText/MorphSVG until needed).
+
+design-gates (ARCHITECT):
+  - One Vue component for `glass-entity` (slot-driven, status-class API).
+  - Motion tokens centralised (no inline `gsap.to` magic numbers).
+  - Supabase types generated from schema, not hand-written.
+
+scope-approved-gate: OPEN
+note: Per PLANNER protocol — generation halts here. User must change `gate: LOCKED` → `gate: OPEN` (or reply LGTM/Go) to unlock S02 concept-specific tracks.

@@ -1,0 +1,44 @@
+---
+id: S01-T08
+name: Adaptive Performance Manager
+status: TODO
+gate: LOCKED
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S01-T08: Adaptive Performance Manager + FPS Monitor
+
+## Objective
+Implement a performance monitoring system that adapts rendering quality based on device capabilities. When FPS drops, UI degrades gracefully per UI_REGULATION.ti.
+
+## Design Regulation Compliance
+From UI_REGULATION.ti §10:
+> If FPS drops: reduce effects → disable glow → throttle graphs → simplify radar.
+> Show: `PERFORMANCE MODE ACTIVE`
+
+## Acceptance Criteria
+- `src/services/PerformanceManager.ts`:
+  - Tracks real-time FPS via rAF timing delta
+  - Quality tiers: HIGH (>45fps), MEDIUM (25-45fps), LOW (<25fps)
+  - Degradation cascade:
+    1. HIGH → full rendering, all effects
+    2. MEDIUM → disable glow effects, reduce graph update rate
+    3. LOW → throttle graphs to 10fps, simplify radar (no sweep), disable particle effects
+  - Memory pressure detection via `performance.memory` (when available)
+  - Emits `PERFORMANCE_MODE_ACTIVE` event when tier drops below HIGH
+- `src/shared/hooks/usePerformance.ts`:
+  - Returns `{ fps, tier, isPerformanceMode, memoryUsage }`
+  - Components subscribe to `tier` and conditionally reduce visual complexity
+- `src/shared/ui/PerformanceBanner.tsx`:
+  - Shows `PERFORMANCE MODE ACTIVE` banner (amber text, 120ms fade-in)
+  - Auto-hides when tier returns to HIGH (after 3s stability)
+- Integrates with RenderScheduler to adjust priority thresholds
+
+## Steps
+1. Create PerformanceManager singleton
+2. Implement FPS tracking + quality tier logic
+3. Implement degradation cascade
+4. Create usePerformance hook
+5. Create PerformanceBanner component
+6. Wire into RenderScheduler for adaptive throttling
