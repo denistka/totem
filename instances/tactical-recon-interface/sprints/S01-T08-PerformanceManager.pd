@@ -1,7 +1,7 @@
 ---
 id: S01-T08
 name: Adaptive Performance Manager
-status: TODO
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti
