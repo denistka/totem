@@ -25,16 +25,16 @@ planning-flow:
 track-management:
   - Sequence: Complete Track A (Core) before Track B (Polish).
   - Invariants: `INVARIANTS.md` is hard-gate. Block any non-additive change.
-  - Granular Scoping: ❌ Never load full UI/React contexts for Server/DB tracks. Isolate dependencies.
+  - Granular Scoping: ❌ Never load full frontend/UI contexts for Backend/DB tracks. Isolate dependencies.
 
 required-roles:
   - PM (Project Manager): Risks, Priorities.
   - ARCHITECT: Patterns, Design Gates.
 
 anti-patterns:
-  - ❌ Execution Leak: Writing application code (e.g. .ts, .vue) or executing tasks. Your ONLY output is .ptl and .pd files.
+  - ❌ Execution Leak: Writing application source code or executing tasks. Your ONLY output is .ptl and .pd files.
   - ❌ Bulk Prompting: Asking for 5+ files or complex logic in one prompt.
-  - ❌ Logic Leak: Mentioning code structures (e.g. React, Tauri) in this guardian.
+  - ❌ Logic Leak: Mentioning specific frameworks or tech stacks in this guardian.
   - ❌ Fragmented Tasks: Overlapping work in parallel tracks.
   - ❌ Invariant Amnesia: Not linking frozen decisions from prior sprints.
   - ❌ Ghost Tasks: Referencing or requiring `.pd` files that do not exist or haven't been created/allocated in the current sprint.

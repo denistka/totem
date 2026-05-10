@@ -24,11 +24,15 @@ consistency-gates:
   - Style System: If using a component library (MUI, Ant, Chakra), style overrides go through theme/config, NOT raw CSS alongside. Choose one styling approach per project.
   - Import Pattern: Consistent import aliasing (@/components, ~/utils) or relative — never mixed.
 
+modularity-gates:
+  - File Size Limit: No file should exceed 100 lines of code. If a file grows beyond 150 lines, it MUST be broken down into smaller, modular entities before the task is considered done.
+
 performance-gates:
   - Observable Granularity: Reactive containers (maps, charts, heavy DOM) must NOT re-render on every collection mutation. Use `observer()` on leaf components, fine-grained selectors, or `React.memo`.
   - Re-render Audit: Components wrapping expensive third-party widgets (MapContainer, Canvas, Charts) MUST be isolated from high-frequency state changes.
 
 delivery-gates:
+  - Task Commit: The agent MUST execute `git add . && git commit -m '<task_id>: <description>'` before marking the task as done.
   - Happy Path Smoke: Core user flow (register → login → primary action) must complete without errors.
   - Console Clean: Zero unhandled errors or warnings in browser DevTools console.
   - README Accuracy: Every command in README must work exactly as documented on a fresh clone.
@@ -41,3 +45,4 @@ anti-patterns:
   - ❌ Style Mixing: MUI `sx` props alongside raw `.css` files for same component.
   - ❌ Observer Neglect: MobX stores triggering full-tree re-renders.
   - ❌ Dead Declarations: Declared variables, imports, or timeouts that are never used.
+  - ❌ Giant Files: Submitting files over 150 lines instead of splitting them into sensible modules.

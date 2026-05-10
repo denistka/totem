@@ -1,13 +1,14 @@
 project:
-  name: tactical-tablet-interface
+  name: tactical-recon-interface
   codename: TRI (Tactical Recon Interface)
   version: 0.1.0
   description: Production-grade tablet-first realtime tactical HUD for live camera/video, telemetry, tactical overlays, and native deployment. Stack demo for DefTech Frontend Developer vacancy.
-  stack: [React 19, TypeScript, Vite, Zustand, React Query, Tailwind CSS, Framer Motion, React Router, Tauri 2, Rust, PWA]
+  stack: [React 19, TypeScript, Vite, Zustand, React Query, Tailwind CSS, Framer Motion, React Router, Tauri 2, Rust, Web Workers, OffscreenCanvas, PWA]
+  repository: https://github.com/denistka/tactical-recon-interface.git
 
 paths:
-  # /Projects/totem/totem-v6/instances/tactical-tablet-interface/ -> ../../../../tactical-tablet-interface -> /Projects/tactical-tablet-interface
-  code: ../../../../tactical-tablet-interface
+  # /Projects/totem/totem-v6/instances/tactical-recon-interface/ -> ../../../../tactical-recon-interface -> /Projects/tactical-recon-interface
+  code: ../../../../tactical-recon-interface
   history: .
   reference: ../../../../drone-interface/6
   reference-react: ../../../../navitrack/navitrack-mobile-apps
@@ -22,7 +23,11 @@ guardians:
   stack_adapters:
     - react/REACT.ti
     - react/ZUSTAND.ti
+    - react/REACT_QUERY.ti
+    - react/FRAMER_MOTION.ti
     - tailwind/TAILWIND.ti
+    - graphics/CANVAS_2D.ti
+    - architecture/WEB_WORKERS.ti
     - rust/RUST_DEV.ti
     - tauri/TAURI.ti
     - pwa/PWA.ti

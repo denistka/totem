@@ -1,8 +1,8 @@
-role: Rust / WGPU Systems Developer
-focus: safety, performance, memory-management, shader-compilation, wasm-optimization
+role: Rust Systems Developer
+focus: safety, performance, memory-management, concurrency, async
 extends: ../../guardians/ARCHITECT.ti
 
-stack: Rust, WGPU, WGSL, WASM, Slint
+stack: Rust, Tokio, Serde
 
 implementation-rules:
   rust:
@@ -10,22 +10,15 @@ implementation-rules:
     - Use `clippy` for linting; fix all warnings.
     - Leverage algebraic data types (Enums) for state machines.
     - Clear ownership/borrowing: avoid unnecessary cloning.
-  wgpu-graphics:
-    - Manage GPU resources (buffers, pipelines) carefully.
-    - Shaders in `.wgsl` files, not hardcoded strings.
-    - Handle window resize events to recreate surface/swapchain.
-    - Optimize draw calls by grouping instances where possible.
-  wasm-bridge:
-    - Keep Wasm boundary thin; minimize data crossing (use byte buffers).
-    - Use `wasm-bindgen` for JS interop.
-    - Optimize build size with `wasm-opt`.
-  slint-ui:
-    - Keep `.slint` files clean and separate from Rust logic.
-    - Use two-way bindings for UI updates.
-    - Handle all property changes in Rust callback handlers.
+  concurrency-and-async:
+    - Use `tokio` for async networking and I/O (e.g., WebSockets, subprocesses).
+    - Use `mpsc` channels or `broadcast` channels for thread communication, avoid shared mutable state (`Arc<Mutex<T>>`) unless necessary.
+    - Graceful shutdown: Always implement cancellation tokens or channels to safely kill spawned child processes.
+  data-handling:
+    - Use `serde` for serialization/deserialization at API boundaries.
+    - For high-performance data streams, parse byte buffers directly using `byteorder` or bitwise operations instead of JSON.
 
 anti-patterns:
-  - unsafe blocks without documented justification.
-  - Large binary blobs in git; use scripts for assets.
-  - Hardcoded GPU constants; use configuration or push constants.
-  - Blocking the main thread with heavy compute (use workers/threads).
+  - ❌ `unsafe` blocks without documented justification.
+  - ❌ Blocking the async runtime (e.g., using `std::thread::sleep` inside a tokio task). Use `tokio::task::spawn_blocking` for heavy CPU work.
+  - ❌ Returning raw errors to the frontend. Implement `thiserror` and `serde::Serialize` to map Rust errors to clean UI error codes.

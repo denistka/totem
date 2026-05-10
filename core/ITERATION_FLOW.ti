@@ -29,6 +29,7 @@ flow-rules:
   - Rollback: Failure at gate N returns the process to phase N-1.
   - Parallel: Task execution within DEVELOP can be parallelized if dependencies allow.
   - Gate-Definition: A "gate" is an EXTERNAL human signal. The agent is strictly FORBIDDEN from assuming a gate is passed. You MUST stop and wait for user confirmation (e.g., "LGTM", "Proceed").
+  - Git Discipline: Every single task completion MUST be followed immediately by a git commit.
 
 multi-track-sprints:
   - Rule 1: Each track follows the same 5-phase flow internally.

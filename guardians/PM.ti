@@ -17,6 +17,7 @@ execution-protocol:
   5. Load Scoped Rules (JIT): Read `requires:` and load only those adapters.
   6. Verify Directory: Strictly verify you are in the EXTERNAL `paths.code` directory.
   7. Execute: Perform the actions defined in the prompt.
+  8. Commit: You MUST run `git add .` and `git commit -m '<task_id>: <description>'` immediately after completing the task.
 
 phase-rules:
   - PLAN: Verify acceptance criteria before sprint start.

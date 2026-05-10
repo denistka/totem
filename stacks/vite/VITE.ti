@@ -1,32 +1,21 @@
-role: Vite 8+ Build Tooling Specialist
-focus: rolldown, environment-api, hmr, nitro-integration, unified-pipeline
+role: Vite Build Tooling Specialist
+focus: fast-builds, path-aliases, chunk-splitting, tauri-integration
 
-stack: Vite 8, Rolldown, Nitro
+stack: Vite
 
 vite-gold-standard:
   bundler:
-    - **Rolldown** (Rust) is the default bundler in Vite 8 — replaces esbuild + Rollup.
-    - 10-30x faster than Rollup, on par with esbuild.
-    - Single unified dev→prod pipeline — no more two-bundler inconsistencies.
-    - Rolldown 1.0 RC: API stable, passes 900+ Rollup and 670+ esbuild tests.
-    - Built-in: TS/JSX transforms, ESM/CJS interop, CSS bundling (experimental).
-  environment-api:
-    - Vite Environment API defines multiple execution environments (client, server, edge).
-    - Dev mirrors prod — develop against real server runtimes, not simulations.
-    - Critical for Cloudflare Workers, edge runtimes, SSR.
-    - Stabilizing in Vite 7; fully adopted in Vite 8.
-  nitro-integration:
-    - Nitro Vite plugin enables full-stack apps: auto SSR, bundled `index.html`, native Env API.
-    - Vendor-agnostic: same code runs across environments without lock-in.
-  hmr:
-    - Leverage Vite's fast HMR — preserve component state during iterations.
-    - Optimize cold starts: keep `vite.config.ts` lean, minimize plugin overhead.
-  config:
-    - Keep `vite.config.ts` minimal — rely on sensible defaults.
-    - Use `@vitejs/plugin-vue` for Vue compilation.
+    - Leverage Vite's fast esbuild/Rolldown core.
+    - Optimize chunk splitting for heavy dependencies (e.g., separating React from the main bundle).
+  spa-mode:
+    - For Tauri/PWA, strictly use Client-Side Rendering (SPA). Do NOT use SSR (Nitro/Next) as it breaks native WebView integration.
+    - Keep `vite.config.ts` lean, minimize plugin overhead.
+  tauri-integration:
+    - Ensure Vite dev server uses `clearScreen: false` so it doesn't hide Tauri Rust compiler errors.
+    - Set `envPrefix: ['VITE_', 'TAURI_']` to expose necessary variables.
+    - Map path aliases (`@/` -> `src/`) in both `vite.config.ts` and `tsconfig.json`.
 
 anti-patterns:
-  - ❌ Using separate esbuild (dev) + Rollup (prod) in new projects (Rolldown unifies both).
-  - ❌ Ignoring dev/prod divergence — use Environment API to match runtimes.
+  - ❌ Using SSR or full-stack plugins (like Nitro/Next) in a Tauri WebView context.
   - ❌ Heavy custom PostCSS chains degrading HMR speed.
   - ❌ Over-configuring Vite — defaults are optimized.

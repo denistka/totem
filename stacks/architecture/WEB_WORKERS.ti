@@ -1,0 +1,23 @@
+role: Web Worker & Realtime Data Specialist
+focus: multi-threading, binary-protocols, websockets, arraybuffers
+
+stack: Web Workers, WebSockets, ArrayBuffer
+
+worker-gold-standard:
+  architecture:
+    - Offload heavy data parsing (large datasets, JSON, binary decoding) to Web Workers.
+    - Keep the Main Thread strictly for DOM manipulation and React reconciliation.
+  binary-protocols:
+    - Use `ArrayBuffer` and `DataView` or TypedArrays (`Float32Array`, `Uint8Array`) for high-throughput WebSocket messages.
+    - Use bitwise operations to pack/unpack boolean flags into single bytes to save bandwidth.
+  communication:
+    - Use `postMessage` with Transferable Objects (`ArrayBuffer`, `MessagePort`, `ImageBitmap`) to avoid zero-copy cloning overhead.
+    - Avoid passing large JSON strings between Main Thread and Worker.
+  websockets:
+    - Implement robust reconnect logic (exponential backoff, max retries) inside a dedicated Service/Worker.
+    - Buffer incoming high-frequency streams (e.g., Ring Buffer) to handle bursts without blocking rendering.
+
+anti-patterns:
+  - ❌ Parsing large JSON payloads on the Main Thread.
+  - ❌ Sending non-transferable large arrays via `postMessage` (causes structured cloning lag).
+  - ❌ Direct DOM access attempts from inside a Web Worker.

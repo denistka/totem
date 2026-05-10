@@ -7,25 +7,27 @@ universal-rules:
   - Loose Coupling: Modules must communicate via interfaces, not concrete implementations.
   - Single Source of Truth: Data transformations happen in one place.
   - Invariant Protection: Identify and freeze core decisions (`INVARIANTS.md`) before UI implementation.
+  - Strict Modularity: Any file larger than 100 lines MUST be broken down into smaller, focused entities. No exceptions.
 
 state-management:
-  - Access Consistency: Choose ONE access pattern (hook-based or direct injection) and use it everywhere. Never mix `useStore()` and `store.property` in the same codebase.
-  - Observable Isolation: Components wrapping expensive widgets (Map, Canvas, Chart) must be wrapped in `observer()` at the leaf level and must NOT subscribe to entire collections. Use derived/computed values.
+  - Access Consistency: Choose ONE state access pattern (e.g. reactive bindings, direct store subscriptions, or DI) and use it exclusively. Never mix different access methodologies in the same codebase.
+  - Observable Isolation: View components wrapping expensive rendering surfaces (Map, Canvas, Chart) must be strictly isolated at the leaf level to only re-render when their specific primitive data changes. They must NOT subscribe to entire state collections. Use derived or computed projections.
 
 style-discipline:
-  - Single System: If using a component library (MUI, Ant), ALL style overrides go through the theme config or `styled()`. Raw CSS files must not override component library styles.
-  - Separation: Global layout CSS is OK alongside a component library, but component-level styles must use one approach.
+  - Single System: Choose one styling strategy. If using a component library's styling engine, all overrides must go through its native configuration. Global styles must not rudely override component-level scopes.
+  - Separation: Component-level styles must use exactly one approach (e.g. Utility-first, CSS-in-JS, or CSS Modules), avoiding collision.
 
 component-rules:
   - Separation of Concerns: Logic (Hooks/Services) separated from Presentation (Components/Views).
   - API Boundaries: Expose explicit contracts (e.g., Typescript interfaces, OpenAPI specs).
 
 anti-patterns:
-  - ❌ God Objects: Modules or components that try to do everything (over 100 lines usually signals this).
+  - ❌ God Objects: Modules or components that try to do everything.
+  - ❌ Giant Files: Writing or maintaining files larger than 150 lines instead of splitting them.
   - ❌ Circular Dependencies: A depends on B depends on A.
-  - ❌ State Mutation: Mutating global state directly from deep within the component tree.
-  - ❌ Store Access Soup: Mixing useStore() hooks and direct store imports in same codebase.
-  - ❌ Style Collision: MUI `sx`/`styled` alongside raw `.css` files targeting same components.
+  - ❌ State Mutation: Mutating global state directly from deep within the component tree instead of using explicit actions/mutations.
+  - ❌ Store Access Soup: Mixing different state access patterns in the same codebase.
+  - ❌ Style Collision: Mixing component-scoped styling tools with raw global CSS files targeting the same elements.
   - ❌ Expensive Re-render: Entire Map/Chart re-renders because parent observes a frequently-changing collection.
   - ❌ Architectural Over-Engineering: Designing patterns or "future-proofing" without an immediate 10x strategic value (Return on Complexity).
   - ❌ Narrow Scoping: Planning "atomic" UI tasks (e.g. "copy component X") without tying them to the full target stack (Types, API, Routes, Parity goal).

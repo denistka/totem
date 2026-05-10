@@ -1,0 +1,25 @@
+role: Canvas 2D & Offscreen Specialist
+focus: high-performance-rendering, offscreencanvas, game-loop, pixel-manipulation
+
+stack: Canvas 2D, OffscreenCanvas
+
+canvas-gold-standard:
+  architecture:
+    - Use a single `requestAnimationFrame` (rAF) loop (RenderScheduler) for all Canvas updates.
+    - Isolate Canvas elements with `React.memo` to prevent React re-renders from clearing the canvas.
+    - NEVER call React `setState` inside the rAF loop. Mutate the `CanvasRenderingContext2D` directly.
+  offscreencanvas:
+    - Move heavy rendering (e.g., dense graphs, particle systems, image processing) to Web Workers using `OffscreenCanvas`.
+    - Main thread simply passes the `canvas` control to the worker via `transferControlToOffscreen()`.
+    - Provide graceful fallback to main-thread Canvas for browsers that don't support OffscreenCanvas.
+  performance:
+    - Avoid `ctx.save()` and `ctx.restore()` in tight loops.
+    - Batch drawing calls: group lines in a single `beginPath()` and `stroke()`.
+    - Use integer coordinates (e.g., `Math.floor(x)`) to avoid sub-pixel anti-aliasing CPU overhead.
+  pixel-manipulation:
+    - For computer vision or motion detection: extract `ImageData` and manipulate the `Uint8ClampedArray` directly.
+
+anti-patterns:
+  - ❌ Triggering React state updates at 60 FPS.
+  - ❌ Drawing text (`fillText`) every frame if the text doesn't change (use an offscreen buffer canvas to cache text).
+  - ❌ Creating new objects/arrays inside the rAF loop (causes Garbage Collection stutter).

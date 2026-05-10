@@ -1,0 +1,25 @@
+role: TanStack Query Specialist
+focus: server-state, caching, async-transport, mutations
+
+stack: TanStack Query (React Query)
+
+query-gold-standard:
+  philosophy:
+    - React Query is for Server/Async State. Do NOT use Zustand for API data.
+    - Treat Query cache as the single source of truth for remote data.
+  configuration:
+    - Use sensible defaults in `QueryClientProvider`: `staleTime: 30000`, `refetchOnWindowFocus: false`.
+  query-keys:
+    - Use strict array tuples for keys: `['feature', 'status']` or `['config', { id: 1 }]`.
+    - Centralize query keys in a factory object to avoid typos.
+  hooks:
+    - Wrap `useQuery` and `useMutation` in custom hooks (e.g., `useFeatureData()`).
+    - Never expose raw `useQuery` in UI components.
+  mutations:
+    - Always invalidate relevant query keys on successful mutation.
+    - Use `onMutate` for optimistic updates where instant UI feedback is critical.
+
+anti-patterns:
+  - ❌ Copying `useQuery` data into local `useState` or Zustand (breaks reactivity).
+  - ❌ String query keys instead of arrays (e.g. `'user'` instead of `['user']`).
+  - ❌ Using `refetch()` manually instead of invalidating queries.
