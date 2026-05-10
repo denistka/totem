@@ -2,7 +2,7 @@
 id: S01-T10
 name: App Shell with HUD Layout
 status: TODO
-gate: LOCKED
+gate: OPEN
 requires: [react/REACT.ti, react/ZUSTAND.ti, tailwind/TAILWIND.ti]
 regulation: UI_REGULATION.ti
 ---

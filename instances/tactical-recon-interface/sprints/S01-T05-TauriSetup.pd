@@ -1,8 +1,8 @@
 ---
 id: S01-T05
 name: Tauri 2 + Rust Backend Setup
-status: TODO
-gate: LOCKED
+status: DONE
+gate: OPEN
 requires: [tauri/TAURI.ti, rust/RUST_DEV.ti]
 ---
 

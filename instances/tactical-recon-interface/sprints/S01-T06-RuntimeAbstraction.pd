@@ -1,8 +1,8 @@
 ---
 id: S01-T06
 name: Runtime Environment Abstraction
-status: TODO
-gate: LOCKED
+status: DONE
+gate: OPEN
 requires: [react/REACT.ti, tauri/TAURI.ti]
 reference: navitrack-mobile-apps/src/api/lib/http-adapter.ts
 ---
