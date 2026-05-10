@@ -1,8 +1,8 @@
 ---
 id: S01-T03
 name: Design System — CSS Token Architecture
-status: TODO
-gate: LOCKED
+status: DONE
+gate: OPEN
 requires: [react/REACT.ti, tailwind/TAILWIND.ti]
 regulation: UI_REGULATION.ti
 reference: navitrack-mobile-apps/src/styles/theme.css
