@@ -1,8 +1,8 @@
 ---
 id: S01-T04b
 name: React Query Transport Cache
-status: TODO
-gate: LOCKED
+status: DONE
+gate: OPEN
 requires: [react/REACT.ti]
 ---
 
