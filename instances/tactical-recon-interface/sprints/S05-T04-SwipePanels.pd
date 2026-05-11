@@ -1,0 +1,30 @@
+---
+id: S05-T04
+name: Swipe Panels for HUD Slots
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/FRAMER_MOTION.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T04: Swipe Panels
+
+## Objective
+Edge-swipe gestures to show/hide HUD slot groups (left = telemetry panel, right = settings, top = top-bar, bottom = graphs).
+
+## Acceptance Criteria
+- Edge-detection: gesture begins within 20px of viewport edge.
+- Direction matched to slot group (left swipe-in ⇒ left panel).
+- Slide animation: 200ms ease-out, translateX only.
+- Persistence: open/closed state in `useLayoutStore`.
+
+## Steps
+1. Add edge-swipe recognizer to gesture engine.
+2. Map directions ↔ slot groups.
+3. Implement `<SidePanel>` wrapper with Framer Motion.
+4. Persist last open/closed state per panel.
+
+## Invariants
+- Swipe never closes critical alert overlays.
+- Panel widths fixed (320px); no responsive shrink.
+- Animation strictly translateX (no scale/opacity composite).

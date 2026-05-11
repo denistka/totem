@@ -1,0 +1,31 @@
+---
+id: S06-T01
+name: Full Debug Panel
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+reference: drone-interface/6/src/components/debug-panel/
+---
+
+# S06-T01: Debug Panel
+
+## Objective
+Port the comprehensive debug panel from `drone-interface/6` — collapsible sections for stream, telemetry, performance, and feature flags.
+
+## Acceptance Criteria
+- `src/features/debug/DebugPanel.tsx` slides in from right edge (S05-T04).
+- Sections: Stream, Telemetry, Performance, Flags, Logs.
+- Toggle via keyboard `~` or 4-finger tap.
+- Hidden in production builds unless `?debug=1` query param.
+
+## Steps
+1. Build panel container with collapsible sections.
+2. Port section components (stream/telemetry/perf/flags/logs).
+3. Add toggle binding (keyboard + gesture).
+4. Gate visibility via build env + query param.
+
+## Invariants
+- Debug panel must NOT impact rendering when closed.
+- All metrics are read-only views into existing stores.
+- Pink/amber colors per UI_REGULATION for warnings.

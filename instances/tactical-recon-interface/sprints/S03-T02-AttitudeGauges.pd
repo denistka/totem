@@ -1,0 +1,31 @@
+---
+id: S03-T02
+name: Roll/Pitch/Yaw Attitude Gauges
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti, react/FRAMER_MOTION.ti]
+regulation: UI_REGULATION.ti
+reference: drone-interface/6/src/components/AttitudeGauges.vue
+---
+
+# S03-T02: Attitude Gauges
+
+## Objective
+Port AttitudeGauges (201 lines, CSS) to React with Tailwind classes (no Canvas).
+
+## Acceptance Criteria
+- `src/features/hud/gauges/AttitudeGauges.tsx` renders three indicators: ROLL, PITCH, YAW.
+- Roll/Pitch as bar indicators; YAW as compass strip.
+- Smooth value updates via Framer Motion `animate()` (200ms ease-out).
+- Labels uppercase, JetBrains Mono per UI_REGULATION.
+
+## Steps
+1. Build `<BarIndicator>` primitive with min/max/value/label props.
+2. Build `<CompassStrip>` primitive (translateX based on yaw degrees).
+3. Compose into `<AttitudeGauges>`.
+4. Bind to `useTelemetryStore.attitude`.
+
+## Invariants
+- All transforms GPU-accelerated (translate3d/transform).
+- No spring/bounce — strict ease-out (UI_REGULATION).
+- Component memoized at root; child primitives leaf-level memoized.

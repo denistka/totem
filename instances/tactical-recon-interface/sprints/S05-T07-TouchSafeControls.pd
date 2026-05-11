@@ -1,0 +1,31 @@
+---
+id: S05-T07
+name: Touch-Safe Control Primitives
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T07: Touch-Safe Controls
+
+## Objective
+Provide a small library of touch-safe primitives: Button, IconButton, Toggle, Slider, Select.
+
+## Acceptance Criteria
+- `src/shared/ui/` houses primitives.
+- All targets ≥ 48×48px (preferred 56×56).
+- No hover-only state — all interactions surfaced via touch.
+- Disabled state visually distinct (low-opacity gray-green per UI_REGULATION).
+- Touch feedback: 1px border brightens within 50ms on press.
+
+## Steps
+1. Implement `<Button>` (variants: primary, alert, ghost).
+2. Implement `<IconButton>` (square, min 48×48).
+3. Implement `<Toggle>`, `<Slider>`, `<Select>` (basic, accessible).
+4. Document each primitive in storybook-free MDX (deferred to S06).
+
+## Invariants
+- No JS-driven hover effects.
+- Active/press visual response within one frame.
+- All controls keyboard-accessible (focus ring per UI_REGULATION cyan).

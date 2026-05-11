@@ -1,0 +1,30 @@
+---
+id: S03-T10
+name: Fullscreen Tactical Mode
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, pwa/PWA.ti, tauri/TAURI.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S03-T10: Fullscreen Tactical Mode
+
+## Objective
+Provide a one-touch fullscreen mode that hides browser chrome and maximizes video real estate.
+
+## Acceptance Criteria
+- `useFullscreen()` hook wrapping `requestFullscreen` / Tauri window API.
+- Top-bar fullscreen toggle (icon button, min 48×48px).
+- Auto-hide non-critical HUD slots after 5s idle (mouse/touch).
+- ESC exits fullscreen; gesture (S05-T04 swipe-down) also exits.
+
+## Steps
+1. Implement `useFullscreen()` with browser + Tauri branches via `bridge.ts`.
+2. Add `IdleTimer` utility (resets on pointer/touch).
+3. Wire to slot visibility map (HUD preset overlay).
+4. Add CSS class `.fullscreen-mode` to AppShell.
+
+## Invariants
+- Critical alerts (pink) NEVER auto-hide.
+- Crosshair and target overlay remain visible in all states.
+- Exit gesture fires within 200ms of input.

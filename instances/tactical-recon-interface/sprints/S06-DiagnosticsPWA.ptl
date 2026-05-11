@@ -1,8 +1,8 @@
 ---
 id: S06
 name: Diagnostics, PWA & Polish
-status: PLANNING
-gate: LOCKED
+status: PLANNED
+gate: OPEN
 requires: [react/REACT.ti, pwa/PWA.ti, tauri/TAURI.ti, tailwind/TAILWIND.ti]
 ---
 

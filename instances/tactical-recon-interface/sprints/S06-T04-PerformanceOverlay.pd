@@ -1,0 +1,30 @@
+---
+id: S06-T04
+name: Runtime Performance Overlay
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S06-T04: Performance Overlay
+
+## Objective
+Compact overlay showing FPS, GPU timing, memory, render budget, dropped frames, packet loss.
+
+## Acceptance Criteria
+- Top-right widget (toggleable in debug panel).
+- Metrics: FPS (rAF interval EMA), heap (`performance.memory` if avail), render budget (`requestAnimationFrame` time), drops, WS latency.
+- Visual color coding per threshold (UI_REGULATION palette).
+- "PERFORMANCE MODE ACTIVE" banner when adaptive degradation triggers (S01-T08).
+
+## Steps
+1. Subscribe to `PerformanceManager` (S01-T08).
+2. Render metrics in single-line monospace strip.
+3. Add banner component for degraded mode.
+4. Position above center video, height ≤ 24px.
+
+## Invariants
+- Overlay is read-only — never affects runtime decisions.
+- Refresh at 2Hz max.
+- Hidden by default in production.

@@ -1,0 +1,33 @@
+---
+id: S02-T04
+name: RTSP Stream Bridge (Tauri / Rust)
+status: PLANNED
+gate: OPEN
+requires: [tauri/TAURI.ti, rust/RUST_DEV.ti, react/REACT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T04: RTSP Bridge via Tauri/Rust
+
+## Objective
+Enable RTSP playback through a Rust-side bridge (Tauri command + native decoder) feeding frames into the JS layer.
+
+## Acceptance Criteria
+- Rust crate in `src-tauri/src/rtsp/` exposes commands:
+  - `rtsp_open(url) -> stream_id`
+  - `rtsp_close(stream_id)`
+  - `rtsp_stats(stream_id) -> { fps, bitrate, drops }`
+- JS-side `RtspBridge.ts` wraps commands via `invokeBridge`.
+- Frames delivered as `ImageBitmap` over event channel, fed to `StreamManager`.
+- Browser fallback: clearly errors with `RTSP_NOT_SUPPORTED` (no mock attempt).
+
+## Steps
+1. Add Rust dependency for RTSP decode (selection deferred to ARCHITECT review).
+2. Define IPC contract (channel name, frame payload format).
+3. Implement `RtspBridge` JS wrapper exposing same shape as `CameraService`.
+4. Register as a `StreamSource` variant in `StreamManager`.
+
+## Invariants
+- All Rust ↔ JS boundary crossings typed via shared schema (single source).
+- Native decode runs on Rust worker thread, never blocks UI bridge.
+- No RTSP code path active in pure browser mode.

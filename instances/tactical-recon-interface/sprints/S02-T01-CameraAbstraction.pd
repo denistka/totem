@@ -1,0 +1,34 @@
+---
+id: S02-T01
+name: Camera API Abstraction (getUserMedia)
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T01: Camera API Abstraction
+
+## Objective
+Build a typed wrapper around the browser `MediaDevices` / `getUserMedia` API exposing a single `CameraService` used by all video features.
+
+## Acceptance Criteria
+- `src/services/camera/CameraService.ts` exposes:
+  - `open(constraints): Promise<MediaStream>`
+  - `close(stream): void`
+  - `applyConstraints(stream, constraints): Promise<void>`
+  - `isSupported(): boolean`
+- Constraints object is fully typed (`CameraConstraints`).
+- All permission failures normalized to a tagged union `CameraError`.
+- No raw `navigator.mediaDevices` access outside this module.
+
+## Steps
+1. Define `CameraConstraints`, `CameraError` types in `src/services/camera/types.ts`.
+2. Implement `CameraService` with explicit feature detection.
+3. Export singleton via `src/services/index.ts`.
+4. Add unit tests for permission error mapping (deferred to S07).
+
+## Invariants
+- No React imports — pure service layer.
+- Errors never thrown across boundaries — return `Result<MediaStream, CameraError>`.
+- Service is platform-aware (Browser/PWA only; Tauri routes via S02-T04).

@@ -1,0 +1,33 @@
+---
+id: S03-T08
+name: HUD Visibility Presets
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S03-T08: HUD Presets
+
+## Objective
+Provide canned HUD configurations: COMBAT / NAV / DIAGNOSTICS / MINIMAL.
+
+## Acceptance Criteria
+- `useLayoutStore.preset` switchable via `setPreset(id)`.
+- Preset definitions in `src/features/hud/presets/presets.ts`:
+  - COMBAT: radar, target overlay, crosshair, attitude
+  - NAV: compass, ALT/SPD, map (future)
+  - DIAGNOSTICS: latency, stream stats, telemetry inspector
+  - MINIMAL: only crosshair + critical alerts
+- Preset switch fades slots (200ms) without unmounting AppShell.
+
+## Steps
+1. Define `HudPreset` type and preset records.
+2. Wire `setPreset` to slot visibility map.
+3. Add preset selector to top-bar (compact 4-button group).
+4. Persist last preset to localStorage.
+
+## Invariants
+- Preset switch never causes video remount.
+- Animations strict ease-out per UI_REGULATION.
+- Default preset = COMBAT.

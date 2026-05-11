@@ -1,0 +1,38 @@
+---
+id: S06-T09
+name: Enterprise-grade Project README
+status: PLANNED
+gate: OPEN
+requires: []
+---
+
+# S06-T09: Enterprise README
+
+## Objective
+Author repo README presenting the project as "Realtime Frontend Systems Engineer" portfolio for DefTech vacancy.
+
+## Acceptance Criteria
+- Sections (mandatory):
+  - Architecture Overview (with diagrams)
+  - Rendering Pipeline (scheduler, OffscreenCanvas, Workers)
+  - Performance Strategy (adaptive quality, frame budgets)
+  - Telemetry Pipeline (binary protocol, Workers, buffers)
+  - Video Pipeline (Camera API, WebRTC, RTSP, source switching)
+  - Embedded Deployment (Tauri 2, Raspberry Pi 5, kiosk mode)
+  - Runtime Modes (Browser / PWA / Tauri)
+  - Touch UX Strategy
+  - Testing Strategy (unit, component, E2E, stress)
+  - Screenshots / demo video links
+- Inline diagrams (Mermaid) for architecture & telemetry pipeline.
+- Positioning paragraph (top): "Realtime Frontend Systems Engineer".
+
+## Steps
+1. Outline README skeleton.
+2. Draft architecture overview + Mermaid diagram.
+3. Fill pipeline sections referencing sprint outputs.
+4. Add screenshots placeholder + final positioning paragraph.
+
+## Invariants
+- No marketing fluff — engineering tone, specific decisions.
+- Every section references concrete files/modules in repo.
+- Diagrams render in GitHub markdown.

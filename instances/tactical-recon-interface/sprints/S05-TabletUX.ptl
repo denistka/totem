@@ -1,8 +1,8 @@
 ---
 id: S05
 name: Touch-first Tablet UX
-status: PLANNING
-gate: LOCKED
+status: PLANNED
+gate: OPEN
 requires: [react/REACT.ti, pwa/PWA.ti]
 ---
 

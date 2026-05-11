@@ -1,0 +1,30 @@
+---
+id: S05-T09
+name: Kiosk Fullscreen Mode
+status: PLANNED
+gate: OPEN
+requires: [tauri/TAURI.ti, pwa/PWA.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T09: Kiosk Mode
+
+## Objective
+Single-app fullscreen lockdown for embedded/Pi5 deployment via Tauri (cage/Wayland) or PWA `display: fullscreen`.
+
+## Acceptance Criteria
+- Tauri config flag: `kiosk: true` disables window decorations, locks size.
+- Boot directly into fullscreen + COMBAT preset.
+- Keyboard quit-combo disabled (require 5-finger gesture or dev unlock).
+- PWA fallback uses `display: fullscreen` in manifest.
+
+## Steps
+1. Add kiosk launch arg parsing in Rust side.
+2. Set Tauri window config when kiosk flag present.
+3. Override exit shortcuts; provide unlock gesture (5-finger long-press 3s).
+4. Update PWA manifest for kiosk display mode.
+
+## Invariants
+- Kiosk mode never enabled by default.
+- Unlock gesture documented prominently in README.
+- No browser chrome visible in kiosk.

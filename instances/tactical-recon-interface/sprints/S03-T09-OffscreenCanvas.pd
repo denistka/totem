@@ -1,0 +1,30 @@
+---
+id: S03-T09
+name: OffscreenCanvas Worker Rendering
+status: PLANNED
+gate: OPEN
+requires: [architecture/WEB_WORKERS.ti, graphics/CANVAS_2D.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S03-T09: OffscreenCanvas Rendering
+
+## Objective
+Migrate heavy renderers (Radar, Graph, Target tracking) to dedicated Web Workers via OffscreenCanvas.
+
+## Acceptance Criteria
+- Worker entrypoints: `src/workers/radar.worker.ts`, `graph.worker.ts`, `tracking.worker.ts`.
+- Shared `WorkerBridge` protocol (transfer canvas, post state diffs).
+- Feature detection: OffscreenCanvas available → worker path; else main-thread fallback.
+- Frame budget: workers maintain 30+ FPS at Pi5 target.
+
+## Steps
+1. Define `WorkerBridge` protocol (init, frame, dispose).
+2. Refactor `RadarEngine` to accept a canvas (Offscreen or main).
+3. Implement worker wrappers transferring canvas.
+4. Wire fallback path in React component.
+
+## Invariants
+- Engine code (Canvas drawing) shared between worker and main-thread paths.
+- No DOM references inside workers (strict).
+- Bridge messages typed via shared schema.

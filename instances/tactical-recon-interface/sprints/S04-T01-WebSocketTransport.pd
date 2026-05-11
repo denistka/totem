@@ -1,0 +1,31 @@
+---
+id: S04-T01
+name: WebSocket Telemetry Transport
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T01: WebSocket Transport
+
+## Objective
+Resilient WebSocket transport layer for live telemetry with reconnect, failover, and binary support.
+
+## Acceptance Criteria
+- `src/services/telemetry/WsTransport.ts` exposes `connect(url)`, `close()`, `send(buf)`, `onMessage(handler)`.
+- Binary frame support (`ArrayBuffer`) + JSON fallback.
+- Reconnect: exponential backoff (250ms → 4000ms), max 5 retries.
+- Failover URL list supported (try next on terminal failure).
+- State machine: `IDLE | CONNECTING | LIVE | RECONNECTING | FAILED`.
+
+## Steps
+1. Implement `WsTransport` with state machine + event emitter.
+2. Add heartbeat (ping/pong, 5s interval).
+3. Surface state via `useTelemetryConnection()` hook.
+4. Loading text per UI_REGULATION: `SYNCING TELEMETRY...`, `RECONNECTING STREAM...`.
+
+## Invariants
+- Only one active socket per session.
+- Heartbeat timeout > 2× interval before reconnect.
+- No automatic retry past max attempts — surface manual retry button.

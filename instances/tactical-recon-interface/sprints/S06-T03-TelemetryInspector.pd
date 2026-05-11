@@ -1,0 +1,30 @@
+---
+id: S06-T03
+name: Telemetry Inspector
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S06-T03: Telemetry Inspector
+
+## Objective
+Raw telemetry data viewer with frame-by-frame inspection and field filtering.
+
+## Acceptance Criteria
+- Live JSON tree of last decoded frame.
+- Field filter (search box).
+- Hex view of raw `ArrayBuffer` payload (toggleable).
+- Frame rate badge + decode error counter.
+
+## Steps
+1. Subscribe to telemetry bus (S04-T05).
+2. Build JSON tree viewer (collapsed by default, depth=1).
+3. Implement hex dump renderer.
+4. Throttle UI updates to 5Hz.
+
+## Invariants
+- Inspector does not retain frame history (single latest).
+- Hex view chunked (rows of 16 bytes).
+- No editing — read-only.

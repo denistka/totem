@@ -1,8 +1,8 @@
 ---
 id: S04
 name: Realtime Telemetry System
-status: PLANNING
-gate: LOCKED
+status: PLANNED
+gate: OPEN
 requires: [react/REACT.ti, react/ZUSTAND.ti, typescript/TYPESCRIPT.ti]
 ---
 

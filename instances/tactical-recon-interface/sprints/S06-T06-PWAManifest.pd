@@ -1,0 +1,30 @@
+---
+id: S06-T06
+name: PWA Manifest + Service Worker
+status: PLANNED
+gate: OPEN
+requires: [pwa/PWA.ti, vite/VITE.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S06-T06: PWA Manifest
+
+## Objective
+Make the app installable as PWA with offline caching of static assets.
+
+## Acceptance Criteria
+- `public/manifest.webmanifest` with name, icons (192/512/maskable), `display: standalone`, theme colors per UI_REGULATION.
+- Vite plugin (`vite-plugin-pwa` or hand-rolled) registers SW.
+- Cache strategy: cache-first for static assets, network-first for telemetry/video config.
+- Offline fallback page shows "OFFLINE — RECONNECTING..." styled per UI_REGULATION.
+
+## Steps
+1. Author manifest with cyan theme color `#1ACDB3` and bg `#071D1B`.
+2. Generate icon set (192, 512, maskable).
+3. Configure SW with named precache.
+4. Add offline fallback HTML.
+
+## Invariants
+- SW only registered on production builds.
+- Static cache versioned (bump on build).
+- No precache of WebSocket endpoints or media streams.

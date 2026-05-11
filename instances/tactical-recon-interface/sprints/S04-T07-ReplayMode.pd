@@ -1,0 +1,32 @@
+---
+id: S04-T07
+name: Telemetry Replay Mode + Timeline Scrubber
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/FRAMER_MOTION.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T07: Replay Mode
+
+## Objective
+Load recorded telemetry sessions and replay through the HUD with a scrubber-based timeline. WOW factor for vacancy.
+
+## Acceptance Criteria
+- Route `/replay` (React Router) hosts replay view.
+- `useReplayStore`: `session`, `cursorMs`, `speed`, `playing`.
+- Timeline bar (Framer Motion) shows scrubber thumb + duration.
+- Controls: Play/Pause/Speed (0.5x/1x/2x/4x), step ±1s, jump to start/end.
+- All HUD widgets reflect replay state (single source).
+- Sessions load from IndexedDB or file picker.
+
+## Steps
+1. Define `ReplaySession` shape (frames + metadata).
+2. Implement playback scheduler tied to `RenderScheduler.NORMAL`.
+3. Build `<TimelineBar>` (Framer motion, ease-out, no spring).
+4. Hook telemetry store into replay source toggle.
+
+## Invariants
+- Replay store mutually exclusive with live source (S02-T06 emits source-change).
+- Scrubber drag updates at most 30Hz.
+- No spring on thumb — direct linear follow per UI_REGULATION.

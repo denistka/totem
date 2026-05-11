@@ -1,0 +1,30 @@
+---
+id: S04-T03
+name: Telemetry Parser Worker
+status: PLANNED
+gate: OPEN
+requires: [architecture/WEB_WORKERS.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T03: Telemetry Worker
+
+## Objective
+Off-load binary frame decoding to a dedicated Web Worker to keep main thread free for rendering.
+
+## Acceptance Criteria
+- `src/workers/telemetry.worker.ts` listens for incoming `ArrayBuffer` messages, decodes via `protocol/v1`.
+- Posts normalized `TelemetryFrame` to main thread.
+- Transferable objects used (zero-copy) for binary input.
+- Worker reports decode error count via stats channel.
+
+## Steps
+1. Create worker entry with `MessagePort` lifecycle.
+2. Forward incoming WS frames through worker.
+3. Define worker output shape (normalized frame).
+4. Wire bootstrap in `App` (S01-T10).
+
+## Invariants
+- No DOM/window access in worker.
+- Single worker for telemetry (no pool).
+- Errors aggregated, not logged per-frame (rate-limited).

@@ -1,0 +1,30 @@
+---
+id: S04-T04
+name: Telemetry Normalization Layer
+status: PLANNED
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T04: Normalization Layer
+
+## Objective
+Map raw protocol frames to UI-friendly normalized telemetry (units, ranges, derived fields).
+
+## Acceptance Criteria
+- `src/features/telemetry/normalize.ts` accepts decoded frame, returns `NormalizedTelemetry`.
+- Derived fields computed: `groundSpeed`, `verticalSpeed`, `signalQuality(0–100)`, `batteryPct`.
+- Unit conversion: m/s, °, V, dBm (documented).
+- Out-of-range values clamped + flagged as `degraded: true`.
+
+## Steps
+1. Define `NormalizedTelemetry` type.
+2. Implement normalize functions per domain (attitude, position, power, link).
+3. Add derived field computation.
+4. Expose pure module — no Zustand inside.
+
+## Invariants
+- No side effects (pure functions).
+- Original raw frame preserved for diagnostics.
+- Clamping is non-destructive — flag, do not mutate prior history.

@@ -1,0 +1,29 @@
+---
+id: S07-T03
+name: Mock Service Worker Setup
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti]
+---
+
+# S07-T03: MSW Setup
+
+## Objective
+Install MSW for API + WebSocket mocking in tests and dev mode.
+
+## Acceptance Criteria
+- Dev dep: `msw`.
+- `src/test/msw/handlers.ts` defines HTTP + WS handlers.
+- Unit/component tests: `setupServer` invoked in test setup.
+- Dev mode: optional `?mock=1` boot path registers service worker (browser only).
+
+## Steps
+1. Install MSW + initialize worker.
+2. Define base handler set (telemetry WS mock, config HTTP).
+3. Wire `setupServer` to vitest setup.
+4. Add dev-mode opt-in via query param.
+
+## Invariants
+- MSW NEVER active in production builds.
+- Handler files are pure (no test framework imports).
+- WS mock replays canned recording (uses S04-T08 export format).

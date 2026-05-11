@@ -1,0 +1,32 @@
+---
+id: S03-T01
+name: Canvas Radar Rendering Engine
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, graphics/CANVAS_2D.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+reference: drone-interface/6/src/components/Radar.vue
+---
+
+# S03-T01: Radar Engine
+
+## Objective
+Port `drone-interface/6/src/components/Radar.vue` (Canvas 2D, 187 lines) to a React 19 component using priority-based RenderScheduler.
+
+## Acceptance Criteria
+- `src/features/hud/radar/Radar.tsx` renders to `<canvas>` with DPI scaling.
+- Features: rotating sweep, concentric rings, crosshair center, fading blip history (trail), trajectory vectors.
+- Subscribes to `RenderScheduler.CRITICAL` priority.
+- Blips driven by `useTelemetryStore.targets` (read-only).
+- Resize observer redraws on container size change.
+
+## Steps
+1. Create `RadarEngine` class (pure Canvas drawing, no React).
+2. Wrap with `<Radar>` React component (mount/unmount lifecycle only).
+3. Apply UI_REGULATION colors (cyan primary, pink for OPEN targets).
+4. Implement trail fade using alpha compositing.
+
+## Invariants
+- React renders Canvas exactly once; all updates via imperative draw calls.
+- No spring/elastic motion (per UI_REGULATION).
+- Sweep is continuous, semi-transparent — no flashy neon.

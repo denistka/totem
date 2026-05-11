@@ -1,0 +1,30 @@
+---
+id: S06-T07
+name: Installable Tablet Mode (PWA Prompt)
+status: PLANNED
+gate: OPEN
+requires: [pwa/PWA.ti, react/REACT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S06-T07: Installable Mode
+
+## Objective
+Surface an in-app install prompt for PWA tablet deployment.
+
+## Acceptance Criteria
+- `useInstallPrompt()` captures `beforeinstallprompt` event.
+- Top-bar "INSTALL" button shown only when installable + not installed.
+- iOS instructions shown for Safari (no native prompt).
+- Dismissal persists for 7 days (localStorage).
+
+## Steps
+1. Implement `useInstallPrompt` hook.
+2. Build `<InstallButton>` per UI_REGULATION ghost-button style.
+3. Add Safari instructions modal.
+4. Wire dismissal persistence.
+
+## Invariants
+- No nag — single button, no popup interrupts.
+- Hidden in Tauri build (already installed natively).
+- Button styled per UI_REGULATION (cyan ghost, 56×56px touch).

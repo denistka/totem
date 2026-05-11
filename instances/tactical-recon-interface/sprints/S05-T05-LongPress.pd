@@ -1,0 +1,30 @@
+---
+id: S05-T05
+name: Long-Press Context Actions
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/FRAMER_MOTION.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T05: Long-Press Actions
+
+## Objective
+Long-press on map/video surfaces opens a contextual radial menu (e.g., set waypoint, mark target, ping).
+
+## Acceptance Criteria
+- Long-press (500ms) on video opens radial menu at touch point.
+- Menu items: Mark Target, Set Waypoint, Ping, Cancel (4-item radial).
+- 200ms scale-in (NOT spring) + opacity.
+- Auto-dismiss on outside tap.
+
+## Steps
+1. Subscribe to gesture engine `longPress`.
+2. Build `<RadialMenu>` component (4 buttons at 90° intervals).
+3. Apply UI_REGULATION colors (cyan default, pink for Mark Target).
+4. Dispatch selected action through Event Bus (S04-T05).
+
+## Invariants
+- No spring/bounce on open (UI_REGULATION).
+- Menu items minimum 56×56px touch targets.
+- Single menu instance at a time; new long-press replaces it.

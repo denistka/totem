@@ -1,0 +1,29 @@
+---
+id: S07-T07
+name: Performance Regression & Memory Leak Tests
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti]
+---
+
+# S07-T07: Performance Tests
+
+## Objective
+Automated FPS and memory regression checks under load.
+
+## Acceptance Criteria
+- `e2e/perf.spec.ts` — runs simulated telemetry burst, asserts ≥30 FPS via `performance.now` deltas.
+- Memory snapshot before/after 60s replay run; growth < 10MB.
+- Render-budget assertion (rAF interval p95 < 16.7ms).
+- Results emitted as Playwright report attachments.
+
+## Steps
+1. Build harness that injects synthetic telemetry frames at high rate.
+2. Sample frame intervals via `requestAnimationFrame`.
+3. Compute p50/p95/p99 + post-run heap diff.
+4. Fail test on regression vs. baseline JSON in `e2e/baselines/`.
+
+## Invariants
+- 30 FPS minimum (UI_REGULATION & invariants).
+- Baselines updated only via explicit PR + reviewer sign-off.
+- Tests run on chromium-tablet project (1366×768).

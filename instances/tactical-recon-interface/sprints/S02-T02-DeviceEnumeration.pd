@@ -1,0 +1,30 @@
+---
+id: S02-T02
+name: Camera Device Enumeration & Switching
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T02: Device Enumeration & Switching
+
+## Objective
+Enumerate connected video input devices and provide a hot-switch mechanism without UI flicker.
+
+## Acceptance Criteria
+- `CameraService.listDevices(): Promise<CameraDevice[]>` returns id, label, kind, facingMode hint.
+- Zustand `useCameraStore` holds: `devices`, `activeDeviceId`, `setActive(id)`.
+- `mediadevices.ondevicechange` triggers store refresh.
+- Switching device closes prior stream and opens new one within one render frame.
+
+## Steps
+1. Extend `CameraService` with `listDevices`.
+2. Create `useCameraStore` (Zustand) at `src/features/video/state/cameraStore.ts`.
+3. Wire `ondevicechange` listener (bound at app boot).
+4. Expose `useCameras()` hook returning sorted device list.
+
+## Invariants
+- Device list never empty if at least one device exists (force refresh on permission grant).
+- Switching is atomic — no intermediate "no stream" state visible to UI.
+- Permission re-prompt suppressed once granted in session.

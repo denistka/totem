@@ -1,0 +1,29 @@
+---
+id: S07-T04
+name: Unit Test Suite
+status: PLANNED
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti]
+---
+
+# S07-T04: Unit Tests
+
+## Objective
+Cover pure modules: binary codec, normalization, ring buffer, performance manager.
+
+## Acceptance Criteria
+- `src/services/telemetry/protocol/__tests__/v1.test.ts` — encode/decode round-trip.
+- `src/features/telemetry/__tests__/normalize.test.ts` — unit conversions + clamping.
+- `src/shared/util/__tests__/RingBuffer.test.ts` — push/at/wraparound.
+- `src/services/__tests__/PerformanceManager.test.ts` — FPS state transitions.
+
+## Steps
+1. Author tests per module.
+2. Add corpus of telemetry fixtures (binary blobs).
+3. Ensure pure-module isolation (no DOM imports).
+4. Wire into `pnpm test`.
+
+## Invariants
+- No I/O, no timers in unit tests (use `vi.useFakeTimers`).
+- One concern per test file.
+- Behavioral assertions only (no snapshots).

@@ -1,0 +1,30 @@
+---
+id: S02-T03
+name: Stream Lifecycle Manager (start/stop/reconnect)
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T03: Stream Lifecycle Manager
+
+## Objective
+Unified `StreamManager` owning the lifecycle of any active video stream (camera/RTSP/WebRTC) with reconnect strategy.
+
+## Acceptance Criteria
+- `src/services/stream/StreamManager.ts` with states: `IDLE | ACQUIRING | LIVE | RECONNECTING | FAILED`.
+- Emits typed events: `onStateChange`, `onFrame`, `onError`.
+- Reconnect: exponential backoff (250ms → 4000ms), max 5 retries, then `FAILED`.
+- Public API: `attach(source)`, `detach()`, `state`, `currentStream`.
+
+## Steps
+1. Define `StreamSource` discriminated union (Camera | RTSP | WebRTC | Replay).
+2. Implement state machine with explicit transition table.
+3. Implement backoff scheduler (uses `RenderScheduler` from S01-T07 for backoff ticks).
+4. Expose `useStreamState()` hook.
+
+## Invariants
+- Single source of truth for current video — no other module mutates streams.
+- Reconnect counter resets on successful `LIVE` for >5s.
+- Loading state surfaced as `ACQUIRING VIDEO SIGNAL...` (per UI_REGULATION).

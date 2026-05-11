@@ -1,0 +1,31 @@
+---
+id: S05-T03
+name: Pinch-to-Zoom on Video
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/FRAMER_MOTION.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T03: Pinch Zoom
+
+## Objective
+Two-finger pinch zoom on the video surface with HUD overlay tracking.
+
+## Acceptance Criteria
+- Zoom range: 1.0x – 4.0x.
+- Pinch center used as zoom origin (transform-origin).
+- HUD overlays (grid, target boxes) scale with same transform.
+- Double-tap to reset.
+- Smooth: 16ms frame budget, no jank (uses transform only).
+
+## Steps
+1. Subscribe `<VideoSurface>` to gesture engine `pinch` events.
+2. Compute scale + origin per frame; apply via CSS transform.
+3. Share transform via `useViewportStore` for overlay coordination.
+4. Add reset on double-tap handler.
+
+## Invariants
+- Only transform/opacity used (UI_REGULATION rendering rules).
+- No layout reflow during zoom.
+- Zoom state survives source switch (S02-T06).

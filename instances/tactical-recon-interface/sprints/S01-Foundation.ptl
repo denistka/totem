@@ -1,7 +1,7 @@
 ---
 id: S01
 name: Frontend Architecture Foundation
-status: PLANNING
+status: PLANNED
 gate: OPEN
 requires: [react/REACT.ti, react/ZUSTAND.ti, tailwind/TAILWIND.ti, vite/VITE.ti, typescript/TYPESCRIPT.ti, tauri/TAURI.ti, rust/RUST_DEV.ti]
 regulation: UI_REGULATION.ti

@@ -1,8 +1,8 @@
 ---
 id: S03
 name: Tactical HUD Rendering
-status: PLANNING
-gate: LOCKED
+status: PLANNED
+gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti, tailwind/TAILWIND.ti]
 ---
 
@@ -43,5 +43,5 @@ Even primitive implementation creates massive interview impact:
 - Colored bounding boxes around "detected" movement regions (threat classification colors)
 - Acquisition labels ("TGT-001", "THREAT-LVL", "INTERCEPT") with distance/bearing
 - Animated lock-on indicator (pulsing ring) on selected target
-- Status text: "ACQUIRING...", "LOCKED", "TRACKING"
+- Status text: "ACQUIRING...", "OPEN", "TRACKING"
 - All rendering in OffscreenCanvas Worker (S03-T09)

@@ -1,0 +1,30 @@
+---
+id: S04-T06
+name: Telemetry Ring Buffer
+status: PLANNED
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T06: Ring Buffer
+
+## Objective
+Fixed-size ring buffer for telemetry history feeding graphs and replay.
+
+## Acceptance Criteria
+- `src/shared/util/RingBuffer.ts` — generic `RingBuffer<T>`.
+- Operations: `push`, `at(i)`, `toArray()`, `size`, `capacity`.
+- O(1) push/access. Typed-array specialization for `Float32Array` (telemetry numeric series).
+- Capacity per series: 600 samples (~60s @ 10Hz).
+
+## Steps
+1. Implement generic class.
+2. Add `Float32RingBuffer` specialization.
+3. Wire per-field buffers in `useTelemetryStore`.
+4. Bind to Graph components (S03-T04).
+
+## Invariants
+- No allocations on push (overwrite-in-place).
+- Order preserved via head/tail indices.
+- Read access never reorders contents.

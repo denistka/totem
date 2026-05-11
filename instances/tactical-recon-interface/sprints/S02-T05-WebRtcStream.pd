@@ -1,0 +1,33 @@
+---
+id: S02-T05
+name: WebRTC Stream Mode
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T05: WebRTC Stream Mode
+
+## Objective
+Add WebRTC as a stream source for low-latency peer-to-peer / SFU video.
+
+## Acceptance Criteria
+- `src/services/stream/WebRtcSource.ts` with:
+  - `connect(signalingUrl, sessionId)`
+  - `disconnect()`
+  - emits `MediaStream` to `StreamManager` on `track` event.
+- ICE candidate exchange via WebSocket signaling (reuses S04-T01 transport).
+- Reconnection delegated to `StreamManager` (no internal retry).
+- Stats surface: RTT, packet loss, jitter, bitrate (from `RTCPeerConnection.getStats`).
+
+## Steps
+1. Implement signaling client (offer/answer/ICE messages).
+2. Implement `WebRtcSource` adhering to `StreamSource` contract.
+3. Register variant in `StreamManager`.
+4. Periodic stats poll (1Hz) feeding S07 diagnostics.
+
+## Invariants
+- Single peer connection per session; no parallel renegotiation.
+- Signaling errors mapped to `StreamManager.FAILED` (no silent retry).
+- No echo of remote tracks back to peer.

@@ -1,0 +1,30 @@
+---
+id: S03-T06
+name: Tactical Grid & Crosshair Overlay
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, graphics/CANVAS_2D.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S03-T06: Tactical Grid Overlay
+
+## Objective
+Render a low-opacity tactical grid and central crosshair as a top-level video overlay.
+
+## Acceptance Criteria
+- `src/features/hud/grid/TacticalGrid.tsx` canvas overlay sized to video container.
+- Grid: 16×9 cells, 1px cyan @ 0.15 opacity.
+- Crosshair: 3 concentric tick marks, 1px line, gap at center (do not block targeting).
+- Optional rule-of-thirds toggle (debug only).
+
+## Steps
+1. Create `GridEngine` for Canvas grid lines.
+2. Compose with crosshair primitive.
+3. Mount above video, below interactive overlays.
+4. Respect safe zones — do not draw over center 10% region.
+
+## Invariants
+- Center targeting area must remain visually clear (UI_REGULATION video-primacy).
+- No animation on grid — static layer.
+- Resizes with `ResizeObserver`.

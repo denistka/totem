@@ -1,0 +1,29 @@
+---
+id: S07-T05
+name: Component Test Suite
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, vite/VITE.ti]
+---
+
+# S07-T05: Component Tests
+
+## Objective
+Cover key HUD components: Radar, Graph, AttitudeGauges, TelemetryTile, Button primitives.
+
+## Acceptance Criteria
+- `Radar.test.tsx` — mounts, registers with scheduler, draws on canvas mock.
+- `Graph.test.tsx` — accepts series, renders, resizes.
+- `AttitudeGauges.test.tsx` — prop-driven indicator rendering.
+- Touch primitives (`Button`, `Toggle`) — accessible role + size assertions.
+
+## Steps
+1. Author component tests with RTL + user-event.
+2. Mock Canvas API (`HTMLCanvasElement.prototype.getContext`).
+3. Mock `ResizeObserver` and `requestAnimationFrame`.
+4. Assert behavior, not implementation.
+
+## Invariants
+- No real Canvas drawing — Canvas mocked.
+- Tests under 100ms each.
+- No flakiness from animation frames (faked).

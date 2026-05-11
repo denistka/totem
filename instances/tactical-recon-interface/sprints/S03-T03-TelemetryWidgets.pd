@@ -1,0 +1,31 @@
+---
+id: S03-T03
+name: Battery & Connection Status Widgets
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti, react/FRAMER_MOTION.ti]
+regulation: UI_REGULATION.ti
+reference: drone-interface/6/src/components/BatteryIndicator.vue
+---
+
+# S03-T03: Telemetry Widgets
+
+## Objective
+Port battery + connection status widgets, plus add ALT/SPD/SIG/BAT compact tiles.
+
+## Acceptance Criteria
+- `src/features/hud/widgets/BatteryWidget.tsx` shows cell levels, charge state, voltage.
+- `src/features/hud/widgets/SignalWidget.tsx` shows link quality bars, SIG dB.
+- `src/features/hud/widgets/TelemetryTile.tsx` reusable tile (label + value + unit).
+- Low battery / poor signal triggers pink alert color + 1Hz pulse animation.
+
+## Steps
+1. Build `<TelemetryTile>` (label, value, unit, severity).
+2. Build `<BatteryWidget>` composed of cell segments.
+3. Build `<SignalWidget>` (5 bars + numeric dB).
+4. Bind all to `useTelemetryStore`.
+
+## Invariants
+- UPPERCASE abbreviated labels (ALT, SPD, SIG, BAT) per UI_REGULATION.
+- Pulse animation: opacity-only, 1Hz, no scale/translate.
+- Severity colors mapped to UI_REGULATION palette.

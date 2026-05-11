@@ -1,0 +1,29 @@
+---
+id: S07-T01
+name: Vitest + React Testing Library Setup
+status: PLANNED
+gate: OPEN
+requires: [vite/VITE.ti, react/REACT.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S07-T01: Vitest Setup
+
+## Objective
+Install and configure Vitest + React Testing Library + jsdom for unit and component tests.
+
+## Acceptance Criteria
+- Dev deps: `vitest`, `@testing-library/react`, `@testing-library/user-event`, `jsdom`, `@vitest/coverage-v8`.
+- `vitest.config.ts` with `jsdom` env, alias parity with vite config.
+- `src/test/setup.ts` extends matchers + global cleanup.
+- `pnpm test` and `pnpm test --coverage` scripts.
+
+## Steps
+1. Install deps.
+2. Author vitest config (env, setupFiles, alias).
+3. Create test setup file.
+4. Add npm scripts.
+
+## Invariants
+- Tests co-located under `__tests__/` next to source (per S07 sprint invariants).
+- No global snapshots — behavioral assertions only.
+- Coverage thresholds left advisory (no fail-on-coverage initially).

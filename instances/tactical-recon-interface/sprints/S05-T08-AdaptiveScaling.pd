@@ -1,0 +1,30 @@
+---
+id: S05-T08
+name: Adaptive HUD Scaling
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T08: Adaptive Scaling
+
+## Objective
+Scale HUD widget sizes based on screen real estate while preserving readability.
+
+## Acceptance Criteria
+- `useViewport()` exposes `width`, `height`, `scaleFactor`.
+- `scaleFactor` interpolated: 1280→0.85, 1366→0.9, 1920→1.0, 2560→1.1.
+- Font sizes, padding, gauge sizes scale via CSS custom prop `--hud-scale`.
+- Per-user override in settings (manual scale 0.75–1.25).
+
+## Steps
+1. Implement `useViewport()` with `ResizeObserver`.
+2. Wire `--hud-scale` to root.
+3. Refactor primitives to use `var(--hud-scale)`.
+4. Expose scale slider in settings panel.
+
+## Invariants
+- Touch targets never scale below 48px minimum.
+- Scale changes throttled to 250ms.
+- Video container size NOT affected by HUD scale.

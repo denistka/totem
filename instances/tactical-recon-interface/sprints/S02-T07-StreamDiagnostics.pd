@@ -1,0 +1,30 @@
+---
+id: S02-T07
+name: Stream Quality Diagnostics
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T07: Stream Quality Monitoring
+
+## Objective
+Compute and expose realtime stream quality metrics: bitrate, FPS, jitter, packet drops.
+
+## Acceptance Criteria
+- `StreamDiagnostics` module with 1Hz sampler.
+- Metrics persisted in `useStreamStore.stats` (last 60 samples, ring buffer).
+- Source-specific collectors: Camera (via `MediaStream` track stats), RTSP (Tauri command), WebRTC (`getStats`).
+- Quality grade computed (`GOOD | DEGRADED | POOR`) using thresholds in UI_REGULATION color rules.
+
+## Steps
+1. Define `StreamStat` shape (bitrate kbps, fps, jitter ms, drops/s, ts).
+2. Implement per-source collector interface.
+3. Aggregate into ring buffer using shared scheduler tick.
+4. Surface `useStreamStats()` hook.
+
+## Invariants
+- Sampler tied to `RenderScheduler` LOW priority — never blocks render.
+- Grade thresholds documented and ARCHITECT-reviewed.
+- Stats cleared on `setSource()`.

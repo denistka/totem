@@ -1,0 +1,31 @@
+---
+id: S05-T02
+name: Touch Gesture Engine
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T02: Gesture Engine
+
+## Objective
+Unified gesture recognition layer on top of Pointer Events.
+
+## Acceptance Criteria
+- `src/services/gesture/GestureEngine.ts` recognizes: tap, double-tap, long-press, pan, pinch, swipe (4-directional).
+- Uses Pointer Events (single code path for mouse + touch + stylus).
+- Per-element binding via `useGesture(ref, handlers)` hook.
+- Inertia for pan (optional, off by default).
+- Touch-action CSS rules surfaced as helpers.
+
+## Steps
+1. Define `Gesture` event types + payload shapes.
+2. Implement recognizer state machine.
+3. Build `useGesture` hook.
+4. Document touch-action requirements per surface.
+
+## Invariants
+- No event listeners on `window` from this layer (per-element only).
+- Long-press threshold: 500ms; tap: <200ms; double-tap window: 250ms.
+- No reliance on Touch Events (Pointer only).

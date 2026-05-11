@@ -1,0 +1,29 @@
+---
+id: S07-T06
+name: Integration Tests
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, vite/VITE.ti]
+---
+
+# S07-T06: Integration Tests
+
+## Objective
+End-to-end flows via Playwright: WebSocket reconnect, stream source switching, HUD rendering, replay timeline.
+
+## Acceptance Criteria
+- `e2e/reconnect.spec.ts` — kill MSW WS, verify reconnect with banner state changes.
+- `e2e/source-switch.spec.ts` — switch camera↔WebRTC↔replay without HUD remount.
+- `e2e/hud-render.spec.ts` — radar + gauges visible at 1920×1080.
+- `e2e/replay.spec.ts` — load fixture session, scrub, verify telemetry replay.
+
+## Steps
+1. Author specs leveraging MSW handlers + fixture data.
+2. Add helper `expectHudVisible(page)` selector group.
+3. Add latency probe — assert frame painted under threshold.
+4. Wire into CI script.
+
+## Invariants
+- Tests run against `pnpm preview` (production-like build).
+- No network egress; all backends mocked.
+- Failures attach trace + screenshot.

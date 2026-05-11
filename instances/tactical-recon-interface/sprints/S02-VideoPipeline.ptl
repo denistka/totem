@@ -1,8 +1,8 @@
 ---
 id: S02
 name: Video & Camera Pipeline
-status: PLANNING
-gate: LOCKED
+status: PLANNED
+gate: OPEN
 requires: [react/REACT.ti, tauri/TAURI.ti, rust/RUST_DEV.ti]
 ---
 

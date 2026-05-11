@@ -1,0 +1,31 @@
+---
+id: S03-T04
+name: Canvas Line Chart System
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, graphics/CANVAS_2D.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+reference: drone-interface/6/src/components/Graph.vue
+---
+
+# S03-T04: Graph System
+
+## Objective
+Port `Graph.vue` (153 lines, Canvas 2D) to React — thin-line tactical chart with gradient fill.
+
+## Acceptance Criteria
+- `src/features/hud/graph/Graph.tsx` accepts `series: RingBuffer<number>` and `label`, `unit`.
+- Renders: 1px tactical line, low-opacity grid, subtle gradient fill under curve.
+- Uses `RenderScheduler.NORMAL` priority.
+- Auto-scaled Y-axis with min/max from current buffer window.
+
+## Steps
+1. Build `GraphEngine` (pure Canvas).
+2. Wrap with `<Graph>` React component.
+3. Add `GraphGrid` configuration (5×5 default, low-opacity cyan).
+4. Implement gradient fill via `createLinearGradient`.
+
+## Invariants
+- No chart.js — strictly hand-rolled Canvas (per UI_REGULATION anti-patterns).
+- No thick gradients, no pie charts, no business-analytics vibe.
+- One graph instance = one Canvas; never share.

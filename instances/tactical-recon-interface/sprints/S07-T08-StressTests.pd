@@ -1,0 +1,30 @@
+---
+id: S07-T08
+name: Stress Tests for Telemetry Bursts
+status: PLANNED
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti, react/REACT.ti]
+---
+
+# S07-T08: Stress Tests
+
+## Objective
+Validate the system under telemetry burst conditions (100Hz frames, 1000+ targets).
+
+## Acceptance Criteria
+- `e2e/stress.spec.ts` injects 100Hz binary frame stream for 60s.
+- Ring buffers do not overflow (no `undefined` reads).
+- Decode error rate < 0.1%.
+- HUD remains responsive (FPS ≥ 24 minimum under stress).
+- `PERFORMANCE MODE ACTIVE` banner triggers when expected.
+
+## Steps
+1. Build frame generator producing synthetic high-rate binary payloads.
+2. Mount full HUD; run for stress duration.
+3. Sample FPS, decode error counter, ring overflow flags.
+4. Assert thresholds; print diagnostics on failure.
+
+## Invariants
+- Stress duration ≥ 60s real-time.
+- No assertions of exact frame counts (timing-sensitive); use rates/ratios.
+- Failure must dump last 100 frames to artifact.

@@ -1,0 +1,31 @@
+---
+id: S05-T06
+name: Drag/Drop HUD Widget Repositioning
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/FRAMER_MOTION.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S05-T06: Widget Drag/Drop
+
+## Objective
+Enable drag-and-drop of HUD widgets between the 7 layout slots (from S03-T07).
+
+## Acceptance Criteria
+- "Edit Layout" mode toggle (top-bar button).
+- In edit mode, widgets draggable to any slot.
+- Drop zones highlighted (1px cyan @ 0.5 opacity).
+- Layout persists to localStorage on drop.
+- Exit edit mode locks positions.
+
+## Steps
+1. Add `editMode` flag to `useLayoutStore`.
+2. Implement HTML5 drag (Pointer Events fallback for touch).
+3. Build `<DropZone>` overlay per slot.
+4. Persist after each drop.
+
+## Invariants
+- Edit mode disables live alerts to avoid layout shifts.
+- Drag preview is a 1:1 ghost (no animated shrink).
+- Drop animation: 150ms ease-out translation.

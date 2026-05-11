@@ -1,0 +1,32 @@
+---
+id: S03-T05
+name: Experimental Target Tracking Overlay
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, graphics/CANVAS_2D.ti, architecture/WEB_WORKERS.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S03-T05: Target Tracking Overlay
+
+## Objective
+Build primitive frame-differencing motion detection with bounding boxes, lock-on indicator, and AI-style threat classification labels. WOW factor for vacancy.
+
+## Acceptance Criteria
+- `src/features/hud/tracking/TargetTracker.ts` consumes `ImageBitmap` frames, outputs `Target[]`.
+- Algorithm: frame differencing on downsampled grayscale, connected-component grouping.
+- Each target: `{ id, bbox, confidence, classification, distance, bearing }`.
+- Overlay component draws bbox + labels (TGT-001, THREAT-LVL, INTERCEPT-Xs).
+- Animated lock-on ring (pulsing) on selected target.
+- Status text states: `ACQUIRING...`, `OPEN`, `TRACKING`.
+
+## Steps
+1. Implement frame-diff worker (S03-T09 will move to OffscreenCanvas).
+2. Define `Target` type and `useTrackingStore` (Zustand).
+3. Build `<TargetOverlay>` Canvas component.
+4. Implement classification heuristic (size + persistence → label).
+
+## Invariants
+- Detection runs at most 10Hz (LOW priority).
+- No real ML — purely heuristic for demo impact.
+- Threat colors per UI_REGULATION (pink = critical lock).

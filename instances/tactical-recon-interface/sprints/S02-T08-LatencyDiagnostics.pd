@@ -1,0 +1,30 @@
+---
+id: S02-T08
+name: Video Latency Diagnostics
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T08: Latency Diagnostics
+
+## Objective
+Measure end-to-end video latency (capture → display) and surface as a HUD metric.
+
+## Acceptance Criteria
+- Frame-timestamping pipeline: capture-time → decode-time → paint-time.
+- Latency metric (`ms`) computed each frame and EMA-smoothed (window=30).
+- Exposed via `useVideoLatency()` and overlay tag `LAT 42ms` in diagnostics panel (S06).
+- Threshold colors per UI_REGULATION (cyan good, amber degraded, pink critical).
+
+## Steps
+1. Add `requestVideoFrameCallback` adapter for browser source.
+2. Stamp frames via Rust bridge timestamps for RTSP.
+3. Implement EMA smoother as pure function.
+4. Register metric in central `useStreamStore`.
+
+## Invariants
+- Measurement overhead < 0.5ms/frame.
+- Falls back gracefully if `requestVideoFrameCallback` unavailable.
+- No persistent storage — runtime only.

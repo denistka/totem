@@ -1,0 +1,30 @@
+---
+id: S06-T08
+name: App Versioning & Update Strategy
+status: PLANNED
+gate: OPEN
+requires: [pwa/PWA.ti, react/REACT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S06-T08: Update Strategy
+
+## Objective
+Detect new app versions (SW update) and prompt user to reload at safe moments.
+
+## Acceptance Criteria
+- Build embeds version (commit SHA + semver).
+- SW `updatefound` event surfaces `useAppUpdate()`.
+- Top-bar non-intrusive indicator: "UPDATE AVAILABLE — RELOAD".
+- Auto-reload only when user idle ≥ 60s AND not in COMBAT preset.
+
+## Steps
+1. Embed version into build via Vite define.
+2. Hook SW `updatefound` and `controllerchange`.
+3. Build indicator widget.
+4. Implement idle + preset gating for auto-reload.
+
+## Invariants
+- Never auto-reload during active stream + recording.
+- Reload always preserves layout state (localStorage).
+- Version visible in debug panel.

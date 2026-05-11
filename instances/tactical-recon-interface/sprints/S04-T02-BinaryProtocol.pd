@@ -1,0 +1,33 @@
+---
+id: S04-T02
+name: Binary Telemetry Protocol
+status: PLANNED
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T02: Binary Protocol Codec
+
+## Objective
+Define and implement a compact binary telemetry frame format using `ArrayBuffer` / `DataView` / `Float32Array` with bitwise flag parsing.
+
+## Acceptance Criteria
+- `src/services/telemetry/protocol/v1.ts` defines:
+  - Frame header: `magic(u16) | version(u8) | type(u8) | seq(u32) | ts(u64)`
+  - Payload schema per `type` (attitude, position, battery, signal, targets).
+  - Flag byte for boolean states (armed, gps_lock, etc.).
+- `encode(frame): ArrayBuffer` and `decode(buf): Frame` pure functions.
+- JSON-compat shim for legacy `drone-interface/6` server.
+- Endian: little-endian (documented).
+
+## Steps
+1. Specify frame layout in `protocol/SPEC.md` (separate doc).
+2. Implement encode/decode using `DataView`.
+3. Add bitwise flag helpers.
+4. Provide round-trip test fixtures (deferred to S07).
+
+## Invariants
+- Codec is pure (no I/O).
+- Additive new fields → bump minor version, never break parse of older frames.
+- All fields aligned to natural boundaries.

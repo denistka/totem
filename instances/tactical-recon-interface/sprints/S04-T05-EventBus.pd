@@ -1,0 +1,30 @@
+---
+id: S04-T05
+name: Realtime Event Bus
+status: PLANNED
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti, react/REACT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T05: Event Bus
+
+## Objective
+Tiny typed pub/sub bus for cross-feature realtime events (telemetry-frame, alert-triggered, target-OPEN, source-changed).
+
+## Acceptance Criteria
+- `src/services/bus/EventBus.ts` with `emit<K>(key, payload)` and `on<K>(key, handler): unsubscribe`.
+- Event map typed (one source of truth in `bus/events.ts`).
+- Synchronous dispatch (no microtask queueing).
+- Optional `useEvent(key, handler)` React hook.
+
+## Steps
+1. Define `BusEvents` interface.
+2. Implement bus with `Map<key, Set<handler>>`.
+3. Provide `useEvent` hook with stable handler ref.
+4. Document fan-out limits (advisory).
+
+## Invariants
+- No async — handlers must be synchronous.
+- No event introspection / wildcard subscribe.
+- Bus is module-singleton, not React context.

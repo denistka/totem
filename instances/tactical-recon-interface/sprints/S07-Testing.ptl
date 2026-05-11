@@ -1,8 +1,8 @@
 ---
 id: S07
 name: Testing & Reliability
-status: PLANNING
-gate: LOCKED
+status: PLANNED
+gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 ---
 

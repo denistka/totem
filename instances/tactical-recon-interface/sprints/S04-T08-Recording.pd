@@ -1,0 +1,31 @@
+---
+id: S04-T08
+name: Telemetry Recording System
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti, typescript/TYPESCRIPT.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S04-T08: Recording
+
+## Objective
+Capture live telemetry frames to a session and export as JSON or binary file.
+
+## Acceptance Criteria
+- `useRecordingStore`: `recording`, `startTs`, `frameCount`, `sessionId`.
+- Top-bar Record button (red dot, pink color per UI_REGULATION alert).
+- Frames buffered in-memory ring (5min cap) + flushed to IndexedDB periodically.
+- Export options: JSON, binary (raw frame array).
+- Auto-stop at 1h limit (configurable).
+
+## Steps
+1. Implement `RecordingStore` + IndexedDB adapter.
+2. Build `<RecordButton>` widget.
+3. Hook into telemetry bus events (S04-T05).
+4. Provide export functions (download via Blob).
+
+## Invariants
+- Recording does not block telemetry pipeline (async flush).
+- Pink "REC" indicator pulses 1Hz while active.
+- Session metadata: start time, duration, frame count, min/max/avg per field.

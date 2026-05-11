@@ -1,0 +1,30 @@
+---
+id: S02-T06
+name: Dynamic Source Switching
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S02-T06: Source Switcher
+
+## Objective
+Allow runtime switching between Camera / RTSP / WebRTC / Replay sources with zero UI flicker and preserved HUD state.
+
+## Acceptance Criteria
+- `useStreamStore` exposes `setSource(source: StreamSource)`.
+- Switch path: tear-down → buffer last frame → swap source → first new frame → release buffered frame.
+- HUD overlays (radar, telemetry) remain mounted during swap.
+- Visual transition: 200ms fade between sources (Framer Motion, ease-out, no bounce).
+
+## Steps
+1. Implement source registry in `StreamManager` keyed by variant tag.
+2. Add `<SourceSwitcher>` headless component bound to `useStreamStore`.
+3. Wrap `<VideoCanvas>` with crossfade transition.
+4. Provide CLI hotkey binding (`1/2/3/4`) for dev convenience.
+
+## Invariants
+- HUD must NOT remount on switch.
+- No source mounted twice simultaneously (single-owner rule).
+- Animation strictly state-driven (per UI_REGULATION motion rules).

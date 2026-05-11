@@ -1,0 +1,30 @@
+---
+id: S03-T07
+name: Modular Widget Layout System
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti, react/FRAMER_MOTION.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S03-T07: Modular Widget Layout
+
+## Objective
+Build the HUD slot-based widget container system enabling future drag-and-drop (S05-T06).
+
+## Acceptance Criteria
+- `src/features/hud/layout/WidgetSlot.tsx` represents one of 7 slots (TL, TC, TR, ML, MR, BL, BR).
+- `src/features/hud/layout/WidgetRegistry.ts` maps widget id → component.
+- `useLayoutStore` persists per-slot widget id + visibility flag (localStorage).
+- Slots support 1+ widgets stacked vertically with gap-y-2.
+
+## Steps
+1. Define slot layout in `AppShell` (from S01-T10).
+2. Build `<WidgetSlot>` with motion mount/unmount (Framer 200ms).
+3. Define widget registry contract.
+4. Implement persistence layer.
+
+## Invariants
+- Slots fixed in count (7) — no dynamic slot creation.
+- Widget swap does not unmount slot wrapper.
+- Center video area protected — no slot draws over it.

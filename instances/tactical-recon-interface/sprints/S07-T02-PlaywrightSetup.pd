@@ -1,0 +1,29 @@
+---
+id: S07-T02
+name: Playwright E2E Setup
+status: PLANNED
+gate: OPEN
+requires: [vite/VITE.ti, react/REACT.ti]
+---
+
+# S07-T02: Playwright Setup
+
+## Objective
+Configure Playwright for browser E2E tests against the Vite dev preview.
+
+## Acceptance Criteria
+- Dev deps: `@playwright/test`.
+- `playwright.config.ts` with projects: chromium-desktop, chromium-tablet (1366×768).
+- Tests in `e2e/` directory.
+- CI command: `pnpm e2e` (launches preview server + runs tests).
+
+## Steps
+1. Install Playwright + browsers.
+2. Author config (projects, webServer pointing to `pnpm preview`).
+3. Add example smoke test (`/` loads, HUD renders).
+4. Add npm script.
+
+## Invariants
+- E2E tests independent of unit suite.
+- No flaky-test retries > 1.
+- Traces enabled on failure only.

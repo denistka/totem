@@ -1,0 +1,29 @@
+---
+id: S06-T05
+name: Feature Flags System
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, react/ZUSTAND.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S06-T05: Feature Flags
+
+## Objective
+LocalStorage-backed feature flag system for gated functionality.
+
+## Acceptance Criteria
+- `src/services/flags/FeatureFlags.ts` exposes typed flag map.
+- `useFlag(name): boolean` hook.
+- Flag editor inside DebugPanel (toggle list).
+- Flag values persist to localStorage; URL query param overrides.
+
+## Steps
+1. Define `FeatureFlagMap` with explicit keys + defaults.
+2. Implement store with persist middleware.
+3. Add `useFlag` and `useAllFlags()` hooks.
+4. Build flags section in DebugPanel.
+
+## Invariants
+- No remote flag source — local only.
+- Typed flag keys (string union), no string-literal scatter.
+- Changes apply immediately, no reload.

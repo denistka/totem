@@ -1,0 +1,30 @@
+---
+id: S06-T02
+name: Stream Diagnostics Panel
+status: PLANNED
+gate: OPEN
+requires: [react/REACT.ti, tailwind/TAILWIND.ti]
+regulation: UI_REGULATION.ti
+---
+
+# S06-T02: Stream Diagnostics Section
+
+## Objective
+UI panel rendering stream stats from S02-T07 (bitrate, FPS, jitter, drops, latency).
+
+## Acceptance Criteria
+- `<StreamDiagnostics>` section inside DebugPanel.
+- Displays: source type, resolution, codec (where known), bitrate, FPS, jitter, drop %, latency.
+- Mini-graphs for bitrate + FPS (using S03-T04 Graph component, 60s window).
+- Quality grade indicator (cyan/amber/pink).
+
+## Steps
+1. Subscribe to `useStreamStats()`.
+2. Render numeric rows + mini-graphs.
+3. Add reset button (clears ring buffer).
+4. Render at LOW priority (1Hz refresh).
+
+## Invariants
+- 1Hz refresh max (no per-frame re-render).
+- Mini-graphs share Canvas pool from S03-T04.
+- Labels uppercase abbreviated.
