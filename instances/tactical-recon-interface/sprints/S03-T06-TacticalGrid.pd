@@ -1,7 +1,7 @@
 ---
 id: S03-T06
 name: Tactical Grid & Crosshair Overlay
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, graphics/CANVAS_2D.ti]
 regulation: UI_REGULATION.ti

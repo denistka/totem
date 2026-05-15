@@ -1,7 +1,7 @@
 ---
 id: S03-T03
 name: Battery & Connection Status Widgets
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, tailwind/TAILWIND.ti, react/FRAMER_MOTION.ti]
 regulation: UI_REGULATION.ti

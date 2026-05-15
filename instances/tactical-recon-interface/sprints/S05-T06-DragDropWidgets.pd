@@ -1,7 +1,7 @@
 ---
 id: S05-T06
 name: Drag/Drop HUD Widget Repositioning
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, react/FRAMER_MOTION.ti, react/ZUSTAND.ti]
 regulation: UI_REGULATION.ti

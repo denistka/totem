@@ -1,7 +1,7 @@
 ---
 id: S04-T07
 name: Telemetry Replay Mode + Timeline Scrubber
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, react/FRAMER_MOTION.ti, react/ZUSTAND.ti]
 regulation: UI_REGULATION.ti

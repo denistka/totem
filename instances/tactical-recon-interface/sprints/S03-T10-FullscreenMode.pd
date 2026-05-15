@@ -1,7 +1,7 @@
 ---
 id: S03-T10
 name: Fullscreen Tactical Mode
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, pwa/PWA.ti, tauri/TAURI.ti]
 regulation: UI_REGULATION.ti

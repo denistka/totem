@@ -1,7 +1,7 @@
 ---
 id: S03-T01
 name: Canvas Radar Rendering Engine
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, graphics/CANVAS_2D.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

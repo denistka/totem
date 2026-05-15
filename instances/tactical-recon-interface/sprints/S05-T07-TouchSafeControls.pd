@@ -1,7 +1,7 @@
 ---
 id: S05-T07
 name: Touch-Safe Control Primitives
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, tailwind/TAILWIND.ti]
 regulation: UI_REGULATION.ti

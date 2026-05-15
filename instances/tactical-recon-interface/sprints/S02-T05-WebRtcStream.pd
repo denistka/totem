@@ -1,7 +1,7 @@
 ---
 id: S02-T05
 name: WebRTC Stream Mode
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

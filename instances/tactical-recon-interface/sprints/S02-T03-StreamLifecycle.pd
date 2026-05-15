@@ -1,7 +1,7 @@
 ---
 id: S02-T03
 name: Stream Lifecycle Manager (start/stop/reconnect)
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

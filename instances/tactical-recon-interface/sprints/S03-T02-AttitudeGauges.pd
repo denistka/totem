@@ -1,7 +1,7 @@
 ---
 id: S03-T02
 name: Roll/Pitch/Yaw Attitude Gauges
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, tailwind/TAILWIND.ti, react/FRAMER_MOTION.ti]
 regulation: UI_REGULATION.ti

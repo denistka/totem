@@ -1,7 +1,7 @@
 ---
 id: S04-T03
 name: Telemetry Parser Worker
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [architecture/WEB_WORKERS.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

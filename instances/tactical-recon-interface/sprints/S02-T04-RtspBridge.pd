@@ -1,7 +1,7 @@
 ---
 id: S02-T04
 name: RTSP Stream Bridge (Tauri / Rust)
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [tauri/TAURI.ti, rust/RUST_DEV.ti, react/REACT.ti]
 regulation: UI_REGULATION.ti

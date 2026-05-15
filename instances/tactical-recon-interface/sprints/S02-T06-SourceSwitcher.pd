@@ -1,7 +1,7 @@
 ---
 id: S02-T06
 name: Dynamic Source Switching
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, react/ZUSTAND.ti]
 regulation: UI_REGULATION.ti

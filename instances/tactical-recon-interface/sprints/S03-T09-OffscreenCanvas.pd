@@ -1,7 +1,7 @@
 ---
 id: S03-T09
 name: OffscreenCanvas Worker Rendering
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [architecture/WEB_WORKERS.ti, graphics/CANVAS_2D.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

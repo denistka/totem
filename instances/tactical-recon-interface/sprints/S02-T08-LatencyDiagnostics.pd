@@ -1,7 +1,7 @@
 ---
 id: S02-T08
 name: Video Latency Diagnostics
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

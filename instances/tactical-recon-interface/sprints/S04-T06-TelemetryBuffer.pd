@@ -1,7 +1,7 @@
 ---
 id: S04-T06
 name: Telemetry Ring Buffer
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

@@ -1,7 +1,7 @@
 ---
 id: S04-T02
 name: Binary Telemetry Protocol
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

@@ -1,7 +1,7 @@
 ---
 id: S02-T07
 name: Stream Quality Diagnostics
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, react/ZUSTAND.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

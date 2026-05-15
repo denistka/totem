@@ -1,7 +1,7 @@
 ---
 id: S03-T08
 name: HUD Visibility Presets
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, react/ZUSTAND.ti]
 regulation: UI_REGULATION.ti

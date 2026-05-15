@@ -1,7 +1,7 @@
 ---
 id: S04-T01
 name: WebSocket Telemetry Transport
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

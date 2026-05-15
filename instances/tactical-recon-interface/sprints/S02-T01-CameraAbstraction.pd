@@ -1,7 +1,7 @@
 ---
 id: S02-T01
 name: Camera API Abstraction (getUserMedia)
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti

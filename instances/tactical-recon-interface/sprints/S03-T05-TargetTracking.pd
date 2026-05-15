@@ -1,7 +1,7 @@
 ---
 id: S03-T05
 name: Experimental Target Tracking Overlay
-status: PLANNED
+status: DONE
 gate: OPEN
 requires: [react/REACT.ti, graphics/CANVAS_2D.ti, architecture/WEB_WORKERS.ti, typescript/TYPESCRIPT.ti]
 regulation: UI_REGULATION.ti
