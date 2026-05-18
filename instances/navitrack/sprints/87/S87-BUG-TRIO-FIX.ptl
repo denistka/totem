@@ -1,0 +1,51 @@
+gate: OPEN
+sprint: S87
+title: Bug Trio Fix — History last-event, Dual-tank UI, Track arrows zoom
+priority: P1
+dep: S86
+
+description: |
+  Three targeted bug fixes across distinct features:
+  B1 — History tab auto-selects first event instead of last on tab open.
+  B2 — Objects list shows single fuel sum when 2 tanks present; each tank
+       must be shown individually in the inline row (where icon+sum currently is).
+  B3 — Track polyline arrows become sparse when zooming in because pixel-space
+       spacing formula grows with zoom level (totalLength ∝ 2^zoom).
+
+ground_truth:
+  - src/screens/object-details/hooks/useHistoryTimeline.ts
+  - src/screens/objects/lib/utils.ts
+  - src/screens/objects/components/ObjectListItem.tsx
+  - src/features/map/components/PolylineDecorator.tsx
+  - src/api/domains/vehicles/vehicle-types.ts
+
+success_metrics:
+  - Opening История tab → last event is highlighted on map and list.
+  - Vehicle with 2 tanks shows two separate values in row 3; single-tank unchanged.
+  - Zooming in on a track shows arrows at constant visual density (~45px spacing).
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV]
+estimated: 1–2 days
+
+tracks:
+  - id: T1
+    title: B1 — History default to last event
+    tasks:
+      - S87-T1-history-last-event.pd
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  - id: T2
+    title: B2 — Dual-tank display in ObjectListItem
+    tasks:
+      - S87-T2-dual-tank-display.pd
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  - id: T3
+    title: B3 — Track arrows zoom density fix
+    tasks:
+      - S87-T3-track-arrows-zoom.pd
+    requires: [FRONTEND_DEV]
+    gate: LOCKED

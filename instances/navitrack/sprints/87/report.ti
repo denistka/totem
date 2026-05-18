@@ -1,0 +1,26 @@
+v:3
+format:totem-report
+sprint:S87
+name:Bug-Trio-Fix
+status:✅ complete
+date:2026-05-18
+commit:c54e994
+
+# SUMMARY
+Three targeted bug fixes across History, Objects, and Tracking features.
+All changes in `navitrack-mobile-apps`. TypeScript clean. One commit.
+
+# DELIVERABLES
+- [x] **T1 — History last event:** `useHistoryTimeline.ts` default index changed
+      from `0` to `itemsCount - 1`. История tab now highlights the most recent event.
+- [x] **T2 — Dual-tank UI:** `VehicleListItem` extended with `fuels: number[]`.
+      `vehicleToListItem` populates it from `fuel1`/`fuel2`/`fuel3` when 2+ tanks > 0.
+      `ObjectListItem` Row 3 renders individual tank chips for multi-tank vehicles;
+      single-tank layout unchanged.
+- [x] **T3 — Track arrows zoom:** `PolylineDecorator` spacing formula now derived
+      from visible viewport segment length instead of full pixel track length.
+      Arrows maintain ~45px density at any zoom level; MAX_ARROWS_COUNT cap preserved.
+
+# VERIFICATION
+- pnpm tsc --noEmit → no errors
+- Manual test required: History tab, Objects list with multi-tank vehicle, track zoom

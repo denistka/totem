@@ -1,0 +1,57 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S87 T3 — PolylineDecorator: fix arrow density regression at high zoom
+requires: [FRONTEND_DEV]
+sprint: S87
+
+context: |
+  When zooming in on a track, direction arrows should appear more densely
+  (more arrows visible in the viewport at the same physical spacing).
+  Currently arrows become SPARSER at high zoom.
+
+  Root cause: PolylineDecorator.tsx line 47:
+    const spacing = Math.max(TARGET_SPACING_PX, totalLength / MAX_ARROWS_COUNT)
+  `totalLength` is the full track length in pixel space, which grows as 2^zoom.
+  At high zoom, spacing >> TARGET_SPACING_PX, causing sparse arrows even in
+  the small visible viewport. The MAX_ARROWS_COUNT cap is there to avoid
+  excessive DOM nodes when the full track is rendered.
+
+  Fix strategy: compute spacing only over the VISIBLE viewport portion of
+  the track, not the full track. This keeps density constant regardless of zoom
+  while still preventing too many arrows from being placed in the current view.
+
+steps:
+  1. Open src/features/map/components/PolylineDecorator.tsx.
+  2. Inside drawArrows(), after computing `points`, add a viewport filter:
+       const bounds = map.getBounds()
+       const visiblePoints = positions.filter(p =>
+         bounds.contains(L.latLng(p[0], p[1]))
+       )
+     Use `visiblePoints` (or at minimum expand by 1 tile margin) to compute
+     a `visibleLength` in pixel space the same way `totalLength` is computed.
+  3. Replace the spacing formula:
+       // OLD:
+       const spacing = Math.max(TARGET_SPACING_PX, totalLength / MAX_ARROWS_COUNT)
+       // NEW:
+       const visibleLength = /* pixel length of track within visible bounds */
+       const spacing = Math.max(TARGET_SPACING_PX, visibleLength / MAX_ARROWS_COUNT)
+     Keep the full `points` array for actual arrow placement (not just visible),
+     so arrows near viewport edges are also rendered. The spacing is now derived
+     from the visible segment only.
+  4. Verify: at zoom 10 arrows have natural density; zoom to 16 on a route
+     segment — arrows appear denser (not sparser). No major lag on long tracks.
+
+  Note: if the visible-segment approach introduces edge artifacts, an acceptable
+  alternative is to drop the totalLength-based cap entirely and simply break
+  when arrows.length >= MAX_ARROWS_COUNT (the loop already has this guard),
+  letting TARGET_SPACING_PX drive density always. Confirm which produces
+  better visual result before closing.
+
+out:
+  - src/features/map/components/PolylineDecorator.tsx
+
+done:
+  - Zooming in increases visible arrow count (denser spacing in viewport).
+  - Zooming out does not produce 1000s of DOM nodes (MAX_ARROWS_COUNT respected).
+  - Arrow redraw happens on zoomend (existing listener — no change needed).
+  - TypeScript typecheck passes (pnpm tsc --noEmit).

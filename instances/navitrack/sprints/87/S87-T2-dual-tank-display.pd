@@ -1,0 +1,50 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S87 T2 — ObjectListItem: show individual tanks when vehicle has 2+ tanks
+requires: [FRONTEND_DEV]
+sprint: S87
+
+context: |
+  When a vehicle has 2 fuel tanks (fuel1 + fuel2 both > 0 in the API),
+  the Objects list currently shows only the sum in:
+    - Top-left badge above the icon  (correct — keep)
+    - Row 3 inline (Fuel icon + sum) (must change for multi-tank)
+
+  Desired for 2-tank vehicles in Row 3:
+    Replace the single "Fuel icon + sum" with two separate values,
+    e.g.  ⛽ 150  ⛽ 80   (one entry per non-zero tank).
+  Single-tank vehicles: no change.
+
+  API fields available on the raw Vehicle object:
+    fuel1?: number, fuel2?: number, fuel3?: number (vehicle-types.ts line 16-18).
+  These are discarded in vehicleToListItem (utils.ts line 38 picks first non-null).
+
+steps:
+  1. src/screens/objects/lib/utils.ts
+     a. Add `fuels: number[]` to VehicleListItem interface (list of non-zero tank values).
+     b. In vehicleToListItem, compute:
+          const tanks = [v.fuel1, v.fuel2, v.fuel3]
+            .filter((f): f is number => f != null && f > 0)
+          fuels: tanks.length >= 2 ? tanks : []
+        (fuels is empty for single-tank → ObjectListItem falls back to existing fuel field)
+
+  2. src/screens/objects/components/ObjectListItem.tsx — Row 3 fuel block (line 122–127):
+     a. When vehicle.fuels.length >= 2, render one inline chip per tank:
+          vehicle.fuels.map((f, i) => (
+            <div key={i} className="flex items-center gap-1 shrink-0">
+              <Fuel className="h-3.5 w-3.5 text-muted-foreground/80" strokeWidth={2.5} />
+              <span>{Math.round(f)}</span>
+            </div>
+          ))
+     b. Else keep existing single-fuel render (fuel icon + sum).
+     c. Top-left badge (line 60–64) remains unchanged (shows sum for all cases).
+
+out:
+  - src/screens/objects/lib/utils.ts
+  - src/screens/objects/components/ObjectListItem.tsx
+
+done:
+  - Vehicle with fuel1=150, fuel2=80: Row 3 shows two fuel chips (150 and 80).
+  - Vehicle with single fuel field: Row 3 unchanged (icon + sum).
+  - Top-left badge unchanged in both cases.
+  - TypeScript typecheck passes (pnpm tsc --noEmit).

@@ -1,0 +1,36 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S87 T1 — History tab: default selection → last event
+requires: [FRONTEND_DEV]
+sprint: S87
+
+context: |
+  When the user taps a vehicle in the Objects screen and navigates to the
+  История tab, the first event (index 0) is automatically highlighted on
+  the map and in the timeline list. Expected: the LAST event for the day
+  should be highlighted by default (most recent position).
+
+  Root cause: useHistoryTimeline.ts line 79 returns `0` as the fallback
+  selectedEventIndex when no explicit selection exists.
+  Fix: return `itemsCount - 1` instead.
+
+steps:
+  1. Open src/screens/object-details/hooks/useHistoryTimeline.ts.
+  2. In the `selectedEventIndex` useMemo (line 71–80), change:
+       return 0
+     to:
+       return itemsCount - 1
+  3. Verify that setSelectedEventIndex(null) resets to last event on
+     next token change (token-reset flow already calls setSelection with
+     index: null, so behavior is correct after fix).
+  4. Manually test: open Objects → tap vehicle → tap История.
+     Map and list must scroll to / highlight the last event row.
+
+out:
+  - src/screens/object-details/hooks/useHistoryTimeline.ts
+
+done:
+  - Opening История tab auto-selects the last (most recent) event.
+  - Tapping an event still overrides the selection correctly.
+  - Switching date in the date tabs also resets to last event of that day.
+  - TypeScript typecheck passes (pnpm tsc --noEmit).
