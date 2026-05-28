@@ -1,0 +1,20 @@
+role: Python + Cloud Run + MCP Service Template
+focus: mcp-tooling, cloud-operations, db-safety, service-quality
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Python, MCP, Cloud Run, Security
+
+includes:
+  - ../../stacks/python/PYTHON_SERVICE.ti
+  - ../../stacks/mcp/MCP.ti
+  - ../../stacks/gcp/CLOUD_RUN.ti
+  - ../../stacks/security/SECURITY.ti
+
+implementation-rules:
+  - Keep MCP tools thin and route all domain behavior through service modules.
+  - Require environment-driven secrets and fail-fast startup validation.
+  - Maintain migration and rollout checklists for DB-backed operations.
+
+anti-patterns:
+  - ❌ MCP handlers with hidden side effects and no audit trail.
+  - ❌ Manual, undocumented production changes to Cloud Run or database state.

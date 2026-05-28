@@ -1,0 +1,32 @@
+gate: DONE
+completed: 2026-05-28
+v:4 role:qa x:triage
+task: S01 T1 - Build baseline and priority queue
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S01
+
+context: |
+  Build a single source of truth for open bug backlog triage from the 2026-05-28
+  snapshot. Focus on actionable sequencing: P0/P1 first, then medium/high churn.
+
+steps:
+  1. Parse open bug issues dataset and create working list with:
+     issue number, title, labels, updatedAt, url, triage_status.
+  2. Assign triage_status=UNREVIEWED initially for all open bug issues.
+  3. Build priority queue:
+     - lane A: urgent + sale-blocker
+     - lane B: high + checkout + qa
+     - lane C: remaining bug issues
+  4. Mark issues requiring real-device validation as NEEDS-HUMAN-DEVICE.
+  5. Prepare first-pass target set of 15-20 issues for reproduction.
+
+out:
+  - issues/2026-05-28/open-bug-issues.json (read-only source)
+  - issues/2026-05-28/processed/S01-T1-TRIAGE-PASS-1.md ✓
+  - sprints/01/S01-BUG-BACKLOG-TRIAGE.ptl ✓
+
+done:
+  - ✓ 84 open bug issues parsed and categorized.
+  - ✓ Priority queue built: Lane A (12 urgent), Lane B (29 high), Lane C (43 medium/low).
+  - ✓ First execution batch selected: Lane A fully checked, Lane B partially.
+  - ✓ ISSUE_TRIAGE_RULES.ti created with working rules, folder structure, statuses.

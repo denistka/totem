@@ -1,0 +1,70 @@
+project:
+  name: CROP Front
+  version: 1.0.0
+  description: Next.js frontend for CROP platform, deployed on Vercel.
+  stack:
+    - nextjs
+    - react
+    - typescript
+    - bun
+    - vercel
+    - biome
+
+paths:
+  code: ../../../CROP-front
+  history: .
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - NEXTJS_VERCEL_FRONTEND
+    - REACT_SERVER_COMPONENTS
+    - REACT_COMPILER
+    - REACT_QUERY
+    - ZUSTAND
+    - TYPESCRIPT
+    - VERCEL
+    - BIOME
+
+issues:
+  rules: ./ISSUE_TRIAGE_RULES.ti
+  snapshots: ./issues/
+  github_repo: CT-CROP/CROP-front
+
+  workflow:
+    # Local environment for triage
+    local_url: http://localhost:3000
+    branch: dev
+
+    # Where processed issues land (ready for GitHub upload)
+    processed: ./issues/{snapshot}/processed/
+    # Issues that appear fixed in code, need human QA before closing
+    moving_to_close: ./issues/{snapshot}/moving-to-close/
+
+    # GitHub push is MANUAL — only on explicit command "push issues to github"
+    push_gate: "push issues to github"
+
+  triage_statuses:
+    - REPRODUCED
+    - NOT-REPRODUCED-NOW
+    - POSSIBLY-FIXED
+    - NEEDS-HUMAN-DEVICE
+    - NEEDS-HUMAN-VERIFY
+    - DUPLICATE
+    - STALE
+    - OUT-OF-SCOPE
+
+  duplicate_policy:
+    # Keep newest, propose close on older
+    signal: same title (normalized) + same author + within 2 days
+    action: close older, reference newer in comment
+
+  moving_to_close_format: |
+    {issue_number}-{slug}.md
+    Required sections: Evidence · Steps to verify · Expected · Actual · Risk if wrongly closed

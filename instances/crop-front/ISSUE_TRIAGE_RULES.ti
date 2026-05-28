@@ -1,0 +1,162 @@
+role: Issue Triage Rules
+focus: bug-triage, qа-flow, backlog-hygiene
+instance: crop-front
+
+# Working environment
+env:
+  local_url: http://localhost:3000
+  branch: dev
+  code_path: ../../../CROP-front
+  issues_snapshot: ./issues/2026-05-28
+
+# Folder structure
+output_dirs:
+  processed: ./issues/2026-05-28/processed/
+  moving_to_close: ./issues/2026-05-28/moving-to-close/
+
+# processed/ — ready for GitHub upload
+# moving-to-close/ — issue seems implemented/fixed, needs human QA before closing
+# PUSH TO GITHUB: only on explicit command "push issues to github"
+
+# Triage status values
+statuses:
+  - REPRODUCED           # confirmed still broken on localhost:3000
+  - NOT-REPRODUCED-NOW   # not triggerable; could be fixed or intermittent
+  - POSSIBLY-FIXED       # code evidence suggests fix landed; needs human verify
+  - NEEDS-HUMAN-DEVICE   # requires real iPhone/physical device — cannot verify in browser
+  - NEEDS-HUMAN-VERIFY   # requires human judgment / external system / credentials
+  - DUPLICATE            # same symptom exists in another open issue (link it)
+  - STALE                # no activity + original condition likely changed
+  - OUT-OF-SCOPE         # not a frontend issue; belongs to another repo
+
+# Priority lanes
+lanes:
+  A: urgent + sale-blocker labels
+  B: high + checkout + payment labels
+  C: medium + low (remaining bugs)
+
+# Check methods per issue type
+check_methods:
+  http_check: curl -s -o /dev/null -w "%{http_code}" http://localhost:3000{path}
+  page_content: curl -s http://localhost:3000{path} | grep -c "{keyword}"
+  code_search: grep -r "{pattern}" ../../../CROP-front/
+  viewport_mobile: simulate 393x852 via curl with User-Agent
+  localStorage: JSON.parse(localStorage.getItem('{key}')).state
+  network_tab: DevTools → Network → filter by {endpoint}
+  break_env: temporarily set {VAR}="https://invalid.localhost" in .env.local, restart dev server, restore after test
+  gh_close: gh issue close {number} --repo CT-CROP/CROP-front --comment "{comment}"
+  gh_comment: gh issue comment {number} --repo CT-CROP/CROP-front --body "{comment}"
+
+# QA-flow format (for moving-to-close/ files)
+qa_flow_template: |
+  # QA Flow — Issue #{number}: {title}
+  **URL:** {url}
+  **Labels:** {labels}
+  **Triage status:** POSSIBLY-FIXED
+  **Evidence:** {code_evidence}
+
+  ## Steps to verify manually
+  1. {step_1}
+  2. {step_2}
+
+  ## Expected result
+  {expected}
+
+  ## Actual result (last known)
+  {actual}
+
+  ## Risk if wrongly closed
+  {risk}
+
+# Invariants (from sprint S01)
+invariants:
+  - Never auto-close issues without reproducible evidence
+  - "Not reproducible now" ≠ "fixed" → classify as NOT-REPRODUCED-NOW
+  - Mobile-only findings → NEEDS-HUMAN-DEVICE, never skip
+  - All closure actions are proposal-only until "push issues to github" command
+  - Duplicate: keep newest, propose close on older with reference
+  - production-only features (Kenect, indexing, analytics) → test on crop-dev.app, not localhost
+  - .env.local breakage tests → always restore original value + remind user to restart dev server
+  - code_evidence alone is sufficient to close when: component exists with explicit issue# comment + visual QA passes
+  - undefined fields in localStorage for non-applicable items ≠ bug (e.g. packQty undefined on non-pack item is correct)
+  - gh_close comment must include: env tested (localhost/crop-dev.app), branch, date, what was tested, result
+
+# Closure logging rule (added 2026-05-28)
+closure_log:
+  trigger: any issue closed OR confirmed still present after human verification
+  action: update S01-STATUS.md moving-to-close table with result + date
+  closed_format:   "| `{file}` | #{number} | CLOSED ✓ ({date}) |"
+  still_open_format: "| `{file}` | #{number} | STILL OPEN — {reason} |"
+  note: log both outcomes so the sprint record stays accurate regardless of result
+
+# Navigation / UI UX sweep scope
+ux_paths:
+  - Home → category tile → parts listing
+  - Parts listing → PDP → Add to cart
+  - Header search + menu on mobile viewport
+  - Checkout flow (guest + logged in)
+
+# How to save processed issues
+processed_format: |
+  {issue_number}-{slug}.md
+  Contains: triage result + evidence + recommendation
+
+# Known duplicate patterns (auto-refile by bot)
+auto_refile_pattern:
+  signal: same title, different date (within 2 days), same author (appdev-v or github-actions)
+  action: DUPLICATE → keep latest, mark older as STALE
+
+# Issue creation rules (CROP-front GitHub templates)
+# Templates live in: CROP-front/.github/ISSUE_TEMPLATE/
+issue_templates:
+  bug:
+    title_format: "bug(<scope>): <one-line description>"
+    required_fields:
+      - verified-env: localhost | dev (Vercel preview) | prod | unverified
+      - observable-success: who + steps + succeeds-when (written BEFORE the fix)
+      - repro: steps + expected + actual (+ curl block for backend-touching bugs)
+      - verification-environment: where the FIX gets verified (not dev/preview)
+      - closure-authority: stakeholder-sourced OR internal/infra
+      - severity-rationale: user impact (not technical impact)
+      - dup-check: ran `gh issue list --search "<keywords>"` first
+    optional_fields:
+      - callsite: file:line
+      - sibling-surfaces: other surfaces with same concept
+      - regression-guard: vitest/e2e test that catches silent regression
+  task:
+    title_format: "<type>(<scope>): <one-line description>"
+    required_fields:
+      - context: what triggered it, who asked, why
+      - surface: exact route/page/component/endpoint
+      - acceptance-block: written BEFORE code — stakeholder "done" as walkable steps
+  qa-finding:
+    title_format: "qa(<scope>): <one-line description>"
+    required_fields:
+      - use-case: UC-NN from #491/#492
+      - round: R1-R5+/ad-hoc
+      - artifact: screenshot/video/log URL
+      - observed, expected, acceptance criteria
+
+# Issue creation checklist (remind user if missing)
+issue_creation_checklist:
+  before_filing:
+    - Run `gh issue list --search "<keywords>"` — no open duplicate?
+    - Check Sentry / link-crawler / prod-schema-smoke for prior signal
+  required_labels:
+    - bug / qa / task (template sets this)
+    - goal/obj-NN (OBJ-01 through OBJ-10) — mandatory per CROP governance; use needs-assignment if unsure
+    - priority: urgent | high | pre-launch | medium | low
+    - assignee: appdev-v (default for this repo)
+  prompt_user_if_missing: |
+    If the user files an issue without goal/obj label, priority, or assignee → remind:
+    "Не забудь указать: goal/obj-NN, приоритет (urgent/high/medium/low), assignee (appdev-v)"
+
+# Lessons learned from S01 human verification sessions
+lessons:
+  - kenect_widget: production-only (VERCEL_ENV === "production") — cannot verify on localhost, use crop-dev.app
+  - env_break_test: requires dev server restart after .env.local change; restore immediately after test
+  - pack_fields: packQty/requiresPackBuy are undefined for non-pack items by design; only relevant for CT-NHL-{PN}-PK{N} SKUs
+  - live_status_null: {"live":null} on /api/parts/[id]/live-status means no channel data leaked — correct behavior
+  - first_order_discount: renders in ReviewGuestPrompt on /checkout/review, NOT on /checkout/shipping step
+  - localStorage_key: cart store persists under key "cart"; access via JSON.parse(localStorage.getItem('cart')).state
+  - gh_comment_format: always include env (localhost:3000 or crop-dev.app), branch (dev), date, exact test steps, observed result

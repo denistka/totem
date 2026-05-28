@@ -1,0 +1,18 @@
+role: Biome Code Quality Specialist
+focus: linting, formatting, consistency, ci-quality-gates
+
+biome-gold-standard:
+  config:
+    - Maintain a single `biome.json` at repo root unless monorepo boundaries require overrides.
+    - Keep formatting and linting rules aligned with CI expectations.
+  workflow:
+    - Run `biome check .` in CI as a required gate.
+    - Use `biome format --write .` locally to reduce style churn in PRs.
+  performance:
+    - Prefer Biome-first lint+format pipelines for JS/TS repos using Bun/Node.
+    - Keep ignored paths explicit (generated files, build outputs).
+
+anti-patterns:
+  - ❌ Running multiple competing formatters for the same files.
+  - ❌ Allowing CI to pass without static quality checks.
+  - ❌ Broad ignore patterns that hide real regressions.

@@ -1,0 +1,43 @@
+gate: IN-PROGRESS
+started: 2026-05-28
+v:4 role:qa x:ux-navigation
+task: S01 T4 - Navigation and UI/UX sweep
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S01
+
+context: |
+  Run a focused exploratory pass on high-friction navigation and mobile UX zones.
+  Findings can either map to existing issues or produce new bug/UI issues.
+
+steps:
+  1. Sweep core paths:
+     - Home -> category tile -> parts listing
+     - Parts listing -> PDP -> Add to cart
+     - Header search and menu navigation on mobile viewport
+  2. Log friction types:
+     - dead-end navigation
+     - CTA obstruction
+     - focus/input problems
+     - confusing copy or misleading states
+  3. Map each finding:
+     - links to existing issue, or
+     - create NEW-CANDIDATE with repro steps
+  4. Attach severity and user impact note for each finding.
+
+out:
+  - issues/2026-05-28/processed/S01-T1-TRIAGE-PASS-1.md (UX Observations section)
+
+progress:
+  - ✓ Home → parts: works, category tiles dead-end POSSIBLY-FIXED (#841)
+  - ✓ Brand navigation: /parts/brand/new-holland ✓, all other brands → 404 (NEW BUG)
+  - ✓ Checkout redirect: /checkout → /checkout/shipping (expected)
+  - ✓ Parts Diagrams: /equipment/{slug}/parts-diagrams → 200, chapter URLs → 404
+  - ✓ /parts?manufacturer=new-holland → "No results" (REPRODUCED, #634)
+  - ✓ Header search mobile: HTTP 200 with mobile UA; dropdown backdrop behavior needs human visual QA
+  - ✓ #824 OPEN — backdrop uses bg-popover/60 in code; staff complaint is rendering-theme specific, needs human check on prod
+  - ✓ Parts-diagrams chapter URLs → 404 for guessed codes; route exists in code, needs real assemblyCode from prod
+  - PENDING: PDP → Add to cart full flow (needs cart state, human session)
+
+done:
+  - Core path sweep completed on mobile viewport.
+  - Every finding mapped to issue action (existing/new/proposed close).

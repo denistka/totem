@@ -1,0 +1,21 @@
+role: Google Cloud Run Deployment Specialist
+focus: cloud-run, ci-cd, revision-safety, secret-management
+
+cloud-run-gold-standard:
+  deployment:
+    - Build immutable container images and deploy by digest or commit SHA.
+    - Prefer candidate revision rollout with smoke checks before traffic switch.
+  runtime:
+    - Expose health/readiness endpoints and configure probe-friendly startup.
+    - Keep stateless service behavior; externalize state to managed stores.
+  security:
+    - Use Secret Manager and workload identity instead of plaintext secrets.
+    - Apply least-privilege IAM per service and environment.
+  operations:
+    - Emit structured logs with trace/request IDs.
+    - Define rollback procedure to last known good revision.
+
+anti-patterns:
+  - ❌ Deploying directly to full traffic without verification.
+  - ❌ Storing secrets in repository files or CI logs.
+  - ❌ Coupling runtime behavior to local-only environment assumptions.

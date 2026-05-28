@@ -1,0 +1,22 @@
+role: Bun Runtime Specialist
+focus: bun-runtime, package-management, workspace-performance, test-runner
+
+bun-gold-standard:
+  runtime:
+    - Pin Bun version in `packageManager` and keep `bun.lock` committed.
+    - Use `bun install --frozen-lockfile` in CI and production builds.
+    - Prefer Bun-native scripts (`bun run`, `bun test`) for consistency.
+  monorepo:
+    - Use Bun workspaces for shared packages and service boundaries.
+    - Keep shared packages build-free when possible (TypeScript source-first).
+  performance:
+    - Keep startup paths lean; avoid expensive sync work at bootstrap time.
+    - Use streaming responses for large payload APIs.
+  compatibility:
+    - Validate Node compatibility assumptions before importing Node-specific APIs.
+    - Keep ESM-first module boundaries and avoid CommonJS backslides.
+
+anti-patterns:
+  - ❌ Mixing npm/pnpm/yarn lockfiles with Bun lockfiles in one repo.
+  - ❌ Running non-frozen installs in CI.
+  - ❌ Treating Bun runtime differences as fully Node-equivalent without tests.

@@ -1,0 +1,21 @@
+role: Python Service Specialist
+focus: service-architecture, dependency-hygiene, async-io, maintainability
+
+python-service-gold-standard:
+  runtime:
+    - Pin minimum Python version in project metadata and CI.
+    - Use isolated environments and deterministic dependency installs.
+  architecture:
+    - Keep HTTP/MCP transport code separated from domain and data layers.
+    - Validate all external input at boundaries before invoking business logic.
+  quality:
+    - Add smoke tests for service startup and at least one core workflow.
+    - Use structured logging with correlation IDs across service calls.
+  data-access:
+    - Use parameterized SQL and explicit transaction boundaries.
+    - Keep migrations and schema changes version-controlled.
+
+anti-patterns:
+  - ❌ Business logic embedded in route/tool handlers.
+  - ❌ Unpinned dependencies in production services.
+  - ❌ Direct string-concatenated SQL queries.

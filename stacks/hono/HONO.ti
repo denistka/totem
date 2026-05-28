@@ -1,0 +1,21 @@
+role: Hono API Specialist
+focus: routing, middleware, schema-validation, openapi-first
+
+hono-gold-standard:
+  routing:
+    - Organize routes by bounded context and mount under stable prefixes.
+    - Keep handlers thin; delegate business logic into service modules.
+  contracts:
+    - Use Zod schemas for request/response validation at route boundaries.
+    - Publish OpenAPI docs and treat schema changes as versioned contracts.
+  middleware:
+    - Centralize auth, request-id, logging, and error shaping middleware.
+    - Normalize error envelopes for client and gateway compatibility.
+  reliability:
+    - Add health/readiness endpoints for platform probes.
+    - Enforce timeouts and retries around external API/database calls.
+
+anti-patterns:
+  - ❌ Unvalidated payloads directly flowing into domain logic.
+  - ❌ Route files with embedded database logic and side effects.
+  - ❌ Breaking response shapes without a migration/version plan.

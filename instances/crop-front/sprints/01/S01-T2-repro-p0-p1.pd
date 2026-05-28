@@ -1,0 +1,61 @@
+gate: DONE
+started: 2026-05-28
+completed: 2026-05-28
+v:4 role:qa x:reproduction
+task: S01 T2 - Reproduce P0/P1 issues with fresh evidence
+requires: [NEXTJS_VERCEL_FRONTEND, VERCEL]
+sprint: S01
+
+context: |
+  Execute a focused reproduction pass for highest-impact open bug issues.
+  Prefer objective checks: URL status, visible UI blockers, and deterministic steps.
+  Track three outcomes only: REPRODUCED, NOT-REPRODUCED-NOW, NEEDS-HUMAN-VERIFY.
+
+steps:
+  1. Re-run objective HTTP checks for redirect/data issues using curated URL sets.
+  2. Re-check mobile/PDP critical flow on 393x852 viewport:
+     - CTA visibility
+     - overlay collision risk
+     - primary purchase path accessibility
+  3. Re-check home-to-parts category query outcomes for current prod behavior.
+  4. For each issue tested, add evidence block:
+     - timestamp
+     - environment (prod/dev, viewport)
+     - observed result
+     - proposed status
+  5. Escalate to NEEDS-HUMAN-DEVICE when issue requires real iPhone validation.
+
+out:
+  - issues/2026-05-28/processed/S01-T1-TRIAGE-PASS-1.md (evidence log)
+  - issues/2026-05-28/moving-to-close/*.md (5 files)
+
+progress:
+  - ✓ #907 POSSIBLY-FIXED — code evidence in kenect-widget.tsx (#918)
+  - ✓ #841 POSSIBLY-FIXED — code evidence in shop-by-category.tsx
+  - ✓ #848 POSSIBLY-FIXED — code evidence in hero-search.tsx
+  - ✓ #986 NOT-REPRODUCED-NOW — equipment pages return 200
+  - ✓ #855 PARTIAL — #10263460 redirects, #47677961/#47677962 still 404
+  - ✓ #921 NEEDS-HUMAN-DEVICE — confirmed by issue title
+  - ✓ #1007 POSSIBLY-FIXED — no-channel-leak rule in 3 code surfaces + test (moving-to-close/1007-channel-leak-mobile.md)
+  - ✓ #1284 REPRODUCED — /parts?priceMax=10 → "No results" (sparse dev data; real cache-poison risk on prod)
+  - ✓ #1252 POSSIBLY-FIXED — 15s timeout confirmed in code + test regression (moving-to-close/1252-search-timeout.md)
+  - ✓ #636 POSSIBLY-FIXED — ServiceUnavailable + NOINDEX + Sentry beacon in code (moving-to-close/636-pdp-service-unavailable.md)
+  - ✓ #632/#633 NEEDS-HUMAN-VERIFY — chapter route exists, needs real assemblyCode from prod
+  - ✓ #1133 NEEDS-HUMAN-VERIFY — partial Sentry coverage in account; needs Sentry review
+  - ✓ #1170 NEEDS-HUMAN-VERIFY — no fix found in code; needs Sentry money-path review
+  - ✓ #904 NEEDS-HUMAN-VERIFY — image sizes set; needs Lighthouse CI run on prod
+  - ✓ #1264/#1265 NEEDS-HUMAN-VERIFY — Sentry-only crashes; check current event rate
+  - ✓ #971 CLOSED 2026-05-28 — OUT-OF-SCOPE backend
+  - ✓ #921 CLOSED 2026-05-28 — iPhone iOS Safari recheck across all surfaces passed
+  - ✓ #904 CLOSED 2026-05-28 — Lighthouse CLS=0.031 on 3 equipment slugs
+  - ✓ #951 CLOSED 2026-05-28 — Lighthouse CLS=0.021 on /parts
+  - ✓ #824 CLOSED 2026-05-28 — iPhone visual QA backdrop overlay OK
+  - ✓ #510/#538 CLOSED 2026-05-28 — continental ZIP test 15/15 pass
+  - DEFERRED #562 — hardcoded tracking (real CT-delivery order required)
+  - DEFERRED #920 — UPS overcharge (real heavy-item order required)
+
+done:
+  - Top-lane P0/P1 issues have up-to-date repro outcomes.
+  - No issue closed without evidence.
+  - Real-device blockers separated from platform failures.
+  - 6 additional issues closed on real device / Lighthouse / code-evidence 2026-05-28.

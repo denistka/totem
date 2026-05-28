@@ -1,0 +1,29 @@
+gate: OPEN
+v:4 role:qa x:handoff
+task: S01 T5 - Prepare closure proposals pack
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S01
+
+context: |
+  Convert triage outcomes into a human-reviewable decision pack for John/team.
+  Objective: quickly approve safe backlog cleanup while preserving important bugs.
+
+steps:
+  1. Produce four proposal lists:
+     - KEEP OPEN (still reproducible)
+     - KEEP OPEN BUT REWRITE (outdated issue text)
+     - CLOSE AS DUPLICATE
+     - CLOSE AS NOT-REPRODUCED-NOW (pending observation window)
+  2. For each issue add:
+     - one-line rationale
+     - latest evidence reference
+     - risk note if wrongly closed
+  3. Prepare final approval request with batch actions.
+  4. Wait for explicit approval before any closure execution.
+
+out:
+  - Review pack for John/team approval
+
+done:
+  - Batch proposals are clear and low-risk.
+  - Team can approve/reject by list without re-reading whole backlog.

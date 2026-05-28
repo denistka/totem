@@ -1,0 +1,23 @@
+role: Next.js + Vercel Frontend Template
+focus: rsc, fullstack-react, deployment-guardrails, frontend-quality
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Next.js, React, TypeScript, Vercel, Biome
+
+includes:
+  - ../../stacks/react/REACT_SERVER_COMPONENTS.ti
+  - ../../stacks/react/REACT_COMPILER.ti
+  - ../../stacks/react/REACT_QUERY.ti
+  - ../../stacks/react/ZUSTAND.ti
+  - ../../stacks/typescript/TYPESCRIPT.ti
+  - ../../stacks/vercel/VERCEL.ti
+  - ../../stacks/biome/BIOME.ti
+
+implementation-rules:
+  - Prefer Server Components by default; move to client components only when interactive state is required.
+  - Keep API contracts typed end-to-end and validated at boundary points.
+  - Treat Vercel preview and production as separate quality gates.
+
+anti-patterns:
+  - ❌ Converting large feature areas to client components without necessity.
+  - ❌ Shipping untyped API responses into UI state.

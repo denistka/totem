@@ -17,6 +17,9 @@ This file serves as the master registry of all specialized `.ti` stacks and comb
 ### Backend & Server
 
 - `node/NODE.ti` - Node.js 22+ Specialist (ESM-first)
+- `bun/BUN.ti` - Bun Runtime Specialist (workspace/performance/test tooling)
+- `hono/HONO.ti` - Hono API Specialist (routing, middleware, OpenAPI)
+- `python/PYTHON_SERVICE.ti` - Python Service Specialist (service layering, dependency hygiene)
 - `supabase/SUPABASE.ti` - Supabase Backend Specialist
 - `vue-backend/VUE_BACKEND_REACTIVITY.ti` - Vue Backend Orchestration
 
@@ -24,6 +27,7 @@ This file serves as the master registry of all specialized `.ti` stacks and comb
 
 - `typescript/TYPESCRIPT.ti` - TypeScript Lean Specialist
 - `vite/VITE.ti` - Vite 8 Specialist (Rolldown)
+- `biome/BIOME.ti` - Biome Lint/Format Specialist
 
 ### Data & State
 
@@ -65,6 +69,7 @@ This file serves as the master registry of all specialized `.ti` stacks and comb
 - `tauri/TAURI.ti` - Tauri 2 Multi-Platform Specialist (iOS, Android, macOS, Windows, Linux)
 - `vercel/VERCEL.ti` - Vercel Deployment Specialist
 - `pwa/PWA.ti` - PWA Immersion Specialist
+- `gcp/CLOUD_RUN.ti` - Google Cloud Run Deployment Specialist
 
 ---
 
@@ -97,6 +102,12 @@ Templates are pre-configured combinations of Stacks and Guardians meant for star
 
 - `node-express/BACKEND_DEV.ti`
 - `node-express/NODE_EXPRESS.ti`
+- `bun-hono-cloudrun/BUN_HONO_CLOUDRUN.ti`
+- `python-cloudrun-mcp/PYTHON_CLOUDRUN_MCP.ti`
+
+### Next.js
+
+- `nextjs-vercel/NEXTJS_VERCEL_FRONTEND.ti`
 
 ### Svelte
 

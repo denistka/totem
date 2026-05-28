@@ -1,0 +1,22 @@
+role: Bun + Hono + Cloud Run Backend Template
+focus: api-contracts, cloud-deploy, reliability, service-boundaries
+extends: ../../guardians/ARCHITECT.ti
+
+stack: Bun, Hono, TypeScript, Cloud Run, Biome
+
+includes:
+  - ../../stacks/bun/BUN.ti
+  - ../../stacks/hono/HONO.ti
+  - ../../stacks/typescript/TYPESCRIPT.ti
+  - ../../stacks/gcp/CLOUD_RUN.ti
+  - ../../stacks/biome/BIOME.ti
+  - ../../stacks/security/SECURITY.ti
+
+implementation-rules:
+  - Version API contracts and validate all requests/responses with schemas.
+  - Deploy candidate revisions first; promote traffic only after smoke and contract checks pass.
+  - Keep service modules independent from route/middleware framework internals.
+
+anti-patterns:
+  - ❌ Route handlers that perform business logic and persistence inline.
+  - ❌ Direct traffic promotion without revision verification.
