@@ -27,16 +27,16 @@ out:
   - issues/2026-05-28/processed/DUPLICATES-1296-1297.md ✓
 
 progress:
-  - ✓ DUPLICATE confirmed: #1270 → close, keep #1297 (ProductFeed shard, auto-refile)
-  - ✓ DUPLICATE confirmed: #1269 → close, keep #1296 (assembly.pagination_overflow, auto-refile)
-  - ✓ POSSIBLE-DUPLICATE: #1271 → possible close, keep #1298 (ImageSitemap, human confirm)
-  - ✓ POSSIBLY-FIXED: #1252 → moving-to-close/1252-search-timeout.md
-  - ✓ POSSIBLY-FIXED: #636 → moving-to-close/636-pdp-service-unavailable.md
+  - ✓ DUPLICATE CLOSED 2026-05-28: #1270 → #1297 (ProductFeed shard, auto-refile)
+  - ✓ DUPLICATE CLOSED 2026-05-28: #1269 → #1296 (assembly.pagination_overflow)
+  - ✓ DUPLICATE CLOSED 2026-05-28: #1271 → #1298 (ImageSitemap, human confirmed)
+  - ✓ POSSIBLY-FIXED: #1252 → moving-to-close/1252-search-timeout.md (CLOSED)
+  - ✓ POSSIBLY-FIXED: #636 → moving-to-close/636-pdp-service-unavailable.md (CLOSED)
   - ✓ REPRODUCED: #504 — webp NOT in emoji script binary exclusions
-  - ✓ OUTDATED-DESCRIPTION: #269 — /brands intentionally NH-only per John's 2-tile decision (DM 1213989); footer copy mismatch is a separate UX issue
-  - ✓ NOT-REPRODUCED-NOW: #975 — returns 404 (not 502), likely stale dev timing issue
-  - ✓ NEEDS-HUMAN-VERIFY: #1171, #1191 — Sentry release tag missing; slow sign-out intermittent
-  - ✓ Full Lane C scan complete. Delivery cluster (#570, #565, #617) marked backend scope.
+  - ✓ OUTDATED-DESCRIPTION: #269 — /brands intentionally NH-only per DM 1213989
+  - ✓ NOT-REPRODUCED-NOW: #975 — returns 404 (not 502), likely stale dev timing
+  - ✓ Code-confirmed (ready for impl): #1171, #1256, #1133, #1170, #1191
+  - ✓ Full Lane C scan complete. Backend cluster (#570, #565, #617, +5 others) CLOSED as OOS 2026-05-28.
 
 done:
   - Each candidate has reason and evidence reference.

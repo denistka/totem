@@ -1,0 +1,41 @@
+gate: LOCKED
+v:4 role:architect x:planning
+task: S02 T3 — Score the four remediation levers, recommend one
+requires: [NEXTJS_VERCEL_FRONTEND, VERCEL]
+sprint: S02
+dep: S02-T2-cache-opportunity-quant.pd
+
+context: |
+  T1 named the dominant segment. T2 sized the cache opportunity.
+  T3 takes the four levers from the ptl and scores them with hard numbers.
+  Output is a decision pack the user picks from before T4.
+
+steps:
+  1. For each lever (L1, L2, L3, L4), fill the rubric:
+     - mechanism: what changes at code/infra level (named).
+     - expected savings: ms saved at p50 and p95, sourced from T1/T2.
+     - effort: S (<1d) / M (1-3d) / L (>3d).
+     - risk: regressions (false-positive cache hits, stale UPS data,
+       PII leakage, billing on UPS API calls saved).
+     - prerequisites: env vars, infra change, cache backend pick,
+       Cloud Run config change.
+     - rollback strategy.
+     - PII handling: hashed keys, no raw-address logs, retention.
+  2. Cross-check each lever against ARCHITECT invariants:
+     - Loose coupling — does the change hide UPS behind an interface?
+     - Single source of truth — where does the cache live?
+     - Strict modularity — does any file cross 100/150 LOC?
+  3. Note any lever that touches a third-party billing or contract
+     (UPS XAV per-call cost reduction implications).
+  4. Recommend one lever, but final pick belongs to the user.
+  5. Produce sprints/02/S02-T3-remediation.md with: Lever table · Per-lever
+     detail · Recommendation · Open questions for the user.
+
+out:
+  - sprints/02/S02-T3-remediation.md
+
+done:
+  - 4 levers each fully scored.
+  - Recommendation called out clearly.
+  - At least 2 levers traceable to T1 dominant segment (defense in depth).
+  - PII handling spelled out per lever that involves storage.

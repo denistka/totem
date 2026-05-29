@@ -1,5 +1,6 @@
-gate: IN-PROGRESS
+gate: DONE
 started: 2026-05-28
+completed: 2026-05-28
 v:4 role:qa x:ux-navigation
 task: S01 T4 - Navigation and UI/UX sweep
 requires: [NEXTJS_VERCEL_FRONTEND]
@@ -34,9 +35,10 @@ progress:
   - ✓ Parts Diagrams: /equipment/{slug}/parts-diagrams → 200, chapter URLs → 404
   - ✓ /parts?manufacturer=new-holland → "No results" (REPRODUCED, #634)
   - ✓ Header search mobile: HTTP 200 with mobile UA; dropdown backdrop behavior needs human visual QA
-  - ✓ #824 OPEN — backdrop uses bg-popover/60 in code; staff complaint is rendering-theme specific, needs human check on prod
-  - ✓ Parts-diagrams chapter URLs → 404 for guessed codes; route exists in code, needs real assemblyCode from prod
-  - PENDING: PDP → Add to cart full flow (needs cart state, human session)
+  - ✓ #824 CLOSED 2026-05-28 — iPhone visual QA passed (backdrop overlay OK)
+  - ✓ #921 CLOSED 2026-05-28 — iPhone recheck across all input surfaces passed
+  - ✓ Parts-diagrams chapter URLs → 404 for guessed codes; route exists, real assemblyCode required for full verify
+  - DEFERRED: PDP → Add to cart full flow (cart state + human session out of triage scope)
 
 done:
   - Core path sweep completed on mobile viewport.

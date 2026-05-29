@@ -1,0 +1,37 @@
+gate: LOCKED
+v:4 role:qa x:server-timing
+task: S02 T1 — Split the 968ms TTFB into oauth_ms / xav_ms / app_ms
+requires: [VERCEL]
+sprint: S02
+
+context: |
+  Front-side trace already captured (970ms total, 968ms TTFB, server-side).
+  Code-path discovery (S02 ptl ground_truth) already located the hot path
+  in services/delivery (UPSAddress + UPSOAuth). T1 only needs to attribute
+  the 968ms across three segments: OAuth (cache hit vs miss), UPS XAV call,
+  and delivery-service application code.
+
+steps:
+  1. Pick timing source in order:
+     a. Existing Sentry / OpenTelemetry spans in services/delivery.
+     b. Vercel function trace (only covers FE Server Action — secondary).
+     c. As a fallback, propose adding three Server-Timing markers in the
+        Hono /ups/addresses/validate handler: oauth, xav, app. Header-only.
+        This is the ONLY code change S02 may authorize and still needs
+        user OK before merging.
+  2. Trigger 10 validations against stage delivery-api with a single test
+     payload. 5 calls back-to-back (warm), then wait 10 min, then 5 more
+     (target cold-instance OAuth refresh).
+  3. Record per-call: total_ms, oauth_ms, xav_ms, app_ms, instance_id,
+     oauth_cache_hit (bool).
+  4. Produce sprints/02/S02-T1-server-timing.md with: Method · Per-call
+     table · p50/p95 per segment · Cold vs warm delta · Confirmation of
+     which hypothesis (A/B/C/D) dominates.
+
+out:
+  - sprints/02/S02-T1-server-timing.md
+
+done:
+  - sum(oauth_ms + xav_ms + app_ms) accounts for >=90% of measured total.
+  - Cold vs warm OAuth contribution isolated.
+  - Dominant segment named explicitly (xav_ms vs oauth_ms vs app_ms).

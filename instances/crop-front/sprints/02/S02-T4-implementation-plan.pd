@@ -1,0 +1,40 @@
+gate: LOCKED
+v:4 role:architect x:planning
+task: S02 T4 — Produce the S03 implementation plan for the chosen lever
+requires: [NEXTJS_VERCEL_FRONTEND, VERCEL]
+sprint: S02
+dep: S02-T3-remediation-architecture.pd + human pick
+
+context: |
+  T4 only starts after the user picks one lever from T3. T4 turns that
+  pick into a fully-scoped implementation plan that PLANNER can convert
+  into S03 .ptl + .pd tasks. No code edits here — still planning.
+
+steps:
+  1. Restate the chosen lever, the savings target, and the risks accepted.
+  2. Decompose into atomic units (each < 50 lines of expected diff):
+     - data-layer change (cache adapter / token store / config).
+     - API surface change (cache-aware route, fallthrough on miss).
+     - observability (metrics for hit ratio, miss latency).
+     - operational config (Memorystore, Cloud Run min-instances, env vars).
+     - rollout plan (feature flag, dark-launch, canary).
+  3. For each unit:
+     - target file(s) and approximate LOC.
+     - prerequisites and order.
+     - test plan: unit, integration (Testcontainers if Memorystore), smoke.
+     - rollback: revert path + data cleanup if any.
+  4. Capture invariants the change must protect:
+     - PII (hashed keys, no raw address in logs/metrics).
+     - UPS contract (no extra billing implications).
+     - Existing 35s FE timeout / 10s BE timeout stays intact.
+  5. Produce sprints/02/S02-T4-implementation-plan.md with: Lever recap ·
+     Atomic-unit list · Per-unit detail · Invariants · Rollout · S03 shape.
+
+out:
+  - sprints/02/S02-T4-implementation-plan.md
+
+done:
+  - Atomic units listed and orderable into S03 tracks (Data -> API ->
+    Observability -> Ops -> Rollout).
+  - Each unit has target file, test plan, rollback.
+  - Hand-off block ready for PLANNER to generate S03 .ptl + .pd set.

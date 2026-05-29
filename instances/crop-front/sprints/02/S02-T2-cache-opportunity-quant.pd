@@ -1,0 +1,38 @@
+gate: LOCKED
+v:4 role:qa x:cache-analysis
+task: S02 T2 — Quantify cache-hit ceiling from stage validation traffic
+requires: [VERCEL]
+sprint: S02
+dep: S02-T1-server-timing-breakdown.pd
+
+context: |
+  Hypothesis C (no result cache): identical addresses are re-validated on
+  suggestion-dialog retries, back-nav, and form edits. If repeat rate is
+  high, an XAV result cache (L1) is the single biggest lever. T2 produces
+  the ceiling number that scores L1 in T3.
+
+steps:
+  1. Pull 24h of /ups/addresses/validate request logs from Cloud Run (dev
+     environment) via Cloud Logging. Do NOT export raw addresses outside
+     the logging system — work on counts only. PII discipline.
+  2. Define normalization: lower(street) + lower(city) + state + zip5.
+     Hash with SHA-256 (no raw address leaves the query).
+  3. Compute:
+     - total requests in window.
+     - unique normalized hashes.
+     - repeat rate = (total - unique) / total.
+     - p95 of "same-hash retries within 5 min" (suggestion-dialog retries).
+     - p95 of "same-hash retries within 1 h" (form edits, back-nav).
+  4. Estimate cache-hit ceilings for two TTLs: 5 min, 24 h. Use historical
+     repeat-rate within those windows as the upper bound.
+  5. Produce sprints/02/S02-T2-cache-opportunity.md with: Method · Repeat
+     rate · Per-window hit ceilings · Storage estimate (rows/day at the
+     chosen TTL) · PII notes.
+
+out:
+  - sprints/02/S02-T2-cache-opportunity.md
+
+done:
+  - 24h window counted; total + unique reported.
+  - 5-min and 24-h hit ceilings reported with confidence note.
+  - PII-safe: no raw addresses in the output file.
