@@ -1,0 +1,83 @@
+role: Issue Triage Rules — crop-front overlay
+focus: nextjs-specific check methods, lessons learned
+instance: crop-front
+extends: ../TRIAGE_RULES.ti          # composite-wide rules: statuses, invariants, labels, qa_flow_template
+
+# Working environment for triage.
+env:
+  local_url: http://localhost:3000
+  branch: dev
+  code_path: ../../../../CROP-front
+
+# Stack-specific check methods (Next.js, Vercel, browser-based).
+check_methods:
+  http_check:      curl -s -o /dev/null -w "%{http_code}" http://localhost:3000{path}
+  page_content:    curl -s http://localhost:3000{path} | grep -c "{keyword}"
+  code_search:     grep -r "{pattern}" ../../../../CROP-front/
+  viewport_mobile: simulate 393x852 via curl with User-Agent
+  localStorage:    JSON.parse(localStorage.getItem('{key}')).state
+  network_tab:     DevTools → Network → filter by {endpoint}
+  break_env:       temporarily set {VAR}="https://invalid.localhost" in .env.local, restart dev server, restore after test
+  gh_close:        gh issue close {number} --repo CT-CROP/CROP-front --comment "{comment}"
+  gh_comment:      gh issue comment {number} --repo CT-CROP/CROP-front --body "{comment}"
+  gh_transfer:     gh issue transfer {number} CT-CROP/{target_repo} --repo CT-CROP/CROP-front
+
+# Priority lanes (legacy from S01 sweep; reusable for any future bulk pass).
+lanes:
+  A: urgent + sale-blocker labels
+  B: high + checkout + payment labels
+  C: medium + low (remaining bugs)
+
+# Navigation / UI UX sweep scope.
+ux_paths:
+  - Home → category tile → parts listing
+  - Parts listing → PDP → Add to cart
+  - Header search + menu on mobile viewport
+  - Checkout flow (guest + logged in)
+
+# Stack-specific issue creation guidance (overlays composite required_labels).
+issue_templates:
+  bug:
+    title_format: "bug(<scope>): <one-line description>"
+    required_fields:
+      - verified-env: localhost | dev (Vercel preview) | prod | unverified
+      - observable-success: who + steps + succeeds-when (written BEFORE the fix)
+      - repro: steps + expected + actual (+ curl block for backend-touching bugs)
+      - verification-environment: where the FIX gets verified (not dev/preview)
+      - closure-authority: stakeholder-sourced OR internal/infra
+      - severity-rationale: user impact (not technical impact)
+      - dup-check: ran `gh issue list --search "<keywords>"` first
+    optional_fields:
+      - callsite: file:line
+      - sibling-surfaces: other surfaces with same concept
+      - regression-guard: vitest/e2e test that catches silent regression
+  task:
+    title_format: "<type>(<scope>): <one-line description>"
+    required_fields:
+      - context: what triggered it, who asked, why
+      - surface: exact route/page/component/endpoint
+      - acceptance-block: written BEFORE code — stakeholder "done" as walkable steps
+  qa-finding:
+    title_format: "qa(<scope>): <one-line description>"
+    required_fields:
+      - use-case: UC-NN from #491/#492
+      - round: R1-R5+/ad-hoc
+      - artifact: screenshot/video/log URL
+      - observed, expected, acceptance criteria
+
+# Stack-specific lessons (from S01 human verification).
+lessons:
+  - kenect_widget: production-only (VERCEL_ENV === "production") — cannot verify on localhost, use crop-dev.app
+  - env_break_test: requires dev server restart after .env.local change; restore immediately after test
+  - pack_fields: packQty/requiresPackBuy are undefined for non-pack items by design; only relevant for CT-NHL-{PN}-PK{N} SKUs
+  - live_status_null: {"live":null} on /api/parts/[id]/live-status means no channel data leaked — correct behavior
+  - first_order_discount: renders in ReviewGuestPrompt on /checkout/review, NOT on /checkout/shipping step
+  - localStorage_key: cart store persists under key "cart"; access via JSON.parse(localStorage.getItem('cart')).state
+  - gh_comment_format: always include env (localhost:3000 or crop-dev.app), branch (dev), date, exact test steps, observed result
+  - kenect_in_dev: production-only features → test on crop-dev.app, not localhost
+  - undefined_localStorage_fields: not a bug when item type doesn't apply
+
+# Auto-refile pattern (kept here — bot-author signal is Next.js-tooling-specific).
+auto_refile_pattern:
+  signal: same title, different date (within 2 days), same author (appdev-v or github-actions)
+  action: DUPLICATE → keep latest, mark older as STALE

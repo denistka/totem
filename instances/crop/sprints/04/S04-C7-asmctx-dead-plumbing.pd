@@ -1,0 +1,33 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C7
+title: "chore(parts): remove dead asmCtx plumbing from PDP supersession path (#1318)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1318
+  - CROP-front#1311   # parent fix that made asmCtx dead
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  #1311 rewrote the PDP supersession path, leaving asmCtx plumbing as dead code.
+  Remove all asmCtx references from the supersession path to reduce noise and
+  prevent future confusion about whether the context is still active.
+
+scope:
+  in:
+    - grep: asmCtx in PDP supersession path files
+    - Remove dead asmCtx prop drilling, type fields, and any related conditionals
+    - Confirm typecheck passes after removal
+  out:
+    - Changing any live supersession logic
+    - Removing asmCtx from non-supersession paths (verify before deleting)
+
+acceptance:
+  - grep for asmCtx in supersession path returns 0 results
+  - typecheck green
+  - No runtime regression on PDP supersession flows
+
+dep: none
+output: dead asmCtx references removed from PDP supersession path

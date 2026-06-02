@@ -1,0 +1,34 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C3
+title: "fix(diagrams): BOM list does not scroll to selected part on hotspot click (#1374)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1374
+requires: [NEXTJS_VERCEL_FRONTEND, REACT_SERVER_COMPONENTS, TYPESCRIPT]
+
+description: |
+  Clicking a hotspot on a parts diagram should scroll the BOM list to the
+  corresponding part row. Currently the list does not respond — the user has
+  to manually find the part in the list. Fix: on hotspot click, scroll the
+  BOM list container to the matching row using scrollIntoView or equivalent.
+
+scope:
+  in:
+    - Diagram hotspot click handler — trigger scroll to BOM row
+    - BOM list row — add id or ref anchor for scroll target
+    - Smooth scroll preferred; instant acceptable if smooth causes jank
+    - Manual verify: click hotspot → BOM row is visible without manual scrolling
+  out:
+    - Changing the diagram rendering or BOM data shape
+    - Any other diagram interactions
+
+acceptance:
+  - Hotspot click scrolls BOM list to the matching part row
+  - Works on mobile viewport (touch + scroll)
+  - No layout shift or double-scroll artifacts
+
+dep: none
+output: diagram hotspot handler + BOM list row scroll anchor patched

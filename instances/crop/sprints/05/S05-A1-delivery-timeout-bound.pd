@@ -1,0 +1,41 @@
+gate: OPEN
+sprint: S05
+track: A
+task: A1
+title: "fix(delivery): bound UPS per-attempt timeout (#259 phase 2)"
+repos: [crop-parts-services]
+priority: high
+refs:
+  - CROP-parts-services#259
+  - S02 hot-path map: ups-address.ts:30, fetchWithRetry
+requires: [BUN_HONO_CLOUDRUN]
+
+description: |
+  The UPS XAV provider uses fetchWithRetry with no per-attempt timeout ceiling.
+  A slow UPS response can hold the delivery Cloud Run instance for up to 35s
+  (the FE client timeout at lib/delivery-api/client.ts:214).
+  Fix: add AbortSignal.timeout(8s) per attempt inside the UPS provider.
+  8s leaves room for 2 retries within the 35s FE ceiling.
+
+ground_truth:
+  file: CROP-parts-services/services/delivery/src/providers/ups/ups-address.ts
+  line: 30   # fetchWithRetry call — no AbortSignal passed
+  fe_timeout: 35s (lib/delivery-api/client.ts:214)
+  target_per_attempt: 8s
+
+scope:
+  in:
+    - ups-address.ts — add AbortSignal.timeout(8_000) per attempt
+    - fetchWithRetry helper — accept and forward signal param
+    - Unit test: mock fetch hangs → expect abort within ceiling
+  out:
+    - FE client timeout (leave at 35s)
+    - OAuth fetch (covered in A2)
+
+acceptance:
+  - Per-attempt UPS XAV call aborts at ≤ 8s
+  - AbortError surfaces as 504/timeout to caller — not swallowed
+  - Unit test: hang mock → abort confirmed
+
+dep: none
+output: ups-address.ts + fetchWithRetry patched + unit test

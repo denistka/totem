@@ -1,0 +1,33 @@
+gate: OPEN
+sprint: S05
+track: B
+task: B3
+title: "feat(checkout): Lane 7 — margin-aware free-ship gate (#995)"
+repos: [crop-front]
+priority: high
+refs:
+  - CROP-front#995
+  - CROP-front#978  (parent umbrella)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+description: |
+  Lane 7 appears only when order passes the margin threshold. FE evaluates the
+  gate condition and shows/hides Lane 7 accordingly. Threshold sourced from
+  A5 shared constants or BE-provided value — never hardcoded.
+
+scope:
+  in:
+    - Checkout shipping lane selector — add Lane 7 gate evaluation
+    - Display Lane 7 when gate passes; hide when fails
+    - Unit tests: gate passes / fails / boundary
+  out:
+    - Margin calculation (done BE-side)
+    - Lanes 1–6 rendering
+
+acceptance:
+  - Lane 7 appears only when order meets threshold
+  - Threshold from constants, not hardcoded
+  - Unit tests cover pass/fail/boundary
+
+dep: B2
+output: shipping lane selector patched + unit tests

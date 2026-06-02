@@ -1,0 +1,58 @@
+project:
+  name: CROP
+  version: 1.0.0
+  description: |
+    CROP composite — single product spread across 4 repositories with
+    independent stacks but shared product contracts. Sprints are planned at
+    this composition level; tracks dispatch tasks to member sub-instances.
+  composite: true
+  members:
+    - id: crop-front
+      repo: CT-CROP/CROP-front
+      path: ./crop-front
+      role: Next.js storefront (Vercel)
+    - id: crop-parts-services
+      repo: CT-CROP/CROP-parts-services
+      path: ./crop-parts-services
+      role: Bun/Hono microservices monorepo (delivery, parts, etc.) on Cloud Run
+    - id: crop-search-hono
+      repo: CT-CROP/CROP-search-hono
+      path: ./crop-search-hono
+      role: Bun/Hono search API on Cloud Run
+
+paths:
+  history: .
+  intel: ./intel
+  sprints: ./sprints
+  routing: ./ROUTING.ti
+  triage_rules: ./TRIAGE_RULES.ti
+  invariants: ./INVARIANTS.md
+
+# Composite-level sprints carry tracks that name target repo(s) explicitly.
+# Each track in .ptl and each task in .pd MUST declare `repos: [...]`.
+sprint_rules:
+  track_repo_field: repos        # array, 1..N member ids from members[].id
+  cascade: ptl → track → task    # task inherits track's repos; track inherits ptl's repos if not set
+  cross_repo_track_allowed: true # e.g. S02 spans crop-front + crop-parts-services
+  ptl_repos_is_union: true       # ptl-level repos = union of all track repos in that sprint
+
+# Issue triage and routing
+issues:
+  rules: ./TRIAGE_RULES.ti       # composite-wide (extends from members)
+  routing: ./ROUTING.ti          # scope → target repo mapping
+  push_gate: "push issues to github"
+  cross_repo_action: transfer    # NEVER close out-of-scope — use `gh issue transfer`
+
+# Guardians inherited from member instances; composite adds only orchestration roles.
+guardians:
+  composite:
+    - ROOT
+    - PM
+    - PRODUCT_CONTRACT          # owns inter-repo API contracts
+  stack_adapters: []            # composite has no code stack of its own
+
+# Load semantics — used by `load instance crop`:
+# 1. Read this file.
+# 2. For each member, read instances/{member.id}/project.config.yml.
+# 3. Open the latest sprint folder in ./sprints/ (highest number).
+# 4. Surface per-repo issue stats via `gh issue list -R {member.repo} --state open`.

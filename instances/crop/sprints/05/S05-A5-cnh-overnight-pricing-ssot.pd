@@ -1,0 +1,34 @@
+gate: OPEN
+sprint: S05
+track: A
+task: A5
+title: "chore(shipping): CNH-overnight pricing constants — single source of truth (#303)"
+repos: [crop-parts-services, crop-front]
+priority: medium
+refs:
+  - CROP-parts-services#303
+  - CROP-front#1437 (B6 runtime parity check depends on this landing first)
+requires: [BUN_HONO_CLOUDRUN, NEXTJS_VERCEL_FRONTEND]
+
+description: |
+  CNH-overnight pricing constants ($25 D&H + 15% markup) exist in 3 divergent
+  copies across repos. Any price update risks silent drift between FE and BE.
+  Promote to a single canonical location in packages/shared-types and remove duplicates.
+  B6 (runtime parity check) depends on this task.
+
+scope:
+  in:
+    - Grep: find all 3 copies of CNH-overnight constants across repos
+    - Promote to packages/shared-types/shipping-constants.ts
+    - Remove 2 duplicate definitions; import from canonical location in both repos
+  out:
+    - Changing the actual pricing values (consolidation only)
+    - Any FE UI changes
+
+acceptance:
+  - Exactly one definition of CNH-overnight constants in the codebase
+  - Both crop-front and crop-parts-services import from the same source
+  - grep for old duplicate values returns only the canonical file
+
+dep: none
+output: packages/shared-types/shipping-constants.ts + removals in both repos

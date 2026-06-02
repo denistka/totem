@@ -1,0 +1,80 @@
+gate: LOCKED
+v:4 role:dev x:nextjs-tailwind
+task: S03 T7 — #1291 Variant selector polish: brand fallback + smoke checklist + banner test
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-1291
+
+context: |
+  3 polish sub-tasks from #158 deferred at MVP ship. All verified accurate against dev (2026-06-01).
+  Domain primer:
+  - Variant = a distinct configuration of the same model family (e.g. NH T6.155 has 11 variants)
+  - humaniseBrand() in lib/brand-display-names.ts maps short-code prefixes (Nhl, Cih) to human names
+  - extractBrand() in variants-brand-filter.tsx does NOT currently use humaniseBrand()
+  - Test data: 1-variant = ford-7710; multi-variant = new-holland-t6155-autocommand-stage-v (11 variants)
+  - Unit test pattern: app/equipment/[slug]/_components/__tests__/equipment-variants-banner.test.tsx
+  All 3 sub-tasks ship in one PR from branch issue-1291.
+
+steps:
+  1. Branch: git checkout -b issue-1291 dev
+
+  SUB-TASK 1 — Brand-name fallback (small):
+    a. app/equipment/[slug]/variants/_components/variants-brand-filter.tsx:88-94:
+       Wrap extractBrand() return values in humaniseBrand() from @/lib/brand-display-names.
+       Pattern: humaniseBrand(extractBrand(displayName, modelNumber))
+    b. app/equipment/[slug]/variants/__tests__/variants-brand-filter.test.tsx:
+       Add test cases:
+         - extractBrand('Nhl 1100', '1100') → 'New Holland' (after humaniseBrand wrapping)
+         - extractBrand('Cih 7250', '7250') → 'Case IH'
+    c. Verify: bun test variants-brand-filter
+
+  SUB-TASK 2 — Manual smoke checklist (small):
+    a. Create docs/smoke/variant-selector.md with 3 walkthroughs:
+       - 1-variant model (ford-7710):
+           detail page shows NO "Compare N other variants" banner
+           /equipment/ford-7710/variants URL 308-redirects to the single variant
+       - Multi-variant model (new-holland-t6155-autocommand-stage-v):
+           banner renders with correct count
+           /variants page lists all variants
+       - 0-variant model: if none exists in live data, document that and note it's
+         covered via integration test mock (sub-task 3) instead
+    b. Walk the checklist on the PR's Vercel preview → check the boxes in the committed file.
+       (The committed file with checked boxes IS the verification artifact for this sub-task.)
+
+  SUB-TASK 3 — Banner-slot integration test (small):
+    a. Create app/equipment/[slug]/_components/__tests__/equipment-detail.test.tsx
+    b. Tests:
+         - EquipmentDetail with variantsBanner={<div data-testid="banner"/>} → banner present in DOM
+         - EquipmentDetail with variantsBanner={null} → absent
+       Copy async server-rendered pattern from equipment-variants-banner.test.tsx.
+    c. Verify: bun test equipment-detail
+    d. Note: e2e already covers banner visibility on live data (equipment-variants.spec.ts:99-123);
+       this integration test covers layout composition in isolation — both are wanted.
+
+  3. Commit(s): polish(variants): apply humaniseBrand to extractBrand filter (#1291)
+                polish(variants): add manual smoke checklist for variant selector (#1291)
+                polish(variants): add banner-slot integration test for EquipmentDetail (#1291)
+     (One PR is fine; 3 commits or squash — your call.)
+  4. Open draft PR into dev, reference #1291.
+     Before marking ready: walk the smoke checklist on the Vercel preview and check the boxes.
+
+cmd:
+  - bun run lint:fix
+  - bun run type-check
+  - bunx vitest run app/equipment/\[slug\]/variants/__tests__/variants-brand-filter.test.tsx
+  - bunx vitest run app/equipment/\[slug\]/_components/__tests__/equipment-detail.test.tsx
+  - bun run check:all
+
+out:
+  - app/equipment/[slug]/variants/_components/variants-brand-filter.tsx (humaniseBrand applied)
+  - app/equipment/[slug]/variants/__tests__/variants-brand-filter.test.tsx (new cases added)
+  - docs/smoke/variant-selector.md (checklist created + walked)
+  - app/equipment/[slug]/_components/__tests__/equipment-detail.test.tsx (new test file)
+
+done:
+  - humaniseBrand wraps extractBrand output — Nhl → New Holland, Cih → Case IH
+  - vitest passes for variants-brand-filter + equipment-detail tests
+  - Smoke checklist committed with all boxes checked (walked on Vercel preview)
+  - bun run check:all clean
+  - PR draft open against dev; closure authority: Vova confirms smoke checklist fidelity

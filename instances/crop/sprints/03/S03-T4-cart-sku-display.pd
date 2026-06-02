@@ -1,0 +1,73 @@
+gate: LOCKED
+v:4 role:dev x:nextjs-tailwind
+task: S03 T4 — #651 Cart line SKU: plumb sku field + fix display (NHL-{partnumber})
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-651
+
+context: |
+  John call 2026-05-04: cart line shows duplicate model/brand/part — should show
+  canonical NHL-{partnumber} SKU format (NOT NHL-P; the "P" was a transcription error).
+  Audit-confirmed root cause against dev:
+  - Part type has sku (lib/search-service/types/part.ts:189) — PRESENT in API
+  - CartItem type has sku? (lib/stores/cart-store.ts:26) — field exists
+  - PDP handleAddToCart (app/parts/[id]/_components/product-detail.tsx:177) does NOT
+    pass sku into addItem() — sku: undefined on every cart line added from PDP
+  - Catalog card (product-card-add-to-cart.tsx) also missing sku — same gap
+  - cart-item-card.tsx:347-354 already renders: {manufacturer} · {item.sku ?? item.partNumber}
+    — display logic is correct, just falls through to partNumber because sku is always undefined
+  External dep: hub#63 (Alex) must be MERGED before this PR lands
+  — sku column must be live in parts_public / search MV so the API actually returns it.
+  Seq dep: branch off AFTER T3 (issue-650) is merged to dev, since both touch
+  product-card-add-to-cart.tsx. If T3 PR is not yet merged, branch off dev and
+  coordinate with T3 to avoid conflicts.
+
+steps:
+  1. Branch: git checkout -b issue-651 dev (after T3 is merged)
+  2. Before fix — repro artifact:
+     - Find a part with a known SKU: GET /api/parts/{pn} → check sku field in response
+     - Add to cart from PDP → open /cart → screenshot showing partNumber fallback
+       instead of NHL- prefix. Post as comment on #651.
+  3. Fix — plumb sku through add-to-cart payloads:
+     a. app/parts/[id]/_components/product-detail.tsx:177 — add sku: product.sku
+        to the addItem() call alongside imageUrl, title, etc.
+     b. features/catalog/product-card-add-to-cart.tsx — add sku: part.sku
+        to the addItem() call (T3 already touches this file — coordinate).
+  4. Sweep sibling surfaces per issue:
+     - /checkout/review line items — does it also render sku? If so, verify.
+     - Order confirmation page + email line items — note for John if sku not shown there.
+     - Pack-alias lines (CT-NHL-{PN}-PK{N}, front#919) — MUST NOT regress; run existing tests.
+  5. Unit tests:
+     a. addItem payload for PDP includes sku: product.sku
+     b. cart-item-card render: given sku: "NHL-12345678" → subtitle shows NHL-12345678;
+        given sku: undefined → falls back to partNumber (existing behavior preserved)
+     c. Pack-alias tests (front#919) still green.
+  6. Commit: fix(cart): plumb sku field into add-to-cart payloads for NHL-{pn} display (#651)
+     NOTE: Do NOT merge PR until hub#63 is confirmed merged by Alex.
+  7. Open draft PR into dev, reference #651 + hub#63, include repro artifact.
+
+external_gate: |
+  hub#63 (Alex) — adds parts.sku as GENERATED column {brand_code}-{part_number} in PG,
+  propagates via parts_public / search MV. FE work is ready to land but MUST NOT merge
+  before hub#63 is confirmed live (or the sku field will always be undefined in prod).
+
+cmd:
+  - bun run lint:fix
+  - bun run type-check
+  - bunx vitest run app/parts/\[id\]/_components/product-detail.test.tsx
+  - bunx vitest run app/cart/_components/cart-item-card.test.tsx
+  - bunx vitest run features/catalog/product-card-add-to-cart.test.tsx
+
+out:
+  - app/parts/[id]/_components/product-detail.tsx (sku added to addItem payload)
+  - features/catalog/product-card-add-to-cart.tsx (sku added to addItem payload)
+  - app/cart/_components/cart-item-card.test.tsx (sku display + fallback test)
+  - issue #651 comment with repro artifact
+
+done:
+  - Cart line subtitle shows NHL-{partnumber} (not raw partNumber) when sku is present
+  - Subtitle falls back to partNumber when sku: undefined (no regression)
+  - Pack-alias (front#919) tests green
+  - vitest suite green, lint + type-check clean
+  - PR draft open against dev, marked NOT READY with note: awaiting hub#63

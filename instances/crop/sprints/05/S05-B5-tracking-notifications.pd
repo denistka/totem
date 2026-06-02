@@ -1,0 +1,42 @@
+gate: OPEN
+sprint: S05
+track: B
+task: B5
+title: "feat(notifications): shipment-tracking notifications CNH + CNH-DFS (#981)"
+repos: [crop-front]
+priority: high
+refs:
+  - CROP-front#981
+  - CROP-front#978  (parent umbrella)
+  - CROP-front#1428 (confirmation email fire-and-forget — related reliability concern)
+  - CROP-front#1396 (RESEND_API_KEY missing — must be confirmed resolved before merge)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+description: |
+  Customers on CNH and CNH-DFS lanes receive no shipment-tracking notification.
+  Trigger a tracking email via Resend when a tracking number appears on these lanes.
+  Pre-condition: #1396 (RESEND_API_KEY missing in Vercel prod) confirmed resolved.
+  Notification send must NOT be fire-and-forget (lesson from #1428).
+
+scope:
+  in:
+    - Trigger: tracking number written to order record for CNH / CNH-DFS
+    - Notification: email via Resend with tracking link + carrier
+    - Idempotency: no duplicate on unchanged tracking number
+    - Staging verify: trigger CNH order → confirm notification received
+  out:
+    - UPS-lane tracking (separate system)
+    - Order confirmation email (#1428)
+
+invariants:
+  - Must NOT be fire-and-forget — use durable dispatch or confirm delivery
+  - RESEND_API_KEY confirmed in Vercel prod before merge
+
+acceptance:
+  - CNH order ships → tracking email sent with correct link
+  - CNH-DFS same
+  - Duplicate tracking number → no duplicate notification
+  - Staging smoke documented in PR
+
+dep: B4 + #1396 resolved
+output: notification trigger + idempotency guard + staging smoke note in PR

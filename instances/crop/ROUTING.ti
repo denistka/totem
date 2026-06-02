@@ -1,0 +1,97 @@
+role: Issue Scope Routing (CROP composite)
+focus: cross-repo-triage, scope-aware-transfer, zero-data-loss
+instance: crop
+extends: TRIAGE_RULES.ti
+
+# Core rule: out-of-scope issues are TRANSFERRED, never closed.
+# Closing loses the reporter's context; transfer preserves it in the correct repo.
+# Memory of past mistake (S01, 2026-05-28): backend cluster issues #156 #524 #564 #570
+# #565 #970 #971 #972 were CLOSED OOS from crop-front when they should have been
+# transferred to crop-parts-services. Do not repeat.
+
+transfer_command: |
+  gh issue transfer {number} CT-CROP/{target_repo} \
+    --repo CT-CROP/{source_repo}
+  # Then post a brief comment in the target referencing original repro context.
+
+# Scope → target member mapping. First match wins.
+# Signals (in priority order): explicit label, paths in body, keyword in title/body.
+routes:
+  - target: crop-front
+    signals:
+      labels: [scope:front, scope:fe, scope:ui]
+      paths:
+        - CROP-front/
+        - app/
+        - components/
+      keywords:
+        - next.js
+        - vercel preview
+        - storefront
+        - PDP
+        - checkout UI
+        - cart
+        - localStorage
+        - viewport
+        - mobile (iPhone visual)
+
+  - target: crop-parts-services
+    signals:
+      labels: [scope:parts, scope:delivery, scope:bun-hono]
+      paths:
+        - CROP-parts-services/
+        - services/delivery/
+        - services/parts/
+      keywords:
+        - delivery API
+        - UPS XAV
+        - address validation (backend)
+        - parts service
+        - Hono route
+        - Cloud Run delivery
+
+  - target: crop-search-hono
+    signals:
+      labels: [scope:search]
+      paths:
+        - CROP-search-hono/
+      keywords:
+        - search API
+        - /search endpoint
+        - PostgreSQL search
+        - search index
+
+# When 2+ scopes match (e.g. checkout calls delivery API):
+# - File in the PRIMARY surface where the user observed the bug.
+# - Cross-link with `Related: CT-CROP/<other-repo>#<n>` line in body.
+# - Do NOT duplicate the issue across repos.
+cross_repo_observed:
+  rule: file in surface-of-observation, cross-link the upstream cause
+  example: |
+    Address validation slow → observed in CROP-front checkout (S02 evidence).
+    Root cause in CROP-parts-services/services/delivery (UPS XAV bridge).
+    → File ONE issue in crop-front (surface) + cross-link to crop-parts-services
+      issue if a backend fix is also tracked separately.
+
+# Triage decision tree (when handling a freshly-pulled open issue):
+decision_tree:
+  - q: Does the body/labels match exactly one route?
+    yes: route to that target
+  - q: Does it match multiple routes?
+    yes: apply cross_repo_observed rule (file at surface, link the rest)
+  - q: Does it match no route?
+    yes: leave in source repo, label `needs-routing`, ask user
+
+# Required labels on every issue (per CROP governance, inherited from crop-front):
+required_labels:
+  - goal/obj-NN              # OBJ-01..OBJ-10; use `needs-assignment` if unsure
+  - priority: [urgent, high, pre-launch, medium, low]
+  - assignee: appdev-v (default, per-repo override allowed)
+  - scope: [front, parts, search]        # composite-mandated for routing
+
+# Audit: how to find historical mis-routes that should be transferred (not re-opened).
+audit:
+  command: |
+    gh issue list -R CT-CROP/CROP-front --state closed \
+      --search "label:wontfix OR label:out-of-scope" --json number,title,closedAt,body
+  action: for each match, propose transfer target via routes above; user approves.

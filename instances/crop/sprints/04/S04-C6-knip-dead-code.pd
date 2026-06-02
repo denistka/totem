@@ -1,0 +1,34 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C6
+title: "chore(deps): knip dead-code cleanup + make dead:check blocking (#1391)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1391
+requires: [TYPESCRIPT]
+
+description: |
+  knip identifies dead exports and unused files but the check is currently
+  non-blocking in CI. Fix in two steps:
+  1. Delete all dead code identified by knip (run `bunx knip`, remove findings).
+  2. Flip dead:check to blocking so future dead code additions fail CI.
+
+scope:
+  in:
+    - Run `bunx knip` — capture full list of dead exports/files
+    - Delete dead code (exports, files, types flagged by knip)
+    - Verify `bunx knip` returns 0 findings after cleanup
+    - Flip CI gate to blocking (package.json script or workflow step)
+  out:
+    - Changing any live code behaviour
+    - Fixing ESLint or TypeScript errors unrelated to dead code
+
+acceptance:
+  - `bunx knip` exits 0 after cleanup
+  - CI dead:check gate is blocking
+  - No runtime regressions (typecheck + tests green)
+
+dep: none
+output: deleted dead files/exports + CI gate update

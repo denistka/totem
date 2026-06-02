@@ -1,0 +1,33 @@
+gate: OPEN
+sprint: S04
+track: A
+task: A2
+title: "obs: Sentry tag upstream.timeout=hono on SearchServiceTimeoutError (#1256)"
+repos: [crop-front]
+priority: P1
+refs:
+  - CROP-front#1256
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  SearchServiceTimeoutError events land in Sentry without a distinguishing tag —
+  they look like generic errors and are impossible to filter by upstream cause.
+  Add `upstream.timeout=hono` tag at the throw/capture site so all hono-originated
+  timeouts are instantly filterable in Sentry dashboards and alerts.
+
+scope:
+  in:
+    - Locate SearchServiceTimeoutError throw/capture site(s) in crop-front
+    - Add Sentry.setTag('upstream.timeout', 'hono') at each capture site
+    - Unit test: SearchServiceTimeoutError thrown → Sentry.setTag called with correct args
+  out:
+    - Changing timeout values or retry logic
+    - Any crop-parts-services or crop-search-hono changes
+
+acceptance:
+  - SearchServiceTimeoutError events in Sentry carry upstream.timeout=hono tag
+  - Unit test confirms setTag is called
+  - No other error types receive the tag
+
+dep: none
+output: error capture site(s) patched + unit test

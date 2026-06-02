@@ -1,0 +1,31 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C5
+title: "test(parts-schematics): per-brand fixture coverage for schematic parsers (#1453)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1453
+requires: [TYPESCRIPT]
+
+description: |
+  Schematic parsers lack per-brand fixture coverage — a parser regression for a
+  specific brand goes undetected until prod. Add fixture files and test cases
+  covering each brand's schematic format so parser changes are caught in CI.
+
+scope:
+  in:
+    - Identify brands with schematic data and without existing parser fixtures
+    - Add minimal fixture file per missing brand (real or anonymised sample)
+    - Add vitest test per brand: parse fixture → assert expected BOM shape
+  out:
+    - Changing parser logic
+    - Adding fixtures for brands already covered
+
+acceptance:
+  - Every brand with schematic data has at least one parser fixture + test
+  - All new tests green in CI
+
+dep: none
+output: test fixtures + vitest tests per brand

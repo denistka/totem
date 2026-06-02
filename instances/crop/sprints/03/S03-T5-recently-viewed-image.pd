@@ -1,0 +1,72 @@
+gate: LOCKED
+v:4 role:dev x:nextjs-tailwind
+task: S03 T5 — #827 Recently Viewed: add imageUrl to store schema + render real thumbnail
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-827
+
+context: |
+  Cart sidebar "Recently Viewed" rail shows MediaPlaceholder for parts that have
+  real images on their PDP. Confirmed root cause (audit 2026-06-01):
+  - lib/stores/recently-viewed-store.ts:16-29 — RecentlyViewedItem has NO imageUrl field
+  - When PDP visit calls track(), only id/partNumber/title/price/viewedAt are persisted
+  - features/catalog/workshop/cart-rail-sheet.tsx:157-194 — RecentlyViewedCard renders
+    MediaPlaceholder unconditionally; no image field to render
+  - Part 84376099 has hasImage: true (5 URLs via /api/parts/84376099)
+  - PR #840 only swapped placeholder branding; data gap untouched
+  This is NOT #650 (catalog-card add-to-cart missing imageUrl — different code path).
+  Honest sizing: medium task — persisted store schema bump required.
+  IMPORTANT: do NOT fetch images at render time (cart-drawer open) — that adds N parallel
+  API calls. Capture image at track time only.
+
+steps:
+  1. Branch: git checkout -b issue-827 dev
+  2. Before fix — repro artifact:
+     - Visit https://crop.clintontractor.net/parts/84376099 (confirmed image-bearing part)
+     - Open cart drawer → scroll to Recently Viewed
+     - Screenshot showing placeholder. Post as comment on #827.
+  3. Fix:
+     a. lib/stores/recently-viewed-store.ts:
+        - Add imageUrl?: string to RecentlyViewedItem interface
+        - Update track() signature to accept imageUrl?: string parameter
+        - Bump persisted store version: 1 → 2
+        - Add migration in the zustand persist config: existing v1 entries get imageUrl: undefined
+          (they'll show placeholder until re-visited — documented as acceptable in issue)
+     b. PDP call site (wherever track() is called on PDP mount — find via grep):
+        Pass imageUrl: product.media.primaryImage into track()
+     c. features/catalog/workshop/cart-rail-sheet.tsx:157-194 — RecentlyViewedCard:
+        Render <Image src={item.imageUrl} .../> when item.imageUrl is truthy,
+        MediaPlaceholder when absent. Follow the existing Image usage pattern in the file
+        (check next/image import, sizes, fill/width patterns in nearby components).
+  4. Unit tests (vitest):
+     a. RecentlyViewedCard: imageUrl present → real <Image> renders, no placeholder
+     b. RecentlyViewedCard: imageUrl absent → placeholder renders
+     c. Store migration: v1 localStorage payload (no imageUrl field) loads without crash;
+        item.imageUrl is undefined after migration
+  5. Manual migration test: visit prod, let localStorage populate v1 entries, then
+     open the PR's Vercel preview in the SAME browser profile — confirm no crash, existing
+     items show placeholder, new visit after re-viewing a part shows real image.
+  6. Commit: fix(recently-viewed): add imageUrl to store schema for real thumbnail (#827)
+  7. Open draft PR into dev, reference #827, include before/after screenshots.
+
+cmd:
+  - grep -r "track(" /Users/denistka/Projects/clinton-tracktor/CROP-front --include="*.tsx" --include="*.ts" | grep -i "recently\|viewed"
+  - bun run lint:fix
+  - bun run type-check
+  - bunx vitest run lib/stores/recently-viewed-store.test.ts
+  - bunx vitest run features/catalog/workshop/cart-rail-sheet.test.tsx
+
+out:
+  - lib/stores/recently-viewed-store.ts (imageUrl field + track() update + version bump + migration)
+  - features/catalog/workshop/cart-rail-sheet.tsx (RecentlyViewedCard renders real image)
+  - lib/stores/recently-viewed-store.test.ts (migration + schema tests)
+  - features/catalog/workshop/cart-rail-sheet.test.tsx (card render tests)
+  - issue #827 comment with repro + before/after screenshots
+
+done:
+  - Recently Viewed card shows real thumbnail for parts with imageUrl (Vercel preview)
+  - Placeholder renders for parts without imageUrl (no regression)
+  - v1 → v2 migration: no crash, no data loss, graceful imageUrl: undefined for old entries
+  - vitest green, lint + type-check clean
+  - PR draft open against dev; closure authority: internal (Vova confirmation sufficient)

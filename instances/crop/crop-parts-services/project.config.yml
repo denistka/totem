@@ -1,0 +1,39 @@
+project:
+  name: CROP Parts Services
+  version: 1.0.0
+  description: Bun monorepo of Hono microservices for parts, search, and integrations.
+  parent: crop                    # member of composite — sprints live at instances/crop/sprints/
+  stack:
+    - bun
+    - hono
+    - typescript
+    - cloud-run
+    - microservices
+    - biome
+
+paths:
+  code: ../../../../CROP-parts-services
+  history: .
+  intel: ./intel
+
+issues:
+  rules: ./ISSUE_TRIAGE_RULES.ti
+  github_repo: CT-CROP/CROP-parts-services
+  cache: ./issues/cache/
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - BUN_HONO_CLOUDRUN
+    - BUN
+    - HONO
+    - TYPESCRIPT
+    - CLOUD_RUN
+    - BIOME
+    - ARCHITECTURE_SCALE
+    - SECURITY

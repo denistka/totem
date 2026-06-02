@@ -1,0 +1,73 @@
+gate: OPEN
+v:4 role:dev x:nextjs-tailwind
+task: S03 T1 — #527 Footer WCAG 2.5.5 tap target: re-measure on prod, then conditional fix
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-527
+
+context: |
+  Issue #527 was filed against a 4-column footer that was redesigned in sprint 4
+  (2026-05-15, commit f7c550db) — the "Shop by Models" column was dropped entirely.
+  The measurement table in the original issue references links that no longer exist.
+  The audit update (2026-06-01) says: FooterLink default variant still has no vertical
+  padding (text-sm, no py, no min-h), so the <24px problem likely persists on the
+  remaining columns (Shop by Brand, Help & Support, legal row, address/phone links).
+  BUT this MUST be re-measured before any code change.
+  Root cause if still present: layout/Footer/Footer.tsx:104 — FooterLink default
+  renders bare <Link> with text-sm (17px) and no vertical padding.
+
+steps:
+  STEP 1 — Re-measure on prod (required; do before branching or writing any code):
+    1. Open https://crop.clintontractor.net/ in DevTools mobile emulation:
+       viewport 390×844, DPR=3, touch=true.
+    2. Scroll to footer.
+    3. Run the verification snippet (from issue body):
+       [...document.querySelectorAll('footer a, footer button, footer [role="button"]')]
+         .filter(e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && Math.min(r.width, r.height) < 24; })
+         .map(e => ({ label: e.textContent?.trim(), w: Math.round(e.getBoundingClientRect().width), h: Math.round(e.getBoundingClientRect().height) }));
+    4. Post the output (screenshot or table) as a comment on issue #527.
+    5. Branch: git checkout -b issue-527 dev (only AFTER posting the comment)
+
+  STEP 2A — If snippet returns [] (no violations):
+    - Footer is already compliant post-redesign.
+    - Comment on #527: "Re-measured on prod 2026-06-01, viewport 390x844 — snippet returns [].
+      Zero footer links <24px. Closing as fixed-by-redesign (sprint 4, commit f7c550db)."
+    - Close the issue. No code change needed. Task complete.
+
+  STEP 2B — If snippet returns violations:
+    1. Fix: layout/Footer/Footer.tsx → FooterLink default return (lines ~104-113):
+       Add py-1.5 to the className. This gives 17px text + 12px padding = 29px tap height.
+       Do NOT change the "all" variant or the ul gap-2 — those don't need touching.
+    2. Also sweep the sibling surfaces per issue:
+       - Footer legal links (text-xs row at bottom) — same pattern, same fix if failing
+       - Footer address link (flex items-start gap-2.5) — should be ok but verify
+       - Footer social icons (size-12 = 48px) — confirm still passing
+    3. Create/update layout/Footer/Footer.test.tsx:
+       Regression guard — render <Footer />, query all links inside footer, assert each
+       has 'py-' in its className (jsdom can't compute layout, so className assertion is
+       the guard). Pattern: import Footer, render, getAllByRole('link') within footer,
+       check classList contains py-1.5.
+    4. Add Playwright test tests/e2e/footer-tap-targets.spec.ts:
+       On 390×844 viewport, every footer a/button getBoundingClientRect() minDim ≥ 24px.
+       (Issue body specifies this as the regression guard — it's mandatory.)
+    5. Commit: fix(footer): add py-1.5 to FooterLink for WCAG 2.5.5 tap target (#527)
+       No Co-Authored-By, no emoji.
+    6. Open draft PR into dev, reference #527, include Step 1 measurement + Step 2 after screenshot.
+
+cmd:
+  - bun run lint:fix
+  - bun run type-check
+  - bunx vitest run layout/Footer/Footer.test.tsx
+  - bunx playwright test tests/e2e/footer-tap-targets.spec.ts --project=chromium (if test written)
+
+out:
+  - issue #527 comment with prod measurement (Step 1)
+  - layout/Footer/Footer.tsx (patched, only if violations confirmed)
+  - layout/Footer/Footer.test.tsx (regression guard, only if fix applied)
+  - tests/e2e/footer-tap-targets.spec.ts (Playwright test, only if fix applied)
+
+done:
+  - Step 1 measurement comment posted on #527
+  - EITHER: issue closed as fixed-by-redesign with evidence
+  - OR: snippet returns [] on prod after PR merge; Playwright test green; PR reviewed by appdev-v

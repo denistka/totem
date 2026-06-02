@@ -1,0 +1,36 @@
+gate: OPEN
+sprint: S04
+track: A
+task: A1
+title: "chore(deps): fix bun audit vulnerabilities — Clerk authz bypass HIGH (#1416)"
+repos: [crop-front]
+priority: P1
+refs:
+  - CROP-front#1416
+requires: [TYPESCRIPT]
+
+description: |
+  bun audit reports a HIGH severity Clerk authorization bypass vulnerability.
+  While unpatched, any user could potentially bypass authorization checks.
+  Fix: upgrade affected Clerk package(s) to patched version. Then flip the
+  audit gate from non-blocking to blocking so future HIGH/CRITICAL vulnerabilities
+  stop CI.
+
+scope:
+  in:
+    - Run `bun audit` — identify exact package(s) and CVE
+    - Upgrade affected package(s) to patched version per advisory
+    - Verify `bun audit` returns 0 HIGH/CRITICAL after upgrade
+    - Flip audit gate to blocking in CI (package.json script or CI workflow)
+    - Smoke: auth flows still work on localhost (sign-in, sign-out, protected routes)
+  out:
+    - Upgrading unrelated packages
+    - Changing auth logic or Clerk configuration
+
+acceptance:
+  - `bun audit` returns 0 HIGH or CRITICAL findings
+  - CI audit gate is blocking (non-zero exit on HIGH/CRITICAL)
+  - Auth smoke passes on localhost
+
+dep: none
+output: bun.lock (updated) + CI workflow or package.json (audit gate flipped)

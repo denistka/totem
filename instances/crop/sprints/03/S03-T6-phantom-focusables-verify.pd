@@ -1,0 +1,55 @@
+gate: LOCKED
+v:4 role:dev x:nextjs-tailwind
+task: S03 T6 — #525 Phantom focusables: verify-first a11y check
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-525
+
+context: |
+  Original issue: mobile nav variants stay tabbable on desktop — 6-15 phantom focusables
+  per page. Root cause was a flex w-0 h-0 lg:w-auto zero-size hide pattern.
+  Audit update 2026-06-01: current layout/Header/Header.tsx uses hidden lg:flex / lg:hidden
+  (display: none) at lines 67, 79, 101, 123, 131, 139 — display:none elements are NOT
+  focusable by CSS spec. The w-0 h-0 pattern no longer exists.
+  This is now verify-first. The phantoms may have been fixed incidentally in a header refactor,
+  or they may still exist from nested components (Radix Sheet content, Suspense fallbacks).
+  Do NOT write any fix code until prod evidence is posted.
+
+steps:
+  1. Branch: git checkout -b issue-525 dev
+  2. Verify on prod — desktop (viewport 1280×800):
+     a. Open https://crop.clintontractor.net/cart
+     b. Run the verification snippet (from issue body):
+        [...document.querySelectorAll('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"]), [role="radio"]')]
+          .filter(e => e.tabIndex >= 0)
+          .filter(e => { const r = e.getBoundingClientRect(); return r.width === 0 && r.height === 0; })
+          .map(e => ({ html: e.outerHTML.slice(0, 120), parent: e.parentElement?.className }))
+     c. Repeat on /checkout/shipping and /parts
+     d. Repeat on mobile viewport 375×667 (reverse direction check)
+  3. Post findings as a comment on issue #525:
+     - ZERO phantoms on all routes: close issue with evidence. Done.
+     - PHANTOMS FOUND: for each element, expand snippet to also log:
+         el.outerHTML.slice(0, 200) and el.closest('[class]').className
+       Re-post detailed output identifying which component renders the phantom.
+       Scope the fix to THAT component only (not the header globally).
+  4. If phantoms found — fix:
+     a. Identify the offending component from the snippet output.
+     b. Apply appropriate hide: aria-hidden + tabIndex=-1 on focusable children, OR
+        use Radix's correct Portal/inert pattern for Sheet content (MobileMenu).
+     c. Add phantom-focusable assertion to existing a11y e2e (e2e-a11y-smoke):
+        zero focusable elements with 0x0 bounding box on /cart, /checkout/shipping, /parts
+        at both 1280x800 and 375x667. Cross-ref #679 (a11y umbrella).
+     d. Commit: fix(a11y): eliminate phantom focusables in [component] (#525)
+     e. Open draft PR into dev, reference #525, include before/after snippet output.
+
+out:
+  - issue #525 comment with prod findings (required)
+  - fix only if phantoms confirmed (scope to identified component)
+  - e2e test addition only if fix applied
+
+done:
+  - Prod verification performed on /cart, /checkout/shipping, /parts at 1280x800 + 375x667
+  - Issue comment posted with evidence
+  - EITHER: issue closed as fixed-by-refactor with evidence
+  - OR: phantom elements identified → fix applied → snippet returns [] → PR merged

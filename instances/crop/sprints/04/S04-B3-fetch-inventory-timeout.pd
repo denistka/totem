@@ -1,0 +1,34 @@
+gate: LOCKED
+sprint: S04
+track: B
+task: B3
+title: "bug: AbortSignal.timeout on fetch-inventory admin endpoint (#1255)"
+repos: [crop-front]
+priority: P2
+refs:
+  - CROP-front#1255
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  The staff fetch-inventory admin endpoint has no per-request timeout — a slow
+  or hung upstream response holds the server action indefinitely. Same pattern
+  as UPS timeout fixes in S04 Track A (crop-parts-services). Fix: add
+  AbortSignal.timeout() to the fetch call with a sensible ceiling (suggest 10s
+  for admin endpoints).
+
+scope:
+  in:
+    - Locate fetch-inventory fetch call in staff/admin route or server action
+    - Add AbortSignal.timeout(10_000) to the fetch options
+    - Unit test: mock fetch hangs → expect abort within ceiling
+  out:
+    - Changing the inventory API contract or response shape
+    - Other admin endpoints (separate issues)
+
+acceptance:
+  - fetch-inventory aborts at ≤ 10s ceiling
+  - AbortError surfaces as a user-visible error message (not a silent hang)
+  - Unit test confirms abort behavior
+
+dep: none
+output: fetch-inventory call site patched + unit test

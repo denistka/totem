@@ -1,0 +1,43 @@
+gate: OPEN
+sprint: S05
+track: A
+task: A2
+title: "fix(delivery): persist UPS OAuth token across Cloud Run instances"
+repos: [crop-parts-services]
+priority: high
+refs:
+  - S02 hypothesis B — ups-oauth.ts:27, instance-memory token lost on cold start
+  - S02 lesson: ups_oauth_cache
+requires: [BUN_HONO_CLOUDRUN, SECURITY]
+
+description: |
+  UPS OAuth token stored in instance memory only. On Cloud Run cold start or
+  scale-out the token is lost — first XAV call on that instance pays +300–500ms
+  for a new OAuth round-trip. Fix: persist token in a shared cache (Memorystore
+  Redis or equivalent). Token must be encrypted at rest, TTL 3300s (< UPS 3600s expiry).
+
+ground_truth:
+  file: CROP-parts-services/services/delivery/src/providers/ups/ups-oauth.ts
+  line: 27   # in-memory token store
+
+scope:
+  in:
+    - ups-oauth.ts — replace instance-memory with shared cache read/write
+    - Cache backend proposal documented in PR (Memorystore vs other)
+    - TTL: 3300s (safe margin under UPS 3600s expiry)
+    - Unit test: cache miss → fetch + store; cache hit → skip OAuth round-trip
+  out:
+    - XAV result caching (A3)
+    - Any crop-front changes
+
+invariants:
+  - Token is a credential — never logged, never in Sentry breadcrumbs
+  - TTL must be < UPS token expiry
+
+acceptance:
+  - Warm instance: OAuth skips network call (cache hit in test)
+  - Cold instance: token fetched once, stored, subsequent calls hit cache
+  - Token never appears in logs or error bodies
+
+dep: A1
+output: ups-oauth.ts + cache adapter + unit tests + infra note in PR

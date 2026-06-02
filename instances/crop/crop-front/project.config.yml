@@ -1,0 +1,39 @@
+project:
+  name: CROP Front
+  version: 1.0.0
+  description: Next.js frontend for CROP platform, deployed on Vercel.
+  parent: crop                    # member of composite — sprints live at instances/crop/sprints/
+  stack:
+    - nextjs
+    - react
+    - typescript
+    - bun
+    - vercel
+    - biome
+
+paths:
+  code: ../../../../CROP-front
+  history: .
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - NEXTJS_VERCEL_FRONTEND
+    - REACT_SERVER_COMPONENTS
+    - REACT_COMPILER
+    - REACT_QUERY
+    - ZUSTAND
+    - TYPESCRIPT
+    - VERCEL
+    - BIOME
+
+issues:
+  rules: ./ISSUE_TRIAGE_RULES.ti
+  github_repo: CT-CROP/CROP-front
+  cache: ./issues/cache/

@@ -1,0 +1,42 @@
+gate: LOCKED
+v:4 role:dev x:nextjs-tailwind
+task: S03 T2 — #649 Cart '+N more' overflow: verify-first investigation
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-649
+
+context: |
+  John call 2026-05-04: "+2 more" link on a cart line does nothing on click.
+  Audit update 2026-06-01: the element does NOT exist in current dev code.
+  app/cart/_components/cart-item-card.tsx — no "+N more" overflow rendering.
+  CartItem type (lib/stores/cart-store.ts) — no field for associated models/variants.
+  Cart line was refactored in PR #840. This is now verify-first: either confirm the
+  element is gone and close, or locate it on another surface and re-scope.
+  Do NOT write any fix code until prod evidence is posted.
+
+steps:
+  1. Branch: git checkout -b issue-649 dev
+  2. On https://crop.clintontractor.net:
+     a. Add several parts to cart — specifically parts that fit multiple models
+        (e.g. find a part on a PDP that lists multiple compatible equipment models).
+     b. Open /cart and the cart drawer.
+     c. Look for any "+N more" / overflow affordance on cart line items.
+     d. Also sweep: /checkout/review, favorites page, PDP fitment section.
+  3. Post findings as a comment on issue #649:
+     - NOT FOUND: post screenshots of the cart with multi-model parts showing no "+N more",
+       and confirm the surfaces swept. Close issue as no-longer-reproducible.
+     - FOUND: post screenshot + exact part number + which surface it appears on.
+       Do NOT implement a fix — wait for product re-scope decision from Vova/John.
+  4. If found: leave issue open, add comment flagging need for product decision on UX
+     (expand list vs remove the affordance), and do NOT open a PR.
+
+out:
+  - issue #649 comment with prod verification findings
+  - no code output expected (fix is out of scope pending product decision if found)
+
+done:
+  - Prod verification performed across /cart, /checkout/review, favorites, PDP fitment
+  - Issue comment posted with evidence (screenshots + part numbers used)
+  - EITHER: issue closed as no-longer-reproducible with evidence
+  - OR: issue updated with "found" artifact and awaiting product re-scope

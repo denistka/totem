@@ -1,0 +1,32 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C4
+title: "bug(seo): /parts-diagrams/{invalid-brand} soft-200 instead of 404 (#1461)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1461
+requires: [NEXTJS_VERCEL_FRONTEND, REACT_SERVER_COMPONENTS, TYPESCRIPT]
+
+description: |
+  /parts-diagrams/{invalid-brand} returns HTTP 200 with an empty or error UI
+  instead of a proper 404. Google indexes these soft-404 pages, wasting crawl
+  budget. Fix: validate the brand slug at the page level; call notFound() from
+  Next.js when the brand does not exist in the catalog.
+
+scope:
+  in:
+    - app/parts-diagrams/[brand]/page.tsx (or equivalent route)
+    - Brand validation: check slug against known brands; call notFound() if invalid
+    - Confirm response is HTTP 404 (not 200) via curl after fix
+  out:
+    - Changing the valid brand page rendering
+    - Sitemap or robots.txt changes
+
+acceptance:
+  - curl /parts-diagrams/invalid-brand → HTTP 404
+  - curl /parts-diagrams/new-holland → HTTP 200 (no regression)
+
+dep: none
+output: parts-diagrams [brand] page.tsx patched with notFound() guard

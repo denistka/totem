@@ -1,0 +1,40 @@
+gate: LOCKED
+sprint: S04
+track: A
+task: A3
+title: "UX: loading.tsx skeletons for PDP + equipment segments — absorb 15s hono timeout (#1257)"
+repos: [crop-front]
+priority: P1
+refs:
+  - CROP-front#1257
+requires: [NEXTJS_VERCEL_FRONTEND, REACT_SERVER_COMPONENTS, TYPESCRIPT]
+
+description: |
+  PDP and equipment segments show a blank screen for up to 15s when hono times out.
+  Next.js loading.tsx files provide instant skeleton UI while the segment resolves.
+  Add loading.tsx to PDP (app/parts/[id]/) and equipment (app/equipment/[slug]/)
+  segments so users see a meaningful skeleton within ~200ms instead of a blank page.
+
+scope:
+  in:
+    - app/parts/[id]/loading.tsx — PDP skeleton (image placeholder, title bar, price bar, tabs)
+    - app/equipment/[slug]/loading.tsx — equipment skeleton (header, parts-diagrams section)
+    - Skeletons use Moby DS tokens and Tailwind animate-pulse
+    - Visual smoke: localhost at throttled network → skeleton appears immediately
+  out:
+    - Changing actual page components or data fetching
+    - Error boundaries (separate concern)
+    - Any other segments beyond PDP + equipment
+
+invariants:
+  - No hardcoded hex colors — Moby DS tokens only
+  - No React.memo / unjustified useMemo/useCallback
+  - Skeleton must not flicker on fast loads (acceptable: briefly visible then replaced)
+
+acceptance:
+  - Throttled network: PDP skeleton visible within 200ms, replaced by real content on load
+  - Equipment skeleton same
+  - Desktop + mobile viewports look reasonable (no layout shift beyond CLS budget)
+
+dep: A2   # A2 tags the timeout in Sentry; A3 fixes the UX symptom — logical order
+output: app/parts/[id]/loading.tsx + app/equipment/[slug]/loading.tsx

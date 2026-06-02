@@ -1,0 +1,17 @@
+role: Issue Triage Rules — crop-parts-services overlay
+instance: crop-parts-services
+extends: ../TRIAGE_RULES.ti
+
+# Stack-specific additions only. Composite TRIAGE_RULES.ti covers statuses,
+# invariants, labels, qa_flow_template, and templated check_methods.
+
+# Hono-route grep (no equivalent in composite).
+check_methods:
+  route_grep: grep -rE "(\.get|\.post|\.put|\.delete)\(['\"][^'\"]*{path}" ../../../../CROP-parts-services/services/
+  server_timing_curl: curl -s -D - -o /dev/null "{base_url}{path}" | grep -i 'server-timing'
+
+# Domain-specific lessons (from S02).
+lessons:
+  - ups_oauth_cache: token is instance-memory only — lost on Cloud Run cold start; shared cache needed
+  - ups_xav_no_cache: no result cache on address validation — high-leverage fix (S02 L1)
+  - direct_url_bypass: DELIVERY_API_DIRECT_URL skips gateway → keep response schema in sync with crop-front

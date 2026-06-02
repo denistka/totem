@@ -1,0 +1,188 @@
+role: Issue Triage Rules (CROP composite)
+focus: bug-triage, qa-flow, backlog-hygiene, cross-repo-consistency
+instance: crop
+applies_to: [crop-front, crop-parts-services, crop-search-hono]
+
+# Full triage rules. Member overlay created only when stack-specific content justifies it.
+# crop-search-hono has no overlay — these rules apply as-is.
+
+# ── LOAD COMMANDS ──────────────────────────────────────────────────────────────
+# Live data always fetched via `gh`. No JSON snapshots. cache/ is working state only.
+
+load_commands:
+
+  # All open issues across the entire CROP composite (3 repos)
+  "load all issues for crop": |
+    gh issue list -R CT-CROP/CROP-front          --state open --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-parts-services --state open --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-search-hono    --state open --json number,title,labels,assignees,createdAt,url
+
+  # Single member
+  "load all issues for crop-front only": |
+    gh issue list -R CT-CROP/CROP-front --state open --json number,title,labels,assignees,createdAt,url
+
+  "load all issues for crop-parts-services only": |
+    gh issue list -R CT-CROP/CROP-parts-services --state open --json number,title,labels,assignees,createdAt,url
+
+  "load all issues for crop-search-hono only": |
+    gh issue list -R CT-CROP/CROP-search-hono --state open --json number,title,labels,assignees,createdAt,url
+
+  # Filtered by type label
+  "load only bugs": |
+    gh issue list -R CT-CROP/CROP-front          --state open --label bug --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-parts-services --state open --label bug --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-search-hono    --state open --label bug --json number,title,labels,assignees,createdAt,url
+
+  "load only tasks": |
+    gh issue list -R CT-CROP/CROP-front          --state open --label task --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-parts-services --state open --label task --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-search-hono    --state open --label task --json number,title,labels,assignees,createdAt,url
+
+  # By priority
+  "load urgent": |
+    gh issue list -R CT-CROP/CROP-front          --state open --label urgent --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-parts-services --state open --label urgent --json number,title,labels,assignees,createdAt,url
+    gh issue list -R CT-CROP/CROP-search-hono    --state open --label urgent --json number,title,labels,assignees,createdAt,url
+
+  # Single issue detail
+  "load issue {repo} {number}": |
+    gh issue view {number} -R CT-CROP/{repo} --json number,title,body,labels,assignees,state,createdAt,url,comments
+
+# ── CREATE COMMAND ─────────────────────────────────────────────────────────────
+# Determine scope → pick repo + template + labels, then call gh issue create.
+
+create_command:
+  trigger: "create issue" | "завести тикет" | "create task" | "create bug"
+
+  # Step 1: resolve scope → repo
+  scope_to_repo:
+    front:  CT-CROP/CROP-front
+    parts:  CT-CROP/CROP-parts-services
+    search: CT-CROP/CROP-search-hono
+
+  # Step 2: select template by type
+  templates:
+    bug:
+      title_format:   "bug(<scope>): <one-line description>"
+      required_labels: [bug, "{priority}", "scope:{scope}", "goal/{obj}", "assignee:appdev-v"]
+      body_sections:
+        - verified-env:          "localhost | dev (Vercel preview) | prod | unverified"
+        - observable-success:    "who + steps + succeeds-when (written BEFORE the fix)"
+        - repro:                 "steps · expected · actual"
+        - verification-environment: "where the fix gets verified"
+        - closure-authority:     "stakeholder-sourced | internal/infra"
+        - severity-rationale:    "user impact (not technical impact)"
+        - dup-check:             "ran `gh issue list --search \"<keywords>\"` first"
+    task:
+      title_format:   "<type>(<scope>): <one-line description>"
+      required_labels: [task, "{priority}", "scope:{scope}", "goal/{obj}", "assignee:appdev-v"]
+      body_sections:
+        - context:          "what triggered it, who asked, why"
+        - surface:          "exact route / page / component / endpoint"
+        - acceptance-block: "stakeholder 'done' as walkable steps — written BEFORE code"
+    qa-finding:
+      title_format:   "qa(<scope>): <one-line description>"
+      required_labels: [qa, "{priority}", "scope:{scope}", "goal/{obj}", "assignee:appdev-v"]
+      body_sections:
+        - use-case:   "UC-NN from #491/#492"
+        - round:      "R1-R5+ / ad-hoc"
+        - artifact:   "screenshot / video / log URL"
+        - observed:   ""
+        - expected:   ""
+        - acceptance: ""
+
+  # Step 3: pre-flight checklist (remind user if missing before filing)
+  preflight:
+    - Run `gh issue list --search "<keywords>"` — no open duplicate?
+    - goal/obj label present? (OBJ-01..OBJ-10; use `needs-assignment` if unsure)
+    - priority label present? (urgent / high / pre-launch / medium / low)
+    - assignee set? (default: appdev-v)
+
+  # Step 4: gh command
+  gh_create: |
+    gh issue create -R CT-CROP/{repo} \
+      --title "{title}" \
+      --body "{body}" \
+      --label "{labels_comma_separated}"
+
+  # Reminder if required labels missing
+  missing_label_prompt: |
+    Не забудь указать: goal/obj-NN, приоритет (urgent/high/medium/low), assignee (appdev-v)
+
+# ── TRIAGE STATUS VOCABULARY ───────────────────────────────────────────────────
+statuses:
+  - REPRODUCED           # confirmed still broken in current branch/env
+  - NOT-REPRODUCED-NOW   # not triggerable; could be fixed or intermittent
+  - POSSIBLY-FIXED       # code evidence suggests fix landed; needs human verify
+  - NEEDS-HUMAN-DEVICE   # requires real physical device
+  - NEEDS-HUMAN-VERIFY   # requires human judgment / external system / credentials
+  - DUPLICATE            # same symptom in another open issue (link it)
+  - STALE                # no activity + original condition likely changed
+  - OUT-OF-SCOPE         # belongs to ANOTHER CROP repo — TRANSFER per ROUTING.ti
+
+# ── UNIVERSAL INVARIANTS ───────────────────────────────────────────────────────
+invariants:
+  - Never auto-close without reproducible evidence.
+  - "Not reproducible now" ≠ "fixed" → NOT-REPRODUCED-NOW or NEEDS-HUMAN-VERIFY.
+  - Mobile-only findings → NEEDS-HUMAN-DEVICE, never skip.
+  - All closure actions are proposal-only until "push issues to github" command.
+  - Duplicate policy: keep newest, propose close on older with reference.
+  - OUT-OF-SCOPE issues are TRANSFERRED (see ROUTING.ti), not closed.
+  - gh_close comment must include: env tested, branch, date, what was tested, result.
+
+# ── OUTPUT / CACHE ─────────────────────────────────────────────────────────────
+# cache/ is ephemeral working state — QA flows, triage notes, pass summaries.
+# No date-based subfolders. Files named {number}-{slug}.md or pass-{tag}.md.
+output_dirs:
+  cache: ./{member}/issues/cache/
+push_gate: "push issues to github"
+
+# Closure log rule.
+closure_log:
+  trigger: any issue closed OR confirmed still present after human verification
+  action: update S{NN}-STATUS.md cache entry with result + date
+  closed_format:     "| #{number} | {title} | CLOSED ✓ ({date}) |"
+  still_open_format: "| #{number} | {title} | STILL OPEN — {reason} |"
+
+# QA-flow template (saved to cache/{number}-{slug}.md).
+qa_flow_template: |
+  # QA Flow — Issue #{number}: {title}
+  **Repo:** CT-CROP/{repo}  **URL:** {url}
+  **Labels:** {labels}
+  **Triage status:** POSSIBLY-FIXED
+  **Evidence:** {code_evidence}
+
+  ## Steps to verify manually
+  1. {step_1}
+  2. {step_2}
+
+  ## Expected result
+  {expected}
+
+  ## Actual result (last known)
+  {actual}
+
+  ## Risk if wrongly closed
+  {risk}
+
+# Templated gh commands (substitute {github_repo} and {code_path} from member project.config.yml).
+check_methods:
+  code_search:  grep -r "{pattern}" {code_path}/
+  gh_close:     gh issue close {number} --repo {github_repo} --comment "{comment}"
+  gh_comment:   gh issue comment {number} --repo {github_repo} --body "{comment}"
+  gh_transfer:  gh issue transfer {number} CT-CROP/{target_repo} --repo {github_repo}
+  bun_test:     cd {code_path} && bun test
+
+# ── REQUIRED LABELS ────────────────────────────────────────────────────────────
+required_labels:
+  - goal/obj-NN              # OBJ-01..OBJ-10; use `needs-assignment` if unsure
+  - priority: [urgent, high, pre-launch, medium, low]
+  - scope: [front, parts, search]
+  - assignee: appdev-v
+
+# ── MEMBER OVERLAYS ────────────────────────────────────────────────────────────
+# Created only where stack-specific content (check methods, lessons, issue templates) exists.
+# crop-search-hono has NO overlay.
+member_overlays:
+  crop-front:          ./crop-front/ISSUE_TRIAGE_RULES.ti
+  crop-parts-services: ./crop-parts-services/ISSUE_TRIAGE_RULES.ti

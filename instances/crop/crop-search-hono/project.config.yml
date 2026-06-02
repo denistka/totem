@@ -1,0 +1,36 @@
+project:
+  name: CROP Search Hono
+  version: 1.0.0
+  description: Bun + Hono search API service deployed to Google Cloud Run.
+  parent: crop                    # member of composite — sprints live at instances/crop/sprints/
+  stack:
+    - bun
+    - hono
+    - typescript
+    - cloud-run
+    - biome
+
+paths:
+  code: ../../../../CROP-search-hono
+  history: .
+  intel: ./intel
+
+issues:
+  github_repo: CT-CROP/CROP-search-hono
+  cache: ./issues/cache/
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - BUN_HONO_CLOUDRUN
+    - BUN
+    - HONO
+    - TYPESCRIPT
+    - CLOUD_RUN
+    - BIOME
+    - SECURITY

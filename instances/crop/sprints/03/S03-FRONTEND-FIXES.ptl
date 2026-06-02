@@ -1,0 +1,123 @@
+gate: LOCKED
+sprint: S03
+title: Frontend Fixes — Denis lane (issues 527 / 649 / 650 / 651 / 827 / 525 / 1291)
+priority: P2
+dep: none
+env: localhost:3000 · branch:dev · prod verify on crop.clintontractor.net / crop-dev.app
+status: PLANNED
+composite: crop
+repos: [crop-front]
+
+description: |
+  7 issues assigned to Denis by appdev-v 2026-06-01 as part of the frontend-fixes lane.
+  Mix of pure bug fixes, verify-first investigations, and polish tasks.
+  Sequence is prescribed: #527 first, then cart cluster (650→651→649), then 827, then 525, then 1291.
+  Branch naming: issue-[issue-id] off dev for every issue.
+  Workflow: reproduce on prod first → branch off dev → draft PR into dev → mark ready → reviewers appdev-v + Greptile.
+
+invariants:
+  - No Co-Authored-By, no emoji, no Cyrillic in commits (CROP-front commit hook)
+  - All colors via Moby DS tokens — no hardcoded hex
+  - No React.memo / unjustified useMemo/useCallback
+  - Verify-first tasks: do NOT write code until prod evidence is posted as an issue comment
+  - #651 blocks on hub#63 (Alex) landing — do not merge FE side before hub#63 is confirmed merged
+  - Branch naming: issue-[issue-id] (e.g. issue-527, issue-650, issue-651)
+
+ground_truth:
+  - All issues: CT-CROP/CROP-front
+  - Code path: /Users/denistka/Projects/clinton-tracktor/CROP-front
+  - base branch: dev
+  - Issue lane assignment: https://github.com/CT-CROP/CROP-front/issues/527#issuecomment-4591975046
+
+success_metrics:
+  - T1 (#527): zero footer links <24px on 390×844 OR confirmed fixed-by-redesign (evidence posted)
+  - T2 (#649): verify evidence posted; element found → product re-scope; not found → closed
+  - T3 (#650): catalog-card add-to-cart passes imageUrl; cart line shows real image
+  - T4 (#651): sku field plumbed from PDP + catalog-card into cart store; display shows NHL-{pn}
+  - T5 (#827): RecentlyViewedItem.imageUrl persisted; card renders real thumbnail
+  - T6 (#525): zero phantom focusables verified OR confirmed fixed-by-refactor (evidence posted)
+  - T7 (#1291): humaniseBrand applied to extractBrand; smoke checklist committed; banner integration test green
+
+requires: [NEXTJS_VERCEL_FRONTEND]
+estimated: 3-5 days
+
+tracks:
+  - id: T1
+    title: "#527 — Footer WCAG 2.5.5 tap target (verify-first + conditional fix)"
+    repos: [crop-front]
+    tasks:
+      - S03-T1-footer-tap-target-fix.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: OPEN
+    branch: issue-527
+    output: layout/Footer/Footer.tsx (if fix needed) + prod measurement comment on #527
+
+  - id: T2
+    title: "#649 — '+N more' cart overflow: verify-first investigation"
+    repos: [crop-front]
+    tasks:
+      - S03-T2-cart-plus-more-verify.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    dep: none
+    branch: issue-649
+    output: issue comment on #649 with prod findings
+
+  - id: T3
+    title: "#650 — Catalog-card add-to-cart missing imageUrl"
+    repos: [crop-front]
+    tasks:
+      - S03-T3-cart-image-catalog-card.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    dep: none
+    branch: issue-650
+    output: features/catalog/product-card-add-to-cart.tsx (patched) + unit test
+
+  - id: T4
+    title: "#651 — Cart line SKU: plumb sku field + fix display"
+    repos: [crop-front]
+    tasks:
+      - S03-T4-cart-sku-display.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    dep: T3          # both touch add-to-cart payloads; T3 lands first
+    branch: issue-651
+    output: product-detail.tsx + product-card-add-to-cart.tsx + cart-item-card.tsx (patched) + unit tests
+    external_dep: hub#63 (Alex) — sku column in parts_public / search MV must be live before merging
+
+  - id: T5
+    title: "#827 — Recently Viewed: add imageUrl to store schema"
+    repos: [crop-front]
+    tasks:
+      - S03-T5-recently-viewed-image.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    dep: none
+    branch: issue-827
+    output: lib/stores/recently-viewed-store.ts + cart-rail-sheet.tsx (patched) + vitest
+
+  - id: T6
+    title: "#525 — Phantom focusables: verify-first a11y check"
+    repos: [crop-front]
+    tasks:
+      - S03-T6-phantom-focusables-verify.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    dep: none
+    branch: issue-525
+    output: issue comment on #525 with prod findings; fix only if phantoms confirmed
+
+  - id: T7
+    title: "#1291 — Variant selector polish: brand fallback + smoke + banner test"
+    repos: [crop-front]
+    tasks:
+      - S03-T7-variant-selector-polish.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    dep: none
+    branch: issue-1291
+    output: variants-brand-filter.tsx + variants-brand-filter.test.tsx + docs/smoke/variant-selector.md + equipment-detail.test.tsx
+
+stop_after: T7
+next_sprint_gate: "All 7 tasks resolved (fixed or closed-with-evidence) → S03 closes."

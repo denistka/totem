@@ -1,0 +1,33 @@
+gate: LOCKED
+sprint: S04
+track: B
+task: B1
+title: "test(catalog): nuqs throttled-queue timer fires after jsdom teardown (#1442)"
+repos: [crop-front]
+priority: P2
+refs:
+  - CROP-front#1442
+requires: [TYPESCRIPT]
+
+description: |
+  The nuqs throttled-queue timer fires after jsdom has torn down, producing an
+  unhandled ReferenceError that randomly fails unit tests. This is a test
+  environment leak — the timer is not cleaned up before the test suite exits.
+  Fix: ensure the throttled queue is flushed/cancelled in afterEach or by
+  mocking the timer so it never fires asynchronously past test boundary.
+
+scope:
+  in:
+    - Identify the test(s) affected (grep: nuqs, throttled, ReferenceError in test output)
+    - Add afterEach cleanup: cancel/flush the nuqs queue or use fake timers
+    - Confirm 10/10 deterministic runs with `bun test --repeat 10` (or equivalent)
+  out:
+    - Changing nuqs runtime behavior in production code
+    - Any other flaky tests (separate issues)
+
+acceptance:
+  - Affected test file(s) pass 10/10 consecutive runs
+  - No ReferenceError in CI output after fix
+
+dep: none
+output: affected test file(s) patched with cleanup

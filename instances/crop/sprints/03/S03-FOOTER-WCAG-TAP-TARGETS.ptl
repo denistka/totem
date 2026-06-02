@@ -1,0 +1,66 @@
+gate: OPEN
+sprint: S03
+title: Footer WCAG 2.5.5 — Mobile Tap Target Fix (#527)
+priority: P3
+dep: none
+env: localhost:3000 · branch:dev · verify on crop-dev.app (mobile viewport 390×844)
+status: PLANNED
+composite: crop
+repos: [crop-front]
+
+description: |
+  21 footer links across Shop by Brand, Help & Support render at 17px height on
+  mobile — below WCAG 2.5.5 Target Size minimum of 24×24 CSS px (AA).
+  Root cause: FooterLink default variant in layout/Footer/Footer.tsx has no
+  vertical padding and no min-height; gap-2 between <li> items does not
+  contribute to the tap target of the <a> itself.
+  Sprint goal: add minimum vertical padding to FooterLink so every footer
+  link meets ≥24px tap height on mobile. No structural or visual redesign.
+
+scope:
+  in:
+    - layout/Footer/Footer.tsx — FooterLink default variant + FooterColumn list gap
+    - layout/Footer/Footer.test.tsx — regression guard
+  out:
+    - "all" variant (already inline-flex + items-center — passes)
+    - social icon buttons (already size-12 = 48px — passes)
+    - legal nav links (text-xs — separate issue if failing; not part of #527)
+    - cart steppers, Continue button (verified passing per issue body)
+
+invariants:
+  - No visual regression on md+ breakpoints — desktop footer appearance unchanged
+  - No Cyrillic, no emoji, no Co-Authored-By in commits (CROP-front commit hook)
+  - All colors via Moby DS tokens — no hardcoded hex
+  - No React.memo / unjustified useMemo/useCallback
+
+ground_truth:
+  - Issue: https://github.com/CT-CROP/CROP-front/issues/527
+  - Component: layout/Footer/Footer.tsx
+  - FooterLink default: <Link className="... text-sm ..."> — no py, no min-h
+  - FooterColumn ul: className="flex flex-col gap-2 pb-4 md:pt-3.5 md:pb-0"
+  - Violation count: 21 links, height 17px (getBoundingClientRect)
+  - WCAG 2.5.5 AA minimum: 24×24 CSS px
+  - Assignee comment (appdev-v, 2026-06-01): first task in denistka's frontend-fixes lane
+  - Branch workflow: branch off dev → draft PR → mark ready → reviewers appdev-v + Greptile
+
+success_metrics:
+  - All 21 footer links report getBoundingClientRect().height >= 24 on 390×844 mobile
+  - Desktop layout unchanged (visual inspection md+ viewport)
+  - FooterLink test covers min tap-target height assertion
+  - PR into dev, reviewed by appdev-v + Greptile
+
+requires: [NEXTJS_VERCEL_FRONTEND]
+estimated: 2-3h
+
+tracks:
+  - id: T1
+    title: Fix FooterLink tap target height — add vertical padding
+    repos: [crop-front]
+    tasks:
+      - S03-T1-footer-tap-target-fix.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: LOCKED
+    output: layout/Footer/Footer.tsx (patched) + layout/Footer/Footer.test.tsx (regression guard)
+
+stop_after: T1
+next_sprint_gate: "PR approved by appdev-v → S03 closes."

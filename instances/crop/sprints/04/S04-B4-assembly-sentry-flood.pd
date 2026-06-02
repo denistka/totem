@@ -1,0 +1,38 @@
+gate: LOCKED
+sprint: S04
+track: B
+task: B4
+title: "bug(assemblies): assembly.missing_index floods Sentry — fix fingerprint (#1370)"
+repos: [crop-front]
+priority: P2
+refs:
+  - CROP-front#1370
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  assembly.missing_index errors use a per-assembly fingerprint, creating a new
+  Sentry issue + email alert for every single broken assembly. This floods Sentry
+  with noise and buries real signals. Underlying nav-resolution failures remain
+  unaddressed. Fix in two parts:
+  1. Consolidate fingerprint: group all assembly.missing_index under one Sentry
+     issue (fingerprint on error type, not assembly id).
+  2. Document the underlying nav-resolution failures as a follow-up issue if not
+     already tracked.
+
+scope:
+  in:
+    - Locate assembly.missing_index Sentry capture/throw site
+    - Override fingerprint: ['assembly.missing_index'] (remove assembly-specific key)
+    - Verify in Sentry staging: multiple assemblies → single issue, not N issues
+    - Check if underlying nav-resolution root cause is tracked; file follow-up if not
+  out:
+    - Fixing the underlying nav-resolution failures (separate scope)
+    - Changing assembly data or fetch logic
+
+acceptance:
+  - assembly.missing_index events group under a single Sentry issue
+  - No per-assembly email storm on next occurrence
+  - Root cause follow-up issue exists (existing or newly filed)
+
+dep: none
+output: Sentry capture site patched (fingerprint override) + follow-up issue link in PR

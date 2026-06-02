@@ -1,0 +1,33 @@
+gate: LOCKED
+sprint: S04
+track: B
+task: B2
+title: "bug(api): MAX_PAGE_SIZE silent clamp → return 400 not Math.min (#1292)"
+repos: [crop-front]
+priority: P2
+refs:
+  - CROP-front#1292
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  request-utils.ts silently clamps page size to MAX_PAGE_SIZE via Math.min.
+  Callers receive fewer results than requested with no indication that their
+  input was out of range — this hides integration bugs. Fix: validate page size
+  at the boundary and return 400 with a clear error message when it exceeds MAX.
+
+scope:
+  in:
+    - lib/request-utils.ts (or equivalent) — replace Math.min clamp with validation + 400
+    - Error message: "pageSize exceeds maximum of {MAX_PAGE_SIZE}"
+    - Unit test: pageSize > MAX → 400; pageSize <= MAX → proceeds normally
+  out:
+    - Changing MAX_PAGE_SIZE value
+    - Any other param validation beyond pageSize
+
+acceptance:
+  - Request with pageSize > MAX returns 400 with descriptive message
+  - Request with pageSize <= MAX proceeds as before
+  - Unit tests cover both paths
+
+dep: none
+output: request-utils.ts patched + unit tests

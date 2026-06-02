@@ -1,0 +1,83 @@
+gate: OPEN
+sprint: S04
+title: Frontend Fixes — Security, Stability, Reliability (CROP-front)
+priority: P1
+dep: none
+env: localhost:3000 · branch:dev · prod verify on crop.clintontractor.net / crop-dev.app
+status: PLANNED
+composite: crop
+repos: [crop-front]
+
+description: |
+  14 issues assigned by team lead to denistka. Prioritised by context:
+  Track A — security vulnerability + prod crashes (P1, do first)
+  Track B — reliability and CI quality (P2)
+  Track C — improvements and tech debt (P3, after A+B)
+
+invariants: ../../INVARIANTS.md
+
+sprint_rules:
+  track_repo_field: repos
+  cascade: ptl → track → task
+  cross_repo_track_allowed: false
+  ptl_repos_is_union: false
+
+tracks:
+  - id: A
+    title: "Security + Stability (P1)"
+    repos: [crop-front]
+    gate: LOCKED
+    sequence: A1 → A2 → A3
+    tasks:
+      - S04-A1-clerk-authz-vuln.pd
+      - S04-A2-sentry-hono-timeout-tag.pd
+      - S04-A3-loading-skeletons.pd
+    requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+  - id: B
+    title: "Reliability + CI (P2)"
+    repos: [crop-front]
+    gate: LOCKED
+    dep: A
+    sequence: B1 → B2 → B3 → B4
+    tasks:
+      - S04-B1-nuqs-timer-flake.pd
+      - S04-B2-max-page-size-400.pd
+      - S04-B3-fetch-inventory-timeout.pd
+      - S04-B4-assembly-sentry-flood.pd
+    requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+  - id: C
+    title: "Improvements + Tech Debt (P3)"
+    repos: [crop-front]
+    gate: LOCKED
+    dep: B
+    sequence: C1 → C2 → C3 → C4 → C5 → C6 → C7
+    tasks:
+      - S04-C1-fetch-full-order.pd
+      - S04-C2-cnh-overnight-parity.pd
+      - S04-C3-bom-scroll-hotspot.pd
+      - S04-C4-parts-diagrams-404.pd
+      - S04-C5-schematic-fixtures.pd
+      - S04-C6-knip-dead-code.pd
+      - S04-C7-asmctx-dead-plumbing.pd
+    requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+stop_after: C7
+next_sprint_gate: "All Track A + B tasks resolved; Track C tasks resolved or deferred → S04 closes."
+
+success_metrics:
+  - A1: bun audit returns 0 HIGH/CRITICAL; audit gate is blocking in CI
+  - A2: SearchServiceTimeoutError carries upstream.timeout=hono tag in Sentry
+  - A3: PDP + equipment segments show skeleton within 200ms; no blank screen on 15s timeout
+  - B1: nuqs timer test passes deterministically 10/10 runs
+  - B2: request over MAX_PAGE_SIZE returns 400, not silently clamped
+  - B3: fetch-inventory aborts at configured ceiling; no indefinite hang
+  - B4: assembly.missing_index events grouped under single Sentry fingerprint
+  - C1: EmailableOrder type + confirmation facade integrated; follow-up #1234 closed
+  - C2: CNH-overnight parity check fires Sentry warning on drift
+  - C3: BOM list scrolls to part on diagram hotspot click
+  - C4: /parts-diagrams/{invalid-brand} returns 404 not soft-200
+  - C5: per-brand schematic parser fixtures cover all brands
+  - C6: knip dead:check blocking in CI; dead code deleted
+  - C7: asmCtx plumbing removed from PDP supersession path

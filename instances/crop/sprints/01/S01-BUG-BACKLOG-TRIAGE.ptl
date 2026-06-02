@@ -1,0 +1,117 @@
+gate: IN-PROGRESS
+sprint: S01
+title: Open Bug Backlog Triage and Reproduction Sweep
+priority: P0
+dep: none
+started: 2026-05-28
+env: localhost:3000 · branch:dev · last-merge:#1301
+closure_status_2026-05-28: 25 closed (T1-T4 DONE, T5 IN-PROGRESS, 2 real-order pending)
+composite: crop                 # migrated 2026-05-29 — see instances/crop/INVARIANTS.md
+repos: [crop-front]             # all S01 tracks operate on CT-CROP/CROP-front
+
+description: |
+  Manual-first QA sprint to clean open bug backlog without automation overreach.
+  Scope: validate current relevance of open bug issues, reproduce where possible,
+  classify stale/outdated issues, and produce close/keep recommendations.
+  This sprint is optimized for project onboarding and domain learning.
+
+invariants:
+  - Never auto-close issues without reproducible evidence.
+  - "Not reproducible now" is not "fixed"; classify as NEEDS-HUMAN-VERIFY.
+  - Mobile and navigation findings are first-class bug backlog inputs.
+  - Keep all closure actions proposal-only until user confirms.
+
+ground_truth:
+  - issues/2026-05-28/open-bug-issues.json
+  - issues/2026-05-28/open-issues.json
+  - issues/2026-05-28/closed-bug-issues.json
+  - issues/2026-05-28/closed-issues.json
+  - project.config.yml
+  - ISSUE_TRIAGE_RULES.ti
+
+working_rules: ISSUE_TRIAGE_RULES.ti
+output_dirs:
+  processed: issues/2026-05-28/processed/
+  moving_to_close: issues/2026-05-28/moving-to-close/
+push_gate: "push issues to github"
+
+success_metrics:
+  - 100% of open bug issues receive a triage status.
+  - At least top P0/P1 bug set gets fresh reproduction evidence.
+  - Candidate stale/duplicate/not-actual list prepared for review.
+  - Navigation + mobile UX findings are linked to concrete issue actions.
+
+requires: [NEXTJS_VERCEL_FRONTEND, VERCEL]
+estimated: 2-3 days
+
+tracks:
+  - id: T1
+    title: Build triage baseline and priority queue
+    tasks:
+      - S01-T1-baseline-priority-queue.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: DONE
+    output: issues/2026-05-28/processed/S01-T1-TRIAGE-PASS-1.md
+    result: |
+      84 open bug issues parsed. Priority queue built: 12 urgent, 29 high, 31 medium, 12 low.
+      Pass 1 completed: 5 POSSIBLY-FIXED, 3 REPRODUCED, 2 DUPLICATE pairs, 1 NEEDS-HUMAN-DEVICE.
+
+  - id: T2
+    title: Reproduce top severity bug issues
+    tasks:
+      - S01-T2-repro-p0-p1.pd
+    requires: [NEXTJS_VERCEL_FRONTEND, VERCEL]
+    gate: DONE
+    evidence_log: issues/2026-05-28/processed/S01-T2-TRIAGE-PASS-2.md
+    result: |
+      P0/P1 targets verified. Additional 2026-05-28 closures:
+      - #921 (P0 sale-blocker), #904, #951, #824, #510, #538.
+      - #971 closed OOS backend.
+      DEFERRED real-order: #562 (CT-delivery), #920 (UPS heavy item).
+      Code-confirmed for impl sprint: #1171, #1256, #1133, #1170.
+
+  - id: T3
+    title: Stale, duplicate, and no-longer-actual pass
+    tasks:
+      - S01-T3-stale-duplicate-pass.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: DONE
+    output: issues/2026-05-28/processed/DUPLICATES-1296-1297.md
+    result: |
+      Duplicates CLOSED 2026-05-28: #1270, #1269, #1271 (kept #1297, #1296, #1298).
+      Lane C scan complete.
+      OUTDATED-DESCRIPTION: #269 (/brands NH-only by design per DM 1213989).
+      Backend cluster CLOSED OOS 2026-05-28: #156, #524, #564, #570, #565, #970, #971, #972.
+
+  - id: T4
+    title: Navigation and UI/UX friction sweep
+    tasks:
+      - S01-T4-navigation-uiux-sweep.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: DONE
+    result: |
+      NEW BUG: /parts/brand/{non-NH} → 404 (only new-holland works; NH-only by design).
+      #634 reproduced: /parts?manufacturer=new-holland → 0 results.
+      Checkout/account redirects work correctly.
+      #824 CLOSED 2026-05-28 (iPhone visual QA passed).
+      #921 CLOSED 2026-05-28 (iPhone recheck all surfaces passed).
+      Parts-diagrams chapters 404 for guessed codes; real assemblyCode required.
+      DEFERRED: PDP → Add to cart full flow (out of triage scope).
+
+  - id: T5
+    title: Closure proposals and human approval pack
+    tasks:
+      - S01-T5-closure-proposals-pack.pd
+    requires: [NEXTJS_VERCEL_FRONTEND]
+    gate: IN-PROGRESS
+    dep: T2,T3,T4
+    result: |
+      Deps T2/T3/T4 DONE. Substantial closure executed 2026-05-28: 25 issues closed
+      with explicit user approval per closure:
+      - 8 moving-to-close (frontend verified fixes)
+      - 3 duplicates (#1270, #1269, #1271)
+      - 8 OUT-OF-SCOPE backend (#156, #524, #564, #570, #565, #970, #971, #972)
+      - 5 test/Lighthouse/visual-verified (#510, #538, #824, #904, #951)
+      - 1 real-device recheck (#921 P0 sale-blocker)
+      Remaining open: #562, #920 (real-order verify), 4 code-confirmed (#1171, #1256,
+      #1133, #1170) ready for impl sprint, ~13 NEEDS-HUMAN-VERIFY (Sentry/Vercel/prod).

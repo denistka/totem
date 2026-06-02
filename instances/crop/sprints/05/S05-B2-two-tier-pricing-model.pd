@@ -1,0 +1,36 @@
+gate: OPEN
+sprint: S05
+track: B
+task: B2
+title: "feat(checkout): 2-tier pricing model — loose ETA + real-rate overnight (#955)"
+repos: [crop-front]
+priority: high
+refs:
+  - CROP-front#955
+  - CROP-front#978  (parent umbrella)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+description: |
+  2-tier pricing in checkout: standard lanes show pre-calculated tier price ranges
+  from shared constants (A5); overnight lane shows live rate from BE /rates.
+  Loading + error states for overnight fetch required.
+
+scope:
+  in:
+    - Checkout shipping step — rate card display component
+    - Standard lanes: tier prices from A5 shared constants
+    - Overnight lane: live rate from BE /rates with loading/error states
+    - Unit tests for rate display logic
+  out:
+    - BE /rates endpoint changes
+    - Per-state timing labels (#982 — not in S05 scope)
+    - shipping-logic repo migration
+
+acceptance:
+  - Standard lanes render correct tier prices without a live fetch
+  - Overnight lane renders live UPS rate or graceful error
+  - No hardcoded price values
+  - Typecheck + vitest green
+
+dep: B1 + A5
+output: checkout rate-card component patched + unit tests

@@ -1,0 +1,42 @@
+gate: OPEN
+sprint: S05
+track: B
+task: B4
+title: "feat(cart): free-shipping countdown banner — '$X away from FREE shipping' (#980)"
+repos: [crop-front]
+priority: high
+refs:
+  - CROP-front#980  (canonical — #1016 and #1172 closed as dups in S04)
+  - CROP-front#978  (parent umbrella)
+  - CROP-front#931  (Phase 1 UI swap — confirm merged before this task)
+  - CROP-front#1166 (revert context — read before implementing; #1172 had re-promotion note)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+description: |
+  Cart banner: "$X away from FREE shipping" where X = threshold minus subtotal.
+  Banner disappears when threshold met. Threshold from A5 shared constants.
+  Before implementing: read #1166 revert context to understand why the previous
+  banner was reverted — carry any relevant constraints into this implementation.
+
+scope:
+  in:
+    - Cart sidebar/page — banner component
+    - Threshold from A5 shared constants
+    - Banner visible when subtotal < threshold; hidden when >= threshold
+    - Unit tests: below / at / above threshold
+  out:
+    - Checkout page banner (cart surface only — verify in #980 spec)
+    - Changing threshold value
+
+invariants:
+  - No hardcoded dollar values
+  - No React.memo / unjustified useMemo/useCallback
+  - All colors via Moby DS tokens
+
+acceptance:
+  - Banner shows correct delta when subtotal < threshold
+  - Banner absent when subtotal >= threshold
+  - Threshold change in shared constants propagates automatically
+
+dep: B3 + A5
+output: components/cart/FreeShipBanner.tsx + unit tests

@@ -1,0 +1,34 @@
+gate: OPEN
+sprint: S05
+track: B
+task: B1
+title: "gate(shipping): umbrella #978 — verify lane spec + confirm #931 status"
+repos: [crop-front]
+priority: high
+refs:
+  - CROP-front#978  (umbrella — 7-lane taxonomy)
+  - CROP-front#931  (Phase 1 UI swap — confirm merged or scoped)
+  - CROP-front#980  (canonical countdown banner — #1016 + #1172 already closed in S04)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+description: |
+  Pre-flight gate for Track B. Before any shipping UI code:
+  1. Read #978 umbrella body — extract 7 lane names, rules, prescribed sequence.
+  2. Confirm #931 (Phase 1 UI swap) status: merged / in-progress / blocked.
+  3. Post lane-taxonomy summary comment on #978 confirming S05 scope.
+  No code changes in this task.
+
+scope:
+  in:
+    - Read #978 body + extract lane spec
+    - Confirm #931 status
+    - Post summary comment on #978
+  out:
+    - Any shipping component changes
+
+acceptance:
+  - Lane taxonomy extracted and attached as comment to #978
+  - #931 status confirmed
+
+dep: none   # can start in parallel with Track A
+output: issue comments on #978; lane-spec note for B2–B6

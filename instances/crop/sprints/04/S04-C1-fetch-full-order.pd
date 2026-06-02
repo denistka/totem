@@ -1,0 +1,34 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C1
+title: "#3b: fetch-full-order integration — EmailableOrder type + confirmation facade (#1443)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1443
+  - CROP-front#1234   # parent — must be merged before this follow-up
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  Follow-up to #1234. Integrate the EmailableOrder type into the fetch-full-order
+  flow and wire up the confirmation facade so order confirmation emails use the
+  correct typed shape end-to-end.
+
+scope:
+  in:
+    - EmailableOrder type definition (verify or add to shared types)
+    - fetch-full-order function — return EmailableOrder shape
+    - Confirmation facade — consume EmailableOrder, not raw order object
+    - Unit test: fetch-full-order returns valid EmailableOrder shape
+  out:
+    - Changing email template HTML
+    - Any Resend API changes
+
+acceptance:
+  - fetch-full-order returns EmailableOrder (TypeScript compiles clean)
+  - Confirmation facade accepts EmailableOrder without casting
+  - Unit test green
+
+dep: none (assumes #1234 merged)
+output: fetch-full-order.ts + confirmation facade patched + unit test

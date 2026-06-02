@@ -1,0 +1,48 @@
+gate: OPEN
+sprint: S05
+track: A
+task: A3
+title: "feat(delivery): UPS XAV result cache — hashed address key, TTL 24h"
+repos: [crop-parts-services]
+priority: high
+refs:
+  - S02 hypothesis C + lever L1 (highest-leverage fix)
+  - S02 lesson: ups_xav_no_cache
+  - INVARIANTS.md: "Address strings are PII — cache keys hashed, no raw addresses in logs"
+requires: [BUN_HONO_CLOUDRUN, SECURITY]
+
+description: |
+  No result cache on UPS XAV — identical addresses re-validated on every checkout
+  attempt. S02 ranked this lever L1 (highest leverage): cache hit eliminates full
+  UPS round-trip (~400–700ms). Cache key = SHA-256 of normalized address fields.
+  TTL = 24h for VALID, 5min for INVALID (user may fix and retry).
+
+ground_truth:
+  file: CROP-parts-services/services/delivery/src/providers/ups/ups-address.ts
+  line: 30   # fetchWithRetry — no cache check before call
+
+scope:
+  in:
+    - ups-address.ts — check cache before UPS call; store result after
+    - Address normalization (lowercase, trim, canonical field order) — deterministic key
+    - Cache key = SHA-256(normalized address JSON) — never raw address as key
+    - Cache backend: reuse shared cache adapter from A2
+    - TTL: 24h VALID / 5min INVALID
+    - Unit tests: cache hit + cache miss + normalization determinism
+  out:
+    - FE changes
+    - Raw address strings in any log or Sentry event (blocked by INVARIANTS.md)
+
+invariants:
+  - Raw address MUST NOT appear in cache keys, logs, or Sentry events
+  - Cache key deterministic for equivalent addresses regardless of field order
+  - PII retention: cached entries expire; no persistent address storage
+
+acceptance:
+  - Identical address second checkout → cached result, no UPS call
+  - Cache key is SHA-256 hash — confirmed in test
+  - INVALID cached 5min, VALID 24h
+  - No raw address in logs
+
+dep: A2   # reuses shared cache adapter
+output: ups-address.ts + normalization util + cache integration + unit tests

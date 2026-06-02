@@ -1,0 +1,32 @@
+gate: OPEN
+sprint: S05
+track: A
+task: A4
+title: "ci: delivery-deploy.yml watch packages/shared-types (#340)"
+repos: [crop-parts-services]
+priority: medium
+refs:
+  - CROP-parts-services#340
+requires: [BUN_HONO_CLOUDRUN]
+
+description: |
+  delivery-deploy.yml does not watch packages/shared-types. A shared-types change
+  (e.g. shipping contract update) lands without triggering a delivery service
+  redeploy — stale binary runs against a new contract. Fix: add
+  packages/shared-types/** to the workflow paths trigger. Also audit other
+  service deploy workflows for the same gap.
+
+scope:
+  in:
+    - .github/workflows/delivery-deploy.yml — add packages/shared-types/** to on.push.paths
+    - Audit other service deploy workflows; fix any with the same gap
+  out:
+    - Changing deployment targets or Cloud Run config
+    - Any source code changes
+
+acceptance:
+  - delivery-deploy.yml triggers on push to packages/shared-types/**
+  - Confirmed by inspecting on.push.paths block after patch
+
+dep: none   # independent of A1–A3
+output: .github/workflows/delivery-deploy.yml patched + audit note for other services

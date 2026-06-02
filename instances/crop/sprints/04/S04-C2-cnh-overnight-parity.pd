@@ -1,0 +1,37 @@
+gate: LOCKED
+sprint: S04
+track: C
+task: C2
+title: "feat(checkout): runtime CNH-overnight cost parity check vs BE /rates (#1437)"
+repos: [crop-front]
+priority: P3
+refs:
+  - CROP-front#1437
+requires: [NEXTJS_VERCEL_FRONTEND, TYPESCRIPT]
+
+description: |
+  At checkout, FE displays CNH-overnight price from a local constant. If BE /rates
+  returns a different value (drift or surcharge), the customer sees the wrong price.
+  Add a runtime parity check: after fetching /rates, compare overnight rate from BE
+  against the FE constant. On mismatch, show the BE value and fire Sentry warning.
+
+scope:
+  in:
+    - Checkout overnight rate fetch — add post-fetch comparison against FE constant
+    - Mismatch: display BE rate (source of truth) + Sentry.captureMessage with delta
+    - Unit test: matching rates → no warning; mismatched → Sentry called + BE rate shown
+  out:
+    - Changing BE /rates logic
+    - Alerts outside Sentry
+
+invariants:
+  - BE /rates is always source of truth on mismatch
+  - Sentry event must not include raw pricing beyond the delta amount
+
+acceptance:
+  - Rate match: no Sentry event, FE shows constant value
+  - Rate mismatch: FE shows BE value, Sentry warning with delta
+  - Unit tests cover both paths
+
+dep: none
+output: checkout overnight rate fetch patched + unit tests

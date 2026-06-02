@@ -1,0 +1,56 @@
+gate: LOCKED
+v:4 role:dev x:nextjs-tailwind
+task: S03 T3 — #650 Catalog-card add-to-cart missing imageUrl
+requires: [NEXTJS_VERCEL_FRONTEND]
+sprint: S03
+repos: [crop-front]
+branch: issue-650
+
+context: |
+  Cart line items added from the catalog grid/list card show no image (placeholder)
+  while the PDP and the catalog card itself both show the real image.
+  Root cause (audit-confirmed against dev):
+  - features/catalog/product-card-add-to-cart.tsx:44-52 builds the cart item payload
+    WITHOUT imageUrl, even though part.media.primaryImage is available on the card.
+  - app/cart/_components/cart-item-card.tsx:144-176 renders item.imageUrl correctly
+    when present, MediaPlaceholder when absent.
+  - PDP add-to-cart (product-purchase-panel.tsx:131) DOES pass imageUrl — working fine.
+  - PR #840 only swapped placeholder branding; the data gap is untouched.
+  This is NOT the same bug as #827 (RecentlyViewed store schema — different code path).
+
+steps:
+  1. Branch: git checkout -b issue-650 dev
+  2. Before fix — repro artifact:
+     - Open https://crop.clintontractor.net/parts on prod
+     - Find any part card with a real image (not placeholder)
+     - Click "Add to cart" on the CARD (not the title link)
+     - Open the cart → screenshot the placeholder in the cart line
+     - Post part number + screenshot as a comment on issue #650
+  3. Fix: features/catalog/product-card-add-to-cart.tsx
+     In the addItem() call payload, add: imageUrl: part.media.primaryImage
+     While there, audit for other fields the PDP payload includes but the card
+     payload omits (check product-purchase-panel.tsx:132-140 for the full PDP payload):
+     availability, stockCount, shippingPath — add any that are missing and available.
+  4. Unit test: assert addItem is called with imageUrl: part.media.primaryImage
+     when the part has an image, and imageUrl: undefined when it doesn't.
+     File: features/catalog/product-card-add-to-cart.test.tsx (co-locate with source)
+  5. Regression: verify PDP add-to-cart still passes imageUrl (product-purchase-panel test).
+  6. Commit: fix(catalog): pass imageUrl in catalog-card add-to-cart payload (#650)
+  7. Open draft PR into dev, reference #650, include before/after screenshots.
+
+cmd:
+  - bun run lint:fix
+  - bun run type-check
+  - bunx vitest run features/catalog/product-card-add-to-cart.test.tsx
+
+out:
+  - features/catalog/product-card-add-to-cart.tsx (imageUrl + any missing fields added)
+  - features/catalog/product-card-add-to-cart.test.tsx (new unit test)
+  - issue #650 comment with before repro artifact
+
+done:
+  - Catalog card add → cart shows real image (verified on Vercel preview)
+  - PDP add → cart still shows real image (regression green)
+  - vitest passes for the new unit test
+  - lint + type-check clean
+  - PR draft open against dev
