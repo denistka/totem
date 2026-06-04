@@ -1,5 +1,5 @@
-gate: OPEN
-sprint: S05
+gate: DEFERRED
+sprint: S05 → S06
 track: A
 task: A3
 title: "feat(delivery): UPS XAV result cache — hashed address key, TTL 24h"

@@ -1,0 +1,211 @@
+role: V2 PR Review Protocol
+focus: pr-review, qa-gate, stacked-prs, denis-checklist
+instance: crop
+sprint: S06
+established: 2026-06-02 (team meetup) · confirmed in practice 2026-06-03
+
+# Loaded when: "review PR", "check PR", "Denis review", any mention of a front#NNNN or search-hono#NNN PR
+
+---
+
+# BRANCH STRATEGY (confirmed by Vova 2026-06-03)
+
+**`dev` IS the V2 base.** The foundation (PR#1533) is already merged into `dev`.
+No separate `v2` integration branch. Everything integrates into `dev` step by step.
+
+## Branch-base decision pattern (apply before every task)
+
+One question: **what does this task depend on?**
+
+```
+Task depends on nothing in-review?
+  → cut from dev  (foundation #1533 already there)
+
+Task needs components/pages from the diagrams redesign (PR#1537)?
+  → cut from feat/ct-1527-diagrams-brand-redesign
+     PR targets #1537, auto-retargets to dev when #1537 merges
+
+Task needs components/pages from the brand hub redesign (PR#1543)?
+  → cut from feat/ct-1529-brand-hub-v2
+     PR targets #1543, auto-retargets to dev when #1543 merges
+```
+
+**Why branch off in-review instead of waiting?**
+If you wait for the base PR to merge you lose a day. Branching off the working branch
+gives you the files now. When the base PR merges to dev, your branch auto-integrates —
+no big merge at the end, everything flows into dev step by step.
+
+**All PRs ultimately target `dev`.** Stacked PRs auto-retarget when their base merges.
+
+---
+
+# PR MERGE CHAIN
+
+```
+Dev (@pedchenkooleh-coo / @DaniilDerkach) opens PR on branch cut from dev (or working branch above)
+  → @denistka: runs locally + verifies acceptance criteria
+    → @denistka comments "Local test: PASS — {details}"  ← @appdev-v merge signal
+      → @appdev-v: final UI/UX + code review
+        → @appdev-v merges to dev → deploy crop-dev.app → smoke → prod
+```
+
+**Denis's PASS comment is the gate.** Vova does not merge without it.
+**Never approve without running locally.** CI green ≠ local test done.
+
+---
+
+# STACKED PR PATTERN (Vova's build style)
+
+Vova ships V2 brand-page work in layers:
+
+1. **Foundation PR** (e.g. front#1533) — shared component library, purely additive, zero page consumers.
+   CI: all checks green before review. Review: Denis + Oleg approve → Vova merges to `dev`.
+
+2. **Feature PRs stacked on working branch** (e.g. front#1537 on foundation branch; front#1543).
+   CI: only Socket / Vercel / soft-404 run on a stacked PR — this is expected and not a concern.
+   Full CI suite triggers automatically when the base branch merges and this PR auto-retargets to `dev`.
+
+**Trigger pattern:** Vova posts in the team channel:
+  "Denis + Oleg: [PR links], first one landing unblocks Oleg's [task]."
+→ Act immediately. Stacked PRs create a dependency chain; every hour of delay blocks downstream work.
+
+---
+
+# DENIS'S LOCAL REVIEW CHECKLIST
+
+## Step 1 — Checkout
+```bash
+gh pr checkout {N}
+bun install          # only if package.json or bun.lock changed
+```
+
+## Step 2 — Typecheck
+```bash
+bun run type-check   # must be clean, zero errors
+```
+
+## Step 3 — Run tests for changed files
+```bash
+bunx vitest run {changed-paths-from-pr-diff}
+# Example: bunx vitest run features/brands/ hooks/use-scroll-spy.test.ts
+```
+
+## Step 4 — Read the diff of key files
+```bash
+git diff origin/{base} -- {key-file}
+```
+Focus on:
+- `page.tsx` changes — breadcrumb hrefs, model link hrefs, Suspense fallbacks, loading.tsx match
+- Navigation files — any link that could create a loop (see INVARIANTS.md §F6)
+- `brand-registry.ts` / `manufacturer-config.ts` — `available`, `seoIndexed` flags
+
+## Step 5 — Manual style check (CI doesn't catch these)
+```bash
+grep -n "bg-white\|transition-colors\|ring-2" {changed-components}
+grep -rn "#[0-9]\{4\}" {changed-files}   # issue refs in JSDoc
+```
+Flag each with file:line. Non-blocking on purely additive PRs; must be fixed before live wiring.
+
+## Step 6 — Comment on PR
+```
+Local test: PASS — {N} tests green, type-check clean, {specific things verified}.
+
+{Optional: style follow-up before wiring to pages (non-blocking):}
+bg-white hardcoded → bg-background: file.tsx:NN
+transition-colors → transition-all: file.tsx:NN
+v3 focus ring (ring-2) → v4 (ring-[3px] ring-ring/50): file.tsx:NN
+Issue refs in JSDoc (#NNNN) → strip: file.ts:NN
+```
+
+```
+Local test: FAIL — {specific thing broken + steps to reproduce}
+```
+
+## Step 7 — Approve
+```bash
+gh pr review {N} --repo CT-CROP/{repo} --approve --body "LGTM — {one line}."
+```
+
+---
+
+# WHAT EACH PR TYPE NEEDS
+
+## Purely additive (no page consumers yet)
+- typecheck + vitest green
+- Storybook stories present for new components
+- Style violations noted as non-blocking follow-up
+
+## Page-changing PRs (page.tsx, routing, nav)
+- Walk the full path manually in dev browser at 375px + 1280px
+- Check breadcrumb hrefs — no loops, correct brand-specific paths
+- `loading.tsx` skeleton matches real page layout (prevents CLS / flash)
+- `<meta name="robots">` correct on brand pages (`noindex,follow`)
+- No JS console errors
+
+## Search/hono PRs
+- `bun run test` + `bun run typecheck` (both required)
+- `GET /api/brand/{slug}/models` returns 200 or clean 404 (never 500)
+- Brand display names: `getBrandDisplayName("FRR"|"VNT"|"MCH"|"MAR")` never returns "UNK"
+- `brand-extractor.ts` / `brand-safety.ts` scope unchanged (CNH family only)
+
+---
+
+# LOCAL-RUN & CI GOTCHAS (learned in practice — not V2-specific)
+
+These bit us during real PR reviews. Check them before concluding a PR is broken.
+
+## 1. `bun install` on EVERY fresh PR-branch checkout
+A new branch may carry a different lockfile. Skipping install yields phantom
+`Cannot find package 'hono'/'zod'` failures that look like 30+ broken tests but
+are just missing deps. Hit on search-hono#332 (31 fake fails → all green after install).
+→ After `gh pr checkout N`: run `bun install` before tests, always.
+
+## 2. Stacked-branch checkout collisions
+Switching between stacked branches, untracked files from branch A block
+`gh pr checkout B` ("untracked working tree files would be overwritten"). And a
+local copy of a working branch can diverge with stale base commits.
+→ Clean leaked untracked files first; if the local branch diverged from a
+  rebased remote, `git reset --hard origin/<branch>` to match origin exactly.
+
+## 3. CI upstream cascade — don't read as multiple bugs
+`lint-and-build` fails with "Upstream jobs not successful: security=failure"
+when `security` / `Semgrep OSS` fail. It is ONE root cause cascading, not three
+independent failures. Fix the upstream (Semgrep finding) and the rest clear.
+
+## 4. Vercel preview gating is an ACCOUNT issue, not code
+"Git author <login> must have access to the project on Vercel" = the PR author's
+GitHub account lacks Vercel project access. Infra/permissions, not a code defect —
+route to Vova, don't try to fix in the diff.
+
+## 5. Commit-msg ≤ 100 chars + commitlint + no-AI hook
+CROP-front `.husky/commit-msg` rejects > 100 chars, the word "claude" (any case),
+`Co-Authored-By:`, and emoji. (Already in CROP-front/CLAUDE.md — see there for the
+full pre-commit chain: ds:validate → cyrillic → emoji → gitleaks → lint-staged.)
+
+---
+
+# RECURRING STYLE VIOLATIONS (S06 brand components)
+
+| Violation | Correct form |
+|---|---|
+| `bg-white` hardcoded | `bg-background` or DS token |
+| `transition-colors` | `transition-all` |
+| `ring-2 ring-oem ring-offset-2` (v3) | `ring-[3px] ring-ring/50 focus-visible:outline-none` (v4) |
+| Issue `#NNNN` in JSDoc/CSS | Strip — belongs in PR description |
+
+---
+
+# S06 ISSUE → PR MAP (real GitHub numbers)
+
+| Plan task | GitHub | Owner | Repo | Branch base |
+|---|---|---|---|---|
+| A1 MAR hono registry | search-hono#329 | @DaniilDerkach | CROP-search-hono | `dev` |
+| A2 MAR front activation | front#1538 | @pedchenkooleh-coo | CROP-front | `feat/ct-1527-diagrams-brand-redesign` |
+| A4 4-brand smoke | front#1541 | @denistka | both | — (QA task) |
+| B1 desktop nav loop | front#1539 | @pedchenkooleh-coo | CROP-front | `feat/ct-1527-diagrams-brand-redesign` |
+| B2 mobile parity | front#1540 | @pedchenkooleh-coo | CROP-front | `feat/ct-1527-diagrams-brand-redesign` |
+| C1+C2 multibrand search | search-hono#330 | @DaniilDerkach | CROP-search-hono | `dev` |
+| Denis test coverage | front#1535 | @denistka | CROP-front | `feat/ct-1529-brand-hub-v2` |
+| Foundation (merged to dev) | front#1533 | @appdev-v | CROP-front | — |
+| Diagrams page (in review) | front#1537 | @appdev-v | CROP-front | `feat/ct-1526-redesign-foundation` → retargets `dev` |
+| Brand hub (in review) | front#1543 | @appdev-v | CROP-front | — |

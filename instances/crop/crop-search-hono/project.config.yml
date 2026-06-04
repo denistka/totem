@@ -13,7 +13,7 @@ project:
 paths:
   code: ../../../../CROP-search-hono
   history: .
-  intel: ./intel
+  # `intel: ./intel` removed 2026-06-03 — broken pointer (dir never existed).
 
 issues:
   github_repo: CT-CROP/CROP-search-hono

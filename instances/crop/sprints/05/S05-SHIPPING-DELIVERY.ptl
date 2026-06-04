@@ -4,26 +4,21 @@ title: Shipping & Delivery — Backend Hardening + Customer-Facing Taxonomy
 priority: P1
 dep: S04 (Track A must be closed before S05 starts — BE reliability baseline required)
 env: localhost:3000 · branch:dev · prod verify on crop.clintontractor.net / crop-dev.app
-status: PLANNED
+status: IN PROGRESS
 composite: crop
 repos: [crop-front, crop-parts-services]
 
 description: |
   Full shipping + delivery sprint in two tracks.
-  Track A — backend delivery hardening in crop-parts-services: UPS per-attempt
-  timeout, OAuth shared cache, UPS XAV result cache, deploy CI fix, CNH pricing SSoT.
-  Carries forward S02 investigation (analysis complete, implementation not started).
-  Track B — customer-facing 7-lane shipping taxonomy in crop-front: 2-tier pricing,
-  margin-aware free-ship gate, countdown banner (#980 canonical), tracking notifications,
-  runtime parity check (#1437).
-  Dedup already done in S04: #1016 and #1172 closed as duplicates of #980.
+  Track A — backend delivery hardening in crop-parts-services.
+  Track B — customer-facing shipping taxonomy in crop-front.
+
+  A2 (UPS OAuth cache) and A3 (XAV result cache) deferred to S06 —
+  blocked on Redis/Memorystore infra provisioning decision.
+  B1 (7-lane spec gate) deferred — requires posting GitHub comment (manual step).
+  B3 (Lane 7 margin gate) deferred to S06 — blocked on 3 open John decisions (#995).
 
 invariants: ../../INVARIANTS.md
-  # Key invariants for this sprint:
-  # - Address strings are PII — cache keys hashed, no raw addresses in logs (S02).
-  # - DELIVERY_API_DIRECT_URL schema must stay in sync between crop-front and crop-parts-services.
-  # - CROP-search-hono is NOT in the shipping/delivery path — do not route to it.
-  # - Out-of-scope issues TRANSFERRED, never closed (ROUTING.ti).
 
 sprint_rules:
   track_repo_field: repos
@@ -36,42 +31,37 @@ tracks:
     title: "Backend Delivery Hardening (crop-parts-services)"
     repos: [crop-parts-services]
     gate: OPEN
-    sequence: A1 → A2 → A3 (A2+A3 parallel after A1) → A4 → A5
     tasks:
-      - S05-A1-delivery-timeout-bound.pd
-      - S05-A2-ups-oauth-shared-cache.pd
-      - S05-A3-ups-xav-result-cache.pd
-      - S05-A4-delivery-deploy-ci-fix.pd
-      - S05-A5-cnh-overnight-pricing-ssot.pd
-    requires: [BUN_HONO_CLOUDRUN, SECURITY]
+      - S05-A1-delivery-timeout-bound.pd   # DONE — PR #362
+      - S05-A4-delivery-deploy-ci-fix.pd   # DONE — PR #363
+      - S05-A5-cnh-overnight-pricing-ssot.pd  # DONE — PR #364 (BE) + PR #1488 (FE)
+    requires: [BUN_HONO_CLOUDRUN]
 
   - id: B
     title: "Customer-Facing Shipping Taxonomy (crop-front)"
     repos: [crop-front]
     gate: OPEN
-    dep: A   # A3 (XAV cache) must land so BE /rates is reliable before FE parity check
-    sequence: B1 → B2 → B3 → B4 → B5 → B6
     tasks:
-      - S05-B1-shipping-umbrella-gate.pd
-      - S05-B2-two-tier-pricing-model.pd
-      - S05-B3-margin-free-ship-gate.pd
-      - S05-B4-countdown-banner.pd
-      - S05-B5-tracking-notifications.pd
-      - S05-B6-cnh-overnight-parity-check.pd
+      - S05-B2-two-tier-pricing-model.pd      # DONE — already in dev (free-shipping-options.tsx)
+      - S05-B4-countdown-banner.pd            # DONE — already in dev (free-ship-countdown.tsx)
+      - S05-B5-tracking-notifications.pd      # DONE — PR #365
+      - S05-B6-cnh-overnight-parity-check.pd  # DONE — PR #1489
     requires: [NEXTJS_VERCEL_FRONTEND]
 
+deferred_to_s06:
+  - S05-A2-ups-oauth-shared-cache.pd    # blocked: Redis infra decision needed
+  - S05-A3-ups-xav-result-cache.pd     # blocked: depends on A2
+  - S05-B1-shipping-umbrella-gate.pd   # blocked: manual GitHub comment step
+  - S05-B3-margin-free-ship-gate.pd    # blocked: 3 open John decisions (#995)
+
 stop_after: B6
-next_sprint_gate: "All Track A tasks resolved + all Track B tasks merged → S05 closes."
+next_sprint_gate: "All Track A + B tasks (PRs #362 #363 #364 #365 #1488 #1489) merged to dev → S05 closes."
 
 success_metrics:
-  - A1: UPS per-attempt timeout bound ≤ 8s; no 35s hangs
-  - A2: OAuth token survives Cloud Run cold start (cache hit confirmed in logs)
-  - A3: UPS XAV cache hit rate > 0% on repeat addresses in staging
-  - A4: delivery-deploy.yml triggers on packages/shared-types/** changes
-  - A5: single canonical definition of CNH-overnight constants; both repos import from it
-  - B1: 7-lane spec extracted and confirmed; #931 status resolved
-  - B2: standard lanes show tier prices; overnight shows live BE rate
-  - B3: Lane 7 visible only when margin threshold met
-  - B4: "$X away from FREE shipping" banner in cart; correct delta; threshold from constants
-  - B5: CNH + CNH-DFS orders trigger tracking email on shipment; no duplicates
-  - B6: BE /rates mismatch → FE shows BE value + Sentry warning with delta
+  - A1: UPS per-attempt timeout bound ≤ 8s; no 35s hangs — PR #362
+  - A4: delivery-deploy.yml triggers on packages/shared-types/** changes — PR #363
+  - A5: single canonical definition of CNH-overnight constants; both repos import from it — PR #364 + #1488
+  - B2: standard lanes show tier prices; overnight shows live BE rate — free-shipping-options.tsx in dev
+  - B4: "$X away from FREE shipping" banner in cart; correct delta — free-ship-countdown.tsx in dev
+  - B5: CNH + CNH-DFS orders trigger tracking email on shipment; no duplicates — PR #365
+  - B6: BE /rates mismatch → FE shows BE value + Sentry warning with delta — PR #1489

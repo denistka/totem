@@ -1,0 +1,71 @@
+gate: OPEN
+status: OPEN
+owner: Oleg (pedchenkooleh-coo)
+as_of: 2026-06-03
+note: |
+  Not yet started. Depends on Ferris routes being clean (A2 merged).
+  loading.tsx skeleton for /parts-diagrams/[brand] was added in PR#1537
+  (approved, waiting Vova merge) — this may already resolve the flash.
+  Verify after #1537 lands on dev before writing a separate fix.
+sprint: S06
+track: B
+task: B4
+title: "fix(diagrams): eliminate loading flash on Ferris commercial mower model selection"
+repos: [crop-front]
+priority: high
+refs:
+  - meetup-02-06-26 ("it's doing this flashy flash s***. I don't know what that is.
+    Ola knows exactly what that is and he's going to fix it")
+  - meetup-02-06-26 (timestamp ~00:55:39 — selecting a Ferris commercial mower config)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+impact: |
+  John demoed Ferris to the team and the immediate visible defect was a visual flash
+  when selecting a commercial mower configuration number. This happens in front of
+  ownership at the Friday presentation. It undermines confidence in the whole platform
+  even if everything else works.
+
+description: |
+  Reproduce: /parts-diagrams/ferris → Commercial Mowers → select a 59-series config.
+  Expected: smooth navigation/load to model assembly list or schematic.
+  Actual: visual flash/flicker before the page content settles.
+
+  Common root causes in Next.js App Router:
+  1. Client-side navigation triggers a React Suspense boundary that shows a
+     fallback (usually `loading.tsx` or a Suspense fallback) before the data resolves.
+     Fix: ensure the loading skeleton matches the page layout so the flash is invisible.
+  2. CSS-in-JS or Tailwind class mismatch on initial hydration (SSR vs client mismatch).
+     Look for dynamic className that differs between server and client render.
+  3. `useEffect` that changes layout-affecting state on mount (e.g., visibility toggle).
+  4. An image that loads after layout (LCP shift). Check if the brand hero or TypeCard
+     images cause layout shift (use priority={true} for above-fold images).
+  5. The assembly list page fetches BOM data client-side and briefly shows empty state.
+
+  Investigate in this order:
+  - Open DevTools → Performance tab → record navigation to the Ferris model page.
+  - Identify which element flashes (the whole page? specific section? image?).
+  - Check `app/parts-diagrams/loading.tsx` and any `Suspense` in BrandModelGroups.
+  - Check `BrandModelGroups` and `assembly-list-layout.tsx` for client-only state
+    that runs after hydration.
+
+scope:
+  in:
+    - Root-cause the flash (specific element + trigger)
+    - Fix: loading skeleton or eliminating the flash-causing state change
+    - Verify: no flash on Ferris → commercial mower → model selection at 4G throttle
+  out:
+    - Full page skeleton redesign
+    - Changing the data-fetching model
+
+invariants:
+  - No React.memo / unjustified useMemo/useCallback (React Compiler handles it)
+  - loading.tsx skeleton must match actual page layout dimensions to prevent CLS
+
+acceptance:
+  - Navigate: /parts-diagrams/ferris → Commercial Mowers → select any 59-series model
+  - No visible flash or layout shift during the transition (Chrome DevTools CLS ≈ 0)
+  - Same test passes on mobile (375px, 4G throttle)
+  - Existing Playwright tests do not regress
+
+dep: A3 (need Ferris routes working before this can be reproduced cleanly)
+output: loading.tsx fix + any Suspense/skeleton adjustments in the affected page

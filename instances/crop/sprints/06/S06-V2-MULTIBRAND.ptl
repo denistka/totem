@@ -1,0 +1,110 @@
+gate: OPEN
+sprint: S06
+title: V2 — Multi-Brand Production Launch
+priority: P0
+deadline: 2026-06-06 (Friday)
+env: localhost:3000 · branch:dev · prod verify on crop.clintontractor.net / crop-dev.app
+status: IN_PROGRESS
+updated: 2026-06-03
+
+progress_snapshot:
+  done:   [A1, B3, C1, C2]        # merged to dev
+  review: [A1-foundation-design, A1-diagrams-page, A1-brand-hub]  # PRs approved, Vova merges
+  flight: [A2, B1, B2]            # Oleg working, no PRs yet
+  blocked: [A3-smoke, B5-nav-smoke] # waiting A2+B1+B2 PRs
+  pending: [A4-ferris-config, B4-flash-fix] # open, not started
+  vova:   [A5-db-row, A6-slug-fix, deploy]
+
+pr_status:
+  - front#1533  merged 2026-06-03  # foundation components
+  - front#1537  APPROVED           # diagrams page v2 (Denis fixed + approved)
+  - front#1543  APPROVED           # brand hub v2 (Denis fixed + approved)
+  - search-hono#332  merged 2026-06-03  # MAR registry + multibrand PN (closes A1, C1, C2)
+  - front#1535  done 2026-06-03    # e2e coverage (price-leak + a11y + filter)
+
+critical_path:
+  front#1538 (@pedchenkooleh-coo) → @denistka local run → @appdev-v merge → front#1541 smoke → deploy
+
+roadmap_issue: https://github.com/CT-CROP/CROP-front/issues/1544   # team-facing checkbox tracker (mirror of ROADMAP.md)
+roadmap_mirror: ./ROADMAP.md
+
+composite: crop
+repos: [crop-front, crop-search-hono]
+
+description: |
+  V2 delivery sprint. Target: Ferris, Ventrac, McHale, and Marcrest brands
+  live in production by Friday 2026-06-06. Three tracks:
+
+  Track A — Brand Activation: complete the data + routing pipeline for all 4
+  new brands so each has a working brand landing page, model grid, and
+  diagram path. Marcrest is the only brand not yet wired in either repo.
+
+  Track B — Navigation & UX: eliminate the desktop circular loop on the
+  parts-diagrams screen; close the mobile parity gap so diagram browsing
+  works without text-only menus; add visual substance to brand pages
+  (equipment-type imagery instead of generic boxes).
+
+  Track C — Search: multibrand part-number collision handling so search
+  results correctly attribute parts when a PN exists across multiple brands;
+  Ferris 59-number configuration codes resolve to correct diagrams.
+
+  PR workflow (agreed 2026-06-02):
+    Denis reviews + runs PR locally → Vova does final UI/UX check → merge.
+  Issue workflow:
+    Small bugs: absorb into current-scope issue or backlog task list.
+    New work: issue with impact statement at top.
+
+invariants: ../../INVARIANTS.md
+
+sprint_rules:
+  track_repo_field: repos
+  cascade: ptl → track → task
+  cross_repo_track_allowed: true
+  ptl_repos_is_union: true
+
+tracks:
+  - id: A
+    title: "Brand Activation — Marcrest + 4-brand end-to-end verification"
+    repos: [crop-front, crop-search-hono]
+    gate: OPEN
+    tasks:
+      - S06-A1-marcrest-hono-registry.pd        # Add MAR to hono BRAND_REGISTRY + carried whitelist
+      - S06-A2-marcrest-front-activation.pd     # Add marcrest to MANUFACTURER_CONFIGS (available:true)
+      - S06-A3-4brand-e2e-smoke.pd              # Verify all 4 brands: hono → FE landing + diagrams
+      - S06-A4-ferris-config-numbers.pd         # 59-number Ferris configs → assembly diagrams wired
+    requires: [NEXTJS_VERCEL_FRONTEND, BUN_HONO_CLOUDRUN]
+
+  - id: B
+    title: "Navigation & UX — desktop loop fix + mobile parity + brand imagery"
+    repos: [crop-front]
+    gate: OPEN
+    tasks:
+      - S06-B1-desktop-nav-loop-fix.pd          # Eliminate circular /parts-diagrams navigation loop
+      - S06-B2-mobile-diagram-parity.pd         # Mobile assembly view: expose image-scroll panel
+      - S06-B3-brand-equipment-imagery.pd       # TypeCard static imagery per equipment type
+      - S06-B4-ferris-flash-fix.pd              # Loading flash on Ferris commercial mower selection
+    requires: [NEXTJS_VERCEL_FRONTEND]
+
+  - id: C
+    title: "Search — multibrand PN collision + Dan alignment"
+    repos: [crop-search-hono]
+    gate: OPEN
+    tasks:
+      - S06-C1-multibrand-pn-search.pd          # Search: PN collision across brands — correct attribution
+      - S06-C2-search-brand-context.pd          # Search results carry brand label for new 4 brands
+    requires: [BUN_HONO_CLOUDRUN]
+
+success_metrics:
+  - A1: `/api/brand/marcrest/models` returns 200 from hono; not 404
+  - A2: `/parts/brand/marcrest` and `/parts-diagrams/marcrest` render (no 404)
+  - A3: All 4 brands render brand page + model grid + at least one assembly diagram end-to-end
+  - A4: Ferris commercial mower 59-code → `/parts-diagrams/ferris/{modelCode}` → assembly loads
+  - B1: No circular redirect loop; breadcrumb depth ≤ 3 from brand page to assembly
+  - B2: Mobile assembly view shows chapter image strip, not text-only list
+  - B3: TypeCards on brand landing show equipment-type image (not generic hex icon)
+  - B4: No flash/flicker on Ferris commercial mower model selection
+  - C1: PN search returns correctly attributed results when PN exists in 2+ brands
+  - C2: Brand facet populates correctly for Ferris, Ventrac, McHale, Marcrest in search results
+
+stop_after: C2
+next_sprint_gate: "All 4 brands smoke-tested in dev by Denis → Vova final check → deploy to prod."

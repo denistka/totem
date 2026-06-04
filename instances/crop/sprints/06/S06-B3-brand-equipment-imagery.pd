@@ -1,0 +1,79 @@
+gate: DONE
+closed: 2026-06-03
+owner: Oleg (pedchenkooleh-coo)
+note: |
+  Already shipped before S06: lib/equipment/type-image.ts + TypeCard already render
+  equipment-type images (12 WebP assets in public/images/equipment-types/).
+  Verified in PR#1537 review — Ferris/Ventrac/McHale slugs covered.
+  No code changes needed.
+sprint: S06
+track: B
+task: B3
+title: "feat(brands): brand landing TypeCards — equipment-type static imagery"
+repos: [crop-front]
+priority: medium
+refs:
+  - meetup-02-06-26 ("it's a little bit too much the same with just boxes with little
+    hex tractors in them")
+  - meetup-02-06-26 ("incorporating specific imagery and clearer grouping will create
+    a more intuitive experience")
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+impact: |
+  Brand landing pages currently show TypeCard grids with a generic category icon
+  (hex tractor silhouette) regardless of brand. Customers landing on a Ferris page
+  see the same visual as the New Holland page. Distinctive imagery per equipment type
+  communicates brand identity immediately and reduces bounce.
+
+description: |
+  TypeCard (`app/parts-diagrams/_components/type-card.tsx`) receives an equipment-type
+  object. The hono brand-hub route returns `imageUrl: null` for all models today
+  (schema slot reserved — no hero image column on `models` table yet).
+
+  V2 pragmatic fix: static curated image map per equipment-type slug. This requires
+  no DB schema change and no hono change.
+
+  Approach:
+  1. Create `lib/brand/equipment-type-images.ts`: a map of equipmentType slug →
+     static image path (placed in `public/images/equipment-types/`).
+     e.g. { "tractors": "/images/equipment-types/tractors.webp", "mowers": "..." }
+     Source: OEM marketing images (same images Vova has for Figma reference).
+  2. `TypeCard` accepts an optional `imageUrl` prop (already may have one — check).
+     If not, add it: when imageUrl is set, render it as a bg-image or <Image>
+     instead of the generic icon.
+  3. Brand landing page (`app/parts/brand/[slug]/page.tsx`): when mapping types to
+     TypeCards, inject `imageUrl` from the static map.
+  4. For types with no static image: retain current generic icon (graceful degradation).
+
+  Image sourcing: Vova has Figma reference with brand imagery. Denis to coordinate
+  with Vova on which images to use. 4-6 images needed (Tractors, Mowers, Hay Tools,
+  Commercial Mowers, Utility Vehicles, Attachments). Formats: WebP, 400×250px,
+  optimized via Next.js <Image>.
+
+scope:
+  in:
+    - `lib/brand/equipment-type-images.ts`: static slug→image map
+    - TypeCard: render static image when available
+    - `/public/images/equipment-types/`: 4-6 curated images (Vova provides sources)
+    - Brand landing: inject static images into TypeCard props
+    - Unit test: TypeCard renders <Image> when imageUrl prop provided
+  out:
+    - Per-brand images (V2 is per-equipment-type; per-brand is a follow-up)
+    - Changes to hono imageUrl field (deferred — no models.hero_image column yet)
+    - Changing the TypeCard component structure
+
+invariants:
+  - <Image> component from Next.js — not <img> tag
+  - All images must have descriptive alt text
+  - Static images in public/ — no CDN dependency for V2 launch
+  - No hardcoded hex colors — use Moby DS tokens for overlays
+
+acceptance:
+  - Brand landing for Ferris: "Commercial Mowers" TypeCard shows a mower image
+  - Brand landing for New Holland (existing): no regression — NH TypeCards still render
+  - TypeCard with no static image matches: renders existing generic icon (no broken img)
+  - Lighthouse perf: no LCP regression (images should be lazy-loaded below-fold;
+    above-fold can have priority flag)
+
+dep: none
+output: lib/brand/equipment-type-images.ts + TypeCard update + public/images/

@@ -1,0 +1,71 @@
+gate: OPEN
+status: IN_FLIGHT
+owner: Oleg (pedchenkooleh-coo)
+issue: https://github.com/CT-CROP/CROP-front/issues/1538
+as_of: 2026-06-03
+note: |
+  Oleg working on activation. No PR yet.
+  Prerequisite: PR#1533 (foundation) merged to dev ✓.
+  Key correction: brand-registry.ts must flip marcrest.available false→true FIRST
+  (carriedIdentity reads record.available — does not auto-set). 4 files affected.
+  Denis runs PR locally the moment it opens.
+sprint: S06
+track: A
+task: A2
+title: "feat(brands): activate Marcrest in CROP-front manufacturer-config"
+repos: [crop-front]
+priority: high
+refs:
+  - meetup-02-06-26 (Ferris, Ventrac, McHale, Marcrest all needed in production)
+  - CROP-front#1433 (McHale/Ventrac activation pattern — copy this)
+  - CROP-front#1398 (Ferris activation pattern — copy this)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+impact: |
+  Marcrest has no entry in MANUFACTURER_CONFIGS so `/parts/brand/marcrest` and
+  `/parts-diagrams/marcrest` return 404. Activating it wires the brand into every
+  route that reads MANUFACTURER_CONFIGS: brand hub page, parts-diagrams, equipment
+  types API, sitemap generation, and the brands list page.
+
+description: |
+  Pattern: front#1433 (McHale). Steps:
+  1. Add `marcrest` entry to MANUFACTURER_CONFIGS in `lib/db/manufacturer-config.ts`
+     using `carriedIdentity("marcrest")`. Set `available: true, seoIndexed: false`.
+     The `seoIndexed: false` keeps the page noindex,follow until John explicitly
+     approves indexing — consistent with all other non-NH V2 brands.
+  2. `AVAILABLE_MANUFACTURER_SLUGS` is derived automatically from the config —
+     no manual additions needed.
+  3. Verify `generateStaticParams()` on both brand pages now includes "marcrest"
+     (the filter `c.available === true` drives it).
+  4. Confirm `robotsForBrand("marcrest")` returns the correct noindex/follow preset
+     (front#1397 pattern).
+  5. Update `lib/seo-config.ts` or wherever brand-level OG defaults are set if
+     Marcrest needs a custom accent color/branding config.
+
+scope:
+  in:
+    - `lib/db/manufacturer-config.ts`: add marcrest entry
+    - Check/add Marcrest to `lib/brand-branding.ts` (accent color) if that file
+      has per-brand entries
+    - Unit test for `getManufacturerConfig("marcrest")` → not null, available: true
+  out:
+    - Static content / imagery for the Marcrest landing page (Track B scope)
+    - Marcrest data seeding in DB (Vova/Alex)
+    - seoIndexed: true (not until John approves indexing)
+
+invariants:
+  - seoIndexed MUST be false — no brand reaches seoIndexed:true without explicit John approval
+  - available: true is required for the route to activate
+  - Canonical slug: "marcrest" (lowercase, no spaces)
+  - vendorCode must match what hono uses in its vocabulary table ("MAR" or full name —
+    verify against vocabulary-cache.ts DEFAULT_MANUFACTURERS or BRAND_REGISTRY)
+
+acceptance:
+  - `getManufacturerConfig("marcrest")` returns config with `available: true`
+  - GET /parts/brand/marcrest → 200 (not 404) in dev build
+  - GET /parts-diagrams/marcrest → 200 or graceful empty-state (no 500)
+  - robots meta on /parts/brand/marcrest → noindex,follow (not noindex,nofollow)
+  - Unit test passes
+
+dep: A1 (hono BRAND_REGISTRY must have MAR before FE data fetch will populate)
+output: lib/db/manufacturer-config.ts + optional lib/brand-branding.ts

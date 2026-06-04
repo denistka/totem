@@ -1,0 +1,92 @@
+gate: OPEN
+status: BLOCKED
+blocked_on: front#1538 (Oleg Marcrest FE) must be merged to dev first
+issue: https://github.com/CT-CROP/CROP-front/issues/1541
+owner: Denis (denistka)
+as_of: 2026-06-03
+note: |
+  search-hono#332 (MAR backend) already merged ✓.
+  Waiting on Oleg's #1538. Local env ready (localhost:3000 + Cloud Run hono).
+  Smoke checklist covers: /parts/brand/{slug} + /parts-diagrams/{slug} + assembly
+  for all 4 brands at 375px and 1280px.
+sprint: S06
+track: A
+task: A3
+title: "test(brands): 4-brand end-to-end smoke — brand page + model grid + diagram path"
+repos: [crop-front, crop-search-hono]
+priority: high
+refs:
+  - meetup-02-06-26 ("means they have to have brand landing pages... interface is working cleanly")
+  - S06-A1, S06-A2 (must be merged first)
+requires: [NEXTJS_VERCEL_FRONTEND, BUN_HONO_CLOUDRUN]
+
+impact: |
+  The team committed to delivering 4 brands to production next Friday. Without a
+  structured smoke-test checklist, bugs surface in prod in front of ownership (the
+  presentation John mentioned). This task defines what "production ready" means for
+  each brand and documents the test run so Denis + Vova can sign off.
+
+description: |
+  For each brand {ferris, ventrac, mchale, marcrest} verify the following manually
+  in the dev environment (crop-dev.app or localhost), then record pass/fail below.
+  Denis runs each scenario locally before Vova does final check.
+
+  Brand landing (/parts/brand/{slug}):
+  - Page renders without 500/404
+  - Brand name + logo visible in hero header
+  - At least 1 TypeCard from hono equipment-types (or graceful empty-state if data
+    not yet seeded — must NOT be a broken layout)
+  - "Search all parts" CTA leads to /parts?manufacturer={vendorCode}
+  - Serial search widget renders
+  - robots meta = noindex,follow (not noindex,nofollow)
+
+  Parts-diagrams brand page (/parts-diagrams/{slug}):
+  - Page renders without 500/404
+  - Model group grid shows (or graceful empty-state if hono returns empty)
+  - Each model card links to /parts-diagrams/{slug}/{modelCode}
+
+  Assembly page (/parts-diagrams/{slug}/{modelCode} for at least 1 model):
+  - Schematic viewer loads
+  - BOM table renders at least 1 part
+  - "Add to cart" on a BOM row works (or visible if user not signed in)
+
+scope:
+  in:
+    - Manual test run checklist (to be filled by Denis during QA)
+    - Any bug fixes discovered during the smoke run that are ≤ 10 lines (absorb inline)
+    - Larger bugs: open as GitHub issues with impact statement, link from this task
+  out:
+    - New feature work
+    - Automated Playwright e2e (separate task if scope allows — not V2 blocker)
+
+invariants:
+  - Test run must mirror prod conditions: use dev Vercel deploy, not localhost build
+  - Each brand must be tested independently (no cross-brand data sharing assumption)
+
+acceptance:
+  Pass criteria for "production ready":
+  - All 3 pages above return 200 for all 4 brands in dev environment
+  - No JS console errors (aside from pre-existing known issues — document exceptions)
+  - No broken layouts at 375px (mobile) and 1280px (desktop) viewport
+
+smoke-checklist:
+  # Fill in ✓/✗ + note during QA run:
+  ferris:
+    brand_landing: ""
+    parts_diagrams: ""
+    assembly_page: ""
+  ventrac:
+    brand_landing: ""
+    parts_diagrams: ""
+    assembly_page: ""
+  mchale:
+    brand_landing: ""
+    parts_diagrams: ""
+    assembly_page: ""
+  marcrest:
+    brand_landing: ""
+    parts_diagrams: ""
+    assembly_page: ""
+
+dep: A1, A2
+output: this file (smoke-checklist filled in) + bug issues if any found

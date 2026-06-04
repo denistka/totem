@@ -1,5 +1,5 @@
-gate: OPEN
-sprint: S05
+gate: DEFERRED
+sprint: S05 → S06
 track: A
 task: A2
 title: "fix(delivery): persist UPS OAuth token across Cloud Run instances"

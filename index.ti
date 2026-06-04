@@ -37,4 +37,28 @@ description: |
 load-order:
   1. `index.ti` (this file)
   2. `instances/<project>/project.config.yml` (brings in stacks/templates)
-  3. Target task/sprint files (`.ptl`, `.pd`).
+  3. For COMPOSITE instances (`composite: true`): read `instances/<project>/_LOADER.ti`
+     FIRST — it lists nested members, the load ritual, and operating rules. Members
+     are nested under the composite root, not siblings; paths cascade one extra `../`.
+  4. Target task/sprint files (`.ptl`, `.pd`).
+
+# ── INSTANCE LOADING (works for ANY of the instances under instances/) ───────
+# Generic discovery rule — no per-instance registry to rot. To load instance <name>:
+#   1. Read `instances/<name>/project.config.yml`.
+#   2. If it declares `composite: true`, read `instances/<name>/_LOADER.ti` first,
+#      then each member's nested `project.config.yml`.
+#   3. Otherwise load the single config + its stack adapters directly.
+# This convention covers every instance equally; `active-engagements` below is only
+# a shortcut for what is being actively worked on — never a gate.
+instance-loading:
+  rule: "instances/<name>/project.config.yml → if composite, _LOADER.ti first"
+  composite-marker: "composite: true"
+  non-composite: "single config + stack_adapters, no _LOADER needed"
+
+# ── ACTIVE ENGAGEMENTS (current focus — update as work shifts) ────────────────
+# A pointer, not a registry. Other instances stay loadable via instance-loading above.
+active-engagements:
+  - id: crop
+    kind: composite (3 repos under CT-CROP/*)
+    loader: ./instances/crop/_LOADER.ti
+    active-sprint: S06 — V2 Multi-Brand Production Launch (deadline 2026-06-06)

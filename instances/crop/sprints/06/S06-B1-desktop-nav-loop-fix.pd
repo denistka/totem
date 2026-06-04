@@ -1,0 +1,73 @@
+gate: OPEN
+status: IN_FLIGHT
+owner: Oleg (pedchenkooleh-coo)
+issue: https://github.com/CT-CROP/CROP-front/issues/1539
+as_of: 2026-06-03
+note: |
+  Oleg working on it. No PR yet.
+  Key correction: brand-routes assembly breadcrumb is already correct
+  (page.tsx:117 → /parts-diagrams/${config.slug}). Loop is elsewhere —
+  likely brand-landing CTA or ConditionalSchematicBanner. Repro first, then fix.
+  Denis runs B5 nav smoke after both B1 + B2 PRs open.
+sprint: S06
+track: B
+task: B1
+title: "fix(navigation): eliminate circular redirect loop on parts-diagrams desktop"
+repos: [crop-front]
+priority: high
+refs:
+  - meetup-02-06-26 ("click open parts diagram right there... it'll go back here again")
+  - meetup-02-06-26 ("there's a lot of just going back to some of these menus")
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+impact: |
+  John demonstrated a case where clicking "Open parts diagram" from the assembly list
+  sent the user back to the same menu they came from. This circular path is the #1
+  navigation pain point: users with a known model can't reach their diagram in a
+  straight line. Fixing it is a prerequisite for the V2 "easily usable" bar.
+
+description: |
+  Root-cause investigation required before coding. Trace the circular path:
+
+  1. Start at /parts-diagrams (NH root) or /parts-diagrams/ferris.
+  2. Select a model → /parts-diagrams/ferris/{modelCode}.
+  3. Click an assembly → /parts-diagrams/ferris/assemblies/{assemblyCode}.
+  4. From the assembly page, find any "back" / "open diagram" / "breadcrumb" link
+     that routes back to step 2 or step 1 instead of going to the assembly viewer.
+
+  Likely suspects:
+  - `assembly-nav.tsx`: the back-navigation component on the assembly page.
+  - `BrandBreadcrumb` in brand-assembly-view: does the breadcrumb href resolve
+    correctly for non-NH brands?
+  - `resolve-assembly-nav.ts`: derives the back-link from assembly context; if the
+    brandCode is missing or wrong for non-NH brands the resolved href may be stale.
+  - `ConditionalSchematicBanner` on brand pages: the CTA may route back to the
+    diagrams root instead of the brand-specific diagrams page.
+
+  Fix: ensure every "back" / "breadcrumb" link on the assembly page routes
+  forward-only (brand landing → model list → assembly → schematic). Never loop.
+
+scope:
+  in:
+    - Identify and fix the circular link(s) in the assembly viewer nav path
+    - Verify breadcrumb depth at each step: landing → type → model → assembly ≤ 4 crumbs
+    - Fix for both NH and non-NH brands (the non-NH path is more likely broken)
+    - Unit test: `resolve-assembly-nav.ts` — for a non-NH brand assembly, resolves
+      to /parts-diagrams/{brand}/{modelCode}, not /parts-diagrams root
+  out:
+    - Redesigning the breadcrumb component (layout/visual changes)
+    - Changing the URL structure
+
+invariants:
+  - No page-level permanentRedirect() — edge-level only (see proxy.ts contract in CLAUDE.md)
+  - Breadcrumb hrefs must be built with URL helpers, never inline template literals
+
+acceptance:
+  - From /parts-diagrams/ferris/assemblies/{assemblyCode}: clicking breadcrumb
+    "Ferris" goes to /parts-diagrams/ferris, not /parts-diagrams
+  - From /parts-diagrams/ferris/{modelCode}: no link routes back to the same page
+  - Smoke test: navigate brand landing → type group → model → assembly → schematic
+    with no circular step at any level (desktop Chrome, mobile Safari)
+
+dep: A3 (smoke run reveals which brand triggers the loop)
+output: features/assemblies/resolve-assembly-nav.ts fix + unit test update

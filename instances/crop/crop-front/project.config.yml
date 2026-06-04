@@ -14,7 +14,7 @@ project:
 paths:
   code: ../../../../CROP-front
   history: .
-  intel: ./intel
+  # `intel: ./intel` removed 2026-06-03 — broken pointer (dir never existed).
 
 guardians:
   default:

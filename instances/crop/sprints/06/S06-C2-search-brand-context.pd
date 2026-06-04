@@ -1,0 +1,73 @@
+gate: DONE
+closed: 2026-06-03
+owner: Daniil (DaniilDerkach)
+pr: https://github.com/CT-CROP/CROP-search-hono/pull/332
+note: |
+  Merged to dev as part of combined PR#332 with A1/C1.
+  getBrandDisplayName coverage for FRR/VNT/MCH/MAR verified by new tests.
+  Brand facets (VNT/MCH slugs) verified in contract tests.
+  Dan briefed via team channel (C3).
+sprint: S06
+track: C
+task: C2
+title: "feat(search): verify brand context in search results for all 4 V2 brands"
+repos: [crop-search-hono]
+priority: medium
+refs:
+  - meetup-02-06-26 ("we're now using alternate data sets")
+  - S06-C1 (must run first — C2 validates the broader brand context, not just collision)
+requires: [BUN_HONO_CLOUDRUN]
+
+impact: |
+  Beyond part-number collisions, every search result for a Ferris, Ventrac, McHale,
+  or Marcrest part must correctly surface the brand so users know they're looking at
+  the right product. If the brand label is missing or shows "Unknown", users can't
+  trust the result.
+
+description: |
+  Validate that the brand context (manufacturer display name + code) is populated
+  correctly in all search result shapes for the 4 new brands.
+
+  Check 3 endpoints:
+  1. `/api/search?q={ferrisPart}` — search adapter maps `manufacturer_codes` array
+     to `brandCodes` in the UnifiedCatalogPart shape.
+  2. `/api/parts/{ferrisPartId}` — part detail includes manufacturer name.
+  3. `/api/autocomplete?q={ferrisQuery}` — autocomplete results include brand label.
+
+  For each brand, verify `getBrandDisplayName(code)` returns the correct display name
+  (not "UNK" or an empty string). This calls into `vocabulary-cache.ts` BRAND_REGISTRY.
+
+  Also verify the `brand-extractor.ts` correctly identifies brand codes from Ferris/
+  Ventrac/McHale parts (it uses `BRAND_KEYWORDS` map — check those brands are present
+  or that they fall through safely if not in the CNH-family guard).
+
+  Note: `brand-safety.ts` guards CNH family only. Ferris/Ventrac/McHale are not CNH
+  family brands, so brand-safety.ts should not filter their content. Verify it does
+  not accidentally block non-CNH brand results.
+
+scope:
+  in:
+    - Verify getBrandDisplayName("FRR"), ("VNT"), ("MCH"), ("MAR") → correct names
+    - Verify brand-extractor.ts does NOT misclassify Ferris parts as CNH-contaminated
+    - Verify autocomplete includes brand token in highlights for new-brand queries
+    - Spot-check: brand-safety.ts isAiBrandSafe returns true for non-CNH brand parts
+      (they have no CNH-family brand mentions → safe by design)
+    - Unit test: add FRR, VNT, MCH, MAR to `getBrandDisplayName` test coverage
+  out:
+    - Adding AI-generated descriptions to new brand parts (out of V2 scope)
+    - Changing the CNH-family brand-safety scope (do not expand it)
+
+invariants:
+  - brand-safety.ts scope is CNH family only — do not modify it to include non-CNH brands
+  - getBrandDisplayName must never return "UNK" for a registered brand code
+
+acceptance:
+  - getBrandDisplayName("FRR") === "Ferris" (unit test)   # FRR is canonical, not FER
+  - getBrandDisplayName("VNT") === "Ventrac" (unit test)
+  - getBrandDisplayName("MCH") === "McHale" (unit test)
+  - getBrandDisplayName("MAR") === "Marcrest" (unit test — needs A1 first)
+  - Autocomplete for "ferris" returns results with brand label "Ferris" (contract test)
+  - No 500 errors on any search endpoint when queried with Ferris/Ventrac part numbers
+
+dep: A1 (MAR display name not available until BRAND_REGISTRY updated), C1
+output: vocabulary-cache.ts unit test additions + brand-extractor.ts spot-check fix (if needed)

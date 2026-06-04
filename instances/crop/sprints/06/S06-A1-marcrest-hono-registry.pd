@@ -1,0 +1,63 @@
+gate: DONE
+closed: 2026-06-03
+owner: Daniil (DaniilDerkach)
+pr: https://github.com/CT-CROP/CROP-search-hono/pull/332
+note: |
+  Merged to dev (search-hono) as part of combined PR#332.
+  MAR added to BRAND_REGISTRY + STATIC_CARRIED_WHITELIST (also hardened VNT/FRR/MCH).
+  967 tests green. Denis reviewed + approved.
+sprint: S06
+track: A
+task: A1
+title: "feat(search): add Marcrest (MAR) to hono BRAND_REGISTRY and carried-brand whitelist"
+repos: [crop-search-hono]
+priority: high
+refs:
+  - meetup-02-06-26 (John: "we're waiting for Marcress to be wired in")
+requires: [BUN_HONO_CLOUDRUN]
+
+impact: |
+  Marcrest is the last of 4 brands needed for V2. Without this task, hono returns 404
+  for `/api/brand/marcrest/models` and the entire brand landing + diagrams route is dead
+  for Marcrest. All other V2 brand work (A2, A3) is unblocked once this lands.
+
+description: |
+  `src/lib/vocabulary-cache.ts` `BRAND_REGISTRY` drives the carried-brand gate for the
+  brand-hub, brand-taxonomy, and models-by-brand routes. Marcrest is absent from the
+  registry; adding it unlocks the vocabulary-cache read path for all Marcrest models.
+
+  STATIC_CARRIED_WHITELIST in vocabulary-cache.ts is the fallback when the DB
+  `brand_vocabulary` table has no row for MAR. Add MAR to the whitelist too so
+  cold-start before cache refresh still serves Marcrest.
+
+scope:
+  in:
+    - `BRAND_REGISTRY`: add entry for Marcrest (code: MAR, canonicalName: "Marcrest",
+      vocabulary: ["Marcrest", "MARCREST"], productLines: ["MARCREST"],
+      querySynonyms: ["marcrest", "mar", "bale barron"])
+    - `STATIC_CARRIED_WHITELIST` (or equivalent): add "MAR"
+    - Unit test: `normaliseManufacturerToken("marcrest")` returns "MAR";
+      `getBrandDisplayName("MAR")` returns "Marcrest"
+    - Contract smoke: `GET /api/brand/marcrest/models` returns 200 or valid 404
+      (not an uncaught exception) after cache refresh
+  out:
+    - DB schema changes
+    - Marcrest data ingestion (Alex/Vova scope)
+    - Changing the `is_carried` flag in DB (that is Vova's task for the
+      brand_vocabulary table refresh)
+
+invariants:
+  - No hardcoded brand logic outside BRAND_REGISTRY
+  - querySynonyms lowercase
+  - productLines UPPERCASE to match models.product_line column convention
+  - All new brand codes must follow the 3-char uppercase convention (MAR ✓)
+
+acceptance:
+  - `normaliseManufacturerToken("marcrest")` → "MAR" (unit test)
+  - `getCarriedBrandCodes()` includes "MAR" whether DB load succeeds or falls back
+  - POST /admin/cache/refresh → GET /api/brand/marcrest/models returns 200 (requires
+    Marcrest rows in models/search_vocabulary — if data not yet in DB, 404 with
+    `code: "NOT_FOUND"` is acceptable; error must NOT be 500)
+
+dep: none
+output: src/lib/vocabulary-cache.ts + unit test update

@@ -1,0 +1,79 @@
+gate: OPEN
+status: IN_FLIGHT
+owner: Oleg (pedchenkooleh-coo)
+issue: https://github.com/CT-CROP/CROP-front/issues/1540
+as_of: 2026-06-03
+note: |
+  Oleg working on it. No PR yet.
+  Target: MobileChapterDrawer shows image thumbnails (not text-only) on mobile.
+  Do not create new drawer — reuse MobileChapterDrawer (chapter-sidebar.tsx, 258 lines).
+  Test: pinch-zoom must still work after change.
+sprint: S06
+track: B
+task: B2
+title: "feat(mobile): expose diagram image-scroll panel on mobile assembly view"
+repos: [crop-front]
+priority: high
+refs:
+  - meetup-02-06-26 ("on mobile you only have that menu on the left side... a lot of
+    menus that are meaningless to you")
+  - meetup-02-06-26 ("this doesn't exist for mobile" — referring to the hover/scroll
+    image strip on the parts diagram screen)
+requires: [NEXTJS_VERCEL_FRONTEND]
+
+impact: |
+  On desktop, the assembly page (`/parts-diagrams/[brand]/assemblies/[assemblyCode]`)
+  shows a scrollable image strip so users can visually browse diagram sections
+  ("I know it when I see it"). On mobile, users only see the text-only chapter list.
+  Most customers browse on mobile. Without image-based browsing on mobile, the
+  strongest feature of the platform is invisible to the majority of users.
+
+description: |
+  The desktop assembly view has an image-scroll overlay (visible via hover / the
+  popout John created). The `MobileChapterDrawer` (features/assemblies/chapter-sidebar.tsx)
+  exists and handles drawer open/close but currently shows only the text chapter list.
+
+  Goal: on mobile, when the assembly page loads, the chapter-part-search panel
+  (currently desktop-only) should be accessible. The user should be able to:
+  1. See thumbnail previews of diagram sections (same images the desktop hover shows).
+  2. Tap a thumbnail → jump to that section in the schematic viewer.
+  3. Use the search-within-diagram filter (the text filter input in the popout panel).
+
+  Implementation path:
+  - `assembly-interactive-view.tsx` controls the chapter/image panel visibility.
+    Inspect whether the image-strip panel is hidden via a CSS breakpoint or via
+    JS state. If CSS: expose it on mobile with a toggle button. If JS: wire the
+    toggle into `MobileChapterDrawer` trigger.
+  - `chapter-sidebar.tsx` / `MobileChapterDrawer`: the drawer already exists;
+    if the image strip content is in `chapter-assembly-list.tsx` or `chapter-row.tsx`,
+    route that content into the mobile drawer.
+  - The `use-zoom-pan.ts` hook drives the schematic viewport on touch — ensure
+    the drawer open/close doesn't interfere with zoom-pan gestures.
+
+scope:
+  in:
+    - Expose the chapter-image-strip content inside MobileChapterDrawer
+    - "Browse diagrams" button / FAB visible on mobile assembly page
+    - Tap thumbnail → schematic viewer scrolls/snaps to that section
+    - Image filter input works on mobile keyboard (no overflow issues)
+    - Vitest: MobileChapterDrawer renders chapter images when provided
+  out:
+    - Redesigning the desktop layout
+    - Changing the zoom-pan gesture model
+    - Implementing pinch-zoom (already handled by use-zoom-pan.ts — don't break it)
+
+invariants:
+  - No React.memo / unjustified useMemo/useCallback
+  - All touch targets ≥ 44x44px (WCAG 2.5.5)
+  - Drawer close must not break the back-navigation (history.back() should still work)
+  - Use MobileChapterDrawer — do not create a new drawer component
+
+acceptance:
+  - Mobile (375px viewport): assembly page has a visible "Browse Diagrams" trigger
+  - Tap trigger → drawer opens with image thumbnails of diagram sections
+  - Tap thumbnail → schematic viewer shows that section (same behavior as desktop click)
+  - Text filter inside drawer filters the thumbnail list
+  - Drawer dismisses on swipe-down or tap-outside; does not interfere with schematic pan
+
+dep: none (isolated to assembly view — can parallel with B1)
+output: features/assemblies/chapter-sidebar.tsx + assembly-interactive-view.tsx changes

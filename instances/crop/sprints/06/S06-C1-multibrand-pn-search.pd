@@ -1,0 +1,81 @@
+gate: DONE
+closed: 2026-06-03
+owner: Daniil (DaniilDerkach)
+pr: https://github.com/CT-CROP/CROP-search-hono/pull/332
+note: |
+  Merged to dev as part of combined PR#332 with A1.
+  pgSearchRowToPart: manufacturer_codes[0] replaces hardcoded NHL fallback.
+  getBrandSlug() exported. brand-extractor.ts scope unchanged (CNH only).
+  967 tests green.
+sprint: S06
+track: C
+task: C1
+title: "feat(search): multibrand part-number collision — correct brand attribution in results"
+repos: [crop-search-hono]
+priority: high
+refs:
+  - meetup-02-06-26 ("this will be the first time that our search will now be multibrand...
+    a part number can be the same for two brands potentially")
+  - meetup-02-06-26 ("search is going to be critical because it's going to be much more
+    complicated when we're not using just the New Holland data set")
+  - Dan — assigned owner of search; needs to be briefed on this requirement
+requires: [BUN_HONO_CLOUDRUN]
+
+impact: |
+  When a user searches a part number that exists for both Ferris and New Holland,
+  the search must surface both results with clear brand labeling. A result shown
+  under the wrong brand erodes customer trust and causes wrong-part orders.
+  With V2 adding 4 brands, this scenario becomes likely (common mower deck parts
+  share part numbers across manufacturers).
+
+description: |
+  Pre-conditions:
+  - Brief Dan on this requirement via the green-team channel (non-code action —
+    Vova to provide agenda; team to update Dan on multibrand search gap before coding).
+
+  Current state:
+  - `/api/search` returns `manufacturer_codes` per part row (already present in
+    PG response).
+  - The CROP-front search results page renders manufacturer badges — verify these
+    are populated for Ferris/Ventrac/McHale parts (not just NHL).
+
+  Investigation:
+  1. Search a known PN that appears in both NHL and one of the new brands.
+  2. Check: does the response `manufacturer_codes` array contain multiple brand codes?
+  3. Check: does CROP-front's search result card display all brand codes, or only the first?
+  4. Check: does the brand facet in `/api/filters` include Ferris/Ventrac/McHale
+     (requires `MANUFACTURER_FILTER_ENABLED=true`)?
+
+  If manufacturer_codes is already correct in PG response (likely — data comes from
+  parts.manufacturer_codes column which is populated per-brand), the fix may be purely
+  in CROP-front's rendering of multi-manufacturer results.
+
+  If PG-side: verify `search_parts_ranked()` returns non-NHL brand rows when
+  non-NHL brand data is present in the DB (check with Alex on data pipeline status).
+
+scope:
+  in:
+    - Audit: verify manufacturer_codes in /api/search response for Ferris parts
+    - Fix: if manufacturer_codes is empty/wrong for non-NHL brands, identify the
+      SQL gap (likely a JOIN on manufacturer_codes array field)
+    - Verify: CROP-front brand facet shows Ferris/Ventrac when their parts are present
+    - Document: the specific PN collision scenarios found (for Dan's reference)
+  out:
+    - Redesigning the search UI (CROP-front changes tracked separately)
+    - Changing the search ranking algorithm
+    - Data ingestion for new brands (Vova/Alex pipeline)
+
+invariants:
+  - Never filter out valid results to avoid collision — show all, label correctly
+  - brand-safety.ts cross-contamination guard must apply to all brands, not only CNH family
+  - No per-request PG hits for brand mapping — use vocabulary cache
+
+acceptance:
+  - Search a part number present in multiple brands → response manufacturer_codes
+    contains all matching brand codes (not just the first)
+  - CROP-front search result card shows all brand codes for multi-brand parts
+  - Ferris brand facet appears in `/api/filters` results when Ferris data is in DB
+  - No regression in existing NHL search behavior
+
+dep: A1 (Marcrest in BRAND_REGISTRY needed for complete brand coverage)
+output: src/routes/search.ts audit + fix (if needed) + docs note for Dan

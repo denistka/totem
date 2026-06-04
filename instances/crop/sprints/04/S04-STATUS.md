@@ -2,7 +2,7 @@
 
 Date: 2026-06-02
 Sprint: S04 — Frontend Fixes: Security, Stability, Reliability (CROP-front)
-Status: **COMPLETE — all 14 issues closed 2026-06-02**
+Status: **IN PROGRESS — all 14 issues closed 2026-06-02; 6 PRs open, CI green on 4, re-running on 2**
 
 ---
 
@@ -53,21 +53,34 @@ Prioritised by context into 3 tracks:
 
 ---
 
+## Open PRs (all base=`dev`, awaiting appdev-v review)
+
+| PR | Task | Title |
+|----|------|-------|
+| [#1482](https://github.com/CT-CROP/CROP-front/pull/1482) | A2 | Sentry tag upstream.timeout=hono on SearchServiceTimeoutError |
+| [#1483](https://github.com/CT-CROP/CROP-front/pull/1483) | A3 | Equipment segment loading.tsx skeleton |
+| [#1484](https://github.com/CT-CROP/CROP-front/pull/1484) | B2 | Throw 400 on pageSize > MAX instead of silent clamp |
+| [#1485](https://github.com/CT-CROP/CROP-front/pull/1485) | B4 | Consolidate assembly.missing_index Sentry fingerprint |
+| [#1486](https://github.com/CT-CROP/CROP-front/pull/1486) | C7 | Remove dead asmCtx plumbing from PDP supersession |
+| [#1487](https://github.com/CT-CROP/CROP-front/pull/1487) | C5 | Per-brand parser fixture coverage |
+
+---
+
 ## Closure log
 
 | Issue | Result | Date |
 |-------|--------|------|
 | #1416 | A1 | Fixed — @clerk/nextjs 7.4.2 + blocking audit gate (commit ef02d15c, PR #1430) | 2026-06-02 |
-| #1256 | A2 | Fixed — upstream.timeout=hono Sentry tag at AbortError throw site (PR #1482) | 2026-06-02 |
-| #1257 | A3 | Fixed — dedicated EquipmentLoadingSkeleton matching real equipment layout (PR #1483) | 2026-06-02 |
+| #1256 | A2 | PR #1482 open — upstream.timeout=hono Sentry tag at AbortError throw site | 2026-06-02 |
+| #1257 | A3 | PR #1483 open — dedicated EquipmentLoadingSkeleton matching real equipment layout | 2026-06-02 |
 | #1442 | B1 | Already on dev — commit 77aa7f24, PR #1449 (NuqsTestingAdapter + rateLimitFactor=0) | 2026-06-02 |
-| #1292 | B2 | Fixed — validatePageSize() throws 400 instead of Math.min clamp (PR #1484) | 2026-06-02 |
+| #1292 | B2 | PR #1484 open — validatePageSize() throws 400 instead of Math.min clamp | 2026-06-02 |
 | #1255 | B3 | Already on dev — authedFetch 30s timeout + TIMEOUT/CANCELLED (PR #1241, commits a408eb1f + 50948de7) | 2026-06-02 |
-| #1370 | B4 | Fixed — fingerprint consolidated to type-only ['assembly-missing-index'] (PR #1485) | 2026-06-02 |
+| #1370 | B4 | PR #1485 open — fingerprint consolidated to type-only ['assembly-missing-index'] | 2026-06-02 |
 | #1443 | C1 | Already on dev — commit 7bb5846b, PR #1447 (EmailableOrder + confirmation facade) | 2026-06-02 |
 | #1437 | C2 | Already on dev — commit f9e82bd7, PR #1421 (CNH-overnight parity golden vectors) | 2026-06-02 |
 | #1374 | C3 | Already on dev — commits 180f3f22 + 21081626, PRs #1376 + #1407 (BOM scroll on hotspot click) | 2026-06-02 |
 | #1461 | C4 | Already on dev — notFound() guard in app/parts-diagrams/[brand]/page.tsx | 2026-06-02 |
-| #1453 | C5 | Fixed — parsers.fixtures.test.ts, 18 tests across NH/Ventrac/McHale/Ferris (PR #1487) | 2026-06-02 |
+| #1453 | C5 | PR #1487 open — parsers.fixtures.test.ts, 18 tests across NH/Ventrac/McHale/Ferris | 2026-06-02 |
 | #1391 | C6 | Already on dev — commits cc1ffd12 + 37d1c15f, PRs #1399 + #1431 (knip + blocking gate) | 2026-06-02 |
-| #1318 | C7 | Fixed — removed assembly-context.ts + dead asmCtx plumbing (PR #1486) | 2026-06-02 |
+| #1318 | C7 | PR #1486 open — removed assembly-context.ts + dead asmCtx plumbing | 2026-06-02 |

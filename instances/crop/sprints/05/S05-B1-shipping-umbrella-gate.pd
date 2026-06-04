@@ -1,5 +1,5 @@
-gate: OPEN
-sprint: S05
+gate: DEFERRED
+sprint: S05 → S06
 track: B
 task: B1
 title: "gate(shipping): umbrella #978 — verify lane spec + confirm #931 status"

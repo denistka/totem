@@ -2,9 +2,10 @@ project:
   name: CROP
   version: 1.0.0
   description: |
-    CROP composite — single product spread across 4 repositories with
+    CROP composite — single product spread across 3 repositories with
     independent stacks but shared product contracts. Sprints are planned at
     this composition level; tracks dispatch tasks to member sub-instances.
+    (crop-hub was an early 4th draft member — dropped 2026-05-29.)
   composite: true
   members:
     - id: crop-front
@@ -21,12 +22,15 @@ project:
       role: Bun/Hono search API on Cloud Run
 
 paths:
+  loader: ./_LOADER.ti               # composite-load ritual — READ FIRST on `load crop`
   history: .
-  intel: ./intel
   sprints: ./sprints
   routing: ./ROUTING.ti
   triage_rules: ./TRIAGE_RULES.ti
   invariants: ./INVARIANTS.md
+  report_rules: ./REPORT_RULES.ti    # customer-facing status report flavors
+  pr_workflow: ./V2_PR_WORKFLOW.ti   # Denis's review checklist + stacked-PR pattern (S06)
+  # NOTE: `intel: ./intel` removed 2026-06-03 — the dir never existed (broken pointer).
 
 # Composite-level sprints carry tracks that name target repo(s) explicitly.
 # Each track in .ptl and each task in .pd MUST declare `repos: [...]`.
@@ -51,8 +55,11 @@ guardians:
     - PRODUCT_CONTRACT          # owns inter-repo API contracts
   stack_adapters: []            # composite has no code stack of its own
 
-# Load semantics — used by `load instance crop`:
-# 1. Read this file.
-# 2. For each member, read instances/{member.id}/project.config.yml.
-# 3. Open the latest sprint folder in ./sprints/ (highest number).
-# 4. Surface per-repo issue stats via `gh issue list -R {member.repo} --state open`.
+# Load semantics — used by `load crop` / `load instance crop`.
+# Full ritual lives in ./_LOADER.ti (read it first). Summary:
+# 1. Read ./_LOADER.ti, then this file.
+# 2. For each member, read ./{member.id}/project.config.yml (members are NESTED, not siblings).
+# 3. Open the latest sprint folder in ./sprints/ (highest number) — currently S06.
+# 4. Load operating rules as needed: ROUTING.ti, TRIAGE_RULES.ti, REPORT_RULES.ti,
+#    V2_PR_WORKFLOW.ti, INVARIANTS.md.
+# 5. Surface per-repo open-issue counts via `gh issue list -R {member.repo} --state open`.

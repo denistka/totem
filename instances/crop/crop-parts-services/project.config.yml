@@ -14,7 +14,7 @@ project:
 paths:
   code: ../../../../CROP-parts-services
   history: .
-  intel: ./intel
+  # `intel: ./intel` removed 2026-06-03 — broken pointer (dir never existed).
 
 issues:
   rules: ./ISSUE_TRIAGE_RULES.ti

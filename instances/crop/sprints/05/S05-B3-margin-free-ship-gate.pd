@@ -1,5 +1,5 @@
-gate: OPEN
-sprint: S05
+gate: DEFERRED
+sprint: S05 → S06
 track: B
 task: B3
 title: "feat(checkout): Lane 7 — margin-aware free-ship gate (#995)"

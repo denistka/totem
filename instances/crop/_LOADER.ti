@@ -1,0 +1,116 @@
+role: CROP Composite Loader
+focus: load-ritual, member-graph, operating-rules
+instance: crop
+type: composite
+extends: ../../index.ti
+
+# READ FIRST when the user says "load crop" / "load instance crop".
+# This file is the self-contained ritual — the totem no longer depends on
+# external memory to know how to load this composite.
+
+description: |
+  CROP (Clinton's Resource for Online Parts) is a COMPOSITE totem instance:
+  one product spread across 3 GitHub repositories under CT-CROP/*, each an
+  independent stack with shared product contracts. Members are NESTED under
+  this composite root (not siblings). Sprints are planned at the composite
+  level; tracks dispatch tasks to member sub-instances via `repos: [...]`.
+
+# ── MEMBERS (3 — nested under instances/crop/) ───────────────────────────────
+members:
+  # `code` paths are relative to THIS file (composite root) = 3x `../`.
+  # NOTE: each member's own project.config.yml uses 4x `../` (it sits one dir deeper).
+  - id: crop-front
+    repo: CT-CROP/CROP-front
+    totem: ./crop-front/project.config.yml
+    code: ../../../CROP-front
+    role: Next.js 16 storefront on Vercel (App Router, React 19, Clerk, Tailwind v4)
+    base_branch: dev                     # PRs target dev; main auto-deploys Vercel
+  - id: crop-parts-services
+    repo: CT-CROP/CROP-parts-services
+    totem: ./crop-parts-services/project.config.yml
+    code: ../../../CROP-parts-services
+    role: Bun/Hono microservices monorepo (delivery, parts) on Cloud Run
+    base_branch: dev
+  - id: crop-search-hono
+    repo: CT-CROP/CROP-search-hono
+    totem: ./crop-search-hono/project.config.yml
+    code: ../../../CROP-search-hono
+    role: Bun/Hono search API on Cloud Run (PG-backed, 882K parts)
+    base_branch: dev
+
+# NOTE: NO crop-hub member. Early 4-member draft dropped per user decision 2026-05-29.
+
+# ── TEAM (GitHub handles) ─────────────────────────────────────────────────────
+team:
+  - name: Daniil
+    github: DaniilDerkach
+    role: Backend / Search
+    repos: [crop-search-hono]
+  - name: Oleg
+    github: pedchenkooleh-coo
+    role: Frontend / UX
+    repos: [crop-front]
+  - name: Denis
+    github: denistka
+    role: QA / PR reviewer
+    repos: [crop-front, crop-search-hono]
+  - name: Vova
+    github: appdev-v
+    role: Team Lead / Deploy
+    repos: [crop-front, crop-search-hono, crop-parts-services]
+
+# ── LOAD RITUAL ──────────────────────────────────────────────────────────────
+load_steps:
+  1: Read this file (_LOADER.ti).
+  2: Read ./project.config.yml (composite config).
+  3: For each member, read ./{member.id}/project.config.yml.
+  4: Open the latest sprint folder ./sprints/{NN}/ (highest number) — currently S06.
+     Read its .ptl for gate/status, then the .pd task files.
+  5: Load operating rules on demand (see operating_rules below).
+  6: Surface per-repo open-issue counts:
+     gh issue list -R CT-CROP/CROP-front          --state open --json number | jq length
+     gh issue list -R CT-CROP/CROP-parts-services --state open --json number | jq length
+     gh issue list -R CT-CROP/CROP-search-hono    --state open --json number | jq length
+
+# ── OPERATING RULES (load when the task calls for it) ────────────────────────
+operating_rules:
+  routing:      ./ROUTING.ti          # scope → target repo signal table
+  triage:       ./TRIAGE_RULES.ti     # bug/issue triage + create/close commands
+  reports:      ./REPORT_RULES.ti     # customer-facing status report flavors
+  pr_workflow:  ./V2_PR_WORKFLOW.ti   # Denis review checklist + stacked-PR + branch-base pattern
+  invariants:   ./INVARIANTS.md       # frozen cross-repo decisions + V2 brand-code facts
+
+# ── SPRINT FORMAT ────────────────────────────────────────────────────────────
+sprint_format:
+  location: ./sprints/{NN}/           # numeric, 01-padded; composite-level (S01..S06)
+  ptl: one per sprint, top-level `repos: [...]` = union of all track repos
+  cascade: ptl → track → task         # task inherits track's repos; track inherits ptl's
+  pd: one objective per task file; each declares `repos: [...]` (member ids)
+  active: S06                          # V2 Multi-Brand Production Launch (verify gate in the .ptl)
+
+# ── ISSUE ROUTING (critical) ─────────────────────────────────────────────────
+issue_routing:
+  rule: Out-of-scope issues are TRANSFERRED, never closed. See ROUTING.ti.
+  transfer: gh issue transfer {number} CT-CROP/{target_repo} --repo CT-CROP/{source_repo}
+  past_mistake: |
+    S01 (2026-05-28) closed 8 backend issues OOS from crop-front that should
+    have been transferred to crop-parts-services. Do not repeat.
+
+# ── BRANCH + PR FLOW (all members) ───────────────────────────────────────────
+git_flow:
+  base: All branches cut from `dev`; PRs target `dev` (never main).
+  v2_exception: |
+    If a task builds on an in-review redesign PR, branch off that working
+    branch directly (e.g. feat/ct-1527-diagrams-brand-redesign) — it
+    auto-retargets to dev when the base merges. See V2_PR_WORKFLOW.ti.
+  identity: Verify git user.email = denistka@gmail.com before committing.
+  language: All GitHub content (issues, PRs, commits) in English only.
+
+# ── CURRENT STATE POINTER (verify, don't trust blindly) ──────────────────────
+current_state:
+  as_of: 2026-06-03
+  active_sprint: S06 — V2 Multi-Brand Production Launch (deadline 2026-06-06)
+  note: |
+    Run `ls ./sprints/` for the real highest sprint and read the .ptl gate/status
+    before relying on this pointer. Sprint progress snapshot lives in the S06 .ptl
+    and ./sprints/06/v2-execution-plan/README.md.

@@ -1,0 +1,76 @@
+gate: OPEN
+status: PENDING_INVESTIGATION
+owner: Daniil (DaniilDerkach)
+as_of: 2026-06-03
+note: |
+  PR#332 (search-hono) covered MAR registry + multibrand PN attribution but did NOT
+  explicitly address Ferris 59-number config routing.
+  Next step: after #332 deploys to Cloud Run dev, verify GET /api/brand/ferris/models
+  returns 59-series model entries with populated slugs.
+  If slugs empty → DB fix needed (Vova A6 task: UPDATE models SET slug=... WHERE FERRIS 59%).
+  Daniil to confirm status.
+sprint: S06
+track: A
+task: A4
+title: "feat(diagrams): Ferris 59-number configuration codes resolve to assembly diagrams"
+repos: [crop-front, crop-search-hono]
+priority: high
+refs:
+  - meetup-02-06-26 ("the 59 numbers tell us a configuration of the new mowers...
+    if a customer knows that 59 number, that's how they're going to find their diagram")
+requires: [NEXTJS_VERCEL_FRONTEND, BUN_HONO_CLOUDRUN]
+
+impact: |
+  For Ferris commercial mowers, the customer's primary entry point is a "59-number"
+  (a configuration code like 59XXX). If searching or browsing by that code doesn't
+  route directly to the correct parts diagram, the entire Ferris use case breaks.
+  This is John's explicit V2 requirement: "V2 release must ensure these configurations
+  are correctly wired and searchable."
+
+description: |
+  Ferris commercial mowers use configuration codes (e.g., 590xx series) as the
+  canonical identifier customers use to find their mower. These map to model codes
+  in the hono vocabulary cache (models.model_code or models.model_number).
+
+  Verify the current state:
+  1. Open /parts-diagrams/ferris in dev.
+  2. Under "Commercial Mowers" group, confirm 59-series model codes appear.
+  3. Click a 59-series model → /parts-diagrams/ferris/{modelCode}.
+  4. Assembly list loads.
+
+  If step 3 or 4 breaks (John saw a flash + no assembly list), investigate:
+  - `resolve-model-param.ts` in hono: does it accept the 59-number as a valid slug?
+  - `brand-model-groups.tsx` in FE: does the model card href use `vocab.slug`?
+    If `vocab.slug` is empty for Ferris 59-series models, the href is malformed
+    (hono#53 guard — hono already skips empty-slug rows in brand-hub.ts, so
+    empty-slug models won't appear in the grid, but if they do appear in another
+    code path they'll 404).
+  - `BrandModelGroups` → model card → href: confirm it routes to the correct assembly
+
+  If the 59-number is the model_number but the URL slug is different, the user-facing
+  browsing path must prominently show the 59-number as the label (not an internal UUID
+  or a different code).
+
+scope:
+  in:
+    - Verify: Ferris commercial mower 59-series model cards appear in /parts-diagrams/ferris
+    - Fix: Any href/slug mismatch that causes 404 on click
+    - Fix: BOM table load flash (if caused by a re-render loop — see B4 for the
+      animation; if they're the same root cause, merge fixes)
+    - Verify: model_number displayed as card label matches what customer knows
+  out:
+    - Adding new Ferris data to DB (Vova/Alex)
+    - Changing the 59-number convention in the source data
+
+invariants:
+  - No direct SQL in FE — data comes from hono vocab cache
+  - Slug conventions: follow `docs/architecture/url-slug-conventions.md`
+
+acceptance:
+  - Navigate to /parts-diagrams/ferris/commercial-mowers (or the equivalent type path)
+  - Click a 59-series config code card → loads the assembly list page (no 404/500)
+  - At least one assembly is clickable and loads the schematic viewer
+  - Model card label shows the 59-number prominently (not an internal UUID)
+
+dep: A3 (need smoke run baseline first)
+output: CROP-front component fix + hono vocab route fix (if needed)
