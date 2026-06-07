@@ -1,0 +1,46 @@
+project:
+  name: MuseCool
+  version: 1.0.0
+  description: |
+    Take-home task for Muse. Browser-based music note-finding mini-game for children aged 5–11.
+    Chrome Dino-style reaction loop: a note appears, player identifies it before time runs out.
+    Difficulty increases over time. Target: mobile-first, polished visuals, kid-friendly UX.
+  stack: [React, TypeScript, Tailwind CSS, Vite, GSAP, Tone.js, VexFlow]
+  deadline: 2026-06-09 # Monday (user to confirm Friday vs Monday)
+  context:
+    audience: children aged 5–11
+    platform: mobile-first, desktop also supported
+    included_asset: piano keyboard component (Tone.js + Tailwind, see incoming/piano-keyboard-export/)
+    repo_hint: deliverable is a Git repo + README (design decisions, tradeoffs, LLM usage)
+    wow_brief: BRIEF.md       # read this before planning any sprint
+    design_system: DESIGN.md  # colors, glass, neon, typography — MuseCool brand × taskboard dark glass
+    key_signal: GSAP replaces Framer Motion — timing precision + Denis's core skill = direct match to JD
+
+paths:
+  # CRITICAL: This explicit relative path enforces that the agent writes OUTSIDE the totem/ history directory.
+  # /Projects/totem/totem-v6/instances/MuseCool/ -> ../../../../musecool -> /Projects/musecool
+  code: ../../../../musecool
+  history: .
+
+repo:
+  url: https://github.com/denistka/musecool.git
+  account: denistka@gmail.com
+  branch: main
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - ARCHITECT
+  stack_adapters:
+    - react-ts/REACT_TS.ti
+    - react-ts/FRONTEND_DEV.ti
+    - react-ts/UI_UX.ti
+    - tailwind/TAILWIND.ti
+    - vite/VITE.ti
+    - pwa/PWA.ti
+    - vercel/VERCEL.ti
+    # GSAP: no adapter — treat as external lib, animation patterns from BRIEF.md
+
+  ui_stack_ref: react-ts/REACT_TS

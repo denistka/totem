@@ -1,0 +1,26 @@
+---
+id: S09-T06
+name: README Update
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S09-T06: README Update
+
+## Objective
+Update `musecool/README.md` to sell the WOW additions as cover-letter material.
+
+## Acceptance Criteria
+- "Game modes" section: Find vs Note Runner (Chrome-dino metaphor, durations, melodies).
+- "Living character" section: emotion set + grounded-shadow physics decision.
+- "Melodies" list: Twinkle, Mary, Jingle Bells, Happy Birthday, Ode to Joy.
+- "Adaptive difficulty": reward-based speed-up + encouragement (not punishment).
+- "Responsive": 667×375 landscape strategy.
+- LLM usage honesty paragraph retained/updated. No S01 token changes.
+
+## Steps
+1. Add the sections above to README.
+2. Refresh deliverables checklist to reflect modes + character.
+3. `git commit -m "docs: README modes, living character, melodies, landscape"`.

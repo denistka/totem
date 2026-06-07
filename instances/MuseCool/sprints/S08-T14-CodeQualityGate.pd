@@ -1,0 +1,32 @@
+---
+id: S08-T14
+name: Code Quality Gate
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+quality: ../CODE-QUALITY.md
+---
+
+# S08-T14: Code Quality Gate
+
+## Objective
+Conformance pass over all S08 new code against `../CODE-QUALITY.md` (piano-keyboard-export bar).
+No new features — only refactors to meet the standard.
+
+## Acceptance Criteria
+- Every new component: `memo` + `.displayName`; variant components use discriminated-union props.
+- Every new hook: typed options object, returns named object, cleans up tweens/RAF/listeners.
+- Pure logic lives in `src/game/`; no React imports there.
+- No magic numbers in engine/animation — extracted to named, doc'd constants.
+- Brand colours only via S01 tokens (no raw hex in new JSX/CSS).
+- A11y: new buttons are real `<button>` with `aria-*`; decorative SVG `aria-hidden`; focus-visible.
+- Public components/hooks/utils have JSDoc; non-trivial ones an `@example`.
+- `tsc --noEmit` clean; ESLint clean (no new disables); zero console errors in both modes.
+
+## Steps
+1. Walk each S08 file; checklist against `CODE-QUALITY.md` "Mandatory bar".
+2. Refactor offenders (extract consts, add displayName/JSDoc, fix a11y, ensure cleanup).
+3. Run `tsc --noEmit` + lint; fix all findings.
+4. Write a short `S08-QUALITY-PASS.md` (file-by-file pass/notes).
+5. `git commit -m "chore(quality): S08 conformance to code-quality standard"`.

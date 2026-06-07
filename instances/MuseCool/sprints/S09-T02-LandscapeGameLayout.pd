@@ -1,0 +1,26 @@
+---
+id: S09-T02
+name: Landscape Game Layout
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S09-T02: Landscape Game Layout
+
+## Objective
+Fit both game screens (Find + Runner) at 667×375 height.
+
+## Acceptance Criteria
+- No vertical overflow at 667×375 for GameScreen + RunnerGameScreen.
+- Landscape: mascot shrinks (`≤64px`) or moves beside content (flex-row).
+- Find ring `size = min(80, vw*0.12, vh*0.22)`.
+- Runner staff height reduced but hit-line + ground visible.
+- ScorePanel `py-0.5`, smaller badge; use Tailwind `landscape:` variant or `index.css` utility.
+
+## Steps
+1. Add a `landscape:` compaction utility/class.
+2. Apply to both game-screen roots; replace hardcoded mascot `min(42vh,11rem)`.
+3. Verify both modes at 667×375.
+4. `git commit -m "fix(layout): landscape compact game screens"`.

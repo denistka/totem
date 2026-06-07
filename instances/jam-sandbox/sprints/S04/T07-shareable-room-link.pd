@@ -1,0 +1,33 @@
+v:4 c:$ m:T07-shareable-room-link role:dev x:vue3/url
+gate: LOCKED
+
+task: Make the room shareable via URL so a second player joins the same jam from a link
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/composables/useJamSession.ts
+  - daww3/experiments/jam-sandbox/src/components/JamControls.vue
+
+context: |
+  room is a plain ref in useJamSession (default 'jam-001') with no URL coupling.
+  To test multiplayer capture (the whole point of the DAWW3 story) you need a
+  frictionless "send a link, friend lands in the same room" path. No router is
+  installed — use URL query/hash directly (e.g. ?room=abc), no new dependency.
+
+steps:
+  1. On composable init: read room from location (e.g. URLSearchParams ?room=);
+     if present, seed room.value with it. Else keep default.
+  2. When the user edits room (pre-join), reflect it into the URL via
+     history.replaceState so the address bar always shows a shareable link.
+  3. JamControls Session section: add a "Copy invite link" button that copies
+     the full URL (origin + ?room=<room>) to clipboard via navigator.clipboard,
+     with a tiny "Copied" confirmation. Existing styles.
+  4. Optional (only if trivial): if no ?room= present, generate a friendly random
+     room id instead of the static 'jam-001' so fresh links don't collide.
+
+done:
+  - Opening ?room=foo seeds the room field with "foo"
+  - Editing the room (before join) updates the URL without reload
+  - "Copy invite link" copies a working URL that lands another tab in the same room
+  - Verified: two tabs via the same link join the same jam
+  - tsc --noEmit passes

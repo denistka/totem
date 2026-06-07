@@ -1,0 +1,30 @@
+---
+id: S06-T02
+name: Service Worker Strategy
+status: TODO
+gate: OPEN
+requires: [pwa/PWA.ti, vite/VITE.ti]
+---
+
+# S06-T02: Service Worker Strategy
+
+## Objective
+Configure Workbox caching in `vite-plugin-pwa` with appropriate strategies:
+CacheFirst for app shell, NetworkFirst for Salamander audio CDN.
+App must load offline after first visit (except audio samples).
+
+## Acceptance Criteria
+- App shell (html/css/js/vexflow) cached CacheFirst — loads offline.
+- Salamander audio CDN (`raw.githubusercontent.com`) NOT cached (large binary files, not worth caching).
+- SW registers in `main.tsx` without console errors.
+- Lighthouse PWA audit: all checks pass.
+
+## Steps
+1. Update `vite.config.ts` VitePWA config with `workbox:` section:
+   - `runtimeCaching`: CacheFirst for `globPatterns: ['**/*.{js,css,html,woff2,svg,png}']`.
+   - NetworkOnly for `raw.githubusercontent.com` (audio samples — let browser cache via HTTP cache headers instead).
+2. Set `strategies: 'generateSW'` in VitePWA options.
+3. In `main.tsx`: `import { registerSW } from 'virtual:pwa-register'` and call `registerSW({ immediate: true })`.
+4. Verify `npm run build`: `dist/sw.js` present.
+5. Run Lighthouse on preview build (`npm run preview`): confirm PWA installability.
+6. `git commit -m "feat: service worker caching strategy"`.

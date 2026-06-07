@@ -1,0 +1,36 @@
+v:4 c:$ m:T03-velocity-control role:dev x:vue3/typescript
+gate: LOCKED
+
+task: Turn the disabled Velocity toolbar button into a working velocity control
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/components/PianoRollView.vue
+
+depends: [T01-pianoroll-tool-api]
+
+context: |
+  PianoRollView.vue L100-114: a Velocity <button> that is hardcoded `disabled`
+  with no handler. piano-roll.ts mousedown plays at hardcoded velocity 100.
+  T01 added setClickVelocity(v). This task surfaces a control that drives it.
+
+  Decision: a 3-step velocity toggle (soft / med / loud → 60 / 100 / 120) keeps
+  the toolbar compact and matches the icon (the up/down arrows already drawn).
+  No new slider component needed; reuse the existing button as a cycle control.
+
+steps:
+  1. Add ref:  const clickVelocity = ref(100)
+  2. Add method velocityCycle() that rotates 60 → 100 → 120 → 60 and calls
+     pianoRoll?.setClickVelocity(clickVelocity.value).
+  3. Remove `disabled` from the Velocity button; add @click="velocityCycle".
+  4. Show the current level: add a small label inside the button (e.g. the
+     numeric value, or a 1/2/3 dot) OR a :title that states current velocity.
+     Keep it visually consistent with the other two tool buttons.
+  5. On mount, call pianoRoll.setClickVelocity(clickVelocity.value) after
+     pianoRoll is constructed so engine + UI start in sync at 100.
+
+done:
+  - Velocity button is enabled and cycles 60/100/120 on click
+  - Notes played via canvas use the selected velocity (audible loudness changes)
+  - Current level is visible (label or title)
+  - tsc --noEmit passes

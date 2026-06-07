@@ -1,0 +1,85 @@
+v:4 c:$$ m:S03-min-latency role:planner
+gate: LOCKED
+
+objective: >
+  Drive end-to-end audio latency (local keypress → audible sound, local and
+  remote) to the practical minimum the web platform allows. Based on a full
+  read of the network / transport / engine chain. The network protocol is
+  already near-optimal (binary 11-byte msgs, unordered/unreliable DataChannel);
+  the real, code-tunable latency lives in the AUDIO and SCHEDULING layers plus
+  the adaptive jitter buffer. This sprint targets those.
+
+requires: [FRONTEND_DEV, WEBGL]
+invariants:
+  - @instances/jam-sandbox/project.config.yml
+
+sprint-path: instances/jam-sandbox/sprints/S03/
+
+latency-chain-analysis: |
+  Traced keypress → remote audio. Where the milliseconds live:
+
+  [SEND]    handleLocalNote → sendNoteOn → encodeNote(11B) → dc.send()
+            DataChannel: ordered:false, maxRetransmits:0  → ALREADY OPTIMAL ✓
+            Binary protocol, no JSON                       → ALREADY OPTIMAL ✓
+
+  [WIRE]    WebRTC DataChannel RTT. STUN-only (no TURN).
+            Physical path latency — NOT code-tunable beyond ICE config.
+            (ICE/relay tuning is its own concern; out of this sprint's core.)
+
+  [RECV]    decodeMessage (network-bridge.ts:392-395):
+              lookaheadBuffer = max(30, peerRtt*1.5, iceRtt*1.5, latency*2)
+              playAt = remoteSentAtLocal + lookaheadBuffer
+            ← THE dominant tunable remote-latency knob. 30ms floor + latency*2
+              is conservative. Adaptive tightening = biggest remote win.
+
+  [SCHED]   GlicolEngine.startScheduler (glicol-engine.ts:118-148):
+              uses requestAnimationFrame (~16.7ms granularity, THROTTLED to
+              ~0 in background tabs). Wrong primitive for audio timing.
+            ← adds up to one frame of jitter + tab-throttle risk.
+
+  [SYNTH]   rebuildGraph (glicol-engine.ts:260-318):
+              re-serializes the ENTIRE graph to a string and re-runs Glicol on
+              EVERY note event (remote scheduled AND local keypress noteOn/Off).
+              Cost scales with active-note count.
+            ← per-note CPU + jitter; worst on dense chords / many peers.
+
+  [CTX]     No AudioContext created with latencyHint:'interactive'. Glicol owns
+            the context at default settings.
+            ← free win: interactive hint lowers output buffer latency.
+
+  [LOCAL]   handleLocalNote → engine.noteOn → rebuildGraph synchronously.
+            Local monitoring latency = rebuildGraph cost (no network involved).
+
+  PROVABILITY: oneWayMs / EMA already measured & shown in JamHeader LCD. Use it
+  as the before/after metric. No guessing — numbers must move.
+
+tracks:
+  track-1_audio-context:
+    desc: Lowest-latency AudioContext + interactive hint (free platform win).
+    tasks: [T01-interactive-audiocontext]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-2_scheduler:
+    desc: Replace rAF scheduler with a drift-free timer immune to tab throttle.
+    tasks: [T02-precise-scheduler]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-3_graph-cost:
+    desc: Cut per-note rebuildGraph cost (incremental / coalesced updates).
+    tasks: [T03-incremental-graph]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-4_jitter-buffer:
+    desc: Adaptively minimise the remote lookahead buffer without xruns.
+    tasks: [T04-adaptive-lookahead]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-5_measure:
+    desc: Lock in a measurable before/after so wins are provable, not vibes.
+    tasks: [T05-latency-bench]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED

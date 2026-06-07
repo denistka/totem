@@ -1,0 +1,94 @@
+---
+id: S08
+name: Living Character & Runner Mode (WOW)
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti, react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+review: ./S08-QUALITY-REVIEW.md
+quality: ../CODE-QUALITY.md
+---
+
+# S08: Living Character & Runner Mode (WOW)
+
+## Objective
+Turn the two weakest WOW areas into showpieces:
+1. **A living character** — rich emotion set + a ground shadow that behaves physically.
+2. **Mode 2 "Note Runner"** — a Chrome-dino-style side-scroller where the **staff scrolls**,
+   the avatar runs and hops to help the child hit notes **in time/duration**, playing real
+   children's melodies (Twinkle, Mary, Jingle Bells, Happy Birthday, Ode to Joy), speeding up
+   only after clean play with a friendly "let's go faster" warning.
+
+Mode 1 (Find) is preserved unchanged — all new behaviour lives in new hooks/screens.
+
+## Tracks (sequential)
+
+### Track A — Living Character & Shadow (applies to ALL screens)
+- [ ] S08-T01-EmotionModel.pd
+- [ ] S08-T02-MascotExpressionUpgrade.pd
+- [ ] S08-T03-EmotionAnimations.pd
+- [ ] S08-T04-GroundShadow.pd
+
+### Track B — Runner Core (pure logic, no DOM)
+- [ ] S08-T05-MelodyLibrary.pd
+- [ ] S08-T06-RunnerModel.pd
+- [ ] S08-T07-RunnerEngineHook.pd
+- [ ] S08-T08-AdaptiveSpeed.pd
+
+### Track C — Runner UI
+- [ ] S08-T09-ScrollingStaff.pd
+- [ ] S08-T10-RunnerMascot.pd
+- [ ] S08-T11-SpeedUpBanner.pd
+- [ ] S08-T12-RunnerGameScreen.pd
+
+### Track D — Mode selection wiring
+- [ ] S08-T13-ModeSelector.pd
+
+### Track E — Quality gate
+- [ ] S08-T14-CodeQualityGate.pd
+
+## Mode 2 — "Note Runner" design contract (frozen for S08)
+
+| Aspect | Decision |
+|---|---|
+| Metaphor | Chrome-dino side-scroller; ground line at bottom, hit-line fixed near left-third |
+| Motion | Notes spawn at right, scroll left at `pxPerSec`; staff lines scroll with them |
+| Goal | Tap the correct piano key as the note crosses the **hit-line** (pitch + timing) |
+| Duration | Each note carries `beats`; spacing between notes = `beats × beatPx` |
+| Hit window | ±140 ms around hit-line crossing → on-beat; outside = miss (stumble) |
+| Avatar | Runs in place at hit-line; **hops** on correct (dino jump), **stumbles** on miss |
+| Melodies | Real tunes from `melodyLibrary`; song title shown; notes follow the song's key |
+| Adaptive speed | After a clean phrase (e.g. 8 notes, 0 misses) → ramp `pxPerSec` +15%, show banner |
+| Encouragement | Banner "Nice! Let's try faster 🚀" 1.2 s before ramp; never punishes silently |
+| Lives | 3 misses → gameover (consistent with Mode 1) |
+| Scoring | +10 on-beat × streak multiplier; perfect-phrase bonus +50 |
+
+## Children's melodies (frozen note data, C-major friendly)
+
+Format per note: `{ name, beats }` — `beats` in quarter units (1=quarter, 2=half, 0.5=eighth).
+Executor maps `name`→midi via existing note utils.
+
+- **Twinkle Twinkle:** C C G G | A A G(2) | F F E E | D D C(2)
+- **Mary Had a Little Lamb:** E D C D | E E E(2) | D D D(2) | E G G(2)
+- **Jingle Bells (chorus):** E E E(2) | E E E(2) | E G C D | E(4)
+- **Happy Birthday:** G(.5) G(.5) A G C | B(2) | G(.5) G(.5) A G D | C(2)
+- **Ode to Joy:** E E F G | G F E D | C C D E | E(1.5) D(.5) D(2)
+
+## Definition of Done
+- Mascot exposes ≥ 7 emotions with visibly distinct face + body motion; used across screens.
+- Ground shadow is a separate element; shrinks/fades as mascot lifts (no jump-with-body).
+- Mode 2 playable end-to-end: pick a melody, staff scrolls, avatar hops, song is recognisable.
+- Speed ramps only after clean play, with the warning banner; gameover at 3 misses.
+- Mode 1 (Find) behaviour identical to pre-S08 (regression-safe).
+- All new code meets `../CODE-QUALITY.md` (piano-keyboard-export bar): typed, `memo`+`displayName`,
+  cleaned-up tweens/RAF, named constants, a11y, JSDoc on public APIs.
+- `git commit` after every task (Git Discipline).
+
+## Out of scope (→ S09)
+- Landscape 667×375 audit + responsive fixes + piano compaction.
+- Final cross-device QA and README modes/character section.
+
+## Risks
+- Scroll perf: drive staff scroll via one GSAP/RAF transform, not per-note React state.
+- Audio timing vs visual hit-line: tie audio trigger to the same crossing event.
+- Melody→midi mapping must respect existing pool/util naming (no new note system).

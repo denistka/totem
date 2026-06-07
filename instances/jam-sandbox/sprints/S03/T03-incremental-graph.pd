@@ -1,0 +1,47 @@
+v:4 c:$ m:T03-incremental-graph role:dev x:glicol/perf
+gate: LOCKED
+
+task: Reduce per-note cost of rebuildGraph — coalesce/diff instead of full re-serialize on every event
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/glicol-engine.ts
+
+context: |
+  rebuildGraph (glicol-engine.ts:260-318) walks ALL participants × ALL active
+  notes, rebuilds a full Glicol code string, and re-runs it on EVERY single note
+  event — both remote (scheduleNoteOn/Off via scheduler) and local
+  (noteOn/noteOff on keypress). Cost grows with chord density and peer count;
+  it adds CPU and timing jitter right at the moment of sound onset.
+
+  Two complementary, low-risk wins (do the cheap one first; second only if it
+  stays simple — respect atomic-logic):
+
+  A. COALESCE: when the scheduler drains multiple due events in one tick, call
+     rebuildGraph ONCE after the loop (it already sets `modified` — confirm a
+     single rebuild per tick, not per event). Also coalesce local rapid events
+     within a microtask if trivially safe.
+
+  B. (optional, only if simple in Glicol 0.4) DIFF: skip re-running the graph
+     when the active-note set is unchanged; cache last codeStr and early-return
+     if identical.
+
+  Do NOT attempt a full per-voice incremental Glicol patch API in this task —
+  that is a larger refactor and would violate one-objective/atomic-logic.
+
+steps:
+  1. Audit call sites: confirm scheduler tick already rebuilds once per tick
+     (T02). If noteOn/noteOff(local) each rebuild synchronously, that's fine for
+     local monitoring latency but verify they don't double-rebuild with the
+     scheduler for the same event.
+  2. Implement (A): single rebuild per scheduler drain.
+  3. Implement (B) if low-risk: memoize last serialized codeStr; early-return on
+     no-op rebuilds.
+  4. Measure rebuild count per N notes before/after (console counter) for T05.
+
+done:
+  - One rebuildGraph per scheduler tick max (not per drained event)
+  - No-op rebuilds skipped when active-note set unchanged (if B done)
+  - No audible regression (notes start/stop correctly, no stuck notes)
+  - Rebuild-count instrumentation available for the bench
+  - tsc --noEmit passes

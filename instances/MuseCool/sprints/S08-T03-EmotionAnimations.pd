@@ -1,0 +1,30 @@
+---
+id: S08-T03
+name: Emotion Animations
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T03: Emotion Animations
+
+## Objective
+Give each emotion a distinct GSAP performance in `useMascotAnimation`, so reactions read
+clearly to a 5–11 audience. Body motion + face extras animate together.
+
+## Acceptance Criteria
+- Per-state timelines: happy (hop+bounce), celebrate (spin/jump + sparkle pop),
+  wink (one lid blink + cheek raise), wrong (shake + sweat drop), sad (wilt/scale-down + brow down),
+  hurry (fast nervous bob + sweat), sleepy (slow sway + zzz fade-in), idle (breathe/float).
+- Each non-idle emotion returns to `idle` on complete.
+- Extras (`sweat`/`sparkle`/`zzz`) fade in/out within their emotion only.
+- All tweens killed on unmount / state change (no leaks, no overlap).
+- Easings match DESIGN.md Animation Palette where specified.
+
+## Steps
+1. Extend `useMascotAnimation` to accept the new `MascotState` union + extra refs.
+2. Implement a `Record<MascotState, () => gsap.core.Timeline>` factory.
+3. Drive extras opacity inside the relevant timelines.
+4. Keep `useLevelUpFlash` / `useScreenShake` unchanged.
+5. `git commit -m "feat(mascot): distinct GSAP performance per emotion"`.

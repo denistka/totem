@@ -1,0 +1,38 @@
+v:4 c:$ m:T01-interactive-audiocontext role:dev x:webaudio
+gate: LOCKED
+
+task: Ensure the audio path uses an AudioContext with latencyHint:'interactive' and report baseLatency/outputLatency
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/glicol-engine.ts
+
+context: |
+  No AudioContext is currently created with a latency hint; Glicol owns the
+  context at platform defaults (often 'balanced', larger output buffer).
+  'interactive' requests the smallest stable output buffer the device allows —
+  a direct, free reduction in [CTX] output latency.
+
+  Glicol 0.4 typically accepts an external AudioContext or exposes its context.
+  Two acceptable strategies:
+    A. Pass a pre-created `new AudioContext({ latencyHint: 'interactive' })`
+       into the Glicol constructor if its API supports it.
+    B. If Glicol manages its own context, access glicol's context after onLoaded
+       and (best-effort) confirm/resume it; if the hint can't be set, document
+       the limitation rather than fake it.
+
+steps:
+  1. Investigate the Glicol 0.4 constructor/options in this repo's installed
+     version (node_modules/glicol) for context injection or context access.
+  2. If injectable: create AudioContext({ latencyHint: 'interactive' }) and pass it.
+  3. After start(), read ctx.baseLatency and ctx.outputLatency and log them once
+     (these feed the T05 bench).
+  4. Resume the context on first user gesture path (startAudio) — verify no
+     regression to the existing start() flow.
+
+done:
+  - Audio runs through a context created/confirmed with latencyHint:'interactive'
+    OR a documented note that Glicol 0.4 does not permit it (with evidence)
+  - baseLatency + outputLatency logged once at startup
+  - No regression: Start Engine still works, notes still sound
+  - tsc --noEmit passes

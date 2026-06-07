@@ -1,0 +1,28 @@
+---
+id: S08-T04
+name: Ground Shadow
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti, react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T04: Ground Shadow
+
+## Objective
+Decouple the shadow from the mascot body so it stays on the ground plane and reacts to
+the mascot's lift (higher jump → smaller, lighter shadow). Fixes G2 in the quality review.
+
+## Acceptance Criteria
+- Shadow removed from the translating mascot `<svg>`; rendered as a separate element pinned to the ground.
+- New `MascotWithShadow` wrapper (or sibling element + shared container) so body translates but shadow does not.
+- A `liftRef`/callback exposes current vertical lift; shadow `scaleX`/`opacity` map inversely to lift.
+- At rest: shadow `rx≈30, opacity≈0.12`; at max jump: `rx≈18, opacity≈0.06`.
+- Works for both idle float and jump/celebrate; no double-shadow, no jump-with-body.
+
+## Steps
+1. Move shadow ellipse out of `MascotSVG` into a wrapper that does not receive the jump transform.
+2. In `useMascotAnimation`, expose lift progress (e.g. via `onUpdate` writing a ref).
+3. Add a small `useGroundShadow(shadowRef, liftRef)` tween mapping lift→scale/opacity.
+4. Verify shadow stays grounded on Start, Find, Runner, GameOver.
+5. `git commit -m "feat(mascot): grounded shadow reacting to jump height"`.

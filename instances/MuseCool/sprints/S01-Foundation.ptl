@@ -1,0 +1,30 @@
+---
+id: S01
+name: Foundation
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, vite/VITE.ti, tailwind/TAILWIND.ti, pwa/PWA.ti, vercel/VERCEL.ti]
+---
+
+# S01: Foundation
+
+## Objective
+Bootstrap the project: Vite + React + TS scaffold, Tailwind design system, piano component integration,
+PWA manifest, and Vercel config. After this sprint the project is deployable (empty shell) and
+all dependencies are installed and verified.
+
+## Tasks
+- [ ] S01-T01-Scaffold.pd
+- [ ] S01-T02-TailwindConfig.pd
+- [ ] S01-T03-PianoIntegration.pd
+- [ ] S01-T04-PWAManifest.pd
+- [ ] S01-T05-VercelConfig.pd
+
+## Invariants
+None (first sprint — invariants created at close of this sprint).
+
+## Definition of Done
+- `npm run dev` opens without errors.
+- Piano keyboard renders in a smoke-test page.
+- `npm run build` produces a `dist/` with manifest and SW registered.
+- Vercel deploy URL is live (empty shell).

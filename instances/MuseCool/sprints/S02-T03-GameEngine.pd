@@ -1,0 +1,33 @@
+---
+id: S02-T03
+name: Game Engine Hook
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti]
+---
+
+# S02-T03: Game Engine Hook
+
+## Objective
+`useGameEngine` — the central state machine hook. Manages phase transitions, score,
+streak, level, and question lifecycle. No GSAP, no DOM — pure React state + callbacks.
+
+## Acceptance Criteria
+- Exported: `{ state, start, answer, expire, restart }`.
+- `start()`: idle → playing, generates first question.
+- `answer(midi)`: correct → score+, streak+, maybe levelUp, next question; wrong → streak reset, result flash, next question or gameover (on 3 mistakes).
+- `expire()`: called by timer when time runs out → same as wrong answer path.
+- `restart()`: gameover → idle, resets all state.
+- `phase` never skips states.
+
+## Steps
+1. Create `src/hooks/useGameEngine.ts`.
+2. Internal state: `GameState` + `mistakes: number` (not in public GameState).
+3. `start()`: `useCallback` — set phase `playing`, level 1, score 0, streak 0, generate question from L1 pool.
+4. `answer(midi)`: check `midi === state.question.target.midi`.
+   - Correct: increment score (+10 × streak multiplier), streak++, check `shouldLevelUp()`, generate next question.
+   - Wrong: mistakes++, streak=0, if mistakes >= 3 → phase `gameover`, else phase `result` for 600ms then `playing`.
+5. `expire()`: same as wrong branch.
+6. `shouldLevelUp()`: every 5 correct answers, advance level (max level from `LEVELS`).
+7. `restart()`: reset to initial state.
+8. `git commit -m "feat: useGameEngine state machine"`.

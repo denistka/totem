@@ -1,0 +1,29 @@
+---
+id: S08-T12
+name: Runner Game Screen
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/UI_UX.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T12: Runner Game Screen
+
+## Objective
+Assemble Mode 2: `RunnerGameScreen.tsx` wiring engine, scrolling staff, runner mascot, banner,
+piano input, score panel, and juice (reuse particle/audio hooks).
+
+## Acceptance Criteria
+- Layout: ScorePanel (with song title) → ScrollingStaff + RunnerMascot → Piano bottom.
+- Piano `onChangePressed` → `hit(midi)` (only the hit-line note is gradable).
+- On-beat: particles at hit-line, mascot hop, ascending tap audio; miss: shake + dissonant chord.
+- `SpeedUpBanner` shown on `rampPending`.
+- `onGameOver(score, streak)` same signature as `GameScreen` (works with existing GameOver flow).
+- Song audibly emerges as the child plays correctly.
+
+## Steps
+1. Create `src/screens/RunnerGameScreen.tsx`.
+2. Wire `useRunnerEngine`, `useRunnerMascot`, `useParticleBurst`, `useAudioFeedback`, `useScreenShake`.
+3. Render `ScrollingStaff` + `SpeedUpBanner`; pass `clockRef`/`pxPerSec`.
+4. Handle gameover → `onGameOver`.
+5. `git commit -m "feat: RunnerGameScreen (Mode 2 assembly)"`.

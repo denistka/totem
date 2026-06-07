@@ -1,0 +1,54 @@
+v:4 c:$$ m:S01-ui-sync role:planner
+gate: LOCKED
+
+objective: >
+  Synchronise the jam-sandbox UI layer with the authoritative ui-kit and
+  visualizer from taskboard-supabase. Pull upstream improvements, add
+  missing components (AgentAvatar, AgentBadge, TimeTravelSlider), align
+  styles (CSS vars, dark-mode baseline), and fix the broken index.ts exports.
+
+requires: [FRONTEND_DEV, NODE]
+invariants:
+  - @instances/jam-sandbox/project.config.yml
+  - @instances/taskboard-supabase/project.config.yml
+
+sprint-path: instances/jam-sandbox/sprints/S01/
+
+context: |
+  Source-of-truth: taskboard-supabase/client/src/components/common/ui/
+  Target:          daww3/experiments/jam-sandbox/src/components/ui/
+
+  Gap analysis (confirmed by diff):
+  1. index.ts  — jam-sandbox exports AgentAvatar, AgentBadge, TimeTravelSlider
+                 as COMMENTED-OUT stubs; taskboard exports ThemeSwitcher cleanly.
+  2. AgentAvatar.vue / AgentBadge.vue — present in jam, NOT in taskboard.
+                 They import from '../../../../../shared/types' (deep relative
+                 path that is invalid in jam-sandbox — no shared/ package).
+  3. TimeTravelSlider.vue — present in jam, stub only (imports useTimeTravel,
+                 useTimeline, useReplay, useRouter — none exist in jam-sandbox).
+  4. style.css — taskboard has Tailwind @directives + rich drag-and-drop CSS
+                 vars; jam has a leaner audio-app baseline. NOT a straight copy.
+  5. visualizer/ ↔ webgl-flower/ — files are byte-identical. No action needed.
+  6. Button/Input/Card/Badge/Avatar/ContentEditable/LoadingOverlay/ThemeSwitcher
+                 — byte-identical. No action needed.
+
+tracks:
+  track-1_fix-index-exports:
+    tasks: [T01-fix-ui-index]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-2_agent-components:
+    tasks: [T02-decouple-agent-avatar, T03-decouple-agent-badge]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-3_time-travel-stub:
+    tasks: [T04-stub-time-travel-slider]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-4_style-alignment:
+    tasks: [T05-align-style-css]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED

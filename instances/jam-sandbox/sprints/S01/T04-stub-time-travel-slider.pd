@@ -1,0 +1,38 @@
+v:4 c:$ m:T04-stub-time-travel-slider role:dev x:vue3/typescript
+gate: LOCKED
+
+task: Replace TimeTravelSlider.vue with a self-contained audio time-scrub stub
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/components/ui/TimeTravelSlider.vue
+
+context: |
+  Current file imports useTimeTravel, useTimeline, useReplay (from
+  composables/core/*) and vue-router — none of these exist in jam-sandbox.
+  The component will fail to compile as-is.
+
+  In jam-sandbox context "time travel" maps to audio playback scrubbing:
+  scrub a position value (0..1 or 0..durationMs) passed in via props/model.
+  No Supabase event history needed.
+
+new-api:
+  props:
+    min: number (default 0)
+    max: number (default 100)
+    disabled?: boolean
+  modelValue: number (v-model)
+  emits: update:modelValue
+
+steps:
+  1. Rewrite TimeTravelSlider.vue from scratch.
+  2. Props: min (0), max (100), modelValue (number), disabled (false).
+  3. Emit update:modelValue on input change.
+  4. Template: single <input type="range"> with Tailwind styling matching the
+     existing slider in the taskboard version (accent-indigo-500, etc.).
+  5. No router, no composables, no supabase imports.
+
+done:
+  - Component compiles without TS errors in jam-sandbox
+  - Renders a styled range input that emits value changes
+  - v-model works: <TimeTravelSlider v-model="pos" :min="0" :max="duration" />

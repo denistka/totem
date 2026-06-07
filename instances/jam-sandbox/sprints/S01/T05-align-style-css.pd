@@ -1,0 +1,44 @@
+v:4 c:$ m:T05-align-style-css role:dev x:vue3/tailwind
+gate: LOCKED
+
+task: Align src/style.css with taskboard conventions without clobbering jam-sandbox audio-app baseline
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/style.css
+
+context: |
+  jam-sandbox style.css:
+    - No @tailwind base/components/utilities directives (uses Tailwind v4 CSS-first mode via vite plugin — correct, leave as-is)
+    - Has purple/pink CSS vars (--primary, --secondary, --accent, --success, --warning, --danger)
+    - Dark-only body bg: #050508
+
+  taskboard style.css:
+    - Has Tailwind v3 @directives (NOT applicable to jam-sandbox which is v4)
+    - Has extensive drag-and-drop CSS vars (NOT needed in jam-sandbox)
+    - Has `dark:bg-gray-50` light-mode styles (NOT desired in jam-sandbox which is dark-only)
+    - Has `*:focus-visible` ring styles — GOOD to adopt
+    - Has `.sr-only` class — GOOD to adopt
+
+  What to cherry-pick FROM taskboard:
+    1. `*:focus-visible` and element-specific focus-visible rules (accessibility)
+    2. `.sr-only` utility class
+    3. `html { @apply scroll-smooth; }` — already present in jam, verify it's there
+
+  What NOT to copy:
+    - @tailwind directives (v3 only)
+    - drag-and-drop CSS vars
+    - light-mode body/background overrides
+    - `.dark body` override (jam is already dark-only)
+
+steps:
+  1. Open jam-sandbox/src/style.css.
+  2. Append the focus-visible block and `.sr-only` after existing content.
+  3. Do NOT remove or replace any existing jam-sandbox CSS vars or base rules.
+
+done:
+  - `*:focus-visible` ring rule present
+  - `.sr-only` class present
+  - No @tailwind directives added
+  - No drag-and-drop vars added
+  - `vite dev` starts without CSS errors

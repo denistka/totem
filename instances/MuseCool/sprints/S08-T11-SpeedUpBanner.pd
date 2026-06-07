@@ -1,0 +1,27 @@
+---
+id: S08-T11
+name: Speed-Up Banner
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T11: Speed-Up Banner
+
+## Objective
+A friendly, kid-readable heads-up that appears just before the runner speeds up, turning the
+difficulty ramp into an encouraging moment (G6).
+
+## Acceptance Criteria
+- `src/components/SpeedUpBanner.tsx`; props: `visible`, `tierLabel`.
+- Copy like "Nice! Let's try a bit faster 🚀" (short, positive, ≤ 4 words + emoji).
+- GSAP slide+scale in, holds ~1.2 s, slides out; `power3.out` / `back.out`.
+- Glass-panel styling per DESIGN.md; non-blocking (pointer-events none).
+- Triggered by `rampPending` from `useRunnerEngine`; never overlaps gameover.
+
+## Steps
+1. Create `SpeedUpBanner.tsx` with GSAP enter/exit timeline.
+2. Drive `visible` from engine `rampPending`.
+3. Position top-center, above the staff, safe-area aware.
+4. `git commit -m "feat(ui): encouraging speed-up banner"`.

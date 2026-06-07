@@ -1,0 +1,35 @@
+---
+id: S03-T04
+name: Feedback Animations
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+---
+
+# S03-T04: Feedback Animations
+
+## Objective
+`useMascotAnimation` hook — GSAP state machine for the SVG mascot.
+`useLevelUpFlash` — full-screen overlay burst on level advance.
+Completes the full animation vocabulary for the game loop.
+
+## Acceptance Criteria
+- Mascot transitions: idle (breathing loop) → correct (jump) → wrong (wilt) → hurry (fast bounce).
+- State change kills previous tween and starts new one immediately.
+- Level-up flash: brief full-screen orange overlay fades in/out in 0.4s.
+- All tweens cleaned up on unmount.
+
+## Steps
+1. Create `src/hooks/useMascotAnimation.ts`.
+2. `useMascotAnimation(ref, state)`:
+   - `idle`: `gsap.to(ref, { y:-5, yoyo:true, repeat:-1, ease:'sine.inOut', duration:2 })`.
+   - `correct`: kill idle, `gsap.timeline()`: y -20 → 0 bounce.out(0.6s), then resume idle.
+   - `wrong`: kill idle, `gsap.to(ref, { rotation:10, yoyo:true, repeat:3, duration:0.1 })`, then resume idle.
+   - `hurry`: kill idle, `gsap.to(ref, { y:-3, yoyo:true, repeat:-1, duration:0.4 })`.
+3. Create `src/hooks/useLevelUpFlash.ts`:
+   - `triggerFlash(overlayRef)`: `gsap.fromTo(overlay, {autoAlpha:0}, {autoAlpha:0.35, yoyo:true, repeat:1, duration:0.2, ease:'power4.out'})`.
+4. Add `useScreenShake` to same file:
+   - `shake(containerEl, intensity = 1)`: `gsap.fromTo(el, {x:0}, {x:6*intensity, yoyo:true, repeat:5, duration:0.05, ease:'power2.inOut', clearProps:'x'})`.
+   - Used on wrong answer to shake the whole game container (juice).
+5. Export all from `src/hooks/index.ts`.
+6. `git commit -m "feat: mascot + level-up flash + screen shake"`.

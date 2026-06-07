@@ -1,0 +1,30 @@
+v:4 c:$ m:T01-fix-ui-index role:dev x:vue3/typescript
+gate: LOCKED
+
+task: Un-comment and correct all exports in src/components/ui/index.ts
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/components/ui/index.ts
+
+context: |
+  Current state — three exports are commented out:
+    // export { default as uiAgentAvatar } from './AgentAvatar.vue'
+    // export { default as uiAgentBadge } from './AgentBadge.vue'
+    // export { default as uiThemeSwitcher } from './ThemeSwitcher.vue'
+    ...
+    // export { default as uiTimeTravelSlider } from './TimeTravelSlider.vue'
+
+  taskboard reference (clean):
+    export { default as uiThemeSwitcher } from './ThemeSwitcher.vue'
+    export { default as uiContentEditable } from './ContentEditable.vue'
+
+steps:
+  1. Un-comment all four lines.
+  2. Add newline at EOF to match taskboard convention.
+  3. Verify all referenced .vue files exist in the same directory.
+
+done:
+  - index.ts has zero commented-out export lines
+  - All 11 primitives + AgentAvatar + AgentBadge + TimeTravelSlider exported
+  - File compiles without TS errors (tsc --noEmit from jam-sandbox root)

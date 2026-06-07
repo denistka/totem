@@ -1,0 +1,26 @@
+---
+id: S02
+name: Game Core
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S02: Game Core
+
+## Objective
+Pure logic layer: TypeScript types, note pool by difficulty, game state machine,
+and level progression config. No UI — all logic is unit-testable in isolation.
+Code style follows piano-keyboard-export as the reference (see `feedback_musecool_codestyle.md`).
+
+## Tasks
+- [ ] S02-T01-Types.pd
+- [ ] S02-T02-NotePool.pd
+- [ ] S02-T03-GameEngine.pd
+- [ ] S02-T04-LevelProgression.pd
+
+## Definition of Done
+- `useGameEngine` hook transitions through all `GamePhase` values correctly.
+- Level 1→6 configs are loaded and accessible.
+- Answer generation produces exactly N unique options including the target.

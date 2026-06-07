@@ -1,0 +1,31 @@
+v:4 c:$ m:T01-pianoroll-tool-api role:dev x:typescript/canvas
+gate: LOCKED
+
+task: Add a tool-mode concept to piano-roll.ts so canvas interaction can branch on active tool
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/piano-roll.ts
+
+context: |
+  Today setupCanvasEvents() (L298-320) unconditionally plays a note on
+  mousedown/drag. There is no tool state. This task adds the plumbing only;
+  T02 wires the behaviour.
+
+  Existing public setters follow the pattern of setViewMode(mode) at L132.
+
+steps:
+  1. Add private field:  private tool: 'pointer' | 'pencil' = 'pencil'
+  2. Add public setter mirroring setViewMode:
+       setTool(tool: 'pointer' | 'pencil'): void { this.tool = tool }
+  3. Add a private field for click velocity (used by T03):
+       private clickVelocity = 100
+       setClickVelocity(v: number): void {
+         this.clickVelocity = Math.max(1, Math.min(127, Math.round(v)))
+       }
+  4. Do NOT change mousedown/move behaviour yet (that is T02/T03).
+
+done:
+  - piano-roll.ts exposes setTool() and setClickVelocity()
+  - Default tool is 'pencil', default clickVelocity 100 (matches current hardcoded 100)
+  - tsc --noEmit passes

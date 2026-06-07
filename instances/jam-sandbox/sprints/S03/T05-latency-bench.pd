@@ -1,0 +1,40 @@
+v:4 c:$ m:T05-latency-bench role:dev x:measurement
+gate: LOCKED
+
+task: Establish a repeatable before/after latency measurement so the sprint's wins are provable
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/composables/useLogger.ts   (or a small new util — author's call)
+
+context: |
+  The app already measures and displays one-way note delay (oneWayMs, oneWayEma)
+  in the JamHeader LCD via NetworkStats. That is the right end-to-end remote
+  metric. This task makes the measurement EXPLICIT and capturable so T01-T04 can
+  be judged on numbers, not impressions.
+
+  Components of perceived latency to capture:
+    - ctx.baseLatency + ctx.outputLatency        (from T01) — local output
+    - local monitor latency: keypress → rebuildGraph applied (perf marks)
+    - remote oneWayMs / oneWayEma                 (already in stats)
+    - scheduler tick granularity                  (from T02)
+    - rebuildGraph count per N notes              (from T03)
+
+  Keep it lightweight — this is an experiment sandbox, not production telemetry.
+
+steps:
+  1. Add a dev-only "latency snapshot" that logs, on demand (e.g. a console
+     command, or a key combo, or a tiny debug button already-existing pattern):
+       outputLatency, baseLatency, current oneWayEma, scheduler interval,
+       rebuilds-per-100-notes.
+  2. Document a 3-step manual A/B protocol in the task DONE notes: capture
+     snapshot on main BEFORE the sprint's other tasks, after each, and compare.
+  3. Do NOT add heavy UI; reuse the existing logger (useLogger) to print the
+     snapshot into the Event List, OR console.table — keep surface minimal.
+
+done:
+  - A single action prints a latency snapshot with the fields above
+  - Snapshot works whether or not peers are connected (local fields still show)
+  - Baseline captured & recorded (in sprint intel or task comment) so T01-T04
+    deltas are demonstrable
+  - tsc --noEmit passes

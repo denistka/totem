@@ -1,0 +1,35 @@
+---
+id: S03-T05
+name: Particle Burst
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+---
+
+# S03-T05: Particle Burst
+
+# WOW task — the visible "celebration" moment on every correct answer.
+
+## Objective
+`useParticleBurst` — spawns short-lived music-note/star particles from a screen point
+with GSAP physics (radial velocity + gravity + fade). Intensity scales with streak.
+Pure DOM/GSAP, no canvas, no library — auto-cleans every particle node.
+
+## Acceptance Criteria
+- `burst(originEl, { count, streak })` spawns `count` particles at the element's center.
+- Each particle: random angle, random distance, arcs out then falls, fades, removes itself.
+- Colors cycle through `primary`/`secondary`/`accent` (brand palette).
+- Higher streak → more particles + larger spread (combo escalation).
+- Zero leftover DOM nodes after animation (verify in DevTools).
+
+## Steps
+1. Create `src/hooks/useParticleBurst.ts`.
+2. `burst(originEl: HTMLElement, opts: { count?: number; streak?: number })`:
+   - Compute origin center from `getBoundingClientRect`.
+   - `const n = (opts.count ?? 12) + Math.min(opts.streak ?? 0, 8)` (more on streak).
+   - For each: create a `<span>` (emoji 🎵/⭐/♪ or a colored dot), `position: fixed`, append to `document.body`.
+3. Per particle GSAP: `gsap.to(el, { x: cos(angle)*dist, y: sin(angle)*dist + gravity, rotation: rand, autoAlpha: 0, scale: rand, duration: 0.8 + rand, ease: 'power2.out', onComplete: () => el.remove() })`.
+4. Spread angle: full 360°, distance 60–160px, gravity adds +40–120 downward y.
+5. Color: cycle `['#FF9800','#0E92BA','#71C8BC']` per particle.
+6. Return `{ burst }`. Memoize with `useCallback`.
+7. `git commit -m "feat: useParticleBurst GSAP confetti"`.

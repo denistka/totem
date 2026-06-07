@@ -1,0 +1,82 @@
+---
+id: S08
+name: Game Modes & Landscape Fit
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti, react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08: Game Modes & Landscape Fit
+
+## Objective
+Introduce two distinct **game modes** selectable from Start screen, and ensure every screen
+fits without scroll or clipping on the smallest landscape viewport **667×375** (iPhone SE class).
+
+## Strategic context (from user)
+1. **Mode 1 — Find (как сейчас):** одна нота, игрок угадывает до истечения таймера.
+   Существующий loop, уровни 1–6, без изменения геймплея.
+2. **Mode 2 — Rhythm (в такт):** последовательность нот по тактам; таймер показывает
+   **когда наступает следующая нота** (beat window), а не общий дедлайн на вопрос.
+   Маскот **летит от ноты к ноте** по горизонтальному пути (GSAP).
+3. **Landscape audit:** все экраны (Start, Game, GameOver) + piano + mascot + score panel
+   должны полностью помещаться при `667×375` landscape без overflow.
+
+## Tracks (sequential)
+
+### Track A — Mode Core (pure logic, no DOM)
+- [ ] S08-T01-GameModeTypes.pd
+- [ ] S08-T02-RhythmSequenceLogic.pd
+- [ ] S08-T03-RhythmEngineHook.pd
+
+### Track B — Rhythm UI & Mode Selection
+- [ ] S08-T04-BeatTimelineUI.pd
+- [ ] S08-T05-MascotFlightPath.pd
+- [ ] S08-T06-RhythmGameScreen.pd
+- [ ] S08-T11-ModeSelectorStart.pd
+
+### Track C — Landscape Responsive (after Track B layout exists)
+- [ ] S08-T07-LandscapeAudit.pd
+- [ ] S08-T08-LandscapeGameLayout.pd
+- [ ] S08-T09-LandscapeStartGameOver.pd
+- [ ] S08-T10-LandscapePianoCompact.pd
+
+### Track D — Docs
+- [ ] S08-T12-README-ModesLandscape.pd
+
+## Mode 2 design contract (frozen for this sprint)
+
+| Aspect | Decision |
+|---|---|
+| Beat driver | GSAP timeline synced to BPM (reuse `useGameTimeline` pattern, not setInterval) |
+| Hit window | ±200 ms around beat centre; early/late = wrong (same mistake counter) |
+| Sequence length | 4 notes per round (configurable per sub-level) |
+| Sub-levels | 3 tiers: BPM 72 / 96 / 120, note pool from L1→L3 |
+| Visual path | Horizontal row of 4 note slots; active slot highlighted; mascot flies on beat advance |
+| Timer ring | Shows progress **to next beat**, not whole sequence |
+| Scoring | +10 per on-beat hit; streak multiplier preserved from Mode 1 |
+| Game over | Same rule: 3 mistakes |
+
+## Landscape layout contract (667×375)
+
+| Element | Landscape rule |
+|---|---|
+| Score panel | Single compact row, `py-1`, smaller badge |
+| Mascot | Max `64px` height in landscape; or inline left column |
+| Note + ring | Max ring `80px`; VexFlow compact staff |
+| Piano | Use `variant="compact"` or reduced octave span if needed |
+| Start / GameOver | Side-by-side or stacked with `min()` clamps, no `text-5xl` |
+| Safe area | Respect `env(safe-area-inset-*)` in landscape |
+
+## Definition of Done
+- Start screen offers **Find** and **Rhythm** mode buttons; each launches correct loop.
+- Mode 1 behaviour unchanged (regression-safe).
+- Mode 2: beat sequence playable end-to-end with mascot flight + beat timer.
+- Chrome DevTools device `667×375` landscape: zero vertical scroll, no clipped CTAs.
+- README section: modes explained + landscape testing note.
+- `git commit` after each task.
+
+## Risks
+- Piano keyboard height dominates 375px — may require landscape-specific octave range (C4–B4).
+- Rhythm audio sync: preload metronome click optional; reuse Tone.js tap on beat.
+- `useGameEngine` vs separate hook: prefer **separate `useRhythmEngine`** to avoid breaking Mode 1.

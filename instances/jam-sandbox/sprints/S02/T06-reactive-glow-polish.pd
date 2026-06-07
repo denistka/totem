@@ -1,0 +1,48 @@
+v:4 c:$ m:T06-reactive-glow-polish role:dev x:vue3/css
+gate: LOCKED
+
+task: Final cohesion pass — per-track color glow on glass + reactive accent breathing
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/components/ParticipantList.vue
+  - daww3/experiments/jam-sandbox/src/styles/glass.css
+
+context: |
+  With backdrop (T01), accent (T02), and glass chrome (T03–T05) in place, this is
+  the polish task that sells the "premium audio app" feel:
+
+    a) Each participant track has a .color (per-peer hue). The selected/local
+       track currently gets a flat blue tint. Make the glass track row pick up
+       its OWN peer color as a soft inset glow so the track list reads like lit
+       channel strips on glass.
+    b) The local ("you") track should subtly breathe (slow pulse) to feel alive,
+       echoing sdui-proto's a-pulse ambient language — but gentle, not noisy.
+    c) Respect prefers-reduced-motion (glass.css already reduces blur there;
+       extend it to disable the pulse).
+
+steps:
+  1. ParticipantList: on .lp-track.selected (local) and on hover for remote
+     tracks, add a left-edge / inset glow using the row's peer color. The color
+     is available via the inline :style on .lp-track-color (p.color) — expose it
+     to the row, e.g. set `--track-glow: <p.color>` as an inline style on the
+     .lp-track element, then in scoped CSS:
+       box-shadow: inset 3px 0 0 var(--track-glow),
+                   inset 0 0 24px -8px var(--track-glow);
+  2. Add a gentle breathing keyframe for the local track (opacity/glow only,
+     ~3s ease-in-out infinite), gated behind a class so only the "you" row uses it.
+  3. glass.css @media (prefers-reduced-motion: reduce): also set the breathing
+     animation to none.
+  4. Final visual audit (document in done): backdrop + accent + glass + glow all
+     speak violet/indigo, Logic chrome intact, per-track color still distinct.
+
+deps: T01–T05 (this is the closing polish; it assumes the system is in place).
+
+done:
+  - Local track glows in its own peer color and breathes gently.
+  - Remote track rows pick up their color on hover (inset glow).
+  - prefers-reduced-motion disables the breathing pulse.
+  - Per-peer color identity preserved (the color bar still distinct).
+  - No layout shift; compiles; dev server clean.
+  - SIGN-OFF note: the three layers (particles / glass / Logic) read as one
+    cohesive premium audio UI.

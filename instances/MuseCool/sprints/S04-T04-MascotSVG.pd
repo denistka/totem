@@ -1,0 +1,43 @@
+---
+id: S04-T04
+name: Mascot SVG
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+---
+
+# S04-T04: Mascot SVG
+
+# WOW task — the character is the #1 thing the JD asks for. This is Denis's signature.
+# Must read as "designed", not "developer placeholder". Build it with named, separately
+# animatable parts so S04-T06 can bring it to life.
+
+## Objective
+`MascotSVG` — an inline, multi-layer SVG character ("Melody", a friendly music note sprite)
+designed so every expressive part is a separately-targetable element. This task builds the
+ARTWORK + the 4 base reaction states. The "living" behaviors come in S04-T06.
+
+## Acceptance Criteria
+- Inline SVG (not <img>) with named refs/ids for every animatable part.
+- Looks intentionally designed: rounded body, glossy highlight, soft drop shadow, rosy cheeks.
+- Base states animate via `useMascotAnimation`: idle / correct / wrong / hurry.
+- Parts are positioned so pupils can move independently (for S04-T06 eye-tracking).
+- Crisp on mobile (viewBox-scaled), no raster assets.
+
+## Steps
+1. Create `src/components/MascotSVG.tsx`. `memo`. `viewBox="0 0 120 120"`.
+2. Build layered artwork with these named groups/ids (each a ref target):
+   - `#shadow` — soft ellipse under body (low opacity).
+   - `#body` — rounded eighth-note shape, fill `secondary` teal, with a subtle gradient.
+   - `#gloss` — white highlight blob on body (opacity 0.25) for a "glossy toy" feel.
+   - `#cheeks` — two soft `primary`-orange ellipses (opacity 0.4).
+   - `#eye-white-l/#eye-white-r` — white eye bases.
+   - `#pupil-l/#pupil-r` — dark pupils (movable for tracking).
+   - `#lid-l/#lid-r` — eyelids as rects that scaleY for blinking.
+   - `#mouth` — path that can morph between smile / "o" / frown via attribute swap.
+3. Props: `state: 'idle' | 'correct' | 'wrong' | 'hurry'`. Forward a `ref` to the root `<svg>`.
+4. `useMascotAnimation(rootRef, state)` from S03-T04 (whole-body motion).
+5. Mouth: switch `d` by state — smile (idle/correct), open-O (hurry), small frown (wrong).
+6. Expose refs for pupils, lids, mouth via `useImperativeHandle` OR query inside (decide in DESIGN follow-up); default: forwardRef exposing `{ root, pupils:[l,r], lids:[l,r], mouth }`.
+7. Default render size 96px mobile / 132px desktop via wrapper class.
+8. `git commit -m "feat: MascotSVG layered character + base states"`.

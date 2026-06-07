@@ -1,0 +1,37 @@
+---
+id: S04-T06
+name: Mascot Living Behaviors
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+---
+
+# S04-T06: Mascot Living Behaviors
+
+# WOW task — turns the mascot from "animated" into "alive". This is what makes a child
+# (and the reviewer) bond with it. Pure GSAP micro-behaviors on the parts built in S04-T04.
+
+## Objective
+`useMascotBehaviors` — layered idle "personality": auto-blink, subtle pupil-tracking toward
+the active note / hovered answer, breathing, and streak-driven excitement. Runs continuously
+underneath the discrete reaction states, the way a real character is never fully still.
+
+## Acceptance Criteria
+- Auto-blink: lids scaleY 1→0→1 on a randomised 2–5s interval, never blocking other anim.
+- Pupil tracking: pupils ease toward a target screen point (the current note, or hovered
+  answer button); clamp travel so they stay inside the eyes.
+- Breathing: gentle continuous body scale (separate from the reaction-state tweens).
+- Streak excitement: at streak ≥ 3 cheeks brighten + tiny faster bounce; ≥ 6 sparkle pulse.
+- All loops killed on unmount; behaviors pause during `gameover`.
+
+## Steps
+1. Create `src/hooks/useMascotBehaviors.ts`.
+2. Args: `{ refs, trackPoint, streak, active }` where `refs` = mascot parts from S04-T04,
+   `trackPoint: {x,y} | null`, `streak: number`, `active: boolean`.
+3. Blink loop: `const scheduleBlink = () => gsap.to([lidL,lidR], { scaleY:1, duration:0.08, yoyo:true, repeat:1, transformOrigin:'center', onComplete: () => gsap.delayedCall(rand(2,5), scheduleBlink) })`. Start on mount.
+4. Pupil tracking: in a GSAP `ticker` (or RAF), compute vector from mascot center to `trackPoint`,
+   clamp to radius ~4px, `gsap.to(pupils, { x, y, duration:0.3, ease:'power2.out' })` (throttle to avoid spamming).
+5. Breathing: `gsap.to(body, { scaleY:1.04, yoyo:true, repeat:-1, duration:1.8, ease:'sine.inOut', transformOrigin:'bottom center' })`.
+6. Streak: `useEffect([streak])` — adjust cheek opacity + bounce speed; ≥6 trigger a quick `gsap.fromTo(gloss,{autoAlpha:0.25},{autoAlpha:0.6,yoyo:true,repeat:1,duration:0.2})` sparkle.
+7. Cleanup: kill all tweens + remove ticker callback on unmount; guard with `active`.
+8. `git commit -m "feat: useMascotBehaviors — living character"`.

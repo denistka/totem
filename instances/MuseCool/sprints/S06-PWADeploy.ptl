@@ -1,0 +1,25 @@
+---
+id: S06
+name: PWA Hardening & Deploy
+status: PLANNING
+gate: OPEN
+requires: [pwa/PWA.ti, vercel/VERCEL.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S06: PWA Hardening & Deploy
+
+## Objective
+Harden PWA for iOS and Android (safe-area insets, visualViewport height, SW caching strategy),
+verify Vercel deployment, and run smoke tests across platforms.
+
+## Tasks
+- [ ] S06-T01-PWAHardening.pd
+- [ ] S06-T02-ServiceWorker.pd
+- [ ] S06-T03-VercelDeploy.pd
+
+## Definition of Done
+- App installable on iOS Safari + Android Chrome.
+- Piano keyboard not clipped by home indicator.
+- `npm run build` passes and Vercel URL is live.
+- All 3 screens function on mobile device.

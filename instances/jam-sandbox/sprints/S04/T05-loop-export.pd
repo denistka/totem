@@ -1,0 +1,50 @@
+v:4 c:$ m:T05-loop-export role:dev x:serialization
+gate: LOCKED
+
+task: Serialize the recorded loop to a portable JSON artifact (DAWW3 ownable-jam on-ramp)
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/composables/useLoopRecorder.ts
+  - daww3/experiments/jam-sandbox/src/components/JamControls.vue
+
+depends: [T04-loop-recorder]
+
+context: |
+  This is the concrete step toward the DAWW3 vision: a quantized loop becomes a
+  portable, signable artifact. NOT minting/on-chain (out of scope) — just a clean,
+  deterministic serialization that a future mint/persist step can consume.
+
+  Artifact shape (stable, versioned):
+    interface JamLoopArtifact {
+      v: 1
+      createdAt: string          // ISO
+      author: { peerId: string; name: string }
+      tempo: { bpm: number; lengthBeats: number; division: number }
+      scale: { divisions: number }     // from ScaleSystem
+      instrument: string               // author's selected instrument
+      notes: { note: number; velocity: number; startBeat: number; durBeats: number }[]
+      // hashable: a stable JSON.stringify of the above (sorted keys) is the
+      // canonical bytes a future on-chain step would hash/sign.
+    }
+
+steps:
+  1. useLoopRecorder: add exportLoop(): JamLoopArtifact | null built from the
+     current Loop + author (network.peerId/peerName) + ScaleSystem.divisions +
+     selected instrument name.
+  2. Add toCanonicalJSON(artifact): string with sorted keys (deterministic) so
+     the same loop always serializes identically (future hash stability).
+  3. Add a "download" action: serialize and trigger a Blob download
+     (jam-loop-<timestamp>.json). Also log a one-line summary to the Event List.
+  4. JamControls Loop section: add an "Export" button (enabled only when a loop
+     exists). Existing styles.
+
+note: |
+  Leave a short code comment marking toCanonicalJSON's output as the future
+  hash/sign input — this is the seam the DAWW3 monetization layer plugs into.
+
+done:
+  - With a recorded loop, Export produces a downloadable, deterministic JSON
+  - Re-exporting the same loop yields byte-identical canonical JSON
+  - Artifact includes tempo grid, scale, author, instrument, beat-relative notes
+  - tsc --noEmit passes

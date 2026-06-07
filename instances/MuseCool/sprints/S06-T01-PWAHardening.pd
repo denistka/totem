@@ -1,0 +1,30 @@
+---
+id: S06-T01
+name: PWA Hardening
+status: TODO
+gate: OPEN
+requires: [pwa/PWA.ti]
+---
+
+# S06-T01: PWA Hardening
+
+## Objective
+Apply safe-area insets, `--app-height` from `visualViewport`, and iOS standalone fixes
+so the game fills the screen correctly in installed PWA mode on notched devices.
+
+## Acceptance Criteria
+- Piano keyboard bottom not clipped by home indicator on iPhone.
+- `--app-height` reflects real available height (not 100dvh which can be wrong in standalone).
+- No overflow scroll on game screen.
+- Status bar is black-translucent (orange brand color bleeds behind it).
+
+## Steps
+1. In `src/pwa/pwaViewport.ts` (created in S01-T04):
+   - Set `document.documentElement.style.setProperty('--app-height', `${visualViewport.height}px`)`.
+   - Listen to `visualViewport.addEventListener('resize', update)`.
+   - Also listen `window.addEventListener('orientationchange', () => setTimeout(update, 300))`.
+2. In `index.css`: `html, body { height: 100%; overflow: hidden; }` (PWA no-scroll reset from PWA.ti gold standard).
+3. Piano keyboard wrapper in `GameScreen.tsx`: add `paddingBottom: 'env(safe-area-inset-bottom)'`.
+4. `#root`: `height: var(--app-height, 100dvh); overflow: hidden;`.
+5. Verify on iOS Safari: add to Home Screen, open, confirm piano keyboard visible above home indicator.
+6. `git commit -m "fix: PWA safe-area + app-height"`.

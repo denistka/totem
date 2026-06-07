@@ -1,0 +1,40 @@
+v:4 c:$ m:T02-precise-scheduler role:dev x:webaudio/timing
+gate: LOCKED
+
+task: Replace the requestAnimationFrame note scheduler with a drift-free, tab-throttle-immune timer
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/glicol-engine.ts
+
+context: |
+  startScheduler (glicol-engine.ts:118-148) drains noteQueue on rAF:
+    - ~16.7ms granularity → up to a frame of avoidable scheduling jitter
+    - rAF is THROTTLED to ~0 Hz in background/blurred tabs → notes stall when
+      the tab isn't focused (fatal for a live jam in a second monitor/window)
+
+  Canonical fix = the "lookahead scheduler" pattern (Chris Wilson, A Tale of Two
+  Clocks): a setInterval/setTimeout tick (e.g. 5-10ms) that schedules any events
+  due within a small window. Granularity and throttle-resistance both improve.
+
+  NOTE: noteQueue events use transport.now (performance.now()+offset) as `time`.
+  Keep that contract; only change the DRAIN cadence/primitive, not the time base.
+
+steps:
+  1. Replace requestAnimationFrame(tick) loop with a setInterval tick at ~5ms
+     (or self-correcting setTimeout) that drains all events with ev.time <= now.
+  2. Preserve the modified→rebuildGraph() call and the reverse-splice drain.
+  3. Stop the interval in stop() (replace cancelAnimationFrame cleanup).
+  4. Guard against drift: compute `now` fresh each tick from transport.now
+     (already the case) — do not accumulate.
+  5. Verify behaviour when tab is backgrounded (timers throttle to ~1s in some
+     browsers but do NOT freeze like rAF; acceptable and strictly better). If a
+     Web Worker timer is trivial to add for hard guarantees, prefer it; else
+     setInterval is acceptable for this experiment.
+
+done:
+  - No requestAnimationFrame in the scheduler path
+  - Notes still play at correct times in foreground (audibly unchanged or tighter)
+  - Notes continue to drain when tab is backgrounded (manual check)
+  - stop() cleanly cancels the new timer
+  - tsc --noEmit passes

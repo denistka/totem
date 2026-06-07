@@ -1,0 +1,28 @@
+---
+id: S02-T01
+name: Types
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+---
+
+# S02-T01: Types
+
+## Objective
+Define all shared TypeScript types for the game in `src/game/types.ts`.
+This file is the single source of truth — no inline types anywhere else.
+
+## Acceptance Criteria
+- All types exported from `src/game/types.ts`.
+- No `any`, no `object` — strict typing throughout.
+- TypeScript compiles without errors.
+
+## Steps
+1. Create `src/game/types.ts`.
+2. Define `GamePhase`: `'idle' | 'playing' | 'result' | 'gameover'`.
+3. Define `Note`: `{ midi: number; name: string; accidental: boolean }`.
+4. Define `Question`: `{ target: Note; options: readonly Note[] }`.
+5. Define `AnswerResult`: `{ midi: number; correct: boolean; timestamp: number }`.
+6. Define `LevelConfig`: `{ level: number; notePool: readonly number[]; timerMs: number; optionCount: number; label: string }`.
+7. Define `GameState`: `{ phase: GamePhase; score: number; streak: number; best: number; level: number; question: Question | null; lastResult: AnswerResult | null }`.
+8. `git commit -m "feat: game types"`.

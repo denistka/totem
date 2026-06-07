@@ -1,0 +1,28 @@
+---
+id: S08-T08
+name: Adaptive Speed
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T08: Adaptive Speed
+
+## Objective
+Speed up only as a reward for clean play, with a friendly heads-up — never silent punishment.
+Implements G6 from the quality review.
+
+## Acceptance Criteria
+- Pure helper `src/game/adaptiveSpeed.ts`: `nextSpeed(current, cleanCount): { pxPerSec, ramped }`.
+- Ramp trigger: a clean phrase (default 8 consecutive on-beat hits, 0 misses) → `pxPerSec × 1.15`.
+- Cap at a max speed (`pxPerSec` ceiling so kids aren't overwhelmed).
+- On a miss, the clean counter resets (no slowdown — just no further ramp).
+- `useRunnerEngine` integrates it and emits a `rampPending` signal for the UI banner.
+- Returns a tier label ("Steady", "Quick", "Zoom") for display.
+
+## Steps
+1. Create `src/game/adaptiveSpeed.ts`.
+2. Track `cleanCount` in engine; call `nextSpeed` at phrase boundaries.
+3. Emit `rampPending=true` ~1.2 s before applying, then apply and reset.
+4. `git commit -m "feat(game): reward-based adaptive speed with warning signal"`.

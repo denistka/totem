@@ -1,0 +1,34 @@
+---
+id: S03-T06
+name: Audio Feedback
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+---
+
+# S03-T06: Audio Feedback
+
+# WOW task — audio-visual sync, a direct demo of the JD's core requirement.
+
+## Objective
+`useAudioFeedback` — musical success/fail cues built on the piano's existing Tone.js
+engine (`getNoteFinderKeyboardAudioEngine`). Reuses the loaded Salamander sampler, so no
+new audio assets. Correct = ascending arpeggio, wrong = dissonant cluster, level-up = fanfare.
+
+## Acceptance Criteria
+- `playCorrect()`: ascending major arpeggio (e.g. C-E-G-C), notes staggered ~70ms.
+- `playWrong()`: low dissonant 2-note cluster (e.g. C + C#), short.
+- `playLevelUp()`: quick 4-note rising fanfare.
+- All use `engine.tapMidi(midi, velocity, duration)` — no new Tone nodes.
+- Safe if sampler not yet loaded (engine.tapMidi already guards on `loaded`).
+
+## Steps
+1. Create `src/hooks/useAudioFeedback.ts`.
+2. `const engine = getNoteFinderKeyboardAudioEngine()`.
+3. `playCorrect()`: arpeggio `[72, 76, 79, 84]`; schedule each with increasing delay via
+   `setTimeout(() => engine.tapMidi(m, 0.7, '16n'), i * 70)`.
+4. `playWrong()`: `engine.tapMidi(48, 0.6, '8n'); engine.tapMidi(49, 0.5, '8n')` (semitone clash).
+5. `playLevelUp()`: rising `[60, 64, 67, 72]` staggered ~90ms, slightly louder.
+6. Wrap each in `useCallback`. Return `{ playCorrect, playWrong, playLevelUp }`.
+7. Note: arpeggio timeouts are fire-and-forget short cues; no cleanup needed (sub-second).
+8. `git commit -m "feat: useAudioFeedback musical cues"`.

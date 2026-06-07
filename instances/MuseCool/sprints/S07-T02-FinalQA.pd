@@ -1,0 +1,32 @@
+---
+id: S07-T02
+name: Final QA
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+---
+
+# S07-T02: Final QA
+
+## Objective
+Systematic verification of all game states, layouts, and PWA behaviour on real devices
+and the live Vercel URL before submission.
+
+## Acceptance Criteria
+- Zero console errors across all tested scenarios.
+- All tap targets ≥ 44px on mobile.
+- Game loop complete: start → 3 wrong → gameover → restart cycles without state leak.
+- PWA installable and working in standalone mode.
+
+## Steps
+1. Mobile 375px (iOS Safari): Start screen loads, Nunito font visible, CTA tappable.
+2. Play round: note appears, piano playable, answer buttons respond, timer depletes.
+3. Correct answer: teal flash + mascot jumps + score increments + sound plays.
+4. Wrong answer: red shake + streak resets.
+5. 3 mistakes: gameover screen appears with score count-up.
+6. Restart: back to start screen cleanly.
+7. Level up: reach level 2 (5 correct), confirm note pool widens.
+8. Timer expire: confirms same as wrong answer path.
+9. Desktop Chrome 1280px: layout centered, no overflow, keyboard usable.
+10. Android Chrome: install prompt visible, standalone mode works.
+11. Fix any issues found. Final `git push`. Confirm Vercel deploy green.

@@ -1,0 +1,47 @@
+v:4 c:$ m:T03-quantize-notes role:dev x:audio/timing
+gate: LOCKED
+
+task: Add optional snap-to-grid quantization for locally played notes
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/composables/useJamSession.ts
+  - daww3/experiments/jam-sandbox/src/App.vue
+  - daww3/experiments/jam-sandbox/src/components/JamControls.vue
+
+depends: [T01-transport-controls, T02-metronome-sync]
+
+context: |
+  transport.quantize(beat, division) exists and is UNUSED. With a shared beat
+  grid (T02) we can snap a played note's trigger time to the nearest subdivision
+  so loose playing locks to the groove — and, crucially, so recorded loops
+  (T04) land on clean grid positions (prerequisite for a capturable artifact).
+
+  handleLocalNote (App.vue) currently triggers immediately. Quantize must delay
+  the local trigger to the next quantized beat-time when enabled.
+
+steps:
+  1. useJamSession: add quantizeDivision ref (0 = off, else 1/2/4 = 1/4,1/8,1/16
+     style snapping) + setter; return it.
+  2. Provide a helper (composable or transport) that, given "now", returns the
+     next quantized play time:
+       nextQuantizedTime(division): number  // transport.now-based
+     using transport.currentBeat + quantize() + beatToTime().
+  3. App.vue handleLocalNote: when quantizeDivision > 0 and note is ON, schedule
+     the local noteOn at the quantized time (use the engine's existing
+     scheduleNoteOn against transport time, NOT immediate noteOn) and send the
+     network note with that same intended time so peers align. When 0, keep
+     current immediate behaviour.
+  4. JamControls: add a small "Quantize" selector (Off / 1/4 / 1/8 / 1/16) in
+     the Transport or Sound section, existing styles.
+
+caution: |
+  Quantizing adds intentional local latency (up to one grid step) — this is
+  musically expected and must be OPT-IN (default Off) so it never fights the
+  S03 min-latency work for players who want raw immediacy.
+
+done:
+  - Quantize Off (default) = current immediate behaviour, unchanged
+  - Quantize 1/8 etc = local notes snap to grid and lock with the metronome
+  - Peers receive the note timed to the same grid position
+  - tsc --noEmit passes

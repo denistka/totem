@@ -1,0 +1,42 @@
+v:4 c:$ m:T02-wire-pencil-pointer role:dev x:typescript/vue3
+gate: LOCKED
+
+task: Make Pencil and Pointer tools behave differently in the canvas, and wire PianoRollView buttons to setTool
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/piano-roll.ts
+  - daww3/experiments/jam-sandbox/src/components/PianoRollView.vue
+
+depends: [T01-pianoroll-tool-api]
+
+context: |
+  Semantics for this audio-jam piano roll:
+    - PENCIL  = current behaviour: mousedown/drag plays notes live (the
+                instrument you hear). This is the "perform" tool.
+    - POINTER = passive/select: hovering/clicking the grid does NOT trigger
+                audio. Used to inspect without making sound. (Cursor changes,
+                no triggerNote.)
+
+steps (piano-roll.ts):
+  1. In setupCanvasEvents() mousedown handler: early-return WITHOUT triggerNote
+     when this.tool === 'pointer' (still allow note read for future hover, but
+     no audio, no this.mouseDown = true).
+  2. In mousemove handler: already guarded by this.mouseDown, so pointer mode
+     (which never sets mouseDown) is inert — verify no triggerNote fires.
+  3. Set canvas cursor to reflect tool: in setTool(), update
+     this.gridCanvas.style.cursor = tool === 'pencil' ? 'crosshair' : 'default'.
+
+steps (PianoRollView.vue):
+  4. activeTool ref already exists (L60). In its @click handlers (L75, L89),
+     after setting activeTool, call pianoRoll?.setTool(activeTool.value).
+     Cleanest: replace the inline `activeTool = 'x'` with a selectTool('x')
+     method that sets the ref AND calls pianoRoll.setTool.
+  5. On mount (after pianoRoll created, ~L35), call pianoRoll.setTool(activeTool.value)
+     so the initial 'pencil' cursor is applied.
+
+done:
+  - Pencil tool: click/drag on grid plays notes (unchanged behaviour) + crosshair cursor
+  - Pointer tool: click/drag on grid produces NO audio + default cursor
+  - Toolbar active-state highlight still tracks activeTool
+  - tsc --noEmit passes; manual: switch tools, confirm audio only in pencil

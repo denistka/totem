@@ -1,0 +1,30 @@
+---
+id: S05-T02
+name: Game Over Screen
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+---
+
+# S05-T02: Game Over Screen
+
+## Objective
+`GameOverScreen` — shows final score with GSAP count-up, max streak, mascot reaction,
+and "Play Again" CTA. Clean, celebratory or consoling depending on score.
+
+## Acceptance Criteria
+- Score counts up from 0 to final value with GSAP `power2.out`, 0.8s.
+- `MascotSVG` in `correct` state if score ≥ 50, else `wrong`.
+- "Play Again" button wired to `onRestart`.
+- Glass panel layout, same background gradient as game.
+
+## Steps
+1. Create `src/screens/GameOverScreen.tsx`.
+2. Props: `score: number`, `streak: number`, `onRestart: () => void`.
+3. `counterRef = useRef(0)`.
+4. On mount: `gsap.to(counterRef, { current: score, duration: 0.8, ease: 'power2.out', onUpdate: () => setDisplay(Math.round(counterRef.current)) })`.
+5. Layout: centered `glass-panel`, `MascotSVG`, big score number, streak row, CTA.
+6. Score display: `text-6xl font-black text-primary`.
+7. "Play Again": same orange CTA style as StartScreen.
+8. Subtle entrance: `gsap.from(panelRef, { scale:0.9, autoAlpha:0, duration:0.4, ease:'back.out(1.5)' })`.
+9. `git commit -m "feat: GameOverScreen"`.

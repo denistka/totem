@@ -1,0 +1,70 @@
+v:4 c:$$ m:S04-jam-daw-mvp role:planner
+gate: LOCKED
+
+objective: >
+  Turn jam-sandbox from a real-time keyboard jam into a minimum "jam DAW" by
+  building the foundation ladder that ends at the DAWW3 ownable-jam vision.
+  Each rung produces the substrate the next needs:
+    grid (metronome+quantize) → loop (record to grid) → artifact (capture/export).
+  Plus two cheap quality multipliers (ADSR, room links) that make the above
+  actually demo-able with a second player.
+
+requires: [FRONTEND_DEV, NODE]
+invariants:
+  - @instances/jam-sandbox/project.config.yml
+
+sprint-path: instances/jam-sandbox/sprints/S04/
+
+rationale: |
+  User goal = prove the DAWW3 vision (capturable/ownable jam), build
+  metronome+quantize FIRST. These reconcile: you cannot capture/mint a jam with
+  no time grid — a session worth owning must be quantized to a shared clock.
+  So the metronome is the PREREQUISITE for the capture story, not a detour.
+
+current-state (evidence from codebase read):
+  - transport.ts defines bpm, currentBeat, quantize(), beatToTime() — but they
+    are called by NOTHING in playback. The jam has no shared pulse. (DORMANT)
+  - No recording, no loop, no metronome anywhere (confirmed by grep).
+  - Notes are pure live on/off — no envelope (clicky raw oscillators).
+  - transport singleton is already shared across engine/piano-roll/network/composable.
+  - Message codes 0x07+ are FREE for clock/loop sync.
+  - room is a plain ref in useJamSession; no URL wiring (no shareable link yet).
+
+scope-discipline:
+  IN:  shared metronome+quantize, loop recorder (note-event loop, NOT audio/WAV),
+       quantized-loop JSON export, ADSR envelopes, shareable room links.
+  OUT: actual blockchain/mint code, MediaRecorder/WAV capture, multi-pattern
+       arrangement, mixer/FX. (Post-MVP — this sprint proves "a synced,
+       quantized, capturable shared loop exists".)
+
+tracks:
+  track-1_grid:
+    desc: Shared, network-synced metronome + quantize. Activates transport clock.
+    tasks:
+      - T01-transport-controls
+      - T02-metronome-sync
+      - T03-quantize-notes
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-2_loop:
+    desc: Record a bar-length phrase of note events that loops on the grid.
+    tasks:
+      - T04-loop-recorder
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-3_artifact:
+    desc: Serialize a quantized loop to a portable JSON artifact (DAWW3 on-ramp).
+    tasks:
+      - T05-loop-export
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-4_quality:
+    desc: Cheap multipliers so the MVP sounds good and a 2nd player can join.
+    tasks:
+      - T06-adsr-envelopes
+      - T07-shareable-room-link
+    requires: [FRONTEND_DEV]
+    gate: LOCKED

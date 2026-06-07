@@ -1,0 +1,29 @@
+---
+id: S04-T01
+name: Score Panel
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+---
+
+# S04-T01: Score Panel
+
+## Objective
+`ScorePanel` — top-of-screen glass card showing score, streak, and level badge.
+Uses `glass-panel` utility from `index.css`. `memo`-wrapped per code style standard.
+
+## Acceptance Criteria
+- Score increments animate via GSAP count-up (not instant jump).
+- Streak row hidden when streak = 0.
+- Level badge visible, color `bg-secondary text-white`.
+- Component is `memo`-wrapped.
+
+## Steps
+1. Create `src/components/ScorePanel.tsx`.
+2. Props: `score: number`, `streak: number`, `level: number`. Wrap in `memo`.
+3. Layout: `flex justify-between items-center px-4 py-2 glass-panel`.
+4. Score: `<span>` with `text-score text-secondary font-bold`. On `score` change:
+   `gsap.fromTo(scoreRef, {scale:1.3}, {scale:1, duration:0.25, ease:'back.out(2)'})`.
+5. Streak row: `{streak > 0 && <span className="text-primary font-bold">🎵 ×{streak}</span>}`.
+6. Level badge: `<span className="bg-secondary text-white text-xs font-bold px-2 py-0.5 rounded-full">L{level}</span>`.
+7. `git commit -m "feat: ScorePanel component"`.

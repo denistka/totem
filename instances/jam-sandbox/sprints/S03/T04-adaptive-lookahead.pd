@@ -1,0 +1,53 @@
+v:4 c:$ m:T04-adaptive-lookahead role:dev x:netcode/jitter-buffer
+gate: LOCKED
+
+task: Tighten the remote note lookahead buffer adaptively toward the minimum that still avoids xruns
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/network-bridge.ts
+
+context: |
+  decodeMessage (network-bridge.ts:392-395):
+    lookaheadBuffer = mode === 'broadcast'
+      ? 10
+      : max(30, peerRtt*1.5, iceRtt*1.5, latency*2)
+    playAt = remoteSentAtLocal + lookaheadBuffer
+
+  This buffer is the dominant REMOTE-latency knob: every received note is delayed
+  by it before sounding. The current formula is conservative (fixed 30ms floor +
+  latency*2). The minimum safe buffer is roughly the jitter (variance) of one-way
+  delay, NOT a fixed multiple of the delay itself.
+
+  Goal: replace the static multipliers with a jitter-aware estimate so a stable
+  low-latency link gets a SMALL buffer, while a jittery link still gets enough.
+
+  Existing signals available: peerOneWayMs, oneWayEma (EMA of one-way), per-peer
+  offset history. We can derive jitter (mean abs deviation / variance) cheaply.
+
+steps:
+  1. Track a per-peer one-way JITTER estimate: maintain an EMA of
+     |latency - oneWayEma| (mean absolute deviation) per sender.
+  2. New buffer formula (WebRTC), e.g.:
+       lookaheadBuffer = clamp(
+         baseFloor + jitterEma * K,
+         minBuffer,   // small, e.g. 8-12ms — never below output buffer reality
+         maxBuffer    // safety cap, e.g. 120ms
+       )
+     Pick baseFloor (e.g. 5ms), K (e.g. 2-3), minBuffer from measured device
+     output latency if available (ties into T01), with sane fallbacks.
+  3. Keep broadcast mode's tiny fixed buffer (local, ~0 jitter).
+  4. Make the constants named & commented so they're tunable.
+  5. Ensure no negative or NaN playAt; clamp defensively.
+
+caution: |
+  This trades safety margin for latency. Lower buffer = more risk of late notes
+  (xruns/clicks) on bad links. Provide the bench (T05) so the tuning is data-led,
+  not guessed. Default constants should be CONSERVATIVE-LEANING; the win is the
+  adaptivity, not an aggressive floor.
+
+done:
+  - Lookahead buffer is jitter-adaptive per peer (not fixed 30 + latency*2)
+  - On a low-jitter link, measured note Δ (oneWayMs shown in LCD) drops vs before
+  - No stuck/late notes under normal local testing; constants documented
+  - tsc --noEmit passes

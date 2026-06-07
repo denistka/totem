@@ -1,0 +1,33 @@
+---
+id: S04-T02
+name: Note Display
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, react-ts/FRONTEND_DEV.ti]
+---
+
+# S04-T02: Note Display
+
+## Objective
+`NoteDisplay` — renders a VexFlow treble-clef staff with the target note highlighted
+in `primary` orange, plus the giant note name below. GSAP entrance on each new question.
+Designed to sit INSIDE the `CountdownRing` (S03-T02) — the ring is the timer around it.
+
+## Acceptance Criteria
+- VexFlow SVG renders in a `<div ref>` container, treble clef + one note.
+- Note head styled in `#FF9800` (primary).
+- Giant note name (`text-note` size) beneath the staff.
+- `useNoteEntrance` hook triggers fly-in on `question` change.
+- No VexFlow errors in console.
+
+## Steps
+1. Create `src/components/NoteDisplay.tsx`.
+2. Props: `question: Question | null`. Wrap in `memo`.
+3. `staffRef = useRef<HTMLDivElement>(null)`.
+4. `useEffect([question])`: clear `staffRef.current.innerHTML`, create VexFlow `Renderer`,
+   render `Stave` with treble clef, create `StaveNote` for target MIDI (use `midiToShortLabel`
+   to get pitch string), style note head with `setStyle({ fillStyle: '#FF9800', strokeStyle: '#FF9800' })`,
+   use `Formatter.FormatAndDraw`.
+5. Apply `useNoteEntrance(containerRef, question?.target.midi)` on the outer container.
+6. Below staff: `<p className="text-note text-neutral font-black text-center">{question?.target.name}</p>`.
+7. `git commit -m "feat: NoteDisplay with VexFlow staff"`.

@@ -1,0 +1,52 @@
+v:4 c:$ m:T04-loop-recorder role:dev x:audio/state
+gate: LOCKED
+
+task: Record a bar-length phrase of note events and loop it on the shared grid
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/composables/useLoopRecorder.ts   (new)
+  - daww3/experiments/jam-sandbox/src/composables/useJamSession.ts
+  - daww3/experiments/jam-sandbox/src/App.vue
+  - daww3/experiments/jam-sandbox/src/components/JamControls.vue
+
+depends: [T01-transport-controls, T02-metronome-sync, T03-quantize-notes]
+
+context: |
+  THE defining jam-DAW feature: capture a phrase, it loops, everyone layers on
+  top. This records NOTE EVENTS (not audio) relative to the loop's beat grid, so
+  the loop is portable/quantized (sets up T05 export) and cheap to replay through
+  the existing engine.scheduleNoteOn/Off.
+
+  Loop model (note events, beat-relative):
+    interface LoopNote { note: number; velocity: number; startBeat: number; durBeats: number }
+    interface Loop { lengthBeats: number; bpm: number; division: number; notes: LoopNote[] }
+
+steps:
+  1. New composable useLoopRecorder():
+     - state: isRecording, isPlaying, loop (Loop | null), loopBars (default 1).
+     - startRecording(): mark loop start at the next downbeat (use transport beat);
+       capture incoming local notes (note/vel/startBeat from transport.currentBeat,
+       durBeats from note off) until lengthBeats reached, then auto-stop + start loop.
+     - playLoop(): on each loop cycle, schedule all LoopNotes via engine
+       .scheduleNoteOn/off at beatToTime(loopStartBeat + n.startBeat). Re-arm each cycle.
+     - stopLoop(), clearLoop().
+  2. Hook local notes: feed handleLocalNote's (note,vel,isOn) into the recorder
+     when isRecording. Reuse quantize (T03) so recorded starts land on grid.
+  3. useJamSession: expose recorder controls; App.vue: route notes; JamControls:
+     add a Loop section — Record / Play / Stop / Clear + bars selector + a
+     recording/playing indicator. Existing styles.
+  4. Loop playback uses the LOCAL peerId so it sounds as "you" (or a dedicated
+     loop voice) — decide and keep consistent; do not double-send loop notes to
+     the network in this task (local layering first; network loop share is post-MVP).
+
+caution: |
+  Keep scope to a SINGLE loop, local playback. Multi-loop, per-peer loop sync,
+  and overdub-merge are explicitly out (atomic-logic / one objective).
+
+done:
+  - Record arms on downbeat, captures 1 bar of played notes, auto-loops
+  - The loop plays back in time with the metronome and repeats cleanly
+  - You can play live ON TOP of the looping phrase (layering works)
+  - Stop/Clear work; re-record replaces the loop
+  - tsc --noEmit passes
