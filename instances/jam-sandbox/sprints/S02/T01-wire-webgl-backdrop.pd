@@ -1,0 +1,43 @@
+v:4 c:$ m:T01-wire-webgl-backdrop role:dev x:vue3/webgl
+gate: LOCKED
+
+task: Mount WebglFlower as the app's living ambient backdrop, driven by jam activity
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/App.vue
+
+context: |
+  WebglFlower.vue (src/components/visualizer/) is a self-contained particle
+  canvas with one prop: `currentSpeed?: number` (default 1). It is currently
+  imported NOWHERE. App.vue instead renders static CSS blobs (.lp-ambient).
+
+  WebglFlower internals to respect:
+    - fixed/absolute canvas, opacity ~0.25 in animationConfig
+    - it manages its own RAF loop + WebGL context (onMounted/onUnmounted)
+    - has dark gradient fallback classes already
+
+  Activity signal available in App.vue's useJamSession():
+    peerCount (ref), participants (computed list). Use a lightweight computed
+    that maps "busier room" → higher speed, e.g.:
+      currentSpeed = 1 + min(peerCount, 6) * 0.25   // 1.0 .. 2.5
+
+steps:
+  1. Import WebglFlower from './components/visualizer/WebglFlower.vue'.
+  2. Place it as the FIRST child inside .logic-app, before .lp-ambient,
+     wrapped so it sits at z-index 0 behind all chrome (absolute, inset:0,
+     pointer-events:none). Reuse the existing `.lp-ambient`/`.logic-app > :not()`
+     z-index stacking from glass.css (logic-app children get z-index:1).
+  3. Bind :current-speed="ambientSpeed" where ambientSpeed is a computed from
+     peerCount as above.
+  4. Keep .lp-ambient blobs as a soft tint OVER the particles (lower opacity)
+     OR remove them — choose so the particle field reads clearly. Document the
+     choice in a one-line comment.
+  5. Ensure pointer-events:none on the backdrop so the UI stays interactive.
+
+done:
+  - WebglFlower mounted once at the app root, behind all chrome.
+  - currentSpeed reacts to peerCount (verify the computed updates on join/leave).
+  - UI remains fully clickable (backdrop is pointer-events:none).
+  - No RAF leak: component unmount stops the loop (already handled in WebglFlower).
+  - Compiles; dev server renders particles behind glass panels.

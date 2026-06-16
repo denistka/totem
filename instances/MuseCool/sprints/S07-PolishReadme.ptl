@@ -1,0 +1,24 @@
+---
+id: S07
+name: Polish & README
+status: PLANNING
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S07: Polish & README
+
+## Objective
+Final QA pass across all platforms and screen sizes, micro-polish fixes,
+and the deliverable README that doubles as a cover letter for the role.
+
+## Tasks
+- [ ] S07-T01-README.pd
+- [ ] S07-T02-FinalQA.pd
+
+## Definition of Done
+- README complete: run instructions, design decisions, LLM usage, improvements.
+- All game states verified on 375px, 768px, desktop.
+- Zero console errors on live URL.
+- Git repo clean, ready to share with Muse team.

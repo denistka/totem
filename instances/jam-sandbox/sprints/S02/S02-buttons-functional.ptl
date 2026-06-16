@@ -1,0 +1,54 @@
+v:4 c:$$ m:S02-buttons-functional role:planner
+gate: LOCKED
+
+objective: >
+  Make every button in the EXISTING (rendered) jam-sandbox UI actually perform
+  the action its label/icon implies. Scope is strictly the controls already on
+  screen — no new components introduced. A full control inventory found exactly
+  ONE dead spot: the Piano Roll toolbar (Pointer / Pencil / Velocity), which set
+  local refs but never change canvas behaviour. This sprint makes those three
+  work with real functionality — no placeholder handlers.
+
+  OUT OF SCOPE (explicitly): the ui/ kit (Button, ThemeSwitcher, TimeTravelSlider,
+  etc.) is imported nowhere and is NOT part of the rendered UI. Per "only fix what
+  already exists on screen", the orphaned kit is left untouched this sprint.
+
+requires: [FRONTEND_DEV]
+invariants:
+  - @instances/jam-sandbox/project.config.yml
+  - @instances/jam-sandbox/sprints/S01/S01-ui-sync.ptl
+
+sprint-path: instances/jam-sandbox/sprints/S02/
+
+audit-baseline: |
+  Full grep of every <button>/<select>/<input>/@click in components/*.vue
+  (excluding the orphaned components/ui/). Result:
+
+  ALREADY WIRED (no work — do not touch):
+    JamControls:  Join / Leave / Start Engine            → emits → composable ✓
+    JamControls:  name/room inputs, transport/instrument/tuning selects → v-model ✓
+    JamHeader:    Toggle Logs / Mute-all                 → emits → composable ✓
+    ParticipantList: Tracks collapse / per-track mute    → local + emit ✓
+    LogViewer:    Expand / Clear / Close                 → local + emit ✓
+    InspectorSection: section open/close toggles         → v-model ✓
+    PianoRollView: Matrix/Piano toggle                   → pianoRoll.setViewMode ✓
+
+  DEAD / COSMETIC (the ONLY dead controls in the rendered app — targets here):
+    PianoRollView Pointer tool  (L70-83)  — sets activeTool='pointer', no canvas effect.
+    PianoRollView Pencil tool   (L84-99)  — sets activeTool='pencil', no canvas effect
+                                            (canvas always plays-on-click regardless).
+    PianoRollView Velocity btn  (L100-114)— hardcoded `disabled`, no handler at all.
+
+  KEY FACT: piano-roll.ts setupCanvasEvents() (L298-320) has no tool concept.
+  mousedown always triggers a note. There is no "select/pointer" passive mode
+  and no adjustable click-velocity. T01-T03 add exactly that.
+
+tracks:
+  track-1_piano-tools:
+    desc: Give the three dead Piano Roll toolbar buttons real canvas behaviour.
+    tasks:
+      - T01-pianoroll-tool-api
+      - T02-wire-pencil-pointer
+      - T03-velocity-control
+    requires: [FRONTEND_DEV]
+    gate: LOCKED

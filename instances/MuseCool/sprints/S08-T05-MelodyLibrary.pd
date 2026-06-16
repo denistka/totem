@@ -1,0 +1,28 @@
+---
+id: S08-T05
+name: Melody Library
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T05: Melody Library
+
+## Objective
+Encode real children's melodies as note+duration data so Mode 2 plays recognisable songs.
+Pure data + mapping helpers; no React.
+
+## Acceptance Criteria
+- `src/game/melodyLibrary.ts` exports `MELODIES: Melody[]`.
+- `Melody = { id, title, emoji, bpm, notes: MelodyNote[] }`; `MelodyNote = { name, beats }`.
+- Includes: Twinkle, Mary Had a Little Lamb, Jingle Bells (chorus), Happy Birthday, Ode to Joy
+  (exact note data from S08 .ptl contract).
+- `noteNameToMidi(name)` reuses existing note utilities (no new note numbering system).
+- `getMelody(id)` + `DEFAULT_MELODY_ID` exported.
+
+## Steps
+1. Create `src/game/melodyLibrary.ts` with the 5 melodies from the .ptl contract.
+2. Map note names → midi via existing `notePool`/note utils.
+3. Validate each melody's notes resolve to valid midis (guard/throw in dev).
+4. `git commit -m "feat(game): children's melody library with durations"`.

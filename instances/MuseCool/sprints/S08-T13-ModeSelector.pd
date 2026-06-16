@@ -1,0 +1,28 @@
+---
+id: S08-T13
+name: Mode Selector
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T13: Mode Selector
+
+## Objective
+Let the child choose **Find the Note** or **Note Runner** (with a melody pick) from Start,
+and route App to the right screen.
+
+## Acceptance Criteria
+- StartScreen: two big CTAs — "Find the Note" (primary orange) + "Note Runner" (teal).
+- Runner path shows a simple melody picker (title + emoji from `melodyLibrary`).
+- `App.tsx`: `Screen = 'start' | 'game-find' | 'game-runner' | 'gameover'`.
+- GameOver "Play Again" returns to Start (mode pick).
+- Mode 1 (Find) path identical to current behaviour (regression-safe).
+- Both CTAs are large tap targets; copy is kid-friendly.
+
+## Steps
+1. Extend `StartScreen` with `onStartFind` + `onStartRunner(melodyId)` and a melody picker.
+2. Update `App.tsx` routing to mount `GameScreen` or `RunnerGameScreen`.
+3. Pass selected melodyId into `RunnerGameScreen`.
+4. `git commit -m "feat: start-screen mode selector (Find + Runner)"`.

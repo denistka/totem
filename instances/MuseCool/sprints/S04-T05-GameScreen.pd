@@ -1,0 +1,43 @@
+---
+id: S04-T05
+name: Game Screen Assembly
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+---
+
+# S04-T05: Game Screen Assembly
+
+## Objective
+`GameScreen` — assembles all S04 components + piano keyboard + timer + game engine.
+Mobile-first flex column layout. Piano keyboard answers feed into `useGameEngine`.
+
+## Acceptance Criteria
+- Full game loop playable: question → answer (button or piano) → feedback → next question.
+- Piano `onChangePressed`: if `midi !== null` → call `engine.answer(midi)`.
+- Timer `onExpire` calls `engine.expire()`.
+- Mascot is alive (S04-T06): blinks/breathes, pupils track the active note, reacts to streak,
+  plays correct/wrong/hurry on results.
+- Correct answer orchestrates: scale burst + particle confetti + arpeggio + mascot celebrate.
+- Wrong answer orchestrates: button shake + screen shake + dissonant chord + mascot wilt.
+- Layout fits 375px viewport without scroll (piano fixed at bottom).
+
+## Steps
+1. Create `src/screens/GameScreen.tsx`.
+2. Instantiate hooks: `useGameEngine()`, `useGameTimeline()`, `useParticleBurst()`,
+   `useAudioFeedback()`, plus refs for container (screen shake), mascot, particle origin.
+3. Start timer on each new question: `useEffect([state.question])` → `timeline.start(levelConfig.timerMs, engine.expire)`.
+4. Layout: `flex flex-col h-[var(--app-height,100dvh)]` on the container ref:
+   - Top: `ScorePanel`.
+   - Middle (flex-1): note zone = `CountdownRing` wrapping `NoteDisplay` (ring around the note),
+     then `AnswerGrid`, with `MascotSVG` positioned beside/below.
+   - Bottom (fixed): `PianoKeyboard` with `env(safe-area-inset-bottom)` padding.
+   - Pass `timeline.progressRef` + `running={phase==='playing'}` to `CountdownRing`.
+5. `onAnswer(midi)`: call `engine.answer(midi)`; play `tapMidi(midi)` for the key's own note.
+6. React to `state.lastResult` (`useEffect([lastResult])`):
+   - Correct: `playCorrect()` + `burst(noteOriginRef, { streak })` + mascot state `correct`.
+   - Wrong: `playWrong()` + `shake(containerRef)` + mascot state `wrong`.
+7. Mascot `trackPoint`: pass the NoteDisplay center while `playing`; null on result/gameover.
+8. Mascot `hurry` state when `progressRef.current >= 0.75` (timer low) and still playing.
+9. Level-up: `useEffect([state.level])` → `triggerLevelUpFlash(overlayRef)` + `playLevelUp()`.
+10. `git commit -m "feat: GameScreen full assembly + juice orchestration"`.

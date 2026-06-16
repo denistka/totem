@@ -1,0 +1,34 @@
+---
+id: S04
+name: UI Components
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S04: UI Components
+
+## Objective
+Build all visual components for the game screen using the DESIGN.md system:
+ScorePanel, NoteDisplay (VexFlow), AnswerGrid, the living MascotSVG, and assemble them
+in GameScreen with the full juice layer wired in. Every component follows the
+piano-keyboard-export code style (BRIEF.md).
+
+## Tasks
+- [ ] S04-T01-ScorePanel.pd
+- [ ] S04-T02-NoteDisplay.pd
+- [ ] S04-T03-AnswerGrid.pd
+- [ ] S04-T04-MascotSVG.pd
+- [ ] S04-T06-MascotBehaviors.pd
+- [ ] S04-T05-GameScreen.pd
+
+## Definition of Done
+- GameScreen renders all sub-components without layout breaks on 375px and 768px viewports.
+- VexFlow staff renders target note correctly.
+- Answer buttons meet 64px min-height tap target.
+- Mascot is visibly ALIVE: blinks, breathes, tracks the note, reacts to streak.
+- Correct answer fires particles + arpeggio; wrong fires screen shake + dissonant chord.
+
+## Note on ordering
+S04-T04 (build character) MUST precede S04-T06 (behaviors), then S04-T05 (assembly) last.

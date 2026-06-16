@@ -1,0 +1,29 @@
+---
+id: S08-T07
+name: Runner Engine Hook
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T07: Runner Engine Hook
+
+## Objective
+`useRunnerEngine` — Mode 2 state machine. Parallel to `useGameEngine`; does NOT modify it.
+
+## Acceptance Criteria
+- API: `{ state, start(melodyId), hit(midi), restart, clockRef }`.
+- State: `phase`, `score`, `streak`, `pxPerSec`, `melodyId`, `track`, `activeIndex`, `misses`.
+- A RAF/GSAP clock advances `tNowMs`; engine flags the note at the hit-line as tappable.
+- `hit(midi)`: correct midi within window → onbeat (score+, streak+, mark note); else miss.
+- Note that scrolls past the window unhit → auto-miss.
+- 3 misses → `gameover`; melody end → loop or next melody (configurable), award phrase bonus.
+- Exposes `clockRef` (mutable `tNowMs`) so UI scrolls without per-frame re-render.
+
+## Steps
+1. Create `src/hooks/useRunnerEngine.ts` (reducer + refs pattern like `useGameEngine`).
+2. Use a single GSAP ticker to advance `tNowMs`; write to `clockRef`.
+3. Wire `runnerModel` (`noteAtHitLine`, `gradeHit`) + `melodyLibrary`.
+4. Export from `src/hooks/index.ts`.
+5. `git commit -m "feat: useRunnerEngine state machine"`.

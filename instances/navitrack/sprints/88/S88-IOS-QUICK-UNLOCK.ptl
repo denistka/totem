@@ -1,0 +1,87 @@
+gate: OPEN
+sprint: S88
+title: iOS Session Trust — direct login without biometry (with security warning)
+priority: P1
+dep: S87
+
+description: |
+  Client feedback (2026-06-05, Перевозчиков Евгений):
+  iPhone user finds Face ID inconvenient on an older device; still types
+  password too often.
+
+  Product decision (2026-06-16, Denis):
+  PIN is NOT needed. Second scenario = disable biometry and enter the app
+  directly without unlock prompts. User must see a clear warning that this
+  is less secure.
+
+  Current gaps (audit baseline):
+  - Biometry cancel/fail → logout + blockBiometryUntilManualLogin → forced password.
+  - Resume from background always prompts Face ID (no inactivity grace).
+  - Session token in sessionStorage may not survive cold start → password again.
+  - No explicit "trust device / skip unlock" mode with informed consent.
+
+ground_truth:
+  - src/features/security/hooks/useSessionBiometryLock.ts
+  - src/features/security/lib/biometric-credentials.ts
+  - src/features/security/lib/biometric-unlock.ts
+  - src/shell/hooks/useMobileShell.ts
+  - src/store/useAuthStore.ts
+  - src/lib/api-auth.ts
+  - src/screens/login/LoginScreen.tsx
+  - src/screens/login/hooks/useLoginFlow.ts
+  - src/screens/settings/components/MainSettingsSection.tsx
+  - src/hooks/useLocalSettings.ts
+
+success_metrics:
+  - Biometry ON: unlock without password (Face ID); brief app switch → no re-prompt.
+  - Biometry OFF + trust device ON: cold start → app opens directly, no password.
+  - Enabling trust device shows security warning; user must confirm.
+  - Explicit sign-out still requires password.
+  - Verified on physical iOS device.
+
+risks:
+  - Trust mode stores session durably on device — document tradeoff in UI copy.
+  - Must not auto-enable trust mode; explicit opt-in only.
+  - JWT expiry still requires server re-auth (password or silent relogin if creds kept).
+
+invariants: sprints/54/INVARIANTS.md
+requires: [FRONTEND_DEV, MOBILE_TAURI]
+estimated: 1–2 days
+
+tracks:
+  - id: T0
+    title: Audit — map every path that forces password entry
+    tasks:
+      - S88-T0-auth-friction-audit.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T1
+    title: Biometry path — inactivity grace + softer cancel landing
+    tasks:
+      - S88-T1-inactivity-grace-resume.pd
+      - S88-T2-biometry-fail-soft-landing.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T2
+    title: Trust device — direct session without biometry or password
+    tasks:
+      - S88-T3-trust-device-direct-session.pd
+      - S88-T4-settings-trust-device-warning.pd
+    requires: [FRONTEND_DEV, MOBILE_TAURI]
+    gate: OPEN
+
+  - id: T3
+    title: Login UX — Face ID retry button (biometry users only)
+    tasks:
+      - S88-T5-login-quick-unlock-button.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T4
+    title: Verification — iOS device QA
+    tasks:
+      - S88-T6-ios-device-verification.pd
+    requires: [FRONTEND_DEV, QA]
+    gate: OPEN

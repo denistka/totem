@@ -1,0 +1,30 @@
+v:4 c:$ m:T03-decouple-agent-badge role:dev x:vue3/typescript
+gate: LOCKED
+
+task: Fix AgentBadge.vue — replace broken shared/types import with local type
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/components/ui/AgentBadge.vue
+
+context: |
+  Same broken import as AgentAvatar (see T02):
+    import type { Profile } from '../../../../../shared/types'
+
+  AgentBadge.vue only uses:
+    profile.actor_type
+    profile.agent_name
+
+steps:
+  1. Remove the shared/types import.
+  2. Declare minimal local interface:
+       interface Profile {
+         actor_type?: string
+         agent_name?: string | null
+       }
+  3. No other logic changes.
+
+done:
+  - No import from '../../../../../shared/types'
+  - Component compiles without TS errors
+  - Props shape and template unchanged

@@ -1,0 +1,29 @@
+---
+id: S08-T09
+name: Scrolling Staff
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T09: Scrolling Staff
+
+## Objective
+The Chrome-dino "ground that runs" — a horizontal treble staff that scrolls right→left with
+notes approaching a fixed hit-line. One transform drives the scroll (perf).
+
+## Acceptance Criteria
+- `src/components/ScrollingStaff.tsx`; props: `track`, `clockRef`, `pxPerSec`, `hitLineX`.
+- Staff lines + note heads scroll via a single `transform: translateX` driven by `clockRef` in a RAF loop (no per-note React state).
+- Hit-line is a visible vertical marker (brand orange) near the left third.
+- Note heads styled per S01 palette (teal lines, orange heads); duration shown via note-head spacing/shape.
+- Notes past the line: dim/struck; upcoming: full colour.
+- Cleans up RAF on unmount.
+
+## Steps
+1. Create `ScrollingStaff.tsx` with an inner `<g>`/div translated each frame from `clockRef`.
+2. Render note heads at `xStart - tNow*pxPerSec`; recycle/cull offscreen.
+3. Draw the fixed hit-line + a soft glow.
+4. Optional: reuse VexFlow for clef glyph at left; notes can be simple SVG heads for perf.
+5. `git commit -m "feat(ui): scrolling staff runner track"`.

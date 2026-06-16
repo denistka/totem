@@ -1,0 +1,35 @@
+---
+id: S10-T02
+name: Tone.js Lazy Init
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S10-T02: Tone.js Lazy Init
+
+## Objective
+Keep the browser console clean on cold load — no AudioContext or Tone.js init until the
+first user gesture (Play tap or piano key down).
+
+## Root cause
+- `StartScreen` calls `getNoteFinderKeyboardAudioEngine().preload()` on mount.
+- `useNoteFinderKeyboardAudio` preloads when `preload: true` (interactive PianoKeyboard).
+- `new Sampler()` in preload creates Tone nodes before gesture.
+
+## Acceptance Criteria
+- Fresh load → DevTools console: zero Tone/AudioContext warnings.
+- First Play click or piano key: audio works (engine loads + `Tone.start()`).
+- Assistive StartScreen piano remains silent and does not trigger preload.
+- Game feedback (`useAudioFeedback`) still works after first gesture.
+- No regression to piano tap latency after preload completes.
+
+## Steps
+1. Refactor `noteFinderKeyboardAudioEngine.ts`: defer `new Sampler()` until `ensureReady()` called after `Tone.start()`.
+2. Remove `StartScreen` mount-time `preload()` call.
+3. Set `PianoKeyboard` default `preload: false`; trigger `ensureReady()` inside `auditionDown` / first game key handler.
+4. Wire game `handlePianoKey` to call `ensureReady()` once on first interactive press.
+5. Move sample download to post-gesture path; show no console.error unless load fails after gesture.
+6. Cold-load verify console; tap Play + key — audio OK.
+7. `git commit -m "fix(audio): defer Tone.js init until user gesture"`.

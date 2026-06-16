@@ -1,0 +1,31 @@
+---
+id: S10-T06
+name: Start Screen Orientation Layout
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+invariants: ../S01-INVARIANTS.md
+depends_on: S10-T01
+---
+
+# S10-T06: Start Screen Orientation Layout
+
+## Objective
+Portrait: column layout (as now). Landscape: **horizontal row** — copy + Play on one side,
+mascot on the other; hide assistive piano to save height.
+
+## Acceptance Criteria
+- **Portrait:** title → tagline → mascot → Play → assistive piano (unchanged feel).
+- **Landscape:** flex-row `items-center justify-center gap-6 px-4`:
+  - Left column: title (`text-3xl`), tagline, Play button.
+  - Right column: mascot (`≤80px`).
+- Assistive piano hidden in landscape (`landscape:hidden` or CSS utility).
+- Play CTA always visible without scroll at 667×375.
+- GSAP entrance stagger still runs (targets updated if refs move).
+
+## Steps
+1. Split StartScreen content into `StartCopyColumn` + mascot column (inline or sub-component).
+2. Apply `flex-col` default, `landscape:flex-row landscape:flex-1 landscape:justify-center`.
+3. Hide bottom piano wrapper in landscape; keep safe-bottom on container if needed.
+4. Verify portrait regression on 375×667.
+5. `git commit -m "fix(layout): start screen landscape row layout"`.

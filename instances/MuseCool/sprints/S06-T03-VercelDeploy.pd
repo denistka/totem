@@ -1,0 +1,31 @@
+---
+id: S06-T03
+name: Vercel Production Deploy
+status: TODO
+gate: OPEN
+requires: [vercel/VERCEL.ti]
+---
+
+# S06-T03: Vercel Production Deploy
+
+## Objective
+Push final build to GitHub, verify Vercel auto-deploy, and run smoke tests
+on the live URL across mobile Safari, Android Chrome, and desktop Chrome.
+
+## Acceptance Criteria
+- `npm run build` exits 0, no TS errors.
+- Vercel deploy succeeds, live URL accessible.
+- PWA "Add to Home Screen" prompt appears on Android Chrome.
+- iOS: "Add to Home Screen" → standalone mode works.
+- All 3 game screens functional on live URL.
+
+## Steps
+1. `npm run build` — fix any TypeScript or build errors.
+2. `git push origin main` — triggers Vercel auto-deploy.
+3. Open Vercel dashboard, confirm deployment status green.
+4. Mobile smoke test (use live URL):
+   - iOS Safari: Start → Play 1 round → GameOver → Restart.
+   - Android Chrome: same flow + confirm install prompt appears.
+   - Desktop Chrome: full flow.
+5. Note live URL in `README.md` under "Live Demo".
+6. `git commit -m "chore: production deploy verified"`.

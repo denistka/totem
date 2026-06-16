@@ -1,0 +1,46 @@
+project:
+  name: REDA
+  version: 1.0.0
+  codename: restaurant-efficiency
+  description: |
+    Restaurant Efficiency Data Analysis — Nuxt 3 PWA for multi-role restaurant operations.
+    Orders, payments (CompuCash POS + Pocket Bank), chat, statistics, feedback, calls/tables.
+    Production-ready codebase with 60+ components, Supabase RLS, role-based workflows.
+  stack: [Nuxt 3, Vue 3, TypeScript, Tailwind CSS, Supabase, Vercel, Vitest]
+  context:
+    tech_reference: ../../../../REDA/docs/REDA_TECH_REFERENCE.md
+    agents_schema: ../../../../REDA/docs/AGENTS.MD
+    role_permissions: ../../../../REDA/docs/ROLE_PERMISSIONS_REFERENCE.md
+    brief: ./BRIEF.md
+    invariants: ./S01-INVARIANTS.md
+
+paths:
+  # CRITICAL: Agent writes OUTSIDE totem/ — enforced relative path.
+  # totem-v6/instances/REDA/ -> ../../../../REDA/_app/reda -> /Projects/REDA/_app/reda
+  code: ../../../../REDA/_app/reda
+  workspace: ../../../../REDA
+  migrations: ../../../../REDA/supabase/migrations
+  history: ./sprints
+  intel: ./intel
+
+repo:
+  url: https://github.com/denistka/REDA.git
+  branch: main
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - PLANNER
+    - ARCHITECT
+    - QA
+  stack_adapters:
+    - vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti
+    - nuxt/NUXT.ti
+    - vue/VUE.ti
+    - supabase/SUPABASE.ti
+    - tailwind/TAILWIND.ti
+    - vercel/VERCEL.ti
+    - typescript/TYPESCRIPT.ti
+
+  ui_stack_ref: vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND

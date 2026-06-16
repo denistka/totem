@@ -1,0 +1,31 @@
+---
+id: S02-T04
+name: Level Progression
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+---
+
+# S02-T04: Level Progression
+
+## Objective
+Define `LEVELS` config array and `getLevelConfig(level)` accessor used by `useGameEngine`.
+6 distinct difficulty tiers with musical progression logic.
+
+## Acceptance Criteria
+- 6 `LevelConfig` entries exported as `LEVELS`.
+- Timer decreases each level. Pool widens each level.
+- `getLevelConfig(n)` clamps to max level safely.
+
+## Steps
+1. Create `src/game/levelConfig.ts`.
+2. Define `LEVELS: LevelConfig[]`:
+   - L1: pool=POOL_L1 (5 whites), timerMs=5000, optionCount=4, label="Starter".
+   - L2: pool=POOL_L2 (7 whites), timerMs=4000, optionCount=4, label="Easy".
+   - L3: pool=POOL_L3 (12 notes), timerMs=3000, optionCount=4, label="Medium".
+   - L4: pool=POOL_L4 (24 notes), timerMs=2500, optionCount=4, label="Hard".
+   - L5: pool=POOL_L4, timerMs=2000, optionCount=4, label="Fast".
+   - L6: pool=POOL_L4, timerMs=1500, optionCount=4, label="Expert".
+3. Export `getLevelConfig(level: number): LevelConfig` — clamps to `LEVELS.length - 1`.
+4. Export `MAX_LEVEL = LEVELS.length`.
+5. `git commit -m "feat: level progression config"`.

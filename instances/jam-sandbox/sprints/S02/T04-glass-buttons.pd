@@ -1,0 +1,42 @@
+v:4 c:$ m:T04-glass-buttons role:dev x:vue3/css
+gate: LOCKED
+
+task: Give .lp-btn variants glass depth while keeping semantic transport colors readable
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/styles/logic-pro.css
+
+context: |
+  .lp-btn today is an opaque metal gradient (#454545→#323232). On a glass+particle
+  backdrop, neutral/default buttons should pick up frosted translucency so they
+  belong to the glass system; SEMANTIC buttons (play=green, danger=red,
+  primary=accent) keep their solid color identity but gain the glass inset
+  highlight + subtle blur so they sit in the same material world.
+
+steps:
+  1. Base .lp-btn (neutral): replace the opaque grey gradient with a translucent
+     frosted fill:
+       background: rgba(255,255,255,0.06);
+       backdrop-filter: blur(12px) saturate(140%);
+       border: 1px solid var(--glass-border);
+       box-shadow: inset 0 1px 0 var(--glass-highlight);
+     Hover → bump bg to rgba(255,255,255,0.10). Active → inset press shadow.
+  2. .lp-btn-primary: re-tint to the violet accent gradient (use --lp-accent /
+     --lp-accent-hover from T02) and add the inset highlight. Keep it solid
+     (it's the primary CTA) but harmonize the border with accent.
+  3. .lp-btn-play / .lp-btn-danger: keep green/red identity, ADD inset 0 1px 0
+     rgba(255,255,255,0.15) highlight + a faint matching glow on hover
+     (box-shadow with the button's own hue) so they read as lit glass keys.
+  4. .lp-btn.active (toggle on): use the violet accent fill from T02.
+  5. .lp-btn-icon: inherits base glass automatically — just verify sizing intact.
+
+deps: T02 (accent tokens) should land first so primary/active use violet.
+
+done:
+  - Neutral lp-btn / lp-btn-icon are frosted translucent with inset highlight.
+  - Play stays green, Danger stays red, Primary/active are violet accent.
+  - All variants share the inset-highlight "lit glass" material.
+  - Disabled + active press states still legible.
+  - Button heights/paddings unchanged (no layout shift).
+  - Compiles; no CSS errors.

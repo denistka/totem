@@ -1,0 +1,28 @@
+---
+id: S01-T02
+name: Tailwind Config
+status: TODO
+gate: OPEN
+requires: [tailwind/TAILWIND.ti, react-ts/UI_UX.ti]
+---
+
+# S01-T02: Tailwind Config
+
+## Objective
+Configure Tailwind with the full MuseCool design system from `DESIGN.md`:
+exact README palette tokens, game extras, custom shadows, and typography.
+
+## Acceptance Criteria
+- `tailwind.config.js` matches the "Full tailwind.config.js" block in `DESIGN.md` verbatim.
+- `src/index.css`: `@tailwind` directives + game background gradient + glass utility classes.
+- Body has `font-game` (Nunito) and `bg-game-bg` gradient applied.
+- Piano component tokens (`primary`, `base-100`, `base-200`, etc.) resolve correctly in browser.
+
+## Steps
+1. Copy `tailwind.config.js` from `DESIGN.md` verbatim to project root.
+2. In `index.css`: add `@tailwind base/components/utilities`.
+3. In `index.css @layer base`: set `body { font-family: 'Nunito', sans-serif; }`.
+4. In `index.css @layer base`: set body background to `linear-gradient(135deg, #FFF5E6 0%, #E4F4F2 100%)` with the two radial blobs from `DESIGN.md`.
+5. In `index.css @layer utilities`: add `.glass-panel`, `.glass-option`, `.glass-option--correct`, `.glass-option--wrong` from `DESIGN.md`.
+6. Set `min-h-dvh` on `#root` so the gradient fills the viewport.
+7. `git commit -m "feat: tailwind design system"`.

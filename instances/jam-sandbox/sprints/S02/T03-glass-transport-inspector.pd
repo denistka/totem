@@ -1,0 +1,42 @@
+v:4 c:$ m:T03-glass-transport-inspector role:dev x:vue3/css
+gate: LOCKED
+
+task: Apply full frosted-glass depth to the transport bar and inspector sections
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/styles/logic-pro.css
+  - daww3/experiments/jam-sandbox/src/components/JamHeader.vue
+  - daww3/experiments/jam-sandbox/src/components/InspectorSection.vue
+
+context: |
+  Transport bar (JamHeader, .lp-transport) already has .glass-panel but its inner
+  layout (.transport-left/right, project-title) sits flat. Inspector section
+  headers (.lp-section-header in logic-pro.css) use a flat rgba(255,255,255,.04)
+  fill — they should read as frosted dividers consistent with the glass sidebar.
+
+  glass.css vocabulary to reuse:
+    .glass-panel (strong), .glass-panel-subtle, .glass-pill, inset highlight var
+    --glass-highlight.
+
+steps:
+  1. .lp-section-header (logic-pro.css): swap the flat fill for a subtle frosted
+     treatment — translucent bg + backdrop-blur(var(--glass-blur-subtle)) +
+     inset 0 1px 0 var(--glass-highlight). Keep the disclosure triangle + type.
+     Hover state stays but slightly brighter.
+  2. .lp-section bottom border → use var(--glass-border) instead of solid
+     --lp-border so sections divide with glass hairlines.
+  3. JamHeader: ensure .lp-transport reads as one frosted bar — the .glass-panel
+     is there; verify backdrop blur is actually visible over the new particle
+     backdrop (it will be now that T01 lands). Add a thin bottom hairline
+     border var(--glass-border-strong) for separation from workspace.
+  4. .lcd-panel: keep the dark LCD look (it's intentionally NOT glass — it's a
+     readout). Leave .glass-lcd as-is.
+
+done:
+  - Inspector section headers show frosted translucency + inset highlight.
+  - Section dividers use glass hairline borders.
+  - Transport bar visibly frosts the particles behind it.
+  - LCD readout stays crisp/dark (unchanged).
+  - DAW layout dimensions (heights, paddings, sidebar width) unchanged.
+  - Compiles; no CSS errors.

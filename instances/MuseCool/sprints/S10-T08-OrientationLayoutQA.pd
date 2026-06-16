@@ -1,0 +1,28 @@
+---
+id: S10-T08
+name: Orientation Layout QA
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti, pwa/PWA.ti]
+invariants: ../S01-INVARIANTS.md
+depends_on: [S10-T05, S10-T06, S10-T07]
+---
+
+# S10-T08: Orientation Layout QA
+
+## Objective
+Final verification pass for S10 across viewports, console cleanliness, and favicon.
+
+## Acceptance Criteria
+- Viewports: 375×667, 667×375, 768×1024, 1280×800 — all screens zero scroll, CTAs visible.
+- Cold load console: no Tone/AudioContext warnings.
+- Favicon shows mascot in browser tab.
+- Safe area: no white status-bar band on iOS simulator.
+- `VITE_LAYOUT_TEST=false`: full start → game → gameover → restart flow works.
+- Write `sprints/S10-QA-RESULTS.md` with pass/fail table.
+
+## Steps
+1. Run `tsc --noEmit` and ESLint on touched files.
+2. Test all three screens both orientations; capture notes in QA doc.
+3. Test audio after first gesture; test PWA meta unchanged except icons.
+4. `git commit -m "docs(qa): S10 orientation and safe-area QA results"`.

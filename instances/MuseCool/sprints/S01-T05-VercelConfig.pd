@@ -1,0 +1,30 @@
+---
+id: S01-T05
+name: Vercel Config
+status: TODO
+gate: OPEN
+requires: [vercel/VERCEL.ti]
+---
+
+# S01-T05: Vercel Config
+
+## Objective
+Create `vercel.json` with SPA fallback, push to GitHub, connect to Vercel,
+and verify a live empty-shell deployment.
+
+## Acceptance Criteria
+- `vercel.json` present with SPA rewrite rule.
+- GitHub repo created and pushed.
+- Vercel project connected and deployed successfully.
+- Live URL opens without 404.
+
+## Steps
+1. Create `vercel.json` at project root:
+   `{ "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }] }`.
+2. Verify `vite.config.ts` build output is `dist/` (Vercel default, no override needed).
+3. Repo already exists: `https://github.com/denistka/musecool.git` (account: denistka@gmail.com).
+   Confirm remote is set: `git remote -v`. If not: `git remote add origin https://github.com/denistka/musecool.git`.
+4. `git push -u origin main`.
+5. Import project to Vercel using denistka@gmail.com account: Framework = Vite, root = `/`, output dir = `dist`.
+6. Trigger deploy, confirm URL is live.
+7. Note deploy URL in `project.config.yml` under `context.deploy_url`.

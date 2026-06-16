@@ -1,0 +1,30 @@
+---
+id: S08-T06
+name: Runner Model
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T06: Runner Model
+
+## Objective
+Pure functions translating a melody into a scrollable runner timeline and grading hits by
+timing. No React, no GSAP.
+
+## Acceptance Criteria
+- `src/game/runnerModel.ts` exports the runner types + builders.
+- `buildRunnerTrack(melody, pxPerSec): RunnerNote[]` — each note gets `xStart` and `tHitMs`
+  derived from cumulative `beats` and `bpm`.
+- `RunnerNote = { index, midi, name, beats, xStart, tHitMs, status }`.
+- `gradeHit(tHitMs, tNowMs, windowMs): 'onbeat' | 'miss'` (±windowMs).
+- `noteAtHitLine(track, tNowMs, windowMs): RunnerNote | null` — the currently-tappable note.
+- Deterministic and unit-testable.
+
+## Steps
+1. Create `src/game/runnerModel.ts`.
+2. Compute `beatMs = 60000/bpm`; cumulative time per note from durations.
+3. `xStart` from `tHitMs × pxPerSec` for spawn positioning.
+4. Implement `gradeHit` + `noteAtHitLine`.
+5. `git commit -m "feat(game): runner track model + hit grading"`.

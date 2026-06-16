@@ -1,0 +1,33 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S88 T2 — Softer biometry cancel/fail — avoid forced password lockout
+requires: [FRONTEND_DEV]
+sprint: S88
+
+context: |
+  Today onBiometryFailed calls performUserLogout which always invokes
+  blockBiometryUntilManualLogin(). User canceling Face ID lands on login
+  with password required — matches client complaint "постоянно пароль".
+  Goal: stay on login with vault intact; offer Face ID retry without typing
+  password unless user chooses "Sign in with password" or API relogin fails.
+
+steps:
+  1. Split logout reasons: user-cancel vs hard-failure vs explicit sign-out.
+  2. On biometry cancel only: navigate to login, preserve credentials + session
+     token in storage, do NOT set biometry_bOPEN_until_manual_login.
+  3. Withhold API token via existing biometric gate until unlock succeeds.
+  4. Login screen shows retry affordance (feeds T5 quick-unlock button).
+  5. Keep blockBiometryUntilManualLogin for explicit logout and bad credentials.
+
+out:
+  - src/shell/hooks/useMobileShell.ts
+  - src/shell/lib/perform-user-logout.ts
+  - src/store/useAuthStore.ts
+  - src/features/security/lib/biometric-unlock.ts
+
+done:
+  - Face ID cancel → login screen, username hint filled, no password fields required
+    to retry unlock.
+  - Explicit "Выйти" still clears biometry and requires password.
+  - Failed API relogin after unlock still forces manual login.
+  - No regression on cold-start gate behavior.

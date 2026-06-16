@@ -1,0 +1,29 @@
+---
+id: S08-T10
+name: Runner Mascot
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T10: Runner Mascot
+
+## Objective
+The avatar runs in place at the hit-line and physically helps the child: it **hops** on a
+correct on-beat hit (dino jump over the note) and **stumbles** on a miss. Reuses the upgraded
+emotion mascot + grounded shadow from Track A.
+
+## Acceptance Criteria
+- `useRunnerMascot` hook coordinating mascot position at the hit-line + reactions.
+- Idle run: subtle bob/lean to convey running (GSAP loop) while emotion stays `idle`/`happy`.
+- On correct: `gsap` jump arc timed so the apex aligns with the note crossing the line.
+- On miss: stumble (quick tilt + `sad`/`wrong` emotion), shadow reacts via grounded-shadow hook.
+- On `rampPending`: switch to `hurry` + look ahead down the track.
+- No changes to `src/piano/`.
+
+## Steps
+1. Create `src/hooks/useRunnerMascot.ts`.
+2. Position mascot absolutely at `hitLineX`, ground-aligned; shadow stays on ground line.
+3. Map engine events (onbeat/miss/rampPending) to emotion + jump/stumble tweens.
+4. `git commit -m "feat(animation): dino-style runner mascot reactions"`.

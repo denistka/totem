@@ -1,0 +1,27 @@
+---
+id: S08-T01
+name: Emotion Model
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T01: Emotion Model
+
+## Objective
+Replace the 4-state mascot model with a richer, typed emotion set used by every screen.
+Pure types + a small mapping table — no GSAP, no SVG here.
+
+## Acceptance Criteria
+- `MascotState` widened to: `'idle' | 'happy' | 'celebrate' | 'wink' | 'wrong' | 'sad' | 'hurry' | 'sleepy'`.
+- Back-compat: `'correct'` aliased/mapped to `'happy'` so existing callers don't break.
+- `EMOTION_FACE` table: per state → `{ mouth: string (path d), brow?: 'up'|'down'|'flat', extra?: 'sweat'|'sparkle'|'zzz'|'none' }`.
+- Table lives in `src/game/emotions.ts`; no React import.
+- Distinct `mouth` path per state (fix current idle==hurry duplication).
+
+## Steps
+1. Create `src/game/emotions.ts` with `MascotState` + `EMOTION_FACE`.
+2. Define distinct mouth paths (smile, big-open smile, flat, frown, wavy-nervous, small-o).
+3. Export helper `resolveEmotion(legacy: string): MascotState` mapping `correct→happy`.
+4. `git commit -m "feat(mascot): richer emotion model + face table"`.

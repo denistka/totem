@@ -1,0 +1,30 @@
+---
+id: S03-T03
+name: Note Entrance Animation
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+---
+
+# S03-T03: Note Entrance Animation
+
+## Objective
+`useNoteEntrance` hook — triggers a GSAP elastic fly-in on a ref element every time
+a new question appears. Used by `NoteDisplay` to animate the note name + staff.
+
+## Acceptance Criteria
+- On `question` change: element flies in from `x: 80` with `elastic.out(1, 0.6)`, duration 0.5s.
+- First render: same animation (no static flash before animation).
+- Cleanup: tween killed on unmount.
+- Works with `key={question.target.midi}` remount pattern if preferred — hook handles both.
+
+## Steps
+1. Create `src/hooks/useNoteEntrance.ts`.
+2. Props: `ref: React.RefObject<HTMLElement>`, `dep: unknown` (the question or MIDI).
+3. `useEffect([dep])`: `gsap.fromTo(ref.current, { x: 80, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.5, ease: 'elastic.out(1, 0.6)' })`.
+4. Return cleanup: kill the tween.
+5. Also export `useNoteEntrance` as named export.
+6. Add `useFeedbackAnimation` to same file:
+   - `triggerCorrect(el)`: `gsap.fromTo(el, {scale:1}, {scale:1.15, yoyo:true, repeat:1, duration:0.18, ease:'back.out(2)'})`.
+   - `triggerWrong(el)`: `gsap.fromTo(el, {x:0}, {x:8, yoyo:true, repeat:5, duration:0.07, ease:'power2.inOut'})`.
+7. `git commit -m "feat: note entrance + feedback animations"`.

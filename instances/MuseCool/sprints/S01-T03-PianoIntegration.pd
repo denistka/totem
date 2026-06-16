@@ -1,0 +1,30 @@
+---
+id: S01-T03
+name: Piano Integration
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+---
+
+# S01-T03: Piano Integration
+
+## Objective
+Copy the provided piano keyboard component into `src/piano/`, remove Next.js directives,
+apply the identified `mx-auto` fix, and verify it renders in a smoke-test component.
+
+## Acceptance Criteria
+- All 6 files from `incoming/piano-keyboard-export/src/` copied to `src/piano/`.
+- Zero `'use client'` directives in any file.
+- `PianoKeyboard.tsx` line 117: `max-w-3xl` changed to `max-w-3xl mx-auto`.
+- `<PianoKeyboard pressedMidi={null} onChangePressed={() => {}} />` renders in `App.tsx` without errors.
+- Console: no TypeScript or runtime errors.
+
+## Steps
+1. Copy `components/PianoKey.tsx`, `KeyboardKeybed.tsx`, `PianoKeyboard.tsx` → `src/piano/components/`.
+2. Copy `hooks/useNoteFinderKeyboardAudio.ts` → `src/piano/hooks/`.
+3. Copy `lib/noteFinderPianoLayout.ts`, `noteFinderKeyboardGeometry.ts`, `noteFinderKeyboardAudioEngine.ts` → `src/piano/lib/`.
+4. Remove `'use client';` from all 3 component files.
+5. In `PianoKeyboard.tsx`: change `max-w-3xl` to `max-w-3xl mx-auto` (centering fix).
+6. Update internal imports to use new paths.
+7. Add smoke test render in `App.tsx`, verify in browser.
+8. Remove smoke test. `git commit -m "feat: piano keyboard integration + mx-auto fix"`.

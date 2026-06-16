@@ -1,0 +1,29 @@
+---
+id: S10-T03
+name: Layout Test Flag
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S10-T03: Layout Test Flag
+
+## Objective
+Temporary dev flag to **stay on the game screen** when the engine hits game-over, so layout
+can be tested in portrait/landscape without replaying to end state.
+
+## Acceptance Criteria
+- When `VITE_LAYOUT_TEST=true` (dev only): `GameScreen` does NOT call `onGameOver` on `phase === 'gameover'`.
+- Game-over UI state still reachable manually: optional dev-only overlay or comment documenting how to force GameOver screen via React DevTools / temporary route — OR a tiny dev toolbar button "Show GameOver" in App when flag is on.
+- When flag unset/false: normal flow unchanged (auto navigate to GameOver).
+- Flag documented in README dev section (one line).
+- `.env.example` entry: `VITE_LAYOUT_TEST=false`.
+
+## Steps
+1. Add `src/config/devFlags.ts` reading `import.meta.env.VITE_LAYOUT_TEST === 'true'`.
+2. Guard the `onGameOver` effect in `GameScreen.tsx` behind `!isLayoutTestMode`.
+3. Add dev-only helper in `App.tsx`: button or query param `?screen=gameover` to jump screens for QA.
+4. Add `.env.example`; do not commit `.env.local`.
+5. Verify: flag on → miss 3 notes → stays on game screen; flag off → navigates.
+6. `git commit -m "chore(dev): layout test flag blocks auto game-over"`.

@@ -1,0 +1,26 @@
+---
+id: S09-T01
+name: Landscape Audit
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S09-T01: Landscape Audit
+
+## Objective
+Document overflow/clipping at 667×375 landscape for all four screens before fixing.
+
+## Acceptance Criteria
+- Viewports: 667×375 (primary), 736×414 (secondary).
+- Screens: Start, GameScreen (Find), RunnerGameScreen, GameOver.
+- Each issue: element, symptom (clip/scroll/overlap), fix, priority P0/P1.
+- Piano height measured in px at 667×375.
+- Audit-only: no code changes. Output `S09-LANDSCAPE-AUDIT.md`.
+
+## Steps
+1. Run dev server; Chrome DevTools responsive 667×375 landscape.
+2. Note each screen's broken elements (screenshot optional).
+3. Write `instances/MuseCool/sprints/S09-LANDSCAPE-AUDIT.md` with P0 list.
+4. `git commit -m "docs: landscape 667x375 audit"`.

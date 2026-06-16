@@ -1,0 +1,47 @@
+v:4 c:$ m:T02-unify-accent-tokens role:dev x:vue3/css
+gate: LOCKED
+
+task: Unify the split Logic-blue / taskboard-violet accents into one accent token set
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/styles/logic-pro.css
+  - daww3/experiments/jam-sandbox/src/styles/glass.css
+
+context: |
+  Two accent languages currently fight:
+    logic-pro.css : --lp-accent #4a90d9 (blue), focus ring rgba(74,144,217,.25)
+    glass blobs   : violet 124,58,237 / indigo 79,70,229
+    taskboard SoT : indigo 99,101,241, violet 138,92,246
+
+  Decision: adopt taskboard's INDIGO/VIOLET as the shared accent voice while
+  keeping Logic's neutral greys for chrome. The blue --lp-accent becomes violet
+  so active states, focus, selection, and glass glow all speak one color.
+
+new-tokens (add to :root in logic-pro.css):
+  --lp-accent:        #7c5cff   /* violet — replaces #4a90d9 */
+  --lp-accent-hover:  #8f74ff
+  --lp-accent-rgb:    124, 92, 255
+  /* keep --lp-record / --lp-play / --lp-danger as-is (semantic transport colors) */
+
+steps:
+  1. In logic-pro.css :root, change --lp-accent / --lp-accent-hover to the violet
+     values above and add --lp-accent-rgb.
+  2. Replace hard-coded blue focus glows with the token:
+       .lp-input:focus / .lp-select:focus box-shadow →
+         0 0 0 2px rgba(var(--lp-accent-rgb), 0.30)
+       (search logic-pro.css for rgba(74,144,217 and #4a6fa5 / #2a5f8f and
+        re-point them to the accent token / a violet equivalent).
+  3. In glass.css, align the violet blob + any glow vars to the SAME violet hue
+     family so backdrop, glass glow, and accent agree. Do NOT change the neutral
+     glass surface greys (--glass-bg*).
+  4. .lp-track.selected highlight: re-tint from blue (74,111,165) to
+     rgba(var(--lp-accent-rgb), 0.40).
+
+done:
+  - Grep for 4a90d9 / 74,144,217 / 4a6fa5 / 2a5f8f in logic-pro.css → all
+    re-pointed to accent token or violet (no stray Logic-blue accents).
+  - Focus rings, .active buttons, selected track, editor-tool.active all violet.
+  - Glass blobs/glow share the violet hue family.
+  - DAW neutral greys (panel/input/border tokens) untouched.
+  - No new compile/CSS errors.

@@ -1,0 +1,29 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S88 T5 — Login screen Face ID retry (biometry users only)
+requires: [FRONTEND_DEV]
+sprint: S88
+
+context: |
+  Applies only when local_use_biometry is true (not trust-device mode).
+  After biometry cancel (T2) or when vault has credentials, login screen
+  should offer one-tap Face ID retry instead of only username/password.
+
+steps:
+  1. In LoginScreen, show quick unlock when: isTauri + local_use_biometry +
+     readBiometryUsernameHint + !isBiometryBOPENUntilManualLogin.
+  2. Primary button "Unlock with Face ID" above credential form.
+  3. Tap → requestBiometricUnlock → handleBiometricRelogin / hydrate path.
+  4. Secondary link "Sign in with password" expands credential form.
+  5. Pre-fill username from hint; hide password until expanded.
+  6. If local_trust_device → do not show this UI (user goes direct per T3).
+
+out:
+  - src/screens/login/LoginScreen.tsx
+  - src/screens/login/hooks/useLoginFlow.ts
+  - locale JSON
+
+done:
+  - Biometry user after Face ID cancel → one tap to retry, no password.
+  - Trust-device users never land on this flow on normal cold start.
+  - OTP/2FA flow unchanged when API returns otp/mail.

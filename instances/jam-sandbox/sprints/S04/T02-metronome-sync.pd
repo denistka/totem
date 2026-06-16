@@ -1,0 +1,46 @@
+v:4 c:$ m:T02-metronome-sync role:dev x:webaudio/netcode
+gate: LOCKED
+
+task: Produce a network-synced metronome click locked to the shared transport clock
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/glicol-engine.ts
+  - daww3/experiments/jam-sandbox/src/network-bridge.ts
+  - daww3/experiments/jam-sandbox/src/composables/useJamSession.ts
+
+depends: [T01-transport-controls]
+
+context: |
+  transport.currentBeat gives a running beat position from bpm + startTime.
+  Peers already clock-sync via NTP-style ping/pong (peerOffsets → averageOffset),
+  and notes schedule against transport.now. To make the metronome SHARED, all
+  peers must agree on (a) bpm and (b) the beat-0 origin (startTime).
+
+  Free message code: use 0x07 = MSG_TRANSPORT for bpm + startTime broadcast.
+
+steps (sync):
+  1. network-bridge: add MSG_TRANSPORT (0x07). Encode bpm (uint16) + transport
+     startTime origin so a joining peer can align beat phase. On receipt, apply
+     to local transport (setBpm + adjust startTime via the existing clock offset)
+     and notify via a new onTransportUpdate handler.
+  2. On a peer JOIN, an already-running peer should send current transport state
+     (reuse the existing "reply with join" pattern timing).
+  3. useJamSession.setBpm should also broadcast MSG_TRANSPORT so tempo changes
+     propagate (mirror how sendScaleUpdate works).
+
+steps (click):
+  4. glicol-engine: add a metronome voice. On each beat boundary (derive from
+     transport.currentBeat crossing an integer in the scheduler tick from S03/
+     existing scheduler), play a short click — acc(downbeat) vs normal (other
+     beats). Keep it a tiny Glicol chain; respect global mute.
+  5. Gate the click on metronomeOn (from T01). Metronome is LOCAL audio only
+     (each peer hears their own click in sync — do NOT send click as a note).
+
+done:
+  - Metronome clicks on the beat at the set BPM
+  - Two peers (two tabs / broadcast mode) hear clicks IN PHASE with each other
+  - Changing BPM on one peer updates the other's tempo
+  - Downbeat is audibly distinct from other beats
+  - Respects global mute; off by default
+  - tsc --noEmit passes

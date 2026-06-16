@@ -1,0 +1,101 @@
+v:4 c:$$ m:S02-glass-logic-fusion role:planner
+gate: LOCKED
+
+objective: >
+  Elevate the jam-sandbox UI into a cohesive "glass + Logic Pro" hybrid: keep the
+  precise DAW chrome (transport, inspector, piano roll, track list) but let it
+  FLOAT on translucent glass surfaces over a living WebGL particle backdrop, with
+  taskboard-supabase's indigo/violet glass accent language threaded through.
+  The result should read as a premium audio app — Logic's structure, taskboard's
+  depth and glow, motion that reacts to the jam.
+
+requires: [FRONTEND_DEV]
+invariants:
+  - @instances/jam-sandbox/project.config.yml
+
+sprint-path: instances/jam-sandbox/sprints/S02/
+
+design-thesis: |
+  THREE LAYERS, ONE LANGUAGE.
+
+  Layer 0 — LIVING BACKDROP (new):
+    The WebglFlower particle visualizer (already in src/components/visualizer/,
+    currently UNMOUNTED) becomes the app's ambient floor, replacing the static
+    CSS .lp-ambient blobs. Its `currentSpeed` prop is driven by jam activity
+    (peer count / note rate) so the field breathes when the room is busy.
+
+  Layer 1 — GLASS SURFACES (extend existing):
+    glass.css already defines .glass-panel / -subtle / -card / -pill / -lcd /
+    -dock and they're partially wired (sidebar, header, LCD, log dock). S02
+    completes the treatment: piano-roll editor chrome, inspector sections, the
+    transport bar, and buttons all gain consistent translucency + the inset
+    highlight + saturated blur so the Logic chrome reads as frosted glass, not
+    flat panels.
+
+  Layer 2 — LOGIC CHROME (preserve + accent):
+    Keep every Logic-Pro structural token (--lp-*). Do NOT flatten the DAW feel.
+    Thread taskboard's accent palette (indigo/violet 124,58,237 → 99,101,241)
+    into focus rings, active states, the "you" highlight, and glow so the two
+    design systems share one accent voice instead of fighting (lp-accent blue
+    vs taskboard indigo).
+
+  NON-GOALS:
+    - No functional/audio/network logic changes. Pure presentation.
+    - No new dependencies. WebGL flower + glass.css already exist.
+    - Do not delete logic-pro.css tokens; the DAW identity stays.
+
+context: |
+  Source-of-truth for glass accent language:
+    taskboard-supabase/client/src/style.css  (indigo 99,101,241 / violet 138,92,246)
+    sdui-proto/src/assets/styles/sdui.css     (canonical glass-entity layering)
+
+  Current wiring (confirmed by read):
+    - App.vue mounts a static .lp-ambient blob backdrop (violet/teal/amber).
+      WebglFlower.vue is NEVER imported anywhere.
+    - glass.css IS imported (main.ts + App.vue @import). Classes applied so far:
+        sidebar=.glass-panel, header=.glass-panel, LCD=.glass-lcd,
+        project-sub=.glass-pill, log dock=.glass-dock, inputs=.glass-panel-subtle,
+        local track row=.glass-panel-subtle, editor tools=.glass-panel-subtle.
+    - .glass-card is DEFINED but UNUSED.
+    - Buttons (.lp-btn*) are opaque gradient — no glass.
+    - Piano-roll editor already has ad-hoc glass (blur 16px) inline in logic-pro.css.
+    - Accent is split: --lp-accent #4a90d9 (blue) vs glass blobs (violet).
+
+  Visual target — "frosted Logic console floating over a particle nebula":
+    transport + sidebar + editor chrome = frosted glass with violet inset glow,
+    piano keys & canvas stay crisp (the working surface), particles drift behind.
+
+tracks:
+  track-1_backdrop:
+    desc: Mount WebglFlower as the living ambient layer; retire static blobs.
+    tasks: [T01-wire-webgl-backdrop]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-2_accent-unification:
+    desc: Unify Logic-blue + taskboard-violet into one accent token set.
+    tasks: [T02-unify-accent-tokens]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-3_glass-chrome:
+    desc: Complete glass treatment across transport, inspector, editor, buttons.
+    tasks: [T03-glass-transport-inspector, T04-glass-buttons, T05-glass-editor-chrome]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+  track-4_polish:
+    desc: Reactive glow + final cohesion pass.
+    tasks: [T06-reactive-glow-polish]
+    requires: [FRONTEND_DEV]
+    gate: LOCKED
+
+acceptance:
+  - WebglFlower renders behind all UI; static .lp-ambient blobs removed or layered as fallback.
+  - One accent token (violet/indigo) drives focus rings, active states, "you" badge, glows.
+  - Transport, inspector sections, editor toolbar, and buttons all show glass depth
+    (translucency + blur + inset highlight), not flat fills.
+  - Logic-Pro DAW identity preserved (piano keys, canvas, --lp-* layout intact).
+  - `npm run build` (vue-tsc) introduces ZERO new errors vs S01 baseline
+    (pre-existing: ThemeSwitcher '../icons', glicol types).
+  - `npm run dev` starts with no CSS/Vue errors.

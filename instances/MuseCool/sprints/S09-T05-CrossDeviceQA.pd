@@ -1,0 +1,27 @@
+---
+id: S09-T05
+name: Cross-Device QA
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S09-T05: Cross-Device QA
+
+## Objective
+Final verification across sizes/orientations for both modes and the upgraded character.
+
+## Acceptance Criteria
+- Verified: 375×667 portrait, 667×375 landscape, 768 tablet, desktop.
+- Both modes: full loop start→play→gameover→restart with no console errors.
+- Character: emotions render + grounded shadow correct on all screens.
+- Runner: melody recognisable, speed ramp + banner work, 3-miss gameover.
+- PWA still installs (theme/orientation per S01).
+- Log results in `S09-QA-RESULTS.md`.
+
+## Steps
+1. Run dev/preview; walk each viewport + mode.
+2. Record pass/fail per checklist; fix P0s (or file follow-ups).
+3. Write `instances/MuseCool/sprints/S09-QA-RESULTS.md`.
+4. `git commit -m "docs: cross-device QA results"`.

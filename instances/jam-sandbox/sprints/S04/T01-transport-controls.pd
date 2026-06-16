@@ -1,0 +1,34 @@
+v:4 c:$ m:T01-transport-controls role:dev x:vue3/audio
+gate: LOCKED
+
+task: Expose BPM + transport state through the composable and add a Transport inspector UI
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/composables/useJamSession.ts
+  - daww3/experiments/jam-sandbox/src/components/JamControls.vue
+
+context: |
+  transport (GlobalTransport singleton) already has bpm + setBpm(newBpm) that
+  preserves phase. useJamSession already imports transport but does not surface
+  bpm or any metronome state. JamControls has a "Transport" InspectorSection
+  (currently Join/Leave/Start) — the natural home for tempo + metronome toggle.
+
+steps:
+  1. In useJamSession: add
+       const bpm = ref(transport.bpm)
+       const metronomeOn = ref(false)
+       function setBpm(v: number) { transport.setBpm(v); bpm.value = transport.bpm }
+       function toggleMetronome() { metronomeOn.value = !metronomeOn.value }
+     Return bpm, metronomeOn, setBpm, toggleMetronome.
+     (Actual click sound + sync handled in T02; this is state+plumbing.)
+  2. In JamControls: add to the Transport section a BPM number input (e.g. 40-240)
+     bound via a bpm model + a Metronome on/off toggle button. Use existing
+     lp-input / lp-btn styles (match the app, NOT the orphaned ui/ kit).
+  3. Wire the new v-model:bpm and @toggle-metronome through App.vue to the composable.
+
+done:
+  - BPM is adjustable in the UI and calls transport.setBpm (phase-preserving)
+  - Metronome toggle flips metronomeOn state (sound wired in T02)
+  - Styling matches existing logic-pro inspector controls
+  - tsc --noEmit passes

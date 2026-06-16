@@ -1,0 +1,43 @@
+---
+id: S09
+name: Landscape Fit & Final Polish
+status: PLANNING
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+quality: ../CODE-QUALITY.md
+depends_on: S08
+---
+
+# S09: Landscape Fit & Final Polish
+
+## Objective
+Make every screen fit the smallest landscape phone **667×375** without scroll or clipping,
+then a final quality pass + README update covering modes, the living character, and melodies.
+Runs after S08 (needs both game screens to exist).
+
+## Tasks
+- [ ] S09-T01-LandscapeAudit.pd
+- [ ] S09-T02-LandscapeGameLayout.pd
+- [ ] S09-T03-LandscapeStartGameOver.pd
+- [ ] S09-T04-LandscapePianoCompact.pd
+- [ ] S09-T05-CrossDeviceQA.pd
+- [ ] S09-T06-ReadmeUpdate.pd
+
+## Landscape contract (667×375)
+
+| Element | Rule |
+|---|---|
+| Score panel | One compact row, `py-0.5`, small badge |
+| Mascot | `≤64px` height in landscape, or beside content (flex-row) |
+| Note/ring (Find) | ring `≤80px`, compact VexFlow |
+| Runner staff | reduced height; hit-line + ground still visible |
+| Piano | compact / narrowed octave (C4–B4) if needed |
+| Start / GameOver | `clamp()` fonts, no `text-5xl`, CTAs always visible |
+| Safe area | respect `env(safe-area-inset-*)` |
+
+## Definition of Done
+- All screens (Start, Find, Runner, GameOver) pass 667×375 landscape: zero vertical scroll, no clipped CTAs.
+- Touch targets ≥ 44px in landscape.
+- README documents modes, character, melodies, landscape strategy, LLM usage.
+- Zero console errors; `git commit` after each task.

@@ -1,0 +1,28 @@
+---
+id: S08-T02
+name: Mascot Expression Upgrade
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti, react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S08-T02: Mascot Expression Upgrade
+
+## Objective
+Upgrade `MascotSVG.tsx` to render the new expression parts (brows, data-driven mouth,
+and optional extras) and expose them via `MascotHandle` for animation.
+
+## Acceptance Criteria
+- Add `<path>` eyebrows (L + R) and drive `mouth` `d` from `EMOTION_FACE[state]`.
+- Add hidden-by-default extra parts: sweat drop, sparkle stars, `z z z` sleepy group.
+- `MascotHandle` extended: `brows: [el,el]`, `mouth: el`, `extras: { sweat, sparkle, zzz }`.
+- Colours strictly from S01-INVARIANTS palette (no new hex).
+- Visual parity preserved for `idle`; no layout/viewBox change (stays `0 0 120 120`).
+
+## Steps
+1. Add brow paths above each eye; default `flat`.
+2. Bind `mouth` `d` to `EMOTION_FACE[resolveEmotion(state)].mouth`.
+3. Add `<g>` groups for sweat/sparkle/zzz with `opacity:0` default.
+4. Extend `useImperativeHandle` to expose new refs.
+5. `git commit -m "feat(mascot): brows, dynamic mouth, expression extras"`.

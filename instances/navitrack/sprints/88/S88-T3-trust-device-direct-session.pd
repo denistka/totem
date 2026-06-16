@@ -1,0 +1,40 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S88 T3 — Trust device: direct app entry without biometry or password
+requires: [FRONTEND_DEV, MOBILE_TAURI]
+sprint: S88
+
+context: |
+  Alternative to Face ID for users who prefer convenience over device-level lock.
+  When local_trust_device is true AND local_use_biometry is false:
+  - Cold start: restore session automatically (no Face ID, no login form).
+  - Skip useSessionBiometryLock gates entirely.
+  - If JWT valid → hydrate and navigate to objects.
+  - If JWT expired → silent relogin from stored credentials (no biometry
+    prompt on vault read — use non-biometric durable storage for trust mode only).
+
+steps:
+  1. Add local_trust_device: boolean to useLocalSettings (default false).
+  2. Mutual exclusion: enabling trust device forces local_use_biometry false;
+     enabling biometry forces local_trust_device false.
+  3. When trust device on: persist JWT in durable storage (tauri store or
+     localStorage), not sessionStorage-only; release token gate on startup.
+  4. useSessionBiometryLock early-return when trust device active.
+  5. On app init (App.tsx or useAuthFlow): if trust + valid token → objects;
+     if trust + expired token + creds → reloginWithBiometricCredentials without
+     loadBiometricCredentials Face ID round-trip (trust-scoped credential read).
+  6. Explicit logout clears trust session storage and requires password.
+
+out:
+  - src/hooks/useLocalSettings.ts
+  - src/lib/api-auth.ts
+  - src/features/security/hooks/useSessionBiometryLock.ts
+  - src/features/security/lib/biometric-credentials.ts
+  - src/shell/hooks/useAuthFlow.ts
+  - src/store/useAuthStore.ts
+
+done:
+  - Trust device ON, biometry OFF → kill app → reopen → main screen, no prompts.
+  - Trust device OFF, biometry ON → existing Face ID flow unchanged.
+  - Trust + explicit logout → login with password required.
+  - No trust mode without user opt-in (T4 warning gate).

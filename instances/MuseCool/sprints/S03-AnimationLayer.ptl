@@ -1,0 +1,32 @@
+---
+id: S03
+name: Animation Layer
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S03: Animation Layer
+
+## Objective
+Build the GSAP animation foundation AND the "juice" layer that makes the game feel alive:
+timer hook (core pacing), TimerBar, note entrance, feedback animations, particle burst,
+and synchronised audio feedback. This is Denis's primary WOW layer — the difference between
+a dev prototype and "something a child wants to play". Must match `BRIEF.md` GSAP patterns.
+
+## Tasks
+- [ ] S03-T01-GSAPTimerHook.pd
+- [ ] S03-T02-CountdownRing.pd
+- [ ] S03-T03-NoteEntrance.pd
+- [ ] S03-T04-FeedbackAnimations.pd
+- [ ] S03-T05-ParticleBurst.pd
+- [ ] S03-T06-AudioFeedback.pd
+
+## Definition of Done
+- Countdown ring depletes around the note via GSAP timeline progress (not CSS transition).
+- Note entrance triggers on every new question with `elastic.out`.
+- Correct answer: scale burst + particle confetti + ascending arpeggio.
+- Wrong answer: horizontal shake + screen shake + dissonant chord.
+- Streak escalates juice intensity (more particles, brighter colors).
+- All GSAP timelines and particles cleaned up on unmount (no memory leak).

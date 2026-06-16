@@ -1,0 +1,25 @@
+---
+id: S09-T03
+name: Landscape Start & GameOver
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S09-T03: Landscape Start & GameOver
+
+## Objective
+StartScreen (with mode selector) and GameOverScreen fit 667×375 landscape, CTAs always visible.
+
+## Acceptance Criteria
+- Start: title `text-3xl` landscape; mascot `≤80px`; both mode CTAs + melody picker visible above piano fold.
+- GameOver: panel `max-h-[90vh] overflow-hidden`, score `text-4xl`, CTA visible.
+- Start piano in landscape: hide assistive keyboard OR one-octave compact row.
+- No element below `var(--app-height)`.
+
+## Steps
+1. Update `StartScreen.tsx` landscape layout (row option: text/CTAs left, mascot right).
+2. Update `GameOverScreen.tsx` padding + font clamps.
+3. Test 667×375 after S09-T02.
+4. `git commit -m "fix(layout): landscape Start and GameOver"`.

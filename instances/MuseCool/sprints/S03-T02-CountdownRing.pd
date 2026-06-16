@@ -1,0 +1,38 @@
+---
+id: S03-T02
+name: Countdown Ring
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, react-ts/FRONTEND_DEV.ti]
+---
+
+# S03-T02: Countdown Ring
+
+# This is the ONLY timer indicator. It wraps the note so the child's eyes never leave
+# the target (replaces the earlier top TimerBar idea — minimal clutter, single focus).
+
+## Objective
+`CountdownRing` — an SVG ring that depletes around the note as time runs out. Driven by
+`useGameTimeline`'s `progressRef` via a RAF loop writing `stroke-dashoffset` directly
+(no React re-renders). Color shifts orange → red as time runs low.
+
+## Acceptance Criteria
+- SVG circle whose visible arc shrinks from full → empty over the level's time window.
+- Driven by RAF reading `progressRef.current` — zero setState during the countdown.
+- Stroke `primary` orange normally; below 25% remaining → `error` red + gentle pulse.
+- Sized to sit around `NoteDisplay` (note + staff sit inside the ring).
+- `running=false` freezes the ring (no visual update loop running).
+
+## Steps
+1. Create `src/components/CountdownRing.tsx`. `memo`.
+2. Props: `progressRef: React.MutableRefObject<number>`, `running: boolean`, `size?: number`.
+3. SVG: one background track circle + one foreground `circleRef` circle.
+   - `r`, `cx`, `cy` from `size`; `circumference = 2 * Math.PI * r`.
+   - Foreground: `strokeDasharray = circumference`, rotate -90° so it depletes from top.
+4. RAF loop (`useEffect`): each frame read `p = progressRef.current` (0→1 elapsed);
+   write `circleRef.current.style.strokeDashoffset = String(circumference * p)`.
+5. Low-time state: when `p >= 0.75`, set stroke to `var(--color-error)` and add a GSAP
+   `yoyo` scale pulse on the ring group; restore on reset.
+6. Stop the RAF when `running === false`; restart when true.
+7. Stroke width ~6–8px, round linecaps, soft `drop-shadow` glow in brand color.
+8. `git commit -m "feat: CountdownRing (single-focus timer around note)"`.

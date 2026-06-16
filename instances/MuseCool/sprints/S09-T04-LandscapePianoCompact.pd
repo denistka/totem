@@ -1,0 +1,26 @@
+---
+id: S09-T04
+name: Landscape Piano Compact
+status: TODO
+gate: OPEN
+requires: [react-ts/FRONTEND_DEV.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S09-T04: Landscape Piano Compact
+
+## Objective
+Piano fits remaining height in landscape without pushing content off-screen.
+
+## Acceptance Criteria
+- Landscape + max-height 430px: piano max height ~120px (measure keybed).
+- If needed: narrow to C4–B4 via `useLandscapePianoRange` (matchMedia-driven).
+- Do NOT modify `src/piano/` except approved props (`variant`, midi range).
+- Find + Runner + Start all pass 667×375.
+- Keys ≥ 44px tap target at compact size.
+
+## Steps
+1. Create `src/hooks/useLandscapePianoRange.ts` → `{ lowMidi, highMidi, compact }`.
+2. Wire into GameScreen, RunnerGameScreen, StartScreen.
+3. Verify tap targets + no overflow.
+4. `git commit -m "fix(piano): landscape compact octave range"`.

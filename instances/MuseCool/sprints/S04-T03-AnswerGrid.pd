@@ -1,0 +1,32 @@
+---
+id: S04-T03
+name: Answer Grid
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+---
+
+# S04-T03: Answer Grid
+
+## Objective
+`AnswerGrid` — 2×2 grid of glass option buttons. Shows feedback state (correct/wrong)
+via `glass-option--correct` / `glass-option--wrong` and GSAP animations from S03.
+
+## Acceptance Criteria
+- 4 buttons in 2×2 grid, min-height 64px each (mobile tap target).
+- On answer: correct button turns teal + scale burst; wrong button turns red + shakes.
+- After 600ms feedback: buttons reset to default state.
+- `disabled=true` during result flash (no double-tap).
+- `memo`-wrapped.
+
+## Steps
+1. Create `src/components/AnswerGrid.tsx`.
+2. Props: `options: readonly Note[]`, `correctMidi: number`, `onAnswer: (midi:number)=>void`, `disabled: boolean`, `lastResult: AnswerResult | null`. `memo`.
+3. Grid: `grid grid-cols-2 gap-3 p-3`.
+4. Each button: `glass-option rounded-2xl min-h-[64px] text-lg font-bold text-neutral`.
+5. `buttonRefs = useRef<(HTMLButtonElement|null)[]>([])`.
+6. `useEffect([lastResult])`: if `lastResult`:
+   - Correct button → add `glass-option--correct` → `triggerCorrect(ref)`.
+   - Wrong button (if `!lastResult.correct`) → add `glass-option--wrong` → `triggerWrong(ref)`.
+   - After 600ms: remove state classes.
+7. `git commit -m "feat: AnswerGrid component"`.

@@ -1,0 +1,77 @@
+project:
+  name: jam-sandbox
+  version: 0.0.1
+  description: >
+    Real-time P2P collaborative jam session experiment within the DAWW3 ecosystem.
+    Standalone Vue 3 + Vite app with WebRTC/Socket.io signaling, Glicol audio engine,
+    MIDI-style piano roll, and multi-participant sync via a custom network bridge.
+  parent: daww3
+  structure: standalone Vite app (experiments/jam-sandbox inside daww3 monorepo)
+  stack:
+    - vue3
+    - typescript
+    - vite
+    - socket.io-client
+    - glicol (web audio DSP)
+    - webrtc (P2P transport)
+    - tailwindcss v4
+    - webgl (particle visualizer)
+  key_modules:
+    # Core engine
+    - src/network-bridge.ts                        # P2P transport abstraction (WebRTC / Socket.io)
+    - src/transport.ts                             # Playback/clock transport
+    - src/glicol-engine.ts                         # Glicol WASM audio engine wrapper
+    - src/piano-roll.ts                            # Piano roll data model
+    - src/signaling-url.ts                         # Signaling server URL resolution
+    - server/signaling.ts                          # Socket.io signaling server (tsx)
+    - src/utils/scales.ts                          # Scale/interval presets
+    # Composables
+    - src/composables/useJamSession.ts             # Session state + lifecycle
+    - src/composables/useLogger.ts                 # In-app log viewer
+    # Feature components
+    - src/components/JamControls.vue               # Transport/session controls
+    - src/components/JamHeader.vue                 # App header
+    - src/components/ParticipantList.vue           # Connected peers UI
+    - src/components/PianoRollView.vue             # Piano roll renderer
+    - src/components/LogViewer.vue                 # Debug log overlay
+    - src/components/InspectorSection.vue          # Collapsible inspector panel
+    # UI kit (src/components/ui/)
+    - src/components/ui/Button.vue
+    - src/components/ui/Input.vue
+    - src/components/ui/Card.vue
+    - src/components/ui/Badge.vue
+    - src/components/ui/Avatar.vue
+    - src/components/ui/AgentAvatar.vue
+    - src/components/ui/AgentBadge.vue
+    - src/components/ui/ContentEditable.vue
+    - src/components/ui/LoadingOverlay.vue
+    - src/components/ui/ThemeSwitcher.vue
+    - src/components/ui/TimeTravelSlider.vue
+    - src/components/ui/index.ts
+    # WebGL visualizer (src/components/visualizer/)
+    - src/components/visualizer/WebglFlower.vue    # Main WebGL canvas component
+    - src/components/visualizer/webglRenderer.ts   # Render loop + draw calls
+    - src/components/visualizer/webglUtils.ts      # Shader compilation helpers
+    - src/components/visualizer/shaders.ts         # GLSL shader sources
+    - src/components/visualizer/particleManager.ts # Particle system logic
+    - src/components/visualizer/Particle.ts        # Particle entity
+    - src/components/visualizer/speed.ts           # Speed/animation utilities
+    - src/components/visualizer/index.ts
+    # Styles
+    - src/styles/glass.css                         # Glass-morphism theme
+    - src/styles/logic-pro.css                     # Logic Pro-inspired dark theme
+
+paths:
+  code: ../../../../daww3/experiments/jam-sandbox
+  history: ./sprints        # each sprint in its own subfolder: sprints/S01/, S02/, …
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - TEAM_LEAD
+    - QA
+  stack_adapters:
+    - FRONTEND_DEV
+    - NODE

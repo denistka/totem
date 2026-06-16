@@ -1,0 +1,45 @@
+v:4 c:$ m:T05-glass-editor-chrome role:dev x:vue3/css
+gate: LOCKED
+
+task: Harmonize the piano-roll editor chrome with the glass system; keep the working surface crisp
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/styles/logic-pro.css
+
+context: |
+  The piano-roll editor (.piano-roll-editor) already has ad-hoc glass inline in
+  logic-pro.css (background rgba(30,30,34,.55) + blur 16px). The toolbar
+  (.lp-editor-toolbar) and tool cluster (.lp-editor-tools) are partly there.
+  GOAL: make the editor CHROME (toolbar, tool buttons, key-column gaps) cohere
+  with glass.css tokens, but the WORKING SURFACE must stay crisp and opaque:
+
+    CRISP / OPAQUE (do NOT glass-ify — these are precision work surfaces):
+      - .lp-roll-grid-canvas, .lp-roll-ruler-canvas, .lp-roll-velocity-canvas
+      - .lp-roll-keys piano keys (white/black gradients)
+      - .lp-roll-keys-bg key column
+    GLASS CHROME (harmonize):
+      - .piano-roll-editor outer frame
+      - .lp-editor-toolbar
+      - .lp-editor-tools / .lp-editor-tool buttons
+
+steps:
+  1. .piano-roll-editor: re-point its hard-coded blur/borders to glass.css tokens
+     (var(--glass-bg), var(--glass-border), var(--glass-highlight)) so it matches
+     sidebar/transport instead of using one-off rgba values.
+  2. .lp-editor-toolbar: same token alignment; inset highlight on top edge.
+  3. .lp-editor-tool.active: use violet accent (T02 token), not the old #4a6fa5.
+  4. EXPLICITLY ensure the grid/ruler/velocity canvases and the key column keep
+     solid opaque backgrounds (no backdrop-filter on them) — verify no glass
+     class leaks onto them. The piano keys must stay high-contrast/crisp.
+  5. .lp-roll-keys-ruler-gap / -velocity-gap: may take a subtle frosted tint to
+     bridge chrome→surface, but the key labels must stay legible.
+
+deps: T02 (accent token for editor-tool.active).
+
+done:
+  - Editor frame + toolbar + tool buttons use glass.css tokens (cohesive material).
+  - Active editor tool is violet accent.
+  - Canvases and piano keys remain crisp/opaque (NO backdrop-filter on them).
+  - Microtonal matrix-pad styling (PianoRollView scoped) still works.
+  - Compiles; no CSS errors.

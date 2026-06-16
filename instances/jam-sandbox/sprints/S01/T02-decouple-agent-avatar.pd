@@ -1,0 +1,42 @@
+v:4 c:$ m:T02-decouple-agent-avatar role:dev x:vue3/typescript
+gate: LOCKED
+
+task: Fix AgentAvatar.vue — replace broken shared/types import with local type
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/components/ui/AgentAvatar.vue
+
+context: |
+  Current import (line 3):
+    import type { Profile } from '../../../../../shared/types'
+
+  This path resolves to a shared/ package that does NOT exist in jam-sandbox
+  (it lives in the taskboard-supabase workspace). The component will fail to
+  compile.
+
+  AgentAvatar.vue uses these Profile fields:
+    profile.actor_type    — 'agent' | string
+    profile.agent_avatar_url
+    profile.agent_name
+    profile.avatar_url
+    profile.full_name
+    profile.email
+
+steps:
+  1. Remove the shared/types import.
+  2. Declare a minimal local interface at the top of <script setup>:
+       interface Profile {
+         actor_type?: string
+         agent_avatar_url?: string | null
+         agent_name?: string | null
+         avatar_url?: string | null
+         full_name?: string | null
+         email?: string | null
+       }
+  3. No other logic changes.
+
+done:
+  - No import from '../../../../../shared/types'
+  - Component compiles without TS errors
+  - Props shape and template unchanged

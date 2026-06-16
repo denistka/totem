@@ -1,0 +1,33 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S88 T4 — Settings: trust device toggle with security warning
+requires: [FRONTEND_DEV]
+sprint: S88
+
+context: |
+  User must consciously choose "enter without biometry" and acknowledge risk.
+  Copy should be plain language (RU/EN/BG): anyone with the phone can open
+  the app; recommend Face ID for shared or lost devices.
+
+steps:
+  1. In MainSettingsSection (Tauri only), add toggle "Remember session on
+     this device" / trust device (maps to local_trust_device).
+  2. On enable: modal with warning text + Confirm / Cancel (no silent toggle).
+  3. On confirm: set local_trust_device true, local_use_biometry false,
+     clear biometric credentials from vault, migrate current session to
+     durable storage (T3).
+  4. On disable trust: return to standard login-on-next-open or offer
+     biometry opt-in again.
+  5. Helper text under toggle: password only after sign-out or token failure.
+  6. i18n keys: settings.trustDevice, settings.trustDeviceWarningTitle,
+     settings.trustDeviceWarningBody, settings.trustDeviceConfirm.
+
+out:
+  - src/screens/settings/components/MainSettingsSection.tsx
+  - locale JSON (ru, en, bg)
+
+done:
+  - Cannot enable trust device without confirming warning dialog.
+  - Biometry toggle and trust toggle are mutually exclusive in UI.
+  - Warning copy visible and understandable for non-technical users.
+  - Turning trust off does not leave stale durable token without user awareness.

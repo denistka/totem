@@ -1,0 +1,32 @@
+---
+id: S05-T01
+name: Start Screen
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+---
+
+# S05-T01: Start Screen
+
+## Objective
+`StartScreen` — title card with game name, tagline, CTA button, and a decorative
+assistive piano keyboard. Triggers audio preload on mount. GSAP entrance animation.
+
+## Acceptance Criteria
+- `getNoteFinderKeyboardAudioEngine().preload()` called on mount.
+- Title and CTA animate in with GSAP stagger on mount.
+- CTA button hover: GSAP scale 1.05, shadow-lift-orange.
+- Decorative keyboard: `<PianoKeyboard variant="assistive" ...>` (display-only).
+- Layout works on 375px mobile.
+
+## Steps
+1. Create `src/screens/StartScreen.tsx`.
+2. Props: `onStart: () => void`.
+3. `useEffect([], () => { getNoteFinderKeyboardAudioEngine().preload() })`.
+4. GSAP stagger entrance on mount: `gsap.from([titleRef, taglineRef, btnRef], { y:30, autoAlpha:0, stagger:0.12, duration:0.5, ease:'power3.out' })`.
+5. Layout: centered column, game background visible, `glass-panel` card.
+6. Title: "🎵 MuseCool" in `text-4xl font-black text-neutral`.
+7. Tagline: "Can you find the note?" in `text-secondary`.
+8. CTA: `bg-primary text-white font-bold rounded-2xl px-8 py-4 text-xl shadow-lift-orange`.
+9. Decorative keyboard below: range `lowMidi={60} highMidi={71}` (C4–B4 only).
+10. `git commit -m "feat: StartScreen"`.

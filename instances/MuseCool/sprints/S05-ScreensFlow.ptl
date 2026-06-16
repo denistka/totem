@@ -1,0 +1,24 @@
+---
+id: S05
+name: Screens & Flow
+status: PLANNING
+gate: OPEN
+requires: [react-ts/REACT_TS.ti, react-ts/UI_UX.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S05: Screens & Flow
+
+## Objective
+Start screen, Game Over screen, and App-level routing with GSAP screen transitions.
+Audio preload on Start screen. Complete game loop: start → play → gameover → restart.
+
+## Tasks
+- [ ] S05-T01-StartScreen.pd
+- [ ] S05-T02-GameOverScreen.pd
+- [ ] S05-T03-AppRouting.pd
+
+## Definition of Done
+- Full flow navigable: Start → Game → GameOver → Start.
+- GSAP fade transition between all screens (no flash).
+- Audio samples begin preloading on StartScreen mount.

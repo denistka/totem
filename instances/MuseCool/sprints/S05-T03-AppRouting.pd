@@ -1,0 +1,31 @@
+---
+id: S05-T03
+name: App Routing
+status: TODO
+gate: OPEN
+requires: [react-ts/REACT_TS.ti]
+---
+
+# S05-T03: App Routing
+
+## Objective
+`App.tsx` — screen state machine with GSAP cross-fade transitions between
+StartScreen / GameScreen / GameOverScreen. Single `screen` state, no router library.
+
+## Acceptance Criteria
+- Three screens: `'start' | 'game' | 'gameover'`.
+- GSAP `autoAlpha` fade-out current screen, fade-in next: 0.25s each.
+- `onStart` → game, `onGameOver(score, streak)` → gameover, `onRestart` → start.
+- No screen flash on transitions.
+- `GameOverScreen` receives final score/streak via state.
+
+## Steps
+1. Update `src/App.tsx`.
+2. State: `screen`, `finalScore`, `finalStreak`.
+3. Screen container: `relative w-full h-[var(--app-height,100dvh)] overflow-hidden`.
+4. Each screen in an absolute positioned `div` with `ref`.
+5. Transition helper `goTo(next)`: `gsap.to(currentRef, {autoAlpha:0, duration:0.25})` then `gsap.to(nextRef, {autoAlpha:1, duration:0.25})`, then `setScreen(next)`.
+6. Wire `<StartScreen onStart={()=>goTo('game')} />`.
+7. Wire `<GameScreen onGameOver={(s,k)=>{ setFinals(s,k); goTo('gameover') }} />`.
+8. Wire `<GameOverScreen score={finalScore} streak={finalStreak} onRestart={()=>goTo('start')} />`.
+9. `git commit -m "feat: App screen routing with GSAP transitions"`.

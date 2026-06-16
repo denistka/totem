@@ -1,0 +1,40 @@
+v:4 c:$ m:T06-adsr-envelopes role:dev x:glicol/synthesis
+gate: LOCKED
+
+task: Give notes an amplitude envelope so they sound musical instead of clicky raw oscillators
+
+requires: [FRONTEND_DEV]
+out:
+  - daww3/experiments/jam-sandbox/src/glicol-engine.ts
+
+context: |
+  INSTRUMENTS (glicol-engine.ts:20-33) are bare oscillator chains, e.g.
+    saw_pad: (f) => `saw ${f} >> lpf 1200.0 1.0 >> mul 0.15`
+  Notes hard on/off via rebuildGraph adding/removing the voice → instant
+  amplitude steps → audible clicks on every note edge. A short attack/release
+  envelope removes the clicks and is the single biggest perceived-quality win.
+
+  Glicol supports envelope nodes (e.g. an envelope/EnvPerc-style or an
+  amplitude ramp via `mul` with an env signal — verify exact 0.4 syntax in
+  node_modules/glicol). Apply a short attack (~5-15ms) and release (~80-200ms)
+  per voice.
+
+steps:
+  1. Confirm the envelope primitive available in installed Glicol 0.4.
+  2. Wrap each instrument voice with a short AR envelope so onset/offset ramp
+     instead of stepping. Keep per-instrument character (don't homogenize).
+  3. Because rebuildGraph drops a voice on note-off, ensure release is handled —
+     either via an envelope that completes before removal, or a brief lingering
+     voice on noteOff. Keep it simple; avoid a full voice-allocator rewrite.
+  4. Re-check CPU: envelopes shouldn't meaningfully worsen the S03 graph cost.
+
+caution: |
+  Stuck/hung notes are the failure mode. Verify every noteOn has a matching
+  silence after noteOff (no infinite sustain). One objective: envelopes only —
+  no new instruments, no filter modulation.
+
+done:
+  - Notes fade in/out (no click on press/release), audibly smoother
+  - No stuck notes; noteOff still silences within the release window
+  - Each instrument keeps its distinct timbre
+  - tsc --noEmit passes

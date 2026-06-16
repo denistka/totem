@@ -1,0 +1,29 @@
+---
+id: S01-T04
+name: PWA Manifest
+status: TODO
+gate: OPEN
+requires: [pwa/PWA.ti, vite/VITE.ti]
+---
+
+# S01-T04: PWA Manifest
+
+## Objective
+Configure `vite-plugin-pwa` with the MuseCool manifest, icons, and all required iOS/Android
+meta tags. App must be installable on both platforms after this task.
+
+## Acceptance Criteria
+- `manifest.webmanifest`: name, short_name, theme_color `#FF9800`, background_color `#FFF5E6`, icons 192+512.
+- `index.html`: viewport `viewport-fit=cover`, apple-mobile-web-app-capable, status-bar black-translucent.
+- `npm run build` generates SW and manifest in `dist/`.
+- Lighthouse PWA score: installable criteria met.
+
+## Steps
+1. In `vite.config.ts`: configure `VitePWA({ registerType: 'autoUpdate', manifest: {...} })`.
+2. Manifest fields: `name: "MuseCool Note Finder"`, `short_name: "MuseCool"`, `start_url: "/"`, `display: "standalone"`, `theme_color: "#FF9800"`, `background_color: "#FFF5E6"`, `orientation: "portrait"`.
+3. Generate/place icons: `public/icon-192.png`, `public/icon-512.png` (orange music note on cream bg).
+4. `index.html` viewport meta: `width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no`.
+5. Add iOS meta tags: `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style: black-translucent`, `apple-touch-icon`.
+6. In `src/pwa/pwaViewport.ts`: export `initPwaViewport()` that sets `--app-height` from `visualViewport.height` and updates on resize.
+7. Call `initPwaViewport()` in `main.tsx`.
+8. `git commit -m "feat: PWA manifest + iOS meta tags"`.
