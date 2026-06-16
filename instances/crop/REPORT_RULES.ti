@@ -95,6 +95,22 @@ include:
   - Specific environments (crop-dev.app, localhost:3000, branch dev)
   - Specific metrics where relevant (CLS 0.031, 15/15 tests pass, 84/84 triaged)
   - Reason for "Awaiting" items — what kind of access/order/session is needed
+  - NAMES: always name the responsible person for each item in plain language.
+    Use first names (Vova, Oleg, Daniil, Denis, Alex, John) — not GitHub handles (@appdev-v etc.).
+    Pattern: "Oleg is finishing..." / "Vova owns..." / "Daniil is verifying..." / "Denis ran smoke on..."
+    Every shipped item, every in-flight item, every blocker must say WHO.
+
+# Rules — human readability (apply to all kinds)
+readability:
+  - Write for someone who doesn't know the codebase. If you mention a feature, say what it does in one clause.
+    Bad:  "B1 nav loop fix merged"
+    Good: "Oleg fixed the navigation loop — clicking 'Open parts diagrams' on a Ferris page no longer
+          bounces the user back to the New Holland picker"
+  - One idea per bullet. Don't stack two separate facts in one line.
+  - Avoid abbreviations mid-sentence (use "for example" not "e.g.", "that is" not "i.e.").
+  - When naming a page or URL, say what it does: "`/parts-diagrams/ferris` — the Ferris model grid"
+  - Numbers before jargon: "170 Marcrest models" not "the MV `mv_search_parts_all` seeded with MAR records"
+  - If a task is blocked, say why in one plain sentence a non-engineer can understand.
 
 # Rules — what to EXCLUDE (customer-facing, no internal jargon)
 exclude:
@@ -124,6 +140,10 @@ tone:
       * next → future / imperative ("Pick up...", "Run...")
   - Lead with the outcome / metric, not the process
   - Concrete > abstract: "Lighthouse CLS = 0.031 on 3 equipment slugs" beats "performance fix verified"
+  - Lead every item with the person's name when there is a clear owner:
+      "Vova merged the brand hub redesign" not "Brand hub redesign merged"
+      "Oleg is finishing the TypeCard glass styling" not "#1576 in progress"
+  - When answering a direct question (e.g. "who owns X?"), answer in the first sentence — don't bury it.
 
 # Length guidance
 length:
@@ -134,6 +154,44 @@ length:
   - Next: ordered by urgency / sequence; pull in any new items filed during the window
   - Midday reports are typically shorter than EOD (less shipped, more in-flight)
   - Weekly reports may need day-grouping in Shipped to stay scannable
+
+# Workload snapshot (added 2026-06-04)
+# Include at the end of every report — one line per active team member.
+# Purpose: surface who is overloaded before it becomes a blocker.
+workload:
+  section_title: "👤 Workload"
+  rules:
+    - List every active team member even if they have nothing open (say "clear").
+    - For each person, count their open tasks + in-review PRs in the current window.
+    - Estimate remaining time in hours (rough, honest — not optimistic).
+      Use these calibration anchors:
+        * Small PR / config change: 1–2 h
+        * Medium feature / polish item: 2–4 h
+        * Verification / smoke run: 1–2 h
+        * Deploy + spot-check: 1–2 h
+        * Review + local run: 1–2 h per PR
+    - Flag overload explicitly if one person holds >60% of remaining sprint work.
+    - Use first names. One line per person. Format:
+        "Name — N open items (~X h remaining): item1, item2, ..."
+    - If a person is a blocker for others, note it: "(blocks deploy)", "(blocks Denis re-smoke)"
+
+# Redistribution suggestions (added 2026-06-04)
+# Always follow the Workload section with a short "💡 Can offload" block
+# when any team member is overloaded (>60% of remaining work or >6 h on one person).
+# Purpose: Denis can pick up frontend tasks and PR reviews to unblock Oleg and Vova.
+redistribution:
+  section_title: "💡 Can offload"
+  rules:
+    - Only show this section when someone is clearly overloaded.
+    - Denis's available capacity: frontend code (Next.js, TypeScript), PR reviews + local runs,
+      smoke testing, issue triage, GitHub comments/updates. He can absorb small-to-medium
+      frontend tasks from Oleg, and free Vova from any review work Denis can handle instead.
+    - For each suggestion: name the task, name who currently owns it, name who could take it,
+      and give a rough time saving.
+    - Be concrete — "Denis can pick up X from Oleg (~2 h off Oleg's plate)" not "consider redistributing".
+    - If nothing can be offloaded (tasks require specific domain knowledge), say so in one line.
+    - Format:
+        "Denis can take X from [Name] — saves [Name] ~N h — [why it's transferable]"
 
 # Template skeleton (kind-agnostic)
 # Substitute the header per `header_format` and adjust the in-section
@@ -166,6 +224,27 @@ template: |
 
   {Ordered next-step list. For EOD/weekly: tomorrow / next week. For midday: rest of today.
    For morning: today's plan. Pull in any urgent issues filed during the window.}
+
+  👤 Workload
+
+  {One line per active team member — open items + rough hours remaining.
+   Flag overload if one person holds >60% of remaining work.
+   Example:
+     Vova — 3 open items (~5 h): deploy, merge gate for 2 PRs (blocks everyone)
+     Oleg — 2 open items (~6 h): TypeCard glass (#1576), diagrams root (#1530)
+     Daniil — 1 open item (~2 h): Marcrest data verification (#1538, blocks Denis re-smoke)
+     Denis — 1 item waiting (~1 h): Marcrest re-smoke after Daniil
+     Alex — clear}
+
+  💡 Can offload
+
+  {Only when someone is overloaded. Concrete suggestions for Denis to absorb tasks from Oleg or Vova.
+   If nothing is transferable, one line explaining why.
+   Example:
+     Denis can take B4 Ferris flash fix from Oleg — saves Oleg ~2 h — straightforward frontend fix,
+     no design knowledge needed, Denis already has the repo running locally.
+     Denis can review Oleg's PRs for #1576 and #1530 immediately on open — saves Vova ~2 h of
+     review queue time and unblocks the merge chain faster.}
 
 # Examples of bad vs good phrasing
 examples_bad_good:

@@ -8,6 +8,8 @@ env:
   local_url: http://localhost:3000
   branch: dev
   code_path: ../../../../CROP-front
+  # .env.local — dev hono (V2 brands + Marcrest diagrams); NOT prod search-hono
+  SEARCH_API_URL_HONO: https://search-hono-dev-222426967009.us-east1.run.app
 
 # Stack-specific check methods (Next.js, Vercel, browser-based).
 check_methods:

@@ -3,30 +3,61 @@ sprint: S06
 title: V2 — Multi-Brand Production Launch
 priority: P0
 deadline: 2026-06-06 (Friday)
-env: localhost:3000 · branch:dev · prod verify on crop.clintontractor.net / crop-dev.app
+env: localhost:3000 + SEARCH_API_URL_HONO=search-hono-dev · branch:dev · prod verify crop.clintontractor.net / crop-dev.app
 status: IN_PROGRESS
-updated: 2026-06-03
+updated: 2026-06-12-eod
 
 progress_snapshot:
-  done:   [A1, B3, C1, C2]        # merged to dev
-  review: [A1-foundation-design, A1-diagrams-page, A1-brand-hub]  # PRs approved, Vova merges
-  flight: [A2, B1, B2]            # Oleg working, no PRs yet
-  blocked: [A3-smoke, B5-nav-smoke] # waiting A2+B1+B2 PRs
-  pending: [A4-ferris-config, B4-flash-fix] # open, not started
-  vova:   [A5-db-row, A6-slug-fix, deploy]
+  done:   [A1, A2, A3b, A5b, B1-B18, B6, B7, C1-C3, #1533, #1535, #1537, #1543, #1583, #1589, #1597, #1607, #1623, #1639, #1640, #1671, #1672, #1675, #1682, #1683, #1684, #1724, #1728, #1821, #1823, #1818, #1826, #1841, #1843, #1827, #1830, #1842, #1851, #1854, ps406]
+  done_denis: [A3-smoke-FVM, A3b-marcrest-PASS-2026-06-12, B5-nav-smoke, fix-lane-crop-dev-PASS-2026-06-08, B18-what-we-stock-PASS, B12-1684-BOM-cart-PASS, oleg-7-prs-localhost-QA-PASS-2026-06-08, 1703-localhost-PASS-scope-AB, homepage-QA-1814-2026-06-12, 1832-cfp-inventory-2026-06-12, 1852-crop-dev-PASS-2026-06-12]
+  qa_pass: [1671-1672-1675-1682-1683-1684-crop-dev-PASS-2026-06-08, 1693-1695-1692-1685-1696-1694-1698-localhost-APPROVED-2026-06-08, A3b-1538-2026-06-12, 1814-homepage-2026-06-12, 1852-FRR-SM-2026-06-12]
+  qa_bugs_open: [1853]
+  denis_prs_open: [1866, 1867, 1868, 1869, 1870, 1855, 1859, 1861, 1860, 1865]
+  qa_bugs_sprint_open: [1613]
+  issues_closed: [1528,1530,1547,1548,1549,1576,1617,1622,1608,1616,1618,1619,1621,1624,1532,1515,1614,1703,1538]
+  meeting_2026-06-09: [saturday-D1-parts-images, D2-category-imagery, D3-brands-grid, A8-NH-construction, 1703-scope-C-hero-simplify, defer-brand-hub-layout-rethink]
+  meeting_2026-06-11: [1863-no-card-CFP, 1832-CFP-inventory, 1833-category-placeholder, 1831-choose-brand]
+  denis_next: [post-merge-QA-1867-1869-1870, close-1852-after-vova, 1832-standard-signoff, 1507-john-OK, evening-1544-regression]
+  oleg_next: [1710-diagrams, D1-parts-images, D2-category-visuals, D3-brands-figma-cards, 1849-rebase-merge]
+  pending: [A4-ferris-config, 1507-john-signoff, D1-D3-saturday-visuals, denis-wave-merge]
+  vova:   [merge-1866-1870-1855, 375-1280-visual, 1814-signoff, 1832-signoff, D0-deploy]
+  daniil: [1538-closed, ps406-merged]
+
+crop_dev_visual:
+  live: [https://crop-dev.app/, https://crop-dev.app/parts/brand/new-holland, https://crop-dev.app/parts/brand/new-holland/type/construction, https://crop-dev.app/parts-diagrams, https://crop-dev.app/brands, https://crop-dev.app/parts/CT-FRR-1650347SM]
+  after_merge: [https://crop-dev.app/parts/brand/marcrest/parts, https://crop-dev.app/parts-diagrams?category=hay-tools, https://crop-dev.app/parts-diagrams/ferris, https://crop-dev.app/parts-diagrams/marcrest/CE_2034/assembly]
 
 pr_status:
   - front#1533  merged 2026-06-03  # foundation components
-  - front#1537  APPROVED           # diagrams page v2 (Denis fixed + approved)
-  - front#1543  APPROVED           # brand hub v2 (Denis fixed + approved)
+  - front#1537  merged 2026-06-03  # diagrams page v2
+  - front#1543  merged 2026-06-03  # brand hub v2
   - search-hono#332  merged 2026-06-03  # MAR registry + multibrand PN (closes A1, C1, C2)
   - front#1535  done 2026-06-03    # e2e coverage (price-leak + a11y + filter)
+  - front#1553  merged 2026-06-04   # A2 Marcrest activation — Vova merged 08:02
+  - front#1556  merged 2026-06-04   # B1 desktop nav loop — Denis PASS, Vova merged 10:00
+  - front#1578  merged 2026-06-04   # B2 mobile thumbnail drawer — Oleg+Vova merged 10:01
+  - front#1589  merged 2026-06-04   # B8 brands PromoContactCard full width
+  - front#1583  merged 2026-06-04   # B4 Ferris model-route loading skeleton
+  - front#1597  merged 2026-06-04   # B6 TypeCard glass (visual sign-off #1576 still open)
+  - front#1607  merged 2026-06-04   # B7 /parts-diagrams root v2 — Denis crop-dev PASS 2026-06-05
+  - front#1623  merged 2026-06-04   # #1548 per-brand type photos
+  - front#1639  merged 2026-06-05   # #1547 thin-hub featured rail
+  - front#1640  merged 2026-06-05   # #1549 NH ItemList JSON-LD
+  - front#1671  merged 2026-06-05   # B17 #1624 — crop-dev PASS 2026-06-08
+  - front#1672  merged 2026-06-05   # B9–B16 batch — crop-dev PASS 2026-06-08
+  - front#1675  merged 2026-06-05   # #1532 brands counts — crop-dev PASS 2026-06-08
+  - front#1682  merged 2026-06-05   # /brands/loading.tsx skeleton
+  - front#1683  merged 2026-06-05   # #1515 home BrandStrip — crop-dev PASS 2026-06-08
+  - front#1684  merged 2026-06-05   # #1614 BOM cart ARI — crop-dev PASS 2026-06-08
+  - front#1674  merged 2026-06-05   # #1673 Ferris tail-tile photos (polish, out of sprint checklist)
+  - front#1670  merged 2026-06-05   # #1617 brand tile routing fix
 
 critical_path:
-  front#1538 (@pedchenkooleh-coo) → @denistka local run → @appdev-v merge → front#1541 smoke → deploy
+  vova-merge-denis-wave-1866-1870-1855 → Denis crop-dev PASS → 1507 John OK → Oleg D1-D3+#1710 → Vova 375/1280+#1814 → D0
 
 roadmap_issue: https://github.com/CT-CROP/CROP-front/issues/1544   # team-facing checkbox tracker (mirror of ROADMAP.md)
-roadmap_mirror: ./ROADMAP.md
+roadmap_mirror: ./ROADMAP.md   # synced 2026-06-12 EOD
+eod_report: ../../reports/2026-06-12-EOD.md
 
 composite: crop
 repos: [crop-front, crop-search-hono]

@@ -1,0 +1,9 @@
+{
+  "patrol": "crop-denis-roadmap",
+  "interval_minutes": 30,
+  "autolaunch_count": 11,
+  "last_tick_at": "2026-06-12T18:00:00Z",
+  "last_result": "no_work",
+  "pending_work": null,
+  "wait_for_user": false
+}

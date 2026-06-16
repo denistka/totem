@@ -14,6 +14,7 @@ project:
 paths:
   code: ../../../../CROP-front
   history: .
+  test_infra: ./TEST_INFRA_RULES.ti   # test-utils conventions — load on test/MSW PRs (#1914)
   # `intel: ./intel` removed 2026-06-03 — broken pointer (dir never existed).
 
 guardians:

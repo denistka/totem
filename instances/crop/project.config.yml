@@ -30,6 +30,7 @@ paths:
   invariants: ./INVARIANTS.md
   report_rules: ./REPORT_RULES.ti    # customer-facing status report flavors
   pr_workflow: ./V2_PR_WORKFLOW.ti   # Denis's review checklist + stacked-PR pattern (S06)
+  test_infra: ./crop-front/TEST_INFRA_RULES.ti  # crop-front test-utils/ conventions (#1914)
   # NOTE: `intel: ./intel` removed 2026-06-03 — the dir never existed (broken pointer).
 
 # Composite-level sprints carry tracks that name target repo(s) explicitly.
@@ -61,5 +62,5 @@ guardians:
 # 2. For each member, read ./{member.id}/project.config.yml (members are NESTED, not siblings).
 # 3. Open the latest sprint folder in ./sprints/ (highest number) — currently S06.
 # 4. Load operating rules as needed: ROUTING.ti, TRIAGE_RULES.ti, REPORT_RULES.ti,
-#    V2_PR_WORKFLOW.ti, INVARIANTS.md.
+#    V2_PR_WORKFLOW.ti, crop-front/TEST_INFRA_RULES.ti, INVARIANTS.md.
 # 5. Surface per-repo open-issue counts via `gh issue list -R {member.repo} --state open`.

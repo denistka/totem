@@ -1,6 +1,6 @@
 gate: OPEN
-status: BLOCKED
-blocked_on: front#1538 (Oleg Marcrest FE) must be merged to dev first
+status: DONE
+completed: 2026-06-04
 issue: https://github.com/CT-CROP/CROP-front/issues/1541
 owner: Denis (denistka)
 as_of: 2026-06-03
@@ -70,23 +70,23 @@ acceptance:
   - No broken layouts at 375px (mobile) and 1280px (desktop) viewport
 
 smoke-checklist:
-  # Fill in ✓/✗ + note during QA run:
   ferris:
-    brand_landing: ""
-    parts_diagrams: ""
-    assembly_page: ""
+    brand_landing: "✓ 200"
+    parts_diagrams: "✓ 200, model grid populated"
+    assembly_page: "✓ 200, crumb → /parts-diagrams/ferris, no loop"
   ventrac:
-    brand_landing: ""
-    parts_diagrams: ""
-    assembly_page: ""
+    brand_landing: "✓ 200"
+    parts_diagrams: "✓ 200, model grid populated"
+    assembly_page: "✓ 200, crumb → /parts-diagrams/ventrac, no loop"
   mchale:
-    brand_landing: ""
-    parts_diagrams: ""
-    assembly_page: ""
+    brand_landing: "✓ 200"
+    parts_diagrams: "✓ 200, model grid populated"
+    assembly_page: "✓ 200, crumb → /parts-diagrams/mchale, no loop"
   marcrest:
-    brand_landing: ""
-    parts_diagrams: ""
-    assembly_page: ""
+    brand_landing: "✓ 200 — /parts/brand/marcrest, hero + CTAs (crop-dev 2026-06-04 A3b)"
+    parts_diagrams: "✗ 200 but EmptyBrandDiagrams — 0 model links; API /api/brands/MAR/models unreachable/empty on public hosts (A5b #1538)"
+    assembly_page: "n/a — blocked until diagrams grid populates"
+    a3b_run: "2026-06-04 @denistka crop-dev.app — FAIL data path; FE activation (#1553) OK"
 
 dep: A1, A2
 output: this file (smoke-checklist filled in) + bug issues if any found

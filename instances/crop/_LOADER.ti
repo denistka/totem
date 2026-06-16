@@ -78,6 +78,7 @@ operating_rules:
   triage:       ./TRIAGE_RULES.ti     # bug/issue triage + create/close commands
   reports:      ./REPORT_RULES.ti     # customer-facing status report flavors
   pr_workflow:  ./V2_PR_WORKFLOW.ti   # Denis review checklist + stacked-PR + branch-base pattern
+  test_infra:   ./crop-front/TEST_INFRA_RULES.ti  # test-utils/ conventions (crop-front only)
   invariants:   ./INVARIANTS.md       # frozen cross-repo decisions + V2 brand-code facts
 
 # ── SPRINT FORMAT ────────────────────────────────────────────────────────────

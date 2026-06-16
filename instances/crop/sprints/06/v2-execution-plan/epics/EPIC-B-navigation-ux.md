@@ -39,6 +39,16 @@ And *"it's a little too much the same with just boxes"* — visual clarity drive
 | [B3 — Equipment-type imagery: verify + gap-fill](../../S06-B3-brand-equipment-imagery.pd) | Oleg | D2 | Already shipped; check 4-brand slug coverage |
 | [B4 — Ferris commercial-mower flash fix](../../S06-B4-ferris-flash-fix.pd) | Oleg | D3 | Needs clean Ferris routes (A2/A4) |
 | B5 — Navigation smoke (B1+B2 sign-off) (ops, see [ROADMAP](../ROADMAP.md)) | Denis | D3 | Desktop loop + mobile drawer |
+| [B9 — DiagramsToolbar sticky bar (#1608)](../../ROADMAP.md) | Denis | D3 | PR [#1672](https://github.com/CT-CROP/CROP-front/pull/1672) — remove redundant frosted strip |
+| [B10 — GroupNav scroll-spy + hash (#1609)](../../ROADMAP.md) | Oleg | D3 | Bottom short section; no skip-one; `#g-*` in URL |
+| [B11 — BOM thumbnails (#1613)](../../ROADMAP.md) | Oleg + Daniil | D3 | `imageUrl` on brand assembly BOM; related #1429 |
+| [B12 — BOM add-to-cart (#1614)](../../ROADMAP.md) | Oleg | D3 | Enable `cart` in `ARI_CAPABILITIES`; NH parity |
+| [B13 — GroupNav active scroll (#1616)](../../ROADMAP.md) | Oleg | D3 | `scrollIntoView` when activeId changes; related #1609 |
+| [B14 — /parts toasts (#1618)](../../ROADMAP.md) | TBD | D3 | Priority via [#1622](https://github.com/CT-CROP/CROP-front/issues/1622) @appdev-v |
+| [B15 — /parts cart toggle (#1619)](../../ROADMAP.md) | TBD | D3 | Same triage |
+| [B16 — checkout address dialog (#1621)](../../ROADMAP.md) | TBD | D3 | Same triage |
+| [B17 — /parts header toolbar gap (#1624)](../../ROADMAP.md) | Denis | D3 | PR [#1671](https://github.com/CT-CROP/CROP-front/pull/1671) QA PASS — ResizeObserver sync |
+| [QT1 — QA priority triage (#1622)](../../ROADMAP.md) | **Vova** | D3 | **Assign P0/P1 + owners on #1608–#1624** |
 
 ## Epic acceptance
 

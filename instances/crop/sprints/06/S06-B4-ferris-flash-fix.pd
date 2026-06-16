@@ -1,12 +1,13 @@
 gate: OPEN
-status: OPEN
-owner: Oleg (pedchenkooleh-coo)
-as_of: 2026-06-03
-note: |
-  Not yet started. Depends on Ferris routes being clean (A2 merged).
-  loading.tsx skeleton for /parts-diagrams/[brand] was added in PR#1537
-  (approved, waiting Vova merge) — this may already resolve the flash.
-  Verify after #1537 lands on dev before writing a separate fix.
+status: DONE
+owner: Denis (denistka)
+as_of: 2026-06-04
+qa: |
+  crop-dev.app PASS 2026-06-04 — PR #1583 merged by @appdev-v.
+  Nav ferris → 5901213: route-level assembly skeleton (lg:grid-cols-3), zero brand-identity
+  skeleton frames during transition. Closes #1582.
+note_reassign: reassigned from Oleg 2026-06-04 to reduce Oleg's load before Friday deadline
+refs_merged: front#1583
 sprint: S06
 track: B
 task: B4

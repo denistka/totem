@@ -73,6 +73,13 @@ Vova ships V2 brand-page work in layers:
 
 # DENIS'S LOCAL REVIEW CHECKLIST
 
+## Step 0 — `.env.local` (before `bun run dev`)
+```
+SEARCH_API_URL_HONO="https://search-hono-dev-222426967009.us-east1.run.app"
+```
+Dev hono only — V2 brand diagrams (FRR/VNT/MCH/MAR) and Marcrest catalog data live on
+`search-hono-dev`, not prod `search-hono`. Wrong URL → empty diagrams / 404 brands on localhost.
+
 ## Step 1 — Checkout
 ```bash
 gh pr checkout {N}
@@ -147,6 +154,11 @@ gh pr review {N} --repo CT-CROP/{repo} --approve --body "LGTM — {one line}."
 - `GET /api/brand/{slug}/models` returns 200 or clean 404 (never 500)
 - Brand display names: `getBrandDisplayName("FRR"|"VNT"|"MCH"|"MAR")` never returns "UNK"
 - `brand-extractor.ts` / `brand-safety.ts` scope unchanged (CNH family only)
+
+## Test-infra / harness PRs (renderWithProviders, mocks, MSW)
+- Load `crop-front/TEST_INFRA_RULES.ti` — five structural rules from @appdev-v review (#1939/#1941)
+- Colocate moved modules + pin-tests; one canonical home (`test-utils/`); move vs rewrite split
+- Spikes → issue comment only; MSW lands with first real `fetchImpl` consumer (#1915)
 
 ---
 

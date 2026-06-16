@@ -34,6 +34,7 @@ that lookup path must be reliable.
 | [A4 — Ferris 59-config → assembly routing](../../S06-A4-ferris-config-numbers.pd) | Daniil | D2 | search-hono |
 | A5 — Marcrest brand_vocabulary DB row + data check (ops, see [ROADMAP](../ROADMAP.md)) | Vova | D1 | DB |
 | A6 — Ferris slug data fix (if needed) + cache refresh (ops, see [ROADMAP](../ROADMAP.md)) | Vova | D2–D3 | DB |
+| [A7 — Brand hub entry parity (#1617)](../ROADMAP.md) | Oleg | D3 | front |
 
 ## Epic acceptance
 

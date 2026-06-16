@@ -81,18 +81,18 @@ enforced on every task.
 
 ---
 
-## Status snapshot — 2026-06-03 EOD
+## Status snapshot — 2026-06-04 (see [ROADMAP.md](../ROADMAP.md) for live checkboxes)
 
 | | |
 |---|---|
-| ✅ Merged to dev | search-hono#332 (A1+C1+C2), front#1533 (foundation) |
-| 🔍 Approved, Vova merges | front#1537 (diagrams page), front#1543 (brand hub) |
-| 🔧 In flight, no PR yet | front#1538 (A2 Marcrest FE), front#1539 (B1 nav), front#1540 (B2 mobile) |
-| ⏳ Blocked | front#1541 smoke (needs #1538), B5 nav smoke (needs B1+B2) |
-| ❓ Pending investigation | A4 Ferris 59-config (not confirmed in #332) |
-| ✅ Done, no PR needed | B3 imagery (already shipped), front#1535 e2e (on #1537 branch) |
+| ✅ Merged to dev | hono#332, front#1533–1543, #1553, #1556, #1578, #1583, #1589, #1597 (B6 code) |
+| ✅ QA PASS (crop-dev) | A3 F/V/M, B4, B5, B8 — @denistka |
+| 🔄 QA in progress | `QA-IMPROVEMENTS-BACKLOG.md` synced 2026-06-04 · done: `/brands`, `/parts` (#1618–1619), `/checkout/shipping` (#1621) · open v2: #1608–#1616, A7 #1617 |
+| ❌ QA FAIL | A3b Marcrest — diagrams empty until catalog data |
+| 🔍 Open issues | #1538 (MAR data), #1530 (B7), #1576 (B6 visual), **#1608–#1616** (B9–B13 QA) |
+| 📝 Issue hygiene | #1603/#1606 withdrawn; #1608 filed with scroll+full-bleed spec |
 
-**Critical path today:** front#1538 → Denis PASS → Vova merge → front#1541 smoke → deploy
+**Critical path:** #1538 → B7 #1530 → B6 visual #1576 → B9 #1608 (recommended) → Vova sign-off → D0
 
 ---
 
@@ -155,12 +155,12 @@ C3 (brief Dan) — D1, independent
 - **Vova:** ✅ Merged #1533 (foundation) + #332. Approved PRs #1537 + #1543 pending merge.
 - **Oleg:** 🔧 Working on #1538 (Marcrest FE), #1539 (nav loop), #1540 (mobile). No PRs yet.
 
-### D2 — Thu 2026-06-04 (build) — TODAY
+### D2 — Thu 2026-06-04 (build) — ✅ MOSTLY COMPLETE
 
-- **Denis:** Run #1538 (Oleg Marcrest FE) locally the MOMENT it opens. Then #1539 and #1540 as they come. B5 nav smoke after B1+B2 PRs.
-- **Oleg:** Open PRs for #1538 (Marcrest FE), #1539 (nav loop), #1540 (mobile parity). #1538 unblocks smoke.
-- **Daniil:** Confirm A4 (Ferris 59-config) status — was it covered by #332 or needs separate investigation?
-- **Vova:** Merge #1537 + #1543 (approved). A5 DB row status. A6 if A4 finds empty slugs.
+- **Denis:** ✅ B4/B8 crop-dev PASS; ✅ A3 F/V/M + B5; ❌ A3b Marcrest FAIL (empty diagrams). #1535 closed.
+- **Oleg:** ✅ #1553 Marcrest FE, #1556 B1, #1578 B2, #1597 B6 code merged. B7 #1530 still open.
+- **Daniil:** #1538 open — MAR catalog data to live page (blocks A3b). A4 still TBD.
+- **Vova:** Merged B4/B8/#1581/#1586; B6 visual sign-off pending on #1576.
 
 ### D3 — Fri 2026-06-05 (stabilize) — **all engineering lands today**
 - **Oleg:** B4 — Ferris commercial-mower flash fix; address smoke bugs.

@@ -1,0 +1,121 @@
+role: CROP Front Test Infrastructure
+focus: test-utils, vitest, msw, pr-structure, colocation
+instance: crop
+member: crop-front
+established: 2026-06-15
+source: @appdev-v review on front#1939 + front#1941 (Denis structural fixes same day)
+
+# Loaded when: "test-utils", "renderWithProviders", "clerk mock", "MSW",
+# "test infra", "lib/testing", "spike test", #1914, #1915, #1939, #1941
+
+---
+
+# CANONICAL HOME
+
+**`CROP-front/test-utils/`** — single home for FE test harness.
+
+| Path | Purpose |
+|------|---------|
+| `test-utils/render.tsx` | `renderWithProviders`, `resetTestHarness` |
+| `test-utils/mocks/clerk.tsx` | Clerk mock (vitest + Storybook via thin re-export) |
+| `test-utils/slug-stability.ts` | CT-674 slug contract helpers (vitest + Playwright) |
+| `test-utils/__probes__/` | Smoke probes (compiler introspection, RSC, etc.) |
+| `test-utils/index.ts` | Public barrel — consumer tests import from `@/test-utils` |
+
+**Removed:** `lib/testing/` (deleted in #1914 follow-up commit 6069ec00).
+
+**Storybook:** `.storybook/mocks/clerk.ts` re-exports from `test-utils/mocks/clerk.tsx` — no drift.
+
+**Vitest global:** `vitest.setup.ts` mocks `@clerk/nextjs` → `test-utils/mocks/clerk`.
+
+---
+
+# FIVE RULES (team standard — apply on every test-infra PR)
+
+## 1. Colocate pin-tests with their subject
+
+When moving a module, move its test in the same PR.
+
+```
+✅ test-utils/mocks/clerk.test.tsx  →  import from "./clerk"
+❌ lib/testing/clerk-mocks.test.ts  →  import from "@/test-utils" barrel (orphan)
+```
+
+Colocated tests import the subject **directly**, not via the `@/test-utils` barrel.
+
+## 2. One home — finish migrations in the same PR
+
+A PR named "shared toolkit" (or any test-infra move) must land **one** canonical directory.
+Half-migration (`test-utils/` + `lib/testing/` coexisting) is the worst outcome — next
+contributor won't know where new helpers go.
+
+## 3. Separate move from rewrite
+
+`git mv` / pure rename in **commit A**; logic changes in **commit B**.
+
+Example that triggered review: `clerk-mocks.ts` → `clerk.tsx` at 53% similarity —
+factory rewrite bundled into rename, invisible in diff. Reviewers must see what changed.
+
+## 4. Spikes commit learning, not permanent CI code
+
+Spike conclusions → **GitHub issue comment** (not a `*.test.ts` in unit CI).
+
+| Spike | Outcome |
+|-------|---------|
+| front#1941 (MSW vs undici) | **Closed** — findings on #1915; no `msw` dep without real consumer |
+| Wrong pattern | Spike test green because DNS fails (`ENOTFOUND`) in CI — false confidence |
+
+Tests must pass for the **right reason**, not because the environment accidentally
+breaks network (captive resolver, undici fallback to global fetch, etc.).
+
+## 5. MSW + undici — mock at the seam
+
+| Transport | MSW intercepts? |
+|-----------|-----------------|
+| `global fetch` | Yes — MSW in `vitest.setup.ts` for client/component tests |
+| `undici.fetch` / `fetchIpv4` prod path | **No** — real DNS; handler never hit when undici succeeds |
+
+**Bulk #1915 direction:** `createSearchServiceClient({ fetchImpl })` seam in
+`lib/search-service/*`; land `msw` devDependency with the **first real handler test**
+that exercises `fetchImpl`, not a spike file.
+
+## 6. CI gates — test failure modes first
+
+When adding a coverage/CI gate script, spec the **worst inputs first**:
+- missing input artifact (exit 2),
+- zero-match targets that would false-green (exit 2),
+- then happy-path / wobble / regression.
+
+Test names must match what they assert. Example: #1917 `check-coverage-ratchet.ts`.
+
+---
+
+# USAGE (consumer tests)
+
+```tsx
+import { mockClerkUser, renderWithProviders } from "@/test-utils";
+
+// Prefer renderWithProviders over raw @testing-library/react render()
+// for client components — wires QueryClient, nuqs, theme, cart, Clerk.
+```
+
+E2e slug specs import pure helpers relatively:
+`../../test-utils/slug-stability` (vitest excludes `tests/e2e/**`).
+
+---
+
+# INCIDENT LOG (why these rules exist)
+
+| Date | PR | Lesson |
+|------|-----|--------|
+| 2026-06-15 | front#1939 | `renderWithProviders` + 30-file migration good; structure half-done blocked merge |
+| 2026-06-15 | front#1941 | MSW spike useful; permanent dep + ENOTFOUND-coupled tests rejected |
+| 2026-06-15 | fix 6069ec00 | Completed `test-utils/` migration; `lib/testing/` removed |
+
+---
+
+# RELATED
+
+- GitHub: #1914 (shared toolkit), #1915 (MSW bulk), #1913 (Wave 1 umbrella)
+- Totem: `../V2_PR_WORKFLOW.ti` — Denis local review checklist for test PRs
+- Code: `CROP-front/test-utils/`, `CROP-front/docs/ops/ui-regression-program.md`
