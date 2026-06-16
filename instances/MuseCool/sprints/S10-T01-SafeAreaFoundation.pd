@@ -1,0 +1,37 @@
+---
+id: S10-T01
+name: Safe Area Foundation
+status: TODO
+gate: OPEN
+requires: [pwa/PWA.ti, tailwind/TAILWIND.ti]
+invariants: ../S01-INVARIANTS.md
+reference: navitrack/navitrack-mobile-apps/src/styles/layout.css
+---
+
+# S10-T01: Safe Area Foundation
+
+## Objective
+Port NaviTrack safe-area patterns so the MuseCool gradient fills the notch/status bar and
+content respects insets on all orientations.
+
+## Reference audit (read-only)
+Study these NaviTrack files — do not copy dark-theme tokens:
+- `src/styles/layout.css` — body `padding-bottom: env(safe-area-inset-bottom)`, `#root` flex column, `100dvh`
+- `src/styles/touch.css` — `.safe-top`, `.safe-bottom`, `.safe-bottom-pwa`
+- `src/styles/screen-layout.css` — landscape `--pwa-spacing-x/r` horizontal insets
+- `index.html` — `viewport-fit=cover`, `interactive-widget=resizes-content`
+
+## Acceptance Criteria
+- No white band above ScorePanel on iPhone simulator (portrait + landscape).
+- Background gradient visible under status bar (html/body extend full viewport).
+- Screen roots use `.safe-top` (or equivalent) so glass panels sit below notch.
+- Piano keybed keeps bottom safe inset; landscape adds horizontal inset on content column.
+- S01 colour tokens unchanged; only layout/safe-area CSS added.
+
+## Steps
+1. Add safe-area utilities to `musecool/src/index.css` (mirror NaviTrack naming).
+2. Update `index.css` base: html/body min-height `100dvh`, overscroll-behavior, body safe-bottom.
+3. Apply `.safe-top` to app shell / ScorePanel wrapper; landscape horizontal padding on screen roots.
+4. Verify `index.html` viewport meta matches NaviTrack (`interactive-widget=resizes-content` optional).
+5. Test iPhone 16e + SE simulators portrait/landscape — screenshot before/after.
+6. `git commit -m "fix(pwa): safe-area foundation from NaviTrack pattern"`.

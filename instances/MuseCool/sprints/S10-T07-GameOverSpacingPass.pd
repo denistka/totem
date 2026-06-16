@@ -1,0 +1,30 @@
+---
+id: S10-T07
+name: GameOver Spacing Pass
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+invariants: ../S01-INVARIANTS.md
+depends_on: S10-T01
+---
+
+# S10-T07: GameOver Spacing Pass
+
+## Objective
+Audit and fix margin/padding on GameOverScreen so the panel fits portrait and landscape
+without excess whitespace or clipped Play Again button.
+
+## Acceptance Criteria
+- Portrait: panel centred, comfortable but not wasteful (`p-6` outer, `p-6 landscape:p-4` inner).
+- Landscape 667×375: panel `max-h-[90dvh]`, score `text-4xl landscape:text-4xl` (not 6xl), gap `gap-4 landscape:gap-3`.
+- Mascot `w-24 h-24 landscape:w-20 landscape:h-20`.
+- Play Again button always fully visible; min-height 44px touch target.
+- Safe-area insets applied (`.safe-top` / horizontal landscape padding from T01).
+- Optional: landscape row variant (mascot left, score copy right) if column still overflows — document choice in commit.
+
+## Steps
+1. Screenshot current GameOver at 375×667 and 667×375; note overflow/gaps.
+2. Update `GameOverScreen.tsx` padding, font clamps, gap utilities.
+3. Apply safe-area classes from T01 to outer wrapper.
+4. Force GameOver via dev helper (T03) and verify both orientations.
+5. `git commit -m "fix(layout): game over screen spacing and landscape fit"`.

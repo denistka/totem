@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S88 T0 — Audit iOS auth friction paths
+requires: [FRONTEND_DEV]
+sprint: S88
+
+context: |
+  Before changing behavior, document every code path that ends with the user
+  typing username/password on the login screen. Reproduce on a physical iPhone
+  with biometry enabled (client scenario: older device, Bulgarian locale).
+
+steps:
+  1. Trace cold start: useSessionBiometryLock → requestBiometricUnlock →
+     loadBiometricCredentials → reloginWithBiometricCredentials.
+  2. Trace resume: visibilitychange handler in useSessionBiometryLock.
+  3. Trace failure: onBiometryFailed in useMobileShell → performUserLogout →
+     blockBiometryUntilManualLogin in useAuthStore.logout.
+  4. Trace JWT expiry: hydrateFromStoredSessionToken + isJwtExpired.
+  5. Record whether user sees one or two system biometry prompts per open.
+  6. Write findings to intel/S88_AUTH_FRICTION_AUDIT.md (paths, repro, severity).
+
+out:
+  - intel/S88_AUTH_FRICTION_AUDIT.md
+
+done:
+  - Audit doc lists all password-forcing paths with file:line refs.
+  - Client repro steps documented (old iPhone, biometry on).
+  - Recommended fix order aligns with T1–T3 tasks in this sprint.

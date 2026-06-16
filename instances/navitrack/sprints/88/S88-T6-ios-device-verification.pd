@@ -1,0 +1,27 @@
+gate: OPEN
+v:4 role:qa x:mobile
+task: S88 T6 — iOS device verification checklist
+requires: [FRONTEND_DEV, QA]
+sprint: S88
+
+context: |
+  Client issue is on a real older iPhone. Verify both paths: biometry
+  convenience fixes AND trust-device direct entry with warning.
+
+steps:
+  1. Build iOS dev or release candidate from navitrack-mobile-apps.
+  2. Biometry path: login → enable Face ID → kill app → Face ID unlock.
+  3. Switch apps 2 min (< grace) → no prompt; 10 min (> grace) → Face ID.
+  4. Cancel Face ID → login shows retry button, no password required.
+  5. Trust device path: disable biometry → enable trust → confirm warning →
+     kill app → reopen → main screen directly, no password.
+  6. Trust device: explicit logout → password required.
+  7. Record results in sprints/88/report.ti (pass/fail per scenario).
+
+out:
+  - sprints/88/report.ti
+
+done:
+  - All 6 scenarios pass on physical iOS device.
+  - report.ti notes device model + iOS version.
+  - Trust-device warning shown before enable (screenshot or step noted).

@@ -1,0 +1,32 @@
+# S88 iOS Device Verification Report
+
+**Sprint:** S88 iOS Session Trust  
+**Task:** S88-T6  
+**Date:** 2026-06-16  
+**Status:** PENDING — requires physical iOS device
+
+## Device under test
+
+| Field | Value |
+|-------|-------|
+| Model | _TBD_ |
+| iOS version | _TBD_ |
+| Build | _TBD (dev/release candidate)_ |
+| Locale | _TBD (include BG if available)_ |
+
+## Scenarios
+
+| # | Scenario | Expected | Result | Notes |
+|---|----------|----------|--------|-------|
+| 1 | Biometry: login → enable Face ID → kill app → reopen | Face ID unlock, main screen | PENDING | |
+| 2 | Switch apps &lt; grace (2 min) → return | No Face ID prompt | PENDING | Grace default 5 min |
+| 3 | Switch apps &gt; grace (10 min) → return | Face ID required | PENDING | |
+| 4 | Cancel Face ID on resume | Login shows retry button, no password | PENDING | |
+| 5 | Trust device: disable biometry → enable trust → confirm warning → kill → reopen | Main screen directly, no password | PENDING | Screenshot warning dialog |
+| 6 | Trust device: explicit logout | Password required on login | PENDING | |
+
+## Sign-off
+
+- [ ] All 6 scenarios pass
+- [ ] Trust-device warning shown before enable
+- [ ] No regression on OTP/2FA flow

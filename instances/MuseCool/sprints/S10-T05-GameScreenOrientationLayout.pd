@@ -1,0 +1,30 @@
+---
+id: S10-T05
+name: Game Screen Orientation Layout
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti]
+invariants: ../S01-INVARIANTS.md
+depends_on: S10-T01
+---
+
+# S10-T05: Game Screen Orientation Layout
+
+## Objective
+Portrait unchanged (column). Landscape: note ring and mascot in **one horizontal row**,
+vertically centred on each other, above the piano.
+
+## Acceptance Criteria
+- **Portrait:** ScorePanel → ring → mascot → piano (current stack preserved).
+- **Landscape (667×375):** ScorePanel compact → flex-row centre band: CountdownRing left, MascotWithShadow right (or order per mock), `items-center justify-center gap-3`, both visually centred on shared vertical axis.
+- Ring size landscape: `min(80px, 18vw, 28vh)` — does not dominate row.
+- Mascot landscape: `h-16 w-16` max (64px), shadow scales with mascot.
+- Piano full width below row; no vertical scroll; touch targets ≥ 44px.
+- Mascot eye-tracking still works after layout change (refs unchanged).
+
+## Steps
+1. Add `@media (orientation: landscape)` block or Tailwind `landscape:` classes in `index.css` for game centre band.
+2. Restructure `GameScreen.tsx`: wrap ring + mascot in shared flex container with orientation variants.
+3. Tune `ringSize` calculation to use `min()` with vh/vw caps in landscape.
+4. Test with `VITE_LAYOUT_TEST=true` at 667×375 and 736×414.
+5. `git commit -m "fix(layout): game screen landscape row for note and mascot"`.

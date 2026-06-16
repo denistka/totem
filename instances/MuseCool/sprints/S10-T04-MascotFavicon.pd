@@ -1,0 +1,29 @@
+---
+id: S10-T04
+name: Mascot Favicon
+status: TODO
+gate: OPEN
+requires: [react-ts/UI_UX.ti, pwa/PWA.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S10-T04: Mascot Favicon
+
+## Objective
+Replace the generic purple favicon with Melody the mascot (idle face) for browser tab,
+apple-touch-icon, and PWA manifest icons.
+
+## Acceptance Criteria
+- `public/favicon.svg` — simplified mascot head (teal body `#0E92BA` / orange accent `#FF9800`), readable at 32×32.
+- PNG exports: `icon-192.png`, `icon-512.png` (and optional 16/48) generated from same artwork.
+- `index.html` links favicon + apple-touch-icon to mascot assets.
+- `vite.config.ts` PWA manifest icons point to mascot PNGs.
+- S01 brand colours only; no new palette tokens.
+
+## Steps
+1. Author static SVG favicon from `MascotSVG` idle geometry (simplified paths, no GSAP refs).
+2. Export PNGs (script or manual) into `public/`.
+3. Update `index.html` icon links; remove stale `/icon-192.png` references if filenames change.
+4. Update VitePWA manifest `icons` array + `includeAssets`.
+5. Hard-refresh + Add to Home Screen preview — mascot visible on tab and icon.
+6. `git commit -m "feat(brand): mascot favicon and PWA icons"`.

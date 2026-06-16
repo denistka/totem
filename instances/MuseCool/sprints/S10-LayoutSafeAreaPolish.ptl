@@ -1,0 +1,59 @@
+---
+id: S10
+name: Safe Area, Layout Orientation & Dev Polish
+status: COMPLETE
+gate: OPEN
+requires: [react-ts/UI_UX.ti, tailwind/TAILWIND.ti, react-ts/FRONTEND_DEV.ti, pwa/PWA.ti]
+invariants: ../S01-INVARIANTS.md
+quality: ../CODE-QUALITY.md
+depends_on: S09
+reference:
+  safe_area: navitrack/navitrack-mobile-apps/src/styles/{layout.css,touch.css,screen-layout.css}
+---
+
+# S10: Safe Area, Layout Orientation & Dev Polish
+
+## Objective
+Fix the layout gaps visible in device testing (portrait safe-area band, landscape column
+stacking) and developer friction (Tone.js console noise, auto game-over during layout work).
+Portrait behaviour stays as-is; landscape switches to horizontal row layouts where specified.
+
+## Context (from user screenshots + audit)
+- Status bar shows white band above content — MuseCool lacks NaviTrack-style safe-area plumbing.
+- Game + Start screens stack note/mascot vertically in landscape; user wants them side-by-side, vertically centered on each other.
+- StartScreen calls `preload()` on mount → Sampler/AudioContext before user gesture.
+- GameScreen auto-navigates to GameOver on `phase === 'gameover'` — blocks layout iteration.
+- Favicon is generic purple asset; mascot (Melody) should be the brand mark.
+
+## Track A — Foundation (must complete before layout)
+- [x] S10-T01-SafeAreaFoundation.pd
+- [x] S10-T02-ToneLazyInit.pd
+- [x] S10-T03-LayoutTestFlag.pd
+- [x] S10-T04-MascotFavicon.pd
+
+## Track B — Orientation layouts (after Track A)
+- [x] S10-T05-GameScreenOrientationLayout.pd
+- [x] S10-T06-StartScreenOrientationLayout.pd
+- [x] S10-T07-GameOverSpacingPass.pd
+- [x] S10-T08-OrientationLayoutQA.pd
+
+## Landscape layout contract
+
+| Screen | Portrait | Landscape |
+|---|---|---|
+| Game (Find) | Column: ring → mascot → piano | Row: ring + mascot centred on each other; piano full width below |
+| Start | Column: title → tagline → mascot → Play → piano | Row: copy + CTA left, mascot right; hide assistive piano |
+| GameOver | Column panel centred | Compact panel; tighter padding; CTA always visible |
+
+## Safe-area contract (ported from NaviTrack)
+- `viewport-fit=cover` + `black-translucent` (already in index.html — verify).
+- Body/html extend gradient into notch; `padding-top: env(safe-area-inset-top)`.
+- Piano/footer: `padding-bottom: max(env(safe-area-inset-bottom), 0px)`.
+- Landscape: horizontal insets via `--pwa-spacing-x` / `--pwa-spacing-r` on screen roots.
+
+## Definition of Done
+- Zero white status-bar band on iOS simulator PWA; gradient fills safe areas.
+- Console clean on cold load (no AudioContext/Tone warnings before first tap).
+- `VITE_LAYOUT_TEST=true` keeps game screen after game-over for layout QA.
+- Favicon + PWA icons show mascot idle face (teal/orange brand).
+- All three screens pass 375×667 portrait and 667×375 landscape without scroll/clipped CTAs.

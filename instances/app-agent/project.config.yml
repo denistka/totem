@@ -1,0 +1,59 @@
+project:
+  name: app-agent
+  version: 1.0.0
+  codename: tech-company-in-a-box
+  description: |
+    App Agent — forkable Nuxt 4 layered monorepo with an embedded AI development agent.
+    Three-layer cascade (core -> organization -> apps) via defu merging + Nuxt Layers.
+    Feature-Oriented Intelligence: slug joins code (// SEE:), knowledge files,
+    defineFeature*() runtime instrumentation, MCP tools, and the control plane.
+    Ships docs+MCP server (3000), control plane (3001), and 5 demos (3010-3013).
+  stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, Nitro, MCP, Supabase, SQLite]
+  context:
+    brief: ./BRIEF.md              # read this before planning any sprint
+    local_dev_runbook: ./intel/LOCAL-DEV-RUNBOOK.md   # how to run locally
+    current_state_audit: ./intel/CURRENT-STATE-AUDIT.md
+    agents_schema: ../../../../app-agent-io/core/AGENTS.md
+    readme: ../../../../app-agent-io/core/README.md
+    adr: ../../../../app-agent-io/core/core/docs/adr
+    knowledge: ../../../../app-agent-io/core/core/docs/knowledge
+    mcp_tools: ../../../../app-agent-io/core/core/docs/server/mcp/tools
+    naming_issue: ../../../../app-agent-io/core/NAMING-ISSUE.md
+    package_manager: bun@1.2.15 (pinned)
+    runtime: Bun (nitro preset 'bun'); bun:sqlite for local datasource
+    key_signal: codebase smarter than the model — slug-keyed feature graph + MCP
+
+paths:
+  # CRITICAL: Agent writes OUTSIDE totem/ — enforced relative path.
+  # totem-v6/instances/app-agent/ -> ../../../../app-agent-io/core -> /Projects/app-agent-io/core
+  code: ../../../../app-agent-io/core
+  workspace: ../../../../app-agent-io/core
+  history: ./sprints
+  intel: ./intel
+
+repo:
+  url: git@github.com:app-agent-io/core.git
+  account: denistka@gmail.com
+  branch: main
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - PLANNER
+    - ARCHITECT
+    - QA
+    - DEVOPS
+  stack_adapters:
+    - vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti
+    - nuxt/NUXT.ti
+    - vue/VUE.ti
+    - typescript/TYPESCRIPT.ti
+    - tailwind/TAILWIND.ti
+    - vite/VITE.ti
+    - mcp/MCP.ti
+    - supabase/SUPABASE.ti
+    - architecture/ARCHITECTURE_SCALE.ti
+    # Bun + Turborepo: no dedicated adapter — treat as external tooling (see AGENTS.md)
+
+  ui_stack_ref: vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND

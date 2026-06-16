@@ -1,0 +1,32 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S88 T1 — Wire inactivity grace before resume biometry prompt
+requires: [FRONTEND_DEV]
+sprint: S88
+
+context: |
+  useLocalSettings already defines local_biometry_inactivity_minutes (default 5)
+  but useSessionBiometryLock ignores it — every foreground return triggers
+  requestBiometricUnlock. Short app switches feel like "constant" re-auth.
+
+steps:
+  1. In useSessionBiometryLock visibility handler, read
+     values.local_biometry_inactivity_minutes.
+  2. Track last successful unlock time (reuse lastActionTimeRef or dedicated ref).
+  3. If elapsed < inactivity window → skip prompt, call onBiometryVerified.
+  4. If elapsed ≥ window → existing requestBiometricUnlock flow.
+  5. Add SettingsField in MainSettingsSection (or Account Security) for
+     inactivity minutes: presets 1 / 5 / 15 / 60 (or numeric stepper).
+  6. Add i18n keys for label + helper text (ru/en/bg minimum).
+
+out:
+  - src/features/security/hooks/useSessionBiometryLock.ts
+  - src/screens/settings/components/MainSettingsSection.tsx
+  - src/hooks/useLocalSettings.ts
+  - locale JSON files (as per project convention)
+
+done:
+  - Background < N minutes → no Face ID on return.
+  - Background ≥ N minutes → Face ID required (biometry users only).
+  - Setting persists across restarts.
+  - pnpm tsc --noEmit passes.
