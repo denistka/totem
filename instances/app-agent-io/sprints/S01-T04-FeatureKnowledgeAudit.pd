@@ -1,0 +1,15 @@
+---
+id: S01-T04
+name: Feature Knowledge Audit
+status: DONE
+gate: OPEN
+requires: [mcp/MCP.ti]
+---
+
+# S01-T04: Feature Knowledge Audit
+
+## Objective
+Census slugs, SEE annotations, defineFeature usage, MCP tools.
+
+## Out
+`intel/FEATURE_CENSUS.md`

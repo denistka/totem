@@ -1,0 +1,14 @@
+---
+id: S01-T09
+name: Docs Drift Audit
+status: DONE
+gate: OPEN
+---
+
+# S01-T09: Docs Drift Audit
+
+## Objective
+README/ADR/knowledge gaps vs reality.
+
+## Out
+`intel/KNOWLEDGE_GAPS.md`

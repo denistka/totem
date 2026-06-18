@@ -1,0 +1,14 @@
+---
+id: S01-T10
+name: Totem Knowledge Hub
+status: DONE
+gate: OPEN
+---
+
+# S01-T10: Totem Knowledge Hub
+
+## Objective
+Create agent load hub linking all intel artifacts.
+
+## Out
+`intel/TOTEM_INDEX.ti`

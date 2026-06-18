@@ -1,0 +1,106 @@
+###############################################################################
+# TOTEM INDEX — app-agent-io
+# Load after: totem/totem-v6/index.ti + instances/app-agent-io/project.config.yml
+###############################################################################
+
+project:
+  name: app-agent-io
+  codename: agent-io-recon
+  tagline: Describing your product makes it exist
+  repo: https://github.com/app-agent-io/core
+  code: ../../../../app-agent-io/core
+  stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, MCP, Supabase]
+  status: S01 investigation complete (2026-06-18)
+
+brand:
+  domain: app-agent.io
+  license: MIT
+
+###############################################################################
+# LOAD ORDER
+###############################################################################
+
+load-order:
+  1: BRIEF.md
+  2: S01-INVARIANTS.md
+  3: intel/ARCHITECTURE_MAP.md
+  4: intel/PROBLEMS_REGISTER.md
+  5: intel/FEATURE_CENSUS.md
+  6: intel/MCP_SETUP.md
+  on-demand:
+    - intel/REPO_INVENTORY.md
+    - intel/GITHUB_ISSUES_SYNC.md
+    - intel/KNOWLEDGE_GAPS.md
+
+###############################################################################
+# INTEL ARTIFACTS
+###############################################################################
+
+intel:
+  architecture: ./ARCHITECTURE_MAP.md
+  inventory: ./REPO_INVENTORY.md
+  features: ./FEATURE_CENSUS.md
+  problems: ./PROBLEMS_REGISTER.md
+  github: ./GITHUB_ISSUES_SYNC.md
+  mcp: ./MCP_SETUP.md
+  gaps: ./KNOWLEDGE_GAPS.md
+
+###############################################################################
+# IN-REPO KNOWLEDGE (pull via MCP when coding)
+###############################################################################
+
+mcp:
+  endpoint: http://localhost:3000/mcp
+  start: bun run dev:docs
+  key-slugs:
+    - layer-cascade
+    - feature-knowledge
+    - runtime-config
+    - authentication
+    - integrations
+
+upstream-knowledge: core/docs/knowledge/
+upstream-adrs: core/docs/adr/  # archived — prefer MCP explain()
+
+###############################################################################
+# PORTS
+###############################################################################
+
+ports:
+  docs: 3000
+  control: 3001
+  chat-app: 3002
+  demo-dashboard: 3010
+  demo-saas: 3011
+  demo-landing: 3012
+  demo-chat: 3013
+  demo-characters: 3014
+
+###############################################################################
+# SPRINTS
+###############################################################################
+
+sprints:
+  current: S01
+  history: ../sprints/
+  summary: ../sprints/S01-INVESTIGATION-SUMMARY.md
+  invariants: ../S01-INVARIANTS.md
+
+next-suggested:
+  - S02: Chat app env + runnable demo
+  - S03: Demo typecheck fixes + configurability (#114)
+  - S04: Test harness + Supabase integration (#4, #83)
+  - S05: MCP knowledge completion (#5, #10, #11)
+
+###############################################################################
+# MACHINE RULES FOR AGENTS
+###############################################################################
+
+agent-rules:
+  - Do NOT modify /core/ in customer forks — extend via organization + apps
+  - Use MCP explain(slug) — do not preload ADRs
+  - Run feature:health after adding SEE annotations
+  - Check PROBLEMS_REGISTER P0 before claiming repo is green
+  - temp.md contains secrets — never copy into Totem
+
+updated: 2026-06-18

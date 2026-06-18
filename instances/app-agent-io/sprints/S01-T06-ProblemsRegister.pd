@@ -1,0 +1,14 @@
+---
+id: S01-T06
+name: Problems Register
+status: DONE
+gate: OPEN
+---
+
+# S01-T06: Problems Register
+
+## Objective
+P0/P1/P2 problem catalog with evidence paths.
+
+## Out
+`intel/PROBLEMS_REGISTER.md`

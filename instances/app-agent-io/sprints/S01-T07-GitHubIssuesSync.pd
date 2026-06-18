@@ -1,0 +1,14 @@
+---
+id: S01-T07
+name: GitHub Issues Sync
+status: DONE
+gate: OPEN
+---
+
+# S01-T07: GitHub Issues Sync
+
+## Objective
+Mirror open GitHub issues to Totem with priority mapping.
+
+## Out
+`intel/GITHUB_ISSUES_SYNC.md`

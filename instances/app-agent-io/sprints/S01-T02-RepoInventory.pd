@@ -1,0 +1,15 @@
+---
+id: S01-T02
+name: Repo Inventory
+status: DONE
+gate: OPEN
+requires: [nuxt/NUXT.ti]
+---
+
+# S01-T02: Repo Inventory
+
+## Objective
+Map monorepo packages, extends chains, ports.
+
+## Out
+`intel/REPO_INVENTORY.md`

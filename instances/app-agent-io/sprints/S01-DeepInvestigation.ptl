@@ -1,0 +1,38 @@
+---
+id: S01
+name: Deep Investigation
+status: CLOSED
+gate: OPEN
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+invariants: ../S01-INVARIANTS.md
+---
+
+# S01: Deep Investigation & Knowledge Capture
+
+## Objective
+Read app-agent-io in depth; produce Totem `intel/` documentation so future agents
+load BRIEF + TOTEM_INDEX instead of re-scanning the monorepo.
+
+## Tasks
+- [x] S01-T01-InstanceBootstrap.pd
+- [x] S01-T02-RepoInventory.pd
+- [x] S01-T03-ArchitectureMap.pd
+- [x] S01-T04-FeatureKnowledgeAudit.pd
+- [x] S01-T05-OperationalSmoke.pd
+- [x] S01-T06-ProblemsRegister.pd
+- [x] S01-T07-GitHubIssuesSync.pd
+- [x] S01-T08-McpAndAgentIntegration.pd
+- [x] S01-T09-DocsDriftAudit.pd
+- [x] S01-T10-TotemKnowledgeHub.pd
+- [x] S01-T11-SprintClose.pd
+
+## Definition of Done
+- [x] `intel/TOTEM_INDEX.ti` links all artifacts
+- [x] `intel/PROBLEMS_REGISTER.md` has P0/P1/P2 with evidence
+- [x] Feature census via `feature:health` CLI
+- [x] typecheck/test results recorded
+- [x] `S01-INVARIANTS.md` created
+- [x] No application source code modified
+
+## Summary
+See `S01-INVESTIGATION-SUMMARY.md`

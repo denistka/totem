@@ -1,0 +1,15 @@
+---
+id: S01-T03
+name: Architecture Map
+status: DONE
+gate: OPEN
+requires: [nuxt/NUXT.ti, mcp/MCP.ti]
+---
+
+# S01-T03: Architecture Map
+
+## Objective
+Document layer cascade, server stack, MCP, control plane.
+
+## Out
+`intel/ARCHITECTURE_MAP.md`

@@ -1,0 +1,15 @@
+---
+id: S01-T08
+name: MCP and Agent Integration
+status: DONE
+gate: OPEN
+requires: [mcp/MCP.ti]
+---
+
+# S01-T08: MCP & Agent Integration
+
+## Objective
+Document MCP setup, tools, control plane vs docs MCP.
+
+## Out
+`intel/MCP_SETUP.md`

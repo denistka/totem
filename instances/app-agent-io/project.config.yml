@@ -1,0 +1,41 @@
+project:
+  name: app-agent-io
+  version: 0.1.0
+  codename: agent-io-recon
+  description: |
+    Turnkey Nuxt 4 monorepo with embedded AI agent (MCP + feature knowledge).
+    Totem instance for deep investigation, operational knowledge, and sprint planning.
+  stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, MCP, Supabase]
+  context:
+    brief: ./BRIEF.md
+    invariants: ./S01-INVARIANTS.md
+    product_context: ../../../../app-agent-io/core/temp-product-context.md
+    readme: ../../../../app-agent-io/core/README.md
+
+paths:
+  code: ../../../../app-agent-io/core
+  workspace: ../../../../app-agent-io
+  history: ./sprints
+  intel: ./intel
+
+repo:
+  url: https://github.com/app-agent-io/core
+  branch: main
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - PLANNER
+    - ARCHITECT
+    - QA
+  stack_adapters:
+    - nuxt/NUXT.ti
+    - vue/VUE.ti
+    - typescript/TYPESCRIPT.ti
+    - mcp/MCP.ti
+    - node/NODE.ti
+    - supabase/SUPABASE.ti
+    - vercel/VERCEL.ti
+
+  ui_stack_ref: vue/VUE

@@ -1,0 +1,20 @@
+---
+id: S01-T05
+name: Operational Smoke
+status: DONE
+gate: OPEN
+requires: [node/NODE.ti]
+---
+
+# S01-T05: Operational Smoke
+
+## Objective
+Run typecheck, tests, feature:health. Record results — no fixes.
+
+## Results (2026-06-18)
+- typecheck: FAIL (demo-saas)
+- bun test: 171 pass / 83 fail
+- feature:health: PASS (12/12 covered)
+
+## Out
+Recorded in `intel/PROBLEMS_REGISTER.md`

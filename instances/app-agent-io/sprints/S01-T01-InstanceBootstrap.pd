@@ -1,0 +1,14 @@
+---
+id: S01-T01
+name: Instance Bootstrap
+status: DONE
+gate: OPEN
+---
+
+# S01-T01: Instance Bootstrap
+
+## Objective
+Create `instances/app-agent-io/` skeleton.
+
+## Done
+- `project.config.yml`, `BRIEF.md`, `README.md`, `incoming/task.md`
