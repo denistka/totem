@@ -10,8 +10,8 @@ Priority: **P0** = blocks dev/onboarding, **P1** = product/quality gap, **P2** =
 
 | ID | Problem | Evidence | Suggested sprint |
 |----|---------|----------|------------------|
-| P0-1 | **Chat app not runnable without env** | `apps/chat/README.md` requires `AI_GATEWAY_API_KEY`, OAuth vars, `db:migrate` | S02 Chat setup |
-| P0-2 | **Credentials in repo scratch file** | `temp.md` line 1–2 contains API keys in plaintext | Security: rotate keys, gitignore/remove file |
+| P0-1 | **Chat app not runnable without env** | Was blocked — **resolved S02**: `SETUP.md`, `.env.example`, migrations verified | ~~S02~~ Done |
+| P0-2 | **Credentials in repo scratch file** | `temp.md` — **redacted S02**; user must rotate keys | Rotate keys manually |
 | P0-3 | **Typecheck fails on demos** | `bun run typecheck` — `@app-agent/demo-saas` and `@app-agent/demo-landing` TS errors (auth route `null` vs `undefined`, nav `active` type) | S02 Demo typecheck fix |
 | P0-4 | **Test suite partially broken at root** | `bun test`: 171 pass, 83 fail (mostly `feature.test.ts` / registry — env stub issue) | S02 Test harness fix |
 | P0-5 | **Cursor MCP `user-app-agent-docs` errored** | MCP server must run via `bun run dev:docs` first | See `MCP_SETUP.md` |
@@ -58,7 +58,8 @@ Priority: **P0** = blocks dev/onboarding, **P1** = product/quality gap, **P2** =
 | `bun run typecheck` | **FAIL** — demo-saas (and related) TS errors; 13/20 turbo tasks OK before failure |
 | `bun test` | **PARTIAL** — 171 pass / 83 fail / 9 errors |
 | `node core/cli/feature-health.js` | **PASS** — 12/12 slugs covered, 3 orphaned knowledge files |
-| `bun run dev:docs` | Not run (long-running); MCP expected at `:3000/mcp` per config |
+| `bun run dev` (full turbo) | **PASS** after `.gitignore` secrets fix — see `intel/S02-DEV-SMOKE.md` |
+| Chat `:3002/api/status` | **PASS** — see `intel/S02-CHAT-SMOKE.md` |
 
 ---
 

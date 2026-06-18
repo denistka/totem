@@ -10,7 +10,7 @@ project:
   repo: https://github.com/app-agent-io/core
   code: ../../../../app-agent-io/core
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, MCP, Supabase]
-  status: S01 investigation complete (2026-06-18)
+  status: S02 chat bootstrap complete (2026-06-18)
 
 brand:
   domain: app-agent.io
@@ -44,6 +44,8 @@ intel:
   github: ./GITHUB_ISSUES_SYNC.md
   mcp: ./MCP_SETUP.md
   gaps: ./KNOWLEDGE_GAPS.md
+  s02-dev-smoke: ./S02-DEV-SMOKE.md
+  s02-chat-smoke: ./S02-CHAT-SMOKE.md
 
 ###############################################################################
 # IN-REPO KNOWLEDGE (pull via MCP when coding)
@@ -81,16 +83,16 @@ ports:
 ###############################################################################
 
 sprints:
-  current: S01
+  current: S02
   history: ../sprints/
-  summary: ../sprints/S01-INVESTIGATION-SUMMARY.md
-  invariants: ../S01-INVARIANTS.md
+  summary: ../sprints/S02-CHAT-BOOTSTRAP-SUMMARY.md
+  invariants: ../S02-INVARIANTS.md
 
 next-suggested:
-  - S02: Chat app env + runnable demo
   - S03: Demo typecheck fixes + configurability (#114)
   - S04: Test harness + Supabase integration (#4, #83)
   - S05: MCP knowledge completion (#5, #10, #11)
+  - S06: Chat agent product design (#108, temp.md goal 2)
 
 ###############################################################################
 # MACHINE RULES FOR AGENTS

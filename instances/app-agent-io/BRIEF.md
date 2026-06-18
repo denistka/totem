@@ -47,4 +47,5 @@ For a task: load PM and execute `sprints/S01-T*.pd` (after gate OPEN).
 
 ## Investigation status
 
-Sprint **S01** (Deep Investigation) completed 2026-06-18. See `intel/` and `sprints/S01-INVESTIGATION-SUMMARY.md`.
+Sprint **S01** (Deep Investigation) and **S02** (Chat Bootstrap) completed 2026-06-18.  
+Chat setup: `app-agent-io/core/apps/chat/SETUP.md` — see `intel/S02-CHAT-SMOKE.md`.

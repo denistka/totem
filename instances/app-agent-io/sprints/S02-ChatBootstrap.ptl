@@ -1,0 +1,29 @@
+---
+id: S02
+name: Chat Bootstrap
+status: CLOSED
+gate: OPEN
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, node/NODE.ti]
+invariants: ../S02-INVARIANTS.md
+---
+
+# S02: Chat App Runnable
+
+## Objective
+Env template, migrations, dev smoke, fix secrets manifest blocker, document chat on port 3002.
+
+## Tasks
+- [x] S02-T00-DevSmoke.pd
+- [x] S02-T01-DevSmokeReport.pd
+- [x] S02-T02-ReadmeEnvAlign.pd
+- [x] S02-T03-SecretsManifest.pd
+- [x] S02-T04-EnvExample.pd
+- [x] S02-T05-SetupDoc.pd
+- [x] S02-T06-Migrations.pd
+- [x] S02-T07-ChatSmoke.pd
+- [x] S02-T08-TempMdSecurity.pd
+- [x] S02-T09-TotemUpdate.pd
+- [x] S02-T10-SprintClose.pd
+
+## Summary
+See `S02-CHAT-BOOTSTRAP-SUMMARY.md`

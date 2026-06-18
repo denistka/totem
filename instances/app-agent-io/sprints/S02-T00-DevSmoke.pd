@@ -1,0 +1,10 @@
+---
+id: S02-T00
+name: Dev Smoke
+status: DONE
+gate: OPEN
+---
+
+# S02-T00: bun run dev smoke
+
+Ran full `bun run dev` after `.gitignore` fix. Turbo starts 12 packages. See `intel/S02-DEV-SMOKE.md`.

@@ -1,0 +1,10 @@
+---
+id: S02-T05
+name: Setup Doc
+status: DONE
+gate: OPEN
+---
+
+# S02-T05: SETUP.md
+
+Created `apps/chat/SETUP.md` with env, migrate, verify, secrets, port conflict notes.
