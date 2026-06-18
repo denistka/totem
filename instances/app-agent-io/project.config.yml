@@ -8,7 +8,7 @@ project:
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, MCP, Supabase]
   context:
     brief: ./BRIEF.md
-    invariants: ./S01-INVARIANTS.md
+    invariants: ./S02-INVARIANTS.md
     product_context: ../../../../app-agent-io/core/temp-product-context.md
     readme: ../../../../app-agent-io/core/README.md
 

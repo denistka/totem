@@ -1,0 +1,11 @@
+---
+id: S02-T10
+name: Sprint Close
+status: DONE
+gate: OPEN
+invariants: ../S02-INVARIANTS.md
+---
+
+# S02-T10: Sprint Close
+
+`S02-INVARIANTS.md`, `S02-CHAT-BOOTSTRAP-SUMMARY.md`, PROBLEMS_REGISTER + TOTEM_INDEX updated.
