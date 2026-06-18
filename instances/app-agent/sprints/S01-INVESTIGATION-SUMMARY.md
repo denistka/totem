@@ -54,7 +54,7 @@ App Agent is a **mature Nuxt 4 monorepo skeleton** with a distinctive **feature-
 ## How to use this knowledge
 
 ```
-read totem/totem-v6/index.ti, load instance app-agent-io, read intel/TOTEM_INDEX.ti
+read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
 ```
 
 Then MCP `explain("layer-cascade")` when touching code.

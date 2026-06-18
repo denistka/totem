@@ -89,3 +89,13 @@ Production behavior of `defineFeature*` = pass-through (zero overhead). Dev = lo
 
 `git clone → bun install → bun run dev` works with zero manual steps; lint/typecheck pass;
 console clean; each README command works on fresh clone; task committed `<task_id>: <desc>`.
+
+## Totem instance
+
+**Canonical path:** `totem/totem-v6/instances/app-agent/` (not `app-agent-io`).
+
+```text
+read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
+```
+
+**Sprints:** S01 investigation + S02 chat bootstrap complete (2026-06-18). See `sprints/` and `intel/`.

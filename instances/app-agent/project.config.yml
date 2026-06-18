@@ -11,6 +11,8 @@ project:
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, Nitro, MCP, Supabase, SQLite]
   context:
     brief: ./BRIEF.md              # read this before planning any sprint
+    invariants: ./S02-INVARIANTS.md
+    totem_index: ./intel/TOTEM_INDEX.ti
     local_dev_runbook: ./intel/LOCAL-DEV-RUNBOOK.md   # how to run locally
     current_state_audit: ./intel/CURRENT-STATE-AUDIT.md
     agents_schema: ../../../../app-agent-io/core/AGENTS.md

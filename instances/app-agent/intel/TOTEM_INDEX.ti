@@ -1,11 +1,11 @@
 ###############################################################################
-# TOTEM INDEX — app-agent-io
-# Load after: totem/totem-v6/index.ti + instances/app-agent-io/project.config.yml
+# TOTEM INDEX — app-agent
+# Load after: totem/totem-v6/index.ti + instances/app-agent/project.config.yml
 ###############################################################################
 
 project:
-  name: app-agent-io
-  codename: agent-io-recon
+  name: app-agent
+  codename: tech-company-in-a-box
   tagline: Describing your product makes it exist
   repo: https://github.com/app-agent-io/core
   code: ../../../../app-agent-io/core
@@ -22,13 +22,15 @@ brand:
 
 load-order:
   1: BRIEF.md
-  2: S01-INVARIANTS.md
-  3: intel/ARCHITECTURE_MAP.md
-  4: intel/PROBLEMS_REGISTER.md
-  5: intel/FEATURE_CENSUS.md
-  6: intel/MCP_SETUP.md
+  2: S02-INVARIANTS.md
+  3: intel/LOCAL-DEV-RUNBOOK.md
+  4: intel/ARCHITECTURE_MAP.md
+  5: intel/PROBLEMS_REGISTER.md
+  6: intel/FEATURE_CENSUS.md
+  7: intel/MCP_SETUP.md
   on-demand:
     - intel/REPO_INVENTORY.md
+    - intel/CURRENT-STATE-AUDIT.md
     - intel/GITHUB_ISSUES_SYNC.md
     - intel/KNOWLEDGE_GAPS.md
 
@@ -37,6 +39,8 @@ load-order:
 ###############################################################################
 
 intel:
+  runbook: ./LOCAL-DEV-RUNBOOK.md
+  audit: ./CURRENT-STATE-AUDIT.md
   architecture: ./ARCHITECTURE_MAP.md
   inventory: ./REPO_INVENTORY.md
   features: ./FEATURE_CENSUS.md

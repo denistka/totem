@@ -1,4 +1,4 @@
-# S01 Invariants — app-agent-io
+# S01 Invariants — app-agent
 
 Frozen after sprint S01 (Deep Investigation), 2026-06-18.  
 Changes require explicit discussion — non-additive edits blocked.
@@ -42,6 +42,6 @@ Changes require explicit discussion — non-additive edits blocked.
 
 ## Totem instance
 
-15. **Agent entry:** `read totem/totem-v6/index.ti, load instance app-agent-io, read intel/TOTEM_INDEX.ti`
-16. **External intel path:** `totem/totem-v6/instances/app-agent-io/intel/`
+15. **Agent entry:** `read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti`
+16. **External intel path:** `totem/totem-v6/instances/app-agent/intel/`
 17. **Code path:** `/Users/denistka/Projects/app-agent-io/core`

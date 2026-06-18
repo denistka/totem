@@ -74,15 +74,16 @@ The defining pattern (ADR-009). A kebab-case **slug** is the universal join key:
 | Customer apps | 3002+ |
 | Demos (dashboard/saas/landing/chat) | 3010–3013 |
 
-## Status (updated 2026-06-10)
+## Status (updated 2026-06-18)
 
-- ✅ Instance scaffolded
-- ✅ Local dev unblocked (SQLite + `.env` stubs; `encrypted.json` vault password not required)
-- ✅ Run method confirmed: per-app `bun --bun nuxt dev` (turbo scripts 500 — see runbook §2C)
-- ✅ docs (:3000) verified 200 OK; dashboard verified booting (needs explicit `--port`)
-- ✅ AI provider configured: working OpenRouter key in `control/.env` + `demos/chat/.env`
-      (validated /key 200 + live chat completion on `anthropic/claude-haiku-4.5`)
-- ⏳ No sprints planned yet — awaiting backlog / `LGTM` to plan S01
+- ✅ **S01** Deep investigation — `intel/ARCHITECTURE_MAP.md`, `FEATURE_CENSUS.md`, etc.
+- ✅ **S02** Chat bootstrap — `intel/S02-CHAT-SMOKE.md`, `intel/S02-DEV-SMOKE.md`
+- ✅ Canonical Totem instance (merged from duplicate `app-agent-io` instance — removed)
+- 📍 Load hub: `intel/TOTEM_INDEX.ti`
+
+```text
+read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
+```
 
 ## Known Risks (intake candidates for S01 backlog)
 

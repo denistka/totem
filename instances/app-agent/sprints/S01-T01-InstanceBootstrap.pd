@@ -8,7 +8,7 @@ gate: OPEN
 # S01-T01: Instance Bootstrap
 
 ## Objective
-Create `instances/app-agent-io/` skeleton.
+Create `instances/app-agent/` skeleton.
 
 ## Done
 - `project.config.yml`, `BRIEF.md`, `README.md`, `incoming/task.md`
