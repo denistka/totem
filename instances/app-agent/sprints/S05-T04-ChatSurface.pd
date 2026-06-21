@@ -1,0 +1,27 @@
+---
+id: S05-T04
+name: ChatSurface
+status: DONE
+gate: OPEN
+role: PM
+requires: [nuxt/NUXT.ti, vue/VUE.ti]
+---
+
+# S05-T04: Chat Surface
+
+## Objective
+Give work-control a chat like `apps/chat`, with room for the epics right column.
+
+## Execution
+- Add a two-pane layout: left = chat thread (list + thread + `UChatPrompt`),
+  right = epics column slot (filled in T06). Reuse `apps/chat` patterns (UDashboardPanel,
+  UChatMessages/UChatPrompt) — copy, do not import across apps.
+- Routes/pages: `chats` list + `chat/[id]` thread; persist to `wc_chats`/`wc_messages` (T03).
+- This sprint the assistant reply is a stub echo; real LLM chat is S06. The point is the
+  surface + persistence + the right-column mount, not conversation quality.
+
+## Out
+`apps/work-control/app/pages/chat/[id].vue`, chat composable, chat API routes
+
+## Done when
+- Can create a chat, send messages, see them persisted and reloaded on refresh.
