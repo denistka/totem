@@ -1,8 +1,14 @@
 # Problems Register
 
-**Updated:** 2026-06-18
+**Updated:** 2026-06-21 (S05 closed)
 
 Priority: **P0** = blocks dev/onboarding, **P1** = product/quality gap, **P2** = polish/future
+
+### S05 close notes
+
+- Work-control orchestrator spine verified on `:3003` (T12).
+- `db:migrate` works (sqlite). Supabase datasource path still unverified without creds.
+- WebSocket live sync: use isolated `bun --bun nuxt dev` in `apps/work-control` (turbo proxy may block `/_ws`).
 
 ---
 
@@ -12,9 +18,10 @@ Priority: **P0** = blocks dev/onboarding, **P1** = product/quality gap, **P2** =
 |----|---------|----------|------------------|
 | P0-1 | **Chat app not runnable without env** | Was blocked — **resolved S02**: `SETUP.md`, `.env.example`, migrations verified | ~~S02~~ Done |
 | P0-2 | **Credentials in repo scratch file** | `temp.md` — **redacted S02**; user must rotate keys | Rotate keys manually |
-| P0-3 | **Typecheck fails on demos** | `bun run typecheck` — `@app-agent/demo-saas` and `@app-agent/demo-landing` TS errors (auth route `null` vs `undefined`, nav `active` type) | S02 Demo typecheck fix |
-| P0-4 | **Test suite partially broken at root** | `bun test`: 171 pass, 83 fail (mostly `feature.test.ts` / registry — env stub issue) | S02 Test harness fix |
-| P0-5 | **Cursor MCP `user-app-agent-docs` errored** | MCP server must run via `bun run dev:docs` first | See `MCP_SETUP.md` |
+| P0-3 | **Typecheck fails on demos + control** | `bun run typecheck` — demo-saas `uiLocale` Locale type; control duplicate `@nuxt/ui` + `~~/shared/utils/file` (see `DEEP-TYPECHECK-AUTOPSY.md`) | S04 Typecheck fix |
+| P0-4 | ~~**Test suite partially broken at root**~~ | **FALSE ALARM S03:** `bun test` ≠ `bun run test`. Vitest: 322 pass; bun:test db: 56 pass. Document correct command. | S04 README/CI doc |
+| P0-5 | **Cursor MCP `user-app-agent-docs` errored** | MCP server must run via docs dev first | See `MCP_SETUP.md` |
+| P0-6 | **`.gitignore` secrets manifest lists `.data/` dirs** | S02 fix reverted upstream — `bun run dev` tries `multi-encrypt dec` for missing `.data`. PR [#120](https://github.com/app-agent-io/core/pull/120) submitted for WAL sidecars only | Upstream: remove `.data` from `# Secrets`, add `./apps/chat/.env` only |
 
 ---
 
@@ -51,15 +58,18 @@ Priority: **P0** = blocks dev/onboarding, **P1** = product/quality gap, **P2** =
 
 ---
 
-## Operational smoke results (2026-06-18)
+## Operational smoke results (2026-06-18, S03 verified)
 
 | Check | Result |
 |-------|--------|
-| `bun run typecheck` | **FAIL** — demo-saas (and related) TS errors; 13/20 turbo tasks OK before failure |
-| `bun test` | **PARTIAL** — 171 pass / 83 fail / 9 errors |
+| `bun run typecheck` | **FAIL** — demo-saas Locale + control @nuxt/ui dedup (see `DEEP-TYPECHECK-AUTOPSY.md`) |
+| `bun run test` (vitest) | **PASS** — 322/322 |
+| `bun run test:db` | **PASS** — 56/56 (bun:test SQLite) |
+| `bun test` (raw) | **MISLEADING** — use vitest; see `DEEP-TEST-ANALYSIS.md` |
 | `node core/cli/feature-health.js` | **PASS** — 12/12 slugs covered, 3 orphaned knowledge files |
-| `bun run dev` (full turbo) | **PASS** after `.gitignore` secrets fix — see `intel/S02-DEV-SMOKE.md` |
+| `bun run dev` (full turbo) | **BOOT OK** — HTTP 500 on routes if Node runtime; use `bun --bun nuxt dev` |
 | Chat `:3002/api/status` | **PASS** — see `intel/S02-CHAT-SMOKE.md` |
+| Work Control `:3003/api/board` | **PASS** when run via `bun --bun nuxt dev` — see `sprints/S04-WORK-CONTROL-SUMMARY.md` |
 
 ---
 

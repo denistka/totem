@@ -10,10 +10,11 @@ project:
   repo: https://github.com/app-agent-io/core
   code: ../../../../app-agent-io/core
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, MCP, Supabase]
-  status: S02 chat bootstrap complete (2026-06-18)
+  status: S05 CLOSED — Work Control Orchestrator shipped (2026-06-21); generated S06-FirstEat from Accept smoke
 
 brand:
   domain: app-agent.io
+  organization: DAWWWB
   license: MIT
 
 ###############################################################################
@@ -22,34 +23,66 @@ brand:
 
 load-order:
   1: BRIEF.md
-  2: S02-INVARIANTS.md
-  3: intel/LOCAL-DEV-RUNBOOK.md
-  4: intel/ARCHITECTURE_MAP.md
-  5: intel/PROBLEMS_REGISTER.md
-  6: intel/FEATURE_CENSUS.md
-  7: intel/MCP_SETUP.md
+  2: S05-INVARIANTS.md
+  3: intel/DEEP-FLOWS.md
+  4: intel/LOCAL-DEV-RUNBOOK.md
+  5: intel/ARCHITECTURE_MAP.md
+  6: intel/PROBLEMS_REGISTER.md
+  7: intel/VISION-VS-BUILT.md
+  8: intel/DEEP-WORK-CONTROL.md
+  9: intel/DEEP-ORCHESTRATOR.md   # created by S05-T01
+  deep-dives:
+    - intel/DEEP-CONFIG-SERVICE.md
+    - intel/DEEP-FEATURE-REGISTRY.md
+    - intel/DEEP-MCP-TOOLS.md
+    - intel/DEEP-AUTH-FLOW.md
+    - intel/DEEP-AI-INTEGRATIONS.md
+    - intel/DEEP-CONTROL-PLANE.md
+    - intel/DEEP-CHAT-APP.md
+    - intel/DEEP-APPS-MAP.md
+    - intel/DEEP-DEV-LAUNCHER.md
   on-demand:
     - intel/REPO_INVENTORY.md
-    - intel/CURRENT-STATE-AUDIT.md
+    - intel/FEATURE_CENSUS.md
+    - intel/DEEP-TEST-ANALYSIS.md
+    - intel/DEEP-TYPECHECK-AUTOPSY.md
+    - intel/DEEP-SECURITY-SURFACE.md
     - intel/GITHUB_ISSUES_SYNC.md
     - intel/KNOWLEDGE_GAPS.md
+    - intel/MCP_SETUP.md
+    - intel/S02-DEV-SMOKE.md
+    - intel/S02-CHAT-SMOKE.md
 
 ###############################################################################
 # INTEL ARTIFACTS
 ###############################################################################
 
 intel:
+  flows: ./DEEP-FLOWS.md
   runbook: ./LOCAL-DEV-RUNBOOK.md
-  audit: ./CURRENT-STATE-AUDIT.md
   architecture: ./ARCHITECTURE_MAP.md
   inventory: ./REPO_INVENTORY.md
   features: ./FEATURE_CENSUS.md
   problems: ./PROBLEMS_REGISTER.md
+  vision: ./VISION-VS-BUILT.md
   github: ./GITHUB_ISSUES_SYNC.md
   mcp: ./MCP_SETUP.md
   gaps: ./KNOWLEDGE_GAPS.md
-  s02-dev-smoke: ./S02-DEV-SMOKE.md
-  s02-chat-smoke: ./S02-CHAT-SMOKE.md
+  deep:
+    config: ./DEEP-CONFIG-SERVICE.md
+    auth: ./DEEP-AUTH-FLOW.md
+    registry: ./DEEP-FEATURE-REGISTRY.md
+    mcp-tools: ./DEEP-MCP-TOOLS.md
+    control: ./DEEP-CONTROL-PLANE.md
+    ai: ./DEEP-AI-INTEGRATIONS.md
+    chat: ./DEEP-CHAT-APP.md
+    work-control: ./DEEP-WORK-CONTROL.md
+    orchestrator: ./DEEP-ORCHESTRATOR.md
+    apps: ./DEEP-APPS-MAP.md
+    launcher: ./DEEP-DEV-LAUNCHER.md
+    tests: ./DEEP-TEST-ANALYSIS.md
+    typecheck: ./DEEP-TYPECHECK-AUTOPSY.md
+    security: ./DEEP-SECURITY-SURFACE.md
 
 ###############################################################################
 # IN-REPO KNOWLEDGE (pull via MCP when coding)
@@ -57,13 +90,14 @@ intel:
 
 mcp:
   endpoint: http://localhost:3000/mcp
-  start: bun run dev:docs
+  start: cd docs && bun --bun nuxt dev
   key-slugs:
     - layer-cascade
     - feature-knowledge
     - runtime-config
     - authentication
     - integrations
+    - work-control
 
 upstream-knowledge: core/docs/knowledge/
 upstream-adrs: core/docs/adr/  # archived — prefer MCP explain()
@@ -76,6 +110,7 @@ ports:
   docs: 3000
   control: 3001
   chat-app: 3002
+  work-control: 3003
   demo-dashboard: 3010
   demo-saas: 3011
   demo-landing: 3012
@@ -87,16 +122,21 @@ ports:
 ###############################################################################
 
 sprints:
-  current: S02
+  current: null
+  current-ptl: null
+  current-invariants: ../S05-INVARIANTS.md
+  previous: S05
+  last-closed: S05
+  last-ptl: ../sprints/S05-Orchestrator.ptl
   history: ../sprints/
-  summary: ../sprints/S02-CHAT-BOOTSTRAP-SUMMARY.md
-  invariants: ../S02-INVARIANTS.md
+  summary: ../sprints/S05-SUMMARY.md
+  generated-by-orchestrator: ../sprints/S06-FirstEat.ptl
 
 next-suggested:
-  - S03: Demo typecheck fixes + configurability (#114)
-  - S04: Test harness + Supabase integration (#4, #83)
-  - S05: MCP knowledge completion (#5, #10, #11)
-  - S06: Chat agent product design (#108, temp.md goal 2)
+  - S06: Replace mock agents with real LLM (in-app Nitro + AI SDK, reuse apps/chat)
+  - S07: Time-machine scrubber (history replay) — totem-view-sandbox pattern
+  - S08: Multi-user presence + collaboration rules — totem-view S12 pattern
+  - S09: Task-level multi-agent (lead + additional roles) + cross-agent handoff
 
 ###############################################################################
 # MACHINE RULES FOR AGENTS
@@ -105,8 +145,17 @@ next-suggested:
 agent-rules:
   - Do NOT modify /core/ in customer forks — extend via organization + apps
   - Use MCP explain(slug) — do not preload ADRs
+  - Load DEEP-FLOWS.md for request lifecycle orientation
+  - Run bun run test (vitest) NOT bun test
   - Run feature:health after adding SEE annotations
-  - Check PROBLEMS_REGISTER P0 before claiming repo is green
-  - temp.md contains secrets — never copy into Totem
+  - Check PROBLEMS_REGISTER P0 before claiming repo is green (esp. P0-6 gitignore)
+  - temp.md may contain secrets — never copy into Totem
+  - Use bun --bun nuxt dev per app — turbo uses Node and breaks bun:sqlite
+  # S05 additions
+  - Agent-role taxonomy lives in organization/app/app.config.ts (agents block)
+  - Per-app rules + gate semantics live in apps/work-control docs + work-control knowledge slug
+  - Totem write-back: app writes .ptl/.pd at gate:LOCKED; human opens; agent then runs
+  - Realtime via Nitro WebSocket (crossws), NOT Supabase Realtime
+  - Persistence: Supabase via CORE_DATASOURCE_* (ADR-005 pattern); bun:sqlite dev fallback
 
-updated: 2026-06-18
+updated: 2026-06-21-S05-closed

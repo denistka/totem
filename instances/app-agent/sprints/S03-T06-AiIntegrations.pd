@@ -1,0 +1,15 @@
+---
+id: S03-T06
+name: AiIntegrations
+status: DONE
+gate: OPEN
+requires: [nuxt/NUXT.ti]
+---
+
+# S03-T06: AiIntegrations
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-AI-INTEGRATIONS.md` or `../DEEP-AI-INTEGRATIONS.md`

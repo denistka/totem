@@ -57,9 +57,33 @@ cd demos/characters && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev --port 3014
 the `# Secrets` block of `.gitignore` is missing, it runs `bun run dec` and **exits if the password
 is wrong**. We don't have the team password.
 
-**Fix (applied):** create the listed files yourself so the launcher skips decryption entirely.
-Manifest (`.gitignore # Secrets`): `./.env`, `./control/.env`, `./demos/chat/.env`,
-`./demos/dashboard/.env`, `./demos/landing/.env`, plus dirs `apps/companions/.data` etc.
+**Fix:** create every path listed in the `# Secrets` block yourself so the launcher skips decryption entirely.
+
+**Full manifest** (all must exist — files or empty dirs):
+
+| Path | Kind | Local stub |
+|------|------|------------|
+| `./.env` | file | `CORE_DATASOURCE_PROVIDER=sqlite`, `CORE_ENVIRONMENT=development` |
+| `./control/.env` | file | `NUXT_SESSION_PASSWORD` (32+ chars), optional `AI_PROVIDER_*` |
+| `./demos/chat/.env` | file | session + optional AI |
+| `./demos/dashboard/.env` | file | session only |
+| `./demos/landing/.env` | file | session only |
+| `demos/characters/.data` | dir | `mkdir -p` (empty) |
+| `demos/dashboard/.data` | dir | `mkdir -p` (empty) |
+| `apps/companions/.data` | dir | `mkdir -p` (empty — no `companions` app required) |
+| `apps/chat/.data` | dir | NuxtHub SQLite (created by chat app / migrate) |
+
+**Also needed (not in manifest):** `apps/chat/.env` — copy from `apps/chat/.env.example`.
+
+**One-shot bootstrap** (no team password):
+
+```bash
+cd /Users/denistka/Projects/app-agent-io/core
+mkdir -p apps/companions/.data demos/characters/.data demos/dashboard/.data
+# Create .env files from .env.example templates if missing (see table above)
+```
+
+Verify: all manifest paths exist → `bun run dev` will not prompt for decrypt password.
 
 > 🚫 **NEVER run `bun run enc`** in this clone. It re-encrypts the CURRENT local `.env` files
 > (our stubs + the live OpenRouter key) and OVERWRITES the committed `encrypted.json` — destroying
@@ -68,15 +92,17 @@ Manifest (`.gitignore # Secrets`): `./.env`, `./control/.env`, `./demos/chat/.en
 > stub files exist (it only decrypts MISSING files). To adopt the real secrets instead of stubs:
 > get the password and run `bun run dec` (this overwrites the stubs with real values).
 
-Current stub contents:
+Current stub contents (gitignored — never commit):
 ```
 .env                  → CORE_DATASOURCE_PROVIDER=sqlite, CORE_ENVIRONMENT=development
-control/.env          → NUXT_SESSION_PASSWORD=<32+ chars>, AI_PROVIDER_* (key blank)
-demos/chat/.env       → NUXT_SESSION_PASSWORD=<32+ chars>, AI_PROVIDER_* (key blank)
+control/.env          → NUXT_SESSION_PASSWORD=<32+ chars>, AI_PROVIDER_* (your key)
+demos/chat/.env       → NUXT_SESSION_PASSWORD=<32+ chars>, AI_PROVIDER_* (optional)
 demos/dashboard/.env  → NUXT_SESSION_PASSWORD=<32+ chars>
 demos/landing/.env    → NUXT_SESSION_PASSWORD=<32+ chars>
+apps/chat/.env        → same as demos/chat (not in manifest but required for chat app)
+*.data dirs           → empty mkdir -p (satisfies launcher only)
 ```
-These are gitignored and never committed. Alternative: get the password and run `bun run dec`.
+Alternative: get the team password and run `bun run dec` (overwrites stubs with team values).
 
 ### Blocker B — Nuxt telemetry interactive prompt
 
@@ -170,12 +196,14 @@ Without `AI_PROVIDER_KEY`, agent chat / chat demo render a friendly "not configu
 ## 6. Verify / health
 
 ```bash
-bun run test          # vitest — 322 tests
+bun run test          # vitest — 322 tests (NOT `bun test` — see DEEP-TEST-ANALYSIS.md)
 bun run test:db       # bun:test SQLite — 56 tests
-bun run typecheck     # turbo typecheck
+bun run typecheck     # turbo typecheck (fails on demo-saas + control as of S03)
 bun run lint          # eslint
 bun run feature:health  # feature knowledge coverage
 ```
+
+> **S03 note:** Raw `bun test` at repo root runs bun's test runner without vitest setup → 83 false failures. Always use `bun run test`.
 
 ## 7. MCP in Cursor/Claude
 
@@ -197,4 +225,3 @@ Cursor: the docs server prints an "Install Nuxt MCP server" deeplink on startup;
 | Demo starts on :3000 instead of its port | `bun --bun nuxt dev` drops the package.json `--port` | add `--port 3010/3011/...` (§0) |
 | HTTPS clone 404 | private repo | clone via SSH |
 | Port conflict warning | port already used | launcher warns; stop the other process or ignore |
-```

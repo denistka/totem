@@ -1,0 +1,23 @@
+---
+id: S06
+name: First eat
+status: PLANNED
+gate: OPEN
+lead_role: PM
+generated_by: work-control (S05 orchestrator)
+---
+
+# S06: First eat
+
+## Objective
+Handle hunger before anything else — fuel first.
+
+## Tasks
+- [ ] S06-T01-DesignFirstEat.pd
+- [ ] S06-T02-BuildFirstEat.pd
+- [ ] S06-T03-TestFirstEat.pd
+- [ ] S06-T04-ShipFirstEat.pd
+
+## Definition of Done
+- [ ] All tasks above complete and committed
+- [ ] A human opened the gate before any task ran (anti-auto-proceed axiom)

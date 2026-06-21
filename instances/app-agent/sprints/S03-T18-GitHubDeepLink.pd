@@ -1,0 +1,15 @@
+---
+id: S03-T18
+name: GitHubDeepLink
+status: DONE
+gate: OPEN
+
+---
+
+# S03-T18: GitHubDeepLink
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/GITHUB_ISSUES_SYNC.md` or `../GITHUB_ISSUES_SYNC.md`

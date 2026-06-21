@@ -40,13 +40,27 @@
 
 *(Issues #6, #7, #9 referenced in ADRs but not in latest open list — may be closed or renumbered.)*
 
+## Deep-linked code paths (S03)
+
+| Issue | Code anchor | Deep doc |
+|-------|-------------|----------|
+| #114 | `organization/app/app.config.ts` (header, footer, auth, dashboard) | `DEEP-APPS-MAP.md` |
+| #111 | `core/app/components/CoreUserMenu.vue` | `DEEP-AUTH-FLOW.md` |
+| #108 | `apps/chat/server/api/chats/[id].post.ts`, `control/.../agent/chat.post.ts` | `DEEP-CHAT-APP.md`, `DEEP-CONTROL-PLANE.md` |
+| #5 | `core/docs/server/mcp/tools/explain.ts:24` (`aspect: analysis`) | `DEEP-MCP-TOOLS.md` |
+| #10 | `core/docs/server/mcp/tools/record.ts` | `DEEP-MCP-TOOLS.md` |
+| #4 | `core/server/utils/config-service/provider-supabase.ts` | `DEEP-CONFIG-SERVICE.md` |
+| #26 | `core/server/utils/integrations.ts` | `DEEP-AI-INTEGRATIONS.md` |
+| #24 | `core/app/composables/useUiLocale.ts` | `DEEP-FEATURE-REGISTRY.md` |
+| #103 | (external VoyceMe patterns) | `VISION-VS-BUILT.md` |
+
 ## Suggested Totem sprint mapping
 
 | Sprint | Issues |
 |--------|--------|
-| S02 Chat working | P0-1, #108 |
-| S03 Demo configurability | #114, P0-3 |
-| S04 Test & CI health | #4, #83, P0-4 |
+| S02 Chat working | ✅ Done |
+| S03 Deep investigation | ✅ Done (docs only) |
+| S04 Typecheck + CI docs | #114 partial, P0-3, test command docs |
 | S05 MCP/knowledge completion | #5, #10, #11, #13 |
 | S06 VoyceMe patterns | #103 |
 | S07 Control plane polish | #115, #111 |

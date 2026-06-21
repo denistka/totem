@@ -1,0 +1,15 @@
+---
+id: S03-T19
+name: KnowledgeSlugGaps
+status: DONE
+gate: OPEN
+
+---
+
+# S03-T19: KnowledgeSlugGaps
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/KNOWLEDGE_GAPS.md` or `../KNOWLEDGE_GAPS.md`

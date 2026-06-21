@@ -20,7 +20,8 @@ organization/                  # @app-agent/organization — branding layer
 docs/                          # @app-agent/docs — customer docs app (port 3000)
 control/                       # @app-agent/control — control app shell (port 3001)
 apps/
-└── chat/                      # @app-agent/chat — customer chat app (port 3002)
+├── chat/                      # @app-agent/chat — AI chat (port 3002)
+└── work-control/              # @app-agent/work-control — Totem kanban (port 3003)
 demos/
 ├── dashboard/                 # @app-agent/demo-dashboard (3010)
 ├── saas/                      # @app-agent/demo-saas (3011)
@@ -42,6 +43,7 @@ packages/                      # (empty / optional shared packages)
 | `@app-agent/control-layer` | `core/control/` | Control plane implementation |
 | `@app-agent/control` | `control/` | Control app entry |
 | `@app-agent/chat` | `apps/chat/` | Customer chat application |
+| `@app-agent/work-control` | `apps/work-control/` | Totem sprint kanban (S04) |
 | `@app-agent/demo-dashboard` | `demos/dashboard/` | Admin pattern |
 | `@app-agent/demo-saas` | `demos/saas/` | SaaS pattern |
 | `@app-agent/demo-landing` | `demos/landing/` | Marketing pattern |
@@ -53,7 +55,7 @@ packages/                      # (empty / optional shared packages)
 All apps/demos extend **organization**, which extends **core**:
 
 ```
-apps/chat, demos/*  →  organization  →  core
+apps/chat, apps/work-control, demos/*  →  organization  →  core
 docs                →  core/docs (docs-layer)  →  organization  →  core
 control             →  core/control (control-layer)  →  organization  →  core
 ```
@@ -65,6 +67,7 @@ control             →  core/control (control-layer)  →  organization  →  c
 | Docs | 3000 | `@app-agent/docs` |
 | Control | 3001 | `@app-agent/control` |
 | Chat (customer) | 3002 | `@app-agent/chat` |
+| Work Control (customer) | 3003 | `@app-agent/work-control` |
 | Demo dashboard | 3010 | `@app-agent/demo-dashboard` |
 | Demo SaaS | 3011 | `@app-agent/demo-saas` |
 | Demo landing | 3012 | `@app-agent/demo-landing` |

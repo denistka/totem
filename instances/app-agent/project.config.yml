@@ -2,16 +2,17 @@ project:
   name: app-agent
   version: 1.0.0
   codename: tech-company-in-a-box
+  organization: DAWWWB
   description: |
     App Agent — forkable Nuxt 4 layered monorepo with an embedded AI development agent.
     Three-layer cascade (core -> organization -> apps) via defu merging + Nuxt Layers.
     Feature-Oriented Intelligence: slug joins code (// SEE:), knowledge files,
     defineFeature*() runtime instrumentation, MCP tools, and the control plane.
-    Ships docs+MCP server (3000), control plane (3001), and 5 demos (3010-3013).
+    Ships docs+MCP (3000), control plane (3001), customer apps (chat 3002, work-control 3003), demos (3010-3014).
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, Nitro, MCP, Supabase, SQLite]
   context:
     brief: ./BRIEF.md              # read this before planning any sprint
-    invariants: ./S02-INVARIANTS.md
+    invariants: ./S05-INVARIANTS.md   # active through S06 planning; supersedes S04 read-only Totem
     totem_index: ./intel/TOTEM_INDEX.ti
     local_dev_runbook: ./intel/LOCAL-DEV-RUNBOOK.md   # how to run locally
     current_state_audit: ./intel/CURRENT-STATE-AUDIT.md

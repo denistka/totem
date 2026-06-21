@@ -1,0 +1,15 @@
+---
+id: S03-T01
+name: ConfigService
+status: DONE
+gate: OPEN
+requires: [mcp/MCP.ti,nuxt/NUXT.ti]
+---
+
+# S03-T01: ConfigService
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-CONFIG-SERVICE.md` or `../DEEP-CONFIG-SERVICE.md`

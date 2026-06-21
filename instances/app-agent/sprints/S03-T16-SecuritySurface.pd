@@ -1,0 +1,15 @@
+---
+id: S03-T16
+name: SecuritySurface
+status: DONE
+gate: OPEN
+
+---
+
+# S03-T16: SecuritySurface
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-SECURITY-SURFACE.md` or `../DEEP-SECURITY-SURFACE.md`

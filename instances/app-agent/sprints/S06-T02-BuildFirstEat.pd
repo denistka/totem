@@ -1,0 +1,19 @@
+---
+id: S06-T02
+name: BuildFirstEat
+status: PLANNED
+gate: LOCKED
+role: PM
+generated_by: work-control (S05 orchestrator)
+---
+
+# S06-T02: Build First eat
+
+## Objective
+Implement "First eat" against the frozen design.
+
+## Execution
+- Implement: Build First eat
+
+## Done when
+- Build First eat is complete and committed.

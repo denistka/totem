@@ -1,0 +1,15 @@
+---
+id: S03-T04
+name: McpTools
+status: DONE
+gate: OPEN
+requires: [mcp/MCP.ti]
+---
+
+# S03-T04: McpTools
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-MCP-TOOLS.md` or `../DEEP-MCP-TOOLS.md`

@@ -51,13 +51,30 @@ Topics in ADRs without dedicated knowledge file:
 - Testing strategy (ADR-007 — issue #83)
 - Naming context vs feature (ADR-008 — covered by `feature-knowledge`)
 
-## Recommended doc fixes (future sprint, not S01)
+## New knowledge slugs recommended (S03 priority)
+
+| Proposed slug | Topic | Source |
+|---------------|-------|--------|
+| `testing-strategy` | vitest vs bun:test, setup files | ADR-007, `DEEP-TEST-ANALYSIS.md` |
+| `control-plane` | Ops UI, agent chat | `DEEP-CONTROL-PLANE.md` |
+| `chat-app` | Customer chat patterns | `DEEP-CHAT-APP.md` |
+| `dev-launcher` | CLI wizard, turbo vs bun | `DEEP-DEV-LAUNCHER.md` |
+
+Or keep as Totem-only intel — agents load `TOTEM_INDEX.ti` for these topics.
+
+## Orphaned slug actions (prioritized)
+
+1. `secrets-management` — add SEE to `core/cli/dev.js` (already has comment) + `package.json` enc scripts
+2. `feature-flags` — add `status: planned` frontmatter or implement
+3. `sync-adr-tickets` — meta-doc only; link from docs ADR index
+
+## Recommended doc fixes (S04+ backlog)
 
 1. Update root README per `todo-documentation-updates.md` sections 1.1–1.4
 2. Add `getting-started/mcp.md` with Cursor + Claude setup (addresses #117 partially)
-3. Sync `temp-product-context.md` or replace with link to Totem BRIEF
+3. Document `bun run test` not `bun test` in README
 4. Remove/redact `temp.md` from repo
 
 ## Totem as canonical external knowledge
 
-For Denis's workspace, **this instance** (`totem/.../app-agent-io/intel/`) is the agent-oriented knowledge hub. App Agent's internal knowledge remains slug files + MCP for in-repo agents.
+For Denis's workspace, **`totem/totem-v6/instances/app-agent/intel/`** is the deep-knowledge hub (S03 `DEEP-*.md` files). In-repo agents use slug files + MCP `explain()`.

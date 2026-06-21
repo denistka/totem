@@ -1,0 +1,19 @@
+---
+id: S06-T01
+name: DesignFirstEat
+status: PLANNED
+gate: LOCKED
+role: ARCHITECT
+generated_by: work-control (S05 orchestrator)
+---
+
+# S06-T01: Design First eat
+
+## Objective
+Freeze the approach, data shapes, and contracts for "First eat" before any code.
+
+## Execution
+- Implement: Design First eat
+
+## Done when
+- Design First eat is complete and committed.

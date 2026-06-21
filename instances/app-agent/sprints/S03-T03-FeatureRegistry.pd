@@ -1,0 +1,15 @@
+---
+id: S03-T03
+name: FeatureRegistry
+status: DONE
+gate: OPEN
+requires: [mcp/MCP.ti]
+---
+
+# S03-T03: FeatureRegistry
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-FEATURE-REGISTRY.md` or `../DEEP-FEATURE-REGISTRY.md`

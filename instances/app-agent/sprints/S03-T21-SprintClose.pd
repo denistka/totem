@@ -1,0 +1,15 @@
+---
+id: S03-T21
+name: SprintClose
+status: DONE
+gate: OPEN
+
+---
+
+# S03-T21: SprintClose
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/S03-DEEP-DIVE-SUMMARY.md` or `../S03-DEEP-DIVE-SUMMARY.md`

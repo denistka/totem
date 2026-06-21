@@ -21,10 +21,10 @@ totem/totem-v6/instances/app-agent/   ← this dir (planning, sprints, invariant
 │   │   ├── knowledge/                 ← slug-keyed feature knowledge
 │   │   └── server/mcp/tools/          ← 12 MCP tools
 │   └── control/                       ← control plane (port 3001)
-├── organization/                      ← brand layer (app.config.ts)
+├── organization/                      ← DAWWWB brand layer (app.config.ts, i18n)
 ├── docs/                              ← customer docs app
 ├── demos/                             ← dashboard(3010) saas(3011) landing(3012) chat(3013) characters
-├── apps/                              ← customer apps (empty upstream)
+├── apps/                              ← chat (3002), work-control (3003)
 └── packages/types/                    ← shared TypeScript types
 ```
 
@@ -37,7 +37,7 @@ Server middleware from ALL layers runs (additive).
 | Layer | Path | Responsibility |
 | ----- | ---- | -------------- |
 | Core | `core/` | Upstream-maintained shared layer — do NOT modify |
-| Organization | `organization/` | Brand, logo, colors, company defaults |
+| Organization | `organization/` | DAWWWB brand, logo, colors, company defaults |
 | Apps | `apps/*` | Customer code (zero merge conflicts with upstream) |
 | Docs + MCP | `core/docs/` | Documentation + MCP server (port 3000) |
 | Control plane | `core/control/` | Agent chat, feature graph, live logs (port 3001) |
@@ -63,6 +63,7 @@ The defining pattern (ADR-009). A kebab-case **slug** is the universal join key:
 | ADRs (001–009) | `app-agent-io/core/core/docs/adr/` |
 | Feature knowledge | `app-agent-io/core/core/docs/knowledge/` |
 | Naming issue (context→feature) | `app-agent-io/core/NAMING-ISSUE.md` |
+| Work Control deep dive | `intel/DEEP-WORK-CONTROL.md` |
 | Instance config | `./project.config.yml` |
 
 ## Ports
@@ -71,30 +72,30 @@ The defining pattern (ADR-009). A kebab-case **slug** is the universal join key:
 | ------- | ---- |
 | Docs + MCP | 3000 |
 | Control plane | 3001 |
-| Customer apps | 3002+ |
-| Demos (dashboard/saas/landing/chat) | 3010–3013 |
+| Chat (customer) | 3002 |
+| Work Control (customer) | 3003 |
+| Demos | 3010–3014 |
 
-## Status (updated 2026-06-18)
+## Status (updated 2026-06-21)
 
 - ✅ **S01** Deep investigation — `intel/ARCHITECTURE_MAP.md`, `FEATURE_CENSUS.md`, etc.
 - ✅ **S02** Chat bootstrap — `intel/S02-CHAT-SMOKE.md`, `intel/S02-DEV-SMOKE.md`
-- ✅ Canonical Totem instance (merged from duplicate `app-agent-io` instance — removed)
+- ✅ **S03** Deep code understanding — `intel/DEEP-*.md`, `VISION-VS-BUILT.md`
+- ✅ **S04** Work Control — closed; `apps/work-control` @ :3003, DAWWWB org, smoke verified
+- 📍 **S05** Orchestrator — **CLOSED** (`sprints/S05-Orchestrator.ptl`, `S05-SUMMARY.md`)
 - 📍 Load hub: `intel/TOTEM_INDEX.ti`
 
 ```text
 read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
 ```
 
-## Known Risks (intake candidates for S01 backlog)
+## Known Risks (2026-06-18 refresh)
 
-- Secrets hygiene: `temp*.md` in repo root contain API-key-like strings — rotate + remove (first key
-  found was already revoked → 401; confirms exposure risk)
-- Dev ergonomics: `bun run dev:*` (turbo) → 500 on bun:sqlite routes; no single-command run-all.
-  Permanent fix = make app `dev` scripts use `bun --bun nuxt dev` (upstream PR).
-- Demo ports only in package.json scripts, not nuxt.config.ts → direct `nuxt dev` drops the port.
-- README drift: control plane, 5th demo (characters), chat WIP not reflected
-- Knowledge coverage low (~14 slugs) vs ambitious feature system; `bun run feature:health` as CI gate
-- Stray `pnpm-lock.yaml` inside bun monorepo (demos/saas, demos/landing)
+- **`.gitignore` secrets manifest regression:** `# Secrets` lists `.data/` dirs (`apps/chat/.data`, `apps/work-control/.data`, etc.) — causes `bun run dev` to fail decrypt in non-TTY. Fix upstream: only `.env` paths + add `./apps/chat/.env`. See `DEEP-DEV-LAUNCHER.md`.
+- **Dev runtime:** `bun run dev` (turbo) uses Node → `bun:sqlite` 500; use `bun --bun nuxt dev` per app.
+- **Port 3003:** not in `core/cli/dev.js` `PORT_MAP` — pre-flight won't warn on work-control conflicts.
+- **Secrets hygiene:** rotate keys if `temp.md` was ever committed with credentials.
+- **Typecheck:** still fails on demo-saas + control — see `DEEP-TYPECHECK-AUTOPSY.md`.
 
 ## Load Order
 
@@ -117,7 +118,9 @@ bun install
 # One app per terminal, from its own dir, under the Bun runtime:
 cd docs    && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3000 docs + MCP (verified 200)
 cd control && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3001 control plane
-cd demos/dashboard && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3010 (etc → 3011-3014)
+cd apps/chat && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev # :3002 chat
+cd apps/work-control && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev # :3003 kanban
+cd demos/dashboard && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3010 (etc → 3014)
 
 bun run test             # vitest (322 tests)
 bun run test:db          # bun:test SQLite suite (56 tests)

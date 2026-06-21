@@ -35,7 +35,7 @@ App Agent is a **mature Nuxt 4 monorepo skeleton** with a distinctive **feature-
 1. **Feature health is good** — 100% slug coverage in code; `feature:health` passes.
 2. **CI-local health is not green** — typecheck fails on demos; 83 test failures at root.
 3. **MCP is the agent interface** — start `dev:docs`, connect Cursor/Claude to `:3000/mcp`.
-4. **Chat is blocked on config** — AI Gateway key, OAuth, DB migrations required.
+4. **Chat is bOPEN on config** — AI Gateway key, OAuth, DB migrations required.
 5. **`temp.md` is a security issue** — API keys in plaintext; rotate immediately.
 
 ---

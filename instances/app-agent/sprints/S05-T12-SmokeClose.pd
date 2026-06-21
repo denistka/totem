@@ -1,0 +1,29 @@
+---
+id: S05-T12
+name: SmokeClose
+status: DONE
+gate: OPEN
+role: QA
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S05-T12: Smoke Verify + Sprint Close
+
+## Objective
+Prove the spine end-to-end and close the sprint per Totem quality gates.
+
+## Execution
+- Smoke the full path on `:3003`: new chat → message → ROOT proposes epics → edit + accept →
+  board + `gate: LOCKED` `.ptl`/`.pd` written → open gate → run task → live todo→in_progress→done
+  → timeline records it. Verify a SECOND tab sees it live (WS).
+- Verify the gate guard: `run` returns 423 while LOCKED; app never auto-opens a gate.
+- Run `bun run lint`, `bun run test`, `bun run feature:health`; console clean.
+- Write `intel/DEEP-WORK-CONTROL.md` update + `sprints/S05-SUMMARY.md`; refresh
+  `intel/TOTEM_INDEX.ti` (current: S05) and `intel/PROBLEMS_REGISTER.md` if needed.
+- Mark `.ptl`/`.pd` DONE; set sprint `status: CLOSED` (human keeps gate authority).
+
+## Out
+`sprints/S05-SUMMARY.md`, updated `intel/*`, checked task boxes
+
+## Done when
+- DoD checklist in `S05-Orchestrator.ptl` fully checked; tests/lint/health green.

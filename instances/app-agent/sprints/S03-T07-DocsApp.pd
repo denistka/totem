@@ -1,0 +1,15 @@
+---
+id: S03-T07
+name: DocsApp
+status: DONE
+gate: OPEN
+requires: [mcp/MCP.ti]
+---
+
+# S03-T07: DocsApp
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-APPS-MAP.md` or `../DEEP-APPS-MAP.md`

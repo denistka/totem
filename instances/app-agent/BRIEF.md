@@ -14,7 +14,7 @@ Target users: startups/agencies who fork the repo, rebrand, and own it forever (
 
 ```
 apps/*        extends   →  YOUR product code (zero merge conflicts on upstream pull)
-organization/ extends   →  brand: name, logo, colors, social, defaults
+organization/ extends   →  brand: **DAWWWB** (name, colors, header/footer, i18n org.*)
 core/         (upstream) →  shared components, server, MCP, config service — DO NOT MODIFY
 ```
 
@@ -42,9 +42,9 @@ Production behavior of `defineFeature*` = pass-through (zero overhead). Dev = lo
 | --- | ---- | ---- |
 | docs | 3000 | documentation + MCP server (12 tools) |
 | control | 3001 | control plane: agent chat, feature graph, live logs, config diff |
-| apps/* | 3002+ | customer apps (empty upstream, scaffolded via launcher) |
-| demos: dashboard / saas / landing / chat | 3010–3013 | reference implementations (copy, don't edit) |
-| demos: characters | — | 5th demo, not in README |
+| apps/chat | 3002 | customer AI chat |
+| apps/work-control | 3003 | Totem sprint kanban + `.ptl`/`.pd` reader (S04) |
+| demos | 3010–3014 | reference implementations (copy, don't edit) |
 
 ## Stack & tooling
 
@@ -98,4 +98,4 @@ console clean; each README command works on fresh clone; task committed `<task_i
 read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
 ```
 
-**Sprints:** S01 investigation + S02 chat bootstrap complete (2026-06-18). See `sprints/` and `intel/`.
+**Sprints:** S01–S05 complete (through work-control orchestrator, closed 2026-06-21). **Next:** S06 real LLM agents (roadmap). See `sprints/S05-SUMMARY.md` and `intel/TOTEM_INDEX.ti`.

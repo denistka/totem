@@ -1,0 +1,39 @@
+---
+id: S04
+name: Work Control — Build & Capture
+status: COMPLETE
+gate: CLOSED
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+invariants: ../S04-INVARIANTS.md
+---
+
+# S04: Work Control — Totem Plan + Kanban Execute
+
+## Objective
+Ship `apps/work-control` per app-agent canon: customer app, feature slug, Totem sprint
+reader, glass kanban UI (design from taskboard-supabase).
+
+## Tasks
+- [x] S04-T01-DesignDoc.pd
+- [x] S04-T02-ScaffoldApp.pd
+- [x] S04-T03-SchemaMigrate.pd
+- [x] S04-T04-ApiRoutes.pd
+- [x] S04-T05-TotemReader.pd
+- [x] S04-T06-UiKanban.pd
+- [x] S04-T07-KnowledgeSlug.pd
+- [x] S04-T08-SmokeVerify.pd
+- [x] S04-T09-TotemIntel.pd
+- [x] S04-T10-SprintClose.pd
+
+## Definition of Done
+- [x] `http://localhost:3003` — Totem panel + kanban
+- [x] `feature:health` includes `work-control` slug (11 files)
+- [x] `intel/DEEP-WORK-CONTROL.md` + `S04-INVARIANTS.md`
+- [x] No edits to upstream `core/` except knowledge slug file
+
+## Post-close notes (2026-06-21)
+- Fixed `TotemSprintPanel` `defineProps` binding; board API 200 verified
+- Added `drizzle-kit` devDependency (NuxtHub Drizzle setup warning)
+- Organization branded **DAWWWB** in `organization/app/app.config.ts` + i18n
+- Upstream PR [#120](https://github.com/app-agent-io/core/pull/120) — `knowledge.db-wal/shm` gitignore
+- Next: **S05** Orchestrator (`sprints/S05-Orchestrator.ptl`)

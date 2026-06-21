@@ -1,0 +1,47 @@
+---
+id: S03
+name: Deep Code Understanding
+status: CLOSED
+gate: OPEN
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+invariants: ../S02-INVARIANTS.md
+---
+
+# S03: Deep Code Understanding
+
+## Objective
+Read app-agent-io in depth; trace execution paths; produce Totem `intel/` deep-dive docs
+so future agents load knowledge instead of re-scanning the monorepo.
+
+## Tasks
+- [x] S03-T01-ConfigService.pd
+- [x] S03-T02-AuthFlow.pd
+- [x] S03-T03-FeatureRegistry.pd
+- [x] S03-T04-McpTools.pd
+- [x] S03-T05-ControlPlane.pd
+- [x] S03-T06-AiIntegrations.pd
+- [x] S03-T07-DocsApp.pd
+- [x] S03-T08-DemosCensus.pd
+- [x] S03-T09-ChatApp.pd
+- [x] S03-T10-OrganizationLayer.pd
+- [x] S03-T11-DevLauncher.pd
+- [x] S03-T12-TypecheckAutopsy.pd
+- [x] S03-T13-TestAutopsy.pd
+- [x] S03-T14-DevErgonomics.pd
+- [x] S03-T15-VisionVsBuilt.pd
+- [x] S03-T16-SecuritySurface.pd
+- [x] S03-T17-CrossCuttingFlows.pd
+- [x] S03-T18-GitHubDeepLink.pd
+- [x] S03-T19-KnowledgeSlugGaps.pd
+- [x] S03-T20-TotemIndexRefresh.pd
+- [x] S03-T21-SprintClose.pd
+
+## Definition of Done
+- [x] 8+ new/updated `intel/DEEP-*.md` artifacts
+- [x] `PROBLEMS_REGISTER.md` refreshed with root-cause notes
+- [x] `intel/TOTEM_INDEX.ti` updated
+- [x] `S03-INVARIANTS.md` + `S03-DEEP-DIVE-SUMMARY.md`
+- [x] No application source code modified
+
+## Summary
+See `S03-DEEP-DIVE-SUMMARY.md`

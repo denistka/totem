@@ -1,0 +1,19 @@
+---
+id: S06-T04
+name: ShipFirstEat
+status: PLANNED
+gate: LOCKED
+role: DEVOPS
+generated_by: work-control (S05 orchestrator)
+---
+
+# S06-T04: Ship First eat
+
+## Objective
+Wire up, document, and release "First eat".
+
+## Execution
+- Implement: Ship First eat
+
+## Done when
+- Ship First eat is complete and committed.

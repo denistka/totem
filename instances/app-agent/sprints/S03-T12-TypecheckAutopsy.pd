@@ -1,0 +1,15 @@
+---
+id: S03-T12
+name: TypecheckAutopsy
+status: DONE
+gate: OPEN
+requires: [typescript/TYPESCRIPT.ti]
+---
+
+# S03-T12: TypecheckAutopsy
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-TYPECHECK-AUTOPSY.md` or `../DEEP-TYPECHECK-AUTOPSY.md`

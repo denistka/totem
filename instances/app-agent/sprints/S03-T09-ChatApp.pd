@@ -1,0 +1,15 @@
+---
+id: S03-T09
+name: ChatApp
+status: DONE
+gate: OPEN
+requires: [nuxt/NUXT.ti]
+---
+
+# S03-T09: ChatApp
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/DEEP-CHAT-APP.md` or `../DEEP-CHAT-APP.md`

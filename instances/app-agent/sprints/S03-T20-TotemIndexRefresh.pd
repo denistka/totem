@@ -1,0 +1,15 @@
+---
+id: S03-T20
+name: TotemIndexRefresh
+status: DONE
+gate: OPEN
+
+---
+
+# S03-T20: TotemIndexRefresh
+
+## Objective
+S03 deep investigation task.
+
+## Out
+`intel/TOTEM_INDEX.ti` or `../TOTEM_INDEX.ti`
