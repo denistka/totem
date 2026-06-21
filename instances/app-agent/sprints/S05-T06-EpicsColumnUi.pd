@@ -1,0 +1,27 @@
+---
+id: S05-T06
+name: EpicsColumnUi
+status: DONE
+gate: OPEN
+role: PM
+requires: [vue/VUE.ti, nuxt/NUXT.ti]
+---
+
+# S05-T06: Epics Right-Column UI
+
+## Objective
+Make the proposed epics fully user-owned (invariant §2).
+
+## Execution
+- Right-column component lists `wc_epics` for the active chat with the lead-role badge
+  (icon/color from `useAgentRoles()`, T02).
+- Per-epic actions: rename, edit summary, delete, change lead role; column action: create.
+  Each mutation is a REST write + optimistic update + `epic.updated` broadcast (T09).
+- "Drag back to chat" → drops the epic title/summary into the prompt as a re-ask seed.
+- Prominent per-epic **Accept** button (wired in T07). Glass UI = `card-glass-*` (S04 §9).
+
+## Out
+`apps/work-control/app/components/EpicsColumn.vue` + epic REST routes/composable
+
+## Done when
+- All five manipulations work and persist; role badge reflects taxonomy.
