@@ -36,7 +36,7 @@ a task `todo → in_progress → done`, streamed live over a Nitro WebSocket.
 - [x] S05-T02-AgentTaxonomy.pd
 - [x] S05-T03-DataModel.pd
 - [x] S05-T04-ChatSurface.pd
-- [ ] S05-T05-RootProposesEpics.pd
+- [x] S05-T05-RootProposesEpics.pd
 - [ ] S05-T06-EpicsColumnUi.pd
 - [ ] S05-T07-AcceptEpicWriteback.pd
 - [ ] S05-T08-GateRunStateMachine.pd

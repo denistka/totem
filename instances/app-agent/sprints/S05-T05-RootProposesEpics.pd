@@ -1,0 +1,29 @@
+---
+id: S05-T05
+name: RootProposesEpics
+status: DONE
+gate: OPEN
+role: PM
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S05-T05: Mock ROOT Proposes Epics
+
+## Objective
+ROOT re-derives an epics proposal from the WHOLE chat + project context (invariant §2).
+
+## Execution
+- Implement a mock ROOT agent (`server/agents/root.mock.ts`) behind the agent interface
+  from T01. Input: all `wc_messages` for the chat + a project-context blob. Output: an
+  ordered epics list with `title`, `summary`, proposed `lead_role`.
+- Deterministic heuristics for the demo (keyword/intent rules) — e.g. the "coffee + hungry"
+  case yields ["First eat", "Make coffee"]; re-running after a new message RE-derives the
+  full list (not append-only), reconciling by title against existing `wc_epics`.
+- Wrap in `defineFeatureHandler('work-control', …)`; persist proposals to `wc_epics`
+  (status `proposed`); emit `epic.proposed` (T09). Trigger on each new chat message.
+
+## Out
+`server/agents/root.mock.ts`, `POST /api/chat/[id]/propose-epics`
+
+## Done when
+- New chat message re-derives the epics list; proposals land in `wc_epics`.
