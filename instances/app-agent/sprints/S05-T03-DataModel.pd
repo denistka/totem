@@ -1,0 +1,30 @@
+---
+id: S05-T03
+name: DataModel
+status: DONE
+gate: OPEN
+role: ARCHITECT
+requires: [supabase/SUPABASE.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S05-T03: Data Model + Supabase Datasource
+
+## Objective
+Persist the whole spine in Supabase via the ADR-005 datasource pattern (invariant §9).
+
+## Execution
+- Define tables (Drizzle schema + `scripts/db-setup.sql` for Supabase):
+  - `wc_chats(id, title, owner_id, ts)`
+  - `wc_messages(id, chat_id, role, parts json, ts)`
+  - `wc_epics(id, chat_id, title, summary, lead_role, status[proposed|accepted|rejected], position, ts)`
+  - `wc_tasks(extend existing: + epic_id, lead_role, agent_state, totem_pd_file)`
+  - `wc_agents(id, scope_type, scope_id, role, kind[mock|llm], status)`
+  - `wc_activity(id, scope_type, scope_id, actor, kind[human|agent], event, payload json, ts)`
+- Connect via `CORE_DATASOURCE_URL/KEY/PROVIDER` (no secrets in runtimeConfig).
+- Provide a `bun:sqlite` dev fallback behind the same repository interface (invariant §9).
+
+## Out
+`apps/work-control/server/db/schema.ts`, migrations, `scripts/db-setup.sql`, repo layer
+
+## Done when
+- Migrate runs clean; a repository module reads/writes all six tables on both providers.
