@@ -1,0 +1,28 @@
+---
+id: S05-T10
+name: BoardLiveTimeline
+status: DONE
+gate: OPEN
+role: PM
+requires: [vue/VUE.ti, nuxt/NUXT.ti]
+---
+
+# S05-T10: Board (live kanban) + Activity Timeline
+
+## Objective
+Visualize agents working in realtime (taskboard-supabase feel) + an activity timeline.
+
+## Execution
+- Board view per accepted epic: kanban columns todo/in_progress/done, fed by `wc_tasks`
+  and live-patched from `useRealtime()` (T09) — cards move on `task.moved` without refresh.
+- Per-task: lead-role badge, agent state, a "Run" button (calls T08; disabled while gate LOCKED,
+  with an "Open gate" affordance that calls T08's open-gate).
+- Activity timeline panel: ordered `wc_activity` + live `agent.activity` events (actor type
+  human|agent). This is the timeline-lite seed; the time-machine scrubber is S07.
+- Reuse glass UI + existing `WorkTaskColumn`/`WorkTaskCard` where possible.
+
+## Out
+`apps/work-control/app/components/{BoardView,ActivityTimeline}.vue`, board page
+
+## Done when
+- Running a task animates live across columns; timeline streams agent events in order.
