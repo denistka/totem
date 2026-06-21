@@ -1,0 +1,29 @@
+---
+id: S05-T07
+name: AcceptEpicWriteback
+status: DONE
+gate: OPEN
+role: PLANNER
+requires: [nuxt/NUXT.ti, mcp/MCP.ti]
+---
+
+# S05-T07: Accept Epic → PLANNER Write-Back (protocol-critical)
+
+## Objective
+Accepting an epic makes PLANNER decompose it AND write LOCKED Totem files (invariant §3).
+
+## Execution
+- `POST /api/epics/[id]/accept`:
+  1. Mock PLANNER decomposes the epic into 3–6 tasks (title, lead_role, position).
+  2. Create a board + `wc_tasks` rows (status `todo`, `epic_id` set).
+  3. **Write `.ptl` + one `.pd` per task** into the instance `sprints/`, all `gate: LOCKED`,
+     next free `S<NN>` id, matching house format (frontmatter + Objective/Tasks/DoD).
+     Store each `.pd` filename back on its `wc_tasks.totem_pd_file`.
+  4. Mark epic `accepted`; emit `epic.accepted` + `board.created` (T09).
+- HARD RULE: write ONLY under `sprints/`; never auto-set `gate: OPEN` (invariant §4/§5).
+
+## Out
+`POST /api/epics/[id]/accept`, `server/utils/totem-writer.ts`
+
+## Done when
+- Accept yields a board AND new `gate: LOCKED` `.ptl`/`.pd` files; no gate auto-opened.
