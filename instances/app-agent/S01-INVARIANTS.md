@@ -1,5 +1,7 @@
 # S01 Invariants — app-agent
 
+> **Binding:** All roles follow `APP-AGENT-PROTOCOL.md` (see `INSTANCE.ti`).
+
 Frozen after sprint S01 (Deep Investigation), 2026-06-18.  
 Changes require explicit discussion — non-additive edits blocked.
 

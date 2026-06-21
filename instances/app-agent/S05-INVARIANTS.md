@@ -1,5 +1,7 @@
 # S05 Invariants — Work Control Orchestrator
 
+> **Binding:** All roles follow `APP-AGENT-PROTOCOL.md` (see `INSTANCE.ti`).
+
 Extends `S03-INVARIANTS.md`. **Supersedes `S04-INVARIANTS.md` §4 (read-only Totem).**
 Frozen at plan time 2026-06-21. (gate: LOCKED until human "Go".)
 
@@ -59,3 +61,8 @@ Frozen at plan time 2026-06-21. (gate: LOCKED until human "Go".)
 cd apps/work-control && bun run db:migrate   # or Supabase scripts/db-setup
 NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev # :3003
 ```
+
+## Cross-sprint (instance protocol)
+
+13. **App Agent × Totem binding** lives in `APP-AGENT-PROTOCOL.md` (MCP preflight, `.pd` template,
+    doc layers). All future sprints and PM execution must follow it; MCP offline → warn + static fallback.

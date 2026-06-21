@@ -3,6 +3,7 @@ id: S05
 name: Work Control Orchestrator — Chat→Epics→Board→Tasks Spine
 status: CLOSED
 gate: OPEN
+protocol: ../APP-AGENT-PROTOCOL.md
 requires: [nuxt/NUXT.ti, vue/VUE.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti, mcp/MCP.ti, architecture/ARCHITECTURE_SCALE.ti]
 invariants: ../S05-INVARIANTS.md
 supersedes: S04-INVARIANTS.md#4 (read-only Totem)

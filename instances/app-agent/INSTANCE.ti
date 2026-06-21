@@ -1,0 +1,65 @@
+role: Instance Hub — app-agent
+focus: mandatory-protocol, role-binding, load-gate
+extends: none
+
+description: |
+  Canonical instance entry for app-agent. EVERY guardian role and EVERY agent session
+  MUST load this file (via project.config.yml) immediately after project.config.yml
+  and BEFORE sprint/task work. Non-negotiable binding to APP-AGENT-PROTOCOL.md.
+
+mandatory-protocol:
+  file: ./APP-AGENT-PROTOCOL.md
+  machine: ./intel/MCP-PREFLIGHT.ti
+  pd_block: ./templates/PD-APP-AGENT-BLOCK.md
+  ptl_header: ./templates/PTL-PROTOCOL-HEADER.md
+
+load-order:
+  1: project.config.yml
+  2: INSTANCE.ti
+  3: APP-AGENT-PROTOCOL.md
+  4: intel/MCP-PREFLIGHT.ti
+  5: intel/TOTEM_INDEX.ti
+  6: BRIEF.md
+  7: active S*-INVARIANTS.md
+
+all-roles-must:
+  - Read APP-AGENT-PROTOCOL.md before planning, executing, reviewing, or closing work
+  - Run MCP preflight (§2); WARN user if Docs MCP :3000 unreachable
+  - Never claim live MCP results when preflight failed — use [static fallback] only
+  - Reference APP-AGENT-PROTOCOL.md in new .ptl/.pd YAML headers (protocol: field)
+
+role-bindings:
+  ROOT:
+    - Enforce APP-AGENT-PROTOCOL across intake, sprint lifecycle, intel updates
+    - Ensure TOTEM_INDEX agent-rules stay aligned with protocol
+  PLANNER:
+    - Link protocol: ../APP-AGENT-PROTOCOL.md in every new .ptl
+    - Paste templates/PD-APP-AGENT-BLOCK.md into every code .pd
+    - requires: [mcp/MCP.ti] on all code tasks
+  PM:
+    - Load protocol before executing any .pd; verify MCP preflight
+    - execution-protocol step 0: APP-AGENT-PROTOCOL.md §2 + §5
+  ARCHITECT:
+    - Design gates must not violate app-agent layer cascade (protocol §3, §5)
+    - New features require slug + knowledge plan per protocol §4
+  QA:
+    - Close tasks only per protocol §7 checklist
+    - Document MCP outage in summary if verify ran degraded
+  DEVOPS:
+    - Dev commands per protocol + LOCAL-DEV-RUNBOOK; bun --bun for registry/MCP
+  OPTIMIZER:
+    - Knowledge extraction uses record/census per protocol when MCP up
+
+sprint-artifacts:
+  ptl_yaml_required:
+    - protocol: ../APP-AGENT-PROTOCOL.md
+  pd_yaml_required:
+    - protocol: ../APP-AGENT-PROTOCOL.md
+
+anti-patterns:
+  - ❌ Any role acting without loading APP-AGENT-PROTOCOL.md
+  - ❌ Closing code tasks without feature:health per protocol §7
+  - ❌ PLANNER .pd without mcp/MCP.ti or PD-APP-AGENT-BLOCK sections
+  - ❌ Guessing architecture when MCP offline instead of static fallback + WARN
+
+updated: 2026-06-21

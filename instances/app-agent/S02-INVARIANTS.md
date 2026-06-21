@@ -1,5 +1,7 @@
 # S02 Invariants — app-agent-io
 
+> **Binding:** All roles follow `APP-AGENT-PROTOCOL.md` (see `INSTANCE.ti`).
+
 Extends `S01-INVARIANTS.md`. Frozen 2026-06-18.
 
 ## Chat bootstrap

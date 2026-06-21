@@ -6,8 +6,11 @@ Totem instance for **App Agent** (`app-agent-io/core`) — a forkable Nuxt 4 lay
 
 ```
 totem/totem-v6/instances/app-agent/   ← this dir (planning, sprints, invariants)
+├── INSTANCE.ti                        ← instance hub — ALL roles load first
+├── APP-AGENT-PROTOCOL.md              ← mandatory binding — ALL roles
 ├── project.config.yml                 ← stack + paths + guardians
 ├── README.md                          ← you are here
+├── templates/                         ← PD + PTL protocol blocks for PLANNER
 ├── sprints/                           ← .ptl + .pd files (created on demand)
 └── intel/                             ← research, audits, links
 
@@ -86,7 +89,7 @@ The defining pattern (ADR-009). A kebab-case **slug** is the universal join key:
 - 📍 Load hub: `intel/TOTEM_INDEX.ti`
 
 ```text
-read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
+read totem/totem-v6/index.ti → load instance app-agent → INSTANCE.ti → APP-AGENT-PROTOCOL.md → TOTEM_INDEX.ti
 ```
 
 ## Known Risks (2026-06-18 refresh)
@@ -101,8 +104,10 @@ read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
 
 1. `totem-v6/index.ti` (master protocol)
 2. `totem-v6/instances/app-agent/project.config.yml` (this instance)
-3. Stack adapters from `requires:` (JIT — nuxt, vue, typescript, tailwind, mcp, supabase)
-4. Sprint `.ptl` → tasks `.pd`
+3. **`INSTANCE.ti` + `APP-AGENT-PROTOCOL.md`** (mandatory — all roles)
+4. `intel/MCP-PREFLIGHT.ti` (warn if MCP :3000 down)
+5. Stack adapters from `requires:` (JIT)
+6. Sprint `.ptl` → tasks `.pd` (`protocol:` field required in YAML)
 
 ## Dev Commands
 

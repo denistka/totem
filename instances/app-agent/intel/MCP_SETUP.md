@@ -1,6 +1,9 @@
 # MCP Setup & Agent Integration
 
-**Updated:** 2026-06-18
+> **Instance binding:** All roles must follow `../APP-AGENT-PROTOCOL.md` and `../INSTANCE.ti`.
+> MCP preflight rules: `MCP-PREFLIGHT.ti`.
+
+**Updated:** 2026-06-21
 
 ## Docs MCP server
 

@@ -1,0 +1,67 @@
+role: MCP Preflight Gate
+focus: docs-mcp, cursor-mcp, degraded-mode, agent-warnings
+extends: none
+instance: app-agent
+
+description: |
+  Machine rules for verifying Docs MCP before Totem planning or PM execution.
+  Agents MUST run this check at session start and before closing code tasks.
+
+servers:
+  docs-mcp:
+    name: app-agent.io
+    endpoint: http://localhost:3000/mcp
+    health_url: http://localhost:3000/
+    start: |
+      cd app-agent-io/core/docs
+      NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev
+    cursor_config: app-agent-io/core/.cursor/mcp.json
+    tools: [explain, record, introspect, census, list-apps, get-app-structure, get-file, list-components, list-pages, get-page, log-summary, recent-logs]
+
+  chrome-devtools:
+    optional: true
+    note: Required only for browser E2E tasks; not a planning blocker.
+
+preflight-procedure:
+  1: "HTTP GET http://localhost:3000/ — expect 200"
+  2: "HTTP GET http://localhost:3000/mcp — must not be connection refused (406 acceptable)"
+  3: "If in Cursor: confirm MCP server app-agent.io / user-app-agent-docs is connected"
+  4: "If all fail → emit WARN block (see warn-template) and switch to static fallback"
+
+warn-template: |
+  ⚠️ Docs MCP (:3000) not reachable. Degraded mode.
+  - Do NOT claim live explain/census/list-apps results.
+  - Start: cd docs && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev
+  - Fallback: core/docs/knowledge/{slug}.md + AGENTS.md + totem intel/
+  - Tag responses: [static fallback — MCP offline]
+
+static-fallback-allowed:
+  - Read core/docs/knowledge/*.md directly
+  - Read totem instances/app-agent/intel/*
+  - Read paths.code/AGENTS.md
+  - bun run feature:health (CLI, no MCP)
+
+static-fallback-forbidden:
+  - Guessing app ports or file paths without reading disk
+  - Claiming feature registry state from control :3001 as truth for other apps
+  - Closing sprint tasks without documenting MCP outage
+
+planner-rules:
+  - Every .ptl MUST include protocol: ../APP-AGENT-PROTOCOL.md in YAML (see templates/PTL-PROTOCOL-HEADER.md)
+  - Every code .pd MUST include protocol: ../APP-AGENT-PROTOCOL.md + requires: [mcp/MCP.ti]
+  - Every code .pd MUST reference APP-AGENT-PROTOCOL.md §4 preflight/close blocks
+  - Link templates/PD-APP-AGENT-BLOCK.md in Execution section
+
+all-roles:
+  - Load INSTANCE.ti + APP-AGENT-PROTOCOL.md before any action — no exceptions
+
+pm-rules:
+  - Run preflight before first tool use each session
+  - Re-run if user reports MCP errors mid-sprint
+  - If MCP down: warn user, use static fallback, note in commit/summary
+
+control-plane-note: |
+  Control :3001 agent is NOT a substitute for Docs MCP.
+  listFeatures on control reads control-process registry only (often empty under bun run dev / Node).
+
+updated: 2026-06-21

@@ -11,8 +11,13 @@ project:
     Ships docs+MCP (3000), control plane (3001), customer apps (chat 3002, work-control 3003), demos (3010-3014).
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, Nitro, MCP, Supabase, SQLite]
   context:
+    instance_hub: ./INSTANCE.ti           # load immediately after this file — all roles
     brief: ./BRIEF.md              # read this before planning any sprint
     invariants: ./S05-INVARIANTS.md   # active through S06 planning; supersedes S04 read-only Totem
+    app_agent_protocol: ./APP-AGENT-PROTOCOL.md   # MANDATORY for every role — see INSTANCE.ti
+    mcp_preflight: ./intel/MCP-PREFLIGHT.ti
+    pd_template: ./templates/PD-APP-AGENT-BLOCK.md
+    ptl_template: ./templates/PTL-PROTOCOL-HEADER.md
     totem_index: ./intel/TOTEM_INDEX.ti
     local_dev_runbook: ./intel/LOCAL-DEV-RUNBOOK.md   # how to run locally
     current_state_audit: ./intel/CURRENT-STATE-AUDIT.md
@@ -40,6 +45,8 @@ repo:
   branch: main
 
 guardians:
+  protocol: ./APP-AGENT-PROTOCOL.md   # ALL roles below MUST load before acting
+  instance_hub: ./INSTANCE.ti
   default:
     - ROOT
     - PM

@@ -1,5 +1,7 @@
 # S03 Invariants — app-agent-io
 
+> **Binding:** All roles follow `APP-AGENT-PROTOCOL.md` (see `INSTANCE.ti`).
+
 Extends `S02-INVARIANTS.md`. Frozen 2026-06-18 after S03 Deep Code Understanding.
 
 ## Investigation facts (frozen)

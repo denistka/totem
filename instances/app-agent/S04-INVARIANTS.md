@@ -1,5 +1,7 @@
 # S04 Invariants — work-control
 
+> **Binding:** All roles follow `APP-AGENT-PROTOCOL.md` (see `INSTANCE.ti`).
+
 Extends `S03-INVARIANTS.md`. Frozen 2026-06-18.
 
 ## App

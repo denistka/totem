@@ -1,5 +1,6 @@
 # App Agent — Project Brief
 
+> **Mandatory:** `APP-AGENT-PROTOCOL.md` + `INSTANCE.ti` — every role, every session.  
 > Read this before planning any sprint. Source of truth: `app-agent-io/core/AGENTS.md` + `core/docs/adr/`.
 
 ## What it is
@@ -95,7 +96,7 @@ console clean; each README command works on fresh clone; task committed `<task_i
 **Canonical path:** `totem/totem-v6/instances/app-agent/` (not `app-agent-io`).
 
 ```text
-read totem/totem-v6/index.ti, load instance app-agent, read intel/TOTEM_INDEX.ti
+read totem/totem-v6/index.ti → INSTANCE.ti → APP-AGENT-PROTOCOL.md → TOTEM_INDEX.ti
 ```
 
-**Sprints:** S01–S05 complete (through work-control orchestrator, closed 2026-06-21). **Next:** S06 real LLM agents (roadmap). See `sprints/S05-SUMMARY.md` and `intel/TOTEM_INDEX.ti`.
+**Sprints:** S01–S05 complete (through work-control orchestrator, closed 2026-06-21). **Next:** S06 real LLM agents (roadmap). See `sprints/S05-SUMMARY.md`, `APP-AGENT-PROTOCOL.md`, and `intel/TOTEM_INDEX.ti`.
