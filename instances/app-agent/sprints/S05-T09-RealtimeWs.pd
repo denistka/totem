@@ -1,0 +1,28 @@
+---
+id: S05-T09
+name: RealtimeWs
+status: DONE
+gate: OPEN
+role: DEVOPS
+requires: [nuxt/NUXT.ti, architecture/ARCHITECTURE_SCALE.ti]
+---
+
+# S05-T09: Nitro WebSocket Layer (crossws)
+
+## Objective
+One typed realtime channel for all agent/board/gate events (invariant §8).
+
+## Execution
+- Add a Nitro WS route (`server/routes/_ws.ts` via crossws/`defineWebSocketHandler`).
+- Implement the event contract from T01: `epic.proposed|updated|accepted`, `board.created`,
+  `gate.opened`, `task.created|moved`, `agent.activity`, `presence.sync`. Typed payloads in
+  `shared/ws.ts`; a server `broadcast(event, payload)` helper used by T05/T07/T08.
+- Rooms by `chatId`/`boardId` so clients subscribe to the scope they're viewing.
+- Client composable `useRealtime()` reconnects and exposes a typed event stream.
+- Confirm it runs under `bun --bun nuxt dev` (no Node-only deps); no Supabase realtime.
+
+## Out
+`server/routes/_ws.ts`, `shared/ws.ts`, `app/composables/useRealtime.ts`
+
+## Done when
+- Two browser tabs see each other's epic/task/gate events live with no refresh.
