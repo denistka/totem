@@ -42,7 +42,7 @@ a task `todo → in_progress → done`, streamed live over a Nitro WebSocket.
 - [x] S05-T08-GateRunStateMachine.pd
 - [x] S05-T09-RealtimeWs.pd
 - [x] S05-T10-BoardLiveTimeline.pd
-- [ ] S05-T11-KnowledgeDocs.pd
+- [x] S05-T11-KnowledgeDocs.pd
 - [ ] S05-T12-SmokeClose.pd
 
 ## Definition of Done

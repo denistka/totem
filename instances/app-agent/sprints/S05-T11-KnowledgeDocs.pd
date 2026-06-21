@@ -1,0 +1,27 @@
+---
+id: S05-T11
+name: KnowledgeDocs
+status: DONE
+gate: OPEN
+role: DEVOPS
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+---
+
+# S05-T11: Knowledge Slug + Instance Docs
+
+## Objective
+Use app-agent's own knowledge system; split agnostic vs per-app rules (invariant §6/§7).
+
+## Execution
+- Update `core/docs/knowledge/work-control.md` (the ONLY allowed core change): document the
+  orchestrator spine, the agent-role taxonomy reference, WS contract, and the write-back +
+  gate flow. Keep `// SEE: feature "work-control"` annotations on the new server routes.
+- Add per-app instance docs under `apps/work-control/docs/` (or README section): how mock
+  agents behave, layer→lead-role defaults, env (`CORE_DATASOURCE_*`), run instructions.
+- Run `bun run feature:health` — `work-control` slug must be covered (no broken SEE refs).
+
+## Out
+`core/docs/knowledge/work-control.md`, `apps/work-control/docs/*`, README update
+
+## Done when
+- `feature:health` green for `work-control`; agnostic vs per-app docs clearly separated.
