@@ -1,0 +1,28 @@
+---
+id: S05-T02
+name: AgentTaxonomy
+status: DONE
+gate: OPEN
+role: ARCHITECT
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+---
+
+# S05-T02: Agent-Role Taxonomy (organization layer)
+
+## Objective
+Put the agnostic agent-role taxonomy where every app inherits it (invariant §6).
+
+## Execution
+- In `organization/app/app.config.ts`, add an `agents` block:
+  - `roles`: PLANNER, PM, ARCHITECT, QA, TEST_AUTHOR, DEVOPS, ROOT, OPTIMIZER.
+  - Per role: `label`, `icon` (lucide), `color` (Nuxt UI token), `blurb`.
+  - `defaultLeadByLayer`: { chat: ROOT, epic: PM, board: PLANNER, task: <derived> }.
+- Add a typed accessor in `apps/work-control` (composable `useAgentRoles()`) that reads
+  `useAppConfig().agents` — do NOT hardcode the list in the app.
+- Keep ONLY the agnostic taxonomy in organization; per-app behavior stays in T11 docs.
+
+## Out
+`organization/app/app.config.ts` (agents block) + `apps/work-control/.../useAgentRoles.ts`
+
+## Done when
+- `useAppConfig().agents.roles` resolves in work-control; lint passes.
