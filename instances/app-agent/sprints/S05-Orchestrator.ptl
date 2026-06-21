@@ -1,0 +1,66 @@
+---
+id: S05
+name: Work Control Orchestrator — Chat→Epics→Board→Tasks Spine
+status: PLANNED
+gate: OPEN
+requires: [nuxt/NUXT.ti, vue/VUE.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti, mcp/MCP.ti, architecture/ARCHITECTURE_SCALE.ti]
+invariants: ../S05-INVARIANTS.md
+supersedes: S04-INVARIANTS.md#4 (read-only Totem)
+---
+
+# S05: Work Control Orchestrator
+
+## Objective
+Evolve `apps/work-control` from a Totem reader into a chat-driven AI work
+orchestrator. Ship the full spine **end-to-end with MOCK agents**:
+
+```
+chats → chat → epics → epic (board) → tasks → task
+```
+
+A ROOT agent watches the chat + project context and proposes an editable
+**Epics** list (right column). Accepting an epic makes PLANNER decompose it into
+a board of tasks AND **write `.ptl`/`.pd` files at `gate: OPEN`** into the
+Totem instance. A human then **opens the gate**; only then may a (mock) agent run
+a task `todo → in_progress → done`, streamed live over a Nitro WebSocket.
+
+## Foundation decisions (frozen — see S05-INVARIANTS.md)
+- Agent runtime: **MOCK** (deterministic) this sprint; real LLM deferred to S06.
+- Realtime: **Nitro WebSocket (crossws)** — local-first, no Supabase realtime.
+- Totem link: **write-back** — app generates real `.ptl`/`.pd` at `gate: OPEN`.
+- Persistence: **Supabase** datasource (multi-user), via `CORE_DATASOURCE_*`.
+- Agent-role taxonomy: **organization layer** (`app.config.ts` `agents` block).
+
+## Tasks
+- [x] S05-T01-Architecture.pd
+- [ ] S05-T02-AgentTaxonomy.pd
+- [ ] S05-T03-DataModel.pd
+- [ ] S05-T04-ChatSurface.pd
+- [ ] S05-T05-RootProposesEpics.pd
+- [ ] S05-T06-EpicsColumnUi.pd
+- [ ] S05-T07-AcceptEpicWriteback.pd
+- [ ] S05-T08-GateRunStateMachine.pd
+- [ ] S05-T09-RealtimeWs.pd
+- [ ] S05-T10-BoardLiveTimeline.pd
+- [ ] S05-T11-KnowledgeDocs.pd
+- [ ] S05-T12-SmokeClose.pd
+
+## Definition of Done
+- [ ] `:3003` chat → ROOT proposes epics in right column (rename/edit/delete/create/accept)
+- [ ] Accept epic → board appears + `.ptl`+`.pd` written at `gate: OPEN` in instance
+- [ ] Open gate (human) → mock agent runs a task `todo→in_progress→done` live over WS
+- [ ] Activity/timeline feed records every agent + gate event
+- [ ] Agent-role taxonomy in `organization/app.config.ts`; consumed by work-control
+- [ ] `core/docs/knowledge/work-control.md` updated; `apps/work-control` instance docs added
+- [ ] `S05-INVARIANTS.md` frozen (supersedes S04 read-only); `S05-SUMMARY.md`
+- [ ] No upstream `core/` product code changes except the `work-control` knowledge slug
+
+## Roadmap (NOT in this sprint — headline only)
+- S06: Replace mock agents with real LLM (in-app Nitro + AI SDK, reuse apps/chat)
+- S07: Time-machine scrubber (history replay) for board + epic stream (totem-view-sandbox)
+- S08: Multi-user presence + collaboration rules (totem-view S12: human|agent, awareness-no-lock)
+- S09: Task-level multi-agent (lead + additional roles) + cross-agent handoff
+- S10: OPTIMIZER pass + feature:health CI gate
+
+## Summary
+See `S05-SUMMARY.md` (created at close).

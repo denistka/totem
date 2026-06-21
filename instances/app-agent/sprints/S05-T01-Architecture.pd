@@ -1,0 +1,28 @@
+---
+id: S05-T01
+name: Architecture
+status: DONE
+gate: OPEN
+role: ARCHITECT
+requires: [nuxt/NUXT.ti, architecture/ARCHITECTURE_SCALE.ti]
+---
+
+# S05-T01: Architecture & Design Doc
+
+## Objective
+Freeze the orchestrator design before any code so every later task has one source.
+
+## Execution
+- Write `intel/DEEP-ORCHESTRATOR.md` covering:
+  - The spine `chats→chat→epics→epic(board)→tasks→task` and the layer→lead-role map.
+  - WS event contract (names + payload shapes) — the single contract T09/T10 implement.
+  - Totem write-back flow: accept → PLANNER → `.ptl`+`.pd` at `gate:OPEN` → human opens.
+  - Supabase schema ERD (tables from invariant §9) + datasource wiring (`CORE_DATASOURCE_*`).
+  - Mock-agent interface (so S06 can swap real LLM without touching callers).
+- Cross-link to `S05-INVARIANTS.md`; flag every place that touches the anti-auto-proceed axiom.
+
+## Out
+`intel/DEEP-ORCHESTRATOR.md`
+
+## Done when
+- Doc reviewed against invariants; no open architectural questions remain.
