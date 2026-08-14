@@ -1,0 +1,46 @@
+---
+id: S02-T13
+name: Permission Matrix Extension
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: B
+requires: [typescript/TYPESCRIPT.ti]
+out:
+  - REDA/_app/reda/server/utils/status-management.ts
+  - REDA/docs/ROLE_PERMISSIONS_REFERENCE.md
+---
+
+# S02-T13: Permission Matrix Extension
+
+## Objective
+
+Add every permission key S03-S06 will need to **all five** role blocks in one edit, since a key
+added to fewer than five blocks makes `hasPermission()` return `false` for the missing roles.
+
+## Steps
+
+1. In `ROLE_PERMISSIONS` (`status-management.ts:100-192`) add to ALL FIVE blocks:
+   `canViewGuestCard`, `canManageGuests`, `canManageLoyalty`, `canManageReferrals`,
+   `canManageStock`, `canManagePurchasing`, `canClosePrepBatch`, `canEditRecipes`,
+   `canManageShifts`, `canViewAnalytics`, `canManageRules`, `canManageCalendar`, `canViewTasks`,
+   `canCompleteTasks`.
+2. Set the matrix:
+   - `visitor` — false everywhere except `canViewGuestCard` on its own card
+   - `waiter` — `canViewGuestCard`, `canManageGuests`, `canViewTasks`, `canCompleteTasks`
+   - `bartender` — as waiter, plus `canManageStock`, `canClosePrepBatch`
+   - `chef` — `canManageStock`, `canClosePrepBatch`, `canViewTasks`, `canCompleteTasks`
+   - `admin` — true for all
+3. Keep existing keys and their values untouched — **additive only**.
+4. Regenerate the permission table in `docs/ROLE_PERMISSIONS_REFERENCE.md` so doc and code agree
+   (mandatory per BRIEF.md:41).
+5. The key-parity assertion spec is written in S02-T14.
+
+## Done
+
+- `Object.keys()` of all five `ROLE_PERMISSIONS` blocks are identical.
+- `hasPermission('admin','canManageRules')` is true; `hasPermission('visitor','canManageRules')`
+  is false.
+- `docs/ROLE_PERMISSIONS_REFERENCE.md` lists all fourteen new keys.
+- The 5-role invariant is preserved — no sixth role, no role removed.
+- Committed: `S02-T13: permission matrix extension`.

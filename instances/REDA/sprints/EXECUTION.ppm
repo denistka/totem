@@ -1,0 +1,182 @@
+---
+id: REDA-EXEC
+name: Sprint Execution Prompt Module
+role: PM / DEVELOPER
+status: READY
+gate: N/A
+protocol: Totem V6 (SYSTEMATIC-EXCELLENCE)
+instance: REDA
+applies_to: [S02, S03, S04, S05, S06]
+---
+
+# REDA — Sprint Execution Prompt Module
+
+Three prompts. **A** runs a sprint. **B** is the inner per-task contract A follows. **C** closes a
+sprint and hands off to the next. Run A → C → A → C … one sprint at a time.
+
+---
+
+## PROMPT A — SPRINT START / RESUME
+
+> Copy from `<<<` to `>>>`, replace `{{SPRINT}}` with `S02` … `S06`.
+
+```
+<<<
+Role: PM/DEVELOPER under Totem V6. Target: {{SPRINT}} of the REDA instance.
+
+═══ LOAD ORDER — do this first, in this order, before touching anything ═══
+1. /Users/denistka/Projects/totem/totem-v6/index.ti
+2. /Users/denistka/Projects/totem/totem-v6/instances/REDA/project.config.yml
+3. /Users/denistka/Projects/totem/totem-v6/instances/REDA/S01-INVARIANTS.md
+   AND every sprints/S*-INVARIANTS.md that already exists — these are FROZEN decisions from
+   completed sprints and outrank anything in a .pd that contradicts them.
+4. sprints/{{SPRINT}}-*.ptl
+5. JIT ONLY: the stack adapters in the CURRENT TRACK's `requires:` — not the sprint's full set.
+   A Track A migration task must NOT load vue/tailwind adapters. Load adapters when you enter a
+   track, not up front.
+6. The ONE .pd you are about to execute. One at a time. Never read ahead.
+
+═══ HARD GATES — stop, do not work around ═══
+- Any file with `gate: LOCKED` is UNEXECUTABLE. Report and STOP.
+- `status: BLOCKED` with `blocked_by: HUMAN-APPROVAL:*` → STOP, name exactly what needs approving.
+- A .pd whose `blocked_by:` lists an incomplete task → STOP, do not reorder around it.
+- You are FORBIDDEN from simulating, assuming, or inferring human approval. A gate opens only when
+  "LGTM" / "Go" / an explicit instruction appears in the LATEST human message.
+- App code goes ONLY to /Users/denistka/Projects/REDA/_app/reda and /Users/denistka/Projects/REDA/supabase.
+  NEVER write application source inside totem/.
+
+═══ EXECUTION ORDER ═══
+Tracks are sequential: A fully done → B → C. Within a track, tasks in ID order.
+Each track has a `gate:` in the .ptl — verify it holds before entering that track.
+
+═══ PER-TASK LOOP (see PROMPT B for the full contract) ═══
+For each .pd: read it → confirm not blocked → implement exactly its Steps → verify every Done
+item → commit → report one line → next.
+
+═══ STOP AND ASK (do not improvise) ═══
+- A .pd Step references a file:line that does not match reality → the plan drifted. Report the
+  discrepancy, propose the correction, wait.
+- A Done criterion cannot be met without breaking a locked invariant.
+- A task would exceed ~50 lines of logic or produce a file over 150 lines → it needs splitting;
+  propose the split, wait.
+- Applying a migration requires a credential or a method you do not have.
+- You are about to add an npm dependency, an env var, or a role — all are locked.
+
+═══ REPORTING ═══
+After each task: one line — `{{SPRINT}}-Txx ✅ <what landed> | <verification result>`.
+After each track: state the track gate for the next track and whether it holds.
+Do not write summary documents unless asked.
+
+Begin: load 1-4, then show me the task list with current status and tell me which task you will
+start with and why. Do not start until I confirm.
+>>>
+```
+
+---
+
+## PROMPT B — PER-TASK CONTRACT
+
+This is the loop Prompt A follows. Quote it into a session if a task goes off the rails.
+
+```
+<<<
+For the single task {{TASK_ID}}:
+
+1. READ the .pd in full. Re-read its `blocked_by:` and the sprint's track gate.
+2. GROUND IT: open every file:line the Steps cite and confirm the claim still holds. The plan was
+   authored against an audit — if reality has moved, STOP and report rather than adapting silently.
+3. IMPLEMENT exactly the Steps. Not more. Scope creep across .pd boundaries is a protocol
+   violation — an adjacent improvement you notice goes into the report, not into the commit.
+4. QUALITY GATES (non-negotiable, from core/QUALITY_GATES.ti):
+   - Zero `any` in production code. Explicit interfaces or generics.
+   - No file over 150 lines. Split before finishing, not after.
+   - Every declared variable, import and parameter is used.
+   - Consistent import aliasing (~/ or @/), matching surrounding files.
+   - Composables only — no Pinia, no global store layer.
+   - All new server routes via createRouteHandler() with { transformResponse: false }.
+   - New migrations: sequential number, banner header per supabase/migrations/README.md:232-250,
+     idempotent DDL (IF NOT EXISTS / ON CONFLICT), closing DO $$ verification block,
+     RLS enabled with explicit policies, inline EXISTS role checks (never a JWT-claim check),
+     TEXT + CHECK for enumerations (no PG ENUM types), restaurant_id on every new table.
+5. VERIFY — run these, paste real output, never claim a pass you did not observe:
+     cd /Users/denistka/Projects/REDA/_app/reda
+     pnpm build
+     pnpm test:run
+   For a migration task, additionally: apply it, then apply it AGAIN — idempotency is a Done
+   criterion, not a nicety. Confirm the verification block raises NOTICE, not EXCEPTION.
+6. WALK THE Done LIST item by item. Any item you cannot verify is a FAILURE, not a caveat — say so
+   plainly and stop. Do not mark a task done with an unverified criterion.
+7. COMMIT: git add . && git commit -m "{{TASK_ID}}: <description>"
+   One commit per task. Never batch two tasks into one commit.
+8. REPORT one line. Then stop and await the next instruction, or continue if the sprint prompt
+   authorised a run of tasks.
+>>>
+```
+
+---
+
+## PROMPT C — SPRINT CLOSE AND HANDOFF
+
+> Run after the last task of a sprint. Produces the invariants the next sprint links to.
+
+```
+<<<
+{{SPRINT}} tasks are complete. Close the sprint under Totem V6 iteration flow (phase 5-CLOSE).
+
+1. VERIFY THE SPRINT DoD, not the task DoDs. Open sprints/{{SPRINT}}-*.ptl, walk its
+   "Definition of Done" list, and produce evidence for each item — real command output, a real
+   query result, a real screenshot path. An item you cannot evidence is NOT done; list it as
+   outstanding and stop before writing invariants.
+2. WRITE sprints/{{SPRINT}}-INVARIANTS.md from the sprint's "Invariants Produced" section, but
+   CORRECTED to what actually shipped. If an invariant was written as a plan and reality differs,
+   the file records reality. Include for each: the decision, the file/migration that enforces it,
+   and what would break if it were violated.
+3. RECONCILE THE DOCS the sprint touched. REDA's docs are aspirational, not descriptive — several
+   claim objects and guarantees that do not exist. Anything this sprint made true or false in
+   docs/AGENTS.MD, docs/REDA_TECH_REFERENCE.md, docs/ROLE_PERMISSIONS_REFERENCE.md,
+   supabase/migrations/README.md must now match the code.
+4. UPDATE instances/REDA/README.md: mark the sprint done, correct the migration range if it moved.
+5. REPORT DRIFT for the next sprint: every place where executing this sprint invalidated an
+   assumption in the NEXT sprint's .ptl. This is the most valuable output of the close — the next
+   sprint's .pd files have not been written yet precisely so they can absorb it.
+6. COMMIT: git add . && git commit -m "{{SPRINT}}: close — invariants + doc reconciliation"
+
+Then STOP. Do NOT generate the next sprint's .pd files and do NOT begin the next sprint.
+Generating them is a PLANNER action requiring a fresh gate from me.
+>>>
+```
+
+---
+
+## Sprint order and preconditions
+
+| Run | Sprint | Blocked until |
+| --- | ------ | ------------- |
+| 1 | S02 Foundation | 4 open questions answered (below) |
+| 2 | S03 Guest Identity | S02-INVARIANTS.md exists; invariants 1-7 in force |
+| 3 | S04 Event Ledger | S02 inv. 8 (line uniqueness) + S03 `guests` table |
+| 4 | S05 Stock & Recipes | S04 inv. 7 (`order_items.id` is a stable `source_id`) |
+| 5 | S06 Analytics & Rules | S05 stock ledger populated; S02-T17 cron spike green |
+
+## Open questions that gate S02
+
+1. **`CRON_SECRET`** — fourth env var against the three locked at S01:67-73. Refusal degrades P5
+   to admin-triggered regeneration.
+2. **`bartender` vs `BARMAN`** — DB CHECK vs docs. Eight migrations bake this in.
+3. **Venue timezone** — `Europe/Kyiv` seeded in S02-T02. Confirm.
+4. **Loyalty scope** — global or per-`restaurant_id`.
+
+## Migration application
+
+`docs/REDA_TECH_REFERENCE.md:74` states remote DB is preferred over local. Establish the method
+**once**, before S02 Track A, and record it in `S02-INVARIANTS.md`:
+Supabase CLI `db push` · SQL editor paste · or the Supabase MCP `apply_migration` tool.
+Every migration in this roadmap must be applied twice to prove idempotency.
+
+## Non-negotiables restated
+
+- One `.pd` = one commit. One objective. Under 50 lines of logic.
+- Never read ahead into unstarted tasks — it inflates context and invites scope bleed.
+- Never write application code inside `totem/`.
+- A `.pd` is a contract, not a suggestion; a `.ptl` invariant outranks a `.pd` step.
+- Report failures with the output that proves them.

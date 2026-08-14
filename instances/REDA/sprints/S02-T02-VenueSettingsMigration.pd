@@ -1,0 +1,50 @@
+---
+id: S02-T02
+name: Venue Settings Table
+status: DONE
+gate: OPEN
+commit: 322247ace
+applied: reda-db 2026-08-13, twice (2nd run NOTICE, not EXCEPTION)
+sprint: ./S02-FoundationContractFreeze.ptl
+track: A
+requires: [supabase/SUPABASE.ti]
+out:
+  - REDA/supabase/migrations/025_venue_settings.sql
+---
+
+# S02-T02: Venue Settings Table
+
+## Objective
+
+Create the single source of truth for venue timezone, service-time target and role baselines,
+which today exist only as UTC assumptions and markdown prose.
+
+## Steps
+
+1. Write the banner header per `supabase/migrations/README.md:232-250`
+   (Version / Date / Description / Category: SCHEMA / Dependencies: 001).
+2. `CREATE TABLE IF NOT EXISTS public.venue_settings (key TEXT PRIMARY KEY, value JSONB NOT NULL,
+   restaurant_id TEXT REFERENCES public.restaurants(id) DEFAULT 'default-restaurant',
+   updated_at TIMESTAMPTZ DEFAULT NOW())`.
+3. Attach a BEFORE UPDATE trigger `update_venue_settings_updated_at` using the existing
+   `public.update_updated_at_column()` (`001:133`).
+4. Seed with `INSERT ... ON CONFLICT (key) DO NOTHING`:
+   - `timezone` → `"Europe/Kyiv"` (pending confirmation, sprint open question 3)
+   - `service_time_target_minutes` → `30` (replaces the literal at
+     `server/api/statistics/performance.get.ts:310`)
+   - `role_baselines` → `{"waiter":87,"bartender":92,"chef":95}` (from
+     `docs/STATISTICS_FEATURE.md:44-49`)
+5. `ENABLE ROW LEVEL SECURITY`; SELECT policy for `authenticated`, ALL policy gated by the inline
+   `EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')` idiom —
+   never a JWT-claim check (abandoned in `010_fix_profiles_rls_recursion.sql:13-15`).
+6. Close with a `DO $$ ... RAISE EXCEPTION/NOTICE $$` verification block asserting the table and
+   the three seed rows exist.
+
+## Done
+
+- Migration applies cleanly **twice in a row** (idempotent DDL + ON CONFLICT).
+- `SELECT value FROM venue_settings WHERE key='timezone'` returns a JSONB string.
+- `role_baselines` uses `bartender`, never `barman` (S02-T01 Decision B).
+- RLS is enabled; a non-admin authenticated role cannot UPDATE.
+- Verification block raises NOTICE, not EXCEPTION.
+- Committed: `S02-T02: venue_settings table (migration 025)`.

@@ -1,0 +1,139 @@
+---
+id: S06
+name: Analytics, Forecast and Business Rules — Asking the Data the Right Question
+status: PLANNED
+gate: LOCKED
+lead_role: PLANNER
+invariants: [../S01-INVARIANTS.md, ./S02-INVARIANTS.md, ./S03-INVARIANTS.md, ./S04-INVARIANTS.md, ./S05-INVARIANTS.md]
+requires: [supabase/SUPABASE.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vercel/VERCEL.ti, vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti]
+pillars: [P3, P5, P6]
+migrations: 047-051
+depends_on: [S02, S03, S04, S05]
+---
+
+# S06: Analytics, Forecast and Business Rules
+
+> *«Данные сами по себе ничего не оптимизируют. Оптимизация начинается тогда, когда бизнес задаёт
+> им правильный вопрос.»*
+
+## Objective
+
+Replace every fabricated metric with a number derived from the ledgers built in S03-S05. Answer
+the owner's questions with SQL rather than in-memory JavaScript. Project stockouts against a
+shift-aware demand forecast. Let an owner express IF/THEN rules that create tasks for a
+responsible employee — on the cron mechanism proven in S02.
+
+## The fabricated metrics this sprint deletes
+
+REDA currently renders these to staff as if they were measured:
+
+| Metric | Actual source |
+| ------ | ------------- |
+| `customerSatisfaction` = 90 | `performance.get.ts:389` — literal, despite `orders.feedback_rating` existing and being indexed since migration 019 |
+| `foodQualityScore` = '4.7' | `:349` — literal |
+| `cocktailAccuracy` = 95 | `:336` — literal |
+| **`wasteReduction` = 85** | `:350` — literal |
+| `responseTime` | `:324` — `avgServiceTime / 2` |
+| `avgPrepTime` | `:335` — `avgServiceTime * 0.4` |
+
+`wasteReduction` as a hardcoded constant is precisely the failure mode the article mocks. After
+S05 it becomes computable from prep-batch remainders; this sprint makes it real or deletes it.
+
+## Tracks
+
+### Track A — Core / Rollups, Shifts, Forecasts and Rules Schema
+requires: [supabase/SUPABASE.ti]
+gate: S05 stock ledger populated; S02 `venue_settings.timezone` in force
+
+- [ ] S06-T01-AnalyticsRollupMigration.pd — `047_analytics_rollups.sql`
+- [ ] S06-T02-AnalyticsFunctions.pd — `048_analytics_functions.sql`
+- [ ] S06-T03-ShiftsMigration.pd — `049_shifts.sql`
+- [ ] S06-T04-ForecastingMigration.pd — `050_forecasting.sql`
+- [ ] S06-T05-RulesAndTasksMigration.pd — `051_business_rules_and_tasks.sql`
+- [ ] S06-T06-SeedArticleRules.pd — the four rules from the article, as seed data
+
+### Track B — Services / Real Metrics, Forecast and Rules Execution
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti, vercel/VERCEL.ti]
+gate: Track A applied; S02-T17 cron spike green
+
+- [ ] S06-T07-AnalyticsRoutes.pd
+- [ ] S06-T08-LiteralMetricReplacement.pd
+- [ ] S06-T09-WasteAndShiftRoutes.pd
+- [ ] S06-T10-ForecastRoutes.pd
+- [ ] S06-T11-RulesEngineCore.pd — pure, fully unit-testable condition evaluator
+- [ ] S06-T12-RulesDispatcherAndEventHook.pd — hangs off S04's `order_events` seam
+- [ ] S06-T13-RulesTasksAndCalendarRoutes.pd
+- [ ] S06-T14-ScheduledEvaluationRoutes.pd
+
+### Track C — UI / Analytics, Forecast, Rules and Tasks
+requires: [vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti, typescript/TYPESCRIPT.ti]
+gate: Track B routes returning SQL-derived data
+
+- [ ] S06-T15-AnalyticsPageAndCards.pd
+- [ ] S06-T16-RetentionWasteAndDashboardTruth.pd
+- [ ] S06-T17-ForecastAndScheduleUI.pd
+- [ ] S06-T18-RulesAndTasksUI.pd
+
+## The six owner questions (acceptance contract)
+
+Each must be answered by a `/api/analytics/*` endpoint computed **in SQL**:
+
+1. Сколько денег принесли постоянные клиенты? → `analytics/guests` (needs S03 `guest_id`)
+2. С каким соусом чаще всего заказывают? → `analytics/modifiers` (needs S04 composition)
+3. Какой продукт продаётся хуже остальных? → `analytics/products` — **LEFT JOIN from
+   `menu_items`**, since an `order_items`-only aggregation silently omits exactly the
+   never-ordered items
+4. В какие дни продажи выше? → `analytics/weekdays` (needs S02 `venue_settings.timezone`)
+5. Сколько клиентов вернулось после первой покупки? → `analytics/guests` cohort
+6. Сколько ресурса вылито в конце смены? → `analytics/waste` (needs S05 prep batches)
+
+## The four article rules (seeded in T06)
+
+```
+IF friday AND payday          THEN purchase +20% AND raise prices in advance
+IF purchase_date ON long_weekend THEN shift purchase task 2 days earlier
+IF guest inactive 30d AND last purchase on expiring-TTL batch
+                              THEN create task: check remainders, pull suspect batch
+IF fasting_period starts      THEN pre-buy specific products AND change menu
+```
+
+## Definition of Done
+
+- [ ] Every metric rendered in the product traces to a column, a rollup or a venue setting. No
+      literal and no `Math.random` survives in any statistics or analytics response
+- [ ] The six questions are answerable and each is computed in SQL, not in Node
+- [ ] Weekday, shift and forecast numbers are computed in the venue timezone and **differ
+      measurably** from the naive UTC result
+- [ ] A nightly cron run refreshes the rollup, regenerates the forecast and produces stockout
+      projections with concrete timestamps; observable in `performance_metrics` and Vercel logs
+- [ ] The system can state **"if tomorrow is a normal Friday, the lamb runs out at 07:40"**
+- [ ] All four article rules exist as seed data, evaluate correctly in unit tests, and can be
+      dry-run from the UI without writing
+- [ ] A matched rule creates exactly one `operational_task` per triggering fact, even under
+      event replay
+- [ ] **Owner-visible deliverable:** `/analytics` page answering all six questions
+
+## Invariants Produced
+
+1. Analytics aggregation happens in plpgsql invoked through `callRpc`. Pulling raw order rows
+   into Node to reduce them is prohibited.
+2. `venue_settings.timezone` is applied to every date bucket, weekday grouping, shift boundary
+   and projected timestamp.
+3. `operational_tasks` is the only action target for a rule that needs a human. Rules never
+   mutate order or stock state directly except through a dispatched, audited action.
+4. Every rule evaluation is recorded in `rule_evaluations` with an idempotency key. A rule fires
+   at most once per triggering fact.
+5. Rule conditions are validated at write time against `evaluateCondition`; an unparseable
+   condition can never reach production.
+6. Scheduled work runs only through `CRON_SECRET`-guarded routes under `server/api/cron/`.
+7. `daily_sales_rollup` and `guest_cohorts` are ordinary relational tables refreshed
+   idempotently. **No external analytics store / data lake** — matching the article's own scale
+   note that a small venue needs a plain relational DB.
+8. Migration numbering continues at **052**.
+
+## Deliberately cut
+
+Full purchasing lifecycle (`purchase_orders`, goods receipt, supplier invoices). S05 keeps only
+`suppliers` + `lead_time_days`, because that is what converts a reorder point into a date. The
+article's ERP pillar is satisfied by knowing *when* stock runs out; a procurement workflow is a
+separate product surface and would double S05 without serving any article beat.

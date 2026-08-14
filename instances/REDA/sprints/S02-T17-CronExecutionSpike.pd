@@ -1,0 +1,60 @@
+---
+id: S02-T17
+name: Cron Execution Spike
+status: BLOCKED
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: C
+requires: [vercel/VERCEL.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+blocked_by: [S02-T09, HUMAN-APPROVAL:CRON_SECRET]
+out:
+  - REDA/_app/reda/server/api/cron/heartbeat.get.ts
+  - REDA/_app/reda/vercel.json
+  - REDA/_app/reda/nuxt.config.ts
+---
+
+# S02-T17: Cron Execution Spike
+
+## ⚠ BLOCKED — requires human approval before execution
+
+This task introduces **`CRON_SECRET`**, a fourth environment variable against the three-variable
+list locked at S01:67-73. Do not proceed without explicit sign-off.
+
+If approval is withheld, S06's scheduled forecasting and `trigger_type='schedule'` rules must fall
+back to admin-triggered POST endpoints plus on-page-load regeneration. That fallback is viable but
+means *"bad news arrives earlier"* only when someone opens the page — a material weakening of the
+article's P5.
+
+## Objective
+
+Answer the single unknown that P5 and P6 both depend on: whether a Vercel-scheduled Nitro route
+can execute and write to Postgres under a shared-secret guard.
+
+## Context
+
+`vercel.json` has **no** `crons` key. `nuxt.config.ts` has no nitro `scheduledTasks`. There is no
+`server/plugins/` or `server/middleware/` directory, no queue or job table, and no Supabase Edge
+Functions. `public.archive_old_orders()` (`005:253`) exists in SQL as a would-be scheduled job
+with nothing scheduling it.
+
+## Steps
+
+1. **Obtain approval for `CRON_SECRET` first.**
+2. Write `server/api/cron/heartbeat.get.ts` using `createRouteHandler` with
+   `{ requireSupabase: true, transformResponse: false }`; compare
+   `getHeader(event,'x-cron-secret')` against `useRuntimeConfig().cronSecret` and throw
+   `AuthenticationError` on mismatch.
+3. On success call `recordMetric(supabase, 'cron.heartbeat', 1, 'counter', {})` via the S02-T09
+   helper.
+4. Add `cronSecret` to the private `runtimeConfig` block in `nuxt.config.ts:26-35`.
+5. Add a `crons` array to `vercel.json` with a single daily entry pointing at
+   `/api/cron/heartbeat`.
+
+## Done
+
+- A request without the header returns 401.
+- A request with the header inserts exactly one `performance_metrics` row.
+- The Vercel deployment shows the cron registered, and **one scheduled invocation is observed in
+  the deployment logs** — the spike is not green until a real scheduled run is seen.
+- `ssr: false` is unaffected (the app is a SPA; this is a server route, not a page).
+- Committed: `S02-T17: cron execution spike`.

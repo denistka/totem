@@ -1,0 +1,42 @@
+---
+id: S02-T15
+name: Schema Health Endpoint
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: C
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+blocked_by: [S02-T10]
+out:
+  - REDA/_app/reda/server/api/health/schema.get.ts
+---
+
+# S02-T15: Schema Health Endpoint
+
+## Objective
+
+Give every later sprint a single machine-checkable signal that its migrations actually landed in
+the live database — the audit found three objects that live code writes to but no migration
+creates, and nothing detected it.
+
+## Steps
+
+1. Use `createRouteHandler` with `{ requireSupabase: true, transformResponse: false }` —
+   `transformResponse` must stay `false` to match every existing route
+   (`createSuccessResponse` has zero production call sites).
+2. Gate with `requireTrustedActor(event, supabase, 'canViewStatistics')` — this is the first route
+   in the repo to require a verified identity, and a deliberate reference implementation.
+3. Query `information_schema.tables` and `pg_proc` for a declared list of expected objects:
+   `venue_settings`, `performance_metrics`, `transaction_items`, `record_metric`,
+   `idx_order_items_line_identity`.
+4. Return `{ missing: string[], present: string[], ok: boolean }` with an explicit TypeScript
+   interface — no `any`.
+5. Export the expected-object list as a single `const` that S03-S06 extend.
+
+## Done
+
+- Returns `ok:true` after S02 Track A is applied.
+- Returns 403 for an untrusted actor (forged `body.userRole`).
+- The expected-object list is a single exported const.
+- File under 100 lines; no `any`.
+- Committed: `S02-T15: schema health endpoint`.

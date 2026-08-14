@@ -1,0 +1,48 @@
+---
+id: S02-T04
+name: Ghost Objects with Live Writers
+status: DONE
+gate: OPEN
+sprint: ./S02-FoundationContractFreeze.ptl
+track: A
+requires: [supabase/SUPABASE.ti]
+out:
+  - REDA/supabase/migrations/027_transaction_items_and_missing_columns.sql
+---
+
+# S02-T04: Ghost Objects with Live Writers
+
+## Objective
+
+Create the two objects that live code already writes to and whose failures are currently
+swallowed, so the behaviour change lands on its own observable commit.
+
+## ⚠ This task changes live behaviour
+
+`server/api/transactions.post.ts:215` already inserts into `transaction_items` and only
+`console.log`s the error (`:219-222`). The moment the table exists those inserts start
+**succeeding** — or start failing loudly if the shape does not match exactly. Same for
+`order_items.ready_at`, which `server/api/orders/mark-items-ready.post.ts:103` already writes.
+
+## Steps
+
+1. `CREATE TABLE IF NOT EXISTS public.transaction_items` with the EXACT shape inserted at
+   `transactions.post.ts:215` — `transaction_id`, `order_id`, `item_name`, `item_type`,
+   `quantity`, `unit_price`, `total_price` — plus `id UUID PK DEFAULT gen_random_uuid()` and
+   `created_at TIMESTAMPTZ DEFAULT NOW()`. FKs: `transaction_id → transactions(id) ON DELETE
+   CASCADE`, `order_id → orders(id)`.
+2. `ALTER TABLE public.order_items ADD COLUMN IF NOT EXISTS ready_at TIMESTAMPTZ`.
+3. `ALTER TABLE public.transactions ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW()`
+   and attach `update_transactions_updated_at`.
+4. Indexes `idx_transaction_items_transaction`, `idx_transaction_items_order`.
+5. `ENABLE ROW LEVEL SECURITY` with SELECT scoped like the existing
+   "Users can view own transactions" policy shape, plus a staff-manage FOR ALL policy.
+6. Verification block asserting both objects exist.
+
+## Done
+
+- A payment through `/api/transactions` persists line rows instead of `console.log`ing an error.
+- "Mark All Items Ready" no longer writes to a nonexistent column.
+- Column list of `transaction_items` matches `transactions.post.ts:215` field-for-field.
+- Migration applies twice in a row.
+- Committed: `S02-T04: transaction_items + ghost columns (migration 027)`.

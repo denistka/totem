@@ -1,0 +1,49 @@
+---
+id: S02-T11
+name: Idempotency Helper
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: B
+requires: [typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+out:
+  - REDA/_app/reda/server/utils/idempotency.ts
+---
+
+# S02-T11: Idempotency Helper
+
+## Objective
+
+Prove exactly-once writes on a stack with **no transaction primitive**, using
+UNIQUE-index-plus-23505-resolution as the only reliable mechanism.
+
+## Context
+
+supabase-js offers no BEGIN/COMMIT and no helper wraps one. The house pattern is manual
+compensating deletes, and it already leaks: `orders.post.ts:151-192` rolls back the order but the
+`table_assignments` insert at `:156-183` survives; `refund.post.ts:120-154` swallows a failed
+`transactions` insert with *"Continue anyway - refund is completed"*, moving money with no ledger
+row.
+
+This helper is what makes the article's P7 (referral fires exactly once) and S03's loyalty accrual
+correct.
+
+## Steps
+
+1. `buildIdempotencyKey(...parts: string[]): string` — join with `':'` after trimming and
+   lowercasing.
+2. `insertIdempotent<TRow>(supabase, table: string, row: TRow, keyColumn: string, keyValue:
+   string): Promise<{ row: TRow; created: boolean }>`.
+3. On Postgres error `23505`, re-SELECT by `keyColumn` and return `{ row, created: false }` —
+   never surface the duplicate-key error, because `handleSupabaseError` maps 23505 to
+   `ValidationError` today, which would be wrong here.
+4. Any other error routes through `handleSupabaseError`.
+
+## Done
+
+- No `any` types; `TRow` is generic.
+- Calling `insertIdempotent` twice with the same key produces one row and `created:false` on the
+  second call.
+- File under 60 lines.
+- Unit-tested in S02-T14 with a stub client that returns 23505 on the second insert.
+- Committed: `S02-T11: idempotency helper`.

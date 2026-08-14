@@ -1,0 +1,57 @@
+---
+id: S02-T14
+name: Pure Module Test Harness
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: C
+requires: [typescript/TYPESCRIPT.ti]
+blocked_by: [S02-T11, S02-T12, S02-T13]
+out:
+  - REDA/_app/reda/tests/unit/status-management.test.ts
+  - REDA/_app/reda/tests/unit/idempotency.test.ts
+  - REDA/_app/reda/tests/README.md
+  - REDA/_app/reda/tests/api/orders.test.ts
+---
+
+# S02-T14: Pure Module Test Harness
+
+## Objective
+
+Replace a test suite that executes **zero** production code with real assertions against the pure
+modules the roadmap depends on.
+
+## Context
+
+`tests/setup.ts:9` sets `global.$fetch = vi.fn()` (resolves `undefined`), and
+`tests/api/orders.test.ts` reads properties off that `undefined`. The `vi.mock('~/server/utils/supabase')`
+factory never fires because no test imports a route module. There is no `@nuxt/test-utils`, no
+supertest, no test DB. Asking for "tests following the existing pattern" produces more
+non-executing tests.
+
+## Steps
+
+1. Delete `tests/api/orders.test.ts` — every assertion reads a property off an unconfigured
+   `vi.fn()`.
+2. Write `tests/unit/status-management.test.ts` covering: `isValidPaymentTransition` across the
+   extended workflow including `refund_process`, `isValidItemServiceTransition`,
+   `computeFrontendStatus`, the four mapping functions, `validateUserRole`'s coercion behaviour,
+   `assertDbStatus` throwing on `'queued'`, and the `ROLE_PERMISSIONS` key-parity assertion from
+   S02-T13.
+3. Write `tests/unit/idempotency.test.ts` against `buildIdempotencyKey` and `insertIdempotent`
+   with a hand-rolled stub client that returns a 23505 on the second insert.
+4. Write `tests/README.md` documenting the policy: **specs target pure modules only**
+   (`status-management`, `error-handling`, and the S03-S06 additions `card-code`, `composition`,
+   `rules-engine`). Route handlers are out of scope until a real harness exists.
+5. Confirm the existing `vitest.config.ts` aliases (`~` and `@` to project root) resolve
+   `~/server/utils/*` from `tests/unit/` without config changes.
+
+## Done
+
+- `pnpm test:run` reports a non-zero number of executed assertions against **real imported
+  modules**.
+- No test asserts against an undefined `$fetch` result.
+- `tests/README.md` states the pure-module-only policy and why.
+- Both new files under 150 lines.
+- No new dependency added to `package.json`.
+- Committed: `S02-T14: pure module test harness`.

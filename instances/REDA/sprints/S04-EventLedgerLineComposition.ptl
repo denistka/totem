@@ -1,0 +1,106 @@
+---
+id: S04
+name: Event-Grained Purchase Ledger and Line Composition
+status: PLANNED
+gate: LOCKED
+lead_role: PLANNER
+invariants: [../S01-INVARIANTS.md, ./S02-INVARIANTS.md, ./S03-INVARIANTS.md]
+requires: [supabase/SUPABASE.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti]
+pillars: [P2]
+migrations: 036-039
+depends_on: [S02, S03]
+---
+
+# S04: Event-Grained Purchase Ledger and Line Composition
+
+> *«CRM не хранит "Павлик купил пятую шаверму" как одно большое текстовое поле. Она хранит
+> отдельное событие покупки, связанное с ID клиента.»*
+
+## Objective
+
+Change the identity of an order line from `(order_id, menu_item_id)` to its own UUID plus a
+composition hash, so two differently-composed portions of the same dish can coexist. Capture
+modifiers and guest notes as structured data. Record every order mutation as an append-only event
+instead of overwriting state and clobbering a single `notes` string.
+
+## The blocking gap this closes
+
+A line's identity **is** `(order_id, menu_item_id)` today. Both add paths *merge* quantities
+(`items.post.ts:120` `existingItem.quantity + quantity`; `items-batch.post.ts:76-80` pre-collapses
+duplicates in a Map). "Steak, rare" and "Steak, well-done" are structurally impossible. A grep for
+`modifier|option|extra|sauce|customiz` across the orders domain returns only HTML `<option>`
+elements.
+
+Without this sprint, P3's *"с каким соусом чаще всего заказывают?"* is not merely unimplemented —
+it is unanswerable, and S05's per-modifier ingredient consumption has nothing to key on.
+
+## Tracks
+
+### Track A — Core / Composition and Event Schema
+requires: [supabase/SUPABASE.ti]
+gate: S02 invariant 8 in force (line uniqueness already enforced at 2 columns)
+
+- [ ] S04-T01-MenuModifiersMigration.pd — `036_menu_modifiers.sql`
+- [ ] S04-T02-OrderLineCompositionMigration.pd — `037_order_line_composition.sql` (widens the
+      S02 unique index to include `composition_hash`)
+- [ ] S04-T03-OrderEventsMigration.pd — `038_order_events.sql`
+- [ ] S04-T04-LineTotalsTrigger.pd — `039_line_totals_trigger.sql`
+
+### Track B — Services / Line Identity Rewire and Event Recording
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+gate: Track A applied
+
+- [ ] S04-T05-CompositionHashUtil.pd
+- [ ] S04-T06-OrderEventRecorder.pd
+- [ ] S04-T07-LineIdentityWireChange.pd  ⚠ **breaking change**
+- [ ] S04-T08-ItemMutationRoutesRekey.pd
+- [ ] S04-T09-ItemStatusAndDeclineRoutes.pd
+- [ ] S04-T10-OrderEventEmissionWiring.pd
+- [ ] S04-T11-CompositionAndLedgerReadRoutes.pd
+
+### Track C — UI / Composition Capture and Timeline
+requires: [vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti, typescript/TYPESCRIPT.ti]
+gate: **T07 + T14 must land as one atomic change set** — no intermediate commit may leave the UI
+      keying on `menu_item_id`
+
+- [ ] S04-T12-OrderTypeContract.pd
+- [ ] S04-T13-ModifierPickerUI.pd
+- [ ] S04-T14-OrderLineRendering.pd
+- [ ] S04-T15-OrderTimelineUI.pd
+
+## Breaking-change register
+
+The wire identity of an order line changes from `menu_item_id` to `order_items.id`. Affected:
+`orders.get.ts:121`, `orders.post.ts:233`, `orders/[id].put.ts:418`, `item-status.put.ts`,
+`decline-item.post.ts`, `items.post.ts`, `items-batch.post.ts`, `composables/useOrders.ts`, and
+the `:key` bindings in `components/order/OrderItems.vue:11` and `components/OrderCard.vue:126`.
+This violates no locked invariant but invalidates an assumption baked into every order surface.
+
+## Definition of Done
+
+- [ ] Two portions of the same dish with different modifiers coexist on one order, can be
+      declined and progressed independently, and render separately
+- [ ] Every order mutation writes an `order_events` row with actor attribution
+- [ ] No feature writes a machine-readable prefix into a `notes` column (retires the
+      `REFUND_REQUESTED:` hack from S02 finding #1)
+- [ ] Modifier surcharges survive every subsequent item mutation
+- [ ] `GET /api/guests/[id]/purchases` returns datetime, amount, composition, chosen modifier and
+      payment method per purchase — the article's literal purchase-event record
+- [ ] The index swap from two-column to three-column identity succeeds against a production restore
+- [ ] **Owner-visible deliverable:** order timeline replaces the overwritten notes string
+
+## Invariants Produced
+
+1. An order line is identified by `order_items.id` on the wire and by
+   `(order_id, menu_item_id, composition_hash)` in the database. `menu_item_id` alone is never a
+   line identifier again.
+2. `order_items.notes` is operator free text only; decline state lives in
+   `declined_at`/`declined_by`.
+3. `order_items.guest_note` is the only per-line customer text field.
+4. Every mutating order route calls `recordOrderEvent`. `order_events` is the single fan-out seam
+   for downstream domains (S06's rules engine hangs off it).
+5. `order_events` is append-only — no UPDATE or DELETE policy may ever be added.
+6. Line money is `base_price + modifier_total`, maintained by `recalc_order_line_totals()`.
+   Application code must never recompute an order total from `price * quantity` again.
+7. `order_items.id` is the stable `source_id` that S05 stock movements reference.
+8. Migration numbering continues at **040**.

@@ -1,0 +1,53 @@
+---
+id: S02-T10
+name: Trusted Actor Resolver
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: B
+requires: [typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti, nuxt/NUXT.ti]
+out:
+  - REDA/_app/reda/server/utils/actor.ts
+---
+
+# S02-T10: Trusted Actor Resolver
+
+## Objective
+
+Create the identity primitive that guest-PII, loyalty and purchasing routes will require,
+replacing the spoofable client-asserted role — **for new sensitive routes only**.
+
+## Context — the most serious finding in the audit
+
+Authorization reads `body.userRole` / `query.userRole` off the wire and never cross-checks it
+against a verified identity. `getCurrentUser()` is called by **2 of 52** routes.
+`createServerSupabaseClient()` uses the service-role key, so RLS is bypassed for all API traffic.
+`validateUserRole()` silently coerces unknown values to `'visitor'` instead of rejecting.
+
+Putting guest PII (phone, preferences, allergy notes), loyalty balances and supplier prices behind
+that is not acceptable. This task does **not** retrofit the 50 existing routes — that is a
+separate decision for the user — it establishes the primitive that all new sensitive routes use.
+
+## Steps
+
+1. Define `interface Actor { id: string | null; role: UserRole; trusted: boolean }`, importing
+   `UserRole` from `~/server/utils/status-management`.
+2. `resolveActor(event, supabase): Promise<Actor>` — call `getCurrentUser(event)` from
+   `~/server/utils/auth`; on success read the role from `public.profiles` via `getUserProfile`
+   and return `trusted: true`.
+3. When no `Authorization` header is present, fall back to
+   `validateUserRole(body/query userRole)` and return `trusted: false`, so existing routes keep
+   working unchanged.
+4. Export `requireTrustedActor(event, supabase, permission)` which throws `AuthorizationError`
+   (`ERROR_CODES.UNAUTHORIZED`) unless `trusted === true` **and** `hasPermission(role, permission)`.
+5. Do **not** import or resurrect `server/utils/role-middleware.ts` — it is 390 lines with zero
+   imports repo-wide. Note in a header comment that S01:48 cites it as the auth mechanism and that
+   this file supersedes that claim.
+
+## Done
+
+- No `any` types.
+- Existing routes are untouched; only new sensitive routes call `requireTrustedActor`.
+- A forged `body.userRole:'admin'` with no JWT yields `trusted:false` and is rejected.
+- File under 80 lines.
+- Committed: `S02-T10: trusted actor resolver`.

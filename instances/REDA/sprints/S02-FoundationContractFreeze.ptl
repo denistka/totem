@@ -1,0 +1,233 @@
+---
+id: S02
+name: Foundation — Contract Freeze and Risk Retirement
+status: ACTIVE
+gate: OPEN
+opened_by: HUMAN-INSTRUCTION 2026-08-13 ("need to start execution" + 4 decisions answered)
+lead_role: PM
+invariants: ../S01-INVARIANTS.md
+brief: ../BRIEF.md
+requires: [supabase/SUPABASE.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vercel/VERCEL.ti]
+migrations: 025-030
+depends_on: []
+---
+
+# S02: Foundation — Contract Freeze and Risk Retirement
+
+## Origin
+
+Backlog source: Habr article *«Как я CRM в шаверму продал»* — small-business automation
+(CRM → WMS → ERP → integration → business rules) told through a shawarma stand.
+Seven pillars extracted: **P1** scannable guest card + loyalty · **P2** event-grained purchase
+ledger with per-line composition · **P3** analytics that expose invisible waste · **P4** stock /
+recipes / consumption / reorder point · **P5** CRM×ERP forecasting · **P6** IF/THEN business
+rules · **P7** idempotent, attribute-isolated referrals.
+
+This sprint implements **none** of them. It exists because a codebase audit found seven
+contradictions that eight downstream migrations would otherwise bake in permanently.
+
+## Objective
+
+Build zero user-visible features. Retire the mechanisms every later sprint rests on
+(verified-actor resolution, exactly-once writes, a working plpgsql RPC convention, scheduled
+execution, live-data-safe line uniqueness), reconcile the three ghost objects that already have
+live writers, and force the two vocabulary contradictions to a written decision.
+
+## Findings that motivate this sprint
+
+| # | Finding | Evidence |
+| - | ------- | -------- |
+| 1 | `refund_process` is not a legal DB value | `orders_payment_status_check` @ `001:62` allows `unpaid\|paid\|refunded`; `status-management.ts:18` defines it; `refund.post.ts:86-89` writes `REFUND_REQUESTED:` into `orders.notes` instead |
+| 2 | Role vocabulary split | S01/BRIEF say `BARMAN`; DB CHECK says `bartender`; `create-empty.post.ts:54` branches on `'barman'`, which `validateUserRole` can never return |
+| 3 | Ghost table with a live writer | `transactions.post.ts:215` inserts into `transaction_items` — no migration creates it; the error is `console.log`ed |
+| 4 | Ghost column with a live writer | `mark-items-ready.post.ts:103` writes `order_items.ready_at` — column does not exist |
+| 5 | Ghost function with live callers | `menu.get.ts:123,:144` call `record_metric()`, which exists in no migration; both are `.catch(console.error)` |
+| 6 | No line uniqueness, but 8 reads assume it | ~8 `.eq('order_id',x).eq('menu_item_id',y).single()` reads with no unique index behind them |
+| 7 | No venue timezone | `getDateRanges()` buckets in UTC; weekday labels use the *server* locale. Every future shift/forecast number is wrong until fixed |
+
+## Tracks
+
+### Track A — Core / Schema Reconciliation
+requires: [supabase/SUPABASE.ti]
+gate: S02-T01 decision record signed off by the user before T05 runs
+
+- [x] S02-T01-VocabularyDecisionRecord.pd — `e8a53f075` · Decision A approved `d33c5088f`
+- [x] S02-T02-VenueSettingsMigration.pd — `322247ace` · migration 025 applied ×2
+- [x] S02-T03-MetricsAndRecordMetric.pd — `3758cde82` · migration 026 applied ×2
+- [x] S02-T04-GhostObjectsMigration.pd — `afab6d368` · migration 027 applied ×2
+- [x] S02-T05-PaymentStatusCheckExtension.pd — `3c071c710` · migration 028 applied ×2
+- [x] S02-T06-RestaurantScopeDefaults.pd — `79d373e9d` · migration 029 applied ×2
+- [x] S02-T07-OrderLineDedupeAndUnique.pd — `6fb706c26` · migration 030 applied ×2
+
+**TRACK A COMPLETE 2026-08-14.** Gate for Track B — "migrations 025-030 applied and idempotent on
+a second run" — **HOLDS**. All six applied via MCP `apply_migration`, then re-applied via
+`execute_sql` with identical SQL; every second pass raised NOTICE, never EXCEPTION.
+
+### Track B — Types and Proven Mechanisms
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+gate: Track A migrations 025-030 applied and idempotent on a second run
+
+- [ ] S02-T08-SharedDomainTypes.pd
+- [ ] S02-T09-RpcConventionHelper.pd
+- [ ] S02-T10-TrustedActorResolver.pd
+- [ ] S02-T11-IdempotencyHelper.pd
+- [ ] S02-T12-StatusVocabularyEnforcement.pd
+- [ ] S02-T13-PermissionMatrixExtension.pd
+
+### Track C — Verification and Dead-Surface Removal
+requires: [typescript/TYPESCRIPT.ti, nuxt/NUXT.ti, vercel/VERCEL.ti]
+gate: Track B helpers exist and are importable
+
+- [ ] S02-T14-PureModuleTestHarness.pd
+- [ ] S02-T15-SchemaHealthEndpoint.pd
+- [ ] S02-T16-DeadSurfaceRemoval.pd
+- ⛔ S02-T17-CronExecutionSpike.pd — **DROPPED from S02.** `CRON_SECRET` approval withheld
+      2026-08-13. Stays `status: BLOCKED`. Not part of this sprint's DoD.
+
+## Track A Execution Findings (2026-08-14)
+
+Grounded by a 59-agent parallel pass over T03-T07, each drift claim then adversarially verified.
+Items that changed the migrations, and items the next sprints must absorb.
+
+**Corrections that would have caused real failures:**
+
+1. `transaction_items.order_id` must be **TEXT**, not UUID. `orders.id` is text (001:56) while
+   `transactions.id` is uuid (001:93). The symmetric guess fails with 42804.
+2. `order_items.order_id` and `menu_item_id` are both **NULLABLE**, so 030's unique index needs
+   `NULLS NOT DISTINCT` or it enforces nothing on NULL-keyed rows.
+3. T03's "INSERT via service role only" is **unwritable as an RLS policy** — `service_role` has
+   `rolbypassrls = true` and never evaluates policies. Correct form: enable RLS, create no INSERT
+   policy.
+4. `record_metric` must be **SECURITY INVOKER**. As DEFINER it would be an unauthenticated public
+   write endpoint: PostgREST publishes every `public` function, EXECUTE defaults to PUBLIC, and no
+   migration 001-025 contains a single GRANT or REVOKE.
+5. T06's backfill silently mutates `public.tables` via `trigger_update_table_occupancy_on_order_change`
+   (023:113-116). Header now reads `Dependencies: 001, 023`.
+
+**Measured facts that contradict the plan:**
+
+6. **Zero duplicate order lines exist** (51 rows, 0 dup pairs, 0 NULL keys). The sprint's
+   "highest-probability migration failure" was not a risk at all. S04 may widen the index safely.
+7. All 24 `orders` rows had NULL `restaurant_id` before 029 — the .pd stated the post-condition
+   without the pre-state.
+8. `/api/transactions` **POST has no caller** (`pay.vue:442` is a GET), and 3 of its 5 declared
+   payment methods abort before the line-item insert. The DoD item "a payment through
+   /api/transactions persists line rows" was verified at the data layer instead, using the exact
+   object literal from `transactions.post.ts:185-193`.
+9. `mark-items-ready` **throws**, it does not swallow — `ready_at` is in the `.select()` projection,
+   so the whole UPDATE 400s. "Mark All Items Ready" was a hard, user-visible no-op, now fixed by 027.
+
+**Open items handed to later sprints (do not lose these):**
+
+10. `computeFrontendStatus` (`status-management.ts:201-230`) has **no branch for `refund_process`**.
+    After 028 such an order renders as `'new'`. Read-side gap — belongs to S02-T12 or S04-T10.
+11. Two more sources hardcode the 3-value payment set and are now stale:
+    `composables/useOrders.ts:33` and `supabase/migrations/README.md:148`. → S02-T08 / T12.
+12. `chat/users.get.ts` branches on `visitor|officer|waiter|barman|chef|admin` and **never
+    `bartender`** — the only value `profiles.role` can hold. Bartenders get an empty chat list.
+    Live bug. → S02-T12.
+13. `usePerformance` sends `metric: 'execution_time'` / `'error'`, but `record_metric` writes
+    `'menu_api_execution_time'` / `'menu_api_error'`, and `performance.get.ts:31` matches with an
+    exact `eq()`. The dashboard will read empty until one side is aligned.
+14. `update_order_progress()` dereferences `NEW.order_id` on an `AFTER ... OR DELETE` row trigger.
+    `NEW` is NULL on DELETE, so it does **not** error (verified empirically) — it silently updates
+    nothing, leaving `orders.order_progress` stale after any line deletion.
+15. FK shape is not uniform: `orders`/`menu_items`.restaurant_id are ON DELETE CASCADE,
+    `venue_settings` is NO ACTION, and invariant 7's text omits the cascade. S03+ inherits
+    NO ACTION. Deliberately not unified in S02.
+
+**Sprint-level state:** `pnpm build` passes (exit 0). `pnpm test:run` **fails 12/12** — every test
+errors with `You must provide a Promise to expect() when using .rejects, not 'undefined'`, i.e. the
+undefined-`$fetch` harness this sprint's DoD already names. Pre-existing, unrelated to Track A,
+and exactly what **S02-T14** exists to fix.
+
+## Definition of Done
+
+- [ ] Migrations 025-030 apply idempotently, twice in a row, against a restore of
+      `REDA/supabase backup/db_cluster-02-11-2025@02-20-44.backup`
+- [ ] `GET /api/health/schema` returns `ok:true`
+- [ ] A payment through `/api/transactions` persists line rows instead of logging an error
+- [ ] "Mark All Items Ready" no longer writes to a nonexistent column
+- [ ] `GET /api/performance` stops returning 500
+- [ ] Zero duplicate `(order_id, menu_item_id)` rows remain; the unique index is in place
+- [ ] `pnpm test:run` executes real assertions against imported modules, not against an
+      undefined `$fetch`
+- [ ] A forged `body.userRole:'admin'` with no JWT is rejected by `requireTrustedActor`
+- [ ] `pnpm build` succeeds; zero new `any`; every new file under 150 lines
+- [ ] One git commit per task
+
+## Invariants Produced (frozen for S03-S06)
+
+1. `bartender` is the only role string permitted in DB CHECKs and TS unions; `BARMAN` is a UI
+   display label only.
+2. `refund_process` is a legal `orders.payment_status`. State is never again encoded in
+   `orders.notes`.
+3. `public.venue_settings` is the sole authority for venue timezone, service-time target and role
+   baselines. No code may hardcode UTC or the 30-minute threshold again.
+4. Every plpgsql function is invoked through `server/utils/rpc.ts` `callRpc`. Direct
+   `supabase.rpc()` calls are forbidden.
+5. Every exactly-once write uses `server/utils/idempotency.ts` against a UNIQUE index. No write
+   path may rely on read-then-insert.
+6. Routes handling PII, money or stock call `requireTrustedActor` from `server/utils/actor.ts`.
+   Client-asserted `userRole` is tolerated only on pre-existing routes.
+7. Every table created from migration 031 onward carries
+   `restaurant_id TEXT REFERENCES restaurants(id) DEFAULT 'default-restaurant'`.
+8. `order_items` line uniqueness is enforced in the database. S04 may only *widen* the index,
+   never introduce uniqueness from scratch.
+9. Shared domain types live in `_app/reda/types/`. Duplicating an interface across components is
+   prohibited.
+10. The permission-key set is frozen. No sprint adds a key to fewer than five role blocks.
+11. Scheduled work lives under `server/api/cron/`, is guarded by `CRON_SECRET`, and is registered
+    in `vercel.json` `crons`.
+12. Migration numbering continues at **031**.
+
+## Open Questions — ANSWERED 2026-08-13
+
+1. **`CRON_SECRET`** — ❌ **DEFERRED.** The three-variable lock at S01:67-73 stands. S02-T17 drops
+   from this sprint (`status: BLOCKED`, no approval given). P5/P6 scheduled evaluation becomes an
+   admin-triggered POST; S06 must absorb this. Invariant 11 is **void as written** — rewrite at
+   close.
+2. **Vocabulary** — ✅ `bartender` wins as the wire value; `BARMAN` is a UI display label only.
+   Recorded as Decision B in S02-T01.
+3. **Venue timezone seed** — ✅ `Europe/Kyiv`.
+4. **Loyalty scope** — ✅ **per-`restaurant_id`**, decided 2026-08-14 under delegated authority.
+   Recorded in `REDA/docs/DECISIONS/S02-loyalty-scope.md`. Rationale: per-venue aggregates up to
+   global, global cannot be split back down. S03 unblocked on this point.
+
+## Delegated Decision Authority
+
+On 2026-08-14 the user delegated sprint decision-making ("make decisions by yourself"). Under that
+delegation:
+
+- **Decision A** (`refund_process` as a legal `payment_status`) is **APPROVED**. S02-T05's
+  `blocked_by: S02-T01 (Decision A sign-off)` is satisfied. Recorded in the decision record as a
+  *delegated* approval, not a human review of the constraint itself.
+- **Open question 4** (loyalty scope) is **ANSWERED** as per-`restaurant_id`.
+- **`CRON_SECRET` is NOT reopened.** The user made that call explicitly on 2026-08-13 (defer). A
+  delegation to decide open questions is not licence to reverse a decision already made. T17 stays
+  dropped.
+
+## Execution Decisions (frozen — carry into S02-INVARIANTS.md at close)
+
+- **Migration application method:** Supabase **MCP `apply_migration`** against project
+  `okcqrarepnwrvomswovk` (reda-db, eu-central-1). Project was `INACTIVE`; restored 2026-08-13.
+  Every migration applied twice; second run must raise NOTICE, never EXCEPTION.
+- **Commit scoping:** explicit `git add <paths>` per task, **not** `git add .` — the REDA tree
+  carries 10 unrelated modified files. Supersedes EXECUTION.ppm Prompt B step 7.
+- **Sprint branch:** `s02-foundation-contract-freeze`, cut from `main` @ `23775f367`.
+- **⚠ Ledger drift:** `apply_migration` records the remote version as a **timestamp**
+  (`20260813155552`), not the local file prefix (`025`). Local numbering and
+  `supabase_migrations.schema_migrations` therefore diverge for every migration applied this way.
+  Consequence: a future `supabase db push` would see `025-030` as unapplied and try to re-run them
+  — which is survivable only because every migration in this sprint is idempotent by mandate.
+  **Do not switch application methods mid-sprint.** Record in S02-INVARIANTS.md at close.
+- **Idempotency proof method:** 1st pass via `apply_migration`, 2nd pass via `execute_sql` with the
+  same SQL — this tests DDL idempotency without writing a duplicate ledger row.
+
+## Baseline captured at sprint start (2026-08-13)
+
+- Remote `reda-db` was at migration **024**, exactly matching the files on disk. Clean baseline.
+- `transaction_items` confirmed **absent** — S02 finding #3 (ghost table) verified against reality.
+- `restaurants` contains `default-restaurant`, so the `restaurant_id` FK default is safe.
+- ⚠ `node_modules` was **missing** — `pnpm build` failed with `nuxt: command not found` before
+  `pnpm install` was run. No build/test verification was possible until then.

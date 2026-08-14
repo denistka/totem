@@ -48,7 +48,19 @@ VISITOR · WAITER · CHEF · BARMAN · ADMIN — see `S01-INVARIANTS.md` and `do
 ## Status
 
 - ✅ Instance scaffolded
-- ⏳ No sprints planned yet — awaiting backlog / `LGTM` to plan S01
+- ✅ S02–S06 planned from the CRM/ERP article backlog (see `sprints/`) — **all `gate: LOCKED`**
+- ⏳ Awaiting `LGTM` + answers to S02 open questions before any task may run
+
+| Sprint | Pillars | Migrations | Tasks |
+| ------ | ------- | ---------- | ----- |
+| S02 Foundation — Contract Freeze & Risk Retirement | — | 025–030 | 17 `.pd` written |
+| S03 Guest Identity, Loyalty, Referral | P1, P7 | 031–035 | manifest only (JIT) |
+| S04 Event Ledger & Line Composition | P2 | 036–039 | manifest only (JIT) |
+| S05 Stock, Recipes, Prep-Batch Waste | P4 | 040–046 | manifest only (JIT) |
+| S06 Analytics, Forecast, Business Rules | P3, P5, P6 | 047–051 | manifest only (JIT) |
+
+`.pd` files for S03–S06 are generated at sprint start per PLANNER JIT context mapping, so their
+`requires:` reflect the codebase as it actually is by then.
 
 ## Load Order
 

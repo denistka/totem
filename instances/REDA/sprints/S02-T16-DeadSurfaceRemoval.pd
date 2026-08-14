@@ -1,0 +1,44 @@
+---
+id: S02-T16
+name: Dead Surface Removal
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: C
+requires: [typescript/TYPESCRIPT.ti]
+blocked_by: [S02-T08]
+out:
+  - REDA/_app/reda/server/api/statistics/[userId].get.ts
+  - REDA/_app/reda/components/MenuItemCard.vue
+---
+
+# S02-T16: Dead Surface Removal
+
+## Objective
+
+Delete the mock and orphaned surfaces that later sprints would otherwise mistake for real
+implementations.
+
+## Steps
+
+1. Delete `server/api/statistics/[userId].get.ts` — every value is `Math.random()` over a
+   hardcoded user map, no client calls it, and it is the last source of the stale
+   `OFFICER`/`BARMAN` vocabulary that contradicts S02-T01 Decision B.
+2. Delete `components/MenuItemCard.vue` — nothing imports it; the live grid is
+   `components/menu/MenuGrid.vue` rendered by `MenuDisplay.vue:53`. It also holds the fourth,
+   now-orphaned copy of the `MenuItem` interface that S02-T08 consolidated.
+3. Grep the repo to confirm zero remaining references to either path **before** committing.
+
+## Done
+
+- `pnpm build` succeeds.
+- `grep -r 'MenuItemCard'` and `grep -r 'statistics/\[userId\]'` return no hits outside git
+  history.
+- No behaviour change — neither surface had a caller.
+- Committed: `S02-T16: remove dead surfaces`.
+
+## Note
+
+`server/utils/role-middleware.ts` (390 lines, zero imports) is **not** deleted here. S01:48 cites
+it as the auth mechanism, so removing it changes a locked invariant's meaning. Flagged for the
+user as a follow-up decision; S02-T10 supersedes it in practice without deleting it.

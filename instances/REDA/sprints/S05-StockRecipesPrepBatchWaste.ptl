@@ -1,0 +1,111 @@
+---
+id: S05
+name: Stock Ledger, Recipes and Prep-Batch Waste
+status: PLANNED
+gate: LOCKED
+lead_role: PLANNER
+invariants: [../S01-INVARIANTS.md, ./S02-INVARIANTS.md, ./S03-INVARIANTS.md, ./S04-INVARIANTS.md]
+requires: [supabase/SUPABASE.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti]
+pillars: [P4]
+migrations: 040-046
+depends_on: [S02, S04]
+---
+
+# S05: Stock Ledger, Recipes and Prep-Batch Waste
+
+> *«Есть товар. Есть его остаток. Есть расход. Есть поставщик. Есть закупка. И есть момент,
+> когда товара становится слишком мало…»*
+>
+> *«Щеглов вечером выливает остатки соусов и моет чаны.»* — the vat is this sprint's prep batch.
+
+## Objective
+
+Replace the read-only percentage fixture with a real stock ledger. Connect menu items to
+ingredients through recipes that include **per-modifier lines**, so the sauce is consumed only
+when the sauce is chosen. Post consumption from a Postgres trigger so a sale and its depletion
+cannot diverge. Add prep batches so end-of-shift remainders become visible waste rather than an
+invisible margin leak.
+
+## What "inventory" means today
+
+`server/api/inventory.get.ts` is 24 lines: `import orders from '~/fixtures/orders.json'` then
+`return orders.inventory`. No Supabase, no auth, no role guard. Shape:
+`{id:'ing-1', name:'Tequila', amount:'750ml', remaining:60, unit:'%'}` — `remaining` is a
+**percentage** and `unit` is the literal string `'%'` on all 27 rows. The real unit of measure is
+trapped in the `amount` string and recovered by regex at `InventoryItemCard.vue:166-170`, which
+breaks on `'5 dozen'` and `'24 bottles'`.
+
+A grep for `inventory|stock|ingredient|supplier|recipe|reorder|purchase` across all 24 migrations
+returns **zero** matches. Nothing decrements on sale, across all four write paths.
+
+## Tracks
+
+### Track A — Core / Stock, Recipe and Batch Schema
+requires: [supabase/SUPABASE.ti]
+gate: S04 invariant 7 in force (`order_items.id` is a stable `source_id`)
+
+- [ ] S05-T01-UomAndStockItems.pd — `040_uom_and_stock_items.sql`
+- [ ] S05-T02-StockBalancesAndMovements.pd — `041_stock_balances_and_movements.sql`
+- [ ] S05-T03-RecipesMigration.pd — `042_recipes.sql` (incl. per-modifier recipe lines)
+- [ ] S05-T04-ConsumptionTrigger.pd — `043_stock_consumption_trigger.sql`
+- [ ] S05-T05-PrepBatchesMigration.pd — `044_prep_batches.sql`
+- [ ] S05-T06-SuppliersAndReorder.pd — `045_suppliers_and_reorder.sql`
+- [ ] S05-T07-MenuCoverageFunction.pd — `046_menu_item_coverage_function.sql`
+
+### Track B — Services / Stock API and Availability Derivation
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+gate: Track A applied; consumption trigger proven by the 50-order simulation
+
+- [ ] S05-T08-StockPermissionKeys.pd
+- [ ] S05-T09-StockReadAndWriteRoutes.pd — **deletes** the fixture endpoint
+- [ ] S05-T10-PrepBatchRoutes.pd
+- [ ] S05-T11-RecipeAndCoverageRoutes.pd
+- [ ] S05-T12-MenuAvailabilityDerivation.pd
+- [ ] S05-T13-ReorderAndSupplierRoutes.pd
+
+### Track C — UI / Inventory, Batches and Sold-Out State
+requires: [vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti, typescript/TYPESCRIPT.ti]
+gate: Track B routes returning real ledger data
+
+- [ ] S05-T14-StockComposables.pd
+- [ ] S05-T15-InventoryPageRewrite.pd
+- [ ] S05-T16-PrepBatchAndReorderUI.pd
+- [ ] S05-T17-RecipeEditorAndSoldOutState.pd
+
+## The packaging decision
+
+The article's *«количество упаковочного материала на единицу заказа»* is cheap to model now — a
+`packaging` department on `stock_items` plus a recipe line on every food item — and expensive to
+backfill later, because there is no historical consumption data to reconstruct from. **Decided
+here, in T01/T03, not deferred.**
+
+## Definition of Done
+
+- [ ] Serving a dish deducts its ingredients, its chosen sauce **and** its packaging, inside the
+      database, exactly once even under a replayed update
+- [ ] Declining or refunding a served line restores the exact quantities
+- [ ] A scripted 50-order simulation ends with `stock_balances` equal to the signed sum of
+      `stock_movements` for every item
+- [ ] Closing a prep batch records the remainder as waste attributable to a shift
+- [ ] Reorder suggestions name a supplier, a lead time and a projected run-out date **in the venue
+      timezone**
+- [ ] `fixtures/orders.json` inventory is read by no code; the fixture endpoint is deleted
+- [ ] An out-of-stock dish renders **sold out** instead of silently vanishing from the menu
+- [ ] **Owner-visible deliverable:** end-of-shift remainder capture — the sauce-vat surface
+
+## Invariants Produced
+
+1. Stock changes only by inserting a `stock_movements` row. No code may update
+   `quantity_on_hand` directly.
+2. Consumption is posted by `post_stock_consumption()` inside the database, never by
+   application-side sequencing. (supabase-js has no transaction primitive; the existing
+   compensating-delete pattern already leaks — `orders.post.ts:151-192` rolls back the order but
+   the `table_assignments` insert survives.)
+3. Every stock movement carries an `idempotency_key` and a `source_type`/`source_id` pair.
+4. A `recipe_line` with `modifier_id` set is consumed only when that modifier is present on the
+   order line.
+5. Packaging is a first-class stock department; every food item consumes it.
+6. Menu sellability is derived from `compute_menu_item_coverage()`. `menu_items.is_available` is
+   an operator override only.
+7. Recipe edits create a new version; recipe history is immutable.
+8. Migration numbering continues at **047**.

@@ -1,0 +1,50 @@
+---
+id: S02-T03
+name: Performance Metrics Table and record_metric()
+status: DONE
+gate: OPEN
+sprint: ./S02-FoundationContractFreeze.ptl
+track: A
+requires: [supabase/SUPABASE.ti]
+out:
+  - REDA/supabase/migrations/026_performance_metrics.sql
+---
+
+# S02-T03: Performance Metrics Table and record_metric()
+
+## Objective
+
+Create the `performance_metrics` table and `record_metric()` function that two production call
+sites already reference and that currently fail silently.
+
+## Context
+
+`server/api/menu.get.ts:123` and `:144` call `supabase.rpc('record_metric', ...)` — a function
+that exists in **no** migration. Both are `.catch(console.error)`, so the failure is invisible.
+`server/api/performance.get.ts:23` selects from a table that does not exist. `docs/AGENTS.MD:114`
+claims the table exists; it does not.
+
+## Steps
+
+1. Banner header, Category: OPTIMIZATION, Dependencies: 001.
+2. `CREATE TABLE IF NOT EXISTS public.performance_metrics` with exactly the columns
+   `performance.get.ts:23` selects: `id UUID PK DEFAULT gen_random_uuid()`,
+   `metric_name TEXT NOT NULL`, `metric_value DECIMAL NOT NULL`, `metric_type TEXT`,
+   `metadata JSONB DEFAULT '{}'`, `recorded_at TIMESTAMPTZ DEFAULT NOW()`.
+3. `CREATE INDEX IF NOT EXISTS idx_performance_metrics_name_time ON
+   public.performance_metrics(metric_name, recorded_at DESC)`.
+4. `CREATE OR REPLACE FUNCTION public.record_metric(p_metric_name TEXT, p_metric_value DECIMAL,
+   p_metric_type TEXT DEFAULT NULL, p_metadata JSONB DEFAULT '{}') RETURNS void LANGUAGE plpgsql`
+   — argument names must match the `.rpc()` payload at `menu.get.ts:123` **character for
+   character**, or PostgREST will not resolve the overload.
+5. `ENABLE ROW LEVEL SECURITY`; INSERT via service role only, SELECT for `role='admin'` via the
+   inline EXISTS idiom.
+6. Verification block asserting both the table and the function exist in `pg_proc`.
+
+## Done
+
+- `GET /api/performance` stops returning 500 (returns an empty list until metrics accumulate).
+- `SELECT record_metric('test', 1)` inserts exactly one row.
+- Argument names verified character-for-character against `menu.get.ts:123` and `:144`.
+- Migration applies twice in a row with no error.
+- Committed: `S02-T03: performance_metrics + record_metric (migration 026)`.

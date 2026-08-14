@@ -1,0 +1,113 @@
+---
+id: S03
+name: Guest Identity, Loyalty Ledger and Idempotent Referral
+status: PLANNED
+gate: LOCKED
+lead_role: PLANNER
+invariants: [../S01-INVARIANTS.md, ./S02-INVARIANTS.md]
+requires: [supabase/SUPABASE.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti]
+pillars: [P1, P7]
+migrations: 031-035
+depends_on: [S02]
+---
+
+# S03: Guest Identity, Loyalty Ledger and Idempotent Referral
+
+> *«Азиз, тебя с такими инновациями местная молодёжь обанкротит. Ты что не в курсе, как с помощью
+> яйца эти утырки штамп перекатывают?»* — the paper punch-card is forgeable. The digital,
+> check-summed, server-generated card is not.
+
+## Objective
+
+Give a walk-in guest a stable, scannable, typo-proof identity that is **not** an auth account.
+Recompute loyalty from an append-only ledger inside a database trigger rather than in application
+code. Prove exactly-once, attribute-isolated referral attribution on the S02 idempotency helper.
+
+## Why this sprint is first
+
+P1 has zero upstream dependencies; P2/P3/P4 all consume it. Today `orders.customer_id` is
+`null` for every staff-created and walk-in order (`orders.post.ts:122`,
+`create-empty.post.ts:101`), so *no* retention metric is computable until a guest exists.
+`profiles` is hard-bound 1:1 to `auth.users` — a walk-in cannot be represented at all, and
+deleting the auth user cascades away the entire history.
+
+## Tracks
+
+### Track A — Core / Guest, Loyalty and Referral Schema
+requires: [supabase/SUPABASE.ti]
+gate: S02 invariants 1-3, 7 in force; migration counter at 031
+
+- [ ] S03-T01-GuestIdentityMigration.pd — `031_guest_identity.sql`
+- [ ] S03-T02-LoyaltyCoreMigration.pd — `032_loyalty_core.sql`
+- [ ] S03-T03-OrderGuestLinkAndTableQr.pd — `033_orders_guest_link_and_table_qr.sql`
+- [ ] S03-T04-LoyaltyAccrualTrigger.pd — `034_loyalty_accrual_trigger.sql`
+- [ ] S03-T05-ReferralIdempotencyMigration.pd — `035_referrals.sql`
+
+### Track B — Services / Guest, Loyalty and Referral API
+requires: [nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, supabase/SUPABASE.ti]
+gate: Track A applied; `requireTrustedActor` and `insertIdempotent` available from S02
+
+- [ ] S03-T06-CardCodeUtility.pd — mod-97 check character; the answer to `CARD-136533`
+- [ ] S03-T07-GuestPermissionKeys.pd
+- [ ] S03-T08-GuestCrudRoutes.pd
+- [ ] S03-T09-CardAndTableResolveRoutes.pd
+- [ ] S03-T10-GuestNotesAndLoyaltyRoutes.pd
+- [ ] S03-T11-GuestOrderLinkage.pd
+- [ ] S03-T12-ReferralRoutes.pd
+
+### Track C — UI / Guest Card Surfaces
+requires: [vue3-nuxt-tailwind/VUE3_NUXT_TAILWIND.ti, typescript/TYPESCRIPT.ti]
+gate: Track B routes returning real data
+
+- [ ] S03-T13-GuestComposables.pd
+- [ ] S03-T14-GuestsPageAndCardPanel.pd — the substitute-waiter surface
+- [ ] S03-T15-GuestCaptureSurfaces.pd — scan modal + safe manual entry
+- [ ] S03-T16-LoyaltyTruthUnification.pd
+
+## Article traceability
+
+| Article beat | Delivered by |
+| ------------ | ------------ |
+| Forgeable paper stamps → digital card | T01, T06 |
+| `CARD-135633` typo'd into `CARD-136533` | T06 check character + T09 pre-DB rejection |
+| "Positive: likes it spicy, no onion" — the substitute waiter reads the card | T10, T14 |
+| 4 purchases → 5, 240 bonuses → 290, regular → discount tier | T02, T04 |
+| Phone changes / customer refuses to give it | T01 (`phone` descriptive, never a key) |
+| Referred girlfriend inherits "triple jalapeño" and screams | T05, T12 (attribute isolation) |
+
+## Definition of Done
+
+- [ ] A walk-in guest with no auth account can be created, given a printable card code, attached
+      to an order, and read back by a *different* staff member
+- [ ] Marking the same order paid twice awards points exactly once; `points_balance` equals the
+      sum of the ledger
+- [ ] Redeeming the same referral code twice yields one referral row; a referral that would
+      inherit the referrer's preferences is rejected **by the database**
+- [ ] A mistyped card code is rejected by the check character before any DB lookup
+- [ ] Profile and guest card display the same loyalty tier (two competing truths eliminated)
+- [ ] Every guest-PII route rejects a forged `body.userRole` with 403
+- [ ] Migrations 031-035 apply idempotently twice; `/api/health/schema` lists the new objects
+- [ ] **Owner-visible deliverable:** `/guests` page — search a guest, read their card
+
+## Invariants Produced
+
+1. `public.guests` is the customer of record; `public.profiles` is staff-and-account identity
+   only. **No sixth role was created** — the 5-role invariant holds.
+2. A card code is server-generated, carries a mod-97 check character, and is never accepted from
+   a client.
+3. `phone` is descriptive data, never a key and never uniquely constrained.
+4. All loyalty mutation happens inside `recompute_loyalty_on_payment()` or through
+   `/api/loyalty/adjust` with a caller-supplied `idempotencyKey`. No route writes points directly.
+5. `loyalty_accounts.tier` is the only loyalty truth. Deriving a tier from account age is
+   prohibited.
+6. `orders.guest_id` is the guest linkage; `orders.customer_id` remains the auth linkage. The two
+   are maintained independently.
+7. A guest may be referred at most once, ever, enforced by `idx_referrals_referred_once`, and
+   never inherits referrer attributes.
+8. Migration numbering continues at **036**.
+
+## Risk
+
+QR/barcode decoding has **no** library in the locked module set and `BarcodeDetector` is
+Chromium-only. T15 must ship the manual-entry fallback regardless; the check character is what
+makes that fallback safe. A polyfill dependency is an open question for the user.

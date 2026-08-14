@@ -1,0 +1,47 @@
+---
+id: S02-T12
+name: Status Vocabulary Enforcement
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: B
+requires: [typescript/TYPESCRIPT.ti]
+blocked_by: [S02-T01, S02-T05]
+out:
+  - REDA/_app/reda/server/utils/status-management.ts
+  - REDA/_app/reda/server/api/orders/create-empty.post.ts
+  - REDA/docs/STATUS_VOCABULARY.md
+---
+
+# S02-T12: Status Vocabulary Enforcement
+
+## Objective
+
+Make S02-T01's decisions enforceable in code: a frontend-only status literal can never reach a DB
+write, and no source file branches on the unreachable string `'barman'`.
+
+## Steps
+
+1. Write `docs/STATUS_VOCABULARY.md` stating the canonical vocabulary:
+   `orders.payment_status` is `unpaid|paid|refund_process|refunded` (post S02-T05);
+   `order_items.service_status` stays `pending|preparing|ready|served|declined`;
+   `'queued'` is frontend-only and MUST pass through `mapItemFrontendToBackend`
+   (`status-management.ts:271-312`).
+2. Add explicit doc comments above `PAYMENT_STATUSES` and `ITEM_SERVICE_STATUSES` marking
+   `QUEUED` as `FRONTEND_ONLY`.
+3. Add `assertDbStatus(value, kind)` that throws `StatusTransitionError` if a frontend-only
+   literal (`'queued'`) reaches a DB write path.
+4. Fix the code path that can never match: `server/api/orders/create-empty.post.ts:54` branches on
+   `'barman'`, which `validateUserRole` (`status-management.ts:438`) can never return — normalise
+   to `'bartender'` per S02-T01 Decision B.
+5. Grep the repo to confirm zero remaining source branches on the string `'barman'` (UI display
+   labels are exempt and must be identified as such).
+
+## Done
+
+- `docs/STATUS_VOCABULARY.md` exists and names the canonical vocabulary explicitly.
+- `assertDbStatus` throws when handed `'queued'`.
+- No remaining source file **branches** on the string `'barman'`.
+- `create-empty.post.ts` bar-order path is now reachable.
+- No `any` introduced; `pnpm build` succeeds.
+- Committed: `S02-T12: status vocabulary enforcement`.

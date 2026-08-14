@@ -1,0 +1,52 @@
+---
+id: S02-T08
+name: Shared Domain Types
+status: TODO
+gate: LOCKED
+sprint: ./S02-FoundationContractFreeze.ptl
+track: B
+requires: [typescript/TYPESCRIPT.ti, vue/VUE.ti]
+out:
+  - REDA/_app/reda/types/menu.ts
+  - REDA/_app/reda/types/order.ts
+  - REDA/_app/reda/types/index.ts
+  - REDA/_app/reda/composables/useMenu.ts
+  - REDA/_app/reda/components/menu/MenuGrid.vue
+  - REDA/_app/reda/components/MenuDisplay.vue
+---
+
+# S02-T08: Shared Domain Types
+
+## Objective
+
+Extract the `MenuItem` interface that is duplicated **verbatim in four files** into a single types
+module, before S04 and S05 each add fields to it.
+
+## Context
+
+`composables/useMenu.ts:1-9`, `components/MenuDisplay.vue:242-250`,
+`components/menu/MenuGrid.vue:71-79` and `components/MenuItemCard.vue:36-44` each redeclare it.
+`types/` currently holds only `feedback.ts`. Every future field addition is otherwise a four-file
+edit with drift risk.
+
+## Steps
+
+1. Create `types/menu.ts` exporting `MenuItem` and `MenuData` — canonical shape from
+   `composables/useMenu.ts:1-16`, with `id: string`, **not** the incorrect `id: number` DTO at
+   `server/api/menu.get.ts:2`.
+2. Create `types/order.ts` exporting `Order` and `OrderItem` — canonical shape from
+   `composables/useOrders.ts:6-47`.
+3. Create `types/index.ts` as the barrel re-export.
+4. Replace the local interface blocks in `useMenu.ts:1-9`, `menu/MenuGrid.vue:71-79` and
+   `MenuDisplay.vue:242-250` with imports from `~/types`.
+5. Add `isAvailable?: boolean` and `coverage?: number` as optional fields now, so S05 does not
+   have to re-edit consumers.
+6. Leave `components/MenuItemCard.vue` alone — it is deleted in S02-T16.
+
+## Done
+
+- `grep -c 'interface MenuItem'` across `composables/` and `components/` returns 0.
+- Exactly one declaration of `MenuItem` exists in the app.
+- `pnpm build` type-checks; no `any` introduced.
+- No behaviour change: the menu page renders identically.
+- Committed: `S02-T08: extract shared domain types`.

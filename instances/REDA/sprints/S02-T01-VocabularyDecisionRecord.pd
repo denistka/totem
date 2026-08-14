@@ -1,0 +1,46 @@
+---
+id: S02-T01
+name: Vocabulary and Status Decision Record
+status: DONE
+gate: OPEN
+commit: e8a53f075
+branch: s02-foundation-contract-freeze
+sprint: ./S02-FoundationContractFreeze.ptl
+track: A
+requires: [supabase/SUPABASE.ti, typescript/TYPESCRIPT.ti]
+out:
+  - REDA/docs/DECISIONS/S02-vocabulary-and-status.md
+  - REDA/docs/ROLE_PERMISSIONS_REFERENCE.md
+---
+
+# S02-T01: Vocabulary and Status Decision Record
+
+## Objective
+
+Resolve in writing the three vocabulary contradictions that eight downstream migrations would
+otherwise bake in permanently. **Documentation only — no code, no schema.**
+
+## Steps
+
+1. Read `orders_payment_status_check` @ `supabase/migrations/001_initial_database_schema.sql:62`
+   against `PAYMENT_STATUSES.REFUND_PROCESS` @ `server/utils/status-management.ts:18` and the
+   notes-string workaround @ `server/api/orders/[orderId]/refund.post.ts:86-89`.
+2. Record **Decision A**: `refund_process` becomes a legal `payment_status` via an additive CHECK
+   extension. No existing row is invalidated. The `REFUND_REQUESTED:` notes-prefix encoding is
+   retired in S04-T10.
+3. Record **Decision B**: `bartender` is the ONLY string permitted in DB CHECK constraints and
+   TypeScript unions; `BARMAN` survives as a UI display label only. Cite the collision at
+   `server/utils/error-handling.ts:352` (accepts both) and
+   `server/api/orders/create-empty.post.ts:54` (branches on `'barman'`, unreachable).
+4. Record **Decision C**: item status `queued` stays a UI-only alias resolved by
+   `mapItemFrontendToBackend` (`status-management.ts:271-312`). No new item status value is
+   created — the locked item flow in S01:33 is preserved as a presentation vocabulary.
+5. Append a `Vocabulary` section to `docs/ROLE_PERMISSIONS_REFERENCE.md` linking the decision
+   record.
+
+## Done
+
+- Each of the three decisions cites at least one `file:line` as evidence.
+- The document explicitly states that **Decision A requires human sign-off before S02-T05 runs**.
+- No source file is modified in this task.
+- Committed: `S02-T01: vocabulary and status decision record`.

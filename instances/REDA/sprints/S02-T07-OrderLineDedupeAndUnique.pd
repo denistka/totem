@@ -1,0 +1,49 @@
+---
+id: S02-T07
+name: Order Line Dedupe and Unique Index
+status: DONE
+gate: OPEN
+sprint: ./S02-FoundationContractFreeze.ptl
+track: A
+requires: [supabase/SUPABASE.ti]
+out:
+  - REDA/supabase/migrations/030_order_items_dedupe_unique.sql
+---
+
+# S02-T07: Order Line Dedupe and Unique Index
+
+## Objective
+
+Prove against production data that order lines can be made unique, retiring the
+highest-probability migration failure in the whole roadmap.
+
+## Why this is risky
+
+No unique constraint exists on `order_items` today, yet ~8 reads assume uniqueness via
+`.eq('order_id',x).eq('menu_item_id',y).single()` (`[id].put.ts:217-222`,
+`item-status.put.ts:67-72`, `decline-item.post.ts:82-88`, `items.post.ts:111-116`). A past
+double-submit would already be causing intermittent `.single()` failures. If duplicates exist,
+S04's three-column unique index would fail to create — **after** four sprints of work had been
+built on the assumption that it would.
+
+## Steps
+
+1. In one statement, collapse duplicate `(order_id, menu_item_id)` rows: keep the earliest
+   `created_at` row, SUM the quantities into it, delete the rest.
+2. `CREATE UNIQUE INDEX IF NOT EXISTS idx_order_items_line_identity ON
+   public.order_items(order_id, menu_item_id)` — the interim two-column form. S04-T02 widens it
+   to include `composition_hash`.
+3. Recompute `orders.total_amount` for every order touched by the dedupe, rounding to two
+   decimals.
+4. Verification block that `RAISE EXCEPTION` if any duplicate pair survives, and `RAISE NOTICE`
+   with row counts before/after and the number of merged pairs.
+
+## Done
+
+- Migration applies cleanly against a restore of
+  `REDA/supabase backup/db_cluster-02-11-2025@02-20-44.backup`.
+- Every `.eq('order_id',..).eq('menu_item_id',..).single()` read in the orders domain is now
+  guaranteed single-row.
+- Row counts before/after and merged-pair count are printed by the verification block.
+- Applies twice in a row.
+- Committed: `S02-T07: order line dedupe + unique index (migration 030)`.

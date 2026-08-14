@@ -1,0 +1,45 @@
+---
+id: S02-T06
+name: Restaurant Scope Defaults
+status: DONE
+gate: OPEN
+sprint: ./S02-FoundationContractFreeze.ptl
+track: A
+requires: [supabase/SUPABASE.ti]
+out:
+  - REDA/supabase/migrations/029_restaurant_scope_defaults.sql
+---
+
+# S02-T06: Restaurant Scope Defaults
+
+## Objective
+
+Make `restaurant_id` a real, always-populated scope key **before** ~25 new tables are created
+without one, so a second venue is a filter change rather than a rewrite.
+
+## Context
+
+Only `menu_items.restaurant_id` and `orders.restaurant_id` reference `restaurants`. No RLS policy
+filters by restaurant, and `orders.restaurant_id` is nullable and never set by
+`orders.post.ts:118-130`. `docs/AGENTS.MD:171` lists multi-location as a client requirement.
+
+## Steps
+
+1. Banner header, Category: FIX, Dependencies: 001.
+2. `ALTER TABLE public.orders ALTER COLUMN restaurant_id SET DEFAULT 'default-restaurant'`;
+   `UPDATE public.orders SET restaurant_id='default-restaurant' WHERE restaurant_id IS NULL`.
+3. Same default + backfill for `public.menu_items`.
+4. `CREATE INDEX IF NOT EXISTS idx_orders_restaurant_id ON public.orders(restaurant_id)`.
+5. Add a comment block stating the S02 invariant: every table created from migration **031**
+   onward carries `restaurant_id TEXT REFERENCES public.restaurants(id) DEFAULT
+   'default-restaurant'`.
+6. Verification block asserting zero NULL `restaurant_id` rows remain in `orders` and
+   `menu_items`.
+
+## Done
+
+- `SELECT COUNT(*) FROM orders WHERE restaurant_id IS NULL` returns 0.
+- New orders inserted without `restaurant_id` land on `'default-restaurant'`.
+- `idx_orders_restaurant_id` exists.
+- Applies twice in a row.
+- Committed: `S02-T06: restaurant scope defaults (migration 029)`.
