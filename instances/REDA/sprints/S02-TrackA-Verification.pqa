@@ -1,0 +1,91 @@
+---
+id: S02-QA-TrackA
+name: Track A Verification Plan
+role: QA
+sprint: ./S02-FoundationContractFreeze.ptl
+status: OPEN
+gate: N/A
+covers: [S02-T01, S02-T02, S02-T03, S02-T04, S02-T05, S02-T06, S02-T07]
+requested_by: HUMAN 2026-08-14
+artifact: https://claude.ai/code/artifact/5425d945-923d-4c57-93fe-a51d93b0b4a6
+---
+
+# S02 Track A — Verification Plan
+
+On-demand `.pqa`, written because the user asked for one. The readable version is the artifact
+linked above; this file is the durable, version-controlled record.
+
+## Blocking constraint
+
+`pnpm test:run` fails **12/12** — every test errors with
+`You must provide a Promise to expect() when using .rejects, not 'undefined'` (`$fetch` undefined in
+the test env). **There is no working automated coverage.** Everything below is manual until
+**S02-T14** lands. T14 should be treated as the top priority of Track C.
+
+## Already proven (do not re-test)
+
+| Claim | Evidence |
+| ----- | -------- |
+| All 30 migrations apply from empty | `supabase db reset` — every 025-030 block printed its NOTICE |
+| 025-030 idempotent | each applied twice; 2nd pass NOTICE, never EXCEPTION |
+| `record_metric` persists via the app | row `menu_api_execution_time = 63` from `menu.get.ts:123` |
+| `GET /api/performance` no longer 500s | HTTP 200 with populated JSON |
+| `refund_process` writable, junk rejected | UPDATE ok; `'not_a_real_status'` → `check_violation` |
+| Unique index rejects duplicates | 2nd insert of same pair → `unique_violation` |
+| New orders default `restaurant_id` | probe insert landed on `default-restaurant` |
+| Non-admin cannot write `venue_settings` | UPDATE as authenticated matched 0 rows |
+| `record_metric` is service_role-only | anon probe → `42501`, 0 rows; `anon=f authenticated=f service_role=t` |
+
+## P0 — highest damage if wrong
+
+1. **Add an already-present dish** (waiter → `/orders` → Add Dish). Must take the UPDATE branch
+   (`items-batch.post.ts:137-160`), quantity sums, no index hit.
+2. **Partial write leaves a wrong bill.** The insert loop commits per item and recomputes
+   `orders.total_amount` only *after* the loop. A `23505` on item 3 of 5 leaves items 1-2 committed
+   and the total stale — and `transactions.post.ts` bills from that total. **New failure class
+   introduced by 030.**
+3. **Concurrent add of the same new dish** from two sessions → loser gets `23505`. The
+   `creatingOrder` guard is per-tab only.
+4. **`POST /api/orders` with a repeated menu id** → HTTP 500 (already reproduced).
+   `orders.post.ts` does not group items; its sibling `items-batch` does. Unreachable from the UI
+   because both carts dedupe — a UI-only pass will report it absent.
+5. **Mark All Items Ready** (chef, then barman). Precondition: push an item to `preparing` first,
+   else `updatedCount: 0`. Then check over-reach — `mark-items-ready.post.ts:105-106` is an
+   `.in()/.in()` cross product.
+
+## P1 — real defects, no data loss
+
+- `/api/performance` is **unauthenticated 200** with the full payload (own service_role client, no
+  guard). Was always-500 before 026, so this sprint opened it. Guard it or accept it explicitly.
+- Unbounded metric growth: public `/menu` writes one row per mount, no retention or cap.
+- Declined lines occupy the unique slot; re-adding resurrects the tombstone and the dish stays
+  invisible to staff. 030 removed the escape hatch.
+- `ready_at` is written by only 1 of 3 ready paths — future metrics see a biased subset.
+- `refund_process` orders render as `new` — `computeFrontendStatus` has no branch (→ T12/S04-T10).
+
+## Cannot be tested today
+
+- Anything automated (broken harness).
+- `transaction_items` — only writer is `POST /api/transactions`, which has **no caller** (Pay uses
+  `/api/payment`). Zero rows, zero readers.
+- `PerformanceDashboard.vue` is mounted nowhere; `/api/performance` reachable only by URL.
+- 030's dedupe branch — zero duplicates, and the index now forbids seeding them. Needs a scratch DB.
+- `venue_settings` readers — none exist; `/settings/roles` is static with no nav link.
+- End-to-end payment — needs a real POS.
+
+## Corrections to earlier reporting
+
+1. **The order-total rewrite was NOT caused by 030.** Migration `004:97-104` seeds hardcoded totals
+   then recomputes them from line items — that is the source of 58.96 vs 57.98. Dry-running the
+   original recompute's WHERE clause returns **0 rows on both local and remote**. The scope fix
+   (`a268d4f16`) was kept as hardening, not repair.
+2. **`record_metric` was not actually locked down.** Supabase grants EXECUTE on new `public`
+   functions to `anon`/`authenticated` via default privileges, and `REVOKE ... FROM PUBLIC` does not
+   touch named-role grants. RLS still blocked the write (`42501`, 0 rows), so nothing was exposed,
+   but the second layer was missing. Fixed in `205900c64`.
+
+## Environment
+
+Local: API `127.0.0.1:54421` · DB `54422` · Studio `54423` · Mail `54424` · app `localhost:8080`.
+Logins `admin@ / waiter@ / barman@ / chef@ / visitor@example.com`, password `password123`.
+SQL: `docker exec supabase_db_REDA psql -U postgres -d postgres -c "..."`
