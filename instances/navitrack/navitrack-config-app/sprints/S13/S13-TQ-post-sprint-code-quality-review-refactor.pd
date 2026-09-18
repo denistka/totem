@@ -1,0 +1,23 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S13 TQ — Post-sprint code quality review + refactor
+sprint: S13
+requires: [FRONTEND_DEV, ARCHITECT, CODEMAP_QUALITY_ADVISOR, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  REQUIRED closeout. Shared UI, React/Tauri practice, refactor if needed.
+  Native paths must remain behind adapters; Fake/MSW untouched for unit tests.
+
+out:
+  - sprints/S13/QUALITY-NOTES.md
+  - refactors under paths.code as needed
+
+cmd:
+  - bun run test
+
+done:
+  - Quality review per CODE-QUALITY-MANDATE.md
+  - Needed refactors applied (or same-day follow-up .pd)
+  - `bun run test` passes

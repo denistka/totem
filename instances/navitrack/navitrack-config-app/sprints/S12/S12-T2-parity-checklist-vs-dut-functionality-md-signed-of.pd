@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S12 T2 — Parity checklist vs DUT-FUNCTIONALITY.md signed off
 sprint: S12

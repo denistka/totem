@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S09 T4 — Document: table does NOT write multi-point to DUT
 sprint: S09

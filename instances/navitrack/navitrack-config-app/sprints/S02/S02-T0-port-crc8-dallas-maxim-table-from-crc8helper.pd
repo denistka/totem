@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S02 T0 — Port CRC8 Dallas/Maxim table from Crc8Helper
+sprint: S02
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Byte-identical CRC vs legacy golden vectors extracted from C#.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/protocol/crc8.ts
+  - src/protocol/crc8.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Port CRC8 Dallas/Maxim table from Crc8Helper
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

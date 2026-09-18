@@ -1,0 +1,38 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S04
+title: BLE Transport
+epic: E3
+priority: P0
+dep: S03
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  BLE Transport for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S04-T0-bleadapter-interface-fakebleadapter-for-tests.pd
+      - S04-T1-name-filter-sensor-names-uuid-constants.pd
+      - S04-T2-scan-connect-mtu-200-gatt-notify-indicate.pd
+      - S04-T3-advertise-manufacturer-data-response-53-telemetry.pd
+      - S04-T4-connection-watchdog-sent-receive-thresholds.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S04-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

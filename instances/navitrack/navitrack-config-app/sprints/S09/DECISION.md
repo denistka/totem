@@ -21,4 +21,19 @@ It does **not** push a multi-point fuel↔frequency table to the device.
 
 ## Follow-up
 
-None required for parity; Standard mode already owns Command_47.
+**S15** (Epic E12): product uplift to allow Graduation → DUT multi-point write via Command_47.  
+Until S15-T0 amends invariants, this decision stands.
+
+---
+
+## S15 Amendment (2026-09-18)
+
+**This decision is superseded by S15-T0.**
+
+Graduation tab MAY now write a multi-point calibration table to the DUT:
+- Uses `Command_47` with 64×u16 payload (fuel↔freq pairs in legacy Xamarin order).
+- Password gate required before write.
+- Optional read-back via `Command_48` for verification.
+- Local draft + share remain unchanged.
+
+See `intel/S15-INVARIANTS.md` for updated product rules.

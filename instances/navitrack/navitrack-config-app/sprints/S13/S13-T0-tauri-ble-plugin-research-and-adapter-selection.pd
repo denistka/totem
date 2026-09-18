@@ -1,0 +1,26 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S13 T0 — Tauri BLE plugin research and adapter selection
+sprint: S13
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Choose plugin/sidecar approach for iOS/Android BLE GATT (UUIDs frozen in invariants). Document in intel/NATIVE-BLE.md. No production hardcode of Fake on device builds.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - intel/NATIVE-BLE.md
+  - src/ble/
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Tauri BLE plugin research and adapter selection
+  - Decision recorded; build flags documented
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.

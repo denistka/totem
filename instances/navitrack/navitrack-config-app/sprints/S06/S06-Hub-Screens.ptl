@@ -1,0 +1,37 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S06
+title: Hub Screens
+epic: E5
+priority: P0
+dep: S05
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Hub Screens for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S06-T0-main-hub-tab-ia-for-sensors-settings-logs-about.pd
+      - S06-T1-settings-screen-dut-fields-not-fleet.pd
+      - S06-T2-logs-screen-buffer-clear-share-hook-stub.pd
+      - S06-T3-about-screen-name-version.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S06-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

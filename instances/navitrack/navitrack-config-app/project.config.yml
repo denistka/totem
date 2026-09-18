@@ -1,0 +1,114 @@
+project:
+  name: NaviTrack Config App
+  version: 1.0.0
+  description: |
+    Hybrid DUT configurator (iOS / Android / desktop) — React 19 + Tauri 2.
+    Functionality source of truth: navitrack-dut-config-mobile (legacy Xamarin).
+    Visual / hybrid shell source: navitrack-mobile-apps (UI identity, Tauri stack).
+    Package manager: bun (NOT pnpm — only deliberate delta vs mobile-apps template).
+  parent: navitrack
+  stack:
+    - hybrid
+    - react19
+    - typescript
+    - tauri2
+    - bun
+    - tailwindcss
+    - zustand
+  package_manager: bun
+  package_manager_note: |
+    Use bun install / bun run. Do NOT introduce pnpm-lock.yaml or package-lock.json.
+    Template source navitrack-mobile-apps uses pnpm; when copying, rewrite scripts/lockfile to bun.
+
+testing:
+  reference: ../../../../../quintagroup/fintech-dashboard
+  strategy: ./intel/TESTING.md
+  mandate: ./intel/TEST-COVERAGE-MANDATE.md
+  hard_rule: |
+    EVERY new module/screen/protocol/BLE change MUST ship co-located Vitest tests.
+    Task not done unless `bun run test` passes. No live FCS in unit/integration.
+
+code_quality:
+  mandate: ./intel/CODE-QUALITY-MANDATE.md
+  hard_rule: |
+    AFTER EVERY SPRINT: review for shared UI reuse (src/ui), React best practices,
+    Tauri best practices; refactor in closeout if needed. Do not start next sprint
+    with untracked smell/debt from the previous one.
+  checklist:
+    - Reuse src/ui primitives; extract duplicates into src/ui
+    - React: modular components, typed props, lean re-renders
+    - Tauri: thin native surface, least-privilege capabilities, adapters
+    - Design tokens / glass identity consistent with mobile-apps
+    - bun run test still green after refactors
+  optional_advisor: CODEMAP_QUALITY_ADVISOR
+  stack:
+    - vitest
+    - happy-dom
+    - testing-library-react
+    - msw
+    - playwright
+  scripts:
+    unit: bun run test
+    e2e: bun run test:e2e
+  rules:
+    - Co-locate src/**/*.test.ts with source (fintech pattern).
+    - Mock HTTP with MSW; never hit live FCS API in unit/integration.
+    - Playwright e2e for critical UI journeys only.
+    - Protocol/CRC/BLE orchestration covered by Vitest with fakes.
+    - See TEST-COVERAGE-MANDATE.md — non-negotiable for DUT port sprints.
+
+sources:
+  functionality: ../../../../../navitrack/navitrack-dut-config-mobile
+  ui_template: ../../../../../navitrack/navitrack-mobile-apps
+  code: ../../../../../navitrack/navitrack-config-app
+
+paths:
+  code: ../../../../../navitrack/navitrack-config-app
+  history: ./sprints
+  intel: ./intel
+
+repo:
+  url: git@github.com:denistka/navitrack-config-app.git
+  https: https://github.com/denistka/navitrack-config-app
+  account: denistka@gmail.com
+  branch: main
+
+rebuild_strategy:
+  phase_1: |
+    Deep-analyze DUT app (screens, flows, domain) → intel/DUT-FUNCTIONALITY.md
+  phase_2: |
+    Scaffold empty shell from mobile-apps: keep Tauri/Vite/UI kit/logo/branding;
+    strip fleet screens, map, tracking stores/APIs. Placeholder home + company logo. DONE.
+  phase_3: |
+    Port DUT functionality via epics E1–E11 / sprints S01–S12 (gate: CLOSED — done 2026-09-18).
+    See intel/EPICS.md. RC: S12-INVARIANTS.md / sprints/S12/RC-NOTES.md.
+  phase_4: |
+    Post-RC epic E12 (S13–S15, gate: LOCKED): native BLE/OS, Advanced stubs, Graduation→DUT write.
+    See intel/POST-RC.md.
+  deltas_vs_mobile_apps:
+    - package_manager: bun (mobile-apps = pnpm)
+    - testing: fintech-dashboard pyramid + HARD mandate intel/TEST-COVERAGE-MANDATE.md
+    - code_quality: post-sprint review + refactor per intel/CODE-QUALITY-MANDATE.md
+
+active_planning:
+  epics: ./intel/EPICS.md
+  post_rc: ./intel/POST-RC.md
+  invariants: ./S01-INVARIANTS.md
+  sprints: ./sprints/
+  completed_sprints: S01-S15
+  next_sprint: null
+  s13_s15_gates: CLOSED
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - CODEMAP_QUALITY_ADVISOR
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - RUST_DEV
+    - MOBILE_TAURI
+    - BUN

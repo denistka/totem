@@ -1,0 +1,25 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S01 T1 — Navigation IA — replace fleet home with DUT hub routes
+sprint: S01
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Define AppScreen set: sensors|settings|logs|about|sensor-session(+tabs). Update navigation store + tab bar labels. Keep logo branding.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/config/lib/navigation.ts
+  - src/shell/
+  - src/screens/
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Navigation IA — replace fleet home with DUT hub routes
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

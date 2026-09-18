@@ -1,0 +1,27 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S14 T4 — Response_52 Advanced ValueUpdated wiring
+sprint: S14
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Ensure notify path surfaces protocol-52 results in Advanced UI/logs; registry already parses — wire session handler.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - src/store/
+  - src/screens/sensor-session/
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Response_52 Advanced ValueUpdated wiring
+  - 52 responses observed in Fake session test
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.

@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S10 T2 — Send single + multi-command queue (43+56)
 sprint: S10

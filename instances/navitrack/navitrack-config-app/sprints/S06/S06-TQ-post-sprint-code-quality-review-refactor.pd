@@ -1,0 +1,30 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S06 TQ — Post-sprint code quality review + refactor
+sprint: S06
+requires: [FRONTEND_DEV, ARCHITECT, CODEMAP_QUALITY_ADVISOR, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  REQUIRED closeout for every sprint. Review this sprint's diff for:
+  - Shared UI reuse (src/ui) — extract duplicates
+  - React best practices (composition, hooks, lean re-renders, file size)
+  - Tauri best practices (thin native, capabilities, adapters)
+  - Design-system consistency with mobile-apps tokens
+  Refactor in this task when needed. Do not start next sprint with unpaid smells.
+  Optional: CODEMAP_QUALITY_ADVISOR structural verdict.
+
+out:
+  - refactors under paths.code as needed
+  - optional note: sprints/S06/QUALITY-NOTES.md
+
+cmd:
+  - bun run test
+  - bun run lint
+
+done:
+  - Quality review completed per CODE-QUALITY-MANDATE.md
+  - Needed refactors applied (or explicit follow-up .pd opened same day)
+  - Shared UI / React / Tauri checklist satisfied
+  - `bun run test` passes after any refactors

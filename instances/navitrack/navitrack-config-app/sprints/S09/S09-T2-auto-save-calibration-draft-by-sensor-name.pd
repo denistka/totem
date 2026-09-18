@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S09 T2 — Auto-save calibration draft by sensor name
 sprint: S09

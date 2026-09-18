@@ -1,0 +1,40 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S08
+title: Sensor Standard Mode
+epic: E7
+priority: P0
+dep: S07
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Sensor Standard Mode for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S08-T0-sensor-session-shell-with-tabs-scaffold.pd
+      - S08-T1-password-gate-ui-cmd-0x50.pd
+      - S08-T2-live-telemetry-06-61-fields.pd
+      - S08-T3-read-settings-chain-e0-14-4d-c8-48.pd
+      - S08-T4-write-settings-chain-optional-47.pd
+      - S08-T5-min-max-capture-write-calibration-47.pd
+      - S08-T6-share-settings-txt.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S08-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

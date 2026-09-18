@@ -1,0 +1,37 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S02
+title: Protocol Foundation
+epic: E2
+priority: P0
+dep: S01
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Protocol Foundation for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S02-T0-port-crc8-dallas-maxim-table-from-crc8helper.pd
+      - S02-T1-package-encode-decode-prefix-addr-cmd-payload-crc.pd
+      - S02-T2-userstate-enum-session-state-helpers.pd
+      - S02-T3-ascii-pad-helpers-password-vehicle-len-8.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S02-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

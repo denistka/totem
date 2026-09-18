@@ -1,0 +1,27 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S14 T1 — Command_46 three-point table encode/UI send path
+sprint: S14
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Legacy: 3 calibration points. Finish Advanced picker send (un-stub); FakeBle round-trip tests; success string i18n.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - src/protocol/commands/
+  - src/screens/sensor-session/advanced*
+  - *.test.ts(x)
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Command_46 three-point table encode/UI send path
+  - Stub badge removed for 46 if enabled
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.

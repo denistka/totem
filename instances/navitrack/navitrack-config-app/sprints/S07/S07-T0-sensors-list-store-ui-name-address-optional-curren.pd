@@ -1,0 +1,25 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S07 T0 — Sensors list store + UI (name/address/optional CurrentData)
+sprint: S07
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  FakeBleAdapter drives list in tests.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/screens/sensors/
+  - src/store/useSensorsStore.ts
+  - *.test.ts(x)
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Sensors list store + UI (name/address/optional CurrentData)
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

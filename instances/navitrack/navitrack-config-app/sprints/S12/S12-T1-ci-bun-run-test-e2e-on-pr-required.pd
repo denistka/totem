@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S12 T1 — CI: bun run test (+ e2e on PR) required
 sprint: S12

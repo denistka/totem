@@ -1,0 +1,27 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S13 T3 — Native keep-awake / Wake Lock for sensor session
+sprint: S13
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Replace no-op keep-awake impl with Tauri/plugin or Screen Wake Lock where available; injectable for tests.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - src/lib/keep-awake.ts
+  - src-tauri/
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Native keep-awake / Wake Lock for sensor session
+  - Session still uses useKeepAwake; tests use stub
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.

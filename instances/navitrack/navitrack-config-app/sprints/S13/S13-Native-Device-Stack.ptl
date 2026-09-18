@@ -1,0 +1,45 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S13
+title: Native Device Stack
+epic: E12
+priority: P0
+dep: S12
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA, ARCHITECT]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+post_rc: true
+
+objective: |
+  Wire real Tauri BLE + OS permission prompts + wake-lock + system share behind existing adapters. Unit tests remain Fake/MSW.
+  HARD RULE: co-located Vitest; `bun run test` green; FakeBle/MSW in unit tests.
+  CLOSEOUT: TQ quality review before next sprint.
+
+tracks:
+  - id: A
+    title: BLE + permissions
+    tasks:
+      - S13-T0-tauri-ble-plugin-research-and-adapter-selection.pd
+      - S13-T1-implement-tauribleadapter-behind-bleadapter-interfac.pd
+      - S13-T2-os-ble-permission-prompts-android-12-and-ios-info-pl.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: B
+    title: Wake-lock + share
+    tasks:
+      - S13-T3-native-keep-awake-wake-lock-for-sensor-session.pd
+      - S13-T4-system-share-sheet-for-settings-logs-graduation.pd
+      - S13-T5-device-smoke-checklist-doc-manual-qa.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S13-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

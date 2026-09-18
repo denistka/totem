@@ -1,0 +1,36 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S01
+title: Contract Freeze
+epic: E1
+priority: P0
+dep: shell-baseline
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Contract Freeze for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S01-T0-freeze-s01-invariants-link-test-coverage-mandate.pd
+      - S01-T1-navigation-ia-replace-fleet-home-with-dut-hub-rout.pd
+      - S01-T2-msw-skeleton-test-scripts-documented-in-package-js.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S01-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

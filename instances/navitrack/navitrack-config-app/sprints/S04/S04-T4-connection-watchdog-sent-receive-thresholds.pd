@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S04 T4 — Connection watchdog (sent/receive thresholds)
+sprint: S04
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Mirror SensorPage timer logic with injectable clock.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/ble/watchdog.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Connection watchdog (sent/receive thresholds)
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

@@ -17,7 +17,7 @@ Source: `intel/DUT-FUNCTIONALITY.md`. Updated 2026-09-18.
 | Standard | Cal write 47 + min/max | yes | Vitest | |
 | Standard | Share settings | yes | Vitest | share helper stub/native-ready |
 | Password | Change 0x59 | yes | Vitest | |
-| Graduation | Table persist + share (no DUT multi-point write) | yes | Vitest | S09 DECISION.md |
+| Graduation | Table persist + share + DUT write via Command_47 | yes | Vitest | S15 amends S09 |
 | Advanced | Server flag gate | yes | Vitest | FCS flag in settings store |
 | Advanced | Command picker + send (+ stubs decision) | yes | Vitest | S10 DECISION-STUBS.md |
 | FCS | GetUserSettings params/flags | yes | Vitest/MSW | POST clients |
@@ -26,10 +26,12 @@ Source: `intel/DUT-FUNCTIONALITY.md`. Updated 2026-09-18.
 | Native | Permissions, keep-awake, share | partial | Vitest | Adapters/stubs; real Tauri plugins TBD |
 | QA | `bun run test` + e2e CI | yes | CI workflow | Real device BLE not in CI |
 
-## Remaining / known gaps
+## Remaining / known gaps → Epic E12 (planned)
 
-- Production Tauri BLE adapter (not Fake) on iOS/Android
-- Native permission prompts, Wake Lock / keep-awake plugin, system share sheet
-- Advanced stubs 46/47/5A intentionally incomplete (documented)
-- Graduation never writes multi-point to DUT (by design)
-- Firmware OTA / USB — out of product scope
+| Gap | Sprint | Notes |
+|-----|--------|-------|
+| Real Tauri BLE / OS permissions / wake-lock / system share | **S13** | Adapters + Fake/MSW stay for unit tests |
+| Advanced stubs 46 / 47 UI / 5A (+ Response_52) | **S14** | Amends S10 DECISION-STUBS |
+| ~~Graduation multi-point write to DUT~~ | **S15** ✅ | Done — amends S09/S12; uses Command_47 |
+
+See `intel/POST-RC.md`. Firmware OTA / USB — still out of product scope.

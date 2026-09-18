@@ -1,0 +1,38 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S14
+title: Advanced Stubs Completion
+epic: E12
+priority: P0
+dep: S13
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA, ARCHITECT]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+post_rc: true
+
+objective: |
+  Complete Advanced Mode stubs 46 / 47 UI / 5A (+ Response_52 handler gaps). Amend S10 DECISION-STUBS when production-ready.
+  HARD RULE: co-located Vitest; `bun run test` green; FakeBle/MSW in unit tests.
+  CLOSEOUT: TQ quality review before next sprint.
+
+tracks:
+  - id: A
+    title: Protocol + UI
+    tasks:
+      - S14-T0-amend-s10-stub-decision-enablement-scope.pd
+      - S14-T1-command-46-three-point-table-encode-ui-send-path.pd
+      - S14-T2-advanced-command-47-send-vs-standard-ownership.pd
+      - S14-T3-command-5a-implement-or-permanent-skip-with-tests.pd
+      - S14-T4-response-52-advanced-valueupdated-wiring.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S14-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

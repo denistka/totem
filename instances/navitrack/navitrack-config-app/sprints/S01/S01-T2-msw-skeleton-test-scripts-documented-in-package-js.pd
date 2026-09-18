@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S01 T2 — MSW skeleton + test scripts documented in package.json
+sprint: S01
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Add src/mocks/{handlers,data}.ts stubs; ensure test/test:e2e scripts; smoke test still green.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/mocks/
+  - package.json
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: MSW skeleton + test scripts documented in package.json
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

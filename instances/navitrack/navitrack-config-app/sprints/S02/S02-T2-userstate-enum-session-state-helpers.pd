@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S02 T2 — UserState enum + session state helpers
+sprint: S02
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Mirror UserState.cs transitions used by SensorPage.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/protocol/user-state.ts
+  - src/protocol/user-state.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: UserState enum + session state helpers
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

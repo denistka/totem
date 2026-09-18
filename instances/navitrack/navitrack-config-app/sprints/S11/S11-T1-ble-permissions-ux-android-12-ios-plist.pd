@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S11 T1 — BLE permissions UX (Android 12+ / iOS plist)
 sprint: S11

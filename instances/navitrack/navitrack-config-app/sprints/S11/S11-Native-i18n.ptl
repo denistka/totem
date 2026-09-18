@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S11
 title: Native i18n
@@ -26,12 +26,12 @@ tracks:
       - S11-T2-keep-screen-on-while-session-active.pd
       - S11-T3-native-share-for-settings-logs-calibration.pd
     requires: [FRONTEND_DEV]
-    gate: OPEN
+    gate: CLOSED
 
   - id: Q
     title: Post-sprint quality
     tasks:
       - S11-TQ-post-sprint-code-quality-review-refactor.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: OPEN
+    gate: CLOSED
 

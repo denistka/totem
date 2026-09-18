@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S11 T0 — Port LocaleEn/Ua/Ru keys used by DUT screens
 sprint: S11

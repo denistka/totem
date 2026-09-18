@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S10 T3 — Decision record for legacy stubs (46/47 UI, 5A, Response_52)
 sprint: S10

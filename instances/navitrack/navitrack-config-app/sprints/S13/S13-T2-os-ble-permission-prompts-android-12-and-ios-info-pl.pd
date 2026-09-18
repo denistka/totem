@@ -1,0 +1,27 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S13 T2 — OS BLE permission prompts Android 12+ and iOS Info.plist
+sprint: S13
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Wire checkBlePermissions/request to real APIs; keep probe injection for tests. Update tauri capabilities + iOS privacy keys.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - src/ble/permissions.ts
+  - src-tauri/
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: OS BLE permission prompts Android 12+ and iOS Info.plist
+  - Permission denied/btOff mapping still unit-tested via probes
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.

@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S04 T2 — Scan + connect + MTU 200 + GATT notify/indicate
+sprint: S04
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Wire Tauri/mobile plugin behind adapter; web uses Fake.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/ble/session.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Scan + connect + MTU 200 + GATT notify/indicate
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S10 T0 — Show Advanced tab only if IsAdvancedModeTabEnabled
 sprint: S10

@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S05 T3 — App settings store (scan/timeouts/cal rows/auto-connect/lang)
+sprint: S05
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Persist; defaults match ApplicationSettingsHelper.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/store/useAppSettingsStore.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: App settings store (scan/timeouts/cal rows/auto-connect/lang)
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

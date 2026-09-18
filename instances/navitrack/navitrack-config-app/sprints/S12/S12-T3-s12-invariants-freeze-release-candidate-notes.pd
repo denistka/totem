@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S12 T3 — S12-INVARIANTS + freeze release candidate notes
 sprint: S12

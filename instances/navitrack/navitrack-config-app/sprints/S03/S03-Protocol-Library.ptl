@@ -1,0 +1,44 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S03
+title: Protocol Library
+epic: E2
+priority: P0
+dep: S02
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Protocol Library for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Standard opcodes
+    tasks:
+      - S03-T0-commandcode-constants-command-base-builder.pd
+      - S03-T1-port-standard-path-cmds-06-0e-13-14-47-48-4d-4e-50.pd
+      - S03-T2-port-standard-path-responses-parse-registry.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: B
+    title: Advanced opcodes + runner
+    tasks:
+      - S03-T3-port-advanced-cmds-responses-17-42-43-45-46-49-4b.pd
+      - S03-T4-command-runner-single-multi-queue.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S03-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

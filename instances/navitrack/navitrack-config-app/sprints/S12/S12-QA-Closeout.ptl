@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S12
 title: QA Closeout
@@ -26,12 +26,12 @@ tracks:
       - S12-T2-parity-checklist-vs-dut-functionality-md-signed-of.pd
       - S12-T3-s12-invariants-freeze-release-candidate-notes.pd
     requires: [FRONTEND_DEV]
-    gate: OPEN
+    gate: CLOSED
 
   - id: Q
     title: Post-sprint quality
     tasks:
       - S12-TQ-post-sprint-code-quality-review-refactor.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: OPEN
+    gate: CLOSED
 

@@ -1,0 +1,25 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S03 T3 — Port Advanced cmds/responses (17,42,43,45,46,49,4B,51,52,58,59,5A,D3,D4,E2,E3,…)
+sprint: S03
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Include stubs noted in DUT inventory; tests for encode even if UI send later gated.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/protocol/commands/
+  - src/protocol/responses/
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Port Advanced cmds/responses (17,42,43,45,46,49,4B,51,52,58,59,5A,D3,D4,E2,E3,…)
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

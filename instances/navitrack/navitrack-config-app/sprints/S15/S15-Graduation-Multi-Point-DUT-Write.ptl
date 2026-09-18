@@ -1,0 +1,44 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S15
+title: Graduation Multi-Point DUT Write
+epic: E12
+priority: P0
+dep: S14
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA, ARCHITECT]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+post_rc: true
+
+objective: |
+  Product uplift: Graduation tab writes multi-point table to DUT via Command_47 (amends S09/S12 'never write' invariant). Local draft+share remain.
+  HARD RULE: co-located Vitest; `bun run test` green; FakeBle/MSW in unit tests.
+  CLOSEOUT: TQ quality review before next sprint.
+
+tracks:
+  - id: A
+    title: Invariant + protocol map
+    tasks:
+      - S15-T0-amend-s09-s12-invariants-graduation-may-write-dut.pd
+      - S15-T1-map-graduation-rows-command-47-ushort-payload.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: B
+    title: UI + session
+    tasks:
+      - S15-T2-graduation-write-to-device-action-password-gate.pd
+      - S15-T3-optional-read-back-via-command-48-after-write.pd
+      - S15-T4-update-parity-checklist-device-qa-for-graduation-wri.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S15-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

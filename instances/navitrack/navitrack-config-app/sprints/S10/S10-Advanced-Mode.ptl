@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S10
 title: Advanced Mode
@@ -26,12 +26,12 @@ tracks:
       - S10-T2-send-single-multi-command-queue-43-56.pd
       - S10-T3-decision-record-for-legacy-stubs-46-47-ui-5a-respo.pd
     requires: [FRONTEND_DEV]
-    gate: OPEN
+    gate: CLOSED
 
   - id: Q
     title: Post-sprint quality
     tasks:
       - S10-TQ-post-sprint-code-quality-review-refactor.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: OPEN
+    gate: CLOSED
 

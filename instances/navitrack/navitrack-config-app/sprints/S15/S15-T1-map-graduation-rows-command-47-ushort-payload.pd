@@ -1,0 +1,26 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S15 T1 — Map graduation rows → Command_47 ushort payload
+sprint: S15
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Define packing (freq/fuel pairs into 64×u16 LE) matching device expectations; golden tests vs encodeCommand47.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - src/protocol/graduation-pack.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Map graduation rows → Command_47 ushort payload
+  - Round-trip pack/unpack tests
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.

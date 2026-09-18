@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S04 T3 — Advertise manufacturer data → Response_53 telemetry
+sprint: S04
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Auto-connect list row data path.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/ble/advertise.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Advertise manufacturer data → Response_53 telemetry
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

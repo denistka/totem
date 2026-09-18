@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S12 T0 — Playwright journeys: hub, settings save, sensors mocked session password unlock
 sprint: S12

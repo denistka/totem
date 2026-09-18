@@ -1,0 +1,37 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S07
+title: Sensors Scanner
+epic: E6
+priority: P0
+dep: S04,S06
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Sensors Scanner for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S07-T0-sensors-list-store-ui-name-address-optional-curren.pd
+      - S07-T1-scan-button-permission-bt-off-error-copy.pd
+      - S07-T2-connect-open-sensor-session-route.pd
+      - S07-T3-playwright-e2e-hub-sensors-mocked.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S07-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

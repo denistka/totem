@@ -1,0 +1,37 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S05
+title: FCS API Prefs
+epic: E4
+priority: P0
+dep: S03
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  FCS API Prefs for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S05-T0-getusersettings-client-msw-handlers.pd
+      - S05-T1-sendlogmessage-client-msw.pd
+      - S05-T2-device-fingerprint-userid-userid2-sha-256.pd
+      - S05-T3-app-settings-store-scan-timeouts-cal-rows-auto-con.pd
+    requires: [FRONTEND_DEV]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S05-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED
+

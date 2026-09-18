@@ -1,0 +1,27 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S13 T1 — Implement TauriBleAdapter behind BleAdapter interface
+sprint: S13
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  scan/connect/MTU200/notify/write/disconnect. Select FakeBleAdapter only in web/test; TauriBleAdapter when `isTauri()` + mobile.
+  Post-RC epic E12. Package manager: bun.
+  SSOT: intel/DUT-FUNCTIONALITY.md + prior sprint DECISION docs (amend when stated).
+
+out:
+  - src/ble/tauri-adapter.ts
+  - src/ble/factory.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Implement TauriBleAdapter behind BleAdapter interface
+  - Factory switches correctly; Fake path unchanged in Vitest
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS; BLE unit tests stay on FakeBleAdapter / injected fakes.
