@@ -1,0 +1,37 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S10
+title: Advanced Mode
+epic: E9
+priority: P0
+dep: S08,S05
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Advanced Mode for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S10-T0-show-advanced-tab-only-if-isadvancedmodetabenabled.pd
+      - S10-T1-command-picker-dynamic-param-forms.pd
+      - S10-T2-send-single-multi-command-queue-43-56.pd
+      - S10-T3-decision-record-for-legacy-stubs-46-47-ui-5a-respo.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S10-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: OPEN
+

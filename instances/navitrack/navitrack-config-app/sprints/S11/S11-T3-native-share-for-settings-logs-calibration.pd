@@ -1,0 +1,24 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S11 T3 — Native share for settings/logs/calibration
+sprint: S11
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Mock share in Vitest; wire plugin on mobile.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/lib/share.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Native share for settings/logs/calibration
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

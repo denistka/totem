@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S12 T2 — Parity checklist vs DUT-FUNCTIONALITY.md signed off
+sprint: S12
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Checkboxes in intel/PARITY-CHECKLIST.md all covered or explicitly waived.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - intel/PARITY-CHECKLIST.md
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Parity checklist vs DUT-FUNCTIONALITY.md signed off
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

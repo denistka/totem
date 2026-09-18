@@ -1,0 +1,24 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S10 T2 — Send single + multi-command queue (43+56)
+sprint: S10
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Fake transport integration tests.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/screens/sensor/advanced/
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Send single + multi-command queue (43+56)
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

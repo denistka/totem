@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S12 T3 — S12-INVARIANTS + freeze release candidate notes
+sprint: S12
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Link test mandate; no open gate:OPEN tasks left for MVP.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - S12-INVARIANTS.md
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: S12-INVARIANTS + freeze release candidate notes
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

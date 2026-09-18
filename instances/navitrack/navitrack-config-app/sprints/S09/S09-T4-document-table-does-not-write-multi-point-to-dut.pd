@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S09 T4 — Document: table does NOT write multi-point to DUT
+sprint: S09
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Invariant note in screen + S09 invariants snippet.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - S09-INVARIANTS.md
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Document: table does NOT write multi-point to DUT
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

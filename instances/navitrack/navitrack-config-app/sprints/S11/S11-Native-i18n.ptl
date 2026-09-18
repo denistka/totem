@@ -1,0 +1,37 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S11
+title: Native i18n
+epic: E10
+priority: P0
+dep: S09,S10
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA]
+invariants: ../S01-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+
+objective: |
+  Native i18n for DUT port into navitrack-config-app.
+  HARD RULE: every task ships co-located Vitest coverage; `bun run test` must pass.
+  No live FCS; BLE unit tests use FakeBleAdapter only.
+  CLOSEOUT: TQ quality review (shared UI, React/Tauri practice, refactor) before next sprint.
+
+tracks:
+  - id: A
+    title: Delivery
+    tasks:
+      - S11-T0-port-localeen-ua-ru-keys-used-by-dut-screens.pd
+      - S11-T1-ble-permissions-ux-android-12-ios-plist.pd
+      - S11-T2-keep-screen-on-while-session-active.pd
+      - S11-T3-native-share-for-settings-logs-calibration.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S11-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: OPEN
+

@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S12 T0 — Playwright journeys: hub, settings save, sensors mocked session password unlock
+sprint: S12
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  e2e/*.spec.ts green.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - e2e/
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Playwright journeys: hub, settings save, sensors mocked session password unlock
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

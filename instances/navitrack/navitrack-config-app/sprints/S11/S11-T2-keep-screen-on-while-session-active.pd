@@ -1,0 +1,24 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S11 T2 — Keep-screen-on while session active
+sprint: S11
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  Tauri/plugin or web noop; tested via wrapper flag.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - src/lib/keep-awake.ts
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: Keep-screen-on while session active
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).

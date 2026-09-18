@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S12 T1 — CI: bun run test (+ e2e on PR) required
+sprint: S12
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+
+context: |
+  GitHub Action or documented workflow file.
+  SSOT: intel/DUT-FUNCTIONALITY.md. Package manager: bun.
+  Tests mandatory — see test_mandate.
+
+out:
+  - .github/workflows/test.yml
+
+cmd:
+  - bun run test
+
+done:
+  - Implements: CI: bun run test (+ e2e on PR) required
+  - Co-located Vitest tests cover new logic (happy + edge).
+  - `bun run test` passes.
+  - No live FCS calls in unit/integration (MSW/fakes only).
