@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T7 — Sensor catalog grid — one active, extensible
 sprint: S16
@@ -26,3 +26,5 @@ done:
   - Disabled/future products non-navigating + labelled
   - Adding a catalog entry is data-only (extensibility proven in test)
   - `bun run test` passes
+
+closed: 2026-09-24

@@ -5,7 +5,7 @@ UI shell: already scaffolded from `navitrack-mobile-apps`
 **Tests:** `intel/TEST-COVERAGE-MANDATE.md` (hard rule on every task)  
 **Code quality:** `intel/CODE-QUALITY-MANDATE.md` — **after every sprint**, review shared UI / React / Tauri practice and refactor before starting the next sprint.
 
-All sprints **S01–S15**: `gate: CLOSED` (executed 2026-09-18). History: `./sprints/`.
+All sprints **S01–S16**: `gate: CLOSED` (S16 executed 2026-09-24). History: `./sprints/`.
 
 ---
 
@@ -32,9 +32,10 @@ sprint tasks → bun run test green → CODE QUALITY review/refactor → then ne
 | **E10** Native + i18n | Permissions, keep-awake, share, Locale* parity | **S11** |
 | **E11** QA closeout | E2E journeys, CI gate, parity checklist | **S12** ✅ |
 | **E12** Post-RC gaps | Native BLE/OS + Advanced stubs + Graduation→DUT write | **S13–S15** ✅ |
-| **E13** Design shell parity | Mix mobile-apps chrome + customer structured IA (welcome, home tiles, catalog, report stub); 1 live sensor, extensible | **S16** `gate: LOCKED` |
+| **E13** Design shell parity | Mix mobile-apps chrome + customer structured IA (welcome, home tiles, catalog, report stub); 1 live sensor, extensible | **S16** ✅ |
+| **E14** Real DUT | macOS Tauri + live Navitrack BLE smoke (then more platforms/fixes) | **S17** `gate: LOCKED` |
 
-See `intel/POST-RC.md`. S16 intake open for further design remarks.
+See `intel/POST-RC.md`. Product sheet: `intel/NAVITRACK-BLE-DUT.md`.
 
 ---
 

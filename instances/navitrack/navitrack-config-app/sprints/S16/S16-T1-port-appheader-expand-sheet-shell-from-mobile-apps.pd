@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T1 — Port AppHeader expand-sheet shell from mobile-apps
 sprint: S16
@@ -27,3 +27,7 @@ done:
   - Hub screens show SettingsButton that toggles sheet chrome
   - Co-located Vitest (happy + collapse/backdrop)
   - `bun run test` passes
+
+closed: 2026-09-24
+note: |
+  Stub sheet: theme accordion only; DUT fields in T4. SettingsButton reused.

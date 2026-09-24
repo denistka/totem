@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T2 — Welcome screen visual parity (Login layout, no auth)
 sprint: S16
@@ -28,3 +28,5 @@ done:
   - App can cold-start on welcome
   - Locales + Vitest coverage
   - `bun run test` passes
+
+closed: 2026-09-24

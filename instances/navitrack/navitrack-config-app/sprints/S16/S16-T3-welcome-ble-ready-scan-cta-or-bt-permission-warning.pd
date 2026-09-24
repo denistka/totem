@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T3 — Welcome BLE gate — Scan CTA or BT/permission warning
 sprint: S16
@@ -26,3 +26,5 @@ done:
   - BT-off / no-permission path: warning visible, no successful scan navigation
   - Fake/stubbed readiness in Vitest (both branches)
   - `bun run test` passes
+
+closed: 2026-09-24

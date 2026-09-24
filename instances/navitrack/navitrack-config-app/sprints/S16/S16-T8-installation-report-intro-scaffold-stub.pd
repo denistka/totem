@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T8 — Installation report intro scaffold (stub)
 sprint: S16
@@ -24,3 +24,5 @@ done:
   - Intro screen reachable from home tile
   - Start does not implement full wizard (explicit stub behaviour)
   - Vitest smoke + `bun run test` passes
+
+closed: 2026-09-24

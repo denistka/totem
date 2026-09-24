@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:architect
 task: S16 T5 — Design-mix decision — structured IA, one sensor now
 sprint: S16
@@ -31,3 +31,5 @@ done:
   - S16-INVARIANTS updated
   - Explicit non-goals listed (GPS hub tile, account, RS-485, full report wizard)
   - `bun run test` passes
+
+closed: 2026-09-24

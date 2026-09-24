@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T6 — Home tile-grid hub (DUT features)
 sprint: S16
@@ -26,3 +26,5 @@ done:
   - Visual mix: card grid structure + mobile-apps tokens
   - Vitest covers tile navigation
   - `bun run test` passes
+
+closed: 2026-09-24

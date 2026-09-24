@@ -1,0 +1,26 @@
+gate: LOCKED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S17 T2 — Desktop dev build uses real TauriBleAdapter
+sprint: S17
+requires: [FRONTEND_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Ensure macOS `tauri dev` / desktop build selects TauriBleAdapter (isTauri, no VITE_FORCE_FAKE_BLE).
+  Web/Vitest remain Fake. Fix factory/env docs if desktop accidentally forced Fake.
+  Smoke that app window launches on macOS (compile success = hard done; radio in T3).
+  Package manager: bun.
+
+out:
+  - src/ble/factory.ts (if needed)
+  - docs/notes as needed
+  - factory tests still force Fake under Vitest
+
+cmd:
+  - bun run test
+
+done:
+  - Desktop Tauri build compiles and launches
+  - Adapter factory: Fake in test/web; real under Tauri desktop when not force-fake
+  - `bun run test` passes

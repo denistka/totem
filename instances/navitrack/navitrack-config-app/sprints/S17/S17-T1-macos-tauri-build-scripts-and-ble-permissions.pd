@@ -1,0 +1,28 @@
+gate: LOCKED
+v:4 c:$ m:navitrack-config role:dev x:rust
+task: S17 T1 — macOS Tauri build scripts + BLE permissions
+sprint: S17
+requires: [RUST_DEV, MOBILE_TAURI, FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Enable reliable macOS desktop target for navitrack-config-app (Tauri 2 + tauri-plugin-blec).
+  Add package.json scripts (e.g. macos:dev / tauri dev documented), Info.plist / entitlements /
+  Bluetooth usage strings as required by macOS + blec/btleplug.
+  Document any Xcode/signing prerequisites in short notes under sprints/S17/ or NATIVE-BLE.md.
+  Package manager: bun.
+
+out:
+  - package.json scripts
+  - src-tauri/* macOS plist/entitlements/conf as needed
+  - intel/NATIVE-BLE.md or sprints/S17/MACOS-BUILD.md notes
+  - *.test.ts only if code paths change
+
+cmd:
+  - bun run test
+
+done:
+  - Documented one-command macOS dev/build path
+  - BLE privacy / entitlements present for macOS
+  - `bun run test` passes

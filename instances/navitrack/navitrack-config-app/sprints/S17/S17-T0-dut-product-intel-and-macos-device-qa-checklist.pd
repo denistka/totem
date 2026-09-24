@@ -1,0 +1,26 @@
+gate: LOCKED
+v:4 c:$ m:navitrack-config role:dev x:qa
+task: S17 T0 — DUT product intel + macOS Device QA checklist
+sprint: S17
+requires: [QA, ARCHITECT, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Product sheet already at intel/NAVITRACK-BLE-DUT.md (site capture 2026-09-24).
+  Extend DEVICE-QA.md with macOS desktop path (Tauri macOS, Bluetooth privacy, name filters).
+  Reaffirm: app protocol = GATT/CRC SSOT, not marketing ModBus.
+  Package manager: bun.
+
+out:
+  - intel/NAVITRACK-BLE-DUT.md (confirm/link)
+  - intel/DEVICE-QA.md (macOS section)
+  - S17-INVARIANTS.md (start: live DUT target = Navitrack BLE)
+
+cmd:
+  - bun run test
+
+done:
+  - DEVICE-QA has macOS preflight + happy path
+  - S17-INVARIANTS names live product + protocol caveat
+  - `bun run test` passes

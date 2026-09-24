@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S16
 title: Design Shell Parity (Welcome + Structured Hub)
@@ -26,7 +26,7 @@ objective: |
   Now: one real BLE fuel sensor path. Catalog UI must scale to many models later (disabled/placeholders OK).
   No fleet GPS setup, no cloud personal account, no RS-485 in this sprint (tabs may show BT-only or hide RS-485).
   HARD RULE: Vitest + `bun run test`; FakeBle/MSW. CLOSEOUT: TQ.
-  Planning complete (intake #1–#3). Awaiting scope-approved before gate OPEN / execution.
+  Executed 2026-09-24. All tracks CLOSED.
 
 tracks:
   - id: A
@@ -36,7 +36,7 @@ tracks:
       - S16-T1-port-appheader-expand-sheet-shell-from-mobile-apps.pd
       - S16-T5-design-mix-decision-structured-ia-one-sensor-now.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: OPEN
+    gate: CLOSED
 
   - id: B
     title: Welcome / scan gate
@@ -44,14 +44,14 @@ tracks:
       - S16-T2-welcome-screen-visual-parity-login-layout-no-auth.pd
       - S16-T3-welcome-ble-ready-scan-cta-or-bt-permission-warning.pd
     requires: [FRONTEND_DEV, MOBILE_TAURI]
-    gate: OPEN
+    gate: CLOSED
 
   - id: C
     title: Settings sheet
     tasks:
       - S16-T4-dut-settings-in-header-sheet-reconcile-hub-tab.pd
     requires: [FRONTEND_DEV]
-    gate: OPEN
+    gate: CLOSED
 
   - id: D
     title: Structured hub + catalog
@@ -60,11 +60,13 @@ tracks:
       - S16-T7-sensor-catalog-grid-one-active-extensible.pd
       - S16-T8-installation-report-intro-scaffold-stub.pd
     requires: [FRONTEND_DEV]
-    gate: OPEN
+    gate: CLOSED
 
   - id: Q
     title: Post-sprint quality
     tasks:
       - S16-TQ-post-sprint-code-quality-review-refactor.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: OPEN
+    gate: CLOSED
+
+closed: 2026-09-24

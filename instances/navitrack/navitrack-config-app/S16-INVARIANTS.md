@@ -35,6 +35,20 @@ S01 §17 sensor-session tabs unchanged.
 | IA / structure (splash, tiles, catalog, report intro) | Customer refs `intel/design-refs/S16-customer/` |
 | Brand | **NaviTrack** — not ESCORT clone |
 
+### Home tile → route (T5 freeze)
+
+| Tile | Route |
+|------|-------|
+| `sensors` | catalog → session (interim: sensors hub) |
+| `logs` | logs |
+| `installation-report` | installation-report stub |
+| `about` | about |
+
+### Catalog
+
+- One live BLE fuel DUT now; model list extensible via `comingSoon` placeholders.
+- No RS-485 / GPS / account this sprint.
+
 ## Non-goals (this sprint)
 
 - Fleet GPS / tracker setup tile  

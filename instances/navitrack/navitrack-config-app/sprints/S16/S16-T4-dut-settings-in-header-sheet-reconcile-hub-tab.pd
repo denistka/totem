@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S16 T4 — DUT settings in header sheet + reconcile hub tab
 sprint: S16
@@ -27,3 +27,5 @@ done:
   - Existing settings behaviours preserved (store + save log)
   - Vitest covers sheet open + field update
   - `bun run test` passes
+
+closed: 2026-09-24
