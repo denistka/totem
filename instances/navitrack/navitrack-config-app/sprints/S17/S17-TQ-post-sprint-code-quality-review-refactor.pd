@@ -1,4 +1,4 @@
-gate: LOCKED
+gate: OPEN
 v:4 c:$ m:navitrack-config role:dev x:architect
 task: S17 TQ — Post-sprint code quality review + refactor
 sprint: S17

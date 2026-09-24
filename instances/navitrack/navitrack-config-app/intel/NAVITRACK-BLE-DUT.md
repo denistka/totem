@@ -78,5 +78,6 @@ Do **not** implement Modbus in the configurator unless a future product variant 
 
 - `DUT-FUNCTIONALITY.md` — app behaviour SSOT  
 - `NATIVE-BLE.md` — TauriBleAdapter / blec  
-- `DEVICE-QA.md` — manual smoke (extend for macOS in S17)  
+- `DEVICE-QA.md` — manual smoke (**macOS desktop path = S17**)  
+- `S17-INVARIANTS.md` — live DUT target + protocol caveat for this sprint  
 - `S01-INVARIANTS.md` — UUIDs / name filters  

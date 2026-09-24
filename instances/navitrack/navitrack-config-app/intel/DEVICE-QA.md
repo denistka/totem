@@ -1,17 +1,28 @@
-# Device smoke checklist — manual QA (S13-T5)
+# Device smoke checklist — manual QA (S13-T5 + S17 macOS)
 
-Use a **real DUT** + Tauri iOS/Android build (`bun run ios:dev` / `android:dev`). Unit tests stay on FakeBle/MSW.
+Use a **real DUT** + Tauri build. Unit tests stay on FakeBle/MSW — **no live BLE in CI**.
 
-## Preflight
+| Path | Launch | Sprint |
+|------|--------|--------|
+| iOS / Android | `bun run ios:dev` / `android:dev` | S13+ |
+| **macOS desktop** | `bun run macos:dev` (or `tauri dev` on macOS) | **S17** |
+
+Live product on hand: **Navitrack BLE** — see `intel/NAVITRACK-BLE-DUT.md`. App protocol = GATT/CRC (S01), **not** marketing ModBus.
+
+Name filters (advertise): `Navitrek` / `Nvt` / `NavOd` / `Navi` / `TD_`.
+
+---
+
+## Preflight (mobile)
 
 - [ ] Build uses TauriBleAdapter (not `VITE_FORCE_FAKE_BLE`)
 - [ ] Bluetooth ON on phone
-- [ ] DUT powered and advertising (name matches `Navitrek` / `Nvt` / `NavOd` / `Navi` / `TD_`)
+- [ ] DUT powered and advertising (name matches filters above)
 - [ ] First-run OS permission dialogs can appear
 
-## Happy path
+## Happy path (mobile)
 
-1. [ ] Open **Sensors** → **Scan**
+1. [ ] Open **Sensors** → **Scan** (or Welcome Scan / Catalog → session)
 2. [ ] OS BLE permission prompt → **Allow**
 3. [ ] DUT appears in list (name + optional advertise telemetry)
 4. [ ] Tap DUT → sensor session opens
@@ -21,6 +32,44 @@ Use a **real DUT** + Tauri iOS/Android build (`bun run ios:dev` / `android:dev`)
 8. [ ] Screen stays awake during session (wake-lock / keep-screen-on)
 9. [ ] Share settings / logs / graduation uses system share sheet or clipboard fallback
 10. [ ] Disconnect / leave session cleanly
+
+---
+
+## macOS desktop (S17)
+
+Primary field path for the unit on hand until mobile live DUT is re-run.
+
+### Preflight (macOS)
+
+- [ ] `bun run macos:dev` (or documented `tauri dev`) launches app window
+- [ ] Build uses **TauriBleAdapter** (not `VITE_FORCE_FAKE_BLE`, not browser Fake)
+- [ ] macOS **Bluetooth ON** (System Settings → Bluetooth)
+- [ ] App has Bluetooth privacy access if prompted (first launch / TCC)
+- [ ] DUT powered and advertising (name filters above)
+- [ ] Entitlements / Info.plist Bluetooth usage present (see `NATIVE-BLE.md` / S17 MACOS-BUILD notes)
+
+### Happy path (macOS)
+
+1. [ ] Open **Sensors** → **Scan** (or Welcome Scan CTA when BLE ready)
+2. [ ] OS / app Bluetooth permission → **Allow** if shown
+3. [ ] Navitrack BLE DUT appears in scan list
+4. [ ] Select DUT → sensor session opens
+5. [ ] Enter DUT password → auth (`0x50`) succeeds
+6. [ ] Standard tab **Read** chain completes (vehicle / probe / period / calibration)
+7. [ ] Live telemetry updates while session open (if DUT advertises / notifies)
+8. [ ] Disconnect / leave session cleanly
+
+Record results in `sprints/S17/SMOKE-NOTES.md` (OS version, DUT name seen, pass/fail, blockers).
+
+### Permission / power deny (macOS)
+
+| Case | Expected UI |
+|------|-------------|
+| Bluetooth off | Sensors / readiness: BT-off copy (not empty silent fail) |
+| Privacy denied | Permission error copy; scan works after granting in System Settings |
+| `VITE_FORCE_FAKE_BLE=1` | Fake demo devices only — not a live pass |
+
+---
 
 ## Graduation tab write (S15)
 
@@ -32,7 +81,7 @@ Use a **real DUT** + Tauri iOS/Android build (`bun run ios:dev` / `android:dev`)
 6. [ ] Optional: verify read-back matches (no mismatch warning)
 7. [ ] Share table → text no longer says "NOT written"
 
-## Permission / power deny paths
+## Permission / power deny paths (mobile)
 
 | Case | Expected UI |
 |------|-------------|

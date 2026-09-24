@@ -1,4 +1,4 @@
-gate: LOCKED
+gate: OPEN
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S17
 title: Real DUT — macOS Build + Live NaviTrack BLE
@@ -35,11 +35,11 @@ tracks:
       - S17-T2-desktop-dev-build-real-tauri-ble-adapter.pd
       - S17-T3-manual-smoke-live-navitrack-ble-scan-connect-read.pd
     requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, QA]
-    gate: LOCKED
+    gate: OPEN
 
   - id: Q
     title: Post-sprint quality
     tasks:
       - S17-TQ-post-sprint-code-quality-review-refactor.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: LOCKED
+    gate: OPEN

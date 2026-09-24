@@ -1,4 +1,4 @@
-gate: LOCKED
+gate: OPEN
 v:4 c:$ m:navitrack-config role:dev x:qa
 task: S17 T3 — Manual smoke: live Navitrack BLE scan/connect/read
 sprint: S17

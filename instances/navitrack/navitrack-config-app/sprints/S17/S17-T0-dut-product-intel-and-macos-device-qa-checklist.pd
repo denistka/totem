@@ -1,4 +1,4 @@
-gate: LOCKED
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:qa
 task: S17 T0 — DUT product intel + macOS Device QA checklist
 sprint: S17
