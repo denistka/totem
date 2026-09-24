@@ -1,0 +1,30 @@
+---
+id: S08-T10
+name: SprintClose
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:in-repo-planning, knowledge:work-control]
+slug: work-control
+---
+
+# S08-T10: Sprint Close
+
+## App-agent verify (MANDATORY)
+
+- [ ] `explain("in-repo-planning")` + `explain("work-control")`
+- [ ] `census()` + `bun run feature:health`
+- [ ] `list-apps` — no `apps/todo` app yet
+- [ ] `get-file` — `apps/work-control/planning/sprints/` has smoke artifacts
+
+## Checklist
+
+- [ ] `S08-SUMMARY.md`
+- [ ] `TOTEM_INDEX.ti` → S08 CLOSED; current S09 todo scaffold
+- [ ] `project.config.yml` `context.invariants` → S08 (optional)
+- [ ] MCP gap noted if any
+
+## Out
+
+`sprints/S08-SUMMARY.md`, `intel/TOTEM_INDEX.ti`

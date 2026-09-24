@@ -1,0 +1,39 @@
+---
+id: S06-T04
+name: OrgDocsWorkControl
+status: DONE
+gate: OPEN
+role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: work-control
+---
+
+# S06-T04: DAWWWB Org Docs — Work Control
+
+## Objective
+
+Add human-facing handbook page for work-control orchestrator + Totem gate flow (protocol §3 org layer).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("layer-cascade")` — orient to docs app structure
+- [ ] Read existing `docs/content/2.company/` pages for tone/format
+
+## Implementation (app-agent conventions)
+
+- [ ] Create `docs/content/2.company/3.work-control.md` (Nuxt Content frontmatter: title, description)
+- [ ] Cover: spine diagram, Accept → OPEN plan → open gate → run, ports (:3003 vs :3001),
+  link to Totem instance path, MCP preflight ritual (brief)
+- [ ] Link from `docs/content/2.company/0.index.md` or handbook if navigation exists
+- [ ] Human docs only — do NOT duplicate full knowledge slug content
+
+## Done when (app-agent)
+
+- [ ] Page renders on `:3000` docs site under Company section
+- [ ] No broken internal links; prose matches DAWWWB handbook tone
+
+## Out
+
+`docs/content/2.company/3.work-control.md`, optional index link

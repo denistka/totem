@@ -1,0 +1,26 @@
+---
+id: S09-T07
+name: SmokeAcceptTodo
+status: TODO
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:work-control, knowledge:todo]
+slug: work-control
+---
+
+# S09-T07: Smoke — Accept on `targetApp: todo`
+
+## Smoke
+
+1. work-control :3003 + todo :3004 up
+2. Chat → epic "TODO MVP task list" with `targetApp: todo`
+3. **Accept** → `apps/todo/planning/sprints/S10-*.ptl` @ `gate: OPEN` + `.pd` tasks
+4. Reader shows todo in-repo sprint
+5. **No** execution — gate stays OPEN (S10 executes)
+
+## Done when
+
+- [ ] Files on disk under `apps/todo/planning/sprints/`
+- [ ] Nothing written to external totem (default config)
+- [ ] Smoke notes in `S09-SMOKE.md`

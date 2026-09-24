@@ -1,0 +1,33 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S16 T5 — Design-mix decision — structured IA, one sensor now
+sprint: S16
+requires: [FRONTEND_DEV, ARCHITECT, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #3. Customer refs: intel/design-refs/S16-customer/ (01 splash, 02 home tiles, 03 catalog, 04 report intro).
+  Mix rules (freeze in S16-INVARIANTS + DECISION):
+  - Chrome/tokens/Logo/glass/header-sheet = mobile-apps
+  - Information architecture = customer (Welcome → Home tiles → Catalog → Session; report intro scaffold)
+  - Branding = NaviTrack (not ESCORT logo/red clone)
+  - Live product now: single fuel-level BLE DUT (existing name filters / session)
+  - Catalog data model: list of products; only one enabled; others `comingSoon` / disabled for future scale
+  Out of sprint: GPS tracker setup, cloud personal account, RS-485, full 6-step installation wizard
+  Package manager: bun.
+
+out:
+  - sprints/S16/DECISION-DESIGN-MIX.md
+  - S16-INVARIANTS.md (extend)
+  - src/config/invariants.ts / catalog types stub if needed
+  - *.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - DECISION-DESIGN-MIX.md records mix + tile→route map + catalog extensibility
+  - S16-INVARIANTS updated
+  - Explicit non-goals listed (GPS hub tile, account, RS-485, full report wizard)
+  - `bun run test` passes

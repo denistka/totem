@@ -167,6 +167,8 @@ Notes:
 | ---- | ---------------------------- |
 | Docs + MCP | `cd docs && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev` → :3000 (port in config) |
 | Control plane | `cd control && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev` → :3001 (port in config) |
+| Work Control | `cd apps/work-control && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev` → :3003 |
+| Todo app | `bun run dev:todo` or `cd apps/todo && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev` → :3004 |
 | A demo | `cd demos/<name> && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev --port <PORT>` (flag REQUIRED) |
 
 ⚠️ Boots but 500s on requests (turbo → Node runtime, see §2C):
@@ -196,7 +198,7 @@ Without `AI_PROVIDER_KEY`, agent chat / chat demo render a friendly "not configu
 ## 6. Verify / health
 
 ```bash
-bun run test          # vitest — 322 tests (NOT `bun test` — see DEEP-TEST-ANALYSIS.md)
+bun run test          # vitest — 336 tests (NOT `bun test` — see DEEP-TEST-ANALYSIS.md)
 bun run test:db       # bun:test SQLite — 56 tests
 bun run typecheck     # turbo typecheck (fails on demo-saas + control as of S03)
 bun run lint          # eslint

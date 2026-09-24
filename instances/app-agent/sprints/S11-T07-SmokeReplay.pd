@@ -1,0 +1,16 @@
+---
+id: S11-T07
+name: SmokeReplay
+status: TODO
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:work-control]
+slug: work-control
+---
+
+# S11-T07: Smoke — History Replay
+
+1. Run a board through gate + task execution (activity logged)
+2. Enable replay; scrub to prior timestamp
+3. UI matches historical state; no DB corruption

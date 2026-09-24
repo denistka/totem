@@ -15,7 +15,7 @@ Visualize agents working in realtime (taskboard-supabase feel) + an activity tim
 ## Execution
 - Board view per accepted epic: kanban columns todo/in_progress/done, fed by `wc_tasks`
   and live-patched from `useRealtime()` (T09) — cards move on `task.moved` without refresh.
-- Per-task: lead-role badge, agent state, a "Run" button (calls T08; disabled while gate LOCKED,
+- Per-task: lead-role badge, agent state, a "Run" button (calls T08; disabled while gate OPEN,
   with an "Open gate" affordance that calls T08's open-gate).
 - Activity timeline panel: ordered `wc_activity` + live `agent.activity` events (actor type
   human|agent). This is the timeline-lite seed; the time-machine scrubber is S07.

@@ -1,0 +1,59 @@
+---
+id: S14
+name: Platform Hygiene + CI
+status: PLANNED
+gate: OPEN
+lead_role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S14-INVARIANTS.md
+requires: [mcp/MCP.ti]
+depends: S13-MultiAgentHandoff.ptl
+---
+
+# S14: Platform Hygiene + CI
+
+## Objective
+
+Fix accumulated technical debt: commit S08–S11 (60+ uncommitted files), clean
+typecheck errors, add GitHub Actions CI (lint + typecheck + test), fix MCP wiring
+so PM can use `explain()` during any session, and audit secrets hygiene.
+
+## Prerequisites
+
+- S13 CLOSED
+- All tests green before committing
+
+## Known debt targeted
+
+1. **S08–S11 uncommitted** — 60+ modified + ~20 untracked files in `app-agent-io/core`
+2. **MCP not wired** — `.mcp.json` scope mismatch (project root vs user root)
+3. **TypeCheck errors** — 12+ from S04 era (demo-saas + control)
+4. **Totem not in git** — sprint intel at risk of loss
+5. **feature:health** not in CI — broken SEE refs go undetected
+
+## Tasks
+
+- [ ] S14-T01-FreezeInvariants.pd
+- [ ] S14-T02-CommitS08S11.pd
+- [ ] S14-T03-TypecheckClean.pd
+- [ ] S14-T04-GitHubActionsCi.pd
+- [ ] S14-T05-McpWiringFix.pd
+- [ ] S14-T06-TotemGitInit.pd
+- [ ] S14-T07-SecretsAudit.pd
+- [ ] S14-T08-SprintClose.pd
+
+## Definition of Done
+
+- [ ] `git log --oneline` shows S08–S11 as clean commits on `test-app`
+- [ ] `bun run typecheck` exits 0 (or documented exceptions with issue numbers)
+- [ ] GitHub Actions runs on push: lint + typecheck + vitest + feature:health
+- [ ] `explain()` tool available during PM execution from any session root
+- [ ] Totem `sprints/` dir is in a git repo (or documented backup strategy)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S15:** Work-control authentication (nuxt-auth-utils + OAuth, user-scoped chats)

@@ -1,5 +1,25 @@
 # DEEP — Work Control Orchestrator (S05)
 
+> ⚠️ **STALE — frozen 2026-06-21. S05-era design. Do not plan from this file.**
+>
+> This was the single source of truth for **S05**, three sprints and one pivot ago. It still holds
+> the correct *gate doctrine* — write `gate: LOCKED` → a human opens → `OPEN` → run — and that part
+> was never wrong. Everything about **how the work executes** has since been rebuilt:
+>
+> - The build plane is the **`claude` CLI** spawned directly (S43-T04/T02), not an HTTP tool loop.
+> - The daemon, work queue, claim/lease and boot-verify are current in `build-loop.md`; the
+>   executor contract, argv and degradation seam are current in `agent-runtime.md`.
+> - Gate integrity was re-audited in **S43-T03** (`S41-F14`): nothing is born OPEN, exactly one
+>   writer flips DB and disk, and a daemon that finds them divergent refuses to run.
+> - The sprint corpus this document's examples drew on was deleted under ruling R4 — it was
+>   `planner.mock.ts` output, 39 for 39
+>   (`apps/work-control/planning/CORPUS-PROVENANCE-EVIDENCE.md`).
+>
+> **Live sources of truth** — in the fork under `apps/work-control/docs/`:
+> `build-loop.md` · `agent-runtime.md` · `chat-session-transport.md` · `work-control.md`.
+>
+> Kept for history only. Retired by **S43-T11**.
+
 **Single source of truth** for S05. Every later task (T02–T12) implements a slice of
 this doc. Frozen decisions live in [`S05-INVARIANTS.md`](../S05-INVARIANTS.md); this doc
 shows *how* they fit together. Where this doc and a task `.pd` disagree, **the invariant
@@ -217,3 +237,21 @@ None blocking. Resolved during T01:
 2. *LOCKED vs OPEN on write-back?* → **LOCKED** (see top-of-doc defect note).
 3. *One WS or per-feature channels?* → one channel, room-scoped by `chatId`/`boardId` (§8).
 4. *Mock vs real boundary?* → `createAgent(role, kind)` factory; mock now, llm in S06 (§6).
+
+---
+
+## 9. S08–S11 updates (supersedes §3 write paths for new work)
+
+> Historical §3 still describes S05 mechanics; **current** write/read paths below.
+
+| Topic | Current (S11) |
+|-------|----------------|
+| Write path | `apps/{epic.targetApp}/planning/sprints/` via `planning-writer.ts` |
+| Resolver | `planning-path.ts` — in-repo first, legacy totem fallback |
+| Epic field | `wc_epics.target_app` (default `work-control`) |
+| Agents | mock + LLM (`factory.ts`, S06) |
+| History | `GET /api/boards/:id/history` + `HistoryScrubber` (S11) |
+| Dogfood apps | `work-control`, `todo` (:3004 MVP CRUD) |
+| Org docs | `explain("organization-planning")`, `explain("in-repo-planning")` |
+
+See `intel/DEEP-WORK-CONTROL.md` (rewritten S11) and `intel/SPRINT-ROADMAP.md`.

@@ -1,0 +1,65 @@
+---
+id: S12-T06
+name: AgentPresence
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  code: apps/work-control/server/api/tasks/[id]/run.post.ts
+  code2: apps/work-control/server/utils/presence.ts
+---
+
+# S12-T06: Agent Auto-Registration in Presence
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — gates + agent activity
+- [ ] Read `server/agents/run.ts` — task run state machine
+- [ ] Read `server/utils/presence.ts` (T02) — joinRoom / leaveRoom API
+
+## Implementation
+
+When an agent task starts running, it MUST appear in the board-room presence
+for the duration of the run (S12-INVARIANTS §5).
+
+Modify `server/agents/run.ts` (or `run.post.ts` caller):
+
+```ts
+// Before status → in_progress:
+const boardRoom = `board:${task.boardId}`
+const agentMember: PresenceMember = {
+  id: `agent:${task.id}`,
+  kind: 'agent',
+  role: task.leadRole ?? 'PM',
+  label: task.leadRole ?? 'Agent'
+}
+joinRoom(boardRoom, agentMember)
+
+// ... run task steps ...
+
+// After status → done (or on error):
+leaveRoom(boardRoom, `agent:${task.id}`)
+broadcastPresence([boardRoom])
+```
+
+Add `broadcastPresence(rooms: string[])` helper to `presence.ts`:
+```ts
+export function broadcastPresence(rooms: string[]): void {
+  for (const room of rooms) {
+    const members = getRoomMembers(room)
+    const { scopeType, scopeId } = roomToScope(room)
+    broadcast({ type: 'presence.sync', scopeType, scopeId, members })
+  }
+}
+```
+
+Also add 30-second safety timeout: if agent crashes, presence is cleared.
+
+## Done when
+
+- [ ] Run a task → agent avatar appears in board presence during execution
+- [ ] Task reaches `done` → agent avatar disappears within 1 s
+- [ ] `bun run test` — run.ts unit test verifies joinRoom/leaveRoom called

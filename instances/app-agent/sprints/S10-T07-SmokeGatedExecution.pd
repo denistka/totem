@@ -1,0 +1,24 @@
+---
+id: S10-T07
+name: SmokeGatedExecution
+status: TODO
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:work-control, knowledge:todo]
+slug: todo
+---
+
+# S10-T07: Smoke — Gated Execution Loop
+
+## Smoke
+
+1. work-control board with S10 tasks from `apps/todo/planning/sprints/`
+2. Human **open-gate** on board
+3. **Run** T03→T05 tasks (or verify already done) → `done` + WS activity
+4. Todo app CRUD works end-to-end on :3004
+5. MCP: `explain("todo")`, `introspect("todo")` if registered
+
+## Done when
+
+- [ ] Full loop documented; no gate bypass

@@ -1,0 +1,14 @@
+---
+id: S11-T01
+name: FreezeInvariants
+status: TODO
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+---
+
+# S11-T01: Ratify S11 Invariants
+
+- [ ] `explain("work-control")` — WS + activity sections
+- [ ] Read `totem/totem-view-sandbox` scrubber reference (filesystem, not MCP)

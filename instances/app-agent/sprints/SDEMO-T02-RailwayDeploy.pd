@@ -1,0 +1,93 @@
+---
+id: SDEMO-T02
+name: Railway Deploy
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+lead_role: DEVOPS
+estimated: 45m
+depends: SDEMO-T01-NitroPreset.pd
+---
+
+# SDEMO-T02: Railway Deploy
+
+## Objective
+
+Deploy work-control to Railway. Get a public URL. WebSocket must work.
+
+## Prerequisites
+
+- SDEMO-T01 CLOSED (build passes, node-server preset)
+- Railway account (railway.app) — free tier sufficient
+
+## App-agent preflight
+
+- [ ] MCP preflight §2
+- [ ] Confirm T01 `.output/` is clean Node build
+
+## Implementation
+
+### 1. Install Railway CLI
+
+```bash
+npm i -g @railway/cli
+railway login
+```
+
+### 2. Create `railway.json` in repo root (or `apps/work-control/`)
+
+```json
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "bun install && bun run build --filter=@app-agent/work-control"
+  },
+  "deploy": {
+    "startCommand": "node apps/work-control/.output/server/index.mjs",
+    "healthcheckPath": "/api/health",
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
+```
+
+### 3. Create `.env` for Railway (set via Railway dashboard, not committed)
+
+Required env vars:
+```
+NUXT_SESSION_PASSWORD=<random 32+ char string>
+PORT=3003
+NODE_ENV=production
+# LLM agents (optional — mock agent works without these)
+# ANTHROPIC_API_KEY=...
+```
+
+Do NOT set `CORE_DATASOURCE_*` — defaults to SQLite (fine for demo).
+
+### 4. Deploy
+
+```bash
+cd /Users/denistka/Projects/app-agent-io/DAWWWB-app-agent
+railway init          # link to project
+railway up            # deploy
+railway domain        # get public URL
+```
+
+### 5. Verify WebSocket
+
+Open public URL → work-control loads → chat → type message → ROOT responds.
+Check browser DevTools WS tab: `wss://<project>.railway.app` connection stays open.
+
+### 6. SQLite persistence note
+
+SQLite file lives in Railway ephemeral filesystem. Data resets on restart/redeploy.
+**This is acceptable for demo.** Document this for the audience.
+
+## Done when
+
+- [ ] Public URL loads work-control without error
+- [ ] Chat flow works: type → ROOT responds (mock or LLM)
+- [ ] Board loads, tasks run
+- [ ] WS connection stays alive (no reconnect loop in DevTools)
+- [ ] URL shared to Denis — accessible from another browser without login

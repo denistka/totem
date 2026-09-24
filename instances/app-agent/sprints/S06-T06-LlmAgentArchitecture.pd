@@ -1,0 +1,42 @@
+---
+id: S06-T06
+name: LlmAgentArchitecture
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, architecture/ARCHITECTURE_SCALE.ti]
+slug: work-control
+---
+
+# S06-T06: LLM Agent Architecture
+
+## Objective
+
+Design the LLM adapter layer under `server/agents/llm/` reusing `createModelForId` and the
+existing `Agent` interface. Document before implementation (T07–T09).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("integrations")` + `explain("work-control")`
+- [ ] Read `intel/DEEP-AI-INTEGRATIONS.md` + `apps/chat/server/api/chats/[id].post.ts` pattern
+- [ ] Read `apps/work-control/server/agents/types.ts` + mock implementations
+
+## Implementation (app-agent conventions)
+
+- [ ] Add `apps/work-control/docs/llm-agents.md`: context assembly (chat history, epic, static hints),
+  prompt boundaries, mock fallback rules, gate semantics unchanged
+- [ ] Define module layout: `server/agents/llm/{root,planner,task}.llm.ts`, shared `context.ts`, `factory.ts`
+- [ ] Specify env gate: reuse `validateIntegrations()` — incomplete → mock, no 503 on work-control boot
+- [ ] PLANNER output schema: validated `TaskPlan[]` matching role taxonomy from `useAgentRoles()`
+- [ ] No code in `core/` except if knowledge update deferred to T05/T11
+
+## Done when (app-agent)
+
+- [ ] `llm-agents.md` reviewed; T07–T09 can implement without ambiguity
+- [ ] Architecture respects S06 invariant §7–10
+
+## Out
+
+`apps/work-control/docs/llm-agents.md` (design doc; minimal scaffolding OK if typed stubs only)

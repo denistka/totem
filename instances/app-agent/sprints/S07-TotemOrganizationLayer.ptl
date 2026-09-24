@@ -1,0 +1,74 @@
+---
+id: S07
+name: Totem Organization Layer
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S07-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+supersedes: none
+---
+
+# S07: Totem Organization Layer
+
+## App-agent protocol
+
+All tasks in this sprint follow `APP-AGENT-PROTOCOL.md`.
+Code tasks use `templates/PD-APP-AGENT-BLOCK.md`.
+
+## MCP-first execution (MANDATORY on every PM task)
+
+Docs MCP must be running: `cd docs && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev` (:3000).
+
+| Phase | Tools |
+|-------|-------|
+| Preflight | `explain("layer-cascade")`, `explain("<slug>")`, `list-pages`, `get-page` |
+| Discover | `list-apps`, `get-file` (read before edit) |
+| Verify | `census()`, `get-page` (new pages), `bun run feature:health` |
+| Knowledge | `record(slug, aspect, content)` when updating slug aspects in-session |
+
+If MCP offline → WARN user, `[static fallback]` only; note gap in sprint summary (T07).
+
+## Objective
+
+Move Totem **header** rules (project-agnostic governance) into app-agent **organization**
+documentation layer (`docs/content/2.company/` + `organization/README.md`). Establish the
+layer map so future sprints can plan per-app instances (`apps/<app>/planning/`) via
+work-control — **not in this sprint**.
+
+## Foundation decisions (frozen — see S07-INVARIANTS.md)
+
+- **Totem header** = org handbook (governance, gates, roles, doc layers) — applies to every app
+- **Totem instance** = per-app (`apps/<app>/planning/`) — documented as future target, S08+
+- **Sprint home:** external totem `instances/app-agent/sprints/` (work-control unchanged)
+- **No code paths** changed in work-control this sprint
+
+## Tasks
+
+### Track A — Invariants & knowledge
+- [x] S07-T01-FreezeInvariants.pd
+- [x] S07-T02-KnowledgeOrganizationPlanning.pd
+
+### Track B — Organization handbook (Totem header rules)
+- [x] S07-T03-TotemGovernancePage.pd
+- [x] S07-T04-DocumentationLayersPage.pd
+- [x] S07-T05-OrganizationReadmePlanning.pd
+
+### Track C — Navigation & close
+- [x] S07-T06-CompanyNavSync.pd
+- [x] S07-T07-SprintClose.pd
+
+## Definition of Done
+
+- [x] Org pages explain Totem header rules without referencing a specific app/project
+- [x] Layer map: org (header) → knowledge → per-app docs → instance planning (future)
+- [x] `organization/README.md` mentions planning layer above apps
+- [x] Knowledge slug `organization-planning` green in `feature:health`
+- [x] `S07-SUMMARY.md`; `TOTEM_INDEX.ti` updated
+- [x] **No** `apps/todo/` or in-repo planning dirs created
+
+## Backlog (planned in totem after S07 — NOT this sprint)
+
+- S08: In-repo instance planning (`apps/<app>/planning/`) + work-control path migration
+- S09: TODO app scaffold (:3004) + dogfood via work-control Accept

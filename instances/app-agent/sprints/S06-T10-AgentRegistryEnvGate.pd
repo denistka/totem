@@ -1,0 +1,39 @@
+---
+id: S06-T10
+name: AgentRegistryEnvGate
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vue/VUE.ti]
+slug: work-control
+---
+
+# S06-T10: Agent Factory + Env Gate + UI Badge
+
+## Objective
+
+Centralize mock/llm selection; persist `kind` on `wc_agents`; show mock/llm badge in UI (S06 §7–8).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("work-control")` + `explain("integrations")`
+- [ ] Read `server/agents/propose.ts`, `run.ts`, `organization/app/app.config.ts` agents block
+
+## Implementation (app-agent conventions)
+
+- [ ] `server/agents/factory.ts` (or extend existing): `validateIntegrations()` → llm | mock
+- [ ] On agent assignment, set `wc_agents.kind`; expose in API for UI
+- [ ] UI: badge on epic/board/task surfaces (Nuxt UI token; no hardcoded role list)
+- [ ] Boot without `AI_PROVIDER_*` — app starts, mocks active, no error spam
+- [ ] Wire T07–T09 agents through factory
+
+## Done when (app-agent)
+
+- [ ] With env set → `kind: llm`; without → `kind: mock`; UI reflects both
+- [ ] `bun run test`, `feature:health`, eslint clean on work-control
+
+## Out
+
+`server/agents/factory.ts`, API fields, UI badge component(s)

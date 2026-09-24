@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S16 T7 — Sensor catalog grid — one active, extensible
+sprint: S16
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #3 ref 03-sensor-catalog. 2-col product cards: category, model, optional image, CTA chevron.
+  Data-driven catalog: ≥1 enabled = current NaviTrack fuel BLE DUT → existing scan/session flow.
+  Extra placeholder products allowed as disabled/comingSoon (future many sensors) — no fake BLE for them.
+  Connection tabs: Bluetooth only (or RS-485 visible-but-disabled). QR optional stub — not required.
+  Package manager: bun.
+
+out:
+  - src/screens/catalog/* (or sensors catalog)
+  - src/config/sensor-catalog.ts (extensible list)
+  - locales + *.test.ts(x)
+
+cmd:
+  - bun run test
+
+done:
+  - Catalog renders grid; enabled product opens scan/session path
+  - Disabled/future products non-navigating + labelled
+  - Adding a catalog entry is data-only (extensibility proven in test)
+  - `bun run test` passes

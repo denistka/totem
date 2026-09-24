@@ -32,8 +32,9 @@ sprint tasks → bun run test green → CODE QUALITY review/refactor → then ne
 | **E10** Native + i18n | Permissions, keep-awake, share, Locale* parity | **S11** |
 | **E11** QA closeout | E2E journeys, CI gate, parity checklist | **S12** ✅ |
 | **E12** Post-RC gaps | Native BLE/OS + Advanced stubs + Graduation→DUT write | **S13–S15** ✅ |
+| **E13** Design shell parity | Mix mobile-apps chrome + customer structured IA (welcome, home tiles, catalog, report stub); 1 live sensor, extensible | **S16** `gate: LOCKED` |
 
-See `intel/POST-RC.md`.
+See `intel/POST-RC.md`. S16 intake open for further design remarks.
 
 ---
 

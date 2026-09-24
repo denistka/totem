@@ -1,0 +1,27 @@
+---
+id: S27
+name: Weather Widget
+status: PLANNED
+gate: LOCKED
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S27-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+generated_by: work-control (S05 orchestrator)
+---
+
+# S27: Weather Widget
+
+## App-agent protocol
+All tasks in this sprint follow `APP-AGENT-PROTOCOL.md`.
+Code tasks use `templates/PD-APP-AGENT-BLOCK.md`.
+
+## Objective
+demo
+
+## Tasks
+- [ ] S27-T01-AddPingEndpoint.pd
+
+## Definition of Done
+- [ ] All tasks above complete and committed
+- [ ] A human opened the gate before any task ran (anti-auto-proceed axiom)

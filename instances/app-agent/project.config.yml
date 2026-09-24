@@ -8,12 +8,28 @@ project:
     Three-layer cascade (core -> organization -> apps) via defu merging + Nuxt Layers.
     Feature-Oriented Intelligence: slug joins code (// SEE:), knowledge files,
     defineFeature*() runtime instrumentation, MCP tools, and the control plane.
-    Ships docs+MCP (3000), control plane (3001), customer apps (chat 3002, work-control 3003), demos (3010-3014).
+    Ships docs+MCP (3000), control plane (3001), customer apps (chat 3002, work-control 3003, todo 3004), demos (3010-3014).
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, Nuxt UI v4, Nitro, MCP, Supabase, SQLite]
   context:
     instance_hub: ./INSTANCE.ti           # load immediately after this file — all roles
     brief: ./BRIEF.md              # read this before planning any sprint
-    invariants: ./S05-INVARIANTS.md   # active through S06 planning; supersedes S04 read-only Totem
+    # STALE POINTER, left in place for history: S12 has not been the active sprint since June.
+    # The ACTIVE invariants live in-repo since S36 —
+    #   <paths.code>/apps/work-control/planning/S36-INVARIANTS.md
+    #   <paths.code>/apps/work-control/planning/S41-INVARIANTS.md  (2 claims falsified; see TOTEM_INDEX.ti)
+    invariants: ./S12-INVARIANTS.md   # historical only
+    sprint_roadmap: ./intel/SPRINT-ROADMAP.md
+    # PLANNING HOME IS IN-REPO since S36: <paths.code>/apps/work-control/planning/ (+ /sprints, /evidence).
+    # Do NOT author .ptl/.pd in this external instance; ./sprints/ here is history only.
+    in_repo_planning:
+      default_app: work-control
+      path_pattern: apps/{targetApp}/planning/sprints/
+      # CORRECTED 2026-08-20 (QA): this pointed into the UPSTREAM repo (app-agent-io/core), where
+      # the file does not exist — planning-path.ts is a fork addition. Verified dangling; now
+      # points at paths.code. (The reference pointers below — agents_schema/readme/adr/knowledge/
+      # mcp_tools — DO resolve upstream and are left as upstream reference on purpose.)
+      resolver: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/server/utils/planning-path.ts
+      legacy_env: WORK_CONTROL_TOTEM_PATH
     app_agent_protocol: ./APP-AGENT-PROTOCOL.md   # MANDATORY for every role — see INSTANCE.ti
     mcp_preflight: ./intel/MCP-PREFLIGHT.ti
     pd_template: ./templates/PD-APP-AGENT-BLOCK.md
@@ -33,16 +49,33 @@ project:
 
 paths:
   # CRITICAL: Agent writes OUTSIDE totem/ — enforced relative path.
-  # totem-v6/instances/app-agent/ -> ../../../../app-agent-io/core -> /Projects/app-agent-io/core
-  code: ../../../../app-agent-io/core
-  workspace: ../../../../app-agent-io/core
+  # totem-v6/instances/app-agent/ -> ../../../../app-agent-io/DAWWWB-app-agent-dev -> /Projects/app-agent-io/DAWWWB-app-agent-dev
+  #
+  # CORRECTED 2026-08-20 (QA). These two keys and repo.branch below pointed at
+  # ../../../../app-agent-io/DAWWWB-app-agent on branch `test-app` until this edit. That is NOT
+  # where the work is, and the mismatch misled every new session — TOTEM_INDEX.ti carries a
+  # standing warning about it. Live target is the DEV worktree, branch `write-docs-in-auto`.
+  #
+  # TWO WORKTREES EXIST — do not "restore" the old values from memory:
+  #   DAWWWB-app-agent-dev  branch write-docs-in-auto  <- ALL live work; planning home; this config
+  #   DAWWWB-app-agent      branch vercel-demo         <- the Vercel demo branch (SDEMO-B, PARKED):
+  #                                                       preset:vercel, no hub:db, MemoryWorkControlRepo
+  #                                                       + seed, demoMode. Superseded by the in-repo
+  #                                                       S36/S41 chain; kept for the deploy target.
+  # Confirm before trusting either: `git branch --show-current` in the directory you are about to write to.
+  code: ../../../../app-agent-io/DAWWWB-app-agent-dev
+  workspace: ../../../../app-agent-io/DAWWWB-app-agent-dev
   history: ./sprints
   intel: ./intel
 
 repo:
-  url: git@github.com:app-agent-io/core.git
+  url: git@github.com:denistka/DAWWWB-app-agent.git
   account: denistka@gmail.com
-  branch: main
+  # CORRECTED 2026-08-20 (QA): was `test-app`. Both worktrees share this one remote; the branch
+  # below is the one checked out in paths.code. The other worktree holds `vercel-demo` — see the
+  # comment in `paths:` above before changing this back.
+  branch: write-docs-in-auto
+  upstream: git@github.com:app-agent-io/core.git
 
 guardians:
   protocol: ./APP-AGENT-PROTOCOL.md   # ALL roles below MUST load before acting

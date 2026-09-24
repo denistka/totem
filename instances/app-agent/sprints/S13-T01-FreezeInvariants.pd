@@ -1,0 +1,21 @@
+---
+id: S13-T01
+name: FreezeInvariants
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+---
+
+# S13-T01: Ratify S13 Invariants
+
+## Preflight
+- [x] explain("work-control") — spine, gates, WS contract
+- [x] explain("in-repo-planning") — planning path
+
+## Implementation
+- [x] S13-INVARIANTS.md ratified — multi-agent handoff scope, OUT list (auth, new app)
+
+## Close
+- [x] status → DONE

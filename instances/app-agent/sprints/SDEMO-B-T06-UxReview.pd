@@ -1,0 +1,79 @@
+---
+id: SDEMO-B-T06
+name: UX Review — Main Flow
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: PM
+estimated: 90m
+depends: SDEMO-B-T05-PresenceStub.pd
+---
+
+# SDEMO-B-T06: UX Review — Main Demo Flow
+
+## Objective
+
+Пройти полный demo флоу как зритель и починить всё что выглядит сыро.
+Фокус: первые 2 минуты демо должны быть идеальными.
+
+## Demo Script (целевой флоу)
+
+```
+1. Открыть / (home или /chats)
+2. Увидеть: 1 seeded chat "App Agent Demo" в сайдбаре
+3. Кликнуть → открыть чат
+4. Видно: ROOT приветствие + история сообщений
+5. Написать в чат: "Нужно добавить аутентификацию через GitHub"
+6. ROOT отвечает → предлагает 3 эпика в правой колонке
+7. Нажать Accept на эпике
+8. Переход на борд автоматически (или кнопка Board)
+9. Борд: 3 задачи (TODO/IN_PROGRESS/DONE)
+10. ROOT Agent виден в шапке (presence)
+11. Нажать Run на задаче → через 3с задача переходит в DONE (mock)
+```
+
+## Что проверять / чинить
+
+### Navigation
+- [ ] `/` → `/chats` редирект работает
+- [ ] Сайдбар показывает seeded chat
+- [ ] Breadcrumbs корректны
+
+### Chat view
+- [ ] Сообщения читаемы, timestamp отображается
+- [ ] Input в нижней части, не перекрывается клавиатурой
+- [ ] ROOT ответ (mock agent) приходит в разумное время
+
+### Epics column
+- [ ] Эпики появляются справа от чата
+- [ ] Кнопка Accept видна и работает
+- [ ] После Accept: визуальная смена статуса (proposed → accepted)
+
+### Board
+- [ ] После Accept → переход на борд (или кнопка в эпике)
+- [ ] 3 колонки: TODO / IN PROGRESS / DONE
+- [ ] Карточки с названием задачи + аватар роли (PM/DEVOPS/ARCHITECT)
+- [ ] "Run task" кнопка на TODO/IN_PROGRESS задачах
+
+### Presence
+- [ ] ROOT Agent аватар в шапке
+- [ ] Mock task.moved event → задача двигается через 3с
+
+### Mobile / resize
+- [ ] Базовая читаемость на 375px (можно не идеально)
+
+## Как тестировать локально
+
+```bash
+# запросить у Дениса перезапустить dev сервер work-control
+# или: проверить через built output
+bun run build --filter=@app-agent/work-control
+NUXT_PUBLIC_DEMO_MODE=true node apps/work-control/.output/server/index.mjs
+```
+
+## Done when
+
+- [ ] Полный demo script проходит без ошибок и без визуальных артефактов
+- [ ] Нет консольных ошибок в Chrome DevTools
+- [ ] Борд с задачами выглядит чисто
+- [ ] Mock task move работает визуально

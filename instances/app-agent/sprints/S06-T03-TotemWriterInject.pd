@@ -1,0 +1,46 @@
+---
+id: S06-T03
+name: TotemWriterInject
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S06-T03: totem-writer Protocol Injection
+
+## Objective
+
+Generated Accept plans must comply with `APP-AGENT-PROTOCOL.md` §4 and §8 — inject protocol
+fields and app-agent checklist into every `.pd` and `.ptl` written by `totem-writer.ts`.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("layer-cascade")` + `explain("work-control")` via Docs MCP (or read knowledge files if MCP offline)
+- [ ] Read `AGENTS.md` constraints for this change
+- [ ] `get-app-structure("work-control")` if unfamiliar with server layout
+
+## Implementation (app-agent conventions)
+
+- [ ] Code only under `apps/work-control/` — no upstream `core/` except allowed knowledge slug
+- [ ] `defineFeatureHandler("work-control", ...)` unchanged on existing routes
+- [ ] `// SEE: feature "work-control"` on changed files in totem-writer
+- [ ] Extend `renderPd()`: YAML adds `protocol: ../APP-AGENT-PROTOCOL.md`, `requires: [mcp/MCP.ti, nuxt/NUXT.ti]`
+- [ ] Append `templates/PD-APP-AGENT-BLOCK.md` body sections to generated `.pd` content
+- [ ] Extend `renderPtl()`: add `protocol`, `invariants: ../S<NN>-INVARIANTS.md` (or relative path),
+  `requires: [mcp/MCP.ti, nuxt/NUXT.ti]`; body includes "## App-agent protocol" blurb
+- [ ] Unit/smoke: accept flow writes compliant headers (no `gate: OPEN`)
+
+## Done when (app-agent)
+
+- [ ] `bun run test` (vitest) — NOT bare `bun test`
+- [ ] `bun run feature:health` — `work-control` slug green
+- [ ] Accept smoke produces `.pd` with `protocol:` + preflight/close sections
+- [ ] Knowledge: update `apps/work-control/docs/orchestrator.md` § generated plans
+
+## Out
+
+`apps/work-control/server/utils/totem-writer.ts`, orchestrator doc note

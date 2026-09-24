@@ -1,0 +1,26 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S16 T8 — Installation report intro scaffold (stub)
+sprint: S16
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #3 ref 04-installation-report-intro. Scaffold only: header + benefit copy + Start CTA.
+  Start → placeholder/coming-soon or soft navigate back — NO 6-step wizard this sprint.
+  Visual mix: mobile-apps tokens + structured intro layout (accent divider OK; no ESCORT hex clone required).
+  Package manager: bun.
+
+out:
+  - src/screens/installation-report/InstallationReportIntroScreen.tsx
+  - locales + *.test.tsx
+  - home tile route wiring
+
+cmd:
+  - bun run test
+
+done:
+  - Intro screen reachable from home tile
+  - Start does not implement full wizard (explicit stub behaviour)
+  - Vitest smoke + `bun run test` passes

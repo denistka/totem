@@ -1,0 +1,16 @@
+---
+id: S11-T03
+name: ActivitySnapshotModel
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+---
+
+# S11-T03: Activity Snapshot API
+
+- [ ] `GET /api/boards/:id/history` — ordered snapshots from `wc_activity`
+- [ ] `defineFeatureHandler('work-control', ...)`
+- [ ] Unit tests for snapshot ordering

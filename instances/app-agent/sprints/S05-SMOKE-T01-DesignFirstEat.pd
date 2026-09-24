@@ -1,0 +1,14 @@
+---
+id: S05-SMOKE-T01
+name: DesignFirstEat
+status: CLOSED
+gate: OPEN
+role: ARCHITECT
+artifact: smoke
+protocol: ../APP-AGENT-PROTOCOL.md
+generated_by: work-control (S05-T12 smoke)
+---
+
+# S05-SMOKE-T01: Design First eat (smoke)
+
+Historical smoke stub from S05-T12 Accept flow. Not executed as product work.

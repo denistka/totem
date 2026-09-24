@@ -1,0 +1,20 @@
+---
+id: S09-T01
+name: FreezeInvariants
+status: TODO
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+---
+
+# S09-T01: Ratify S09 Invariants
+
+## App-agent preflight
+
+- [ ] `explain("in-repo-planning")` + `explain("organization-planning")`
+- [ ] Verify S08 CLOSED — in-repo paths live
+
+## Done when
+
+- S09 scope excludes MVP CRUD; port 3004 frozen; ARCHITECT sign-off.

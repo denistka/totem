@@ -1,0 +1,65 @@
+---
+id: S12-T05
+name: AvatarStackUI
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+slug: work-control
+paths:
+  code: apps/work-control/app/components/PresenceAvatars.vue
+  integration: apps/work-control/app/pages/board/[id].vue
+  integration2: apps/work-control/app/pages/chat/[id].vue
+---
+
+# S12-T05: PresenceAvatars Component + Page Integration
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — presence + WS section
+- [ ] Read board `[id].vue` + chat `[id].vue` — find header area for avatar injection
+- [ ] Confirm T03 + T04 DONE
+
+## Implementation
+
+### PresenceAvatars.vue
+
+```vue
+<!-- Shows a stack of colored initials circles for each presence member.
+     "You" (own presenceId) gets a distinct ring. Agents get their role color.
+     Max 5 shown; "+N" overflow chip. Tooltip on hover: label + role. -->
+<script setup lang="ts">
+defineProps<{
+  members: PresenceMember[]
+  selfId: string
+}>()
+</script>
+```
+
+- Use `useAgentRoles()` for agent role → color mapping
+- Human: neutral gray circle with label initials
+- Agent: role color badge with role icon (e.g., i-lucide-radar for ROOT)
+- Self member: ring highlight (2px ring-white/60)
+- Overflow: show first 4 + "+N" chip
+- Tooltip (UTooltip or title attr): label + role string
+
+### Board page (`board/[id].vue`) integration
+
+- `usePresenceId()` for self member
+- Pass `member` to `useBoard()` which passes to `useRealtime()`
+- Add `<PresenceAvatars :members="members" :self-id="presenceId" />` in board header
+  (right side, next to WS indicator)
+
+### Chat page (`chat/[id].vue`) integration
+
+- Same pattern: `usePresenceId()` → pass to `useChats()` / `useRealtime()`
+- Add `<PresenceAvatars>` in chat header
+
+## Done when
+
+- [ ] Two tabs on same board: both see 2 avatars (including self) in header
+- [ ] Self member has ring; other user doesn't
+- [ ] Closing tab: avatar disappears from the other tab within ~1 s
+- [ ] Agent avatar appears on board during task run
+- [ ] `bun run test` — component renders with mock members

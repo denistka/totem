@@ -1,0 +1,55 @@
+---
+id: S21
+name: Onboarding + Demo Mode
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S21-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+depends: S20-CommandPalette.ptl
+---
+
+# S21: Onboarding + Demo Mode
+
+## Objective
+
+First-time user experience. Demo mode: pre-seeded chats/epics/boards (no auth
+required) accessible at `?demo=true` or `/demo`. Step-by-step walkthrough overlay
+guides user through: send message → ROOT proposes epics → Accept → Open gate →
+Run task → see timeline. Public showcase for the platform.
+
+## Features
+
+- **Demo seed script**: `scripts/seed-demo.ts` — creates fixed chat + epic + board
+- **Demo mode flag**: `?demo=true` shows seed data, disables auth redirect
+- **Walkthrough overlay**: 5-step tooltip chain (UStepIndicator or custom)
+- **Setup wizard**: first-time org config (org name, app selection, AI provider key)
+- **Public `/demo` route**: no login, read-only (Run is gated behind "Try it" button)
+
+## Tasks
+
+- [ ] S21-T01-FreezeInvariants.pd
+- [ ] S21-T02-DemoSeed.pd               — seed script, demo flag middleware
+- [ ] S21-T03-WalkthroughOverlay.pd     — 5-step tooltip chain component
+- [ ] S21-T04-SetupWizard.pd            — first-run org config UI
+- [ ] S21-T05-PublicDemoRoute.pd        — /demo page, read-only, CTAs
+- [ ] S21-T06-EmptyStates.pd            — empty state for new chat list, empty board
+- [ ] S21-T07-KnowledgeUpdate.pd        — onboarding slug (new)
+- [ ] S21-T08-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] `?demo=true` shows pre-seeded data without auth
+- [ ] Walkthrough guides new user through full loop
+- [ ] Setup wizard completes: org name saved to organization config
+- [ ] `/demo` route publicly accessible (no 401)
+- [ ] `bun run test` green (seed script deterministic)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S22:** Todo auth + personal/shared workspace (user-scoped tasks)

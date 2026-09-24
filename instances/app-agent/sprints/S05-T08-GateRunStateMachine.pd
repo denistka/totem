@@ -14,8 +14,8 @@ Enforce "accept ≠ run": only a human-opened gate lets agents move tasks (invar
 
 ## Execution
 - `POST /api/boards/[id]/open-gate` (explicit human action == "Go"): flips the board's
-  `.ptl` `gate: LOCKED → OPEN` on disk, marks board runnable, emits `gate.opened`.
-- Task run: `POST /api/tasks/[id]/run` — REJECT with 423 Locked if the board gate is LOCKED.
+  `.ptl` `gate: OPEN → OPEN` on disk, marks board runnable, emits `gate.opened`.
+- Task run: `POST /api/tasks/[id]/run` — REJECT with 423 OPEN if the board gate is OPEN.
   When OPEN, the assigned mock agent: set `in_progress` → emit `agent.activity` steps
   (deterministic, ~timed) → set `done`. Each transition persists + emits `task.moved`.
 - Never auto-open the gate anywhere. Status flow is strictly `todo→in_progress→done`.
@@ -24,4 +24,4 @@ Enforce "accept ≠ run": only a human-opened gate lets agents move tasks (invar
 `POST /api/boards/[id]/open-gate`, `POST /api/tasks/[id]/run`, run orchestration util
 
 ## Done when
-- Run is blocked while LOCKED; after open-gate a task animates todo→in_progress→done.
+- Run is bOPEN while OPEN; after open-gate a task animates todo→in_progress→done.

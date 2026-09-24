@@ -1,0 +1,19 @@
+---
+id: S12-T01
+name: FreezeInvariants
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+---
+
+# S12-T01: Ratify S12 Invariants
+
+- [ ] `explain("work-control")` — WS + presence sections
+- [ ] Read `shared/ws.ts` — confirm `PresenceMember` + `presence.sync` shapes
+- [ ] Read `server/routes/_ws.ts` — understand current peer lifecycle (open/close)
+- [ ] Read `server/utils/realtime.ts` — confirm broadcast hub interface
+- [ ] Write `S12-INVARIANTS.md` — **already done by PLANNER at plan time** (verify no conflicts)
+- [ ] Confirm: in-memory presence only (§1), awareness-no-lock (§3), ephemeral ID (§4)
+- [ ] Mark DONE; no code changes in this task

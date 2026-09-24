@@ -1,0 +1,35 @@
+---
+id: S08-T04
+name: EpicTargetApp
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, supabase/SUPABASE.ti]
+slug: work-control
+---
+
+# S08-T04: Epic `targetApp` Field
+
+## Objective
+
+Epic declares which app receives Accept write-back (`apps/{targetApp}/planning/`).
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `explain("work-control")` — persistence section
+- [ ] `get-file` — repo schema, epic API routes, `useEpics.ts`
+
+## Implementation
+
+- [ ] Migration: `wc_epics.target_app TEXT NOT NULL DEFAULT 'work-control'`
+- [ ] Repo layer + API: create/patch epic `targetApp`
+- [ ] Validate: `apps/{targetApp}/` exists OR allowlist `['work-control','todo']`
+- [ ] UI: target app badge/selector on Epics column (default `work-control`)
+- [ ] ROOT agents: include `targetApp` on proposals (default `work-control`)
+
+## Done when
+
+- [ ] `bun run db:migrate` succeeds
+- [ ] Epic PATCH persists `targetApp`
+- [ ] `bun run test` green

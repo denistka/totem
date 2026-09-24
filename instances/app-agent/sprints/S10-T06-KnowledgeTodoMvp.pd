@@ -1,0 +1,20 @@
+---
+id: S10-T06
+name: KnowledgeTodoMvp
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: todo
+---
+
+# S10-T06: Update Knowledge + Per-App Docs
+
+- [ ] Expand `core/docs/knowledge/todo.md` — API, schema, MCP tools used
+- [ ] `apps/todo/docs/README.md` — MVP usage
+- [ ] `record("todo", ...)` if MCP up
+
+## Done when
+
+- [ ] `explain("todo")` reflects MVP; `census()` green

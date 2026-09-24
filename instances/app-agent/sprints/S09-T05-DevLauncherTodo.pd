@@ -1,0 +1,22 @@
+---
+id: S09-T05
+name: DevLauncherTodo
+status: TODO
+gate: OPEN
+role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: todo
+---
+
+# S09-T05: Root `dev:todo` Script
+
+## Implementation
+
+- [ ] Root `package.json`: `"dev:todo": "turbo run dev --filter=@app-agent/todo"`
+- [ ] `core/cli/dev.js` PORT_MAP: `3004: todo`
+- [ ] Update `organization-planning` or `todo` knowledge boot commands
+
+## Done when
+
+- [ ] `bun run dev:todo` from monorepo root → :3004

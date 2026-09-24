@@ -1,0 +1,149 @@
+role: Team Roster & Role Digitalization — app-agent
+focus: people, real-world-titles, org-structure, totem-role-affinity
+extends: none
+maintained_by: ROOT
+source: Slack #app-agent (private), Mar 13 – Jul 9 2026 (11 ingested batches) + repo grounding (wf wmca6it0x)
+updated: 2026-07-10  (v2 — full-channel pass)
+
+legend:
+  confidence: confirmed (stated/self-declared) · inferred (from signals) · proposed (ROOT guess, verify)
+  totem_affinity: which guardian role(s) this person's work feeds (ROOT/PLANNER/PM/ARCHITECT/QA/DEVOPS/FOUNDERS)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ORG STRUCTURE — three groups, not one team
+#   app-agent (the company) = the Steeles + Sam + Rachel — founders/owners.
+#   Platform-Factory (PF)   = an external dev shop (~8 people in-channel) that
+#                             supplies the engineering (Vinay et al.). Contractors.
+#   Vendors/partners        = Ajay/PandaStack (deploy), Justia (OpenJurist data).
+#   DAB (Denis)             = separate org, onboarded collaborator + Totem dogfood.
+#   Tenants                 = customer-side users (Tim @ Zing) — NOT channel staff.
+# Business model: open-source-enterprise (Red Hat/Mattermost). Customer forks core,
+#   owns everything, setup fee + monthly retainer, no moat. → [[chat-intel]]
+# ═══════════════════════════════════════════════════════════════════════════
+
+members:
+
+  # ── app-agent principals ──────────────────────────────────────────────────
+  nick_steele:
+    display: Nick Steele  (@njsteele · nick@app-agent.io)
+    title: "Founder / CEO"          # confidence: Denis labeled him CTO — FLAG: every signal reads CEO/founder
+    org: app-agent
+    footprint:
+      - Sole business driver — customers (DMG, Zing, Peabody), business-model manifesto, pricing, equity, hiring, direction
+      - Deep tech background — founded VoyceMe (reference arch), runs GCP/AWS/Cloudflare; set up the first Turbopuffer RAG
+      - Serial founder — also verbalspeech.ai (RTX 6000 pro, raising ~$3m), PlayEngine/Do Big, Brand-e
+      - Sets cadence ("bring DMG repo back into core"), reviews/approves PRs
+    totem_affinity: [ROOT, DEVOPS, FOUNDERS]
+    open_questions: ["CTO (Denis's label) or CEO? Is there a separate CEO?"]
+
+  angelica_steele:
+    display: Angelica Steele
+    title: "Co-founder — DevRel / Docs / Repo-Governance"   # inferred (shares surname w/ Nick; likely spouse/co-founder)
+    org: app-agent
+    footprint:
+      - Repo hygiene, README clarity, docs taxonomy, root AGENTS.md (E15/E16)
+      - Branch-protection rulesets (only-develop→main / feature→develop Actions) — ready, blocked on GitHub Teams
+      - The features-flow / multitenancy roadmap; co-owns the DMG deployment with Nick
+      - 🔴 Discovered + is investigating the cross-fork DATA-LEAK with GitHub support (E17)
+      - Onboards/coaches (showed Sam how to open a PR)
+    totem_affinity: [ROOT, DEVOPS, QA]
+
+  sam:
+    display: Sam  (GitHub: samdeskin)
+    title: "Co-founder — Product / Business (self-declared NON-developer)"   # confirmed: "I am not a developer"
+    org: app-agent
+    footprint:
+      - Builds OpenJurist (his legal site; Drupal 6 → App Agent, ~80+ hrs) as the flagship field-test; Justia data partner
+      - THE agent-behavior spec (80-hr feedback: verify-watchdog, clickable URLs, one-question intake, dev dashboard, no-secrets-in-context, per-task model choice)
+      - Authored the framework-standards trio: AGENT_WORKING_STANDARD (work) · RELEASE_PROTOCOL (ship) · AI_OPERATIONS_CHARTER (operate); + SECURITY_HANDOFF, STATUS.md/docs-lint pattern
+      - Drafts the business-model + equity contract + pricing-proposal.html (4-tier ladder + partner channel)
+      - Self-healing / Hermes-agent vision; heavy Fable-5 evangelist ("Fable is a game changer, Opus sucks compared to Fable")
+    totem_affinity: [FOUNDERS, ARCHITECT, QA]
+    note: earlier v1 mislabeled Sam a "framework engineer" — CORRECTED. He drives via AI (Opus/Fable), not by hand.
+
+  rachel_feather:
+    display: Rachel Feather
+    title: "Operations / People / Accounts (founding operator)"   # inferred-strong (created the channel Mar 13)
+    org: app-agent
+    footprint:
+      - Created #app-agent; onboards/invites everyone; runs Google Workspace ($9/mo) + company accounts
+      - Cloudflare + domain migration (Digital Ocean → Cloudflare), Squarespace nameservers, GitHub-Teams procurement
+      - Equity admin with Nick; building her own marketing/showcase workstream
+    totem_affinity: [FOUNDERS, ROOT]
+
+  # ── Platform-Factory (external dev shop, "8 external people") ──────────────
+  vinay:
+    display: Vinay  (GitHub: vinay-atomcx · vinay@app-agent.io)
+    title: "Lead Software / DevOps Engineer"   # confirmed by his output; org: Platform-Factory (inferred)
+    org: Platform-Factory
+    footprint:
+      - The primary builder — nearly all code. PRs: ADR-sync skill #72, lint #76, typecheck #78/#79 (~120 errors), port-check #80, feature:health #81/#97, tests #84–#96 (232→378), voice #124/#127, sqlite #102/#110
+      - RAG/data layer (VoyceMe core clone, Turbopuffer, embeddings), Peabody POC, marketing-demo app, branch protection
+      - Infra — Cloudflare Super Admin, GCP; owns CI/CD deployment setup
+    totem_affinity: [PM, QA, DEVOPS]
+
+  ayman_b:
+    display: Ayman.B
+    title: "(proposed) Engineer — Platform-Factory"   # low confidence — welcomes/present, in founder/equity set, no shipped work seen yet
+    org: Platform-Factory
+    footprint: ["Onboarding-friendly; part of the equity/founder cohort; role not yet evidenced in-channel"]
+    totem_affinity: [unknown]
+    open_questions: ["What does Ayman actually own? Engineer or business?"]
+
+  dylan_grey:
+    display: Dylan Grey
+    title: "(unknown) — Platform-Factory"   # added by Rachel; silent (no messages)
+    org: Platform-Factory
+    footprint: ["Added to channel; no messages ingested"]
+    totem_affinity: [unknown]
+
+  # ── Vendors / external partners ───────────────────────────────────────────
+  ajay_kumar:
+    display: Ajay Kumar
+    title: "Deployment partner — owner, PandaStack (pandastack.io)"   # confirmed
+    org: vendor (PandaStack)
+    footprint: ["Provisioning for the 'blue' managed-cloud tier (containers/DBs/cron/edge from GitHub)"]
+    totem_affinity: [DEVOPS (external)]
+
+  justia_contacts:
+    display: "Justia — Esteban, Phil"
+    title: "Data/RDS partner (OpenJurist)"   # confirmed (RDS provisioning for Sam)
+    org: vendor (Justia)
+    footprint: ["Provisioned OpenJurist's prod RDS (justiapro.com → AWS us-west-2); endpoint verification pending"]
+
+  # ── DAB (you) ─────────────────────────────────────────────────────────────
+  denis_baranov:
+    display: Denis Baranov  (denistka · "from DAB")
+    title: "Collaborator (DAB) — learning core; Totem dogfood operator"   # confirmed (self)
+    org: DAB
+    footprint:
+      - Added by Nick; onboarded to learn the core framework; DMG eyeing ~$2m/yr → training people
+      - Exploring the 'yellow' (fork-and-own) tier — planned a demo video for the team
+      - Runs the Totem V6 role-chain + this chat-memory instance (ROOT operator, dogfood plane)
+    totem_affinity: [ROOT (operator), PM]
+
+  # ── Tenant (customer-side, NOT channel staff) ─────────────────────────────
+  tim:
+    display: Tim
+    title: "Zing! Patio tenant admin user"   # customer-side end user, not app-agent/PF
+    org: customer-tenant (Zing! Patio, under DMG)
+    footprint: ["Logged-in user on the Zing tenant in the go-live screenshot"]
+
+# ═══════════════════════════════════════════════════════════════════════════
+mentioned_but_not_members:
+  customers: [Doherty Marketing Group (DMG, yellow, first paying), Zing! Patio (green, $500/mo), Peabody Lawfirm (POC, reseller), Upper Cervical Care (UCC, DMG chiropractor funnel)]
+  other_forks_named: [Continuum, RYP]           # surfaced in the data-leak disclosure
+  nick_ventures: [VoyceMe, Brand-e/brande.ai, PlayEngine/Do Big Studios, verbalspeech.ai]
+  early_mentions: [Johanna (TWW), Rick/"Rickd", "a sales guy"]
+  vendors: [PandaStack, Turbopuffer, Cloudflare, GCP, Squarespace, Google Workspace, Digital Ocean, OpenAI, OpenRouter, Replicate, Justia]
+
+roster_status:
+  channel_headcount: 9 named + Slackbot; PF contributes ~8 "external people"
+  identified: [nick_steele, angelica_steele, sam, rachel_feather, vinay, ayman_b, dylan_grey, ajay_kumar, denis_baranov]
+  soft_spots: [ayman_b role, dylan_grey role, exact app-agent-vs-PF employment lines]
+
+anti_patterns:
+  - ❌ Treating Nick's title as settled — Denis said CTO, signals say CEO (open)
+  - ❌ Calling Sam an engineer — he is a non-dev product/business founder who drives via AI
+  - ❌ Assuming Vinay/Ayman/Dylan are app-agent employees — they're Platform-Factory (external)
+  - ❌ Counting Tim as staff — he's a customer tenant user

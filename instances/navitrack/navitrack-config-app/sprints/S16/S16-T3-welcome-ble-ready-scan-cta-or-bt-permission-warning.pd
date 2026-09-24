@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S16 T3 — Welcome BLE gate — Scan CTA or BT/permission warning
+sprint: S16
+requires: [FRONTEND_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #1. If Bluetooth on + permission granted → primary CTA "Scan" / «Сканировать» → navigate to Sensors scan screen.
+  Else → warning copy: enable Bluetooth + grant permission (no Scan CTA, or disabled with same message).
+  Use existing BleAdapter / permission helpers; unit tests inject FakeBle / stubs — no live BLE.
+  Package manager: bun.
+
+out:
+  - src/screens/welcome/* (BLE readiness hook/state)
+  - src/ble/* readiness helpers if needed
+  - *.test.ts / *.test.tsx
+  - locales keys for warning + scan CTA
+
+cmd:
+  - bun run test
+
+done:
+  - BT-ready path: Scan navigates to sensors/scan
+  - BT-off / no-permission path: warning visible, no successful scan navigation
+  - Fake/stubbed readiness in Vitest (both branches)
+  - `bun run test` passes

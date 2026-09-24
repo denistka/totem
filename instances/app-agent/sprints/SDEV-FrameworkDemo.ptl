@@ -1,0 +1,59 @@
+---
+id: SDEV
+name: Framework Demo — Dev Branch
+status: PLANNED
+gate: LOCKED
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+depends: SDEMO-B-VercelDemo.ptl
+---
+
+# SDEV: Framework Demo — Dev Branch
+
+## Цель
+
+Подготовить `dev` ветку (`test-app`) как локальную демонстрацию того,
+как команда научилась работать с app-agent фреймворком.
+
+## Что показываем
+
+**Тезис:** "The AI isn't smarter. The codebase is smarter."
+
+Демо доказывает тезис через:
+1. **MCP в работе** — агент вызывает `explain(slug)`, получает актуальное знание,
+   пишет код по правилам фреймворка (SEE annotations, defineFeatureHandler)
+2. **Sprint workflow** — реальные `.ptl` / `.pd` файлы которые APP-AGENT написал
+   в ходе работы над собой (S05–S13 + SDEMO)
+3. **Документация по правилам** — knowledge файлы, org handbook pages, per-app docs
+   которые генерировались по sprint close checklist
+4. **work-control как оркестратор** — показать как агент принимает задачи через
+   work-control и пишет документацию как выход
+
+## Аудитория
+
+Разработчики / технические лиды которые хотят понять как встроить AI в процесс
+разработки через структуру данных, а не промпты.
+
+## Tasks (детализировать после SDEMO-B)
+
+- [ ] SDEV-T01-BranchPrep.pd         — убедиться dev=test-app, добавить MCP readme
+- [ ] SDEV-T02-McpLocalRunbook.pd    — runbook: как поднять MCP за 3 команды
+- [ ] SDEV-T03-SprintWalkthrough.pd  — guided tour по спринтам S05-S13 через work-control
+- [ ] SDEV-T04-KnowledgeShowcase.pd  — показать knowledge файлы + explain() в action
+- [ ] SDEV-T05-DemoScript.pd         — финальный demo script для локальной демки
+
+## Definition of Done
+
+- [ ] `bun run dev:docs` + `bun run dev:work-control` → обе запускаются за 1 команду
+- [ ] MCP `explain("work-control")` → возвращает полное знание
+- [ ] Можно показать: чат → ROOT предлагает эпик → PLANNER генерирует .ptl → gate → PM выполняет
+- [ ] knowledge/ директория с реальными slug файлами (не стабы)
+- [ ] Есть guided demo script (README или docs страница)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Note
+
+Этот спринт НЕ меняет production код — только документацию, runbooks, demo scripts.

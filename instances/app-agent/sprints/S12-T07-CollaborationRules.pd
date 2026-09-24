@@ -1,0 +1,57 @@
+---
+id: S12-T07
+name: CollaborationRules
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: work-control
+paths:
+  doc: apps/work-control/docs/collaboration.md
+---
+
+# S12-T07: Collaboration Rules Document
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — presence, gates sections
+- [ ] Re-read `S12-INVARIANTS.md` — awareness-no-lock
+
+## Implementation
+
+Create `apps/work-control/docs/collaboration.md`:
+
+```markdown
+# Collaboration Rules — work-control
+
+## Presence model (S12)
+- Awareness-only: multiple users CAN view and interact simultaneously
+- No edit-locking, no pessimistic concurrency (S12-INVARIANTS §3)
+- Human presence: ephemeral tab ID; label "User XXXX" (pre-auth)
+- Agent presence: visible during task run; role badge; auto-clears on done
+- Pre-auth: all users anonymous. After S15 auth: real identity.
+
+## Who sees whom
+| Actor | Sees | When |
+|-------|------|------|
+| Human (chat) | Other viewers on same chat | Always while subscribed |
+| Human (board) | Other viewers + running agents | Always while subscribed |
+| Agent | Does NOT subscribe — server pushes its presence | During task run only |
+
+## Collaboration invariants
+- Last-write-wins on task status (no lock)
+- Open-gate is idempotent (flip OPEN→OPEN twice is safe)
+- Run task is idempotent per task: already-done tasks skip re-run (S08 invariant)
+- Presence is volatile: server restart clears all presence
+
+## Future (S13+)
+- S15: Real user identity via OAuth session
+- S13: Agent-to-agent handoff visible in presence (lead + helpers)
+- S-future: typing indicators, collaborative editing
+```
+
+## Done when
+
+- [ ] `apps/work-control/docs/collaboration.md` written
+- [ ] `bun run feature:health` — SEE ref to `work-control` slug still green

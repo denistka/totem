@@ -1,0 +1,61 @@
+---
+id: S06
+name: App Agent Execution Loop
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S06-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti, vue/VUE.ti]
+supersedes: S05-INVARIANTS.md#11
+---
+
+# S06: App Agent Execution Loop
+
+## App-agent protocol
+
+All tasks in this sprint follow `APP-AGENT-PROTOCOL.md`.
+Code tasks use `templates/PD-APP-AGENT-BLOCK.md`.
+
+## Objective
+
+Close the Totem × app-agent × work-control loop: MCP preflight, slug/knowledge/doc layers,
+and protocol fields on every plan — then replace mock agents with real LLM behind the same
+`Agent` interface (S05 roadmap).
+
+## Foundation decisions (frozen — see S06-INVARIANTS.md)
+
+- **Protocol:** `INSTANCE.ti` + `APP-AGENT-PROTOCOL.md` mandatory on every role.
+- **totem-writer:** inject `protocol`, `requires`, and PD block into generated `.pd` files.
+- **LLM:** reuse `createModelForId` / `integrations` slug; mock fallback when env unset.
+- **Gates unchanged:** Accept ≠ run; human opens gate; 423 while OPEN.
+
+## Tasks
+
+- [x] S06-T01-FreezeInvariants.pd
+- [x] S06-T02-RehomeSmokeArtifact.pd
+- [x] S06-T03-TotemWriterInject.pd
+- [x] S06-T04-OrgDocsWorkControl.pd
+- [x] S06-T05-KnowledgeProtocolSync.pd
+- [x] S06-T06-LlmAgentArchitecture.pd
+- [x] S06-T07-RootLlmAgent.pd
+- [x] S06-T08-PlannerLlmAgent.pd
+- [x] S06-T09-TaskLlmAgent.pd
+- [x] S06-T10-AgentRegistryEnvGate.pd
+- [x] S06-T11-SmokeClose.pd
+
+## Definition of Done
+
+- [x] `S06-INVARIANTS.md` ratified; smoke rehomed to `S05-SMOKE-FirstEat.*`
+- [x] Accept-generated `.pd` files carry protocol + app-agent block (totem-writer)
+- [x] `docs/content/2.company/3.work-control.md` + knowledge slug updated
+- [x] LLM ROOT/PLANNER/task agents with mock fallback; gates still enforced
+- [x] E2E smoke on `:3003`; `feature:health` + `bun run test` green
+- [x] `S06-SUMMARY.md`; `TOTEM_INDEX.ti` → S06 CLOSED
+
+## Roadmap (NOT in this sprint)
+
+- S07: Time-machine scrubber (history replay)
+- S08: Multi-user presence + collaboration rules
+- S09: Task-level multi-agent handoff
+- S10: OPTIMIZER + `feature:health` CI gate

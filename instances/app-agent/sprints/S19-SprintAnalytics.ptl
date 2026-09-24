@@ -1,0 +1,56 @@
+---
+id: S19
+name: Sprint Analytics Dashboard
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S19-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S18-NotesApp.ptl
+---
+
+# S19: Sprint Analytics Dashboard
+
+## Objective
+
+A `/dashboard` page in work-control that shows cross-sprint metrics:
+task velocity, gate-open latency (time from OPEN → OPEN → done), agent
+efficiency (mock vs LLM speed), epic acceptance rate. Sourced from `wc_activity`
+(already populated since S05). No new DB tables — SQL aggregation only.
+
+## Features
+
+- Velocity chart: tasks completed per day/week (sparkline)
+- Gate timing histogram: OPEN → OPEN median, OPEN → done median
+- Agent efficiency table: per-role avg task duration
+- Epic funnel: proposed → accepted → rejected rates
+- Per-board summary card
+- Export: JSON (CSV via `Content-Disposition: attachment`)
+
+## Tasks
+
+- [ ] S19-T01-FreezeInvariants.pd
+- [ ] S19-T02-AnalyticsQueries.pd       — SQL aggregations from wc_activity + wc_tasks
+- [ ] S19-T03-AnalyticsApi.pd           — GET /api/analytics endpoints
+- [ ] S19-T04-VelocityChart.pd          — sparkline component (SVG or chart lib)
+- [ ] S19-T05-GateTimingView.pd         — histogram + median display
+- [ ] S19-T06-DashboardPage.pd          — `/dashboard` page with all widgets
+- [ ] S19-T07-KnowledgeUpdate.pd        — work-control slug: analytics section
+- [ ] S19-T08-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] `/dashboard` loads with real data from wc_activity
+- [ ] Velocity chart shows historical tasks completed
+- [ ] Gate timing shows median OPEN→OPEN latency
+- [ ] Export downloads JSON
+- [ ] `bun run test` green (analytics query unit tests)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S20:** Command palette + keyboard shortcuts (K shortcut, cross-app nav)

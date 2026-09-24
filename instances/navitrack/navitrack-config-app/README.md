@@ -8,7 +8,7 @@ Hybrid DUT configurator (iOS / Android / desktop). Config: **`project.config.yml
 | Functionality SSOT | `navitrack/navitrack-dut-config-mobile` → `intel/DUT-FUNCTIONALITY.md` |
 | UI / hybrid template | `navitrack/navitrack-mobile-apps` (shell scaffolded) |
 | Package manager | **bun** |
-| Epics / sprints | `intel/EPICS.md` · S01–S15 ✅ CLOSED · post-RC E12 done → `intel/POST-RC.md` |
+| Epics / sprints | `intel/EPICS.md` · S01–S15 ✅ CLOSED · **S16** Design Shell Parity `gate: LOCKED` · post-RC E12 → `intel/POST-RC.md` |
 | **Tests** | **HARD MANDATE** → `intel/TEST-COVERAGE-MANDATE.md` |
 | **Code quality** | **After each sprint** → `intel/CODE-QUALITY-MANDATE.md` (shared UI, React/Tauri practice, refactor) |
 

@@ -1,0 +1,41 @@
+---
+id: S06-T07
+name: RootLlmAgent
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S06-T07: ROOT LLM Agent
+
+## Objective
+
+Implement `root.llm.ts`: `proposeEpics` via LLM using whole-chat + project context (S05 invariant §2).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("work-control")` + `explain("integrations")`
+- [ ] Read `apps/work-control/docs/llm-agents.md` (T06)
+- [ ] Read `server/agents/root.mock.ts` for contract + reconcile-by-title behavior
+
+## Implementation (app-agent conventions)
+
+- [ ] Code under `apps/work-control/server/agents/llm/root.llm.ts`
+- [ ] `defineFeatureHandler("work-control")` on routes unchanged; SEE on new files
+- [ ] Output: `EpicProposal[]` with title + summary; full list re-derive (not append-only)
+- [ ] Fallback to `root.mock.ts` when integrations not configured
+- [ ] Wire through existing `propose.ts` factory hook (T10 may finalize registry)
+
+## Done when (app-agent)
+
+- [ ] `bun run test` — add/update unit test for fallback + mocked LLM path
+- [ ] `scripts/smoke-agents.ts` or equivalent passes with mock; LLM path manual note if no key
+- [ ] `feature:health` green
+
+## Out
+
+`server/agents/llm/root.llm.ts`, tests, factory partial wiring

@@ -1,0 +1,22 @@
+---
+id: S09-T04
+name: KnowledgeTodoSlug
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: todo
+---
+
+# S09-T04: Knowledge Slug `todo`
+
+## Implementation
+
+- [ ] `core/docs/knowledge/todo.md` — stub: port 3004, planning path, S10 MVP pointer
+- [ ] `apps/todo/docs/README.md` — per-app dev instructions
+
+## Done when
+
+- [ ] `explain("todo")` + `feature:health` green
+- [ ] `census()` shows slug

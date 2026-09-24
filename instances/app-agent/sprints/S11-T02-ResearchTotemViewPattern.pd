@@ -1,0 +1,16 @@
+---
+id: S11-T02
+name: ResearchTotemViewPattern
+status: TODO
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: work-control
+---
+
+# S11-T02: Research totem-view Scrubber
+
+- [ ] `get-file` — totem-view-sandbox scrubber components (list paths in task output)
+- [ ] Design note in `apps/work-control/docs/history-replay.md` (per-app rules)
+- [ ] No production code — design gate only

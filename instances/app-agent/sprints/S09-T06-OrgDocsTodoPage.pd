@@ -1,0 +1,23 @@
+---
+id: S09-T06
+name: OrgDocsTodoPage
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:todo]
+slug: todo
+---
+
+# S09-T06: Company Page — TODO App
+
+## Implementation
+
+- [ ] `docs/content/2.company/5.todo-app.md` — scaffold purpose, port, dogfood loop
+- [ ] Link from `0.index.md`
+- [ ] Cross-link documentation-layers + work-control
+
+## Done when
+
+- [ ] `get-page` or HTTP 200 on `/company/todo-app`
+- [ ] MCP preflight section included

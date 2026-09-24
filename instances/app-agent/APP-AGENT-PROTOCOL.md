@@ -13,6 +13,55 @@
 
 ---
 
+## §0.0 Working principle — quality over pace (binding, all roles)
+
+**Мы делаем хорошо и качественно — не гоним лошадей.** Set by Denis, 2026-08-20. This governs every
+section below; where speed and correctness conflict, correctness wins, and the schedule moves.
+
+Operationally, for every role:
+
+- **Verify before claiming.** A statement of fact must be backed by something checked this session —
+  a file read, a command run, a query. "Should be" is not evidence. The agent's own confidence is
+  not evidence. An external agent's report is a claim, not a result.
+- **Root-cause, don't patch around.** A defect gets traced to the line that causes it. A workaround
+  that hides a cause is a future false "done".
+- **Architecture before implementation.** Design, get it attacked, then build. A wrong foundation
+  costs more than the round trip that would have caught it.
+- **Fewer, correct changes beat many fast ones.** Volume is not progress, and neither is test count
+  (Denis, 2026-08-20: *"забудь пока про тесты — важно иметь рабочий функционал а не покрытие"*).
+  Runtime verification is the product — the gate, `build-verify`, `boot-verify`, the containment
+  guard, the honest preflight; unit coverage is developer hygiene. The measure is whether the loop
+  runs end to end, and whether the knowledge graph stayed intact (`bun run feature:health`).
+- **Momentum never overrides the gate.** No urgency justifies simulating a human "Go" (index.ti
+  axioms 1–4). The gate is the product, not an obstacle to it.
+- **Context grows in quality, not like weeds.** Closing a sprint means consolidating what was learned
+  into durable knowledge and removing what it supersedes — not appending another document. Ephemeral
+  sprint artifacts are scaffolding; the slug graph is the building.
+
+### Why this is binding, not aspiration — evidence from 2026-08-20
+
+Every real defect that day was found by slowing down and checking, never by moving faster:
+
+| Found | How | What rushing would have produced |
+|---|---|---|
+| Provider returning HTTP 402 (no credit) | direct probe of the provider | a demo recorded on regex output |
+| All four LLM agents silently falling back to mock while `wc_agents.kind` said `llm` and preflight said `ok` | reading the `catch` blocks after the output looked wrong | a product that lies about doing AI work |
+| Supabase project paused, not deleted | asking the provider instead of trusting NXDOMAIN | recreating a live project |
+| A transient 404 during DB startup reported as "tables are missing" | cross-checking one tool against another | running `db-setup.sql` against live customer data |
+| A build that "succeeded" writing zero files | the post-build self-check | a false "done" — the exact failure this chain exists to kill |
+
+### Note on knowledge storage (2026-08-20)
+
+Totem is **currently the only knowledge storage system** in use, which is why working principles are
+recorded here. The intended destination is the platform's slug graph —
+`core/docs/knowledge/{slug}.md` joined to code by `// SEE: feature "slug"` annotations and to runtime
+by `defineFeature*()` (upstream ADR-009, ADR-006: *"ADR fate: historical artifacts... decomposed into
+slug-based knowledge"*). Until work-control's own knowledge lands there, Totem holds this. When it
+does, this principle moves with it and Totem keeps only what is genuinely Totem's: roles, gates,
+sprint lifecycle.
+
+---
+
 ## 0. Role matrix (all roles → this file)
 
 | Role | Must read protocol | Primary sections |
@@ -78,12 +127,15 @@ See also: `intel/MCP-PREFLIGHT.ti`, `intel/MCP_SETUP.md`.
 
 | Layer | Path | Audience | Update when |
 |-------|------|----------|-------------|
-| **Feature knowledge** | `core/docs/knowledge/{slug}.md` | AI (MCP `explain`, control `readKnowledge`) | New/changed platform or app feature slug |
-| **Org / human docs** | `docs/content/` (DAWWWB handbook) | People on :3000 | Sprint close doc-sync task |
-| **Per-app rules** | `apps/<app>/docs/*.md` | Devs + AI for that app only | App-specific behavior (see `work-control/docs/orchestrator.md`) |
-| **Totem intel** | `totem/.../intel/`, `sprints/` | PLANNER, PM, gates | Each sprint |
+| **Org handbook (Totem header)** | `docs/content/2.company/` | People + all agents | Governance / process (S07) |
+| **Feature knowledge** | `core/docs/knowledge/{slug}.md` | AI (MCP `explain`) | Platform or app capability |
+| **Per-app rules** | `apps/<app>/docs/*.md` | Devs + AI for that app | App-specific behavior |
+| **Instance planning** | `apps/<app>/planning/sprints/` | PLANNER, PM, gates (S08+) | Accept write-back per epic |
+| **Meta planning (archive)** | `totem/.../instances/app-agent/sprints/` | Cursor PLANNER | Sprint meta `.ptl` S01–S11 |
 
-Organization (`organization/`) = brand + `app.config.ts` + i18n — **not** auto-synced to docs or knowledge.
+Key MCP slugs: `organization-planning`, `in-repo-planning`, `work-control`, `todo`.
+
+Organization (`organization/`) = brand + `app.config.ts` — **not** auto-synced to handbook or knowledge.
 
 ---
 
@@ -145,9 +197,14 @@ Control agent **cannot** see work-control runtime or write Totem — do not ask 
 
 ## 8. work-control generated `.pd` files
 
-When Accept epic writes `S<NN>-*.pd` via `totem-writer`, generated tasks should inherit
-§4 blocks (future: inject in `totem-writer.ts`). Until then, PM adds the block manually
-when opening a generated gate.
+When Accept epic writes `S<NN>-*.pd` via `planning-writer.ts` (S08+):
+
+- **Default path:** `apps/{epic.targetApp}/planning/sprints/` (`targetApp` default `work-control`)
+- **Legacy:** `WORK_CONTROL_TOTEM_PATH` → external totem archive
+- Generated tasks inherit protocol + PD block from `planning-writer.ts` (S06-T03 pattern)
+- Always `gate: LOCKED` until human opens gate
+
+Meta sprint plans (S07–S11 `.ptl` in external totem) are PLANNER artifacts — not Accept targets after S08.
 
 ---
 

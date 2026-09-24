@@ -1,0 +1,28 @@
+---
+id: S13-T05
+name: AgentConversation
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  code: apps/work-control/server/agents/run.ts
+  code2: apps/work-control/app/components/ActivityTimeline.vue
+---
+
+# S13-T05: Agent conversation in ActivityTimeline
+
+## Preflight
+- [x] explain("work-control") — WS agent.activity events, timeline
+
+## Implementation
+`agent.handoff` event flows over WS → `ActivityTimeline` renders with `actor` = handoff sender,
+`event = "agent.handoff"`, `payload = { from, to }`. Distinct visual step between role turns.
+
+- [x] `agent.handoff` emitted via `broadcast()` between sequential role runs
+- [x] `ActivityTimeline.vue` renders handoff entries with role-colour styling
+
+## Close
+- [x] status → DONE

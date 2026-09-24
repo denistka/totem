@@ -1,0 +1,28 @@
+---
+id: S08-T07
+name: BackwardCompatFallback
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S08-T07: Legacy Totem Path Fallback
+
+## Objective
+
+Forks without in-repo planning dirs still work via env / legacy walk.
+
+## Implementation
+
+- [ ] If `apps/{targetApp}/planning/sprints/` missing AND `WORK_CONTROL_TOTEM_PATH` set → use external
+- [ ] If missing AND legacy `../../totem/.../app-agent` exists → use external (log warn: deprecated)
+- [ ] `.env.example`: document `WORK_CONTROL_PLANNING_ROOT`, deprecate note on `WORK_CONTROL_TOTEM_PATH`
+- [ ] Unit test: fallback chain order per S08-INVARIANTS
+
+## Done when
+
+- [ ] Tests cover in-repo preferred + legacy fallback
+- [ ] No silent failure when neither path exists — clear error message

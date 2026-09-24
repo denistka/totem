@@ -1,0 +1,55 @@
+---
+id: S12
+name: Multi-User Presence
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S12-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S11-TimeMachineScrubber.ptl
+---
+
+# S12: Multi-User Presence
+
+## Objective
+
+Wire the existing `presence.sync` WcEvent (defined S05, never emitted) into a real
+real-time awareness layer. Users and running agents appear as live avatar stacks on
+the chat and board pages. No edit-locking — awareness only. Pre-auth: ephemeral tab IDs.
+
+## Prerequisites
+
+- S11 CLOSED (WS + activity log stable)
+- `presence.sync` type exists in `shared/ws.ts` (S05 §4)
+- Broadcast hub (`realtime.ts`) unchanged transport
+
+## Tasks
+
+- [x] S12-T01-FreezeInvariants.pd
+- [x] S12-T02-PresenceRegistry.pd
+- [x] S12-T03-PresenceBroadcast.pd
+- [x] S12-T04-EphemeralIdentity.pd
+- [x] S12-T05-AvatarStackUI.pd
+- [x] S12-T06-AgentPresence.pd
+- [x] S12-T07-CollaborationRules.pd
+- [x] S12-T08-KnowledgeUpdate.pd
+- [x] S12-T09-TestsSmoke.pd
+
+## Definition of Done
+
+- [x] Two browser tabs on same board see each other's avatars live
+- [x] Running mock agent appears in board presence for task duration
+- [x] Chat page shows presence for active viewers
+- [x] No edit-locking introduced (awareness-no-lock invariant §3)
+- [x] `bun run test` green, `bun run feature:health` green
+- [x] `S12-SUMMARY.md` written, `SPRINT-ROADMAP.md` updated
+
+## App-agent protocol
+
+All tasks in this sprint follow `APP-AGENT-PROTOCOL.md`.
+Code tasks use `templates/PD-APP-AGENT-BLOCK.md`.
+
+## Next
+
+**S13:** Multi-agent task handoff (lead + helper roles per task)

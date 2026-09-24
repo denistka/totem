@@ -1,0 +1,38 @@
+---
+id: S06-T09
+name: TaskLlmAgent
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S06-T09: Task LLM Agent
+
+## Objective
+
+Implement `task.llm.ts`: `runTask` streams activity steps over WS; respects board gate (423 while OPEN).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("work-control")` + read `server/agents/task.mock.ts`
+- [ ] Read `server/agents/run.ts` gate check path
+
+## Implementation (app-agent conventions)
+
+- [ ] `server/agents/llm/task.llm.ts` — emit `AgentActivityStep[]` via callback (timed/streaming OK)
+- [ ] Status flow strictly `todo → in_progress → done` (S05 §10)
+- [ ] Mock fallback when env unset; no auto-open gate
+- [ ] SEE annotations on new files
+
+## Done when (app-agent)
+
+- [ ] Open gate → run task → live activity on board; OPEN → 423 unchanged
+- [ ] `bun run test` + `feature:health` green
+
+## Out
+
+`server/agents/llm/task.llm.ts`, run integration

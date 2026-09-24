@@ -1,0 +1,38 @@
+---
+id: S12-T08
+name: KnowledgeUpdate
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: work-control
+paths:
+  doc: core/docs/knowledge/work-control.md
+  doc2: apps/work-control/docs/orchestrator.md
+---
+
+# S12-T08: Update work-control Knowledge Slug
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — check current presence section
+- [ ] `record("work-control", "presence", ...)` after writing if MCP online
+
+## Implementation
+
+Update `core/docs/knowledge/work-control.md`:
+- Add **Presence (S12)** section under Realtime:
+  - `useRealtime()` now returns `members: Ref<PresenceMember[]>`
+  - `PresenceAvatars.vue` — shows in chat + board headers
+  - Server: in-memory registry in `server/utils/presence.ts`
+  - Ephemeral IDs (pre-auth); real identity in S15
+  - Agent auto-registration during task run
+
+Update `apps/work-control/docs/orchestrator.md`:
+- Add `## Presence` section (brief, link to `docs/collaboration.md`)
+
+## Done when
+
+- [ ] `bun run feature:health` — `work-control` slug green, census updated
+- [ ] MCP `census()` called (or noted offline)

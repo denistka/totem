@@ -1,0 +1,39 @@
+---
+id: S07-T06
+name: CompanyNavSync
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:organization-planning]
+slug: organization-planning
+---
+
+# S07-T06: Company Section Navigation Sync
+
+## Objective
+
+Wire new org pages into company index; renumber work-control page if needed.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] MCP preflight — WARN if `:3000` down
+- [ ] `list-pages` category `company` — full inventory before renumber
+- [ ] `get-page` — every existing company page (index, handbook, work-control)
+- [ ] `get-file` — filesystem paths under `docs/content/2.company/` to match MCP inventory
+
+## Implementation
+
+- [ ] Update `docs/content/2.company/0.index.md` — list:
+  - Handbook
+  - Totem governance (T03)
+  - Documentation layers (T04)
+  - Work Control (renumber `3.work-control.md` → `4.work-control.md` if sort requires)
+- [ ] Fix internal links if file renumbered
+- [ ] Verify sort order matches numeric folder prefixes
+
+## Done when (app-agent tools)
+
+- [ ] `list-pages` category `company` — all pages listed including new ones
+- [ ] `get-page` — each linked page resolves (no 404 via MCP)
+- [ ] Nav on `:3000` human-check optional if MCP `get-page` passes

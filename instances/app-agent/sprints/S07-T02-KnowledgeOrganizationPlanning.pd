@@ -1,0 +1,44 @@
+---
+id: S07-T02
+name: KnowledgeOrganizationPlanning
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: organization-planning
+---
+
+# S07-T02: Knowledge Slug `organization-planning`
+
+## Objective
+
+MCP knowledge slug for the Totem header → app-agent organization layer map. Project-agnostic.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] MCP preflight — WARN if `:3000` down
+- [ ] `explain("layer-cascade")` + `explain("feature-knowledge")`
+- [ ] `census()` — baseline coverage before adding slug
+- [ ] `list-pages` — survey `docs/content/2.company/` existing pages
+- [ ] `get-file` — read `APP-AGENT-PROTOCOL.md` §3, `organization/README.md`
+- [ ] Read `AGENTS.md` — allowed upstream knowledge touch
+
+## Implementation
+
+- [ ] Create `core/docs/knowledge/organization-planning.md` with frontmatter `slug: organization-planning`
+- [ ] `// SEE: feature "organization-planning"` if any index references added
+- [ ] Document four layers with paths:
+  - **Org / Totem header** → `docs/content/2.company/` + `organization/`
+  - **Feature knowledge** → `core/docs/knowledge/{slug}.md`
+  - **Per-app rules** → `apps/<app>/docs/`
+  - **Instance planning** → future `apps/<app>/planning/` (S08 — not built in S07)
+- [ ] Document: sprint `.ptl`/`.pd` in external totem; work-control orchestrates
+- [ ] Document MCP workflow table: `explain` → `get-file` → `census` → `feature:health`
+
+## Done when (app-agent tools)
+
+- [ ] `bun run feature:health` — `organization-planning` slug green
+- [ ] `explain("organization-planning")` returns full slug (or [static fallback] noted)
+- [ ] `census()` — new slug appears in coverage report
+- [ ] `introspect("organization-planning")` — note result (may be unregistered until runtime handler exists; OK for knowledge-only slug)

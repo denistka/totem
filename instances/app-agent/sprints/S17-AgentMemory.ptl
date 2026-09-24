@@ -1,0 +1,66 @@
+---
+id: S17
+name: Agent Memory
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S17-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S16-LlmChatLoop.ptl
+---
+
+# S17: Agent Memory
+
+## Objective
+
+Give agents persistent memory across chats. ROOT remembers project goals, past
+epics, and user preferences. PLANNER remembers successful decomposition patterns.
+This prevents ROOT from proposing duplicate epics and makes the orchestrator feel
+like a real collaborator rather than a stateless service.
+
+## Prerequisites
+
+- S16 CLOSED (LLM chat loop working)
+- `wc_agents` table exists; agent context pipeline in `llm/context.ts`
+
+## Data model
+
+New table `wc_agent_memory`:
+```sql
+wc_agent_memory(
+  id pk,
+  scope_type TEXT,    -- 'project' | 'chat' | 'board'
+  scope_id TEXT,
+  role TEXT,          -- agent role
+  key TEXT,           -- e.g. 'goals', 'patterns', 'user_prefs'
+  value JSON,         -- arbitrary structured memory
+  ts TIMESTAMPTZ
+)
+```
+
+## Tasks
+
+- [ ] S17-T01-FreezeInvariants.pd
+- [ ] S17-T02-MemorySchema.pd           — `wc_agent_memory` table + repo methods
+- [ ] S17-T03-MemoryReadWrite.pd        — `memory.get(role, key)` / `memory.set(...)` API
+- [ ] S17-T04-RootMemoryIntegration.pd  — ROOT reads project goals + past epics on each propose
+- [ ] S17-T05-PlannerMemoryIntegration.pd — PLANNER writes decomposition result; skips re-plan
+- [ ] S17-T06-MemoryUiPanel.pd          — optional: memory inspector in board sidebar
+- [ ] S17-T07-KnowledgeUpdate.pd        — agent-memory slug (new) + work-control update
+- [ ] S17-T08-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] ROOT does not propose duplicate epics for same project goal (memory check)
+- [ ] PLANNER remembers accepted decompositions (skips if same epic re-accepted)
+- [ ] `wc_agent_memory` table in Supabase DB setup script
+- [ ] `bun run test` green (memory read/write unit tests)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S18:** Notes app — markdown notes linked to epics (third dogfood app)

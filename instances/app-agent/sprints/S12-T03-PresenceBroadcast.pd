@@ -1,0 +1,60 @@
+---
+id: S12-T03
+name: PresenceBroadcast
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  code: apps/work-control/server/routes/_ws.ts
+---
+
+# S12-T03: Emit presence.sync on Join / Leave / Room-Change
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — realtime section
+- [ ] Confirm T02 DONE: `presence.ts` registry exists
+
+## Implementation
+
+Extend `server/routes/_ws.ts`:
+
+```ts
+// On open: peer starts with no rooms — no broadcast yet
+// On subscribe (message handler): when rooms change
+//   1. leaveRoom(oldRoom, peerId) for removed rooms
+//   2. joinRoom(newRoom, { id: peerId, kind: 'human', label: 'User …' }) for added rooms
+//   3. broadcast presence.sync to all affected rooms
+// On close / error:
+//   1. leaveRoom all current rooms for this peer
+//   2. broadcast presence.sync to each affected room
+
+// Helper: broadcastPresence(rooms: string[]) → for each room:
+//   broadcast({ type: 'presence.sync', scopeType, scopeId, members: getRoomMembers(room) })
+```
+
+Scope/ID extraction from room string:
+```ts
+// 'chat:<id>' → scopeType: 'chat', scopeId: id
+// 'board:<id>' → scopeType: 'board', scopeId: id
+function roomToScope(room: string): { scopeType: ScopeType; scopeId: string }
+```
+
+The `wrappers` Map in `_ws.ts` already tracks `peerId → RoomPeer`. Extend it to also
+carry the ephemeral `PresenceMember` data (received in first subscribe message from client).
+
+Client sends on subscribe:
+```json
+{ "type": "subscribe", "rooms": ["board:abc"], "member": { "id": "...", "label": "User 1234" } }
+```
+
+Add `member?: PresenceMember` to `ClientMessage` interface. Store in wrapper.
+
+## Done when
+
+- [ ] Opening two tabs: each sees the other in `presence.sync` broadcast within 500 ms
+- [ ] Closing one tab: other tab receives `presence.sync` with one fewer member
+- [ ] `bun run test` — WS handler tests pass (mock peer, mock broadcast)

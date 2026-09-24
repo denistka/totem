@@ -1,0 +1,78 @@
+---
+id: S26
+name: Launch
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S26-INVARIANTS.md
+requires: [mcp/MCP.ti]
+depends: S25-MobilePwa.ptl
+---
+
+# S26: Launch
+
+## Objective
+
+Ship the platform publicly. Comprehensive public README: what app-agent-io is,
+how to fork it, how to deploy it, how to add your own apps. Changelog from S01.
+Security audit. Feature:health CI green. Demo deploy on public URL with seed data.
+Press kit. The "tech company in a box" is ready to hand to someone who wants to
+bootstrap their own AI-powered work platform.
+
+## Launch checklist
+
+### Documentation
+- [ ] `README.md` at repo root: what / why / how to fork / how to deploy
+- [ ] `CHANGELOG.md`: S01–S26 milestones
+- [ ] `CONTRIBUTING.md`: how to add an app, how to add a knowledge slug
+- [ ] `docs/content/` full company handbook reviewed and accurate
+
+### Security
+- [ ] Auth flows audited: no bypass paths
+- [ ] Rate limiting on `/api/chats/*/messages` (prevent LLM abuse)
+- [ ] Input validation on all user-facing routes
+- [ ] No secrets in git history (`git secrets` scan)
+- [ ] CORS headers correct on all apps
+
+### Quality
+- [ ] `bun run typecheck` exits 0
+- [ ] `bun run test` 100% pass
+- [ ] `bun run feature:health` all slugs green
+- [ ] Lighthouse scores: Performance ≥80, Accessibility ≥90, PWA ≥90
+- [ ] No console errors on any page
+
+### Deployment
+- [ ] Public demo URL live with seed data
+- [ ] Custom domain (app-agent.io or subdomain)
+- [ ] SSL cert, HSTS, CSP headers
+
+## Tasks
+
+- [ ] S26-T01-FreezeInvariants.pd
+- [ ] S26-T02-PublicReadme.pd
+- [ ] S26-T03-Changelog.pd
+- [ ] S26-T04-SecurityAudit.pd
+- [ ] S26-T05-RateLimiting.pd           — on messages + tasks/run endpoints
+- [ ] S26-T06-LaunchChecklist.pd        — verify all items above
+- [ ] S26-T07-DemoDeploySmoke.pd        — full smoke on public URL
+
+## Definition of Done
+
+- [ ] Public README covers fork-and-deploy in under 30 minutes
+- [ ] Demo URL accessible to external visitors
+- [ ] Security audit finds no critical/high issues
+- [ ] All quality gates green
+- [ ] **"Tech company in a box" is shippable**
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## After S26
+
+The platform is live. Future sprints depend on user feedback:
+- User feedback loop / telemetry (privacy-first)
+- Plugin / extension system for third-party agents
+- Advanced RBAC (roles per board, per org)
+- White-label / multi-org SaaS

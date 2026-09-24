@@ -1,93 +1,106 @@
 # Work Control — Architecture
 
-**App:** `app-agent-io/core/apps/work-control` · **Port:** 3003 · **Slug:** `work-control`  
-**Organization:** DAWWWB (`organization/app/app.config.ts` — cascades to all apps)
+> ⚠️ **STALE — frozen 2026-06-21 (S11). Do not plan from this file.**
+>
+> Two sprints have landed since: **S41** (the agent-honesty batch) and **S43** (the Claude-CLI
+> overlay). What this document presents as current is wrong in at least these ways:
+>
+> - **Agent selection.** "mock when `AI_PROVIDER_*` incomplete; else LLM" (§Agents below) is the
+>   exact silent-fallback shape recorded as defect **S41-F13** — a mock served while the product
+>   claimed an LLM. `resolveAgentKind()` now asks the claude-cli question first.
+> - **The completion backend** is the `claude` CLI on subscription OAuth (S43-T04), not an HTTP
+>   provider. There is no OpenRouter path and no `402` to swallow.
+> - **The UI** is chat + board only. The fleet / insight / dashboard views and the brickhouse were
+>   deleted in **S43-T08**.
+> - **"mock/LLM" epic proposals**: every generated sprint in the repo's history was
+>   `planner.mock.ts` output, 39 for 39. See `apps/work-control/planning/CORPUS-PROVENANCE-EVIDENCE.md`.
+>
+> **Live sources of truth** — in the fork under `apps/work-control/docs/`:
+> `work-control.md` (surface + API) · `build-loop.md` (daemon, queue, gate) ·
+> `agent-runtime.md` (the build plane) · `chat-session-transport.md` (the completion plane) ·
+> `time-switcher.md` (per-app git and restore).
+>
+> Kept for history only. Retired by **S43-T11**.
 
-## Layers (S05 orchestrator)
+**App:** `app-agent-io/core/apps/work-control` · **Port:** 3003 · **Slug:** `work-control`  
+**Updated:** 2026-06-21 (S11)
+
+## Spine
 
 ```
 chats → chat → epics → epic (board) → tasks → task
-
-Totem write-back: accept epic → PLANNER writes S<NN>-*.ptl + .pd at gate: LOCKED
-Human open-gate → LOCKED→OPEN on disk → run task (mock agent, todo→in_progress→done)
-Realtime: Nitro WebSocket /_ws (crossws) — chat:<id> / board:<id> rooms
-Persistence: wc_* tables (SQLite local / Supabase target via CORE_DATASOURCE_*)
 ```
 
-```
-Chat UI + EpicsColumn  ──REST──►  API (defineFeatureHandler)
-       │                              │
-       │                              ├── mock ROOT (propose epics)
-       │                              ├── mock PLANNER (decompose + totem-writer)
-       │                              └── mock task agent (run)
-       │
-       └── useRealtime() ◄── WS ── broadcast hub (shared/ws.ts contract)
-```
-
-**App-agent cascade:** `apps/work-control` → `organization/` (DAWWWB brand + agent taxonomy) → `core/` (platform).
-
-## Agent roles
-
-Canonical enum in `organization/app/app.config.ts` (`agents` block). Per-app rules in
-`apps/work-control/docs/orchestrator.md` and knowledge slug `work-control`.
-
-| Layer | Lead | S05 behavior |
-|-------|------|--------------|
-| chat | ROOT | Re-derives epics from whole conversation |
-| epic | PM | User-owned proposals (edit/accept) |
+| Layer | Lead | Behavior |
+|-------|------|----------|
+| chat | ROOT | Whole-context epic proposals (mock/LLM) |
+| epic | PM | User-owned; `targetApp` selects planning home |
 | board | PLANNER | Accept → LOCKED `.ptl`/`.pd` + task board |
-| task | per-task `lead_role` | Runs only after human opens gate |
+| task | `lead_role` | Run after human opens gate |
 
-## Totem path resolution
+## Planning paths (S08+)
 
-From monorepo root (`turbo.json`):
-`../../totem/totem-v6/instances/app-agent`
+**Default:** `apps/{epic.targetApp}/planning/sprints/` (default `targetApp: work-control`)
 
-Override: `WORK_CONTROL_TOTEM_PATH`
+Resolver: `server/utils/planning-path.ts`  
+Writers/readers: `planning-writer.ts`, `planning-reader.ts` (`totem-*` re-exports)
 
-Write scope: `<instance>/sprints/` only. Generated ids use next free `S<NN>`.
+| Priority | Source |
+|----------|--------|
+| 1 | `apps/{targetApp}/planning/` |
+| 2 | `WORK_CONTROL_PLANNING_ROOT` env |
+| 3 | `WORK_CONTROL_TOTEM_PATH` → external totem archive |
+| 4 | Legacy walk to `../../totem/.../app-agent` |
+
+Instance scaffolds: `apps/work-control/planning/`, `apps/todo/planning/`.
+
+## Agents (S06)
+
+`server/agents/factory.ts` — mock when `AI_PROVIDER_*` incomplete; else LLM.  
+Kinds: ROOT, PLANNER, task agents. UI `AgentKindBadge`.
+
+## Gates
+
+- Accept writes **only** `gate: LOCKED`
+- `POST /api/boards/:id/open-gate` — human Go
+- `POST /api/tasks/:id/run` → **423** while LOCKED
+
+## History replay (S11)
+
+- `GET /api/boards/:id/history` — activity snapshots
+- `HistoryScrubber.vue` on board — Live/Replay mode
+- WS disconnected during replay (no live mutations)
+
+## Realtime & persistence
+
+- WS: Nitro `crossws` at `/_ws` — `shared/ws.ts` contract
+- DB: `wc_*` tables — SQLite local / Supabase via `CORE_DATASOURCE_*`
 
 ## Dev
 
 ```bash
 cd apps/work-control
-cp .env.example .env          # NUXT_SESSION_PASSWORD (32+ chars)
+cp .env.example .env    # NUXT_SESSION_PASSWORD
 bun run db:migrate
-NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3003 — preferred for WS
+NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3003
+# or from root: bun run dev:work-control
 ```
 
-**Deps:** `drizzle-orm` + `drizzle-kit` (NuxtHub requires both).
+MCP: `explain("work-control")`, `explain("in-repo-planning")` on :3000.
 
-**Do not use** `bun run dev` / turbo for WS verification — REST works; `/_ws` may not handshake through turbo proxy. Use isolated `bun --bun nuxt dev` per app.
+## Docs (in-repo)
 
-Optional: `cd docs && bun --bun nuxt dev` for MCP `explain work-control` on :3000.
+| Doc | Path |
+|-----|------|
+| Per-app rules | `apps/work-control/docs/orchestrator.md` |
+| History replay | `apps/work-control/docs/history-replay.md` |
+| Knowledge | `core/docs/knowledge/work-control.md` |
 
-## Smoke (S05 closed — T12 verified 2026-06-21)
+## Legacy (S04)
 
-```bash
-# Logic (no server):
-bun run apps/work-control/scripts/smoke-agents.ts
+- `TotemSprintPanel` — reads planning dir for current sprint
+- External totem `sprints/` — historical archive S01–S11 meta plans
 
-# Runtime API path:
-# POST /api/chats → POST .../messages ("hungry + coffee") → ROOT epics
-# POST /api/epics/:id/accept → LOCKED .ptl/.pd + board
-# POST /api/tasks/:id/run → 423 while LOCKED
-# POST /api/boards/:id/open-gate → POST .../run → status done
-# GET /api/boards/:id → activity timeline
-```
+## Next
 
-- `bun run test` → 322 pass
-- `bunx eslint .` (work-control) → clean
-- `bun run feature:health` → work-control green
-
-## S04 legacy (still available)
-
-- `TotemSprintPanel` reads instance `.ptl`/`.pd` (read path)
-- `POST /api/totem/sync` imports pending `.pd` tasks into kanban
-
-## Next (roadmap — not planned)
-
-- **S06 (Totem):** Replace mock agents with real LLM (in-app Nitro + AI SDK)
-- **S07:** Time-machine scrubber
-- **S08:** Multi-user presence
-- Note: `S06-FirstEat.ptl` in `sprints/` is a **user-generated** plan from Accept smoke, not the roadmap S06.
+S12: multi-user presence — `intel/SPRINT-ROADMAP.md`

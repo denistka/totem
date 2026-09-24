@@ -96,8 +96,11 @@ active_planning:
   invariants: ./S01-INVARIANTS.md
   sprints: ./sprints/
   completed_sprints: S01-S15
-  next_sprint: null
+  next_sprint: S16
+  s16_gate: LOCKED
+  s16_planning: complete
   s13_s15_gates: CLOSED
+  open_intake: null
 
 guardians:
   default:

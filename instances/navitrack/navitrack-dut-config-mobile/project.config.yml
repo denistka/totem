@@ -1,0 +1,29 @@
+project:
+  name: NaviTrack DUT Configurator
+  version: 1.0.0
+  description: DUT Configurator Mobile Application — migrating to React 19 + Tauri 2.
+  stack:
+    - react19
+    - typescript
+    - tauri2
+    - rust
+    - tailwindcss
+    - zustand
+
+paths:
+  code: ../../../../../navitrack/navitrack-dut-config-mobile
+  react_app: ../../../../../navitrack/navitrack-dut-config-mobile
+  intel: ./intel
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - CODEMAP_QUALITY_ADVISOR
+    - DEVOPS
+    - ARCHITECT
+  stack_adapters:
+    - FRONTEND_DEV
+    - RUST_DEV
+    - MOBILE_TAURI

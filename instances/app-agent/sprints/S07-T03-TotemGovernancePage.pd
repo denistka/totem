@@ -1,0 +1,43 @@
+---
+id: S07-T03
+name: TotemGovernancePage
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:organization-planning]
+slug: organization-planning
+---
+
+# S07-T03: Org Handbook — Totem Governance (header rules)
+
+## Objective
+
+Project-agnostic company page: Totem header governance rules every app inherits.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] MCP preflight — WARN if `:3000` down
+- [ ] `explain("organization-planning")` + `explain("layer-cascade")`
+- [ ] `get-file` — `organization/app/app.config.ts` (`agents` block for role names)
+- [ ] `list-pages` category `company` — avoid nav/filename collisions
+- [ ] `get-page` — read `docs/content/2.company/0.index.md`, `1.handbook.md` for tone
+
+## Implementation
+
+- [ ] Create `docs/content/2.company/2.totem-governance.md`
+- [ ] Content (from `totem-v6/index.ti` axioms — paraphrase for humans, no `.ti` syntax):
+  - **AI-only approval:** never simulate human LGTM/Go
+  - **Role separation:** PLANNER plans, PM executes — same session must not do both
+  - **Gating:** execution OPEN until literal `Go`/`LGTM` in latest user message
+  - **Physical lock:** `gate: OPEN` on `.pd` is unexecutable until human opens
+  - **Sprint home:** plans live in totem instance; work-control orchestrates
+- [ ] Link agent roles to `organization/app/app.config.ts` `agents` block (names from `get-file`)
+- [ ] Include **MCP preflight** subsection: start docs :3000, use `explain` before coding
+- [ ] No app-specific paths (no todo; work-control one sentence max)
+
+## Done when (app-agent tools)
+
+- [ ] `get-page("/company/totem-governance")` — page exists via MCP
+- [ ] `explain("organization-planning")` still consistent with new page
+- [ ] Page readable without knowing which app is being built

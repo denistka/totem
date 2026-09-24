@@ -1,0 +1,39 @@
+---
+id: S07-T05
+name: OrganizationReadmePlanning
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:organization-planning, knowledge:layer-cascade]
+slug: organization-planning
+---
+
+# S07-T05: Update `organization/README.md`
+
+## Objective
+
+Extend organization README with planning layer — Totem header sits here, above all apps.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] MCP preflight — WARN if `:3000` down
+- [ ] `explain("organization-planning")` + `explain("layer-cascade")`
+- [ ] `get-file` — `organization/README.md` (current), `organization/app/app.config.ts`
+- [ ] `get-page("/company/totem-governance")` + `get-page("/company/documentation-layers")` — align wording
+
+## Implementation
+
+- [ ] Add section **Planning & governance** to `organization/README.md`:
+  - Organization = company brand + **process rules** (Totem header)
+  - Handbook on `:3000/company/` (totem-governance, documentation-layers)
+  - AI agents: start with `explain("organization-planning")` via Docs MCP
+  - Per-app instances (`apps/<app>/` + future `planning/`) — S08
+- [ ] Keep existing branding sections unchanged
+- [ ] No code changes outside README
+
+## Done when (app-agent tools)
+
+- [ ] `get-file` — README contains planning section
+- [ ] README reflects header vs instance distinction
+- [ ] Fork owner can understand layer map without reading totem files

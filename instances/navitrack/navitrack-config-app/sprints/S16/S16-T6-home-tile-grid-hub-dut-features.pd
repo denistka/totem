@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S16 T6 — Home tile-grid hub (DUT features)
+sprint: S16
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #3 ref 02-home-tiles. Structure like customer 2×2 cards; surface = mobile-apps glass/dark cards + NaviTrack header.
+  Proposed tiles (finalize in T5): Sensor settings → catalog; Logs; Installation report → intro stub; About (not personal account).
+  No GPS/GLONASS tracker tile. Header gear opens settings sheet (T1/T4). Version chip OK.
+  Package manager: bun.
+
+out:
+  - src/screens/home/HomeScreen.tsx (or hub refactor)
+  - navigation wiring (post-welcome → home)
+  - locales
+  - *.test.tsx
+
+cmd:
+  - bun run test
+
+done:
+  - Structured tile hub navigates to mapped DUT routes
+  - Visual mix: card grid structure + mobile-apps tokens
+  - Vitest covers tile navigation
+  - `bun run test` passes

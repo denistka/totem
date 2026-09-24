@@ -1,0 +1,43 @@
+---
+id: S06-T11
+name: SmokeClose
+status: DONE
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S06-T11: Smoke Verify + Sprint Close
+
+## Objective
+
+Prove App Agent Execution Loop end-to-end; close sprint per protocol §7 + Totem quality gates.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] Document MCP gap in summary if verify ran degraded
+
+## Execution
+
+- [ ] MCP preflight → `explain("work-control")` before manual smoke
+- [ ] E2E on `:3003` (isolated `cd apps/work-control && bun --bun nuxt dev` for WS):
+  chat → epics → accept → generated `.pd` has protocol + app-agent block → 423 on run →
+  open gate → task completes → timeline events
+- [ ] Verify org page `:3000/.../work-control` renders (T04)
+- [ ] Run `bun run lint`, `bun run test`, `bun run feature:health`
+- [ ] Write `sprints/S06-SUMMARY.md`; refresh `intel/TOTEM_INDEX.ti` (current: S06, fix load-order dup)
+- [ ] Update `project.config.yml` `context.invariants` → `./S06-INVARIANTS.md`
+- [ ] Mark `.ptl`/`.pd` DONE; set sprint `status: CLOSED` in summary (human keeps gate authority)
+
+## Done when (app-agent)
+
+- [ ] Protocol §7 checklist complete (MCP gap noted if any)
+- [ ] `feature:health` green; DoD in `S06-AppAgentExecution.ptl` fully checked
+- [ ] `S06-SUMMARY.md` written
+
+## Out
+
+`sprints/S06-SUMMARY.md`, updated `intel/TOTEM_INDEX.ti`, `project.config.yml` invariants pointer

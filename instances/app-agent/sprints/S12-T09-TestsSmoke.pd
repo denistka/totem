@@ -1,0 +1,43 @@
+---
+id: S12-T09
+name: TestsSmoke
+status: DONE
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: work-control
+---
+
+# S12-T09: Tests, Smoke + Sprint Close
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — verify presence section added (T08)
+- [ ] Confirm T01–T08 all DONE
+
+## Verification checklist
+
+### Unit tests (bun run test)
+- [ ] `presence.ts` — joinRoom / leaveRoom / getRoomMembers
+- [ ] `usePresenceId.ts` — stable UUID, deterministic label
+- [ ] `_ws.ts` handler — subscribe emits presence.sync; close emits updated presence
+
+### Manual smoke (:3003)
+- [ ] Open two tabs on same board → both see 2 avatars
+- [ ] Self avatar has ring; other doesn't
+- [ ] Close one tab → avatar disappears in remaining tab (≤1 s)
+- [ ] Open gate → run task → agent avatar (role badge) appears → disappears after done
+- [ ] Chat page: two tabs show each other's avatars in chat header
+- [ ] Server restart → all presence clears on reconnect
+
+### Feature health
+- [ ] `bun run feature:health` green (work-control slug)
+- [ ] Console clean — no unexpected errors on `:3003`
+
+## Sprint close
+
+- [ ] Write `S12-SUMMARY.md` in `sprints/`
+- [ ] Update `SPRINT-ROADMAP.md`: S12 → CLOSED; S13 → NEXT
+- [ ] Update `TOTEM_INDEX.ti`: status → S12 CLOSED
+- [ ] Mark `S12-MultiUserPresence.ptl` status → CLOSED, gate → OPEN

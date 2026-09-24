@@ -1,0 +1,76 @@
+---
+id: SDEMO-B-T07
+name: Vercel Deploy + Smoke
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: DEVOPS
+estimated: 30m
+depends: SDEMO-B-T06-UxReview.pd
+---
+
+# SDEMO-B-T07: Vercel Deploy + Smoke
+
+## Objective
+
+Задеплоить `vercel-demo` ветку на Vercel. Получить публичный URL. Smoke test.
+
+## Prerequisites
+
+- T01-T06 CLOSED
+- Vercel аккаунт (vercel.com — логин через GitHub)
+- Vercel CLI: `npm i -g vercel` или `bun add -g vercel`
+
+## Implementation
+
+### 1. Push ветки
+
+```bash
+cd /Users/denistka/Projects/app-agent-io/DAWWWB-app-agent
+git push -u origin vercel-demo
+```
+
+### 2. Vercel deploy через CLI
+
+```bash
+# из корня монорепо
+vercel --prod
+```
+
+При первом запуске Vercel спросит:
+- Project name: `dawwwb-work-control`
+- Framework: Other (не Next.js)
+- Build command: `bun install && bun run build --filter=@app-agent/work-control`
+- Output dir: `apps/work-control/.output`
+
+### 3. Env vars в Vercel dashboard
+
+Добавить (Settings → Environment Variables):
+```
+NUXT_PUBLIC_DEMO_MODE=true
+NUXT_SESSION_PASSWORD=<random 32+ chars>
+NODE_ENV=production
+```
+
+### 4. Redeploy после env vars
+
+```bash
+vercel --prod
+```
+
+### 5. Smoke test
+
+Открыть URL → пройти mini demo script:
+- [ ] Страница загружается < 3с
+- [ ] Seeded chat виден в сайдбаре
+- [ ] Написать сообщение → ROOT отвечает
+- [ ] Accept эпика работает
+- [ ] Board → задачи видны
+- [ ] ROOT Agent в шапке (presence stub)
+- [ ] Нет 500 ошибок в Network tab
+
+## Done when
+
+- [ ] Публичный URL `https://*.vercel.app` открывается
+- [ ] Smoke script пройден без ошибок
+- [ ] URL отправлен Денису

@@ -1,0 +1,55 @@
+---
+id: S24
+name: Deployment + Monitoring
+status: PLANNED
+gate: OPEN
+lead_role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S24-INVARIANTS.md
+requires: [mcp/MCP.ti]
+depends: S23-SupabaseProduction.ptl
+---
+
+# S24: Deployment + Monitoring
+
+## Objective
+
+Deploy all apps to production: Vercel (docs, work-control) + NuxtHub for DB-backed
+apps. Add health check endpoints, structured logging to production sink, Sentry for
+error tracking. Establish a monitoring baseline so incidents are caught before users
+report them.
+
+## Stack
+
+- **Platform**: Vercel (NuxtHub preset) or Cloudflare Pages
+- **DB**: Supabase (S23) via CORE_DATASOURCE_*
+- **Errors**: Sentry (or self-hosted Glitchtip)
+- **Logs**: structured logs already in place (S03); wire to Logtail / Axiom
+
+## Tasks
+
+- [ ] S24-T01-FreezeInvariants.pd
+- [ ] S24-T02-NuxtHubConfig.pd          — hub.remote config, NuxtHub token, env vars
+- [ ] S24-T03-VercelDeploy.pd           — vercel.json + deploy each app
+- [ ] S24-T04-HealthEndpoint.pd         — /api/health for each app: DB + WS ping
+- [ ] S24-T05-SentryIntegration.pd      — @sentry/nuxt, source maps, release tracking
+- [ ] S24-T06-LogSink.pd                — wire structured-logging to Logtail / Axiom
+- [ ] S24-T07-AlertRules.pd             — alert on 5xx spike, WS disconnect rate
+- [ ] S24-T08-KnowledgeUpdate.pd        — deployment + monitoring slugs
+- [ ] S24-T09-SmokeProduction.pd        — full smoke on production URL
+
+## Definition of Done
+
+- [ ] All apps live on public URL (or staging subdomain)
+- [ ] Sentry captures real errors with source maps
+- [ ] `/api/health` returns 200 with DB status
+- [ ] Alert fires on simulated error spike
+- [ ] `bun run test` passes against prod URLs (smoke only, no mutations)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S25:** Mobile-responsive UX + PWA (installable, offline-capable)

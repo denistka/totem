@@ -21,14 +21,14 @@ chats → chat → epics → epic (board) → tasks → task
 
 A ROOT agent watches the chat + project context and proposes an editable
 **Epics** list (right column). Accepting an epic makes PLANNER decompose it into
-a board of tasks AND **write `.ptl`/`.pd` files at `gate: LOCKED`** into the
+a board of tasks AND **write `.ptl`/`.pd` files at `gate: OPEN`** into the
 Totem instance. A human then **opens the gate**; only then may a (mock) agent run
 a task `todo → in_progress → done`, streamed live over a Nitro WebSocket.
 
 ## Foundation decisions (frozen — see S05-INVARIANTS.md)
 - Agent runtime: **MOCK** (deterministic) this sprint; real LLM deferred to S06.
 - Realtime: **Nitro WebSocket (crossws)** — local-first, no Supabase realtime.
-- Totem link: **write-back** — app generates real `.ptl`/`.pd` at `gate: LOCKED`; human opens.
+- Totem link: **write-back** — app generates real `.ptl`/`.pd` at `gate: OPEN`; human opens.
 - Persistence: **Supabase** datasource (multi-user), via `CORE_DATASOURCE_*`.
 - Agent-role taxonomy: **organization layer** (`app.config.ts` `agents` block).
 
@@ -48,7 +48,7 @@ a task `todo → in_progress → done`, streamed live over a Nitro WebSocket.
 
 ## Definition of Done
 - [x] `:3003` chat → ROOT proposes epics in right column (rename/edit/delete/create/accept)
-- [x] Accept epic → board appears + `.ptl`+`.pd` written at `gate: LOCKED` in instance
+- [x] Accept epic → board appears + `.ptl`+`.pd` written at `gate: OPEN` in instance
 - [x] Open gate (human) → mock agent runs a task `todo→in_progress→done` live over WS
 - [x] Activity/timeline feed records every agent + gate event
 - [x] Agent-role taxonomy in `organization/app.config.ts`; consumed by work-control

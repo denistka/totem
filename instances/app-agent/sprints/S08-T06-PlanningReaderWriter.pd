@@ -1,0 +1,37 @@
+---
+id: S08-T06
+name: PlanningReaderWriter
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S08-T06: Migrate Reader / Writer to In-Repo Paths
+
+## Objective
+
+Accept + reader use `planning-path.ts` + epic `targetApp`. Rename or alias modules.
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `get-file` — `totem-reader.ts`, `totem-writer.ts`, accept route
+- [ ] `explain("work-control")` — API + write-back sections
+
+## Implementation
+
+- [ ] `planning-reader.ts` — read `.ptl`/`.pd` from `resolveSprintsDir(targetApp)`
+- [ ] `planning-writer.ts` — write to same; inject protocol from `apps/{targetApp}/planning/templates/` or fallback
+- [ ] Accept handler: pass `epic.targetApp` to writer
+- [ ] `open-gate`: flip `.ptl` under correct in-repo path
+- [ ] Keep `totem-reader.ts` / `totem-writer.ts` as re-exports OR update all imports
+- [ ] Update `core/tests/unit/totem-writer.test.ts` → planning-writer
+- [ ] `defineFeatureHandler('work-control')` unchanged on routes
+
+## Done when
+
+- [ ] Accept writes to `apps/work-control/planning/sprints/S<NN>-*.ptl` @ OPEN
+- [ ] Reader returns in-repo sprint
+- [ ] `bun run test` green

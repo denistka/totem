@@ -1,0 +1,50 @@
+---
+id: S12-T02
+name: PresenceRegistry
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  code: apps/work-control/server/utils/presence.ts
+---
+
+# S12-T02: Server-Side Presence Registry
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] MCP preflight: `explain("work-control")` — WS + activity sections
+- [ ] Read `server/utils/realtime.ts` — `RoomPeer`, `registerPeer`, `broadcast`
+- [ ] Read `server/routes/_ws.ts` — peer lifecycle hooks
+
+## Implementation
+
+Create `apps/work-control/server/utils/presence.ts`:
+
+```ts
+// In-memory presence store: room → Set<PresenceMember> (S12-INVARIANTS §1)
+// Volatile by design — clears on server restart.
+import type { PresenceMember } from '../../shared/ws'
+
+const store = new Map<string, Map<string, PresenceMember>>()
+// Map<room, Map<memberId, PresenceMember>>
+
+export function joinRoom(room: string, member: PresenceMember): void
+export function leaveRoom(room: string, memberId: string): void
+export function updateMember(room: string, member: PresenceMember): void
+export function getRoomMembers(room: string): PresenceMember[]
+```
+
+- `joinRoom`: upsert member into room Map; rooms created lazily
+- `leaveRoom`: remove by `memberId`; delete room entry if empty
+- `getRoomMembers`: returns `Array.from(store.get(room)?.values() ?? [])`
+- Add `// SEE: feature "work-control" ...` annotation
+- No DB writes — all in-memory (invariant §1)
+
+## Done when (app-agent)
+
+- [ ] `bun run test` — unit test for joinRoom / leaveRoom / getRoomMembers
+- [ ] `bun run feature:health` — work-control still green
+- [ ] File annotated: `// SEE: feature "work-control"`

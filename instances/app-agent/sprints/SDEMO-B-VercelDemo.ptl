@@ -1,0 +1,63 @@
+---
+id: SDEMO-B
+name: Vercel Demo Branch
+status: PLANNED
+gate: LOCKED
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+depends: SDEMO-QuickDeploy.ptl
+---
+
+# SDEMO-B: Vercel Demo Branch
+
+## Цель
+
+Создать ветку `vercel-demo` из `test-app`, срезать всё что не деплоится на Vercel,
+заменить реальный стейт заглушками. Результат — живой URL на Vercel с рабочим флоу:
+chat → ROOT proposes epics → accept → board → tasks.
+
+## Что убираем
+
+- WebSocket (`/_ws`, `experimental.websocket`, `crossws`) — заменяем заглушкой
+- `@nuxthub/core` / `hub:db` — заменяем in-memory store с seed данными
+- Realtime как реальный транспорт — оставляем как визуальный демо-стейт
+
+## Что оставляем / делаем
+
+- Nitro preset → `vercel`
+- In-memory репо с seed data (1 chat, 1 epic, board, 3 tasks)
+- `useRealtime` stub — mock события на таймере (агент "работает")
+- Presence stub — ROOT Agent всегда "подключён" в шапке
+- UX polish main flow: chat → epics column → accept → board → run task
+
+## Стратегия данных
+
+In-memory Map (сбрасывается при cold start Vercel — для демо ок).
+Seed загружается при старте сервера. Нет Supabase, нет SQLite.
+
+## Tasks
+
+- [ ] SDEMO-B-T01-BranchSplit.pd         — создать vercel-demo ветку
+- [ ] SDEMO-B-T02-VercelPreset.pd         — preset vercel + убрать WS конфиг
+- [ ] SDEMO-B-T03-MemoryRepo.pd           — in-memory репо + seed данные
+- [ ] SDEMO-B-T04-RealtimeStub.pd         — useRealtime → mock events stub
+- [ ] SDEMO-B-T05-PresenceStub.pd         — ROOT Agent всегда подключён
+- [ ] SDEMO-B-T06-UxReview.pd             — пройти флоу, починить шероховатости
+- [ ] SDEMO-B-T07-VercelDeploy.pd         — vercel deploy + smoke
+
+## Definition of Done
+
+- [ ] `https://<project>.vercel.app` открывается
+- [ ] Пользователь печатает в чате → ROOT предлагает эпики → Accept → board
+- [ ] На борде видны задачи, ROOT Agent "подключён" в шапке
+- [ ] Нет реальных WS / DB зависимостей
+- [ ] Нет Supabase, нет hub:db в production пути
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+Code only in `apps/work-control/` — no upstream `core/` changes.
+
+## Next
+
+SDEV-FrameworkDemo.ptl — dev ветка, локальное демо фреймворка

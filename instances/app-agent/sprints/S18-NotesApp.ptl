@@ -1,0 +1,62 @@
+---
+id: S18
+name: Notes App
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S18-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S17-AgentMemory.ptl
+---
+
+# S18: Notes App
+
+## Objective
+
+Third dogfood app: `apps/notes` on port 3005. Markdown notes scoped to epics,
+chats, or free-floating. Work-control Epics column gets a "targetApp: notes" option.
+Accepting an epic in notes mode writes the plan to `apps/notes/planning/sprints/`.
+Demonstrates that the orchestrator spine is truly app-agnostic.
+
+## App
+
+- Port: 3005
+- Slug: `notes`
+- Planning home: `apps/notes/planning/sprints/`
+
+## Features
+
+- Create / edit / delete markdown notes (CodeMirror or textarea)
+- Link note to: epic ID, chat ID, or none
+- Notes list: filter by linked scope
+- Full-text search across notes
+- Accept `targetApp: notes` in work-control epics column
+
+## Tasks
+
+- [ ] S18-T01-FreezeInvariants.pd
+- [ ] S18-T02-AppScaffold.pd           — apps/notes Nuxt + planning instance
+- [ ] S18-T03-NotesSchema.pd           — `notes_notes` table, repo interface
+- [ ] S18-T04-CrudApi.pd               — /api/notes CRUD + defineFeatureHandler
+- [ ] S18-T05-MarkdownEditor.pd        — editor UI + preview pane
+- [ ] S18-T06-EpicLink.pd              — link note to epic/chat; back-link from board
+- [ ] S18-T07-DevLauncher.pd           — `bun run dev:notes`, PORT_MAP 3005
+- [ ] S18-T08-KnowledgeSlug.pd         — `notes.md` knowledge slug + company page
+- [ ] S18-T09-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] `apps/notes` boots on :3005, CRUD notes persists
+- [ ] Epic in work-control with `targetApp: notes` writes plan to notes/planning/
+- [ ] Note linked to epic shows in board sidebar (back-link)
+- [ ] `bun run feature:health` — `notes` slug green
+- [ ] `bun run test` green
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S19:** Sprint analytics dashboard — velocity, gate timing, agent efficiency

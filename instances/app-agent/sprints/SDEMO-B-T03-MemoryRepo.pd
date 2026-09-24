@@ -1,0 +1,116 @@
+---
+id: SDEMO-B-T03
+name: In-Memory Repo + Seed Data
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: PM
+estimated: 60m
+depends: SDEMO-B-T02-VercelPreset.pd
+---
+
+# SDEMO-B-T03: In-Memory Repo + Seed Data
+
+## Objective
+
+Заменить `hub:db` (NuxtHub/SQLite) на in-memory репо с seed данными.
+На Vercel serverless нет persistent filesystem. Для демо: данные живут в памяти
+процесса, при cold start грузится seed. Это нормально — демо показывает один человек.
+
+## Implementation
+
+### 1. `apps/work-control/server/repo/repo-memory.ts`
+
+Реализовать `WorkControlRepo` через `Map<string, T>`.
+Seed при инициализации:
+
+```ts
+// SEE: feature "work-control" at core/docs/knowledge/work-control.md
+import { randomUUID } from 'node:crypto'
+import type { WorkControlRepo, ... } from './types'
+
+const SEED_CHAT_ID = 'demo-chat-1'
+const SEED_EPIC_ID = 'demo-epic-1'
+const SEED_BOARD_ID = 'demo-board-1'
+
+export class MemoryWorkControlRepo implements WorkControlRepo {
+  private chats = new Map<string, WcChat>()
+  private messages = new Map<string, WcMessage[]>()
+  private epics = new Map<string, WcEpic>()
+  private boards = new Map<string, WorkBoard>()
+  private tasks = new Map<string, WorkTask[]>()
+
+  constructor() { this._seed() }
+
+  private _seed() {
+    // 1 chat
+    this.chats.set(SEED_CHAT_ID, {
+      id: SEED_CHAT_ID, title: 'App Agent Demo',
+      ownerId: 'demo', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
+    })
+    // ROOT initial message
+    this.messages.set(SEED_CHAT_ID, [{
+      id: 'msg-1', chatId: SEED_CHAT_ID, role: 'assistant',
+      parts: [{ type: 'text', text: 'Привет! Я ROOT. Расскажи что нужно построить — я предложу план по спринтам.' }],
+      createdAt: new Date().toISOString()
+    }])
+    // 1 accepted epic
+    this.epics.set(SEED_EPIC_ID, {
+      id: SEED_EPIC_ID, chatId: SEED_CHAT_ID,
+      title: 'Запустить публичное демо App Agent',
+      summary: 'Показать полный цикл: чат → эпик → борд → задачи → выполнение агентом.',
+      leadRole: 'PM', targetApp: 'work-control', status: 'accepted', position: 0,
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
+    })
+    // 1 board with 3 tasks
+    this.boards.set(SEED_BOARD_ID, {
+      id: SEED_BOARD_ID, title: 'S01 — Demo Sprint', ownerId: 'demo',
+      epicId: SEED_EPIC_ID, ptlFile: null, gate: 'OPEN',
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
+    })
+    this.tasks.set(SEED_BOARD_ID, [
+      { id: 'task-1', boardId: SEED_BOARD_ID, title: 'Спроектировать флоу демо', status: 'DONE', leadRole: 'ARCHITECT', position: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+      { id: 'task-2', boardId: SEED_BOARD_ID, title: 'Задеплоить на Vercel', status: 'IN_PROGRESS', leadRole: 'DEVOPS', position: 1, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+      { id: 'task-3', boardId: SEED_BOARD_ID, title: 'Написать документацию', status: 'TODO', leadRole: 'PM', position: 2, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    ])
+  }
+
+  // ... реализовать все методы WorkControlRepo
+}
+```
+
+Методы: читать из Map, писать в Map. IDs генерировать через `randomUUID()`.
+
+### 2. Обновить фабрику `apps/work-control/server/repo/index.ts`
+
+```ts
+import { MemoryWorkControlRepo } from './repo-memory'
+
+export function createWorkControlRepo(): WorkControlRepo {
+  ensureRootEnv()
+  const provider = process.env.CORE_DATASOURCE_PROVIDER
+  const url = process.env.CORE_DATASOURCE_URL
+  const key = process.env.CORE_DATASOURCE_KEY
+
+  if (provider === 'supabase' && url && key) return new SupabaseWorkControlRepo(url, key)
+  if (provider === 'memory' || process.env.DEMO_MODE === 'true') return new MemoryWorkControlRepo()
+  // SqliteWorkControlRepo использует hub:db — недоступен на Vercel
+  // Fallback: memory (безопаснее чем падать)
+  return new MemoryWorkControlRepo()
+}
+```
+
+На `vercel-demo` ветке: убрать `SqliteWorkControlRepo` из import (не нужен, hub:db нет).
+
+### 3. ROOT agent mock
+
+ROOT агент в `apps/work-control/server/agents/root.mock.ts` — проверить что он не
+зависит от hub:db напрямую. Если зависит — заглушить через репо.
+
+## Done when
+
+- [ ] `MemoryWorkControlRepo` реализует весь `WorkControlRepo` интерфейс
+- [ ] Seed данные грузятся при старте
+- [ ] `POST /api/chats` → создаёт в памяти
+- [ ] `GET /api/boards/:id` → возвращает seeded board с 3 задачами
+- [ ] Нет импортов `hub:db` в production bundle

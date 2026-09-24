@@ -1,0 +1,40 @@
+role: NaviTrack Composite Loader
+focus: load-ritual, member-graph, operating-rules
+instance: navitrack
+type: composite
+extends: ../../index.ti
+
+# READ FIRST on "load navitrack". Self-contained ritual.
+# NaviTrack = one product across multiple navitrack/* repos (members NESTED here, not siblings).
+# Sprints planned at composite level; tracks dispatch via `repos: [...]`.
+
+members:                                   # `code` = 4x ../ from here; member configs use 5x ../
+  - id: navitrack-mobile-apps
+    repo: navitrack/navitrack-mobile-apps
+    totem: ./navitrack-mobile-apps/project.config.yml
+    code: ../../../../navitrack/navitrack-mobile-apps
+    role: Main mobile application (PWA) — React 19 + Tauri 2 (iOS/Android)
+    base_branch: main
+
+  - id: navitrack-dut-config-mobile
+    repo: navitrack/navitrack-dut-config-mobile
+    totem: ./navitrack-dut-config-mobile/project.config.yml
+    code: ../../../../navitrack/navitrack-dut-config-mobile
+    role: DUT Configurator App — transitioning to Tauri 2 (currently Xamarin)
+    base_branch: main
+
+  - id: navitrack-config-app
+    repo: navitrack/navitrack-config-app
+    totem: ./navitrack-config-app/project.config.yml
+    code: ../../../../navitrack/navitrack-config-app
+    role: Hybrid DUT configurator — mobile-apps UI + DUT functionality; package manager bun (not pnpm)
+    base_branch: main
+
+ritual:
+  # ... rules analogous to ct-totem ...
+  1_load_index:
+    - action: "Read this _LOADER.ti"
+  2_check_members:
+    - action: "Verify code links via `ls` on members[].code"
+  3_check_sprints:
+    - action: "Check sprints inside members to determine active work"

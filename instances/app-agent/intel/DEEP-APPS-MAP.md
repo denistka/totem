@@ -66,15 +66,23 @@ Issue #114 proposes centralizing configurable items.
 | App | Port | Package | Status |
 |-----|------|---------|--------|
 | `apps/chat` | 3002 | `@app-agent/chat` | AI chat — see `DEEP-CHAT-APP.md`, `apps/chat/SETUP.md` |
-| `apps/work-control` | 3003 | `@app-agent/work-control` | Totem kanban + sprint reader — see `DEEP-WORK-CONTROL.md` |
+| `apps/work-control` | 3003 | `@app-agent/work-control` | Kanban + planning reader/writer — see `DEEP-WORK-CONTROL.md` |
+| `apps/todo` | 3004 | `@app-agent/todo` | Task list MVP (S09–S10) — knowledge slug `todo` |
 
 Upstream may ship empty `apps/`; launcher `copyDemo()` or manual scaffold populates customer apps.
 
-### work-control (S04)
+### work-control (S04 + S08 + S11)
 
-- Reads Totem `.ptl`/`.pd` from `totem/totem-v6/instances/app-agent/sprints/` (read-only)
+- **Planning paths (priority):** `apps/<targetApp>/planning/sprints/` → `WORK_CONTROL_PLANNING_ROOT` → `WORK_CONTROL_TOTEM_PATH` → legacy walk
+- Default `targetApp`: `work-control`; dogfood: `todo`
 - SQLite via NuxtHub; `POST /api/totem/sync` imports pending tasks
-- Override path: `WORK_CONTROL_TOTEM_PATH`
+- **S11:** `GET /api/boards/:id/history` + `HistoryScrubber` on board page (chat replay: backlog)
+
+### todo (S09–S10)
+
+- Scaffold + in-repo `apps/todo/planning/` instance
+- CRUD API under `defineFeatureHandler('todo')`
+- Dev: `bun run dev:todo` or `cd apps/todo && bun --bun nuxt dev`
 
 ---
 
@@ -101,4 +109,6 @@ Direct `nuxt dev` without script may bind wrong port.
 | 3000 | docs + MCP |
 | 3001 | control |
 | 3002 | apps/chat |
+| 3003 | apps/work-control |
+| 3004 | apps/todo |
 | 3010–3014 | demos |

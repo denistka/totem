@@ -1,0 +1,52 @@
+---
+id: S15
+name: Work-Control Auth
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S15-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S14-PlatformHygiene.ptl
+---
+
+# S15: Work-Control Authentication
+
+## Objective
+
+Add opt-in auth (`nuxt-auth-utils`) to work-control. GitHub OAuth (plus optional
+email magic-link). `wc_chats.owner_id` becomes a real user ID. Chat list scoped
+to authenticated user. Presence `PresenceMember.label` shows real user name.
+Board still viewable by anyone with the URL (share-by-link, S-future RBAC).
+
+## Prerequisites
+
+- S14 CLOSED (CI green, typecheck clean)
+- `nuxt-auth-utils` already in `core` (used by other apps)
+- ADR: auth is opt-in per app (`apps/*/nuxt.config.ts` adds module)
+
+## Tasks
+
+- [ ] S15-T01-FreezeInvariants.pd
+- [ ] S15-T02-AuthModule.pd            — add nuxt-auth-utils to work-control
+- [ ] S15-T03-OAuthRoute.pd            — GitHub OAuth + session
+- [ ] S15-T04-UserScopedChats.pd       — chat list = my chats; owner_id from session
+- [ ] S15-T05-PresenceIdentity.pd      — real name in PresenceMember after login
+- [ ] S15-T06-UserMenuUi.pd            — CoreUserMenu + avatar in work-control header
+- [ ] S15-T07-KnowledgeAuthUpdate.pd   — update work-control + authentication slugs
+- [ ] S15-T08-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] Unauthenticated: redirect to login (or guest read-only view)
+- [ ] GitHub OAuth: login → see own chats → create chat → scoped to user
+- [ ] Presence: shows real GitHub username / avatar
+- [ ] `bun run test` green, no auth-bypass paths
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S16:** Full LLM chat loop — real AI reply from `chat.llm.ts`, streaming over WS

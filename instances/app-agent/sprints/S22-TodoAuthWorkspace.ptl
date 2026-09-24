@@ -1,0 +1,44 @@
+---
+id: S22
+name: Todo Auth + Shared Workspace
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S22-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S21-OnboardingDemo.ptl
+---
+
+# S22: Todo Auth + Shared Workspace
+
+## Objective
+
+Add auth to `apps/todo` (same pattern as S15 work-control). `todo_tasks.user_id`
+scoped to session. Add optional shared workspace: tasks can be marked `shared: true`
+and appear for all users in the org. First cross-user feature in todo.
+
+## Tasks
+
+- [ ] S22-T01-FreezeInvariants.pd
+- [ ] S22-T02-AuthModule.pd             — nuxt-auth-utils in todo app
+- [ ] S22-T03-UserScopedTasks.pd        — user_id on todo_tasks, scoped list API
+- [ ] S22-T04-SharedWorkspace.pd        — shared flag + org-wide task list view
+- [ ] S22-T05-TodoPresence.pd           — presence for todo app (reuse S12 pattern)
+- [ ] S22-T06-KnowledgeUpdate.pd        — todo slug: auth + shared workspace
+- [ ] S22-T07-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] Todo tasks scoped to authenticated user
+- [ ] Shared tasks visible to all org members
+- [ ] Presence shows other viewers on todo (same AvatarStack pattern)
+- [ ] `bun run test` green
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S23:** Supabase production setup — RLS, multi-tenant, migration from SQLite

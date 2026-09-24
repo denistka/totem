@@ -1,0 +1,38 @@
+---
+id: S08-T03
+name: PlanningPathResolver
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S08-T03: `planning-path.ts` Resolver
+
+## Objective
+
+Single source of truth for planning root + sprints dir per `targetApp`.
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `explain("work-control")` + `explain("in-repo-planning")` (after T02)
+- [ ] `get-file` — `totem-reader.ts`, `nuxt.config.ts`, `.env.example`
+- [ ] `get-app-structure("work-control")`
+
+## Implementation
+
+- [ ] `server/utils/planning-path.ts`:
+  - `resolveMonorepoRoot()` — walk to `turbo.json`
+  - `resolvePlanningRoot(targetApp: string): string | null`
+  - `resolveSprintsDir(targetApp: string): string | null` → `{root}/sprints`
+  - `resolveLegacyTotemPath()` — extract current logic from `totem-reader.ts`
+- [ ] RuntimeConfig: `workControlPlanningRoot` from `WORK_CONTROL_PLANNING_ROOT`
+- [ ] Unit tests: `core/tests/unit/planning-path.test.ts`
+- [ ] `// SEE: feature "work-control"` on new file
+
+## Done when
+
+- [ ] `bun run test` — planning-path tests pass
+- [ ] No behavior change yet — reader/writer still call old paths until T06

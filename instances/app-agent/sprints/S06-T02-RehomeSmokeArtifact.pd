@@ -1,0 +1,36 @@
+---
+id: S06-T02
+name: RehomeSmokeArtifact
+status: DONE
+gate: OPEN
+role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+---
+
+# S06-T02: Rehome S05 Smoke Artifact
+
+## Objective
+
+Free the S06 semantic slot: move orchestrator smoke files from `S06-FirstEat.*` to
+`S05-SMOKE-FirstEat.*` (created during S05-T12). Mark as closed historical proof only.
+
+## Execution
+
+- Rename:
+  - `S06-FirstEat.ptl` → `S05-SMOKE-FirstEat.ptl`
+  - `S06-T01-DesignFirstEat.pd` → `S05-SMOKE-T01-DesignFirstEat.pd`
+  - `S06-T02-BuildFirstEat.pd` → `S05-SMOKE-T02-BuildFirstEat.pd`
+  - `S06-T03-TestFirstEat.pd` → `S05-SMOKE-T03-TestFirstEat.pd`
+  - `S06-T04-ShipFirstEat.pd` → `S05-SMOKE-T04-ShipFirstEat.pd`
+- Update frontmatter: `id: S05-SMOKE`, `artifact: smoke`, `status: CLOSED`,
+  `protocol: ../APP-AGENT-PROTOCOL.md`, note `generated_by: work-control (S05-T12 smoke)`.
+- Add footnote to `sprints/S05-SUMMARY.md` + update `intel/TOTEM_INDEX.ti`
+  `generated-by-orchestrator` path.
+
+## Out
+
+Renamed smoke files; no `S06-FirstEat.*` remaining
+
+## Done when
+
+- Only `S06-AppAgentExecution.ptl` uses sprint id S06; smoke clearly labeled CLOSED.

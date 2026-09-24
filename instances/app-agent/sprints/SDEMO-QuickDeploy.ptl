@@ -1,0 +1,53 @@
+---
+id: SDEMO
+name: Quick Demo Deploy
+status: PLANNED
+gate: LOCKED
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+depends: S13-MultiAgentHandoff.ptl
+---
+
+# SDEMO: Quick Demo Deploy
+
+## Objective
+
+Get work-control live on a public URL (Railway) fast — for demo purposes.
+No auth, no Supabase, no CI required. bun:sqlite in-process DB is acceptable
+for demo (ephemeral data resets on restart, which is fine).
+
+## Strategy
+
+Switch nitro preset from `'bun'` to `'node-server'` (one line), deploy to
+Railway free tier. WebSockets work on Railway. SQLite stays. No DB migrations
+needed — schema is auto-applied at startup.
+
+## Target platform
+
+**Railway** — Node.js server, persistent process, WebSocket support, free tier.
+NuxtHub/Vercel blocked by: bun preset + WS on Cloudflare Workers.
+
+## Tasks
+
+- [ ] SDEMO-T01-NitroPreset.pd        — change preset bun→node-server, verify build
+- [ ] SDEMO-T02-RailwayDeploy.pd      — Railway project setup + env vars + deploy
+- [ ] SDEMO-T03-DemoSeed.pd           — seed script: 1 chat + 1 epic + board state
+
+## Definition of Done
+
+- [ ] `https://<project>.railway.app` loads work-control
+- [ ] User can type in chat → ROOT proposes epics → Accept → board shows tasks
+- [ ] WS events flow (live board updates on task run)
+- [ ] URL is shareable — accessible without login
+
+## Out of scope
+
+- Auth (S15)
+- Supabase (S23)
+- CI/typecheck (S14)
+- Multi-user presence demo (S12 — works locally, skip for speed)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+Code tasks use `templates/PD-APP-AGENT-BLOCK.md`.

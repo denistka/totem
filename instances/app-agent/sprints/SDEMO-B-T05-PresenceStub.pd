@@ -1,0 +1,45 @@
+---
+id: SDEMO-B-T05
+name: Presence Stub — ROOT Agent завcегда подключён
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: PM
+estimated: 20m
+depends: SDEMO-B-T04-RealtimeStub.pd
+---
+
+# SDEMO-B-T05: Presence Stub
+
+## Objective
+
+В demo mode ROOT Agent всегда виден в шапке (PresenceAvatars).
+Демонстрирует концепцию multi-agent присутствия без реального WS.
+
+## Implementation
+
+Это уже покрыто T04 — `useRealtimeStub` возвращает:
+```ts
+const members = ref<PresenceMember[]>([
+  { id: 'root-agent', kind: 'agent', role: 'ROOT', label: 'ROOT Agent' }
+])
+```
+
+`PresenceAvatars.vue` получает `members` из `useRealtime()` и рендерит аватар.
+
+### Дополнительно: проверить PresenceAvatars.vue
+
+- Аватар ROOT Agent должен отображаться в цвете агента (не пользователя)
+- Тултип: "ROOT Agent • online"
+- Не показывать "(You)" для агента
+
+### UX улучшение (опционально в этом таске)
+
+Добавить "Agent thinking..." индикатор в шапку борда когда задача выполняется:
+- при mock event `task.moved` → показать spinner на 1с → потом задача переходит
+
+## Done when
+
+- [ ] PresenceAvatars показывает ROOT Agent аватар в demo mode
+- [ ] Аватар имеет корректный цвет (agent, не user)
+- [ ] Тултип информативен

@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S16 TQ — Post-sprint code quality review + refactor
+sprint: S16
+requires: [FRONTEND_DEV, ARCHITECT, CODEMAP_QUALITY_ADVISOR, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  REQUIRED closeout. Shared UI reuse (src/ui), React/Tauri practice, parity with mobile-apps shell patterns without duplicating dead fleet code.
+  Fake/MSW untouched for unit tests.
+
+out:
+  - sprints/S16/QUALITY-NOTES.md
+  - refactors under paths.code as needed
+
+cmd:
+  - bun run test
+
+done:
+  - Quality review per CODE-QUALITY-MANDATE.md
+  - Needed refactors applied (or same-day follow-up .pd)
+  - `bun run test` passes

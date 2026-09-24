@@ -1,0 +1,26 @@
+---
+id: S10-T02
+name: RatifyInRepoPlan
+status: TODO
+gate: OPEN
+role: PLANNER
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+---
+
+# S10-T02: Ratify In-Repo S10 Plan
+
+## Objective
+
+Ensure `apps/todo/planning/sprints/S10-TodoMvp.ptl` + `.pd` tasks exist and match this sprint.
+If S09 smoke created them — audit + align. If missing — PLANNER creates @ `gate: OPEN`.
+
+## Execution
+
+- [ ] Read existing files in `apps/todo/planning/sprints/S10-*`
+- [ ] Align task ids with S10-T03..T07 or update `.ptl` checklist
+- [ ] **STOP** — wait for human open-gate before T03 executes
+
+## Done when
+
+- In-repo `.ptl` + `.pd` files exist; human opens gate on T03 `.pd`

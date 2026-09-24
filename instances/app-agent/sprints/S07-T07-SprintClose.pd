@@ -1,0 +1,38 @@
+---
+id: S07-T07
+name: SprintClose
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:organization-planning]
+slug: organization-planning
+---
+
+# S07-T07: Sprint Close
+
+## Objective
+
+Close S07; update totem intel. Confirm zero per-app instance files were created.
+
+## App-agent verify (MANDATORY — MCP must be up for close)
+
+- [ ] MCP preflight — if down, document gap in `S07-SUMMARY.md` (cannot claim full verify)
+- [ ] `explain("organization-planning")` — final content review
+- [ ] `census()` — `organization-planning` in coverage; no broken SEE refs
+- [ ] `list-pages` category `company` — all S07 pages present
+- [ ] `get-page` — totem-governance, documentation-layers, company index
+- [ ] `list-apps` — confirm no new `apps/todo` or `apps/*/planning/` appeared
+- [ ] `bun run feature:health` — `organization-planning` green
+- [ ] `record("organization-planning", "history", "...")` — note S07 close date if MCP up
+
+## Checklist (APP-AGENT-PROTOCOL.md §7)
+
+- [ ] Org handbook + knowledge + organization README updated (T02–T06)
+- [ ] `intel/TOTEM_INDEX.ti` → S07 current, backlog S08/S09 noted
+- [ ] `sprints/S07-SUMMARY.md` — include MCP tool verify log (which tools ran)
+- [ ] Verify: no `apps/todo/` or `apps/*/planning/` dirs in repo
+
+## Out
+
+`sprints/S07-SUMMARY.md`, `TOTEM_INDEX.ti` patch

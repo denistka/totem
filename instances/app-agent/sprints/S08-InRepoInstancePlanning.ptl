@@ -1,0 +1,76 @@
+---
+id: S08
+name: In-Repo Instance Planning
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S08-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+supersedes: S07-external-totem-default
+---
+
+# S08: In-Repo Instance Planning
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md` + `templates/PD-APP-AGENT-BLOCK.md`.
+MCP-first execution per S07 pattern — see `.ptl` MCP table.
+
+## MCP-first execution (MANDATORY on every PM task)
+
+| Phase | Tools |
+|-------|-------|
+| Preflight | `explain("organization-planning")`, `explain("work-control")`, `explain("<slug>")` |
+| Discover | `get-app-structure("work-control")`, `get-file`, `list-apps` |
+| Verify | `census()`, `get-page`, `bun run feature:health`, `bun run test` |
+
+## Objective
+
+Implement what S07 documented as **future** in `documentation-layers.md`: per-app instance
+planning at `apps/<app>/planning/sprints/`. Migrate work-control `totem-reader` / `totem-writer`
+to in-repo paths with backward-compatible fallback to external totem.
+
+**First instance:** `apps/work-control/planning/` (orchestrator dogfoods on itself).
+**S09** adds `apps/todo` (:3004).
+
+## Foundation decisions (see S08-INVARIANTS.md)
+
+- Default Accept target: `work-control` → `apps/work-control/planning/sprints/`
+- `targetApp` field on epics (DB + API + UI)
+- Legacy `WORK_CONTROL_TOTEM_PATH` still works — not removed
+- External totem S01–S07 remain historical archive
+
+## Tasks
+
+### Track A — Invariants & knowledge
+- [x] S08-T01-FreezeInvariants.pd
+- [x] S08-T02-KnowledgeInRepoPlanning.pd
+
+### Track B — Path resolver & data model
+- [x] S08-T03-PlanningPathResolver.pd
+- [x] S08-T04-EpicTargetApp.pd
+- [x] S08-T05-WorkControlPlanningScaffold.pd
+
+### Track C — Reader / writer migration
+- [x] S08-T06-PlanningReaderWriter.pd
+- [x] S08-T07-BackwardCompatFallback.pd
+
+### Track D — Docs sync & verify
+- [x] S08-T08-DocsSyncOrchestrator.pd
+- [x] S08-T09-SmokeInRepoAccept.pd
+- [x] S08-T10-SprintClose.pd
+
+## Definition of Done
+
+- [x] Accept with `targetApp: work-control` writes OPEN `.ptl`/`.pd` under `apps/work-control/planning/sprints/`
+- [x] Reader panel shows in-repo sprint
+- [x] `orchestrator.md` + `work-control.md` + `documentation-layers.md` updated (no "future")
+- [x] Legacy external totem path still works via env
+- [x] `bun run test` + `feature:health` green
+- [x] **No** `apps/todo` app code (S09)
+
+## Backlog (NOT S08)
+
+- **S09:** TODO app scaffold (:3004) + dogfood Accept on `targetApp: todo`
+- **S10:** Time-machine scrubber (was old S08 in S05–S06 roadmap)

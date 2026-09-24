@@ -1,0 +1,34 @@
+---
+id: S07-T01
+name: FreezeInvariants
+status: TODO
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, architecture/ARCHITECTURE_SCALE.ti]
+---
+
+# S07-T01: Ratify S07 Invariants
+
+## Objective
+
+Confirm `S07-INVARIANTS.md` scope boundary: organization-level only; no per-app instance work.
+No application code.
+
+## App-agent preflight (MANDATORY)
+
+- [ ] MCP preflight — WARN if `:3000` down
+- [ ] `explain("layer-cascade")` — verify org vs app layer model
+- [ ] `get-file` — read `S07-INVARIANTS.md`, `S07-TotemOrganizationLayer.ptl`
+
+## Execution
+
+- Verify invariants §1–3: scope IN/OUT, header→org mapping table, explicit exclusions.
+- Confirm S08/S09 backlog items are NOT sneaked into S07 tasks.
+- Confirm every PM task (T02–T07) lists MCP tools in preflight/close sections.
+- ARCHITECT sign-off before T02 opens.
+
+## Done when
+
+- Invariants linked in `.ptl`; enforceable for T02–T07.
+- MCP was used for layer-cascade context (or [static fallback] noted).

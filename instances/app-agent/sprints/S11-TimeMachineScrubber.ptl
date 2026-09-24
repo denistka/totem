@@ -1,0 +1,44 @@
+---
+id: S11
+name: Time-Machine Scrubber
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S11-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+depends: S10-TodoMvp.ptl
+---
+
+# S11: Time-Machine Scrubber (work-control)
+
+## Objective
+
+Add history replay UI to work-control: scrub through chat messages, epic changes, gate events,
+and task activity on a timeline. Reference: `totem/totem-view-sandbox` time scrubber pattern.
+
+## Prerequisites
+
+- S10 CLOSED (dogfood loop proven on todo)
+- work-control WS + activity log populated (S05)
+
+## Tasks
+
+- [x] S11-T01-FreezeInvariants.pd
+- [x] S11-T02-ResearchTotemViewPattern.pd
+- [x] S11-T03-ActivitySnapshotModel.pd
+- [x] S11-T04-ScrubberUiComponent.pd
+- [x] S11-T05-IntegrateChatBoardViews.pd
+- [x] S11-T06-KnowledgeWorkControlHistory.pd
+- [x] S11-T07-SmokeReplay.pd
+- [x] S11-T08-SprintClose.pd
+
+## Definition of Done
+
+- [ ] Scrubber replays recorded activity on a chat/board without live mutations
+- [ ] `work-control` knowledge updated
+- [ ] Tests + smoke on :3003
+
+## Next
+
+**S12:** Multi-user presence + collaboration rules

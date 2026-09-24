@@ -1,0 +1,39 @@
+---
+id: S06-T05
+name: KnowledgeProtocolSync
+status: DONE
+gate: OPEN
+role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+---
+
+# S06-T05: Knowledge + Per-App Docs Sync
+
+## Objective
+
+Align platform knowledge and per-app docs with the App Agent × Totem binding (protocol §3–§4).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("work-control")` + `explain("feature-knowledge")`
+- [ ] Read `APP-AGENT-PROTOCOL.md` §3 doc layer table
+
+## Implementation (app-agent conventions)
+
+- [ ] Update `core/docs/knowledge/work-control.md`: doc layer table, MCP preflight ritual,
+  totem-writer behavior (post-T03), link to `APP-AGENT-PROTOCOL.md` concept (path in totem instance)
+- [ ] Update `apps/work-control/docs/orchestrator.md`: LLM roadmap pointer, generated `.pd` compliance
+- [ ] Keep agnostic vs per-app split (S05 invariant §6/§7)
+- [ ] `// SEE: feature "work-control"` on any touched server files in work-control app
+
+## Done when (app-agent)
+
+- [ ] `bun run feature:health` — `work-control` slug green, no broken SEE refs
+- [ ] MCP `census()` confirms work-control slug (skip with note if MCP offline)
+
+## Out
+
+`core/docs/knowledge/work-control.md`, `apps/work-control/docs/orchestrator.md`

@@ -1,0 +1,45 @@
+---
+id: S07-T04
+name: DocumentationLayersPage
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:organization-planning]
+slug: organization-planning
+---
+
+# S07-T04: Org Handbook — Documentation Layers
+
+## Objective
+
+Project-agnostic page: where each kind of documentation lives and who updates it.
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] MCP preflight — WARN if `:3000` down
+- [ ] `explain("organization-planning")` + `explain("feature-knowledge")`
+- [ ] `get-page("/company/totem-governance")` — cross-link T03 (must exist first)
+- [ ] `list-apps` — enumerate apps for per-app docs row examples (generic, no deep dive)
+
+## Implementation
+
+- [ ] Create `docs/content/2.company/3.documentation-layers.md`
+- [ ] Table (from `APP-AGENT-PROTOCOL.md` §3, org-focused):
+
+| Layer | Path | Audience | Update when | MCP tool |
+|-------|------|----------|-------------|----------|
+| Organization handbook | `docs/content/2.company/` | People + agents | Governance change | `list-pages`, `get-page` |
+| Brand config | `organization/app/app.config.ts` | All apps | Brand/roles | `get-file` |
+| Feature knowledge | `core/docs/knowledge/{slug}.md` | AI | Platform change | `explain`, `record`, `census` |
+| Per-app rules | `apps/<app>/docs/` | Devs + AI | App behavior | `get-app-structure` |
+| Instance planning | totem `instances/<project>/` | PLANNER, PM | Each sprint | work-control |
+
+- [ ] Explicit rule: organization layer does **not** auto-sync to knowledge or per-app docs
+- [ ] MCP preflight section: when to WARN, `[static fallback]`, start command
+
+## Done when (app-agent tools)
+
+- [ ] `get-page("/company/documentation-layers")` — page exists
+- [ ] `census()` — no regression on knowledge slugs
+- [ ] Cross-links to totem-governance page work

@@ -7,10 +7,61 @@ project:
   name: app-agent
   codename: tech-company-in-a-box
   tagline: Describing your product makes it exist
-  repo: https://github.com/app-agent-io/core
-  code: ../../../../app-agent-io/core
+  repo: https://github.com/denistka/DAWWWB-app-agent
+  upstream: https://github.com/app-agent-io/core
+  code: ../../../../app-agent-io/DAWWWB-app-agent-dev   # LIVE target (branch write-docs-in-auto) — see agent-rules mismatch warning
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, MCP, Supabase]
-  status: S05 CLOSED — Work Control Orchestrator shipped (2026-06-21); generated S06-FirstEat from Accept smoke
+  status: S44 CLOSED 2026-08-25 — upstream PR built on real develop; see upstream_pr below.
+  #   S43 CLOSED 2026-08-24 — THE LOOP CLOSED. chat -> Accept -> HUMAN gate -> daemon -> claude-cli
+  #   build -> boot-verify -> app serving, observed end to end on 2026-08-24 (apps/app2 on :3007).
+  #   This answers S41-F08, outstanding since July. The output is model-authored, not mock: the
+  #   generated code follows the repo's `// SEE: feature` convention and its QA doc records real
+  #   numeric verification. Evidence: apps/app2/.git (scaffold + pre/post-task commits + wc/<id>-done
+  #   tags), the board's activity (1 human gate.opened, 4 build.start, 10 write_file, 4 build.done,
+  #   2 boot.ok, 0 boot.fail), and the running process on :3007.
+  # STILL OWED (S43-T02 residue): the captured evidence pack, the S41-F08/T03 + S36 [~] flips, one
+  #   captured stream-json fixture, and S43-F08 (explain the run's record shape before citing it).
+  # NOTE: the pre-S43 corpus WAS mock (39-for-39 plannerMock fingerprint, preserved in
+  #   <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md). That history stands. What changed is that it
+  #   is now history rather than the whole story.
+
+# ── UPSTREAM PR (S44 CLOSED 2026-08-25) — read this before touching anything upstream ────────
+upstream_pr:
+  branch: feat/work-control-base-app
+  head: 880f16f3
+  base: bd1d8199            # app-agent-io/core origin/develop, fetched 2026-08-25
+  target: develop           # ci.yml runs FULL CI on PRs into develop; mark the PR ready, not draft
+  worktree: ../../../../app-agent-io/DAWWWB-app-agent-dev   # remote `upstream` added there
+  shape: layer-only at core/work-control/ — NO root thin app
+  commits: [235f1acc layer, ccbdf85b DEV_FACING, 66aecea9 F09 guard test, 880f16f3 §9 alternatives]
+  companion: chore/disable-turbo-telemetry @ 3e040aa5
+  body: <planning-home>/evidence/S44/PR-BODY.md
+  pushed: false             # the push and the merge remain a human act
+  ci: all gates exit 0 on a fresh clone; vitest exit 1 = 2 admin:nuxt toaster-a11y tests that
+  #   FAIL IDENTICALLY on pristine upstream develop — pre-existing, not ours.
+
+  # ── DEAD ENDS. Do not resurrect. ──────────────────────────────────────────────────────────
+  abandoned: pr/work-control-base-app @ 2111ebf
+  #   Base 974e43b was main HEAD *two fetches ago* (2026-06-11): 588 behind main, 900 behind
+  #   develop. Its shape mirrored control/ over core/control/ — a pattern upstream RETIRED on
+  #   2026-07-09 in 9115055b ("Nobody adopted the standalone control plane"). Its `work-control/`
+  #   thin app was dropped; upstream's root has no thin app and apps/ is .gitkeep only.
+
+  # ── UPSTREAM FACTS THAT KEEP GETTING READ WRONG ───────────────────────────────────────────
+  # ALWAYS `git fetch` /Projects/app-agent-io/core before quoting any upstream number. Every
+  # upstream fact S44 was planned on was false because that mirror had never been fetched.
+  develop_vs_main: "5 317"   # main...develop — develop is 317 AHEAD. It is the ACTIVE branch.
+  #   NEVER ask the maintainer to fast-forward develop to main: it would destroy 317 commits.
+  #   `9a9309d "Initial commit"` is the FORK's develop, not upstream's.
+  ci_typecheck: unfiltered (`bunx turbo run typecheck`) — new workspaces ARE reached
+  ci_steps: 11, not 6 — adds wiki-drift, baseline-growth, i18n parity, component-manifest
+  #   freshness, conformance freshness. Draft PRs are skipped entirely.
+  ci_build_gap: `bun run build` filters ./apps/* (empty) — NO CI step builds the layer
+  retired_upstream: [control/, core/control/, core/docs/server/, demos/, packages/* workspace]
+  #   core/admin + core/api are the live layer precedents; apps/api (3002) + apps/admin (3003)
+  #   are scaffolded into apps/ by the launcher on first run. RESERVED_PORTS must reflect that.
+  decisions: <planning-home>/decisions/S44-R{1,2,3}-*.md
+  summary: <planning-home>/S44-SUMMARY.md
 
 brand:
   domain: app-agent.io
@@ -26,14 +77,24 @@ load-order:
   2: APP-AGENT-PROTOCOL.md
   3: intel/MCP-PREFLIGHT.ti
   4: BRIEF.md
-  5: S05-INVARIANTS.md
-  5: intel/DEEP-FLOWS.md
-  6: intel/LOCAL-DEV-RUNBOOK.md
-  7: intel/ARCHITECTURE_MAP.md
-  8: intel/PROBLEMS_REGISTER.md
-  9: intel/VISION-VS-BUILT.md
-  10: intel/DEEP-WORK-CONTROL.md
-  11: intel/DEEP-ORCHESTRATOR.md
+  5: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/planning/S43-INVARIANTS.md   # ACTIVE from 2026-08-24. Supersedes S41-INVARIANTS.md: the 2 falsified claims are CORRECTED there
+  #    (not annotated), "agent never starts dev servers" is formally retired for the PRODUCT and
+  #    explicitly KEPT for working agents, and the S43 invariants are added. Do NOT load S41-INVARIANTS
+  #    as the active set — it remains on disk as the S41 record only.
+  6: intel/SPRINT-ROADMAP.md
+  7: intel/DEEP-FLOWS.md
+  8: intel/LOCAL-DEV-RUNBOOK.md
+  9: intel/ARCHITECTURE_MAP.md
+  10: intel/PROBLEMS_REGISTER.md
+  11: intel/VISION-VS-BUILT.md
+  # 12/13 REMOVED 2026-08-24 by S43-T11 — intel/DEEP-WORK-CONTROL.md and intel/DEEP-ORCHESTRATOR.md
+  # were frozen 2026-06-21 and fed 2026-06 falsehoods into every session's startup context (mock-vs-LLM
+  # selection, an HTTP provider, and UI views deleted in S43-T08). Both now carry STALE banners and
+  # moved to `historical:` below. The live equivalents are in the fork, listed here so the load order
+  # points at truth rather than at a retired design:
+  12: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/docs/build-loop.md        # daemon, queue, gate
+  13: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/docs/agent-runtime.md     # the build plane (claude-cli)
+  14: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/docs/chat-session-transport.md  # completion plane — header states BUILT, NOT LIVE-RUN
   deep-dives:
     - intel/DEEP-CONFIG-SERVICE.md
     - intel/DEEP-FEATURE-REGISTRY.md
@@ -45,6 +106,7 @@ load-order:
     - intel/DEEP-APPS-MAP.md
     - intel/DEEP-DEV-LAUNCHER.md
   on-demand:
+    - intel/CURRENT-STATE-AUDIT.md
     - intel/REPO_INVENTORY.md
     - intel/FEATURE_CENSUS.md
     - intel/DEEP-TEST-ANALYSIS.md
@@ -55,6 +117,11 @@ load-order:
     - intel/MCP_SETUP.md
     - intel/S02-DEV-SMOKE.md
     - intel/S02-CHAT-SMOKE.md
+  # STALE — history only. Never load these to answer "how does it work now"; both carry a ⚠️ banner
+  # naming what they get wrong and where the live doc is. Demoted 2026-08-24 by S43-T11.
+  historical:
+    - intel/DEEP-WORK-CONTROL.md   # frozen 2026-06-21 (S11) — pre-claude-cli, pre-S43-T08 UI
+    - intel/DEEP-ORCHESTRATOR.md   # frozen 2026-06-21 (S05) — gate doctrine still valid, execution model replaced
 
 ###############################################################################
 # INTEL ARTIFACTS
@@ -63,6 +130,7 @@ load-order:
 intel:
   instance_hub: ../INSTANCE.ti
   protocol: ../APP-AGENT-PROTOCOL.md
+  roadmap: ./SPRINT-ROADMAP.md
   mcp_preflight: ./MCP-PREFLIGHT.ti
   pd_template: ../templates/PD-APP-AGENT-BLOCK.md
   ptl_template: ../templates/PTL-PROTOCOL-HEADER.md
@@ -102,6 +170,9 @@ mcp:
   key-slugs:
     - layer-cascade
     - feature-knowledge
+    - organization-planning
+    - todo
+    - in-repo-planning
     - runtime-config
     - authentication
     - integrations
@@ -119,38 +190,213 @@ ports:
   control: 3001
   chat-app: 3002
   work-control: 3003
+  todo: 3004
   demo-dashboard: 3010
   demo-saas: 3011
   demo-landing: 3012
   demo-chat: 3013
   demo-characters: 3014
+  # S41-F01: the scaffolder no longer hard-caps at 3009.
+  customer-window: 3002-3099        # nextAppPort walks this range, first genuinely free port wins
+  reserved: [3000, 3001, 3010, 3011, 3012, 3013, 3014]   # never allocated to a customer app
+  note: AGENTS.md still documents the OLD 3002-3009 window and omits 3014 — code is authoritative
 
 ###############################################################################
 # SPRINTS
 ###############################################################################
 
+# PLANNING HOME MOVED. Meta sprints are no longer authored in this external instance.
+# Since S36 the hand-authored ROOT->PLANNER chain lives IN-REPO alongside the code:
+#   <code>/apps/work-control/planning/          <- BRIEF/INSTANCE/PROTOCOL/S*-INVARIANTS
+#   <code>/apps/work-control/planning/sprints/  <- all .ptl/.pd/S*-SUMMARY
+# The external ../sprints/ tree (S01-S14, SDEMO*) is HISTORY ONLY — do not author there.
+
+planning-home:
+  root: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/planning/
+  sprints: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/planning/sprints/
+  evidence: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/planning/evidence/
+  legacy-external: ../sprints/          # S01-S14 + SDEMO* — archived, read-only
+  legacy-env: WORK_CONTROL_TOTEM_PATH   # deprecated; the suite still logs a deprecation line
+
 sprints:
-  current: null
-  current-ptl: null
-  current-invariants: ../S05-INVARIANTS.md
-  previous: S05
-  last-closed: S05
-  last-ptl: ../sprints/S05-Orchestrator.ptl
-  history: ../sprints/
-  summary: ../sprints/S05-SUMMARY.md
-  generated-by-orchestrator: ../sprints/S06-FirstEat.ptl
+  # RE-SYNCED 2026-08-24 by S43-T12. This block read `current: S41` for four days after S43 opened
+  # and two days after S43 closed — a stale pointer here sends every fresh session into the wrong
+  # invariants, the wrong docket and a blocker that no longer exists.
+  current: S43
+  current-ptl: <planning-home>/sprints/S43-ClaudeCliOverlay.ptl
+  current-invariants: <planning-home>/S43-INVARIANTS.md
+  current-summary: <planning-home>/sprints/S43-SUMMARY.md
+  current-status: CLOSED 2026-08-24. THE LIVE RUN HAPPENED (S43-T02) — daemon built, verified and
+    booted apps/app2 after a human opened the gate. ONE outstanding item, S43-T02's residue: the
+    captured evidence pack, the S41-F08/S41-T03 closure + S36's two [~] flips, one captured
+    stream-json fixture, and S43-F08 (explain the run's record shape before citing it). Eight
+    findings S43-F01..F08 filed LOCKED, none fixed in-sprint (acceptance-first).
+  # CHAIN: S36 -> S41 -> S43. S42 exists on disk as a work-control-GENERATED artifact and is NOT a
+  # link in the hand-authored chain (hence the S41 -> S43 numbering jump).
+  previous: S41
+  last-closed: S43
+  last-ptl: <planning-home>/sprints/S43-ClaudeCliOverlay.ptl
+  history: <planning-home>/sprints/
+  smoke-artifact: ../sprints/S05-SMOKE-FirstEat.ptl     # external, historical
+  # In-repo sprints dir holds 42 .ptl. THREE are hand-authored: S15, S36, S41.
+  # CORRECTED 2026-08-20 — S15 (NickDemoPolish) is hand-authored: six bespoke tasks, a
+  # target_branch field no generator emits, protocol: ../APP-AGENT-PROTOCOL.md, no generated_by.
+  # So 39 are work-control-GENERATED, not 40. S35-S42 band: S37-S40 + S42 generated.
+  # AND SEE S41-F11: all 39 generated decompositions carry planner.mock.ts's verbatim strings —
+  # the PLANNER half of the dogfood corpus was a template, not a model.
+  closed-chain:
+    # external instance (historical meta chain)
+    S07: ../sprints/S07-SUMMARY.md
+    S08: ../sprints/S08-SUMMARY.md
+    S09: ../sprints/S09-SUMMARY.md
+    S10: ../sprints/S10-SUMMARY.md
+    S11: ../sprints/S11-SUMMARY.md
+    S12: ../sprints/S12-SUMMARY.md
+    S13: ../sprints/S13-SUMMARY.md
+    # in-repo (current meta chain)
+    S36: <planning-home>/sprints/S36-SUMMARY.md   # PARTIAL: 2 DoD items still [~], live run deferred
+    S41: <planning-home>/sprints/S41-SUMMARY.md   # PARTIAL: 3 of 9 DoD were blocked on the live run
+                                                  #   — which S43-T02 has now performed. Flips owed.
+    S43: <planning-home>/sprints/S43-SUMMARY.md   # CLOSED 2026-08-24; proof ledger in §2
+                                                  #   (LIVE-PROVEN / GREEN-TESTS-ONLY / NEVER-RUN)
+  generated-sprints: S01-S14, S16-S35, S37-S40, S42   # 39 total (S15/S36/S41/S43 are HAND-authored)
+  # 2026-08-22 (S43-T11): the count 39 is CORRECT, the naive method is not. Grepping for the
+  # ABSENCE of `generated_by` misclassifies S36 — it mentions the token in prose. The reliable
+  # discriminator is the `authored_by: ... hand-authored ...` header line. Full fingerprint
+  # evidence (39-for-39 plannerMock strings) preserved at
+  # <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md — captured BEFORE the R4 cleanup deletes the corpus.
+  # "do not touch, do not renumber" is SUPERSEDED for deletion purposes by ruling R4 (S43-T11);
+  # it still holds for editing or renumbering anything that survives.
+  demo-sprints:
+    SDEMO: ../sprints/SDEMO-QuickDeploy.ptl           # aborted — Railway path abandoned
+    SDEMO-B: ../sprints/SDEMO-B-VercelDemo.ptl        # PARKED — superseded by the S36/S41 in-repo chain
+
+open-findings:
+  # Docket as of 2026-08-20 (post agent-honesty batch). All .pd live at <planning-home>/sprints/
+  # DONE / gate:OPEN — fixed, each carries a "## Resolution (2026-08-20)" section:
+  S41-F01: BootVerifyPortCollisionFalseGreen    # FIXED in-sprint (the S41 deviation)
+  S41-F02: DaemonLeaseNeverRenewedDoubleBuild   # FIXED — lease renewal + ownership-guarded release
+  S41-F03: DaemonHeartbeatBlindDuringBuilds     # FIXED — pump outside the loop; per-worker markers
+  S41-F04: McpIntrospectionCwdRootFailsGreen    # FIXED 2026-08-20 — Denis authorized core/docs/server/mcp/tools/ ONLY
+  S41-F05: ScaffoldedDevScriptBreaksBunInvariant# FIXED — generator emits `bun --bun`; 12 apps backfilled
+  S41-F06: AcceptHandlerStepNumberingStale      # FIXED — comment-only
+  S41-F07: PreflightDatasourceIsPresenceOnly    # FIXED — real round-trip; its AI half closed by F13
+  S41-F09: TestSuiteWritesIntoRealApps          # FIXED — sandboxed suites + whole-run guard
+  S41-F12: TargetAppDefaultDeadEndsFlagship     # FILED AND FIXED 2026-08-20 — see agent-rules
+  S41-F13: SilentLlmToMockFallbackClaimsLlm     # FILED AND FIXED 2026-08-20 — THE headline defect
+  # PLANNED / gate:LOCKED — still open:
+  S41-F08: LiveClosedLoopRunNeverExecuted       # ANSWERED IN SUBSTANCE 2026-08-24 by the S43-T02 run
+                                                #   (human gate -> daemon -> claude-cli build -> boot.ok ->
+                                                #   apps/app2 serving :3007). The .pd still reads PLANNED/LOCKED
+                                                #   on disk: the CLOSURE + evidence links are owed, not the run.
+  S41-F10: DatasourceProbeColdSchemaCache404    # MED-HIGH — a cold-schema 404 is routed to a CONCLUSIVE fail,
+                                                #   and its fix text tells the operator to run DDL at a live DB
+  S41-F11: GeneratedSprintProvenanceUnverified  # HIGH — steps 1-4 died with the R4 corpus cleanup (S43-T11); the
+                                                #   fingerprint evidence is preserved at
+                                                #   <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md. Step 5
+                                                #   (provenance-at-write) survives as a STANDING REQUIREMENT in
+                                                #   S43-INVARIANTS §2 — and is NOT yet met: apps/app2's generated
+                                                #   .ptl still carries only `generated_by`, the selected-agent form.
+  # ADDED TO THIS DOCKET 2026-08-24 (S43-T12) — both were on disk since 2026-08-20/21 and were MISSING here:
+  S41-F14: GateBypassedBySeedAndSnapshot        # EXECUTED by S43-T03 — nothing born OPEN; one guarded gate writer
+                                                #   flips DB+disk or refuses. Green in tests; no fresh install run.
+  S41-F15: WorktreeIsolationForBuildAgentWrites # OPEN — co-designed in S43-T10 (runner/git.ts is the shared seam);
+                                                #   the worktree half itself is not built.
+
+  # ── S43 DOCKET (filed 2026-08-24 at close, all gate: LOCKED, none fixed in-sprint) ──
+  S43-F01: GuardianSchemaNeverAppliedLiveDatasource  # HIGH — wc_guardians absent from the LIVE datasource;
+                                                #   /api/guardians + /drift 500. The T04/T05 columns from the SAME
+                                                #   db-setup.sql ARE applied, so it is the guardian half specifically.
+                                                #   Consequence: T07's editor is dark and T06's ARCHITECT runs on
+                                                #   axioms + seam contract, not on its guardian. Degradation is
+                                                #   honest (loader is best-effort by contract) — but silent.
+  S43-F02: BoardMetricsBuildBlockStructurallyZero    # MED — metrics.get.ts folds board-scoped activity over
+                                                #   build.start/build.done, which build-run.ts:211 emits TASK-scoped.
+                                                #   Six of nine `build` fields can never be non-zero.
+  S43-F03: RestoreLeaseCheckBoardScopedNotAppScoped  # MED-HIGH — the refusal reads ONE board's tasks; the rollback
+                                                #   moves the whole app dir. No unique constraint on target_app.
+  S43-F04: BootBadgeSurvivesRollback            # MED — isBootedFromActivity reads only boot.ok/boot.fail, so
+                                                #   code.rolled_back cannot move the badge. Also T09 step 4, never wired.
+  S43-F05: GuardianWriteGatedOnlyByDemoMode     # MED-HIGH — the prompt-write route has demo-mode and editable:false
+                                                #   refusals but NO identity check. Correction to the shorthand:
+                                                #   it is not "no auth", it is "auth by deploy flag".
+  S43-F06: ChatAndRootShareOneCliSession        # MED — the session key is chatId alone, so a ROOT schema re-ask
+                                                #   enters the CHAT transcript. A decision never made, only inherited.
+  S43-F07: BuiltAppsBreakFeatureHealth          # LOW-MED — every daemon-built app adds a broken SEE ref. The
+                                                #   layer-aware scanner exists ONLY on pr/work-control-base-app,
+                                                #   and it keys on `slug:` frontmatter the build agent does not emit.
+  S43-F08: RunRecordDuplicationOnTheFirstLiveRun# MED — 8 task lifecycles for 5 tasks; 2 build.fail rows on an
+                                                #   all-done board. Most likely a lease loser publishing its loss
+                                                #   across a mid-sprint daemon restart. NOT PROVEN — settle it from
+                                                #   the payloads before citing the run in the demo or upstream.
+  # ID COLLISION, do not be confused by it: the honesty seam's SOURCE comments cite "S41-F10"
+  # (38 occurrences under apps/work-control/server/agents/). The defect they describe is S41-F13.
+  # S41-F10 on disk is the datasource-probe finding. F12's 19 citations are correct.
 
 next-suggested:
-  - S06: Replace mock agents with real LLM (in-app Nitro + AI SDK, reuse apps/chat)
-  - S07: Time-machine scrubber (history replay) — totem-view-sandbox pattern
-  - S08: Multi-user presence + collaboration rules — totem-view S12 pattern
-  - S09: Task-level multi-agent (lead + additional roles) + cross-agent handoff
+  # REWRITTEN 2026-08-24 (S43-T12). The previous list was built for a world where the loop had never
+  # run and the provider was out of credit. Both premises are dead: the run happened, and the CLI
+  # authenticates by subscription OAuth out of $HOME (no HTTP provider, no credit, no :8787 shim —
+  # the whole shim lineage was rejected outright by ruling R3 and DELETED).
+  - COMMIT S43. Most of the sprint's code is UNCOMMITTED on write-docs-in-auto (97 modified/deleted
+      tracked files + 59 untracked at close). Only T11's two commits and the T13 branch are in
+      history. This is the largest structural risk carried out of the sprint.
+  - S43-T02 RESIDUE — the one outstanding sprint item. The run happened; its bookkeeping did not:
+      capture the evidence pack in <planning-home>/evidence/S43/, close S41-F08 + S41-T03 with
+      links, flip S36's two [~], and capture ONE real stream-json transcript (all 8 fixtures in
+      core/tests/fixtures/claude-stream/ are authored, not captured — every reducer test currently
+      tests an assumption about the CLI's output).
+  - S43-F08 BEFORE ANY DEMO CLAIM. Explain the run's record shape (8 task lifecycles for 5 tasks;
+      2 build.fail rows on an all-done board) from the payloads. Do not cite the run further until
+      the record it rests on is explained.
+  - S43-F01. The guardian plane is dark in the running product; T07's editor and T06's guardian
+      prompt do not exist there. Likely a one-line remedy (re-run scripts/apply-schema.ts) plus the
+      durable half: a preflight row, so an absent table is never again discoverable only by a 500.
+  - THE ROLLBACK BEAT. The only Sprint DoD item still fully unmet: slide back one tick, watch the
+      app restart and serve older code. The substrate is proven (tagged per-app ticks, shas in the
+      activity payloads); the restore itself has never run outside tests.
+  - S41-F10 / S41-F15 / S43-F02..F07: filed, LOCKED, unfixed.
+
+decisions-of-record:
+  # THE authority for R1-R4 and the product formula. Read it before re-litigating any of them.
+  current: ./SESSION-2026-08-22.md          # R1 claude-cli/high · R2 openrouter DEMOTED (kept, non-default)
+                                            # R3 direct CLI spawn, shim lineage REJECTED outright · R4 corpus cleanup
+                                            # + the product formula and the endgame deliverable (charter §0/§6a)
+  previous: ./SESSION-2026-08-20.md         # SUPERSEDED IN PART by the above — each S43 ruling names what it kills.
+                                            # Its "shim for dev, OpenRouter for the demo" line is DEAD (R1+R3).
+
+roadmap-doc: ./SPRINT-ROADMAP.md
 
 ###############################################################################
 # MACHINE RULES FOR AGENTS
 ###############################################################################
 
 agent-rules:
+
+  # ── TARGET STRUCTURE (decided with Denis 2026-08-20) ─────────────────────────
+  # ENDGAME: work-control is upstreamed by PR into app-agent-io/core as a BASE APP —
+  # a peer of control/, not a resident of apps/. Not this stage, but shape code for it.
+  # The upstream base-app pattern, verified in core/control/nuxt.config.ts:
+  #     core/<name>/   = the LAYER — all infrastructure (server, pages, components)
+  #     <name>/        = a THIN app — `extends ../core/<name>`, sets devServer.port,
+  #                      holds branding overrides + public/ only
+  # So the target split is  core/work-control/  +  work-control/  (port 3003).
+  # WHY IT MATTERS BEYOND TIDINESS: today work-control is BOTH the orchestrator AND an
+  # app inside apps/, and the code conflates the two — DEFAULT_TARGET_APP='work-control',
+  # isProtectedBuildTarget guarding it by NAME, its own planning under apps/work-control/
+  # planning/. That conflation is the root of the S41 defect where every proposed epic
+  # defaulted to targetApp 'work-control' (the protected orchestrator) and Accept 422'd.
+  # Once work-control leaves apps/, it stops being addressable as a build target
+  # STRUCTURALLY, the name-based guard becomes redundant, and the bad default dissolves.
+  # CONSTRAINT FOR NEW CODE: never hardcode `apps/work-control` as work-control's OWN
+  # location. "Where customer apps live" (apps/) and "where work-control lives" are two
+  # different facts that only coincide today.
+  # PR HYGIENE: the fork carries things that must NEVER go upstream — untracked generated apps,
+  # evidence/ folders, .env, demo seeds. The ~40 mock-generated sprints are GONE (S43-T11, commit
+  # 8d8996c: 195 files, 7,410 deletions, ruling R4) with their provenance evidence preserved in
+  # <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md. T13 verified the PR diff against `main` — note
+  # NO `upstream` remote is configured in the dev worktree, so the .pd's `git log upstream/main..`
+  # step could not be run as written.
   - MANDATORY: every role loads INSTANCE.ti + APP-AGENT-PROTOCOL.md before any action (see §0 role matrix)
   - MCP preflight (intel/MCP-PREFLIGHT.ti) at session start; WARN user if :3000/mcp unreachable
   - Every new .ptl/.pd YAML MUST include protocol: ../APP-AGENT-PROTOCOL.md
@@ -169,5 +415,151 @@ agent-rules:
   - Totem write-back: app writes .ptl/.pd at gate:LOCKED; human opens; agent then runs
   - Realtime via Nitro WebSocket (crossws), NOT Supabase Realtime
   - Persistence: Supabase via CORE_DATASOURCE_* (ADR-005 pattern); bun:sqlite dev fallback
+  # S07 additions
+  - Totem header rules live in docs/content/2.company/ + explain("organization-planning")
+  - Organization layer does not auto-sync to knowledge or per-app docs
+  # S08 additions
+  - Default Accept target: apps/<targetApp>/planning/sprints/ (epic.targetApp, default work-control)
+  - explain("in-repo-planning") for path resolver + env vars; legacy WORK_CONTROL_TOTEM_PATH fallback
+  # S12 additions
+  - Presence: in-memory registry + presence.sync on chat/board rooms; PresenceAvatars UI
+  - usePresenceId() ephemeral tab UUID; agent auto-presence during task run
+  # S36 + S41 additions (2026-08-20) — READ THESE FIRST, they override older entries
+  - WORKTREE — FIXED 2026-08-20, do not "restore" the old values from memory: project.config.yml
+      paths.code + paths.workspace now point at ../../../../app-agent-io/DAWWWB-app-agent-dev and
+      repo.branch is `write-docs-in-auto`. That IS where the work is. The OTHER worktree
+      (DAWWWB-app-agent, branch `vercel-demo`) is the parked Vercel demo. Still verify with
+      `git branch --show-current` before trusting either file.
+  - PLANNING HOME IS IN-REPO since S36: apps/work-control/planning/ (+ /sprints, /evidence).
+      Do NOT author .ptl/.pd in this external totem instance; ../sprints/ is history only.
+  - Sprint state: S36 CLOSED PARTIAL (2 DoD items still [~]); S41 CLOSED 2026-08-20 with T03
+      OUTSTANDING. The chat->Accept->plan+docs half is PROVEN LIVE on apps/pulse-note.
+      The daemon->OpenRouter build->boot->preview half HAS NEVER RUN. Treat every claim about
+      it as unproven no matter how many green tests reference it.
+  - S41 was NOT acceptance-first. Its charter said findings become LOCKED follow-ups, never
+      inline fixes; Denis explicitly overrode that and S41-F01 was FIXED in-sprint. Do not
+      repeat the override without an equally explicit human instruction.
+  - PORT ALLOCATION AFTER S41-F01 (behaviour changed — old notes are wrong):
+      * nextAppPort is no longer hard-capped at 3009. It walks 3002-3099, skipping RESERVED
+        (3000/3001/3010-3014) and any port that is declared by another app OR held by a listener.
+        It THROWS on exhaustion instead of silently colliding.
+      * A port declared in package.json `scripts.dev` counts as declared, not just nuxt.config.ts.
+      * boot-verify targets the app's OWN configured port via resolveBootPort — NOT the allocator.
+      * An OCCUPIED port is now REFUSED before any spawn. This is correct but it is a NEW
+        failure class: if Denis has the target app running, boot-verify fails loudly.
+      * pulse-note / focus-timer / habit-tracker / kanban-board ALL still declare 3009.
+      * A green boot needs a real proof: listener probe (three-valued, `unknown` proves nothing),
+        child liveness (EADDRINUSE + on-exit), or the /api/health `app` identity marker.
+  - GATE ANOMALY IS SETTLED — do not re-litigate. `gate: OPEN` at `status: PLANNED` on a .ptl is
+      the fingerprint of a LEGITIMATE HUMAN open-gate, NOT a generator defect (10-for-10 against
+      the historical activity log). No generator path can emit OPEN; openPtlGate() is the only
+      writer and it rewrites the .ptl alone, which is why the .pd stay LOCKED.
+      CAVEAT: that fingerprint applies to work-control-GENERATED artifacts only — hand-authored
+      S41-F*/T* .pd at gate: OPEN are a separate, unrelated bookkeeping slip.
+  - THE TWO FALSIFIED S41 CLAIMS ARE NOW CORRECTED, NOT MERELY ANNOTATED (S43-T12, 2026-08-24).
+      The corrections live in S43-INVARIANTS.md §4 and that file is the ACTIVE invariants set:
+      (1) the S38/S39 gate anomaly is a LEGITIMATE HUMAN open-gate whose tasks never ran — no
+          generator path can emit `gate: OPEN`; planning-writer.ts:228's flip runs only through the
+          human open-gate route, and it rewrites the .ptl alone (which is why the .pd stay LOCKED);
+      (2) config reassignment is EFFECTIVE. resolveBootPort (runner/scaffold.ts:468) reads
+          readConfiguredPort(appRoot) FIRST and only falls back to nextAppPort; loop.ts:444-455 calls
+          it and supervise.ts:777 injects it as the supervisor's resolvePort. The old sentence
+          described code that no longer exists, and the "only freeing the port helps" workaround it
+          implied is obsolete.
+  - INVARIANT #5 IS BROKEN ON DISK: 7 of 14 apps declare plain `nuxt dev` (no `bun --bun`),
+      including pulse-note, which S41 itself scaffolded. The scaffolder emits the bad form while
+      boot-verify spawns the good one, so a green boot never exercises the human start path.
+  - Adversarial verification EARNS ITS COST: three lenses turned a green, tested S41-F01 fix into
+      18 findings, one of which reproduced the original false green through the FIXED code path.
+      Run it on anything load-bearing before calling it done.
+  # test-count history — S41 close 62/687; follow-up 67/869; agent-honesty 70/1069; S43 open 78/1258
+  - SUITE BASELINE 2026-08-24 at S43 close — `bun run test` = 98 files / 1731 tests, exit 0.
+      `bun run typecheck` in apps/work-control exits 0.
+      `bun run feature:health` now exits 1 on TWO broken refs, and the count moved for a reason worth
+      knowing: core/docs/knowledge/work-control.md (long-standing, the slug is app-local by design)
+      AND core/docs/knowledge/trig-calculator.md — created by the product WORKING. The daemon-built
+      app followed the `// SEE: feature "slug" at <app-local path>` convention correctly, and
+      core/cli/feature-health.js:23 resolves slugs against core/docs/knowledge/ only. So every app
+      the daemon builds adds one broken ref. Filed as S43-F07. The layer-aware scanner that fixes it
+      exists ONLY on pr/work-control-base-app and additionally needs `slug:` frontmatter the build
+      agent does not emit. Do NOT "fix" an app-local slug by creating core/docs/knowledge/<slug>.md —
+      in the resolver that file SHADOWS the layer's own, silently.
+  - MCP WAS UP FOR THE S43 CLOSE (2026-08-24) — the first time in this chain that protocol §7's
+      "MCP was up for verify" box is answered yes rather than gapped. Verified this session:
+      GET / -> 200, GET /mcp -> 406, POST /mcp tools/list -> live tool list, explain("work-control")
+      -> the correct app-agent description, census() -> 23 features. The S41-era squatter is gone.
+      The standing rule is unchanged: PROBE :3000 before trusting explain(); label fallbacks
+      [static fallback]. Being up today is not a property of the system, it is an observation.
+  # AGENT-HONESTY BATCH additions (2026-08-20) — READ THESE BEFORE BELIEVING ANY "AI DID THIS" CLAIM
+  - SUPERSEDED 2026-08-24 (S43-T12). This rule read "THE PRODUCT HAS NEVER BEEN OBSERVED DOING AI
+      PLANNING." That was TRUE for everything written before 2026-08-24 and is FALSE now — do not
+      keep repeating it, and do not delete the history it records either. Both halves:
+      (a) STILL TRUE, and it is the whole reason this instance distrusts its own record: both
+          pre-S43 "live" Accept runs (pulse-note 2026-07-11, quote-wall 2026-08-20) were served by
+          the DETERMINISTIC MOCK agents, as was the ENTIRE generated corpus — 39 for 39 on
+          planner.mock.ts's verbatim "Freeze the approach, data shapes, and contracts for ...",
+          with root.mock.ts's canned epic titles ("Add authentication", "Build the API & data
+          model", "Design the UI") on the boards. That corpus was deleted under ruling R4
+          (S43-T11); the fingerprint evidence is preserved at
+          <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md.
+      (b) NO LONGER TRUE as of 2026-08-24: apps/app2 was decomposed and built by the real Claude
+          CLI after a human opened the gate. The output is model-authored on evidence, not on
+          assertion — the generated source carries `// SEE: feature "trig-calculator" at
+          apps/app2/docs/trig-module-design.md` (a repo convention nobody templated for it) and the
+          QA doc records task-specific numeric verification. planner.mock.ts's fingerprint sentence
+          appears nowhere in it.
+      Infrastructure claims (ports, gate, datasource, daemon count, generator fidelity) were never
+      affected by either half — they do not depend on who wrote the text.
+  - WHY IT WAS INVISIBLE (S41-F13, fixed) — the OpenRouter account returned HTTP 402 Insufficient
+      credits and ALL FOUR llm agents swallowed it with a bare `catch` and returned mock output,
+      while /api/preflight said the ai-provider row was ok, wc_agents.kind said 'llm', and the UI
+      result as AI work. Three assertions, all false, zero signal.
+  - THE RULE THAT REPLACED IT — THE MOCK MAY SERVE, IT MAY NOT CLAIM. Every fallback goes through
+      apps/work-control/server/agents/llm/degradation.ts `withProviderFallback(seam, primary,
+      fallback, {scope})`, which serves the mock AND records a classified, redacted degradation.
+      If you add a new agent or a new "... with AI" action, ROUTE IT THROUGH THAT SEAM. Never write
+      `catch { return mock(...) }`, and never swap an empty result for the mock silently — that
+      is the same lie, quieter (it was live in enrich/refactor/refactor-tasks and is now fixed).
+  - wc_agents.kind IS NOT PROVENANCE for anything written before 2026-08-20. `resolveAgentKind()`
+      decides from env PRESENCE, before the call, and never revises. A row reading 'mock' is a
+      trustworthy upper bound; a row reading 'llm' proves NOTHING. New writes go through
+      `effectiveAgentKind()` and are corrected in both directions; the six 'llm' rows from the live
+      run are still wrong on disk and were deliberately not rewritten.
+  - PROVIDER SITUATION — REWRITTEN 2026-08-24 (S43-T12). THE 2026-08-20 ENTRY IS DEAD; do not act
+      on any memory of it. OpenRouter being out of credit (HTTP 402) is no longer on any default
+      path, and the :8787 shim DOES NOT EXIST — ruling R3 (Denis, 2026-08-22) rejected the entire
+      shim lineage outright and scripts/claude-provider.ts was DELETED (tombstone:
+      <code>/apps/work-control/docs/agent-runtime.md:80-87). Do not resurrect it; do not point
+      AI_PROVIDER_URL at it.
+      CURRENT TRUTH: WORK_CONTROL_EXECUTOR=claude-cli, WORK_CONTROL_EFFORT=high (-> Opus). The CLI
+      authenticates by SUBSCRIPTION OAuth out of $HOME — AI_PROVIDER_* is not read by any role in
+      this configuration. executors/openrouter.ts is KEPT but demoted: legacy, deploy-only,
+      non-default — still the only builder where no `claude` binary exists.
+      THE HONESTY CAVEAT SURVIVES, unchanged and still load-bearing: preflight's ai-provider row is
+      per-PROCESS, empty after a restart, and NEVER covers the separate `bun run runner` daemon.
+      A green row is not proof that this run did AI work.
+  - S41-F12 (fixed) — proposed epics used to default their targetApp to 'work-control', the PROTECTED
+      orchestrator — so the flagship "describe it -> watch it build" path dead-ended by default, and
+      NOT with a clean 422 — because apps/work-control/planning/sprints exists, the plan was written
+      into the orchestrator's OWN corpus and the build was skipped as `blocked`. Now resolved from
+      the conversation by server/agents/target-app.ts, with an honest self-announcing fallback.
+      The derivation is ENGLISH-ONLY — a Russian-language request still resolves to the fallback.
+  - RUN ADVERSARIAL VERIFICATION ON ANYTHING LOAD-BEARING. It paid again — three lenses turned this
+      batch's green, tested fixes into 21 findings, including (a) retried 429/5xx being structurally
+      unreachable because the ai SDK's RetryError carries no status code, and (b) a false-degradation
+      "cry wolf" that labelled a genuinely successful run as mock. A wrong honesty badge is worse
+      than no badge — it teaches the operator to ignore it.
+  # SDEMO-B additions (2026-06-22) — PARKED branch, superseded by the in-repo S36/S41 chain
+  - Two git worktrees: DAWWWB-app-agent (vercel-demo) + DAWWWB-app-agent-dev (test-app)
+  - vercel-demo branch: preset:vercel, no hub:db, MemoryWorkControlRepo with seed, useRealtime stub
+  - demoMode flag (NUXT_PUBLIC_DEMO_MODE=true): stubs WS + presence, fires mock task.moved after 3s
+  - Vite SSR externalization bug fixed: inline chatRoom/boardRoom in client composables
+  - vercel.json at monorepo root pointing to apps/work-control/.vercel/output
 
-updated: 2026-06-21-instance-protocol-binding
+updated: 2026-08-24-S43-closed-loop-proven-live
+# S43 CLOSED (S43-T12, QA/ROOT). THE LOOP RAN END TO END: human gate -> daemon -> claude-cli build ->
+# boot-verify -> apps/app2 serving :3007, 2026-08-24. AI planning and AI building are no longer
+# UNPROVEN — the first non-mock decomposition-and-build in this repository is on disk. What is still
+# owed is the RECORD of it (S43-T02 residue), not the act. Active invariants: S43-INVARIANTS.md.
+# Docket: S41-F10/F15 + S43-F01..F08, all LOCKED and unfixed. Verified at stamp time: 98 files /
+# 1731 tests green, typecheck 0, MCP :3000 up, preflight canRunBuild:true with zero warnings.

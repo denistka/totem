@@ -1,0 +1,68 @@
+---
+id: S16
+name: LLM Chat Loop
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S16-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S15-WorkControlAuth.ptl
+---
+
+# S16: Full LLM Chat Loop
+
+## Objective
+
+Wire `chat.llm.ts` into the message POST handler. Currently `messages.post.ts`
+returns an echo stub reply. This sprint connects the LLM backend: ROOT reads the
+full chat context, generates a real response, streams it over WS as `agent.activity`
+events, then re-derives epics from the LLM-enriched conversation. Chat becomes
+a real AI assistant — not a mock.
+
+## Prerequisites
+
+- S15 CLOSED (auth in place; user identity in context)
+- `AI_PROVIDER_*` env vars (AI_PROVIDER_URL, KEY, MODEL) — factory.ts already gates on these
+- `chat.llm.ts` skeleton exists; `root.llm.ts` implements `proposeEpics()`
+- `factory.ts` resolves mock ↔ llm transparently
+
+## Context
+
+`chat-reply.ts` and `llm/chat.llm.ts` exist from S06 but are NOT integrated into
+`messages.post.ts`. That route currently uses a static echo reply + `proposeEpics`.
+This sprint wires the loop:
+```
+POST /api/chats/:id/messages
+  → chat.llm.ts.reply(ctx) [or mock stub]
+  → stream reply via agent.activity WS events (typing indicator feel)
+  → save assistant message to DB
+  → proposeEpics (unchanged)
+```
+
+## Tasks
+
+- [ ] S16-T01-FreezeInvariants.pd
+- [ ] S16-T02-ChatLlmIntegration.pd     — wire chat.llm.ts into messages.post.ts
+- [ ] S16-T03-StreamingWsReply.pd       — stream tokens as agent.activity events
+- [ ] S16-T04-ContextWindow.pd          — trim history to last N + rolling summary
+- [ ] S16-T05-ChatMockFallback.pd       — mock reply still works w/o AI_PROVIDER_*
+- [ ] S16-T06-TypingIndicatorUi.pd      — UI shows "ROOT is thinking..." during LLM call
+- [ ] S16-T07-KnowledgeUpdate.pd        — work-control slug: chat loop section
+- [ ] S16-T08-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] With `AI_PROVIDER_*` set: chat gets real LLM reply, epics are LLM-derived
+- [ ] Without `AI_PROVIDER_*`: mock reply works (existing behavior)
+- [ ] Typing indicator visible during LLM generation
+- [ ] Context window managed (no infinite token growth)
+- [ ] `bun run test` green
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S17:** Agent memory — persistent context across chats

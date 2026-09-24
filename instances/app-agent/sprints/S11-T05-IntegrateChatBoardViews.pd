@@ -1,0 +1,16 @@
+---
+id: S11-T05
+name: IntegrateChatBoardViews
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+---
+
+# S11-T05: Integrate Scrubber into Chat/Board UI
+
+- [ ] Board page: scrubber drives read-only replay of epics/tasks/activity
+- [ ] Live mode vs replay mode toggle
+- [ ] WS paused during replay

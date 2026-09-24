@@ -1,0 +1,49 @@
+---
+id: S13
+name: Multi-Agent Task Handoff
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S13-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+depends: S12-MultiUserPresence.ptl
+---
+
+# S13: Multi-Agent Task Handoff
+
+## Objective
+
+A single task can have a `lead_role` (primary owner) **plus** `helper_roles` (supporting agents).
+The lead agent runs first, then optionally hands off steps to helpers. All agents appear in
+board presence during their turn (S12). Enables ARCHITECT → QA → DEVOPS pipeline on a single task.
+
+## Prerequisites
+
+- S12 CLOSED (agent presence visible)
+- `wc_tasks.lead_role` exists; `agent.activity` WS events work
+
+## Tasks
+
+- [x] S13-T01-FreezeInvariants.pd
+- [x] S13-T02-SchemaHelperRoles.pd
+- [x] S13-T03-HandoffStateMachine.pd
+- [x] S13-T04-HandoffUiTask.pd
+- [x] S13-T05-AgentConversation.pd
+- [x] S13-T06-KnowledgeUpdate.pd
+- [x] S13-T07-TestsSmoke.pd
+
+## Definition of Done
+
+- [x] Task with ARCHITECT lead + QA helper shows both agents running sequentially
+- [x] Board activity timeline shows handoff events (agent.activity per actor)
+- [x] Presence shows active agent during their turn
+- [x] `bun run test` green — 344 passed (handoff.test.ts 2/2)
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`. Code tasks use `templates/PD-APP-AGENT-BLOCK.md`.
+
+## Next
+
+**S14:** Platform hygiene — commit S08–S11, typecheck, CI, MCP config fix

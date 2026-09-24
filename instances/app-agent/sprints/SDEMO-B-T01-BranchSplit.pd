@@ -1,0 +1,45 @@
+---
+id: SDEMO-B-T01
+name: Branch Split — vercel-demo
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: DEVOPS
+estimated: 10m
+---
+
+# SDEMO-B-T01: Branch Split
+
+## Objective
+
+Создать ветку `vercel-demo` от HEAD `test-app`. Зафиксировать текущий build fix
+(useChats/useBoard/useEpics inline room functions) как отправную точку.
+
+## Implementation
+
+```bash
+cd /Users/denistka/Projects/app-agent-io/DAWWWB-app-agent
+
+# убедиться что мы на test-app
+git status
+git branch
+
+# создать vercel-demo от текущего HEAD
+git checkout -b vercel-demo
+
+# закоммитить build fix (если ещё не закоммичен)
+git add apps/work-control/app/composables/useChats.ts \
+        apps/work-control/app/composables/useEpics.ts \
+        apps/work-control/app/composables/useBoard.ts
+git commit -m "fix: inline chatRoom/boardRoom to fix Vite SSR externalization bug"
+
+# проверить
+git log --oneline -3
+git branch
+```
+
+## Done when
+
+- [ ] Ветка `vercel-demo` существует локально
+- [ ] Build fix закоммичен
+- [ ] `git log` показывает vercel-demo отходит от test-app HEAD

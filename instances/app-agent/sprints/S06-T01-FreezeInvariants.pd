@@ -1,0 +1,31 @@
+---
+id: S06-T01
+name: FreezeInvariants
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [architecture/ARCHITECTURE_SCALE.ti]
+---
+
+# S06-T01: Ratify S06 Invariants
+
+## Objective
+
+Confirm `S06-INVARIANTS.md` is complete, linked from `S06-AppAgentExecution.ptl`, and aligned
+with `INSTANCE.ti` + `APP-AGENT-PROTOCOL.md`. No application code.
+
+## Execution
+
+- Verify `S06-INVARIANTS.md` covers: App Agent Execution Contract (§1–6), LLM rules (§7–10),
+  S05 carry-forward (§11–13).
+- Cross-check against `APP-AGENT-PROTOCOL.md` §0–§8 — no contradictions.
+- Ensure `project.config.yml` `context.invariants` will point to S06 after sprint open (T11).
+
+## Out
+
+`S06-INVARIANTS.md` (frozen at plan time)
+
+## Done when
+
+- Invariants linked in `.ptl`; ARCHITECT sign-off that contract is enforceable for T03–T11.

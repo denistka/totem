@@ -1,0 +1,40 @@
+---
+id: S06-T08
+name: PlannerLlmAgent
+status: DONE
+gate: OPEN
+role: PLANNER
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+slug: work-control
+---
+
+# S06-T08: PLANNER LLM Agent
+
+## Objective
+
+Implement `planner.llm.ts`: `decompose` epic → `TaskPlan[]`; Accept still calls `totem-writer`
+at **gate: OPEN** only (S06 invariant §9).
+
+## App-agent preflight (MANDATORY before code)
+
+- [ ] Run MCP preflight per `APP-AGENT-PROTOCOL.md` §2 — **warn user if :3000 down**
+- [ ] `explain("work-control")` + read Totem `APP-AGENT-PROTOCOL.md` §4 (PLANNER contract)
+- [ ] Read `server/agents/planner.mock.ts` + `totem-writer.ts`
+
+## Implementation (app-agent conventions)
+
+- [ ] `server/agents/llm/planner.llm.ts` — structured output → 3–6 tasks with valid `lead_role`
+- [ ] Validate roles against `useAgentRoles()` / organization taxonomy — reject unknown roles
+- [ ] Accept handler unchanged gate semantics; generated `.pd` benefit from T03 injection
+- [ ] Mock fallback when env unset
+- [ ] Never emit `gate: OPEN` from writer
+
+## Done when (app-agent)
+
+- [ ] Accept with LLM (or mock fallback) writes OPEN `.ptl`/`.pd`; run still 423 until open-gate
+- [ ] `feature:health` green
+
+## Out
+
+`server/agents/llm/planner.llm.ts`, accept integration

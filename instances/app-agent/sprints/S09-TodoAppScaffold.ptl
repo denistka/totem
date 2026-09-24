@@ -1,0 +1,49 @@
+---
+id: S09
+name: TODO App Scaffold
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S09-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, typescript/TYPESCRIPT.ti]
+depends: S08-InRepoInstancePlanning.ptl
+---
+
+# S09: TODO App Scaffold
+
+## App-agent protocol
+
+MCP-first per S07/S08. Every PM task uses `explain`, `get-app-structure`, `feature:health`.
+
+## Objective
+
+Create `apps/todo` (:3004) with in-repo planning instance. Dogfood work-control Accept on
+`targetApp: todo`. **No MVP features** — placeholder UI only; S10 delivers CRUD via gated tasks.
+
+## Prerequisites
+
+- S08 CLOSED — in-repo planning paths work
+
+## Tasks
+
+- [x] S09-T01-FreezeInvariants.pd
+- [x] S09-T02-TodoAppScaffold.pd
+- [x] S09-T03-TodoPlanningInstance.pd
+- [x] S09-T04-KnowledgeTodoSlug.pd
+- [x] S09-T05-DevLauncherTodo.pd
+- [x] S09-T06-OrgDocsTodoPage.pd
+- [x] S09-T07-SmokeAcceptTodo.pd
+- [x] S09-T08-SprintClose.pd
+
+## Definition of Done
+
+- [x] `apps/todo` boots on :3004 from monorepo root
+- [x] `apps/todo/planning/` matches instance contract
+- [x] Accept `targetApp: todo` writes OPEN files under `apps/todo/planning/sprints/`
+- [x] Knowledge slug `todo` green
+- [x] **No** task CRUD UI only in S09 — full MVP delivered in S10 same batch
+
+## Next
+
+**S10:** TODO MVP — execute Accept-generated plan from `apps/todo/planning/sprints/`

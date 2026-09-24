@@ -1,102 +1,87 @@
 # App Agent — Project Brief
 
-> **Mandatory:** `APP-AGENT-PROTOCOL.md` + `INSTANCE.ti` — every role, every session.  
-> Read this before planning any sprint. Source of truth: `app-agent-io/core/AGENTS.md` + `core/docs/adr/`.
+> **Mandatory:** `INSTANCE.ti` + `APP-AGENT-PROTOCOL.md` + `intel/TOTEM_INDEX.ti` — every role, every session.  
+> Source of truth for code: `app-agent-io/core/AGENTS.md`.
 
 ## What it is
 
-**App Agent** is a turnkey, forkable **Nuxt 4 layered monorepo** with an embedded AI development agent.
-The thesis: *"The AI isn't smarter. The codebase is smarter."* — make conventions so explicit
-(and machine-readable via MCP) that even basic models build features without drifting.
+**App Agent** is a forkable **Nuxt 4 layered monorepo** with an embedded AI development agent.
+Thesis: *"The AI isn't smarter. The codebase is smarter."* — conventions + MCP so models build without drifting.
 
-Target users: startups/agencies who fork the repo, rebrand, and own it forever (MIT, zero lock-in).
+## Documentation layers (S07+)
+
+| Layer | Path | MCP |
+|-------|------|-----|
+| Organization handbook | `docs/content/2.company/` | `list-pages`, `get-page` |
+| Feature knowledge | `core/docs/knowledge/{slug}.md` | `explain(slug)` |
+| Per-app rules | `apps/<app>/docs/` | `get-app-structure` |
+| Instance planning | `apps/<app>/planning/sprints/` | work-control Accept |
+| Meta planning (PLANNER) | `totem/.../instances/app-agent/sprints/` | archive S01–S11 |
+
+Key slugs: `organization-planning`, `in-repo-planning`, `work-control`, `todo`.
 
 ## Core mental model — three-layer cascade
 
 ```
-apps/*        extends   →  YOUR product code (zero merge conflicts on upstream pull)
-organization/ extends   →  brand: **DAWWWB** (name, colors, header/footer, i18n org.*)
-core/         (upstream) →  shared components, server, MCP, config service — DO NOT MODIFY
+apps/*        extends   →  YOUR product code
+organization/ extends   →  DAWWWB brand + agent taxonomy
+core/         (upstream) →  shared platform — DO NOT MODIFY
 ```
-
-Merge semantics (`defu`): objects deep-merge, arrays concatenate, primitives override (higher wins).
-Server middleware from ALL layers runs (additive, never overrides). `null` = "defer to lower layer".
-
-## Signature pattern — Feature-Oriented Intelligence (ADR-009)
-
-A kebab-case **slug** (e.g. `rate-limiting`) is the universal join key across dimensions:
-
-| Dimension | Mechanism | Status |
-| --------- | --------- | ------ |
-| Knowledge | `core/docs/knowledge/{slug}.md` (frontmatter + H2 aspects) | ~14 slugs |
-| Source | `// SEE: feature "slug" at path` (PEP 350 codetag) | ~50+ annotations |
-| Runtime | `defineFeatureHandler/Composable/Plugin(slug, fn)` | core implemented |
-| Tooling | MCP `explain`, `introspect`, `census`, `record`, `log-summary` | working |
-| Config flags | feature flags | future / aspirational |
-| Telemetry | OTel spans by slug | future / aspirational |
-
-Production behavior of `defineFeature*` = pass-through (zero overhead). Dev = logs to SQLite + edge graph.
 
 ## Apps in the monorepo
 
 | App | Port | Role |
 | --- | ---- | ---- |
-| docs | 3000 | documentation + MCP server (12 tools) |
-| control | 3001 | control plane: agent chat, feature graph, live logs, config diff |
+| docs | 3000 | documentation + MCP (12 tools) |
+| control | 3001 | control plane |
 | apps/chat | 3002 | customer AI chat |
-| apps/work-control | 3003 | Totem sprint kanban + `.ptl`/`.pd` reader (S04) |
-| demos | 3010–3014 | reference implementations (copy, don't edit) |
+| apps/work-control | 3003 | chat → epic → board → task orchestrator |
+| apps/todo | 3004 | dogfood app — task list MVP (S10) |
+| demos | 3010–3014 | reference implementations |
 
-## Stack & tooling
+## Work-control loop (S05–S11)
 
-- Nuxt 4 (`app/` dir, compatibilityDate 2025-07-15) · Vue 3 · Nuxt UI v4 (Tailwind-based)
-- Bun 1.2.15 pinned · Nitro preset `bun` · `bun:sqlite` local datasource
-- Turborepo orchestration · TypeScript strict
-- Tests: vitest (322) + bun:test for SQLite (56) — all green after `bun install`
-- Auth: `nuxt-auth-utils`, 3-role RBAC, opt-in per app
-- Config service (ADR-005): hot-reload runtime config, SQLite local / Supabase prod, `$meta.lock` governance
-- Secrets: `multi-encrypt` → `encrypted.json` (committed); manifest in `.gitignore # Secrets`
+```
+chat → ROOT proposes epics → Accept (PLANNER) → LOCKED .ptl/.pd
+  → human open-gate → run task (mock/LLM) → done + WS activity
+```
 
-## Current state (verified 2026-06-09)
+- **Default write path (S08):** `apps/{targetApp}/planning/sprints/` (`targetApp` on epic)
+- **History replay (S11):** board Live/Replay + `HistoryScrubber`
+- Gates: Accept ≠ run; `423` while LOCKED
 
-- ✅ Clean clone via SSH; `bun install` + full test suite pass
-- ✅ Local dev unblocked WITHOUT the team's vault password: SQLite + `.env` stubs created
-  (`.env`, `control/.env`, `demos/{chat,dashboard,landing}/.env`, `apps/companions/.data/`)
-- ✅ `bun run dev:docs` boots docs + MCP on :3000
-- ⚠️ Agent chat / chat demo show "not configured" until `AI_PROVIDER_KEY` set
+## Current state (2026-06-21 — S11 closed)
 
-## Constraints / invariants to respect (from AGENTS.md)
+| Sprint | Deliverable |
+|--------|-------------|
+| S07 | Org handbook + `organization-planning` slug |
+| S08 | `planning-path.ts`, in-repo planning, `targetApp` |
+| S09 | `apps/todo` scaffold + planning instance |
+| S10 | TODO MVP CRUD |
+| S11 | Board history replay |
 
-- Do NOT modify `core/` as a customer; customer code lives in `apps/`
-- `runtimeConfig` is startup-only; runtime config goes through the config service (ADR-005)
-- Nuxt/Nitro versions pinned — no upgrades without reviewing `useRuntimeConfig()` mutability contract
-- bun:sqlite tests MUST live in `core/tests/db/` (not vitest workers)
-- Secrets: extend `# Secrets` in `.gitignore` + `bun run enc` when adding `.env`
-- NEVER assume gate approval; PLANNER plans only, PM executes only
+**Next:** S12 multi-user presence — `intel/SPRINT-ROADMAP.md`
 
-## Candidate backlog (for PLANNER to decompose — NOT yet approved)
+```bash
+cd app-agent-io/core && bun install
+bun run dev:docs          # :3000 MCP
+bun run dev:work-control  # :3003 (after db:migrate)
+bun run dev:todo          # :3004
+```
 
-1. **Security hygiene**: `temp.md` / `temp-product-context.md` in repo root contain API-key-like
-   strings. Remove from git, add to `.gitignore`, rotate keys. (HIGH)
-2. **README accuracy**: reflect control plane, characters demo, chat demo WIP, real ports;
-   reconcile `todo-documentation-updates.md`.
-3. **Feature knowledge coverage**: wire `bun run feature:health` as CI gate; create stubs so every
-   `// SEE:` has a knowledge file.
-4. **Chat demo + control-plane agent end-to-end**: config + smoke test with an AI provider.
-5. **Tooling consistency**: remove stray `pnpm-lock.yaml` inside bun monorepo (demos/saas, landing).
-6. **Naming cleanup**: finish context→feature migration follow-ups; relocate `NAMING-ISSUE.md`.
+## Constraints (from AGENTS.md)
 
-## Definition of "delivery" (Totem Quality Gates)
-
-`git clone → bun install → bun run dev` works with zero manual steps; lint/typecheck pass;
-console clean; each README command works on fresh clone; task committed `<task_id>: <desc>`.
+- Customer code in `apps/*` and `organization/` only
+- `bun --bun nuxt dev` per app (not turbo for bun:sqlite)
+- `bun run test` (vitest) — NOT bare `bun test`
+- NEVER assume gate approval; PLANNER plans, PM executes
 
 ## Totem instance
 
-**Canonical path:** `totem/totem-v6/instances/app-agent/` (not `app-agent-io`).
+**Path:** `totem/totem-v6/instances/app-agent/`
 
 ```text
-read totem/totem-v6/index.ti → INSTANCE.ti → APP-AGENT-PROTOCOL.md → TOTEM_INDEX.ti
+index.ti → project.config.yml → INSTANCE.ti → APP-AGENT-PROTOCOL.md → TOTEM_INDEX.ti
 ```
 
-**Sprints:** S01–S05 complete (through work-control orchestrator, closed 2026-06-21). **Next:** S06 real LLM agents (roadmap). See `sprints/S05-SUMMARY.md`, `APP-AGENT-PROTOCOL.md`, and `intel/TOTEM_INDEX.ti`.
+Active invariants: `S11-INVARIANTS.md` · Last closed: `sprints/S11-SUMMARY.md`

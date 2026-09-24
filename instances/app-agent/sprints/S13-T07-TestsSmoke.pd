@@ -1,0 +1,22 @@
+---
+id: S13-T07
+name: TestsSmoke
+status: DONE
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: work-control
+---
+
+# S13-T07: Tests + Smoke + Sprint Close
+
+## Implementation
+- [x] `core/tests/unit/handoff.test.ts` — 2 tests: lead+helper ordering, dedup
+- [x] `bun run test` → 344 passed
+- [x] `bun run feature:health` → green (after command-palette.md created in same batch)
+- [x] `S13-SUMMARY.md` written
+- [x] `S13-MultiAgentHandoff.ptl` tasks + DoD marked [x], status → CLOSED
+
+## Close
+- [x] status → DONE

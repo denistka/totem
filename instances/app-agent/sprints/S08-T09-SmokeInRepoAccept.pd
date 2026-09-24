@@ -1,0 +1,34 @@
+---
+id: S08-T09
+name: SmokeInRepoAccept
+status: TODO
+gate: OPEN
+role: QA
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:work-control, knowledge:in-repo-planning]
+slug: work-control
+---
+
+# S08-T09: Smoke — In-Repo Accept
+
+## Objective
+
+E2E: Accept writes to `apps/work-control/planning/sprints/`, not external totem.
+
+## Preconditions
+
+- T03–T08 complete; `:3000` + `:3003` up; DB migrated
+
+## Smoke steps
+
+1. Chat → epic with `targetApp: work-control`
+2. **Accept** → verify `apps/work-control/planning/sprints/S<NN>-*.ptl` + `.pd` @ `gate: OPEN`
+3. Verify **no new files** in `totem/.../instances/app-agent/sprints/` (unless legacy fallback env set)
+4. Sprint panel shows in-repo sprint
+5. **Open gate** → **Run** one task → done + WS activity
+6. MCP: `explain("work-control")`, `list-apps`, `get-file` on written `.ptl`
+
+## Done when
+
+- [ ] Smoke log in `S08-SMOKE.md` or summary
+- [ ] `bun run test` + `feature:health` green

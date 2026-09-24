@@ -1,0 +1,30 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S16 T0 — Amend S01 UX IA — welcome entry + settings sheet
+sprint: S16
+requires: [FRONTEND_DEV, ARCHITECT, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #1+#2+#3. Freeze IA: Welcome → Home tile hub → Catalog (1 live sensor) → Session;
+  settings via AppHeader sheet; Installation report = intro stub only.
+  Visual chrome SSOT: mobile-apps. Structured layout cues: customer refs (intel/design-refs/S16-customer/).
+  Propose bottom tabs reduced or secondary once home tiles own primary nav (confirm on scope-approved).
+  Package manager: bun.
+
+out:
+  - S16-INVARIANTS.md
+  - S01-INVARIANTS.md (UX IA amendment note)
+  - src/config/invariants.ts (if hub tab ids change)
+  - src/config/invariants.test.ts
+
+cmd:
+  - bun run test
+
+done:
+  - S16-INVARIANTS.md documents welcome entry + settings-sheet IA
+  - S01 UX IA amended or explicitly linked with supersede note
+  - Hub tab decision recorded (sheet-primary; tab removed or opens sheet)
+  - Co-located Vitest for any invariant/code mirror changes
+  - `bun run test` passes

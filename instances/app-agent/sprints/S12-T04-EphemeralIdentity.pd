@@ -1,0 +1,73 @@
+---
+id: S12-T04
+name: EphemeralIdentity
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  code: apps/work-control/app/composables/usePresenceId.ts
+---
+
+# S12-T04: Ephemeral Tab Identity (pre-auth)
+
+## App-agent preflight
+
+- [ ] `explain("work-control")` — auth note (S15 = real identity)
+- [ ] Read `S12-INVARIANTS.md` §4 — ephemeral ID spec
+
+## Implementation
+
+Create `apps/work-control/app/composables/usePresenceId.ts`:
+
+```ts
+// Generates a stable per-tab random ID (UUID v4, stored in sessionStorage).
+// After S15 auth, this is replaced by the real user session ID.
+// The label is "User " + last 4 chars of the id for anonymous display.
+
+export function usePresenceId() {
+  const KEY = 'wc-presence-id'
+
+  const id = (() => {
+    if (import.meta.server) return ''
+    let stored = sessionStorage.getItem(KEY)
+    if (!stored) {
+      stored = crypto.randomUUID()
+      sessionStorage.setItem(KEY, stored)
+    }
+    return stored
+  })()
+
+  const label = `User ${id.slice(-4).toUpperCase()}`
+
+  return { id, label }
+}
+```
+
+Extend `useRealtime.ts`:
+- Accept optional `member?: PresenceMember` param
+- Include `member` in the `subscribe` message sent to server
+- Expose `members: Ref<PresenceMember[]>` that updates on `presence.sync` events
+
+```ts
+// In useRealtime:
+export function useRealtime(room: MaybeRefOrGetter<string | string[]>, member?: PresenceMember) {
+  const members = ref<PresenceMember[]>([])
+  // ...in message handler:
+  if (data.type === 'presence.sync') {
+    members.value = data.members
+  }
+  // ...in subscribe():
+  ws.send(JSON.stringify({ type: 'subscribe', rooms: roomList(), member }))
+  return { connected, on, members }
+}
+```
+
+## Done when
+
+- [ ] `usePresenceId()` returns stable UUID across reactive renders (not new ID on re-render)
+- [ ] Two tabs generate different IDs (sessionStorage isolation)
+- [ ] `useRealtime` `members` ref updates when `presence.sync` received
+- [ ] `bun run test` — composable unit tests

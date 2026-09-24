@@ -1,0 +1,30 @@
+---
+id: S05-SMOKE
+name: First eat
+status: CLOSED
+gate: OPEN
+lead_role: PM
+artifact: smoke
+protocol: ../APP-AGENT-PROTOCOL.md
+generated_by: work-control (S05-T12 smoke)
+---
+
+# S05-SMOKE: First eat (historical smoke artifact)
+
+> **Not product backlog.** Generated during S05-T12 Accept smoke to prove write-back + gate flow.
+> Superseded by `S06-AppAgentExecution.ptl`.
+
+## Objective
+
+Handle hunger before anything else — fuel first.
+
+## Tasks
+
+- [x] S05-SMOKE-T01-DesignFirstEat.pd
+- [x] S05-SMOKE-T02-BuildFirstEat.pd
+- [x] S05-SMOKE-T03-TestFirstEat.pd
+- [x] S05-SMOKE-T04-ShipFirstEat.pd
+
+## Definition of Done
+
+- [x] Smoke verified in S05-T12; gate opened manually in e2e test

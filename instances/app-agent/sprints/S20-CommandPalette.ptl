@@ -1,0 +1,62 @@
+---
+id: S20
+name: Command Palette + Keyboard Shortcuts
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S20-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+depends: S19-SprintAnalytics.ptl
+---
+
+# S20: Command Palette + Keyboard Shortcuts
+
+## Objective
+
+Power-user UX: `⌘K` / `Ctrl+K` opens a fuzzy-search command palette. Navigate
+chats, boards, apps; run quick actions (create chat, open gate, run task). Lives in
+the organization layer — cascades to all apps automatically. Keyboard-first
+interaction model for the tech-company-in-a-box audience.
+
+## Location
+
+`organization/app/components/CommandPalette.vue` — auto-imported in all apps.
+`organization/app/composables/useCommandPalette.ts` — commands registry.
+
+## Commands (MVP)
+
+- Go to chat: `c` → list recent chats
+- Go to board: `b` → list boards
+- Switch app: `a` → navigate to :3003 / :3004 / :3005
+- Create chat: opens new chat immediately
+- Open gate on current board (if applicable)
+- Run task: opens run dialog with task picker
+- Open docs: navigate to :3000
+
+## Tasks
+
+- [ ] S20-T01-FreezeInvariants.pd
+- [ ] S20-T02-PaletteComposable.pd      — useCommandPalette, commands registry API
+- [ ] S20-T03-PaletteComponent.pd       — CommandPalette.vue (modal, fuzzy search)
+- [ ] S20-T04-GlobalKeyBinding.pd       — ⌘K / Ctrl+K in organization layout
+- [ ] S20-T05-BoardKeyShortcuts.pd      — j/k nav in board, space to open gate, r to run
+- [ ] S20-T06-AppSwitcher.pd            — cross-app links in palette + sidebar
+- [ ] S20-T07-KnowledgeUpdate.pd        — new slug `command-palette` + org update
+- [ ] S20-T08-TestsSmoke.pd
+
+## Definition of Done
+
+- [ ] `⌘K` opens palette from any page in work-control and todo
+- [ ] Can navigate to any recent chat/board without mouse
+- [ ] Board keyboard shortcuts work (j/k/space)
+- [ ] Palette lists all available commands with descriptions
+- [ ] `bun run test` green
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S21:** Onboarding + demo mode (seed data, walkthrough, /demo public route)

@@ -1,0 +1,29 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S16 T4 — DUT settings in header sheet + reconcile hub tab
+sprint: S16
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #2. Move current SettingsScreen DUT fields (theme, language, scan period, thresholds, cal rows, auto-connect, save)
+  into AppHeaderExpandedMenu (embedded), mobile-apps accordion/section chrome.
+  No logout / map / fleet / server-source. Reconcile bottom Settings tab per S16-T0 decision.
+  Package manager: bun.
+
+out:
+  - src/shell/components/app-header/AppHeaderExpandedMenu.tsx (or equiv)
+  - src/screens/settings/* (embedded sections)
+  - MobileShellTabBar / navigation updates
+  - *.test.tsx
+
+cmd:
+  - bun run test
+
+done:
+  - DUT settings editable from header sheet
+  - Hub tab IA matches S16-INVARIANTS
+  - Existing settings behaviours preserved (store + save log)
+  - Vitest covers sheet open + field update
+  - `bun run test` passes

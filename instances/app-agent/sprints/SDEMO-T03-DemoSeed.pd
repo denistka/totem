@@ -1,0 +1,102 @@
+---
+id: SDEMO-T03
+name: Demo Seed Data
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+lead_role: PM
+estimated: 30m
+depends: SDEMO-T02-RailwayDeploy.pd
+---
+
+# SDEMO-T03: Demo Seed Data
+
+## Objective
+
+Add a `seed:demo` script that populates work-control with a realistic demo state:
+one chat thread, one accepted epic, a board with 3 tasks (DONE / IN_PROGRESS / TODO).
+Audience sees a non-empty UI immediately — no need to type to get started.
+
+## App-agent preflight
+
+- [ ] MCP preflight §2
+- [ ] `explain("work-control")` — confirm repo interface (chat, epic, board, tasks)
+- [ ] Read `apps/work-control/server/repo/types.ts` — WorkControlRepo interface
+
+## Implementation
+
+### 1. Create seed script
+
+File: `apps/work-control/scripts/seed-demo.ts`
+
+```ts
+// SEE: feature "work-control" at core/docs/knowledge/work-control.md
+import { createWorkControlRepo } from '../server/repo'
+
+const repo = createWorkControlRepo()
+
+async function seed() {
+  // 1 chat
+  const chat = await repo.createChat({ title: 'App Agent Demo' })
+
+  // 1 epic (accepted)
+  const epic = await repo.createEpic({
+    chatId: chat.id,
+    title: 'Build a public demo of App Agent',
+    description: 'Showcase the chat → epic → board → task execution loop.',
+    targetApp: 'work-control',
+    status: 'ACCEPTED'
+  })
+
+  // 1 sprint plan
+  const sprint = await repo.createSprint({
+    epicId: epic.id,
+    title: 'S01 - Demo Sprint',
+    gate: 'OPEN'
+  })
+
+  // 3 tasks
+  await repo.createTask({ sprintId: sprint.id, title: 'Design the demo flow', status: 'DONE', leadRole: 'ARCHITECT' })
+  await repo.createTask({ sprintId: sprint.id, title: 'Build the deploy pipeline', status: 'IN_PROGRESS', leadRole: 'DEVOPS' })
+  await repo.createTask({ sprintId: sprint.id, title: 'Write the product page', status: 'TODO', leadRole: 'PM' })
+
+  console.log('Demo seed complete')
+}
+
+seed().catch(console.error)
+```
+
+> Adjust method names to match actual `WorkControlRepo` interface — read `types.ts` first.
+
+### 2. Add to package.json scripts
+
+In `apps/work-control/package.json`:
+```json
+"seed:demo": "bun run scripts/seed-demo.ts"
+```
+
+### 3. Run locally to verify
+
+```bash
+cd /Users/denistka/Projects/app-agent-io/DAWWWB-app-agent
+bun run --filter=@app-agent/work-control seed:demo
+```
+
+Then open `http://localhost:3003` — board should show the 3 seeded tasks.
+
+### 4. Railway: run seed post-deploy
+
+Option A (simplest): run manually via Railway CLI once after deploy:
+```bash
+railway run bun apps/work-control/scripts/seed-demo.ts
+```
+
+Option B: add to `startCommand` with a seed check (skip if data exists).
+
+## Done when
+
+- [ ] `seed:demo` script runs without error
+- [ ] Board page shows 3 seeded tasks in correct columns
+- [ ] Chat shows the demo chat in sidebar
+- [ ] Script is idempotent (safe to run twice — check-before-insert)

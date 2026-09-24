@@ -1,0 +1,105 @@
+---
+id: SDEMO-B-T04
+name: Realtime Stub — Mock WS Events
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: PM
+estimated: 45m
+depends: SDEMO-B-T03-MemoryRepo.pd
+---
+
+# SDEMO-B-T04: Realtime Stub
+
+## Objective
+
+Заменить реальный WebSocket на визуальную заглушку. На Vercel нет persistent WS.
+Нужно чтобы UI выглядел "живым" — агент отвечает, задачи двигаются.
+
+## Стратегия
+
+Добавить env var `NUXT_PUBLIC_DEMO_MODE=true`. При demo mode:
+- `useRealtime` → возвращает stub, который эмитит mock события через `setTimeout`
+- Реальный `/_ws` роут не регистрируется (или возвращает 404)
+
+## Implementation
+
+### 1. Demo mode composable
+
+`apps/work-control/app/composables/useRealtime.ts` — добавить demo branch:
+
+```ts
+export function useRealtime(room, member?) {
+  const isDemoMode = useRuntimeConfig().public.demoMode === 'true'
+
+  if (isDemoMode) {
+    return useRealtimeStub(room)
+  }
+  // ... существующий WS код (только на dev/prod с реальным WS)
+}
+
+function useRealtimeStub(room) {
+  const connected = ref(true)   // сразу "подключён"
+  const members = ref<PresenceMember[]>([
+    { id: 'root-agent', kind: 'agent', role: 'ROOT', label: 'ROOT Agent' }
+  ])
+  const handlers = new Set<(e: WcEvent) => void>()
+
+  // mock: задача двигается через 3с после монтирования
+  // только на board-* комнате
+  onMounted(() => {
+    const r = toValue(room)
+    const roomStr = Array.isArray(r) ? r[0] : r
+    if (!roomStr?.startsWith('board:')) return
+
+    setTimeout(() => {
+      for (const h of handlers) h({
+        type: 'task.moved',
+        boardId: roomStr.replace('board:', ''),
+        taskId: 'task-2',
+        from: 'IN_PROGRESS',
+        to: 'DONE',
+        ts: new Date().toISOString()
+      } as WcEvent)
+    }, 3000)
+  })
+
+  return {
+    connected,
+    members,
+    on: (handler) => { handlers.add(handler); return () => handlers.delete(handler) }
+  }
+}
+```
+
+### 2. `nuxt.config.ts` — добавить public runtime config
+
+```ts
+runtimeConfig: {
+  workControlTotemPath: process.env.WORK_CONTROL_TOTEM_PATH || '',
+  workControlPlanningRoot: process.env.WORK_CONTROL_PLANNING_ROOT || '',
+  public: {
+    demoMode: process.env.NUXT_PUBLIC_DEMO_MODE || 'false'
+  }
+}
+```
+
+### 3. Vercel env vars
+
+В Vercel dashboard добавить:
+```
+NUXT_PUBLIC_DEMO_MODE=true
+```
+
+### 4. WS server route
+
+`apps/work-control/server/routes/_ws.ts` — если demo mode не нужен на сервере,
+можно оставить как есть (Vercel просто не вызовет его). Но если вызывается —
+вернуть 404 или пустой ответ чтобы не падало.
+
+## Done when
+
+- [ ] `NUXT_PUBLIC_DEMO_MODE=true` → `useRealtime` возвращает stub
+- [ ] На board странице через 3с одна задача сдвигается в DONE (mock event)
+- [ ] `connected.value === true` сразу — нет "disconnected" состояния
+- [ ] Нет попыток открыть реальный WebSocket в demo mode

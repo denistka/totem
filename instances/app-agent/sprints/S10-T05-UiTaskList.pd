@@ -1,0 +1,22 @@
+---
+id: S10-T05
+name: UiTaskList
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+slug: todo
+---
+
+# S10-T05: Task List UI
+
+## Implementation
+
+- [ ] Single page: input + list + toggle done + delete
+- [ ] Organization branding via cascade
+- [ ] `list-components` verify structure after build
+
+## Done when
+
+- [ ] Manual UI on :3004; console clean

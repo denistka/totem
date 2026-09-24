@@ -23,6 +23,8 @@ load-order:
   7: active S*-INVARIANTS.md
 
 all-roles-must:
+  - Read APP-AGENT-PROTOCOL.md §0.0 FIRST — working principle: quality over pace, verify
+    before claiming, root-cause don't patch, momentum never overrides the gate
   - Read APP-AGENT-PROTOCOL.md before planning, executing, reviewing, or closing work
   - Run MCP preflight (§2); WARN user if Docs MCP :3000 unreachable
   - Never claim live MCP results when preflight failed — use [static fallback] only
@@ -62,4 +64,13 @@ anti-patterns:
   - ❌ PLANNER .pd without mcp/MCP.ti or PD-APP-AGENT-BLOCK sections
   - ❌ Guessing architecture when MCP offline instead of static fallback + WARN
 
-updated: 2026-06-21
+updated: 2026-06-21-s11-instance-sync
+
+planning-home:
+  meta: totem/totem-v6/instances/app-agent/sprints/
+  in-repo-default: apps/<targetApp>/planning/sprints/
+  default-target-app: work-control
+  dogfood-apps: [work-control, todo]
+  resolver: apps/work-control/server/utils/planning-path.ts
+  key-slugs: [organization-planning, in-repo-planning, work-control, todo]
+  roadmap: intel/SPRINT-ROADMAP.md

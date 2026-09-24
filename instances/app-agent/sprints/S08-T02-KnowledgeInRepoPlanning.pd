@@ -1,0 +1,35 @@
+---
+id: S08-T02
+name: KnowledgeInRepoPlanning
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: in-repo-planning
+---
+
+# S08-T02: Knowledge Slug `in-repo-planning`
+
+## Objective
+
+MCP slug for instance planning layer — complements `organization-planning` (header).
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `explain("organization-planning")` + `explain("work-control")`
+- [ ] `census()` baseline
+- [ ] `get-app-structure("work-control")` — server utils layout
+
+## Implementation
+
+- [ ] Create `core/docs/knowledge/in-repo-planning.md`
+- [ ] Document: `apps/<app>/planning/` contract, path resolver, `targetApp`, env vars
+- [ ] Document: fallback chain (in-repo → WORK_CONTROL_TOTEM_PATH → legacy walk)
+- [ ] MCP workflow table per layer
+
+## Done when (app-agent tools)
+
+- [ ] `explain("in-repo-planning")` works
+- [ ] `bun run feature:health` — slug green
+- [ ] `census()` shows new slug

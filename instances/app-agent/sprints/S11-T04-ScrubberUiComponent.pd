@@ -1,0 +1,15 @@
+---
+id: S11-T04
+name: ScrubberUiComponent
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, vue/VUE.ti]
+slug: work-control
+---
+
+# S11-T04: Timeline Scrubber Component
+
+- [ ] `app/components/HistoryScrubber.vue` — range input + timestamp label
+- [ ] `list-components` verify after build

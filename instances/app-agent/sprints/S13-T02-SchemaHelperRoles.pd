@@ -1,0 +1,27 @@
+---
+id: S13-T02
+name: SchemaHelperRoles
+status: DONE
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  migration: apps/work-control/server/db/migrations/sqlite/0003_helper_roles.sql
+  schema: apps/work-control/server/db/schema.ts
+  types: apps/work-control/shared/types.ts
+---
+
+# S13-T02: Schema — helper_roles column
+
+## Preflight
+- [x] explain("work-control") — wc_tasks schema
+
+## Implementation
+- [x] `ALTER TABLE wc_tasks ADD COLUMN helper_roles text` (JSON array)
+- [x] Drizzle schema: `helperRoles: text('helper_roles', { mode: 'json' }).$type<AgentRole[]>()`
+- [x] `shared/types.ts`: `helperRoles: AgentRole[] | null` on `WorkTask`
+
+## Close
+- [x] status → DONE

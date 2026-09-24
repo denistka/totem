@@ -1,0 +1,35 @@
+---
+id: S08-T08
+name: DocsSyncOrchestrator
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:work-control, knowledge:in-repo-planning]
+slug: work-control
+---
+
+# S08-T08: Sync Docs — orchestrator, knowledge, company layers
+
+## Objective
+
+Remove "future" language; align open files user has (`orchestrator.md`, `documentation-layers.md`).
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `get-page("/company/documentation-layers")`
+- [ ] `get-file` — `apps/work-control/docs/orchestrator.md`, `core/docs/knowledge/work-control.md`
+
+## Implementation
+
+- [ ] `documentation-layers.md` — instance planning row → `apps/<app>/planning/sprints/` (current)
+- [ ] `orchestrator.md` — new paths, `targetApp`, env vars, remove-only external totem as default
+- [ ] `work-control.md` knowledge slug — same
+- [ ] `organization-planning.md` — cross-link `in-repo-planning`
+- [ ] `2.totem-governance.md` — one sentence on in-repo instance (if needed)
+- [ ] MCP `record()` on changed slugs if MCP up
+
+## Done when
+
+- [ ] `explain("work-control")` + `explain("in-repo-planning")` match orchestrator.md
+- [ ] `census()` no regression

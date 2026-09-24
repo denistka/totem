@@ -1,0 +1,29 @@
+---
+id: S09-T02
+name: TodoAppScaffold
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: todo
+---
+
+# S09-T02: Scaffold `apps/todo` (:3004)
+
+## App-agent preflight
+
+- [ ] `explain("layer-cascade")` + `list-apps`
+- [ ] `get-app-structure("work-control")` — mirror patterns
+
+## Implementation
+
+- [ ] `apps/todo/package.json` — `@app-agent/todo`, workspace deps
+- [ ] `nuxt.config.ts` — extends organization, `devServer.port: 3004`, nitro `bun`
+- [ ] `app/pages/index.vue` — placeholder "TODO App" (no CRUD)
+- [ ] `app/assets/css/main.css`
+
+## Done when
+
+- [ ] `cd apps/todo && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev` → :3004
+- [ ] `list-apps` shows todo

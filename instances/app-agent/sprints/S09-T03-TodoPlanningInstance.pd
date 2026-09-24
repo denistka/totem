@@ -1,0 +1,28 @@
+---
+id: S09-T03
+name: TodoPlanningInstance
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:in-repo-planning]
+slug: todo
+---
+
+# S09-T03: `apps/todo/planning/` Instance
+
+## App-agent preflight
+
+- [ ] `explain("in-repo-planning")`
+- [ ] `get-file` — `apps/work-control/planning/` (S08 reference)
+
+## Implementation
+
+- [ ] `planning/INSTANCE.md`, `BRIEF.md`, `PROTOCOL.md` (link org handbook)
+- [ ] `planning/templates/PD-BLOCK.md`, `PTL-HEADER.md`
+- [ ] `planning/sprints/.gitkeep`
+
+## Done when
+
+- [ ] Matches S08 instance contract
+- [ ] `get-file` resolves INSTANCE.md via MCP

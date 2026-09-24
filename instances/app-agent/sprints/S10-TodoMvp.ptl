@@ -1,0 +1,44 @@
+---
+id: S10
+name: TODO MVP
+status: CLOSED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S10-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, supabase/SUPABASE.ti]
+depends: S09-TodoAppScaffold.ptl
+---
+
+# S10: TODO MVP — Task List CRUD
+
+## Objective
+
+Deliver minimal task list app. Plans live in `apps/todo/planning/sprints/` (from S09 Accept smoke
+or ratify here). Execute gated `.pd` tasks only — dogfood the full loop.
+
+## Prerequisites
+
+- S09 CLOSED — `apps/todo` :3004 + planning instance + seed S10 `.ptl` in-repo
+
+## Tasks
+
+- [x] S10-T01-FreezeInvariants.pd
+- [x] S10-T02-RatifyInRepoPlan.pd
+- [x] S10-T03-DataModelTasks.pd
+- [x] S10-T04-ApiCrudTasks.pd
+- [x] S10-T05-UiTaskList.pd
+- [x] S10-T06-KnowledgeTodoMvp.pd
+- [x] S10-T07-SmokeGatedExecution.pd
+- [x] S10-T08-SprintClose.pd
+
+## Definition of Done
+
+- [ ] Add / complete / delete tasks; persists across refresh
+- [ ] All code from OPEN `.pd` tasks; gates respected
+- [ ] `feature:health` + `bun run test` green
+- [ ] work-control: open-gate → run tasks → done
+
+## Next
+
+**S11:** Time-machine scrubber in work-control

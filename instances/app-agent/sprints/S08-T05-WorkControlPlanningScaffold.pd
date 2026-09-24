@@ -1,0 +1,36 @@
+---
+id: S08-T05
+name: WorkControlPlanningScaffold
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, knowledge:in-repo-planning]
+slug: work-control
+---
+
+# S08-T05: `apps/work-control/planning/` Scaffold
+
+## Objective
+
+First in-repo instance directory — no app code, planning artifacts only.
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `explain("in-repo-planning")` + `explain("organization-planning")`
+- [ ] `list-apps` — confirm work-control exists
+
+## Implementation
+
+- [ ] Create `apps/work-control/planning/`:
+  - `INSTANCE.md` — hub, links to org handbook
+  - `BRIEF.md` — work-control as orchestrator (stub)
+  - `PROTOCOL.md` — pointer to `docs/content/2.company/totem-governance.md` + per-app orchestrator.md
+  - `templates/PD-BLOCK.md` — copy from totem or embedded fallback
+  - `sprints/.gitkeep`
+- [ ] **Do not** create `apps/todo/`
+
+## Done when
+
+- [ ] Directory matches S08-INVARIANTS contract
+- [ ] `get-file` via MCP resolves INSTANCE.md

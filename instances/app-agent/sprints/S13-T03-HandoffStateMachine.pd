@@ -1,0 +1,29 @@
+---
+id: S13-T03
+name: HandoffStateMachine
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti]
+slug: work-control
+paths:
+  code: apps/work-control/server/agents/run.ts
+---
+
+# S13-T03: Handoff state machine in run.ts
+
+## Preflight
+- [x] explain("work-control") — gate/run mechanics, agent.activity events
+
+## Implementation
+`agentRolesForTask(task)` → `[lead, ...helpers]` (dedupes helper matching lead).
+Run loop: for each role in order → `task.mock.ts` `runTask()` → emits `agent.activity` +
+`agent.handoff` event (`{ from, to }`) between roles. Gate guard unchanged: 423 while LOCKED.
+
+- [x] `server/agents/run.ts` — sequential handoff loop
+- [x] `server/agents/task.mock.ts` — unchanged (role-agnostic, emits steps)
+- [x] `server/utils/realtime.ts` — `agent.activity` for handoff events
+
+## Close
+- [x] status → DONE

@@ -1,0 +1,16 @@
+---
+id: S10-T08
+name: SprintClose
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+slug: todo
+---
+
+# S10-T08: Sprint Close
+
+- [ ] `S10-SUMMARY.md`, `TOTEM_INDEX.ti`
+- [ ] `feature:health` + `bun run test`
+- [ ] Update `apps/todo/planning/sprints/S10-TodoMvp.ptl` → CLOSED

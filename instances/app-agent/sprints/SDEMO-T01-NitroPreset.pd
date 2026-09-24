@@ -1,0 +1,67 @@
+---
+id: SDEMO-T01
+name: Fix Nitro Preset for Node Deploy
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti]
+lead_role: DEVOPS
+estimated: 30m
+---
+
+# SDEMO-T01: Fix Nitro Preset for Node Deploy
+
+## Objective
+
+Change `nitro.preset` in work-control from `'bun'` to `'node-server'` so the app
+builds and runs on Railway (Node.js). Verify build passes. No other changes.
+
+## Context
+
+- `apps/work-control/nuxt.config.ts` line: `nitro: { preset: 'bun', ... }`
+- `'bun'` preset targets Bun runtime directly — incompatible with Railway Node.js
+- `'node-server'` uses standard Node HTTP, works with WebSockets via crossws
+- SQLite (`bun:sqlite`) must be replaced with `better-sqlite3` for Node runtime
+  OR check if `bun:sqlite` has a Node fallback in NuxtHub core
+
+## App-agent preflight
+
+- [ ] MCP preflight §2 — warn if :3000 down
+- [ ] `explain("work-control")` — confirm no bun-specific imports in server code
+- [ ] Read `AGENTS.md` — check if bun:sqlite is enforced or swappable
+
+## Implementation
+
+1. **Check SQLite import** — grep `apps/work-control/server` for `bun:sqlite`
+   - If found: replace with `drizzle-orm/better-sqlite3` + install `better-sqlite3`
+   - If not found (NuxtHub abstraction): proceed directly to preset change
+
+2. **Change preset** in `apps/work-control/nuxt.config.ts`:
+   ```ts
+   nitro: {
+     preset: 'node-server',   // was: 'bun'
+     experimental: {
+       openAPI: true,
+       websocket: true
+     }
+   }
+   ```
+
+3. **Test build**:
+   ```bash
+   cd /Users/denistka/Projects/app-agent-io/DAWWWB-app-agent
+   bun run build --filter=@app-agent/work-control
+   ```
+
+4. **Verify output**: `.output/` dir exists in `apps/work-control/`, server starts:
+   ```bash
+   node apps/work-control/.output/server/index.mjs
+   ```
+   Expect: `Listening on http://localhost:3003`
+
+## Done when
+
+- [ ] `bun run build --filter=@app-agent/work-control` exits 0
+- [ ] `node .output/server/index.mjs` starts without error
+- [ ] No bun-specific imports remain in built output
+- [ ] `bun run test` still green

@@ -1,0 +1,26 @@
+---
+id: S10-T03
+name: DataModelTasks
+status: TODO
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, supabase/SUPABASE.ti]
+slug: todo
+---
+
+# S10-T03: Task Data Model
+
+## App-agent preflight
+
+- [ ] `explain("todo")` + `get-app-structure("todo")`
+
+## Implementation
+
+- [ ] NuxtHub SQLite schema: `todo_tasks` (id, title, done, created_at)
+- [ ] `bun run db:migrate` in apps/todo
+- [ ] Repo interface under `server/repo/`
+
+## Done when
+
+- [ ] Migration runs; `bun run test` if repo tests added

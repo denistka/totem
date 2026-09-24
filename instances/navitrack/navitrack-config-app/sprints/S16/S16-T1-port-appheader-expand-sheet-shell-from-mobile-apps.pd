@@ -1,0 +1,29 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S16 T1 — Port AppHeader expand-sheet shell from mobile-apps
+sprint: S16
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+
+context: |
+  Intake #2. Match mobile-apps: SettingsButton → expand AppHeader + backdrop + scrollable menu.
+  Reuse/port patterns from navitrack-mobile-apps shell/app-header (CollapsedRow, ExpandedMenu chrome).
+  Hide header on welcome/login-equivalent mode. No fleet/logout sections.
+  Package manager: bun.
+
+out:
+  - src/shell/components/app-header/*
+  - src/shell/hooks/useAppHeader.ts (or equivalent)
+  - src/ui/SettingsButton.tsx (if missing)
+  - *.test.ts / *.test.tsx
+
+cmd:
+  - bun run test
+
+done:
+  - Header expands/collapses with backdrop like mobile-apps
+  - Welcome mode hides header
+  - Hub screens show SettingsButton that toggles sheet chrome
+  - Co-located Vitest (happy + collapse/backdrop)
+  - `bun run test` passes

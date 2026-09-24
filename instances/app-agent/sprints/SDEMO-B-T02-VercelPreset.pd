@@ -1,0 +1,79 @@
+---
+id: SDEMO-B-T02
+name: Vercel Preset + Strip WS Config
+gate: LOCKED
+status: PLANNED
+protocol: ../APP-AGENT-PROTOCOL.md
+lead_role: DEVOPS
+estimated: 30m
+depends: SDEMO-B-T01-BranchSplit.pd
+---
+
+# SDEMO-B-T02: Vercel Preset + Strip WS Config
+
+## Objective
+
+Переключить work-control на Vercel-совместимую конфигурацию:
+- `nitro.preset: 'vercel'`
+- убрать `experimental.websocket` (Vercel serverless не поддерживает WS)
+- убрать `@nuxthub/core` из modules (hub:db не нужен)
+- добавить `vercel.json` для монорепо
+
+## Implementation
+
+### 1. `apps/work-control/nuxt.config.ts`
+
+```ts
+nitro: {
+  preset: 'vercel',
+  experimental: {
+    openAPI: true
+    // websocket убран — Vercel serverless не поддерживает
+  }
+},
+
+// hub убрать полностью (нет hub:db в vercel demo)
+// hub: { db: 'sqlite' },  ← удалить эту секцию
+```
+
+Из `modules` убрать `'@nuxthub/core'`:
+```ts
+modules: [
+  '@nuxt/eslint',
+  '@nuxt/ui',
+  // '@nuxthub/core',  ← убрать
+  'nuxt-auth-utils'
+],
+```
+
+### 2. `vercel.json` в корне монорепо
+
+```json
+{
+  "buildCommand": "bun install && bun run build --filter=@app-agent/work-control",
+  "outputDirectory": "apps/work-control/.output",
+  "framework": null,
+  "installCommand": "bun install"
+}
+```
+
+### 3. Проверить build
+
+```bash
+rm -rf apps/work-control/node_modules/.cache/nuxt apps/work-control/.nuxt apps/work-control/.output
+bun run build --filter=@app-agent/work-control 2>&1 | tail -10
+```
+
+Ожидаем: `preset: vercel` + `✨ Build complete!`
+
+### 4. Проверить что нет WS-зависимостей в output
+
+```bash
+grep -r "websocket\|crossws" apps/work-control/.output 2>/dev/null | head -5
+```
+
+## Done when
+
+- [ ] `bun run build --filter=@app-agent/work-control` exits 0 с `preset: vercel`
+- [ ] `.output/` содержит Vercel-формат (functions/)
+- [ ] Нет импортов `@nuxthub/core` в production bundle

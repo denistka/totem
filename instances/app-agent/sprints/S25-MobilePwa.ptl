@@ -1,0 +1,57 @@
+---
+id: S25
+name: Mobile-Responsive UX + PWA
+status: PLANNED
+gate: OPEN
+lead_role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S25-INVARIANTS.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+depends: S24-DeploymentMonitoring.ptl
+---
+
+# S25: Mobile-Responsive UX + PWA
+
+## Objective
+
+Make work-control and todo usable on mobile. PWA: installable on iOS/Android,
+offline-capable for read-only views. Board on mobile: vertical stacked columns
+(swipe to switch). Chat on mobile: full-screen thread. Keyboard palette (S20)
+adapted to touch (bottom sheet command bar).
+
+## Features
+
+- Responsive board: vertical columns on `sm:`, horizontal on `lg:`
+- Chat: full-screen on mobile, no sidebar
+- Bottom navigation bar on mobile (Home / Chats / Board / Profile)
+- PWA: `@vite-pwa/nuxt` or `nuxt-pwa`, manifest, service worker
+- Offline: cache last-viewed chat + board; show stale data with banner
+- Push notifications (Web Push) for gate.opened + task.done events
+
+## Tasks
+
+- [ ] S25-T01-FreezeInvariants.pd
+- [ ] S25-T02-ResponsiveBoard.pd        — vertical stack on mobile, swipe nav
+- [ ] S25-T03-ResponsiveChat.pd         — full-screen mobile chat, bottom nav
+- [ ] S25-T04-PwaManifest.pd            — @vite-pwa/nuxt, icons, manifest.json
+- [ ] S25-T05-OfflineCache.pd           — service worker: cache last chat/board
+- [ ] S25-T06-WebPush.pd                — VAPID keys, push for gate.opened events
+- [ ] S25-T07-TouchPalette.pd           — bottom sheet command bar on mobile
+- [ ] S25-T08-KnowledgeUpdate.pd        — pwa + mobile slugs
+- [ ] S25-T09-TestsSmoke.pd             — Lighthouse PWA audit ≥90
+
+## Definition of Done
+
+- [ ] Lighthouse PWA score ≥90 on work-control
+- [ ] Board usable on 375px viewport (iPhone SE)
+- [ ] App installable (Add to Home Screen works)
+- [ ] Offline: last-viewed board loads without network
+- [ ] `bun run test` green
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S26:** Launch — public README, changelog, fork guide, launch checklist

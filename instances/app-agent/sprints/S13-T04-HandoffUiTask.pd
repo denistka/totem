@@ -1,0 +1,25 @@
+---
+id: S13-T04
+name: HandoffUiTask
+status: DONE
+gate: OPEN
+role: PM
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, nuxt/NUXT.ti, vue/VUE.ti]
+slug: work-control
+paths:
+  code: apps/work-control/app/components/BoardView.vue
+---
+
+# S13-T04: Board UI — helper role badges on task cards
+
+## Preflight
+- [x] explain("work-control") — board/task data shape
+
+## Implementation
+- [x] `BoardView.vue`: helper role icon badges rendered via `task.helperRoles` array
+- [x] `v-for="hr in (task.helperRoles ?? [])"` — icon chip per helper, tooltip "Helper: <label>"
+- [x] Lead badge unchanged; helpers appended to the right
+
+## Close
+- [x] status → DONE

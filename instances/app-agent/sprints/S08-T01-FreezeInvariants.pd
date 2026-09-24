@@ -1,0 +1,25 @@
+---
+id: S08-T01
+name: FreezeInvariants
+status: TODO
+gate: OPEN
+role: ARCHITECT
+protocol: ../APP-AGENT-PROTOCOL.md
+requires: [mcp/MCP.ti, architecture/ARCHITECTURE_SCALE.ti]
+---
+
+# S08-T01: Ratify S08 Invariants
+
+## Objective
+
+Confirm `S08-INVARIANTS.md`: path resolution table, first dogfood target `work-control`, S09 exclusions.
+
+## App-agent preflight (MANDATORY)
+
+- [ ] `explain("organization-planning")` — layer map matches S08 scope
+- [ ] `get-file` — `S08-INVARIANTS.md`, `S08-InRepoInstancePlanning.ptl`
+- [ ] `get-page("/company/documentation-layers")` — verify "future" text is what S08 will remove
+
+## Done when
+
+- ARCHITECT sign-off; T02–T10 enforceable.

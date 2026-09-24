@@ -1,0 +1,52 @@
+---
+id: S23
+name: Supabase Production Setup
+status: PLANNED
+gate: OPEN
+lead_role: DEVOPS
+protocol: ../APP-AGENT-PROTOCOL.md
+invariants: ../S23-INVARIANTS.md
+requires: [mcp/MCP.ti]
+depends: S22-TodoAuthWorkspace.ptl
+---
+
+# S23: Supabase Production Setup
+
+## Objective
+
+Full production database setup: all tables for work-control + todo + notes in Supabase
+with Row Level Security (RLS). Multi-tenant isolation: each org has its own RLS scope.
+Migration path from local SQLite to Supabase. `scripts/db-setup.sql` extended with S12–S22
+additions (memory, analytics views, notes, shared tasks).
+
+## Prerequisites
+
+- S22 CLOSED (all apps auth'd; user_id on all tables)
+- Supabase project provisioned (not in code — user action)
+
+## Tasks
+
+- [ ] S23-T01-FreezeInvariants.pd
+- [ ] S23-T02-RlsPolicies.pd            — RLS for wc_*, notes_*, todo_tasks per user_id
+- [ ] S23-T03-MultiTenantOrg.pd         — org_id column on all tables; org-scoped queries
+- [ ] S23-T04-MigrationScript.pd        — SQLite → Supabase migration helper
+- [ ] S23-T05-AnalyticsViews.pd         — Supabase views for S19 analytics queries
+- [ ] S23-T06-BackupStrategy.pd         — pg_dump schedule / Supabase backups
+- [ ] S23-T07-DbSetupSqlUpdate.pd       — `scripts/db-setup.sql` comprehensive update
+- [ ] S23-T08-TestsSmoke.pd             — test against real Supabase (CI with test DB)
+
+## Definition of Done
+
+- [ ] All tables have RLS; no cross-user data leak
+- [ ] `CORE_DATASOURCE_PROVIDER=supabase` works end-to-end for all apps
+- [ ] Migration script exports SQLite → imports Supabase without data loss
+- [ ] `bun run test:db` uses Supabase test instance
+- [ ] `scripts/db-setup.sql` is the single source of truth for prod schema
+
+## App-agent protocol
+
+All tasks follow `APP-AGENT-PROTOCOL.md`.
+
+## Next
+
+**S24:** Deployment + monitoring (Vercel, health checks, error tracking)

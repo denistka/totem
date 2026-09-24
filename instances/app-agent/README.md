@@ -27,7 +27,7 @@ totem/totem-v6/instances/app-agent/   ← this dir (planning, sprints, invariant
 ├── organization/                      ← DAWWWB brand layer (app.config.ts, i18n)
 ├── docs/                              ← customer docs app
 ├── demos/                             ← dashboard(3010) saas(3011) landing(3012) chat(3013) characters
-├── apps/                              ← chat (3002), work-control (3003)
+├── apps/                              ← chat (3002), work-control (3003), todo (3004)
 └── packages/types/                    ← shared TypeScript types
 ```
 
@@ -77,6 +77,7 @@ The defining pattern (ADR-009). A kebab-case **slug** is the universal join key:
 | Control plane | 3001 |
 | Chat (customer) | 3002 |
 | Work Control (customer) | 3003 |
+| Todo (customer) | 3004 |
 | Demos | 3010–3014 |
 
 ## Status (updated 2026-06-21)
@@ -84,9 +85,16 @@ The defining pattern (ADR-009). A kebab-case **slug** is the universal join key:
 - ✅ **S01** Deep investigation — `intel/ARCHITECTURE_MAP.md`, `FEATURE_CENSUS.md`, etc.
 - ✅ **S02** Chat bootstrap — `intel/S02-CHAT-SMOKE.md`, `intel/S02-DEV-SMOKE.md`
 - ✅ **S03** Deep code understanding — `intel/DEEP-*.md`, `VISION-VS-BUILT.md`
-- ✅ **S04** Work Control — closed; `apps/work-control` @ :3003, DAWWWB org, smoke verified
-- 📍 **S05** Orchestrator — **CLOSED** (`sprints/S05-Orchestrator.ptl`, `S05-SUMMARY.md`)
-- 📍 Load hub: `intel/TOTEM_INDEX.ti`
+- ✅ **S04** Work Control — `apps/work-control` @ :3003
+- ✅ **S05** Orchestrator — `sprints/S05-Orchestrator.ptl`, `S05-SUMMARY.md`
+- ✅ **S06** Real LLM agents — closed
+- ✅ **S07** Totem organization layer — company docs + `organization-planning` slug
+- ✅ **S08** In-repo instance planning — `planning-path.ts`, `apps/work-control/planning/`
+- ✅ **S09** TODO app scaffold — `apps/todo` @ :3004
+- ✅ **S10** TODO MVP — task CRUD, knowledge slug `todo`
+- ✅ **S11** Time-machine scrubber — board history replay (`HistoryScrubber`)
+- 📍 **Next:** S12 multi-user presence — see `intel/SPRINT-ROADMAP.md`
+- 📍 Load hub: `intel/TOTEM_INDEX.ti` · active invariants: `S11-INVARIANTS.md`
 
 ```text
 read totem/totem-v6/index.ti → load instance app-agent → INSTANCE.ti → APP-AGENT-PROTOCOL.md → TOTEM_INDEX.ti
@@ -96,7 +104,7 @@ read totem/totem-v6/index.ti → load instance app-agent → INSTANCE.ti → APP
 
 - **`.gitignore` secrets manifest regression:** `# Secrets` lists `.data/` dirs (`apps/chat/.data`, `apps/work-control/.data`, etc.) — causes `bun run dev` to fail decrypt in non-TTY. Fix upstream: only `.env` paths + add `./apps/chat/.env`. See `DEEP-DEV-LAUNCHER.md`.
 - **Dev runtime:** `bun run dev` (turbo) uses Node → `bun:sqlite` 500; use `bun --bun nuxt dev` per app.
-- **Port 3003:** not in `core/cli/dev.js` `PORT_MAP` — pre-flight won't warn on work-control conflicts.
+- **Ports 3003–3004:** in `core/cli/dev.js` `PORT_MAP` (work-control, todo).
 - **Secrets hygiene:** rotate keys if `temp.md` was ever committed with credentials.
 - **Typecheck:** still fails on demo-saas + control — see `DEEP-TYPECHECK-AUTOPSY.md`.
 
@@ -125,9 +133,10 @@ cd docs    && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3000 docs + MCP 
 cd control && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3001 control plane
 cd apps/chat && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev # :3002 chat
 cd apps/work-control && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev # :3003 kanban
+cd apps/todo && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev         # :3004 todo MVP
 cd demos/dashboard && NUXT_TELEMETRY_DISABLED=1 bun --bun nuxt dev   # :3010 (etc → 3014)
 
-bun run test             # vitest (322 tests)
+bun run test             # vitest (336 tests)
 bun run test:db          # bun:test SQLite suite (56 tests)
 bun run feature:health   # feature knowledge coverage report
 ```
