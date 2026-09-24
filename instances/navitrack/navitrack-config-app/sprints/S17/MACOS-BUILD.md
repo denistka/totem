@@ -44,6 +44,16 @@ Default local desktop builds are **not** App Sandbox. If you later enable sandbo
 - macOS `tauri dev` → `isTauri()` → **TauriBleAdapter** (real radio)
 - Verified 2026-09-24: `bun run macos:dev` compiled (`Finished dev`) and launched `target/debug/navitrack-config-app`
 
+## Scan timing (S17 fix)
+
+`tauri-plugin-blec` `startScan` / `discover` **returns immediately** after spawning the scan task; devices arrive later on a Channel. `TauriBleAdapter.scan` waits `timeoutMs + 300` before stopping and returning. Without that wait, Logs show instant `raw=0`.
+
+Default scan window = Settings **scan period** (often **30s**) — Scan button stays busy that long.
+
+## Info.plist / TCC
+
+`src-tauri/Info.plist` Bluetooth usage strings merge into **`tauri build`** `.app` bundles. Bare `tauri dev` binary reports `Info.plist=not bound` — if macOS never prompts for Bluetooth, allow the app under **System Settings → Privacy & Security → Bluetooth**, or smoke with `bun run macos:build` and open the generated `.app`.
+
 ## Smoke
 
 Follow `intel/DEVICE-QA.md` § macOS; record session in `sprints/S17/SMOKE-NOTES.md`.
