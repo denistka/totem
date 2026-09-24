@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:architect
 task: S16 T0 — Amend S01 UX IA — welcome entry + settings sheet
 sprint: S16
@@ -28,3 +28,8 @@ done:
   - Hub tab decision recorded (sheet-primary; tab removed or opens sheet)
   - Co-located Vitest for any invariant/code mirror changes
   - `bun run test` passes
+
+closed: 2026-09-24
+note: |
+  Decision: settingsHubTab=removed (sheet-only). HUB_TAB_IDS transitional until T4.
+  Runtime: S16_UX_IA in invariants.ts.

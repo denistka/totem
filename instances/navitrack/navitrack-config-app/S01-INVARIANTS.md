@@ -31,5 +31,7 @@ Frozen for all subsequent sprints. Changes require explicit user approval.
 
 ## UX IA (hub)
 
-16. Primary nav mirrors legacy MainPage: **Sensors · Settings · Logs · About** (may live under shell tabs / hub, not fleet tabs).
+16. ~~Primary nav mirrors legacy MainPage: **Sensors · Settings · Logs · About** (may live under shell tabs / hub, not fleet tabs).~~  
+    **Superseded by S16** (`S16-INVARIANTS.md`): primary IA = **Welcome → Home tiles → Catalog → Sensor session**; DUT settings via **AppHeader expand sheet**; settings hub tab **removed**. Bottom tabs sensors/logs/about may remain secondary.  
+    Historical S01–S15 behaviour used hub tabs including Settings until S16-T4.
 17. Sensor session tabs: **Settings (Standard) · Change password · Graduation · Commands (Advanced, server-gated)**.
