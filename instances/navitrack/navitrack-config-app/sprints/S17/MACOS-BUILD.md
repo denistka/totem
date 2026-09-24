@@ -38,6 +38,12 @@ First launch may prompt for Bluetooth access (TCC). If scan fails after deny: Sy
 
 Default local desktop builds are **not** App Sandbox. If you later enable sandbox for notarized distribution, add an entitlements plist with `com.apple.security.device.bluetooth` and point `bundle.macOS.entitlements` in `tauri.conf.json`. Do **not** put usage strings in the entitlements file.
 
+## Adapter factory (S17-T2)
+
+- `resolveUseFakeBle` / `createBleAdapter`: Fake under Vitest / web / `VITE_FORCE_FAKE_BLE=1`
+- macOS `tauri dev` → `isTauri()` → **TauriBleAdapter** (real radio)
+- Verified 2026-09-24: `bun run macos:dev` compiled (`Finished dev`) and launched `target/debug/navitrack-config-app`
+
 ## Smoke
 
 Follow `intel/DEVICE-QA.md` § macOS; record session in `sprints/S17/SMOKE-NOTES.md`.

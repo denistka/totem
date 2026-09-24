@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:frontend
 task: S17 T2 — Desktop dev build uses real TauriBleAdapter
 sprint: S17
