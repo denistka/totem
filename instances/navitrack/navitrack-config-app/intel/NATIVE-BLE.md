@@ -37,6 +37,7 @@ Use **`tauri-plugin-blec`** (`@mnlphlp/plugin-blec` + Rust `tauri-plugin-blec` *
 
 - Capability permission: `blec:default`
 - iOS: `NSBluetoothAlwaysUsageDescription` (+ peripheral legacy key) in `tauri.ios.conf.json`
+- **macOS (S17):** `src-tauri/Info.plist` Bluetooth usage strings (merged into bundle). Dev: `bun run macos:dev`. See `sprints/S17/MACOS-BUILD.md`.
 - Android 12+: plugin merges `BLUETOOTH_SCAN` / `BLUETOOTH_CONNECT` (see `BLE_PLATFORM_NOTES`)
 
 ## Alternatives considered

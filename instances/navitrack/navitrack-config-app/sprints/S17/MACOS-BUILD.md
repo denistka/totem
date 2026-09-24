@@ -1,0 +1,43 @@
+# macOS build — NaviTrack Config (S17)
+
+One-command desktop path for live Navitrack BLE DUT work.
+
+## Prerequisites
+
+| Tool | Notes |
+|------|--------|
+| **bun** | Package manager (not npm/pnpm) |
+| **Rust** + macOS SDK | Tauri 2 desktop |
+| **Xcode CLT** | `xcode-select --install` if missing |
+| Bluetooth | System Settings → Bluetooth **ON** |
+| Signing | Local `tauri dev` uses ad-hoc / development signing; no Apple Developer ID required for smoke |
+
+## Commands
+
+```bash
+cd navitrack/navitrack-config-app
+bun install
+bun run macos:dev    # = tauri dev — Vite + native window
+# release-ish desktop bundle:
+bun run macos:build  # = tauri build (macOS host)
+```
+
+Do **not** set `VITE_FORCE_FAKE_BLE=1` for live radio. Web `bun run dev` stays Fake.
+
+## BLE / privacy
+
+| Piece | Location |
+|-------|----------|
+| Capability | `src-tauri/capabilities/default.json` → `blec:default` |
+| Usage strings | `src-tauri/Info.plist` (`NSBluetoothAlwaysUsageDescription`) — merged into the .app bundle |
+| Adapter | `TauriBleAdapter` when `isTauri()` and not force-fake (`src/ble/factory.ts`) |
+
+First launch may prompt for Bluetooth access (TCC). If scan fails after deny: System Settings → Privacy & Security → Bluetooth → enable NaviTrack Config.
+
+### Sandboxed distribution (optional)
+
+Default local desktop builds are **not** App Sandbox. If you later enable sandbox for notarized distribution, add an entitlements plist with `com.apple.security.device.bluetooth` and point `bundle.macOS.entitlements` in `tauri.conf.json`. Do **not** put usage strings in the entitlements file.
+
+## Smoke
+
+Follow `intel/DEVICE-QA.md` § macOS; record session in `sprints/S17/SMOKE-NOTES.md`.

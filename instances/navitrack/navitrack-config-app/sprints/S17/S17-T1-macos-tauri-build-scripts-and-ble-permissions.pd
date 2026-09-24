@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$ m:navitrack-config role:dev x:rust
 task: S17 T1 — macOS Tauri build scripts + BLE permissions
 sprint: S17
