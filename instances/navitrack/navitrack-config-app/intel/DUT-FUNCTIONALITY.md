@@ -1,191 +1,161 @@
-# DUT Functionality Inventory — navitrack-dut-config-mobile
+# DUT Functionality Guide — NaviTrack Config (hybrid as-built)
 
-Source: `/Users/denistka/Projects/navitrack/navitrack-dut-config-mobile`  
-Product: NaviTrack DUT / fuel-level sensor configurator  
-Android package: `com.navitrack.dut_configurator` (versionCode/Name **56**)  
-Stack: **Xamarin.Forms 3.4** + **Plugin.BLE 2.1.0** (shared netstandard2.0)
+**SSOT** for hybrid app behaviour after **S18**.  
+Code: `navitrack/navitrack-config-app` · Package manager: **bun** · Stack: React 19 + Tauri 2.
 
-Status: deep inventory for Tauri rebuild into `navitrack-config-app`.  
-Visual SSOT for rebuild: `navitrack-mobile-apps`. Package manager: **bun**.
+Legacy Xamarin inventory lived in this file through S17; **this rewrite documents the hybrid product** (screens, BLE, protocol, FCS, calibration). A short legacy pointer remains at the end.
 
----
-
-## 1. Repo structure
-
-| Path | Role |
-|------|------|
-| `NaviTrackDutConfigMobile/App/App/` | Shared UI + protocol + settings |
-| `App.Android/` | Shipping host (BLE permissions, `IDevice`) |
-| `App.iOS/` | Incomplete scaffold (placeholder bundle `com.companyname.App`, no `IDevice`, weak BLE plist) |
-| `Doc/` | Google Play / Manual deployment Word docs |
-| `PlayMarket/` | Store logos + screenshots |
-| Root `*.apk` / `*.aab` | Built Android artifacts |
-
-Shared domains: `Pages/`, `SensorConfigurator/`, `Settings/`, `Server/`, `CalibrationData/`, `Logs/`, `Localization/`, `Utils/`.
-
-**No** ViewModels/, Services/, USB/serial host, firmware OTA.
+Related: `PARITY-CHECKLIST.md` · `CLIENT-FIELD-INTEL.md` · `DEVICE-QA.md` · `S18-INVARIANTS.md`.
 
 ---
 
-## 2. Screens & navigation
+## 1. Product IA (S16 shell)
 
 ```
-App start → NavigationPage(MainPage)
-         → OnStart: ServerHelper.GetUserSettings(); KeepScreenOn
-
-MainPage
- ├─ SensorsPage → (BLE connect) → SensorPage (TabbedPage)
- ├─ SettingsPage
- ├─ LogsPage (singleton retained on MainPage)
- └─ AboutPage
+Boot (LogoLoader) → FCS bootstrap (soft-fail)
+                  → Welcome (BLE ready / permission)
+                  → Home tile hub
+                       ├─ Sensors (scan list)
+                       ├─ Catalog (one active sensor type)
+                       ├─ Settings (header sheet + hub)
+                       ├─ Logs
+                       └─ About
+Sensors / Catalog → Sensor session (tabs)
 ```
 
-| Screen | Files | Purpose |
-|--------|-------|---------|
-| MainPage | `Pages/MainPage.xaml(.cs)` | Hub: Sensors / Settings / Logs / About; clears temp files on load |
-| SensorsPage | `Pages/SensorsPage.xaml(.cs)` | BLE scan list; connect; open SensorPage |
-| SensorPage | `Pages/SensorPage/*` | Device session after password |
-| → Standard | `SensorPage_StandardModeTab.cs` | Auth, live data, read/write settings, simple cal write, share |
-| → Change Password | `ChangePasswordTab.cs` | DUT password change (0x59) |
-| → Calibration | `SensorPage_CalibrationTab.cs` | Multi-row fuel/freq table; local persist + share (**does not** write table to DUT) |
-| → Advanced | `SensorPage_AdvancedModeTab.cs` | Raw command picker (server-gated) |
-| SettingsPage | `Pages/SettingsPage.xaml(.cs)` | Language, scan, timeouts, cal rows, auto-advertise |
-| LogsPage | `Pages/LogsPage.*` | In-memory log, clear, share |
-| AboutPage | `Pages/AboutPage.*` | App name + version |
+| Surface | Role |
+|---------|------|
+| Welcome | Brand + Scan CTA or BT permission warning |
+| Home | Tile hub for DUT features |
+| Sensors | BLE scan / connect list |
+| Sensor session | Password gate → Standard / Password / Graduation / Advanced |
+| Settings | Language, scan period, watchdog thresholds, cal rows, autoConnect, company |
+| Logs / About | Diagnostics + version |
 
-No app login screen. Auth = **DUT numeric password** (cmd 0x50), not cloud credentials.
+No cloud login. Auth = **DUT password** (`0x50`). Default in field manuals: often **`111`** (hint only — not hardcoded auth).
 
 ---
 
-## 3. BLE transport
+## 2. BLE session
 
-| Item | Value |
-|------|-------|
-| Library | Plugin.BLE |
-| Name filters | `Navitrek`, `Nvt`, `NavOd`, `Navi`, `TD_` |
-| Service UUID | `0bd51666-e7cb-469b-8e4d-2742f1ba77cc` |
-| Characteristic | `e7add780-b042-4876-aae1-112855353cc1` |
-| MTU | `RequestMtuAsync(200)` |
-| Notify | Indicate **or** Notify required |
-| Permissions | Location (scan) + Android 12+ `BLUETOOTH_SCAN`/`CONNECT` |
+| Item | Hybrid |
+|------|--------|
+| Adapter | `TauriBleAdapter` inside Tauri; `FakeBleAdapter` on web / Vitest |
+| Force Fake | `VITE_FORCE_FAKE_BLE=1` only for demos |
+| Name filters | `Navitrek` / `Nvt` / `NavOd` / `Navi` / `TD_` |
+| Service / char | Same GATT UUIDs as legacy (`BLE_GATT`) |
+| MTU | Request 200 |
+| Connect | Tap list → GATT connect **without** second scan (`knownDevice` / `skipScan`) |
+| Desktop launch | `bun run macos:dev` — see `sprints/S17/MACOS-BUILD.md`, smoke in `sprints/S18/SMOKE-NOTES.md` |
 
-**Auto-connect mode:** parse manufacturer data as `Response_53` → fuel/temp/battery on list row without GATT.
+**autoConnectSensor** (default **false**): when true, scan rows enrich with advertise **Response_53** fuel/temp/battery; when false, list shows name/RSSI only.
 
-**No USB / classic SPP / Wi‑Fi.** Baud commands (E2/E3) configure the **sensor’s COM baud**, still over BLE.
-
-Watchdog (5s): command pending > `LastSentCommandThresholdSec` (default 10) **or** idle no response > `LastReceiveResponseThresholdSec` (default 45) → reconnect alert.
+**Watchdog** (after unlock): thresholds from settings (default **10s** last-sent / **45s** idle receive). On trip → status alert + GATT reconnect attempt.
 
 ---
 
-## 4. Features
+## 3. Standard tab (post-password)
 
-### Standard mode (post-password)
+| Capability | Behaviour |
+|------------|-----------|
+| Live telemetry | Commands `0x06` / `0x61` |
+| Read settings | Chain E0 → 14 → 4D → C8 → 48 |
+| Write settings | E1 (if vehicle) else 56 → 56 → 4E → 0E → 13 → optional 47 |
+| Calibration write | **Command_47** `[min, 1, max, calType]` |
+| Share | Text via share helper; filename `navitrack-dut-settings-{SensorName}.txt` |
 
-| Capability | Protocol evidence |
-|------------|-------------------|
-| Live telemetry | 0x06 / 0x61 → fuel, frequency, temperature, battery |
-| Read settings chain | E0 → 14 → 4D → C8 → 48 |
-| Write settings chain | E1 (if vehicle) else 56 → 56 → 4E → 0E → 13 → optional 47 |
-| 2-point calibration write | Command_47 `[min, 1, max, calType]` |
-| Min/Max from live frequency | UI copies `Frequency_ent` |
-| Calibration modes | Full tank / Not full / Dry — uses server params FREQUENCY_STEP, PROBE_LENGTH_TOP_SHIFT, INIT_CALIBRATION_BOTTOM_SHIFT |
-| Share settings | Human-readable `.txt` via Essentials Share |
-| Reconnect | Re-runs GATT setup |
+### Encoding
 
-Editable: Company (local), Vehicle, Network address, Sensor length, Period, Averaging, Calibration type (1024/2048/4096), Min/Max.  
-Read-only: Updated time, Serial, Firmware, Fuel/Freq/Temp/Power.
+| Field | On DUT? | Charset |
+|-------|---------|---------|
+| Password | yes | ASCII pad 8 |
+| Vehicle | yes | ASCII pad 8 — UI warns if non-ASCII (→ `?` on wire) |
+| Company | no | Prefs + share file; Cyrillic OK |
 
-### Change password
-Current + serial + new → **0x59**.
+### Calibration modes (S18)
 
-### Calibration data tab
-- Default **32** rows fuel ↔ frequency; auto-save 5s to Properties by sensor name
-- Add row fills previous empty with **live frequency**
-- Share `navitrack-dut-calibration-data-*.txt`
-- **Does not** push multi-point table to device (that’s Standard’s Command_47)
+| Mode | Index | Max derivation |
+|------|-------|----------------|
+| Full tank | 0 | Entered min + max |
+| Not full | 1 | `INIT_CALIBRATION_BOTTOM_SHIFT` + (currentFreq − min) |
+| Dry | 2 | min + (probeLength − `PROBE_LENGTH_TOP_SHIFT`) × `FREQUENCY_STEP` |
 
-### Advanced mode (server-gated)
-Shown if `GetUserSettings` returns flag `IS_ADVANCED_MODE_TAB_ENABLED` (=1). Locally forced false each Init, then server may enable.
-
-Notable opcodes (EN labels from LocaleEn): 06, 0E, 13, 14, 17, 42, 43, 45–52, 56, 58, 59, 5A, 61, C8, D3/D4, E0–E3; combo 43+56.  
-**Stubbed/bugs:** Advanced 46/47 send commented; Response_52 unwired; 5A TODO empty; firmware **read only — no OTA**.
-
-### Explicitly absent
-Firmware flash/OTA · USB/UART host · Preset library / import settings · User account login · Map/Geotab live (protocol enum only).
+FCS params come from GetUserSettings (or defaults). Manual dry field sequence: `CLIENT-FIELD-INTEL.md`.
 
 ---
 
-## 5. Protocol framing (rebuild-critical)
+## 4. Other session tabs
+
+| Tab | Behaviour |
+|-----|-----------|
+| Change password | Command `0x59` |
+| Graduation | Multi-point table; **write to DUT** via Command_47 (S15) + optional 48 read-back |
+| Advanced | Shown when FCS `isAdvancedModeTabEnabled`; command picker (S14 stubs policy) |
+
+---
+
+## 5. Protocol summary
 
 ```
 Command:  [0x31][netAddr][cmdCode][...payload...][CRC8]
 Response: [0x3E][netAddr][cmdCode][...payload...][CRC8]
 ```
 
-- CRC: Dallas/Maxim table `0x31` (`Crc8Helper.cs`) — copy exactly
-- BLE net address for commands: **0xFF**
-- Password / vehicle: ASCII padded length **8**
-- Endianness: BitConverter / little-endian on current platforms
-
-`UserState`: None → ReadSettings / WriteSettigs / ChangePassword / SendSingleCommand / SendMultiplyCommands / WriteCalibrationData
+- CRC: Dallas/Maxim table `0x31`
+- BLE net address: **0xFF**
+- Password / vehicle: ASCII pad **8**
 
 ---
 
-## 6. Server API
+## 6. FCS cloud
 
 Base: `https://api.fcs.navitrack.com.ua`
 
-| Endpoint | Effect |
-|----------|--------|
-| `POST /scfg/GetUserSettings` `{ userId, userId2 }` | Advanced flag + FREQUENCY_STEP, PROBE_LENGTH_TOP_SHIFT, INIT_CALIBRATION_BOTTOM_SHIFT |
-| `POST /scfg/SendLogMessage` | Crash/log telemetry |
+| Call | When |
+|------|------|
+| `GetUserSettings` | App start: fingerprint → apply Advanced + cal params (soft-fail offline) |
+| `SendLogMessage` | Log telemetry |
 
-`userId`/`userId2` = SHA-256 of device fingerprint (`Sha256HashHelper`); `userId2` adds AndroidId via `IDevice` (**Android only**).
-
----
-
-## 7. App settings keys
-
-| Key | Default | Meaning |
-|-----|---------|---------|
-| Language | ua | ua / ru / en |
-| ScanPeriod | 30 s | BLE scan timeout |
-| LastSentCommandThresholdSec | 10 | Command timeout |
-| LastReceiveResponseThresholdSec | 45 | Idle response timeout |
-| CountCalibrationRows | 32 | Calibration table size |
-| AutoConnectSensor | false | Parse advertise telemetry |
-| UserId / UserId2 | computed | FCS identity |
-| Company | remembered | Standard form |
-| IsAdvancedModeTabEnabled | server | Advanced tab |
-| IsCalibrationTabEnabled | forced true locally; server flag unused | |
-| FrequencyStep / ProbeLengthTopShift / InitCalibrationBottomShift | defaults + server | Cal math |
+Unit tests: **MSW only** — never live FCS in CI.
 
 ---
 
-## 8. UI patterns (legacy — do not copy look)
+## 7. App settings defaults
 
-Code-behind + `partial SensorPage` (5 files). NavigationPage + TabbedPage. Lime brand `#B5CC18`, pill buttons. i18n via `Localizer` dictionaries (~200 keys), not RESX.
-
-**New app visual identity:** `navitrack-mobile-apps` theme (`#94b32c` / `#8cc63f` / `#1a1c17`), not legacy Xamarin chrome.
+| Key | Default |
+|-----|---------|
+| language | `ua` (i18n code `uk`) |
+| scanPeriod | 30 s |
+| lastSent / lastReceive | 10 / 45 s |
+| countCalibrationRows | 32 |
+| autoConnectSensor | false |
+| frequencyStep / probeLengthTopShift / initCalibrationBottomShift | 4.413… / 10 / 500 |
 
 ---
 
-## 9. Rebuild module map
+## 8. Non-goals (frozen — S18)
 
-1. **UI** — Main hub, Scanner, Device session (tabs), Settings, Logs, About  
-2. **ble** — scan/connect/GATT notify/write  
-3. **protocol** — encode/decode + CRC + command runners  
-4. **api** — GetUserSettings / SendLogMessage  
-5. **storage** — prefs + temp file share  
-6. **i18n** — ua/ru/en from Locale*.cs  
+- Desktop COM / RS-485 / Bluetooth converter  
+- Thermocompensation UI  
+- Min RSSI scan filter  
+- Full Installation Report wizard (S16 stub remains)  
+- Application code under `totem/`  
+- Live BLE in unit/CI tests  
 
-### Product decisions to settle
+---
 
-- Calibration tab vs Standard cal-write are different concepts — clarify UX  
-- Keep or drop Advanced Mode stubs (46/47/5A/52)  
-- iOS BLE parity (legacy incomplete)  
-- Fingerprinting privacy for FCS userIds  
+## 9. Testing
 
-### Tauri risks
+| Layer | Rule |
+|-------|------|
+| Unit / integration | Vitest + FakeBle + MSW — `bun run test` |
+| Device smoke | `DEVICE-QA.md` · record in `sprints/S18/SMOKE-NOTES.md` |
+| Mandate | `TEST-COVERAGE-MANDATE.md` |
 
-BLE plugin on iOS/Android · Location for scan · Share sheet · Keep-awake · Offline defaults for flags · Doc password “NaviTrack” in Word — rotate for new release process.
+---
+
+## 10. Legacy source (history)
+
+Functional origin: `navitrack/navitrack-dut-config-mobile` (Xamarin.Forms + Plugin.BLE).  
+Visual / hybrid shell: `navitrack/navitrack-mobile-apps`.  
+Do not treat the Xamarin repo as runtime SSOT after S18 — use **this guide** + code under `paths.code`.

@@ -1,0 +1,67 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S18
+title: Legacy Parity Closeout + As-Built Guide
+epic: E15
+priority: P0
+dep: S16
+absorbs: S17-T3, S17-TQ
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN, QA, ARCHITECT]
+invariants: ../S01-INVARIANTS.md
+s18_invariants: ../S18-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+functionality_ssot: ../intel/DUT-FUNCTIONALITY.md
+dut_product: ../intel/NAVITRACK-BLE-DUT.md
+client_field: ../intel/CLIENT-FIELD-INTEL.md
+device_qa: ../intel/DEVICE-QA.md
+native_ble: ../intel/NATIVE-BLE.md
+intake:
+  - "#1 Finish legacy mobile → hybrid functional parity (in-scope)"
+  - "#2 Rewrite DUT-FUNCTIONALITY.md as as-built hybrid guide (product руководство)"
+  - "#3 Absorb open S17-T3 live smoke + S17-TQ into this sprint"
+open_for_append: false
+planning_status: complete
+planned: 2026-09-28
+
+objective: |
+  Deliver a working hybrid template with all in-scope functionality from
+  navitrack-dut-config-mobile, plus rewrite intel/DUT-FUNCTIONALITY.md into the
+  as-built hybrid functionality guide (SSOT / руководство).
+  Carry over open S17 work: macOS live BLE smoke (was S17-T3) and quality closeout (was S17-TQ).
+  HARD RULE: Vitest + FakeBle/MSW; no live BLE in CI. CLOSEOUT: TQ.
+  OUT: desktop COM/RS/BT-converter, thermocompensation, min-RSSI, full Installation Report wizard.
+
+tracks:
+  - id: A
+    title: S17 carry-over — live smoke
+    tasks:
+      - S18-T0-macos-live-ble-smoke-absorbed-from-s17.pd
+      - S18-T1-desktop-path-ready-for-smoke.pd
+    requires: [QA, FRONTEND_DEV, MOBILE_TAURI, RUST_DEV]
+    gate: CLOSED
+
+  - id: B
+    title: Runtime parity gaps
+    tasks:
+      - S18-T2-fcs-bootstrap-on-app-start.pd
+      - S18-T3-watchdog-reconnect-ux.pd
+      - S18-T4-autoconnect-gates-advertise-enrichment.pd
+      - S18-T5-calibration-modes-full-notfull-dry.pd
+      - S18-T6-field-ux-password-vehicle-share-i18n.pd
+    requires: [FRONTEND_DEV, BUN, QA]
+    gate: CLOSED
+
+  - id: C
+    title: As-built guide
+    tasks:
+      - S18-T7-rewrite-dut-functionality-as-built-guide.pd
+    requires: [QA, ARCHITECT]
+    gate: CLOSED
+
+  - id: Q
+    title: Post-sprint quality
+    tasks:
+      - S18-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT]
+    gate: CLOSED

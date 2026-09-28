@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S18 T7 — Rewrite DUT-FUNCTIONALITY.md as as-built hybrid guide
+sprint: S18
+requires: [QA, ARCHITECT]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  Product руководство = intel/DUT-FUNCTIONALITY.md rewritten as as-built hybrid guide:
+  screens/IA (S16), session flows, settings, BLE, protocol summary, FCS, calibration modes,
+  graduation (S15 write), Advanced, encoding/Cyrillic, non-goals, deltas vs Xamarin legacy.
+  Keep a short legacy-source pointer. Sync PARITY-CHECKLIST to 100% for in-scope items.
+  Link from instance README (already pointed). No application code under totem/.
+  Package manager: bun (tests still green if any doc-adjacent scripts).
+
+out:
+  - intel/DUT-FUNCTIONALITY.md (as-built guide)
+  - intel/PARITY-CHECKLIST.md updated
+  - CLIENT-FIELD-INTEL related links if needed
+
+cmd:
+  - bun run test
+
+done:
+  - DUT-FUNCTIONALITY.md describes hybrid as-built end-to-end
+  - Parity checklist reflects S18 in-scope complete (or marks remaining only if a task failed)
+  - `bun run test` passes

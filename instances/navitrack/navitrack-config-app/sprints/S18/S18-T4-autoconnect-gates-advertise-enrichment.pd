@@ -1,0 +1,25 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S18 T4 — autoConnectSensor gates advertise enrichment
+sprint: S18
+requires: [FRONTEND_DEV, BUN, QA]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  Legacy AutoConnectSensor toggles parsing manufacturer data (Response_53) onto scan rows.
+  Hybrid always enriches; useAppSettingsStore.autoConnectSensor must gate enrichment display/parse.
+  Default remains false (legacy). Package manager: bun.
+
+out:
+  - SensorsScreen / scan pipeline gated by autoConnectSensor
+  - Vitest for on/off behaviour
+
+cmd:
+  - bun run test
+
+done:
+  - autoConnect false → no advertise telemetry on list (or not enriched)
+  - autoConnect true → Response_53 fields shown when present
+  - `bun run test` passes

@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:qa
+task: S18 T0 — macOS live BLE smoke (absorbed from S17-T3)
+sprint: S18
+supersedes: S17-T3-manual-smoke-live-navitrack-ble-scan-connect-read.pd
+requires: [QA, FRONTEND_DEV, MOBILE_TAURI]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  Absorbed from S17-T3. Physical DUT = Navitrack BLE (intel/NAVITRACK-BLE-DUT.md, CLIENT-FIELD-INTEL).
+  Follow DEVICE-QA macOS path: BT on → permission → scan → connect → password 0x50 (often 111)
+  → Standard read chain → live telemetry if available.
+  Prefer Latin vehicle plates. Record in sprints/S18/SMOKE-NOTES.md.
+  Package manager: bun. No live BLE in unit tests.
+
+out:
+  - sprints/S18/SMOKE-NOTES.md
+  - DEVICE-QA.md checkboxes updated / linked
+  - follow-up .pd only if defects found
+
+cmd:
+  - bun run test
+
+done:
+  - SMOKE-NOTES records macOS session vs live DUT
+  - Happy path pass OR explicit fail + next task proposals
+  - `bun run test` still green

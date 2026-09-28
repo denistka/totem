@@ -1,37 +1,45 @@
-# DUT parity checklist (S12-T2 signed)
+# DUT parity checklist (hybrid as-built — S18)
 
-Source: `intel/DUT-FUNCTIONALITY.md`. Updated 2026-09-18.
+Source: `intel/DUT-FUNCTIONALITY.md` (as-built hybrid guide). Updated 2026-09-28.
 
 | Area | Parity item | Covered | Tests | Notes |
 |------|-------------|---------|-------|-------|
-| Hub | Main: Sensors / Settings / Logs / About | yes | Vitest + e2e | MobileShell IA |
-| Settings | Lang, scan, timeouts, cal rows, auto-connect | yes | Vitest | Theme/lang via existing UI |
-| BLE | Name filters + UUIDs + MTU 200 | yes | Vitest | invariants + constants |
-| BLE | Scan / connect / notify | yes | Vitest + e2e | FakeBleAdapter default on web |
-| BLE | Advertise Response_53 | yes | Vitest | parseAdvertise53 |
-| BLE | Watchdog thresholds | yes | Vitest | injectable clock |
-| Auth | Password 0x50 | yes | Vitest + e2e | Standard gate |
-| Standard | Live 06/61 | yes | Vitest | Fake autoRespond |
-| Standard | Read chain E0→14→4D→C8→48 | yes | Vitest | |
-| Standard | Write chain | yes | Vitest | |
-| Standard | Cal write 47 + min/max | yes | Vitest | |
-| Standard | Share settings | yes | Vitest | share helper stub/native-ready |
+| Hub | Welcome → Home → Sensors / Catalog / Settings / Logs / About | yes | Vitest + e2e | S16 IA |
+| Settings | Lang, scan, timeouts, cal rows, auto-connect, company | yes | Vitest | ua↔uk i18n sync (S18-T6) |
+| BLE | Name filters + UUIDs + MTU 200 | yes | Vitest | |
+| BLE | Scan / connect / notify | yes | Vitest | FakeBle web; Tauri desktop |
+| BLE | Advertise Response_53 gated by autoConnect | yes | Vitest | S18-T4 default off |
+| BLE | Watchdog → reconnect UX | yes | Vitest | S18-T3 |
+| Auth | Password 0x50 + field hint 111 | yes | Vitest | S18-T6 hint only |
+| Standard | Live 06/61 | yes | Vitest | |
+| Standard | Read / write chains | yes | Vitest | |
+| Standard | Cal modes Full / Not-full / Dry → 47 | yes | Vitest | S18-T5 |
+| Standard | Vehicle ASCII warn | yes | Vitest | S18-T6 |
+| Standard | Share `navitrack-dut-settings-{SensorName}.txt` | yes | Vitest | S18-T6 |
 | Password | Change 0x59 | yes | Vitest | |
-| Graduation | Table persist + share + DUT write via Command_47 | yes | Vitest | S15 amends S09 |
-| Advanced | Server flag gate | yes | Vitest | FCS flag in settings store |
-| Advanced | Command picker + send (+ stubs decision) | yes | Vitest | S10 DECISION-STUBS.md |
-| FCS | GetUserSettings params/flags | yes | Vitest/MSW | POST clients |
-| FCS | SendLogMessage | yes | Vitest/MSW | |
-| i18n | en/uk/ru DUT keys | yes | Manual/locale files | Expanded S09–S11 |
-| Native | Permissions, keep-awake, share | partial | Vitest | Adapters/stubs; real Tauri plugins TBD |
-| QA | `bun run test` + e2e CI | yes | CI workflow | Real device BLE not in CI |
+| Graduation | Table + DUT write Command_47 | yes | Vitest | S15 |
+| Advanced | Server flag + command picker | yes | Vitest | S14 |
+| FCS | Bootstrap on app start | yes | Vitest/MSW | S18-T2 soft-fail |
+| i18n | en/uk/ru | yes | Locale files | |
+| Native | Permissions, keep-awake, share, macOS BLE | yes* | Vitest + manual | *Live smoke: T0 deferred if no DUT |
+| QA | `bun run test` | yes | CI | No live BLE in CI |
 
-## Remaining / known gaps → Epic E12 (planned)
+## In-scope S18 — closed
 
-| Gap | Sprint | Notes |
-|-----|--------|-------|
-| Real Tauri BLE / OS permissions / wake-lock / system share | **S13** | Adapters + Fake/MSW stay for unit tests |
-| Advanced stubs 46 / 47 UI / 5A (+ Response_52) | **S14** | Amends S10 DECISION-STUBS |
-| ~~Graduation multi-point write to DUT~~ | **S15** ✅ | Done — amends S09/S12; uses Command_47 |
+| Item | Task |
+|------|------|
+| FCS bootstrap | T2 |
+| Watchdog reconnect | T3 |
+| autoConnect gate | T4 |
+| Calibration modes | T5 |
+| Field UX (hint / ASCII / share / i18n) | T6 |
+| As-built guide | T7 |
+| Desktop path / smoke notes | T1 / T0 |
 
-See `intel/POST-RC.md`. Firmware OTA / USB — still out of product scope.
+## Explicit non-goals (unchanged)
+
+Desktop COM/RS · thermocompensation · min RSSI · full Installation Report wizard · ModBus in-app.
+
+## Live smoke
+
+macOS path ready (`SMOKE-NOTES.md` T1). Live DUT session **deferred** when no unit on hand — re-run T0 checklist when available.

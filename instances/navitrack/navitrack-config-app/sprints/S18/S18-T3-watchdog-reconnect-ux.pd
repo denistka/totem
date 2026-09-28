@@ -1,0 +1,27 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S18 T3 — Watchdog reconnect UX
+sprint: S18
+requires: [FRONTEND_DEV, MOBILE_TAURI, BUN, QA]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  evaluateWatchdog exists (src/ble/watchdog.ts) with LastSent / LastReceive thresholds from settings
+  but is not driving session reconnect/alert like legacy. Wire into BLE session path; surface alert
+  and reconnect/GATT re-setup UX. FakeBle tests for threshold trip. No live BLE in CI.
+  Package manager: bun.
+
+out:
+  - ble/session (or equivalent) wiring
+  - UI alert / status for reconnect
+  - co-located Vitest
+
+cmd:
+  - bun run test
+
+done:
+  - Watchdog fires on thresholds and triggers reconnect/alert path
+  - Thresholds read from app settings store defaults (10s / 45s)
+  - `bun run test` passes

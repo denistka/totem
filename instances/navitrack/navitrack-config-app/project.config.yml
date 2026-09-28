@@ -95,15 +95,23 @@ active_planning:
   post_rc: ./intel/POST-RC.md
   invariants: ./S01-INVARIANTS.md
   sprints: ./sprints/
-  completed_sprints: S01-S16
-  next_sprint: S17
+  completed_sprints: S01-S18
+  next_sprint: null
   s16_gate: CLOSED
   s16_planning: complete
-  s17_gate: LOCKED
-  s17_planning: in_progress
+  s17_gate: ABSORBED
+  s17_planning: absorbed_into_s18
+  s17_closed_tasks: T0-T2
+  s17_superseded: [S17-T3, S17-TQ]
+  s18_gate: CLOSED
+  s18_planning: complete
+  s18_planning_file: sprints/S18/S18-Legacy-Parity-Closeout.ptl
+  s18_note: live_smoke_T0_deferred_no_DUT
   s13_s15_gates: CLOSED
-  open_intake: sprints/S17/S17-Real-DUT-macOS.ptl
+  open_intake: sprints/S18/S18-Legacy-Parity-Closeout.ptl
   dut_product: ./intel/NAVITRACK-BLE-DUT.md
+  client_field: ./intel/CLIENT-FIELD-INTEL.md
+  functionality_guide: ./intel/DUT-FUNCTIONALITY.md
 
 guardians:
   default:

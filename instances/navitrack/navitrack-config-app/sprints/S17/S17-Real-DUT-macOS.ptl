@@ -1,4 +1,4 @@
-gate: OPEN
+gate: ABSORBED
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S17
 title: Real DUT — macOS Build + Live NaviTrack BLE
@@ -16,15 +16,17 @@ device_qa: ../intel/DEVICE-QA.md
 intake:
   - "#1 Compile config-app for macOS (Tauri desktop) and verify live Navitrack BLE DUT"
   - "Product sheet saved from https://navitrack.com.ua/ru/solution/navitrack-ble/ → intel/NAVITRACK-BLE-DUT.md"
-open_for_append: true
-planning_status: in_progress
+open_for_append: false
+planning_status: absorbed_into_s18
+absorbed_on: 2026-09-28
+absorbed_by: S18-Legacy-Parity-Closeout.ptl
 
 objective: |
   Connect the physical Navitrack BLE fuel DUT via real radio (TauriBleAdapter / tauri-plugin-blec).
   First slice: ship a working **macOS** Tauri build, then smoke-test scan → connect → password → read chain
   against the unit on hand. Unit tests stay FakeBle/MSW. Marketing ModBus is NOT app protocol (see DUT sheet caveat).
-  HARD RULE: Vitest green; no live BLE in CI. CLOSEOUT: TQ when sprint closed.
-  Further real-DUT tasks may append (iOS/Android, protocol fixes) while open_for_append.
+  HARD RULE: Vitest green; no live BLE in CI.
+  STATUS 2026-09-28: T0–T2 CLOSED. Open T3 + TQ SUPERSEDED / absorbed into S18 (E15).
 
 tracks:
   - id: A
@@ -35,11 +37,13 @@ tracks:
       - S17-T2-desktop-dev-build-real-tauri-ble-adapter.pd
       - S17-T3-manual-smoke-live-navitrack-ble-scan-connect-read.pd
     requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, QA]
-    gate: OPEN
+    gate: ABSORBED
+    note: T0-T2 CLOSED; T3 SUPERSEDED by S18-T0
 
   - id: Q
     title: Post-sprint quality
     tasks:
       - S17-TQ-post-sprint-code-quality-review-refactor.pd
     requires: [FRONTEND_DEV, ARCHITECT]
-    gate: OPEN
+    gate: SUPERSEDED
+    note: SUPERSEDED by S18-TQ

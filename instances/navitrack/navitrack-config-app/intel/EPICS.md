@@ -33,9 +33,10 @@ sprint tasks → bun run test green → CODE QUALITY review/refactor → then ne
 | **E11** QA closeout | E2E journeys, CI gate, parity checklist | **S12** ✅ |
 | **E12** Post-RC gaps | Native BLE/OS + Advanced stubs + Graduation→DUT write | **S13–S15** ✅ |
 | **E13** Design shell parity | Mix mobile-apps chrome + customer structured IA (welcome, home tiles, catalog, report stub); 1 live sensor, extensible | **S16** ✅ |
-| **E14** Real DUT | macOS Tauri + live Navitrack BLE smoke (then more platforms/fixes) | **S17** `gate: LOCKED` |
+| **E14** Real DUT | macOS Tauri + live Navitrack BLE (T0–T2 done; open T3/TQ → **S18**) | **S17** T0–T2 ✅ · remainder → S18 |
+| **E15** Hybrid parity template | Finish in-scope legacy mobile parity + as-built `DUT-FUNCTIONALITY.md` guide | **S18** `gate: LOCKED` |
 
-See `intel/POST-RC.md`. Product sheet: `intel/NAVITRACK-BLE-DUT.md`.
+See `intel/POST-RC.md`. Product sheet: `intel/NAVITRACK-BLE-DUT.md`. Field intel: `intel/CLIENT-FIELD-INTEL.md`.
 
 ---
 
@@ -43,16 +44,21 @@ See `intel/POST-RC.md`. Product sheet: `intel/NAVITRACK-BLE-DUT.md`.
 
 ```
 S01 → … → S12  (MVP RC)
-              └→ S13 → S14 → S15
+              └→ S13 → S14 → S15 → S16
+                                   └→ S17 (T0–T2) → S18 (parity + guide + absorbed smoke)
 ```
 
 ```
 S01 → S02 → S03 → S04 → S05 → S06 → S07 → S08 → S09 → S10 → S11 → S12
          ↘________↗ (S05 can partially parallel S04 after S03)
 ```
-
 ---
 
 ## Out of scope (still)
 
-Firmware OTA · USB/UART host · Fleet map/tracking · Cloud user login · Import settings presets
+Firmware OTA · USB/UART host · Fleet map/tracking · Cloud user login · Import settings presets ·  
+Desktop Windows COM / **RS-485** / Bluetooth-converter chapters · Thermocompensation field (desktop-only; unwired in mobile)
+
+## Field intel
+
+Manual v3.0 + client Cyrillic notes + `Navi_4214` export → `intel/CLIENT-FIELD-INTEL.md`.

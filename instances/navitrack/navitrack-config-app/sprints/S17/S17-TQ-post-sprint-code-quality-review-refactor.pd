@@ -1,13 +1,16 @@
-gate: OPEN
+gate: SUPERSEDED
 v:4 c:$ m:navitrack-config role:dev x:architect
 task: S17 TQ — Post-sprint code quality review + refactor
 sprint: S17
+superseded_by: S18-TQ-post-sprint-code-quality-review-refactor.pd
+superseded_on: 2026-09-28
 requires: [FRONTEND_DEV, ARCHITECT, CODEMAP_QUALITY_ADVISOR, BUN]
 test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
 quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
 
 context: |
-  REQUIRED when S17 closes. Shared UI, React/Tauri practice; keep Fake/MSW for unit tests;
+  SUPERSEDED by S18-TQ (quality closeout moves to S18 with full parity sprint).
+  Original intent: REQUIRED when S17 closes. Shared UI, React/Tauri practice; keep Fake/MSW for unit tests;
   desktop BLE only behind TauriBleAdapter.
 
 out:
@@ -18,5 +21,4 @@ cmd:
   - bun run test
 
 done:
-  - Quality review per CODE-QUALITY-MANDATE.md
-  - `bun run test` passes
+  - Moved to S18-TQ — do not execute this file

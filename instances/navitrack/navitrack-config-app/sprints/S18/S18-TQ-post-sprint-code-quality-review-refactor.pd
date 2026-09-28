@@ -1,0 +1,25 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S18 TQ — Post-sprint code quality review + refactor
+sprint: S18
+supersedes: S17-TQ-post-sprint-code-quality-review-refactor.pd
+requires: [FRONTEND_DEV, ARCHITECT, CODEMAP_QUALITY_ADVISOR, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  REQUIRED when S18 closes. Absorbs former S17-TQ. Shared UI, React/Tauri practice;
+  Fake/MSW for unit tests; desktop BLE only behind TauriBleAdapter.
+  Package manager: bun.
+
+out:
+  - sprints/S18/QUALITY-NOTES.md
+  - refactors under paths.code as needed
+
+cmd:
+  - bun run test
+
+done:
+  - Quality review per CODE-QUALITY-MANDATE.md
+  - `bun run test` passes

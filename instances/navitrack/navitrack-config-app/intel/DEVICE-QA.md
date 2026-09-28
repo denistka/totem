@@ -11,6 +11,12 @@ Live product on hand: **Navitrack BLE** — see `intel/NAVITRACK-BLE-DUT.md`. Ap
 
 Name filters (advertise): `Navitrek` / `Nvt` / `NavOd` / `Navi` / `TD_`.
 
+Field intel (manual v3.0 + client): `intel/CLIENT-FIELD-INTEL.md`.
+
+- Default DUT password (manuals): **`111`**
+- Vehicle / plate on DUT: **ASCII / Latin only** (max 8). Company may be Cyrillic in UI/file only.
+- Example unit: **Navi_4214** (serial 4214)
+
 ---
 
 ## Preflight (mobile)
@@ -26,8 +32,9 @@ Name filters (advertise): `Navitrek` / `Nvt` / `NavOd` / `Navi` / `TD_`.
 2. [ ] OS BLE permission prompt → **Allow**
 3. [ ] DUT appears in list (name + optional advertise telemetry)
 4. [ ] Tap DUT → sensor session opens
-5. [ ] Enter DUT password → auth (cmd `0x50`) succeeds
+5. [ ] Enter DUT password (default often **`111`**) → auth (cmd `0x50`) succeeds
 6. [ ] Standard tab **Read** settings chain completes (vehicle / probe / period / calibration)
+6a. [ ] If writing vehicle: use **Latin/ASCII** plate only (Cyrillic will become `?` on DUT)
 7. [ ] Live telemetry updates while session open
 8. [ ] Screen stays awake during session (wake-lock / keep-screen-on)
 9. [ ] Share settings / logs / graduation uses system share sheet or clipboard fallback
@@ -54,12 +61,13 @@ Primary field path for the unit on hand until mobile live DUT is re-run.
 2. [ ] OS / app Bluetooth permission → **Allow** if shown
 3. [ ] Navitrack BLE DUT appears in scan list
 4. [ ] Select DUT → sensor session opens
-5. [ ] Enter DUT password → auth (`0x50`) succeeds
+5. [ ] Enter DUT password (default often **`111`**) → auth (`0x50`) succeeds
 6. [ ] Standard tab **Read** chain completes (vehicle / probe / period / calibration)
+6a. [ ] If writing vehicle: **Latin/ASCII** only (see CLIENT-FIELD-INTEL)
 7. [ ] Live telemetry updates while session open (if DUT advertises / notifies)
 8. [ ] Disconnect / leave session cleanly
 
-Record results in `sprints/S17/SMOKE-NOTES.md` (OS version, DUT name seen, pass/fail, blockers).
+Record results in `sprints/S18/SMOKE-NOTES.md` (OS version, DUT name seen, pass/fail, blockers). S17 notes superseded for active smoke.
 
 ### Permission / power deny (macOS)
 

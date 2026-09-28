@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S18 T1 — Desktop path ready for smoke
+sprint: S18
+requires: [FRONTEND_DEV, RUST_DEV, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  Ensure `bun run macos:dev` still launches with TauriBleAdapter (no accidental Fake force).
+  No new build scripts unless smoke is bOPEN. Document blockers in SMOKE-NOTES or MACOS-BUILD.
+  Package manager: bun.
+
+out:
+  - confirmation in sprints/S18/SMOKE-NOTES.md or brief note under sprints/S18/
+  - code fixes only if launch/adapter broken
+
+cmd:
+  - bun run test
+
+done:
+  - Desktop Tauri path known-good for T0 smoke OR blocker filed
+  - `bun run test` passes

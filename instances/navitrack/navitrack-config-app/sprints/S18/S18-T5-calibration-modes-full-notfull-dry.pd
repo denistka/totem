@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S18 T5 — Calibration modes Full / Not-full / Dry
+sprint: S18
+requires: [FRONTEND_DEV, BUN, QA, ARCHITECT]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  Legacy Standard picker: Full tank (0), Not full (1), Dry (2) — see SensorPage_StandardModeTab.cs
+  CreateCalibrationData / ValidateCalibrationData + FCS FREQUENCY_STEP, PROBE_LENGTH_TOP_SHIFT,
+  INIT_CALIBRATION_BOTTOM_SHIFT. Hybrid today = full-tank min/max only.
+  Port three modes into StandardModeTab + pure math helpers (testable). Command_47 write unchanged.
+  Manual dry sequence: CLIENT-FIELD-INTEL / DUT guide. Package manager: bun.
+
+out:
+  - calibration-mode math module + tests
+  - StandardModeTab mode picker + wiring
+  - i18n keys en/uk/ru for mode labels
+
+cmd:
+  - bun run test
+
+done:
+  - Three modes selectable; max derivation matches legacy formulas for Not-full / Dry
+  - Full tank still min+max → Command_47
+  - Vitest covers math edge cases
+  - `bun run test` passes

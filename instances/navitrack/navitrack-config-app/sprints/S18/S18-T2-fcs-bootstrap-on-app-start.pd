@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S18 T2 — FCS bootstrap on app start
+sprint: S18
+requires: [FRONTEND_DEV, BUN, QA]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S18-INVARIANTS.md
+
+context: |
+  Legacy OnStart calls ServerHelper.GetUserSettings. Hybrid has getUserSettings + fingerprint +
+  applyFcsSettings but App.tsx never boots them — Advanced flag stays false; cal math params unused.
+  Wire: fingerprint → getUserSettings → applyFcsSettings (isAdvancedModeTabEnabled, FREQUENCY_STEP,
+  PROBE_LENGTH_TOP_SHIFT, INIT_CALIBRATION_BOTTOM_SHIFT). Fail soft offline (keep defaults).
+  Clients: src/api/fcs.ts, src/lib/fingerprint.ts, useAppSettingsStore.applyFcsSettings.
+  Package manager: bun. MSW in unit tests.
+
+out:
+  - src/App.tsx (or dedicated bootstrap module)
+  - co-located Vitest (bootstrap / App test)
+
+cmd:
+  - bun run test
+
+done:
+  - FCS applied on start when network/MSW available
+  - Offline / error does not crash boot
+  - Advanced flag + cal params land in settings store
+  - `bun run test` passes

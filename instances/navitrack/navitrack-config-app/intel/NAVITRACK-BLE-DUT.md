@@ -74,9 +74,22 @@ Do **not** implement Modbus in the configurator unless a future product variant 
 - Live catalog product now = this **Navitrack BLE** fuel DUT (one physical unit on hand).
 - Future catalog rows = other models; this sheet is the first enabled entry’s hardware brief.
 
+## Field sample (export)
+
+Live unit seen in client settings file **`Navi_4214`** (serial 4214, FW 26, length 545 mm, period/avg 10 s, cal range 4096, empty/full Hz 3262/5598, company Cyrillic in file, plate `H0981KM`). Full table: `intel/CLIENT-FIELD-INTEL.md`.
+
+## Encoding (firmware / wire)
+
+Client (2026-09-25): firmware likely **does not** store Cyrillic. DUT string fields (password, vehicle) = **ASCII-8**. Company Cyrillic belongs in the **calibration/settings file** only.
+
+## Official manual
+
+«NAVITRACK DUT CONFIG» user guide **v3.0** (30.04.2026) — BLE + dry calibration + mobile chapter. Digest + gaps: `intel/CLIENT-FIELD-INTEL.md`. RS-485 / COM / BT-converter chapters are **out of app scope**.
+
 ## Related intel
 
 - `DUT-FUNCTIONALITY.md` — app behaviour SSOT  
+- `CLIENT-FIELD-INTEL.md` — manual + client chat + live export  
 - `NATIVE-BLE.md` — TauriBleAdapter / blec  
 - `DEVICE-QA.md` — manual smoke (**macOS desktop path = S17**)  
 - `S17-INVARIANTS.md` — live DUT target + protocol caveat for this sprint  
