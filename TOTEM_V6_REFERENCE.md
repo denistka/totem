@@ -538,9 +538,6 @@ guardians:
 Phase 1 — AUDIT
   Читать последние N спринтов из инстанции
   → искать паттерны, компоненты, замороженные решения из S*-INVARIANTS.md / блоков inv
-  → phase-2: ...
-  → оставить: .ptl, .pd, .pa, S*-INVARIANTS.md, INVARIANTS-LOG.md, historical digest
-  → invariants-compaction: компакт лога без потери хронологии INV-ID
 
 Phase 2 — GLOBAL BACKFILL
   Абстрагировать паттерны в глобальные best practices
@@ -552,7 +549,8 @@ Phase 3 — COMPRESS INSTANCE
 
 Phase 4 — PRUNE
   Удалить: chat logs, .po файлы, устаревшие .md
-  → оставить: .ptl, .pd, .pa, INVARIANTS.md, historical digest
+  → оставить: .ptl, .pd, .pa, S*-INVARIANTS.md, INVARIANTS-LOG.md, historical digest
+  → invariants-compaction: компакт лога без потери хронологии INV-ID
 ```
 
 ### Метрики обслуживания
