@@ -7,7 +7,7 @@ principles:
   context: "Analyze base entities (tokens, wrappers) before changes. No partial updates."
   ref-first: "Build ONE reference screen (e.g. Login) end-to-end; replicate pattern."
   order: "Tokens -> Components -> Compose. No screen-level hardcoding."
-  safety: "INVARIANTS.md gates all changes. Block regressions."
+  safety: "S*-INVARIANTS.md (+ hard ```inv```) gates all changes. Block regressions."
   atomic: "File limit: 100 lines. `splitIf > 100`. Parent (State) -> Child (UI)."
 
 implementation-gates:
@@ -15,10 +15,11 @@ implementation-gates:
   - Design: Extract new tokens to `index.css :root` or `tailwind.config`.
   - Polish: Apply visual tweaks ONE by ONE. Build + theme check after each.
   - Motion: `motion-safe:` only. Respect `prefers-reduced-motion`.
+  - Invariants: Assign severity when freezing; append INVARIANTS-LOG.md.
 
 checklists:
   pre-sprint:
-    - `INVARIANTS.md` exists.
+    - `S*-INVARIANTS.md` exists and is linked.
     - Reference screen identified.
     - Duplicates cataloged for extraction.
   active:

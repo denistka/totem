@@ -6,7 +6,8 @@ includes: ../core/DESIGN_SPRINT_GUIDE.ti
 universal-rules:
   - Loose Coupling: Modules must communicate via interfaces, not concrete implementations.
   - Single Source of Truth: Data transformations happen in one place.
-  - Invariant Protection: Identify and freeze core decisions (`INVARIANTS.md`) before UI implementation.
+  - Invariant Protection: Identify and freeze core decisions (`S*-INVARIANTS.md` + ```inv```) before UI implementation.
+  - Invariant Severity: When freezing, assign `severity: hard|soft` and a machine-checkable `assertion` where possible (`core/INVARIANTS.ti`). Append INVARIANTS-LOG.md.
   - Strict Modularity: Any file larger than 100 lines MUST be broken down into smaller, focused entities. No exceptions.
 
 state-management:

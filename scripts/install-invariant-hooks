@@ -1,0 +1,137 @@
+#!/usr/bin/env node
+/**
+ * install-invariant-hooks — install git post-commit / pre-push hooks that run
+ * scripts/verify-invariants against a Totem instance.
+ *
+ * Usage:
+ *   scripts/install-invariant-hooks --instance <totem/instances/X> [--code <repo>] [--hooks-dir <dir>]
+ *   scripts/install-invariant-hooks --uninstall [--code <repo>] [--hooks-dir <dir>]
+ *
+ * Default --code: cwd (the project repo). Hooks go to <code>/.git/hooks/
+ * unless --hooks-dir is set (for core.hooksPath).
+ *
+ * Wiring: templates/ci/verify-invariants.yml + README "Versioned invariants".
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const { execFileSync } = require('child_process');
+
+function usage() {
+  console.error(`Usage:
+  install-invariant-hooks --instance <totem/instances/X> [--code <repo>] [--hooks-dir <dir>]
+  install-invariant-hooks --uninstall [--code <repo>] [--hooks-dir <dir>]`);
+}
+
+function parseArgs(argv) {
+  const out = { instance: null, code: process.cwd(), hooksDir: null, uninstall: false };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--instance') out.instance = argv[++i];
+    else if (a === '--code') out.code = argv[++i];
+    else if (a === '--hooks-dir') out.hooksDir = argv[++i];
+    else if (a === '--uninstall') out.uninstall = true;
+    else if (a === '-h' || a === '--help') {
+      usage();
+      process.exit(0);
+    } else {
+      console.error(`Unknown arg: ${a}`);
+      usage();
+      process.exit(2);
+    }
+  }
+  return out;
+}
+
+function findGitDir(codeRoot) {
+  try {
+    return execFileSync('git', ['rev-parse', '--git-dir'], {
+      cwd: codeRoot,
+      encoding: 'utf8',
+    }).trim();
+  } catch {
+    return null;
+  }
+}
+
+function main() {
+  const args = parseArgs(process.argv.slice(2));
+  const codeRoot = path.resolve(args.code);
+  const gitDirRel = findGitDir(codeRoot);
+  if (!gitDirRel) {
+    console.error(`Not a git repo: ${codeRoot}`);
+    process.exit(2);
+  }
+  const gitDir = path.resolve(codeRoot, gitDirRel);
+  const hooksDir = args.hooksDir ? path.resolve(args.hooksDir) : path.join(gitDir, 'hooks');
+  fs.mkdirSync(hooksDir, { recursive: true });
+
+  const marker = 'Totem invariants';
+  const names = ['post-commit', 'pre-push'];
+
+  if (args.uninstall) {
+    for (const name of names) {
+      const p = path.join(hooksDir, name);
+      if (fs.existsSync(p) && fs.readFileSync(p, 'utf8').includes(marker)) {
+        fs.unlinkSync(p);
+        console.log(`Removed ${p}`);
+      }
+    }
+    process.exit(0);
+  }
+
+  if (!args.instance) {
+    usage();
+    process.exit(2);
+  }
+  const instancePath = path.resolve(args.instance);
+  const verifyScript = path.resolve(__dirname, 'verify-invariants');
+  if (!fs.existsSync(verifyScript)) {
+    console.error(`Missing verifier: ${verifyScript}`);
+    process.exit(2);
+  }
+  if (!fs.existsSync(instancePath)) {
+    console.error(`Instance not found: ${instancePath}`);
+    process.exit(2);
+  }
+
+  for (const name of names) {
+    const p = path.join(hooksDir, name);
+    if (fs.existsSync(p)) {
+      const existing = fs.readFileSync(p, 'utf8');
+      if (!existing.includes(marker)) {
+        console.error(`Refusing to overwrite unrelated hook: ${p}`);
+        process.exit(2);
+      }
+    }
+    let body = `#!/bin/sh
+# Totem invariants ${name} hook (installed by install-invariant-hooks)
+set -e
+VERIFY="${verifyScript}"
+INSTANCE="${instancePath}"
+CODE="$(git rev-parse --show-toplevel)"
+if [ ! -f "$VERIFY" ]; then
+  echo "totem verify-invariants missing: $VERIFY" >&2
+  exit 0
+fi
+`;
+    if (name === 'post-commit') {
+      body += `# Advisory only — never block commit
+node "$VERIFY" --instance "$INSTANCE" --code "$CODE" || true
+exit 0
+`;
+    } else {
+      body += `# Hard invariant failures block push
+node "$VERIFY" --instance "$INSTANCE" --code "$CODE"
+`;
+    }
+    fs.writeFileSync(p, body, { mode: 0o755 });
+    console.log(`Installed ${p}`);
+  }
+  console.log(`Instance: ${instancePath}`);
+  console.log(`Verifier: ${verifyScript}`);
+}
+
+main();

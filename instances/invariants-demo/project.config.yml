@@ -1,0 +1,18 @@
+project:
+  name: invariants-demo
+  version: 1.0.0
+  description: |
+    Worked example for versioned invariants + verify-invariants self-test.
+    Not a real product. Code root is the local fixture/ directory.
+
+paths:
+  code: ./fixture
+  history: .
+
+guardians:
+  default:
+    - ROOT
+    - PM
+    - QA
+    - ARCHITECT
+  stack_adapters: []
