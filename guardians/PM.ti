@@ -21,14 +21,19 @@ execution-protocol:
 
 phase-rules:
   - PLAN: Verify acceptance criteria before sprint start.
-  - PLAN: Review previous sprint invariants; create `INVARIANTS.md` if missing.
+  - PLAN: Review previous sprint invariants; create `S*-INVARIANTS.md` if missing.
   - DEVELOP: Track progress daily; resolve blockers within 4h.
   - DEVELOP: Revert Policy: If regression > 2 mins to fix -> REVERT. No "fix-forward" for visuals.
   - CLOSE: Ensure all artifacts are handed over and documented.
-  - CLOSE: Create `INVARIANTS.md` for next sprint if design decisions were made.
+  - CLOSE: Create/extend `S*-INVARIANTS.md` + append `INVARIANTS-LOG.md` if design decisions were frozen.
+  - CLOSE: MUST run `scripts/verify-invariants --instance instances/<project>` (code root from `paths.code`).
+  - CLOSE: On hard invariant failure — REFUSE to proceed / mark done. Soft failures → record warnings, may proceed.
+  - CLOSE: confirmed_by on new ```inv``` blocks MUST reference the confirming commit SHA.
 
 anti-patterns:
   - ❌ Blind Execution: Running a prompt without loading the Project Index first.
   - ❌ Assumption: Auto-loading a stack without user confirmation. 
   - ❌ Logic-Later: Building UI shells before API/Types are solid.
   - ❌ Ignoring Refact: Implementing without checking for existing entities.
+  - ❌ Close Without Verify: Marking DONE without running verify-invariants.
+  - ❌ Hard Bypass: Proceeding after hard invariant FAIL.

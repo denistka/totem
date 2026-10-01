@@ -14,7 +14,7 @@
 |----------|---------|
 | AI авто-выполняет задачи без одобрения | Физические gates (`gate: LOCKED`) |
 | Планирование и исполнение смешаны | Разделение ролей PLANNER / PM |
-| Решения «теряются» между спринтами | `INVARIANTS.md` + ссылки из `.ptl` |
+| Решения «теряются» между спринтами | `S*-INVARIANTS.md` + `INVARIANTS-LOG.md` + ссылки из `.ptl` |
 | Перегрузка контекста (все правила сразу) | JIT-загрузка через `requires:` |
 | Знания одного проекта не используются в других | OPTIMIZER: глобальный backfill в `/stacks` |
 
@@ -120,35 +120,66 @@ requires: [node/NODE.ti]
 - **Атомарность**: одна цель = один файл
 - `gate: LOCKED` по умолчанию — PM блокируется и сообщает: _"Change `gate: LOCKED` to `gate: OPEN` to authorize execution"_
 
-### 3.4 Инварианты `INVARIANTS.md`
+### 3.4 Инварианты `S*-INVARIANTS.md` (версионируемые)
 
 Создаются в конце спринта. Замораживают решения для следующего спринта.
+Полная схема: `core/INVARIANTS.ti`. Шаблоны: `templates/invariants/`.
 
-```markdown
+**Структурированная запись** — машинопроверяемый fenced-блок с языком `inv`:
+
+~~~~
 # S05 Invariants — Glass System
 
 Sprint result: Design tokens ported, visual parity pending.
 
-## Design Tokens
-- `--glass-primary`: RGB definition (no rgba())
-- `--shadow-glass`, `--shadow-glass-lg`, `--shadow-glass-xl`
-
-## API Contracts
-- `POST /api/auth/login` → { email, password } → { token, user }
-
-## Structural Decisions
-- State: Pinia (global), local hooks (component)
-- Directory: `/src/features/{feature}/{components,services,types}`
-
-## Restrictions
-- Cannot change API contracts without explicit discussion
-- Cannot add dependencies without ARCHITECT approval
+```inv
+id: INV-kvit-001
+date: 2026-02-26
+severity: hard
+status: active
+confirmed_by: a1b2c3d
+assertion: file_exists
+path: src/styles/tokens.css
+why: Glass tokens live in one SSOT file
+added_by: ARCHITECT
+sprint: S05
 ```
+
+## Freeform / narrative
+- State: Pinia (global), local hooks (component)
+~~~~
+
+Обязательные поля: `id` (`INV-<project>-NNN`), `date`, `severity` (`hard|soft`),
+`status`, `confirmed_by` (SHA коммита), `assertion`, `why`, `added_by`.
+
+**Severity:**
+- `hard` — нарушение блокирует CLOSE / CI / pre-push (`verify-invariants` → exit 1)
+- `soft` — только WARN; QA фиксирует в отчёте
+
+**История (append-only):** `INVARIANTS-LOG.md` в корне инстанции — кто/когда/зачем
+добавил, подтвердил или deprecated/superseded. Текущий набор остаётся читаемым в
+`S*-INVARIANTS.md` или опциональном `CURRENT-INVARIANTS.md`. OPTIMIZER может
+компактировать лог (`invariants-compaction`), не стирая хронологию ID.
+
+**Проверка:**
+
+```bash
+node scripts/verify-invariants --instance instances/<project>
+node scripts/verify-invariants --self-test   # demo: instances/invariants-demo
+```
+
+Хуки: `scripts/install-invariant-hooks`. CI: `templates/ci/verify-invariants.yml`.
+Документация: `docs/INVARIANTS_VERIFICATION.md`.
+
+**Обратная совместимость:** старые свободные `S*-INVARIANTS.md` без блоков `inv`
+остаются валидными и линкуются из `.ptl`. Машина проверяет только блоки `inv`;
+миграцию (ID + severity + assertion + лог) делает OPTIMIZER/человек.
 
 **Правила инвариантов:**
 - Подключаются в следующем `.ptl` через `invariants: @S05-INVARIANTS.md`
-- Изменение — только через явный task + обсуждение
+- Изменение — только через явный task + обсуждение + запись в лог
 - Pre-sprint audit: проверить существование инвариантов предыдущего спринта
+- PM перед CLOSE обязан прогнать verify-invariants; hard FAIL → отказ закрывать задачу
 
 ---
 
@@ -179,7 +210,7 @@ Track C: Tests → Documentation → Polish
 ```
 
 - Треки выполняются **последовательно** (если не помечен `parallel: true`)
-- Перед 3-DEVELOP: верифицировать `INVARIANTS.md` предыдущего спринта
+- Перед 3-DEVELOP: верифицировать `S*-INVARIANTS.md` предыдущего спринта; при наличии блоков `inv` — `scripts/verify-invariants`
 - Визуальные изменения — **один за раз**: изменение → build → проверка
 
 ### 4.3 LGTM Gate Protocol
@@ -415,7 +446,8 @@ instances/
       ├── sprints/
       │   ├── S01-Foundation.ptl
       │   ├── S01-T01-FrontendInit.pd
-      │   ├── S01-INVARIANTS.md
+      │   ├── S01-INVARIANTS.md      # текущий набор (+ блоки inv)
+      │   ├── INVARIANTS-LOG.md      # append-only история
       │   └── ...
       ├── intel/                  # Instance-specific docs
       │   ├── architecture.md
@@ -505,7 +537,7 @@ guardians:
 ```
 Phase 1 — AUDIT
   Читать последние N спринтов из инстанции
-  → искать паттерны, компоненты, замороженные решения из INVARIANTS.md
+  → искать паттерны, компоненты, замороженные решения из S*-INVARIANTS.md / блоков inv
 
 Phase 2 — GLOBAL BACKFILL
   Абстрагировать паттерны в глобальные best practices
@@ -517,7 +549,8 @@ Phase 3 — COMPRESS INSTANCE
 
 Phase 4 — PRUNE
   Удалить: chat logs, .po файлы, устаревшие .md
-  → оставить: .ptl, .pd, .pa, INVARIANTS.md, historical digest
+  → оставить: .ptl, .pd, .pa, S*-INVARIANTS.md, INVARIANTS-LOG.md, historical digest
+  → invariants-compaction: компакт лога без потери хронологии INV-ID
 ```
 
 ### Метрики обслуживания
@@ -531,7 +564,7 @@ Phase 4 — PRUNE
 ### Planning Lessons
 
 - **Scope by flow, not widget**: одна "маленькая" задача тянет types, styles, несколько экранов
-- **Invariants before next sprint**: создавать/расширять `INVARIANTS.md` после каждого спринта
+- **Invariants before next sprint**: создавать/расширять `S*-INVARIANTS.md` + `INVARIANTS-LOG.md` после каждого спринта; hard/soft + verify перед CLOSE
 - **Delivery = user flow**: `clone → install → start`; любой failing step = провал до code review
 
 ---
@@ -577,7 +610,7 @@ Phase 4 — PRUNE
 |--------|------------|
 | **Gate** | Checkpoint (`gate: LOCKED/OPEN`). Агент не может предполагать, что gate пройден |
 | **LGTM** | "Looks Good To Me" — явный сигнал одобрения человека |
-| **Invariants** | Замороженные решения в `INVARIANTS.md`; изменение только через explicit task |
+| **Invariants** | Версионируемые `INV-*` в `S*-INVARIANTS.md` + лог; hard/soft; `verify-invariants` |
 | **JIT Context** | Загрузка только нужных правил через `requires:` |
 | **DAG** | Directed Acyclic Graph зависимостей задач |
 | **Parity** | Полная реализация, соответствующая референсу (по flow, не по виджетам) |

@@ -16,15 +16,16 @@ universal-rules:
 
 planning-flow:
   - 1. Audit: Check current state and existing entities (Deduplication).
-  - 2. Invariants: Locate and link `S*-INVARIANTS.md` in the `.ptl`.
-  - 3. Decompose: Split backlog into atomic `.pd` tasks (Atomic First: Break sprints into tasks < 50 lines).
-  - 4. Sequence: Order tasks by dependency (Core -> Types -> Services -> UI).
-  - 5. JIT Context Mapping: Explicitly assign `requires: [AdapterName]` to each nested Track or Task (`.pd`), picking only the necessary elements from `stack_adapters`.
-  - 6. Physical Locking: You MUST include `gate: LOCKED` in the YAML header of every generated `.ptl` and `.pd` file. This is a hard-gate that only the USER can open by changing it to `gate: OPEN`.
+  - 2. Invariants: Locate and link `S*-INVARIANTS.md` (or CURRENT-INVARIANTS.md) in the `.ptl`.
+  - 3. Severity: When adding invariants, assign `severity: hard|soft` (hard = checkable + must not break; soft = preference/warn). Prefer ```inv``` blocks + INVARIANTS-LOG.md entry (see `core/INVARIANTS.ti`).
+  - 4. Decompose: Split backlog into atomic `.pd` tasks (Atomic First: Break sprints into tasks < 50 lines).
+  - 5. Sequence: Order tasks by dependency (Core -> Types -> Services -> UI).
+  - 6. JIT Context Mapping: Explicitly assign `requires: [AdapterName]` to each nested Track or Task (`.pd`), picking only the necessary elements from `stack_adapters`.
+  - 7. Physical Locking: You MUST include `gate: LOCKED` in the YAML header of every generated `.ptl` and `.pd` file. This is a hard-gate that only the USER can open by changing it to `gate: OPEN`.
 
 track-management:
   - Sequence: Complete Track A (Core) before Track B (Polish).
-  - Invariants: `INVARIANTS.md` is hard-gate. Block any non-additive change.
+  - Invariants: Active hard invariants are a hard-gate. Block any non-additive change without log + discussion.
   - Granular Scoping: ❌ Never load full frontend/UI contexts for Backend/DB tracks. Isolate dependencies.
 
 required-roles:

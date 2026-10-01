@@ -37,6 +37,13 @@ delivery-gates:
   - Console Clean: Zero unhandled errors or warnings in browser DevTools console.
   - README Accuracy: Every command in README must work exactly as documented on a fresh clone.
   - Clone-Install-Start: `git clone → install → start` must succeed with zero manual intervention.
+  - Invariants Verify: Before CLOSE, run `scripts/verify-invariants --instance instances/<project>`. Hard failures ⇒ task NOT done. Soft ⇒ WARN in QA notes only.
+
+invariant-gates:
+  - Schema: New freezes use ```inv``` blocks per `core/INVARIANTS.ti` (id, date, severity, confirmed_by, assertion).
+  - Hard vs Soft: hard blocks CLOSE / CI / pre-push; soft warns only.
+  - History: Append INVARIANTS-LOG.md on add/deprecate/supersede — never rewrite past entries.
+  - Linkage: Next `.ptl` links `invariants: @S*-INVARIANTS.md` (or CURRENT-INVARIANTS.md).
 
 anti-patterns:
   - ❌ `any` Escape Hatch: Using `any` to "fix it later" — it never gets fixed.
@@ -46,3 +53,4 @@ anti-patterns:
   - ❌ Observer Neglect: MobX stores triggering full-tree re-renders.
   - ❌ Dead Declarations: Declared variables, imports, or timeouts that are never used.
   - ❌ Giant Files: Submitting files over 150 lines instead of splitting them into sensible modules.
+  - ❌ Unverified Close: Marking DONE while hard invariants FAIL.

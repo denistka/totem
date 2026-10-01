@@ -1,0 +1,379 @@
+#!/usr/bin/env node
+/**
+ * verify-invariants — check structured ```inv``` blocks against a code root.
+ *
+ * Usage:
+ *   scripts/verify-invariants --instance <path> [--code <path>]
+ *   scripts/verify-invariants --self-test
+ *   scripts/verify-invariants --files <inv.md>... --code <path>
+ *
+ * Exit: 0 = hard OK (soft failures warn), 1 = hard fail, 2 = usage/config error
+ *
+ * No npm deps. Node 18+ recommended.
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const EXIT_OK = 0;
+const EXIT_HARD = 1;
+const EXIT_USAGE = 2;
+
+function usage() {
+  console.error(`Usage:
+  verify-invariants --instance <dir> [--code <dir>]
+  verify-invariants --files <file>... --code <dir>
+  verify-invariants --self-test
+
+Reads \`\`\`inv blocks from S*-INVARIANTS.md / CURRENT-INVARIANTS.md / INVARIANTS.md
+under the instance (or explicit --files). Code root defaults to paths.code in
+project.config.yml (resolved relative to the config file).`);
+}
+
+function parseArgs(argv) {
+  const out = { instance: null, code: null, files: [], selfTest: false };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--instance') out.instance = argv[++i];
+    else if (a === '--code') out.code = argv[++i];
+    else if (a === '--files') {
+      while (argv[i + 1] && !argv[i + 1].startsWith('--')) out.files.push(argv[++i]);
+    } else if (a === '--self-test') out.selfTest = true;
+    else if (a === '-h' || a === '--help') {
+      usage();
+      process.exit(EXIT_OK);
+    } else {
+      console.error(`Unknown arg: ${a}`);
+      usage();
+      process.exit(EXIT_USAGE);
+    }
+  }
+  return out;
+}
+
+function readYamlishBlock(body) {
+  const rec = {};
+  for (const line of body.split(/\r?\n/)) {
+    const m = line.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.*)$/);
+    if (!m) continue;
+    rec[m[1]] = m[2].trim().replace(/^["']|["']$/g, '');
+  }
+  return rec;
+}
+
+function extractInvBlocks(text, source) {
+  const blocks = [];
+  const re = /```inv\s*\n([\s\S]*?)```/g;
+  let m;
+  while ((m = re.exec(text))) {
+    const rec = readYamlishBlock(m[1]);
+    rec._source = source;
+    blocks.push(rec);
+  }
+  return blocks;
+}
+
+function discoverInvFiles(instanceDir) {
+  const names = fs.readdirSync(instanceDir);
+  const files = [];
+  for (const name of names) {
+    if (
+      /^(S\d+-)?INVARIANTS\.md$/i.test(name) ||
+      /^CURRENT-INVARIANTS\.md$/i.test(name) ||
+      /^S\d+-INVARIANTS\.md$/i.test(name)
+    ) {
+      files.push(path.join(instanceDir, name));
+    }
+  }
+  // Also scan sprints/ one level deep and intel/
+  for (const sub of ['sprints', 'intel']) {
+    const dir = path.join(instanceDir, sub);
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) continue;
+    walkInv(dir, files, 2);
+  }
+  return [...new Set(files)].sort();
+}
+
+function walkInv(dir, files, depth) {
+  if (depth < 0) return;
+  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, ent.name);
+    if (ent.isDirectory()) walkInv(p, files, depth - 1);
+    else if (/INVARIANTS\.md$/i.test(ent.name)) files.push(p);
+  }
+}
+
+function readPathsCode(instanceDir) {
+  const cfg = path.join(instanceDir, 'project.config.yml');
+  if (!fs.existsSync(cfg)) return null;
+  const text = fs.readFileSync(cfg, 'utf8');
+  // Minimal YAML: paths: / code: <value>
+  const m = text.match(/^\s*code:\s*(.+)$/m);
+  if (!m) return null;
+  let raw = m[1].trim().replace(/^["']|["']$/g, '');
+  // strip inline comments
+  raw = raw.replace(/\s+#.*$/, '');
+  return path.resolve(path.dirname(cfg), raw);
+}
+
+function resolveUnder(root, rel) {
+  const resolved = path.resolve(root, rel);
+  if (!resolved.startsWith(path.resolve(root))) {
+    throw new Error(`Path escapes code root: ${rel}`);
+  }
+  return resolved;
+}
+
+function matchGlob(root, pattern) {
+  // Minimal glob: **, *, ?
+  const matches = [];
+  const parts = pattern.replace(/\\/g, '/').split('/');
+  function walk(dir, pi) {
+    if (pi >= parts.length) {
+      matches.push(dir);
+      return;
+    }
+    const part = parts[pi];
+    if (part === '**') {
+      walk(dir, pi + 1);
+      if (!fs.existsSync(dir)) return;
+      for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+        if (ent.name === '.git') continue;
+        const next = path.join(dir, ent.name);
+        if (ent.isDirectory()) walk(next, pi); // stay on **
+        walk(next, pi + 1);
+      }
+      return;
+    }
+    if (!fs.existsSync(dir)) return;
+    const re = new RegExp(
+      '^' +
+        part
+          .replace(/[.+^${}()|[\]\\]/g, '\\$&')
+          .replace(/\*/g, '[^/]*')
+          .replace(/\?/g, '[^/]') +
+        '$'
+    );
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (!re.test(ent.name)) continue;
+      const next = path.join(dir, ent.name);
+      if (pi === parts.length - 1) matches.push(next);
+      else if (ent.isDirectory()) walk(next, pi + 1);
+    }
+  }
+  walk(root, 0);
+  return [...new Set(matches)];
+}
+
+function checkConfigValue(filePath, key, expect) {
+  if (!fs.existsSync(filePath)) return { ok: false, detail: 'file missing' };
+  const text = fs.readFileSync(filePath, 'utf8');
+  const jsonRe = new RegExp(`"${escapeRe(key)}"\\s*:\\s*"${escapeRe(expect)}"`);
+  const yamlRe = new RegExp(`^\\s*${escapeRe(key)}\\s*:\\s*["']?${escapeRe(expect)}["']?\\s*$`, 'm');
+  if (jsonRe.test(text) || yamlRe.test(text)) return { ok: true, detail: 'matched' };
+  return { ok: false, detail: `key/expect not found (${key}=${expect})` };
+}
+
+function escapeRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function checkPort(filePath, port) {
+  if (!fs.existsSync(filePath)) return { ok: false, detail: 'file missing' };
+  const text = fs.readFileSync(filePath, 'utf8');
+  const re = new RegExp(`(^|\\D)${escapeRe(String(port))}(\\D|$)`);
+  return re.test(text)
+    ? { ok: true, detail: 'port present' }
+    : { ok: false, detail: `port ${port} not found` };
+}
+
+function runAssertion(inv, codeRoot) {
+  const type = inv.assertion;
+  if (!type) return { ok: false, detail: 'missing assertion' };
+
+  switch (type) {
+    case 'file_exists': {
+      if (!inv.path) return { ok: false, detail: 'missing path' };
+      const p = resolveUnder(codeRoot, inv.path);
+      return fs.existsSync(p)
+        ? { ok: true, detail: 'exists' }
+        : { ok: false, detail: `missing: ${inv.path}` };
+    }
+    case 'path_absent': {
+      if (!inv.path) return { ok: false, detail: 'missing path' };
+      const p = resolveUnder(codeRoot, inv.path);
+      return !fs.existsSync(p)
+        ? { ok: true, detail: 'absent' }
+        : { ok: false, detail: `still present: ${inv.path}` };
+    }
+    case 'glob_exists': {
+      if (!inv.glob) return { ok: false, detail: 'missing glob' };
+      const hits = matchGlob(codeRoot, inv.glob);
+      return hits.length > 0
+        ? { ok: true, detail: `${hits.length} match(es)` }
+        : { ok: false, detail: `no match: ${inv.glob}` };
+    }
+    case 'glob_absent': {
+      if (!inv.glob) return { ok: false, detail: 'missing glob' };
+      const hits = matchGlob(codeRoot, inv.glob);
+      return hits.length === 0
+        ? { ok: true, detail: 'absent' }
+        : { ok: false, detail: `${hits.length} match(es): ${inv.glob}` };
+    }
+    case 'port': {
+      if (!inv.path || inv.port == null) return { ok: false, detail: 'missing path/port' };
+      return checkPort(resolveUnder(codeRoot, inv.path), inv.port);
+    }
+    case 'config_value': {
+      if (!inv.path || !inv.key || inv.expect == null)
+        return { ok: false, detail: 'missing path/key/expect' };
+      return checkConfigValue(resolveUnder(codeRoot, inv.path), inv.key, inv.expect);
+    }
+    case 'command': {
+      if (!inv.cmd) return { ok: false, detail: 'missing cmd' };
+      const r = spawnSync(inv.cmd, {
+        cwd: codeRoot,
+        shell: true,
+        encoding: 'utf8',
+        env: process.env,
+      });
+      return r.status === 0
+        ? { ok: true, detail: 'exit 0' }
+        : { ok: false, detail: `exit ${r.status}: ${(r.stderr || r.stdout || '').trim().slice(0, 200)}` };
+    }
+    default:
+      return { ok: false, detail: `unknown assertion: ${type}` };
+  }
+}
+
+function validateRecord(inv) {
+  const missing = [];
+  for (const f of ['id', 'date', 'severity', 'status', 'confirmed_by', 'assertion', 'why', 'added_by']) {
+    if (!inv[f]) missing.push(f);
+  }
+  if (missing.length) return `missing fields: ${missing.join(', ')}`;
+  if (!/^INV-[a-z0-9-]+-\d{3,}$/i.test(inv.id)) return `bad id format: ${inv.id}`;
+  if (!/^(hard|soft)$/i.test(inv.severity)) return `bad severity: ${inv.severity}`;
+  if (!/^(active|deprecated|superseded)$/i.test(inv.status)) return `bad status: ${inv.status}`;
+  return null;
+}
+
+function verify(files, codeRoot) {
+  let hardFails = 0;
+  let softFails = 0;
+  let checked = 0;
+  let skipped = 0;
+
+  console.log(`Code root: ${codeRoot}`);
+  console.log(`Sources:   ${files.length} file(s)`);
+
+  for (const file of files) {
+    if (!fs.existsSync(file)) {
+      console.error(`ERROR: file not found: ${file}`);
+      return EXIT_USAGE;
+    }
+    const text = fs.readFileSync(file, 'utf8');
+    const blocks = extractInvBlocks(text, file);
+    for (const inv of blocks) {
+      const verr = validateRecord(inv);
+      if (verr) {
+        console.error(`ERROR ${inv.id || '(no id)'} @ ${path.basename(file)}: ${verr}`);
+        return EXIT_USAGE;
+      }
+      if (!/^active$/i.test(inv.status)) {
+        skipped++;
+        console.log(`SKIP  ${inv.id} (${inv.status})`);
+        continue;
+      }
+      checked++;
+      let result;
+      try {
+        result = runAssertion(inv, codeRoot);
+      } catch (e) {
+        result = { ok: false, detail: e.message };
+      }
+      const sev = inv.severity.toLowerCase();
+      if (result.ok) {
+        console.log(`PASS  ${inv.id} [${sev}] ${inv.assertion}: ${result.detail}`);
+      } else if (sev === 'hard') {
+        hardFails++;
+        console.error(`FAIL  ${inv.id} [hard] ${inv.assertion}: ${result.detail}`);
+      } else {
+        softFails++;
+        console.warn(`WARN  ${inv.id} [soft] ${inv.assertion}: ${result.detail}`);
+      }
+    }
+  }
+
+  console.log(`---`);
+  console.log(`Checked ${checked}, skipped ${skipped}, hard fails ${hardFails}, soft warns ${softFails}`);
+  return hardFails > 0 ? EXIT_HARD : EXIT_OK;
+}
+
+function selfTest() {
+  const repoRoot = path.resolve(__dirname, '..');
+  const instance = path.join(repoRoot, 'instances', 'invariants-demo');
+  const code = path.join(instance, 'fixture');
+  if (!fs.existsSync(instance)) {
+    console.error('Self-test fixture missing: instances/invariants-demo');
+    return EXIT_USAGE;
+  }
+  console.log('=== self-test: expect PASS (hard) + optional soft WARN ===');
+  const code_ok = verify(discoverInvFiles(instance), code);
+  if (code_ok !== EXIT_OK) {
+    console.error('Self-test failed: expected exit 0 against fixture/');
+    return EXIT_HARD;
+  }
+
+  // Negative: break a hard invariant by pointing at empty dir
+  const empty = fs.mkdtempSync(path.join(require('os').tmpdir(), 'inv-neg-'));
+  console.log('=== self-test negative: expect hard FAIL ===');
+  const neg = verify(discoverInvFiles(instance), empty);
+  fs.rmSync(empty, { recursive: true, force: true });
+  if (neg !== EXIT_HARD) {
+    console.error('Self-test failed: expected exit 1 against empty code root');
+    return EXIT_HARD;
+  }
+  console.log('Self-test OK');
+  return EXIT_OK;
+}
+
+function main() {
+  const args = parseArgs(process.argv.slice(2));
+  if (args.selfTest) process.exit(selfTest());
+
+  let files = args.files.slice();
+  let codeRoot = args.code ? path.resolve(args.code) : null;
+
+  if (args.instance) {
+    const instanceDir = path.resolve(args.instance);
+    if (!fs.existsSync(instanceDir)) {
+      console.error(`Instance not found: ${instanceDir}`);
+      process.exit(EXIT_USAGE);
+    }
+    if (!files.length) files = discoverInvFiles(instanceDir);
+    if (!codeRoot) {
+      codeRoot = readPathsCode(instanceDir);
+      if (!codeRoot) {
+        console.error('Could not read paths.code from project.config.yml; pass --code');
+        process.exit(EXIT_USAGE);
+      }
+    }
+  }
+
+  if (!files.length || !codeRoot) {
+    usage();
+    process.exit(EXIT_USAGE);
+  }
+  if (!fs.existsSync(codeRoot)) {
+    console.error(`Code root not found: ${codeRoot}`);
+    process.exit(EXIT_USAGE);
+  }
+
+  process.exit(verify(files, codeRoot));
+}
+
+main();

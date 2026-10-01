@@ -34,12 +34,15 @@ flow-rules:
 multi-track-sprints:
   - Rule 1: Each track follows the same 5-phase flow internally.
   - Rule 2: Tracks execute sequentially unless explicitly marked parallel.
-  - Invariant-Gate: Before phase 3-DEVELOP, verify `INVARIANTS.md` from prior sprints.
-  - Final-QA: Phase 4-VERIFY covers ALL tracks together (not per-track).
+  - Invariant-Gate: Before phase 3-DEVELOP, verify prior `S*-INVARIANTS.md` is linked; run `scripts/verify-invariants` when ```inv``` blocks exist.
+  - Final-QA: Phase 4-VERIFY covers ALL tracks together (not per-track). Soft invariant WARNs go into QA notes; hard FAILs fail the gate.
   - Incremental-Discipline: Visual changes applied one at a time; build after each.
   - Granularity: Every `.pd` task MUST be between 15-30 lines of execution logic (excluding header). Small tasks ensure focus; large tasks increase perplexity.
 
 invariant-protection:
-  - Post-Sprint: Create `<SPRINT>-INVARIANTS.md` documenting frozen decisions (tokens, APIs, animations).
+  - Post-Sprint: Create/extend `<SPRINT>-INVARIANTS.md` with frozen decisions; embed ```inv``` blocks (id, date, severity, confirmed_by, assertion) per `core/INVARIANTS.ti`.
+  - Severity: PLANNER/ARCHITECT assign hard vs soft when adding; hard violations block CLOSE.
+  - History: Append every add/deprecate/supersede to instance `INVARIANTS-LOG.md` (append-only). Current set stays readable in S*-INVARIANTS.md or CURRENT-INVARIANTS.md.
   - Linkage: Link via `invariants:` field in next sprint's `.ptl` file.
-  - Modification: Any change to an invariant requires explicit discussion — auto-approve is BLOCKED.
+  - Modification: Any change to an invariant requires explicit discussion + log entry — auto-approve is BLOCKED.
+  - Verify-Before-Close: PM runs `scripts/verify-invariants`; refuse CLOSE on hard failures.

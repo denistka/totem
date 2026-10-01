@@ -39,12 +39,24 @@ task-structure (.pd):
     cmd: [shell]
     done: [criteria]
 
+# Versioned invariants — full schema in core/INVARIANTS.ti
+invariant-structure:
+  id: "INV-<project>-NNN (stable, never reused)"
+  fields: [id, date, severity, status, confirmed_by, assertion, why, added_by]
+  severity: "hard (blocks CLOSE / exit 1) | soft (WARN only)"
+  embed: "```inv key: value``` fences inside S*-INVARIANTS.md or CURRENT-INVARIANTS.md"
+  history: "append-only INVARIANTS-LOG.md per instance"
+  verify: "scripts/verify-invariants --instance instances/<project>"
+  backward-compat: "Freeform S*-INVARIANTS.md prose remains valid; only ```inv``` is machine-checked"
+
 machine-rules:
   - Load Order: `index.ti` -> `config` -> Stack Adapaters -> `.ptl` -> `.pd`.
   - Atomic: Task logic change < 50 lines.
   - Granularity: One `.pd` file per atomic objective.
+  - Invariants: Load `core/INVARIANTS.ti` with protocol; verify before CLOSE.
 
 anti-patterns:
   - ❌ Extension Blur: Using `.po` for tasks (use `.pd`).
   - ❌ Logic Bloat: Mixing multiple tracks in one `.pd`.
   - ❌ Shadow Schemas: Creating custom keys outside this protocol.
+  - ❌ Invariant Amnesia: Closing without verify-invariants / log entry.
