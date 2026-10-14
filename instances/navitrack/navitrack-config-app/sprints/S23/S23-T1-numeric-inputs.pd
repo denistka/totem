@@ -1,0 +1,5 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S23
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S23 T1 — NumericInput (src/ui): text + numeric keypad, can be emptied, no leading zeros, selects on focus; wheel popups (Done waits for a value) and graduation cells.

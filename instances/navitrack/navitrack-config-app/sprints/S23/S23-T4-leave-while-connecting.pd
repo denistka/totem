@@ -1,0 +1,5 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S23
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S23 T4 — Back works mid-connect (verified on the iOS simulator with the keyboard closed); Back now closes the keyboard first; Cancel on the password gate stops the wait; cancelled loops never clobber a new one.

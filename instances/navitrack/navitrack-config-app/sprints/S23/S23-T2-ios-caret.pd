@@ -1,0 +1,5 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S23
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S23 T2 — iOS hides the caret in every field (html[data-ios], src/lib/platform.ts) — the hidden password caret was the one the client called right.

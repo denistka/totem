@@ -1,0 +1,5 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S23
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S23 T6 — Graduation table filled point by point: one open row, take current frequency opens the next, remove last row, write only captured points.

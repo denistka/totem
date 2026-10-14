@@ -1,0 +1,36 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S23
+title: Field Feedback — inputs, calibration, scan
+epic: E20
+priority: P0
+dep: S22
+requires: [FRONTEND_DEV, MOBILE_TAURI, QA]
+invariants: ../S22-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "Client 2026-10-14 (Navi_901, iPhone): number fields — first digit / default 0 cannot be deleted, '0465' keeps the 0 (wheel popups + graduation cells)"
+  - "Caret drawn outside every value field on iOS; only the password field (hidden caret) is right"
+  - "Scan screen: at some list heights the big scanner never collapses and scrolling stops"
+  - "Entered the password, the app did not connect — cannot go back"
+  - "'Період' → 'Період передачі даних'"
+  - "Dry calibration: 'Тип калібрування' → 'Макс. рівень' with 1024 / 2048 / 4096"
+  - "Calibration should read: current level, min level, max level (= today's 'type')"
+  - "Graduation: start with one row; litres + button takes the current frequency → next row opens"
+open_for_append: true
+planning_status: executing
+planned: 2026-10-14
+
+tasks:
+  - S23-T1-numeric-inputs.pd
+  - S23-T2-ios-caret.pd
+  - S23-T3-scan-collapse-loop.pd
+  - S23-T4-leave-while-connecting.pd
+  - S23-T5-calibration-fields.pd
+  - S23-T6-graduation-point-by-point.pd
+
+open_question: |
+  Full tank mode: the client listed current / min / max(=range) only. The calibration write
+  still needs the full-tank frequency (legacy "Частота повного бака"); kept as its own row.
+  Confirm with the client whether it stays or the current level replaces it at write time.

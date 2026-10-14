@@ -1,0 +1,5 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S23
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S23 T3 — Scan hero collapse: keep viewport + 64 px of scroll room while collapsed so a short list cannot clamp to the top and re-expand.

@@ -1,0 +1,5 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S23
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S23 T5 — Calibration rows: current level (live), min level, full tank frequency (full mode), max level = 1024 / 2048 / 4096 picker (legacy CalibrationType_pic); no "max=…" hint row; "Період передачі даних".
