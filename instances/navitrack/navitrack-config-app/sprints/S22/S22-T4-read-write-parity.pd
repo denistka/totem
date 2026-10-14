@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T4 — Read maps network address (header), averaging (0x14 length), calibration (0x48 min/max/type); auto-read after unlock; write chain stops on a non-zero return code; calibration written only when changed.

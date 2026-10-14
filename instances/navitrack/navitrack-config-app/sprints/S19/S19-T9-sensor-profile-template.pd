@@ -1,0 +1,34 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S19 T9 — Sensor profile template, one live product
+sprint: S19
+dep: S19-T8-about-screen-pass.pd
+requires: [ARCHITECT, FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Catalog is already a data list: one live fuel BLE product, two comingSoon.
+  Session screens are hardcoded to that fuel DUT, not to a profile.
+  Add a profile the catalog entry points at (id, transport, which session
+  sections exist). The live fuel profile enables today's sections.
+  A comingSoon entry must not open a session. Do not add a second live
+  sensor, RS-485, or new protocol commands. Prove a fixture profile can
+  omit a section without copying SensorSessionScreen.
+  Package manager: bun.
+
+out:
+  - sensor profile module + catalog link
+  - session reads the active profile
+  - co-located tests
+  - note in S19-INVARIANTS.md
+
+cmd:
+  - bun run test
+
+done:
+  - Live fuel profile still opens the current session
+  - Disabled / comingSoon profile does not
+  - Section list comes from the profile
+  - `bun run test` passes

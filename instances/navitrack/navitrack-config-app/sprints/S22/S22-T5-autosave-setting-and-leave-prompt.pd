@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T5 — Draft autosave becomes a setting, OFF by default (graduation rows still survive tab switches in memory); leave popup only for real unsaved sensor edits; none after a successful save.

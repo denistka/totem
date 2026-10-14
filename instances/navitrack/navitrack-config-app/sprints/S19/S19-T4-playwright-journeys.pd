@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:qa
+task: S19 T4 — Playwright journeys for the shell
+sprint: S19
+dep: S19-T3-vitest-landed-shell.pd
+requires: [QA, FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Update e2e. Browsers were not installed on the visual pass — install them
+  for this repo, then run. FakeBle web only.
+  Journeys: welcome entry (not a Scan label) → Home tab; header shows the
+  screen name; scan → bookmark (`save-*`) → Home card (`saved-sensor-*`);
+  connect → password. Connect via `connect-*`, not the bookmark.
+  Extend e2e/s12-journeys.spec.ts and e2e/sensors-scan.spec.ts.
+  Package manager: bun.
+
+out:
+  - e2e specs + helpers as needed
+
+cmd:
+  - bun run test
+  - bun run test:e2e
+
+done:
+  - The three journeys pass under FakeBle
+  - `bun run test` stays green

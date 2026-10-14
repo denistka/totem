@@ -79,6 +79,22 @@ Record results in `sprints/S18/SMOKE-NOTES.md` (OS version, DUT name seen, pass/
 
 ---
 
+## Headless live DUT (S22) — no clicking
+
+Runs the app's own `src/` code against a sensor in range of this Mac. Ground truth and timings: `sprints/S22/LIVE-DUT-NOTES.md`.
+
+```bash
+swiftc -O tools/dut-bridge/main.swift -o tools/dut-bridge/.build/dut-bridge   # once
+bun tools/dut-probe/probe.ts read Navi_7514            # raw read chain (no auth needed)
+bun tools/dut-probe/probe.ts idle Navi_7514 130        # store session + watchdog + idle + linger
+bun tools/dut-probe/probe.ts silent Navi_7514          # connect at the start of an advert sleep
+bun tools/dut-probe/probe.ts roundtrip Navi_7514 <pw>  # unlock, write the read values back, re-read
+VITE_DUT_SELFTEST=Navi_7514 bun run macos:dev          # real Tauri + blec stack, prints to the terminal
+```
+
+- `SCAN_MS` raises the probe's scan budget: the sensor can stay silent for over a minute, and longer while another phone is connected to it.
+- **Never write** to a live sensor before a read of the same session succeeded (`roundtrip` refuses when the read looks wrong).
+
 ## Graduation tab write (S15)
 
 1. [ ] Open **Graduation** tab

@@ -1,0 +1,54 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S22
+title: Live Sensor Reliability + Session UX
+epic: E19
+priority: P0
+dep: S21
+requires: [FRONTEND_DEV, MOBILE_TAURI, RUST_DEV, BUN, QA, ARCHITECT]
+invariants: ../S21-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "User 2026-10-14: caret still drawn outside the password field (hide it?)"
+  - "Work with the real sensor is very bad — compare with legacy, propose fixes"
+  - "Autosave → a setting, OFF by default"
+  - "Pressed Save, still get save/cancel popup on leaving the sensor"
+  - "Web first, then mobile. Live DUT on this Mac (Navi_7514) — macOS / headless allowed"
+open_for_append: true
+planning_status: complete
+planned: 2026-10-14
+gate_opened_by: user instruction 2026-10-14 ("think deep and do best")
+
+objective: |
+  First live-DUT sprint. Ground truth from Navi_7514 (see LIVE-DUT-NOTES.md) drives the fixes.
+  Supersedes S21-T0 (connect failure).
+
+tracks:
+  - id: A
+    title: Live harness + ground truth
+    tasks: [S22-T0-live-dut-harness.pd]
+  - id: B
+    title: Link layer
+    tasks:
+      - S22-T1-session-link-transport.pd
+      - S22-T2-watchdog-liveness.pd
+      - S22-T3-connect-across-advertising-cycle.pd
+  - id: C
+    title: Protocol parity
+    tasks: [S22-T4-read-write-parity.pd]
+  - id: D
+    title: Session UX
+    tasks:
+      - S22-T5-autosave-setting-and-leave-prompt.pd
+      - S22-T6-password-caret.pd
+  - id: Q
+    title: Verify + ship
+    tasks: [S22-T7-web-then-mobile.pd, S22-TQ-quality.pd]
+
+done:
+  - App session code passes on the live DUT through the headless harness
+  - No reconnect while idle in a session; pushes update live values
+  - Read fills network address, averaging, calibration; Save never writes defaults
+  - Autosave OFF by default; no leave popup after a successful save
+  - bun run test green; web checked; iOS + Android rebuilt

@@ -1,0 +1,31 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T13 — Focused field stays visible; unsaved edits ask
+sprint: S19
+dep: S19-T12-installer-copy-hides-opcodes.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  First ship is a phone. Session fields (password, vehicle, lengths) must
+  scroll into view on focus so the keyboard and bottom chrome do not cover
+  them. Prove the focus behavior in Vitest (scroll into view); do not claim
+  a device keyboard pass. If the form differs from the last read and the
+  user leaves the session, ask before discard. Discard writes nothing.
+  Stay does not navigate. Web + FakeBle. Package manager: bun.
+
+out:
+  - focus scroll on session fields
+  - leave-session guard when edits are unwritten
+  - co-located tests
+
+cmd:
+  - bun run test
+
+done:
+  - Focusing a session field scrolls it into view
+  - Leave with edits asks; discard sends no write
+  - Leave with a clean form does not ask
+  - `bun run test` passes

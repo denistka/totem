@@ -1,0 +1,38 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S20 T1 — Decide the unowned shell diff
+sprint: S20
+dep: S20-T0-freeze-host-compile-invariants.pd
+requires: [FRONTEND_DEV, ARCHITECT, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  These uncommitted files are not a new feature. S19 did not own them.
+  Decide once, per hunk. Do not add a screen, tab, command, or sensor.
+  Files: src/config/lib/navigation.ts and its test,
+  src/store/useNavigationStore.ts and its test,
+  src/shell/components/MobileShellTabBar.tsx,
+  src/screens/settings/SettingsScreen.test.tsx.
+  KEEP a hunk only when it matches a rule S19 already froze:
+  Home is a bottom tab and the primary hub tab;
+  Welcome → Home → Catalog → sensor session;
+  installation-report highlights Home;
+  settings does not gain a second screen header.
+  REVERT chrome S19 did not freeze: icon swaps, padding, glass border,
+  type tracking, and screenDepth slide motion.
+  A Home tab may keep one icon slot in the existing style.
+  Record keep vs revert. Package manager: bun.
+
+out:
+  - sprints/S20/LEFTOVER-TREE.md
+  - keep or revert on the six files only
+
+cmd:
+  - bun run test
+
+done:
+  - The note lists each hunk as kept or reverted
+  - No new product behavior was added
+  - `bun run test` passes

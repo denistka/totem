@@ -1,0 +1,34 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T2 — Empty/error states and screen rhythm
+sprint: S19
+dep: S19-T0-freeze-design-shell-invariants.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Web + FakeBle only. Put hub screens on ScreenHeader + content-wrapper.
+  Known off-rhythm: SensorsScreen custom h1; SensorSessionScreen custom header;
+  legacy SettingsScreen h1. Session title stays the device name — extend
+  ScreenHeader if needed; do not add a second header.
+  Welcome stays full-bleed. Settings sheet stays embedded.
+  Align empty/error: Home saved-empty, sensors empty, sensors error, logs empty.
+  Do not remove Home tiles. Do not add a version chip.
+  Chrome screen-title dedupe is T6. Package manager: bun.
+
+out:
+  - Sensors, session, legacy settings page
+  - empty/error presentation
+  - co-located tests for touched screens
+  - exception list in S19-INVARIANTS.md if a screen must stay custom
+
+cmd:
+  - bun run test
+
+done:
+  - Hub screens share ScreenHeader + content-wrapper, or an exception is frozen
+  - Session header still shows the device name
+  - Empty and error states for Home saved and scan are visible and tested
+  - `bun run test` passes

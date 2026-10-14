@@ -1,0 +1,36 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S20 T0 — Freeze host-compile invariants
+sprint: S20
+requires: [ARCHITECT, MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  S19 is closed. Do not reopen S19 tasks. Do not reopen S18.
+  S18-T0 live smoke stays deferred until a DUT is present.
+  Write S20-INVARIANTS.md. Link S19-INVARIANTS. Add a pointer on
+  S19 that it stays frozen. Do not edit the six uncommitted shell files.
+  Shell stays Welcome → Home → Catalog → sensor session.
+  Settings stay in the AppHeader sheet. Brand stays NaviTrack.
+  One live profile: fuel-ble. First ship: iOS and Android.
+  macOS is the desk DUT test build. No App Store or Play upload.
+  No live radio. gen/ stays gitignored.
+  Bundle id loses the underscore: com.navitrack.dutconfigurator
+  in the Tauri conf files only. productName stays.
+  T1 decides the unowned shell diff. This task does not.
+  Package manager: bun.
+
+out:
+  - S20-INVARIANTS.md
+  - pointer on S19-INVARIANTS.md
+
+cmd:
+  - bun run test
+
+done:
+  - S20-INVARIANTS.md links S19 and freezes the rules above
+  - S19 and S18 gates stay CLOSED; S18-T0 stays deferred
+  - The six uncommitted files are untouched
+  - `bun run test` passes

@@ -1,0 +1,24 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S21
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+task: S21 T3 — Neutral "сенсор" copy instead of DUT
+requires: [FRONTEND_DEV]
+
+context: |
+  Different sensor types can exist, so user-facing copy must say "сенсор/датчик",
+  not "DUT". uk.json: scanningHint "Шукаємо DUT сенсори поруч…" → "Шукаємо сенсори поруч…",
+  plus permission, home subtitle, emptyBody, scan subtitle, dutSection, lockedHint.
+  Mirror in ru/en. Keep internal ids/keys unchanged.
+
+out:
+  - src/locales/{uk,ru,en}.json
+  - test asserting no "DUT" in user-facing locale values (allowlist if needed)
+
+cmd:
+  - bun run test
+
+done:
+  - No "DUT" in scan, home, permission, password copy

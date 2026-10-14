@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T2 — Watchdog counts every inbound frame (pushes) as liveness; idle threshold ≥ 2.5×sensor period; trip on 2 consecutive request timeouts, not on a quiet but healthy link.

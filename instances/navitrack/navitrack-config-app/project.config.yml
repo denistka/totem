@@ -95,8 +95,21 @@ active_planning:
   post_rc: ./intel/POST-RC.md
   invariants: ./S01-INVARIANTS.md
   sprints: ./sprints/
-  completed_sprints: S01-S18
-  next_sprint: null
+  completed_sprints: S01-S22
+  next_sprint: none
+  s22_gate: CLOSED
+  s22_note: live-verified on Navi_7514 (macOS harness + Tauri/blec); phone confirmation pending
+  s22_planning_file: sprints/S22/S22-Live-Sensor-Reliability.ptl
+  s22_invariants: ./S22-INVARIANTS.md
+  live_dut_notes: ./sprints/S22/LIVE-DUT-NOTES.md
+  s21_gate: CLOSED
+  s21_note: T1-T3,TQ closed; T0 superseded by S22
+  s21_invariants: ./S21-INVARIANTS.md
+  s21_planning_file: sprints/S21/S21-Field-Feedback-Bugs.ptl
+  s19_gate: CLOSED
+  s19_planning: complete
+  s19_planning_file: sprints/S19/S19-Design-Shell-Closeout.ptl
+  s19_invariants: ./S19-INVARIANTS.md
   s16_gate: CLOSED
   s16_planning: complete
   s17_gate: ABSORBED
@@ -108,7 +121,11 @@ active_planning:
   s18_planning_file: sprints/S18/S18-Legacy-Parity-Closeout.ptl
   s18_note: live_smoke_T0_deferred_no_DUT
   s13_s15_gates: CLOSED
-  open_intake: sprints/S18/S18-Legacy-Parity-Closeout.ptl
+  s20_gate: CLOSED
+  s20_planning: complete
+  s20_planning_file: sprints/S20/S20-Host-Compile.ptl
+  s20_invariants: ./S20-INVARIANTS.md
+  open_intake: none
   dut_product: ./intel/NAVITRACK-BLE-DUT.md
   client_field: ./intel/CLIENT-FIELD-INTEL.md
   functionality_guide: ./intel/DUT-FUNCTIONALITY.md

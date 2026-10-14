@@ -1,0 +1,30 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S20 TQ — Post-sprint code quality review + refactor
+sprint: S20
+dep: S20-T4-android-init-and-build.pd
+requires: [FRONTEND_DEV, ARCHITECT, BUN, QA]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+
+context: |
+  REQUIRED before S20 can close. Review per CODE-QUALITY-MANDATE.md
+  what this sprint touched: Tauri identifier confs, iOS sync script
+  only if T3 changed it, and the T1 keep/revert shell diff.
+  Shared UI stays shared. Tauri stays a thin surface. gen/ stays gitignored.
+  Do not redesign the shell. Do not reopen S18 or S19.
+  No live radio. No store upload. Package manager: bun.
+
+out:
+  - sprints/S20/QUALITY-NOTES.md
+  - refactors under paths.code only if this sprint added a smell
+
+cmd:
+  - bun run test
+
+done:
+  - Quality review recorded
+  - Needed refactors applied in this task
+  - `bun run test` passes
+  - Sprint is not closable until this task is done

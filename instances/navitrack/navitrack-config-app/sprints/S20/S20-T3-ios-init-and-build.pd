@@ -1,0 +1,37 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+task: S20 T3 — iOS init, then ios:build
+sprint: S20
+dep: S20-T2-legal-bundle-identifier.pd
+requires: [MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+
+context: |
+  bun run ios:build dies in scripts/sync-ios-version.sh because
+  src-tauri/gen/apple/NaviTrack_iOS/Info.plist does not exist.
+  Xcode 26.2 and the iPhoneOS SDK are installed. gen/ is gitignored.
+  Run bun run tauri ios init so that plist exists. Do not commit gen/.
+  If init writes a different Info.plist path, point the sync script
+  at the plist init created. Do not rename the product.
+  Do not run ios:build:appstore. Do not upload. Do not run live radio.
+  Then bun run ios:build. If a new host error appears after the
+  sync script passes, stop and record it. Do not guess a second fix.
+  Package manager: bun. No pnpm or npm lockfile.
+
+out:
+  - gitignored iOS project via tauri ios init
+  - sync script only if its plist path does not match init
+  - append to sprints/S20/RELEASE-COMPILE.md
+
+cmd:
+  - bun run test
+  - bun run ios:build
+
+done:
+  - ios:build gets past sync-ios-version.sh and compiles on this Mac
+  - gen/ is not committed
+  - The note records that result
+  - No store upload and no live radio
+  - `bun run test` passes

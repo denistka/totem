@@ -1,0 +1,32 @@
+gate: SUPERSEDED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S21
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+task: S21 T0 — Diagnose and fix sensor connect failure
+requires: [MOBILE_TAURI, RUST_DEV, FRONTEND_DEV]
+
+context: |
+  Client sees Navi_901 (RSSI -91) and Navi_919 (RSSI -100) in scan with live
+  fuel/temp/battery adverts, but cannot connect. Platform unconfirmed (likely
+  Android or iOS phone build). Weak RSSI is a suspect, not a conclusion.
+  Code: src/ble/tauri-adapter.ts, src/ble/session.ts, session-watchdog.ts,
+  auto-connect/auto-unlock from commit 1b8990c (new — prime suspect for regression).
+  Step 1: get the failure — ask client for journal copy (Журнал → copy log)
+  and platform/OS version. Step 2: reproduce on desk build with a DUT if present.
+  Step 3: fix the root cause; surface a readable error in UI if connect fails.
+  If no evidence, stop and record — do not guess a fix.
+
+out:
+  - root cause note in sprints/S21/CONNECT-NOTES.md
+  - fix + Vitest regression test with fake adapter
+
+cmd:
+  - bun run test
+
+done:
+  - Failure captured and root cause recorded
+  - Connect works on client device (client confirms)
+  - Connect errors visible to the user, not silent
+superseded_by: S22 (live DUT ground truth)

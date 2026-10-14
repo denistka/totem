@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T7 — Verify on web (design demo) first, then iOS (TestFlight IPA) + Android builds.

@@ -1,0 +1,28 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T11 — Confirm before a write to the sensor
+sprint: S19
+dep: S19-T9-sensor-profile-template.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Write settings, write calibration, graduation overwrite, and password
+  change send immediately. Field use can brick a tank table or a password.
+  Ask in the existing sheet/modal before each of those four. Cancel sends
+  no frame. Confirm sends the same command as today. Read and live refresh
+  stay immediate. No new protocol. Web + FakeBle. Package manager: bun.
+
+out:
+  - confirm step on the four write actions
+  - co-located tests
+
+cmd:
+  - bun run test
+
+done:
+  - Cancel on each write leaves the adapter with no new frame
+  - Confirm still performs that write
+  - `bun run test` passes

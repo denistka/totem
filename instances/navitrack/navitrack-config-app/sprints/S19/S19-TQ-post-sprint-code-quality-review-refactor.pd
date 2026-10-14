@@ -1,0 +1,28 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S19 TQ — Post-sprint code quality review + refactor
+sprint: S19
+dep: S19-T10-ios-android-first-macos-test-build.pd
+requires: [FRONTEND_DEV, ARCHITECT, BUN, QA]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  REQUIRED before S19 can close. Review per CODE-QUALITY-MANDATE.md:
+  src/ui reuse (ScreenHeader, RadarScanner), React modularity, thin Tauri
+  surface. Home tiles and bottom tabs both stay — extract shared UI only.
+  FakeBle/MSW for unit tests. No live radio. Package manager: bun.
+
+out:
+  - sprints/S19/QUALITY-NOTES.md
+  - refactors under paths.code as needed
+
+cmd:
+  - bun run test
+
+done:
+  - Quality review recorded
+  - Needed refactors applied in this task
+  - `bun run test` passes
+  - Sprint is not closable until this task is done

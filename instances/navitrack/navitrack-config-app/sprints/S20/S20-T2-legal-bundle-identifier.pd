@@ -1,0 +1,36 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+task: S20 T2 — Legal bundle identifier, then macOS build
+sprint: S20
+dep: S20-T1-decide-unowned-shell-diff.pd
+requires: [MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+
+context: |
+  bun run macos:build fails before compile. Tauri rejects
+  com.navitrack.dut_configurator because of the underscore.
+  Set the identifier to com.navitrack.dutconfigurator in
+  src-tauri/tauri.conf.json and src-tauri/tauri.ios.conf.json.
+  Do not change productName. Do not edit intel that records the
+  legacy Xamarin package id. Do not upload. Do not run live radio.
+  Do not run the iOS or Android scripts. Then run bun run macos:build.
+  If a new host error appears after the identifier is accepted,
+  stop and record it. Do not guess a second fix.
+  Package manager: bun.
+
+out:
+  - both Tauri identifier fields
+  - sprints/S20/RELEASE-COMPILE.md
+
+cmd:
+  - bun run test
+  - bun run macos:build
+
+done:
+  - Both conf identifiers are com.navitrack.dutconfigurator
+  - bun run macos:build compiles on this Mac
+  - The note records that result
+  - No store upload and no live radio
+  - `bun run test` passes

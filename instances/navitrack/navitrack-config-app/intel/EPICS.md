@@ -34,7 +34,11 @@ sprint tasks → bun run test green → CODE QUALITY review/refactor → then ne
 | **E12** Post-RC gaps | Native BLE/OS + Advanced stubs + Graduation→DUT write | **S13–S15** ✅ |
 | **E13** Design shell parity | Mix mobile-apps chrome + customer structured IA (welcome, home tiles, catalog, report stub); 1 live sensor, extensible | **S16** ✅ |
 | **E14** Real DUT | macOS Tauri + live Navitrack BLE (T0–T2 done; open T3/TQ → **S18**) | **S17** T0–T2 ✅ · remainder → S18 |
-| **E15** Hybrid parity template | Finish in-scope legacy mobile parity + as-built `DUT-FUNCTIONALITY.md` guide | **S18** `gate: LOCKED` |
+| **E15** Hybrid parity template | Finish in-scope legacy mobile parity + as-built `DUT-FUNCTIONALITY.md` guide | **S18** ✅ |
+| **E16** Design shell closeout | Welcome → Home → Catalog → session; one live profile | **S19** ✅ |
+| **E17** Host compile | iOS / Android / macOS compile on this Mac | **S20** ✅ |
+| **E18** Field feedback | Client chat bugs: home tiles, password field, neutral copy | **S21** ✅ |
+| **E19** Live DUT reliability | First live-sensor sprint: link layer, watchdog, connect across advert sleep, read/write parity, autosave opt-in | **S22** |
 
 See `intel/POST-RC.md`. Product sheet: `intel/NAVITRACK-BLE-DUT.md`. Field intel: `intel/CLIENT-FIELD-INTEL.md`.
 

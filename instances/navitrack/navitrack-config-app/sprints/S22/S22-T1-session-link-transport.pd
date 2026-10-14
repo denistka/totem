@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T1 — One transport per adapter: serialized requests, cmd-matched replies, per-request timeout with cleanup (no orphan waiters), unsolicited 0x61 pushes → live telemetry; adapter disconnect events reach the session store.

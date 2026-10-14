@@ -1,0 +1,31 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:qa
+task: S19 T3 — Vitest for landed shell behavior
+sprint: S19
+dep: S19-T13-focus-and-unsaved-edits.pd
+requires: [FRONTEND_DEV, BUN, QA]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Fill holes. Do not rewrite green tests. FakeBle + MSW. No live FCS or radio.
+  Confirm coverage for: Home tab + brand → Home; saved persist/save/remove/markSeen;
+  scan bookmark; RadarScanner; advertise telemetry with autoConnect false;
+  session device name; report intro card.
+  Known hole: ScreenTransition swaps screens and does not assert the exiting
+  screen is non-clickable. Add that assertion.
+  Rename UI is T1. Header, welcome, About, profiles, write confirm,
+  installer copy, and focus/unsaved guards are T6–T13 — do not retest
+  those here. Package manager: bun.
+
+out:
+  - co-located *.test.ts(x) only where a behavior above has no assertion
+
+cmd:
+  - bun run test
+
+done:
+  - Each behavior above has a co-located assertion
+  - Exiting screen is not clickable under test
+  - `bun run test` passes

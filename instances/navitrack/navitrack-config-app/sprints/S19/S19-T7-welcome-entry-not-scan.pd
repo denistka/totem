@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T7 — Welcome button enters Home, not Scan
+sprint: S19
+dep: S19-T6-header-screen-title-and-single-version.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Welcome primary button is labeled Scan (ru: «Сканировать») and calls
+  setScreen('home'). That label is a lie. Keep the destination: Home.
+  Relabel it as enter-the-app in en/ru/uk. BLE-not-ready still disables it
+  and shows the existing warning. Do not open the scanner from Welcome.
+  Amends the S16 scan-CTA wording only. Package manager: bun.
+
+out:
+  - WelcomeScreen label + locales
+  - WelcomeScreen.test.tsx
+
+cmd:
+  - bun run test
+
+done:
+  - The button copy is not Scan / Сканировать
+  - Ready tap opens Home
+  - Not-ready stays disabled with the BT warning
+  - `bun run test` passes

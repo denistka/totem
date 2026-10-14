@@ -1,0 +1,84 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S20
+title: Host Compile
+epic: E17
+priority: P1
+dep: S19
+requires: [FRONTEND_DEV, BUN, QA, ARCHITECT, MOBILE_TAURI]
+invariants: ../S19-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "Make the already-wired Tauri scripts compile on this Mac"
+  - "First ship stays iOS and Android; macOS stays the desk DUT test build"
+  - "Recorded blockers only: bundle id underscore, missing iOS gen plist, missing Android gen"
+  - "One task decides the uncommitted shell diff S19 did not own"
+  - "TQ before the sprint can close"
+open_for_append: false
+planning_status: drafted
+planned: 2026-09-30
+
+objective: |
+  E17 host compile. S19 is closed. Do not reopen S19 tasks. Do not reopen S18.
+  S18-T0 live BLE smoke stays deferred until a DUT is present.
+  Shell stays Welcome → Home → Catalog → sensor session.
+  Settings stay in the AppHeader sheet. Brand stays NaviTrack.
+  One live profile: fuel-ble.
+  Make these already-wired scripts compile on this Mac:
+  bun run macos:build, bun run ios:build, bun run android:build.
+  Recorded blockers, not guesses: Tauri rejects
+  com.navitrack.dut_configurator because of the underscore;
+  ios:build dies in scripts/sync-ios-version.sh because
+  src-tauri/gen/apple/NaviTrack_iOS/Info.plist is missing
+  (Xcode 26.2 and the iPhoneOS SDK are installed; gen/ is gitignored);
+  android:build stops because src-tauri/gen/android is missing
+  (SDK at ~/Library/Android/sdk; ANDROID_HOME was unset; CLI asks for tauri android init).
+  The six uncommitted shell files are not a feature. T1 decides keep or revert.
+  Sequence A → B → C → D → E → F. Sprint stays open until F (TQ) is done.
+  OUT: App Store / Play upload, live radio, new protocol commands, FCS changes,
+  a second live sensor, RS-485, GPS tile, cloud account, full report wizard,
+  thermocompensation, desktop COM, reopening S18 or S19.
+
+tracks:
+  - id: A
+    title: Freeze invariants
+    tasks:
+      - S20-T0-freeze-host-compile-invariants.pd
+    requires: [ARCHITECT, MOBILE_TAURI, BUN]
+    gate: CLOSED
+
+  - id: B
+    title: Unowned working tree
+    tasks:
+      - S20-T1-decide-unowned-shell-diff.pd
+    requires: [FRONTEND_DEV, ARCHITECT, BUN]
+    gate: CLOSED
+
+  - id: C
+    title: macOS bundle identifier
+    tasks:
+      - S20-T2-legal-bundle-identifier.pd
+    requires: [MOBILE_TAURI, BUN]
+    gate: CLOSED
+
+  - id: D
+    title: iOS init and build
+    tasks:
+      - S20-T3-ios-init-and-build.pd
+    requires: [MOBILE_TAURI, BUN]
+    gate: CLOSED
+
+  - id: E
+    title: Android init and build
+    tasks:
+      - S20-T4-android-init-and-build.pd
+    requires: [MOBILE_TAURI, BUN]
+    gate: CLOSED
+
+  - id: F
+    title: Post-sprint quality
+    tasks:
+      - S20-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT, BUN, QA]
+    gate: CLOSED

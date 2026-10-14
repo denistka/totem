@@ -1,0 +1,30 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T8 — About screen pass
+sprint: S19
+dep: S19-T7-welcome-entry-not-scan.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  About is a centered logo shrine, italic "NaviTrack Config", a hardcoded
+  English "Monitoring Systems", a version pill, then the welcome support
+  line pasted underneath. Replace it with a short info screen: what this
+  configurator is, the single version line, support contacts in locale
+  files. Brand stays NaviTrack. No second decorative logo lockup.
+  Web + FakeBle. Package manager: bun.
+
+out:
+  - src/screens/about/AboutScreen.tsx
+  - en/ru/uk about strings
+  - AboutScreen.test.tsx
+
+cmd:
+  - bun run test
+
+done:
+  - About states the app purpose, version once, and support
+  - No hardcoded English tagline
+  - `bun run test` passes

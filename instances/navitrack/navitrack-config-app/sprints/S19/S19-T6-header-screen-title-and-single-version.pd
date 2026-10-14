@@ -1,0 +1,31 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T6 — Header shows the screen; version once
+sprint: S19
+dep: S19-T2-empty-error-and-screen-rhythm.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Chrome currently prints the word NaviTrack. Replace that text with the
+  current screen name (i18n), including on Home. Logo stays the Home control
+  and does not spell the brand. Drop the Home version chip. The only version
+  line is on About. If a page ScreenHeader only repeats the chrome title,
+  remove that duplicate. Session device name stays. Web + FakeBle.
+  Package manager: bun.
+
+out:
+  - AppHeader collapsed row
+  - Home version chip removed
+  - co-located tests
+
+cmd:
+  - bun run test
+
+done:
+  - Header text is the active screen, not "NaviTrack"
+  - Logo still navigates Home
+  - Version is rendered in one place
+  - `bun run test` passes

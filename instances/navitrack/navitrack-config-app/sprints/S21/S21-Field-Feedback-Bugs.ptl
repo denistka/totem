@@ -1,0 +1,52 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S21
+title: Field Feedback Bugs
+epic: E18
+priority: P0
+dep: S20
+requires: [FRONTEND_DEV, MOBILE_TAURI, RUST_DEV, BUN, QA]
+invariants: ../S20-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "Client field test 2026-10-13 (phone build, chat screenshots)"
+  - "Cannot connect to a sensor (reported twice) — Navi_901, Navi_919 are found by scan"
+  - "Home tiles: center icon and title in each tile; make icons bigger"
+  - "Password field: tap lands caret in a different place than the input (also seen in legacy app)"
+  - "Do not show password 111 in the field / hints"
+  - "Scan copy: 'Шукаємо DUT сенсори' → just 'сенсори'; there can be different sensor types"
+open_for_append: true
+planning_status: drafted
+planned: 2026-10-13
+
+objective: |
+  Fix the client-reported field bugs. S18–S20 stay closed.
+  Shell stays Welcome → Home → Catalog → sensor session. One live profile: fuel-ble.
+  T0 (connect) is the blocker and goes first. It is diagnose-first: no guessed fix
+  without a captured failure (journal export or device log).
+  OUT: new protocol commands, FCS changes, second live sensor, store upload.
+
+tracks:
+  - id: A
+    title: Connect failure
+    tasks: [S21-T0-diagnose-fix-sensor-connect.pd]
+    gate: OPEN
+  - id: B
+    title: UI polish
+    tasks:
+      - S21-T1-home-tiles-centered-larger-icons.pd
+      - S21-T2-password-field-caret-and-no-111.pd
+      - S21-T3-sensor-neutral-copy.pd
+    gate: OPEN
+  - id: Q
+    title: Closeout
+    tasks: [S21-TQ-post-sprint-code-quality-review.pd]
+    gate: OPEN
+
+done:
+  - Client connects to Navi_901 / Navi_919 from scan list on phone
+  - Home tiles centered, larger icons
+  - Password caret lands in the field; no 111 anywhere in UI
+  - No "DUT" wording in user-facing scan/permission copy
+  - `bun run test` passes; TQ done

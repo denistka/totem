@@ -1,0 +1,18 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S21
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+task: S21 TQ — Post-sprint code quality review
+requires: [QA, FRONTEND_DEV]
+
+context: |
+  Per CODE-QUALITY-MANDATE.md. Review S21 diffs for src/ui reuse, React/Tauri
+  practice. Record in sprints/S21/QUALITY-NOTES.md. Write S21-INVARIANTS.md.
+
+cmd:
+  - bun run test
+
+done:
+  - QUALITY-NOTES.md and S21-INVARIANTS.md written; tests green

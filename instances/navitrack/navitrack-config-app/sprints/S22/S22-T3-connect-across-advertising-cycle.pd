@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T3 — Sensor advertises in ~30s windows with up to ~90s silence. Connect retries across the cycle (≤120s, cancellable, visible status); longer scan window default; keep the link ~90s after leaving the session.

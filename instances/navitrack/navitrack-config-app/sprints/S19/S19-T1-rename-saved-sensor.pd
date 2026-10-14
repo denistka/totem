@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T1 — Rename a saved sensor from Home
+sprint: S19
+dep: S19-T0-freeze-design-shell-invariants.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Store rename(id, label) exists and is unit-tested. SavedSensorCard only
+  opens and removes. Add an installer label edit on the Home card.
+  Blank label keeps the BLE name. Id and advertised name stay put.
+  Web + FakeBle. No new protocol. Package manager: bun.
+
+out:
+  - src/screens/home/components/SavedSensorCard.tsx
+  - i18n keys
+  - SavedSensorCard.test.tsx
+
+cmd:
+  - bun run test
+
+done:
+  - Home card renames the installer label
+  - Open and remove still work
+  - Co-located Vitest covers rename
+  - `bun run test` passes

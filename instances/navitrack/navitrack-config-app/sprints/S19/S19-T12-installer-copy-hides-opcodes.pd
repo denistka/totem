@@ -1,0 +1,29 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:frontend
+task: S19 T12 — Installer screens hide opcode numbers
+sprint: S19
+dep: S19-T11-confirm-before-dut-write.pd
+requires: [FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  Standard live refresh is labeled "06/61". The password hint mentions
+  command 0x59. An installer should see "Refresh" and a password hint.
+  Advanced stays the raw-command screen and keeps opcode labels.
+  Logs may keep command ids. No protocol change. Web + FakeBle.
+  Package manager: bun.
+
+out:
+  - StandardModeTab refresh label
+  - password hint in en/ru/uk
+  - tests that the installer strings have no opcode
+
+cmd:
+  - bun run test
+
+done:
+  - Standard and password UI show no opcode numbers
+  - Advanced command list still shows them
+  - `bun run test` passes

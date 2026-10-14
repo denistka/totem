@@ -1,0 +1,32 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+task: S19 T10 — iOS and Android first; macOS build for DUT tests
+sprint: S19
+dep: S19-T5-tauri-ble-factory-boundary.pd
+requires: [MOBILE_TAURI, ARCHITECT, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  First user-facing apps are iOS and Android. macOS compile stays so a
+  real sensor can be tested from the desk (S17 scripts already exist:
+  ios:build, android:build, macos:build). Confirm those scripts still
+  call Tauri. On this Mac, run the compiles the host can (macOS, iOS if
+  Xcode is present, Android if the SDK is present). A missing SDK is a
+  recorded blocker, not a pass. Do not upload to App Store or Play.
+  Do not run live BLE. Do not reopen S18-T0. Package manager: bun.
+
+out:
+  - sprints/S19/RELEASE-TARGETS.md
+  - script fix only if a target command is wired wrong
+
+cmd:
+  - bun run test
+
+done:
+  - Note states iOS + Android are the first ship apps
+  - Note states macOS is the DUT test build and how to compile it
+  - Each attempted compile is recorded as built or blocked
+  - No store upload and no live radio
+  - `bun run test` passes

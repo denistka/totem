@@ -1,0 +1,43 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:architect
+task: S19 T0 — Freeze design-shell invariants
+sprint: S19
+requires: [ARCHITECT, FRONTEND_DEV, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S16-INVARIANTS.md
+s18_invariants: ../S18-INVARIANTS.md
+
+context: |
+  Freeze the working tree and the design amendments below. Do not redesign
+  from scratch. Do not reopen S18. S18-T0 live smoke stays deferred.
+  Write S19-INVARIANTS.md. Link S16-INVARIANTS and S18-INVARIANTS.
+  Shell: Welcome → Home → Catalog → session. Settings = AppHeader sheet.
+  Brand NaviTrack. Tabs Home · Sensors · Logs · About. Home is primary.
+  Logo goes Home. Header text is the current screen name, not "NaviTrack".
+  Version is shown once, on About. Welcome enters Home and is not labeled Scan.
+  Saved sensors persist; bookmark; Home card opens a session; markSeen on scan.
+  Advertise telemetry whenever manufacturer data is present (amends S18).
+  One live fuel profile. Catalog and session read a sensor-profile template.
+  No second live product. No RS-485. First ship apps: iOS and Android.
+  macOS build is for real-sensor testing. Store upload is out.
+  DUT writes ask for confirmation. Installer UI hides opcode numbers.
+  Advanced raw commands may keep them. Focused fields stay visible.
+  Leaving a session with unwritten edits asks.
+  Pointer notes only on S16/S18. Package manager: bun.
+
+out:
+  - S19-INVARIANTS.md
+  - pointer notes on S16-INVARIANTS.md and S18-INVARIANTS.md
+  - src/config/invariants.ts + invariants.test.ts
+  - useAppHeader comment matches Home-as-tab
+  - project.config.yml next_sprint + README pointer → S19
+
+cmd:
+  - bun run test
+
+done:
+  - S19-INVARIANTS.md links S16 and S18 and freezes the rules above
+  - S18 gate stays CLOSED; S18-T0 stays deferred
+  - Runtime mirror matches the freeze
+  - `bun run test` passes

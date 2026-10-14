@@ -1,0 +1,30 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+task: S19 T5 — Tauri BLE factory boundary (no DUT)
+sprint: S19
+dep: S19-T4-playwright-journeys.pd
+requires: [MOBILE_TAURI, ARCHITECT, QA, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S19-INVARIANTS.md
+
+context: |
+  UI pass did not re-check the factory. No live DUT. Do not reopen S18-T0.
+  createBleAdapter: inside Tauri → TauriBleAdapter; web, Vitest, and
+  VITE_FORCE_FAKE_BLE → FakeBle. Fix selection only if that matrix is wrong.
+  Document verified vs still-needs-DUT (hardware scan/connect/read, macos:dev smoke).
+  Release builds are T10. This task does not compile or upload.
+  Package manager: bun.
+
+out:
+  - sprints/S19/TAURI-BOUNDARY.md
+  - src/ble/factory.ts only if selection is wrong
+
+cmd:
+  - bun run test
+
+done:
+  - Note splits verified selection rules from DUT-still-required checks
+  - factory.test.ts still encodes Tauri → real, web → Fake
+  - No live BLE was run
+  - `bun run test` passes

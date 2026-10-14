@@ -1,0 +1,25 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S21
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+task: S21 T1 — Home tiles centered, larger icons
+requires: [FRONTEND_DEV]
+
+context: |
+  src/screens/home/HomeScreen.tsx. The four tiles (Сенсори, Журнал, Сканувати,
+  Про додаток) are left-aligned with small icon badges. Client asks: center icon,
+  title and subtitle in each tile; bigger icon (badge and glyph). Reuse src/ui tokens.
+  Check narrow phone width — subtitle "Пошук сенсорів поруч" must not clip.
+
+out:
+  - HomeScreen.tsx (+ src/ui tile primitive if shared)
+  - HomeScreen.test.tsx update
+
+cmd:
+  - bun run test
+
+done:
+  - Icon, title, subtitle centered in every tile
+  - Icon visibly larger; no clipping at 360px width

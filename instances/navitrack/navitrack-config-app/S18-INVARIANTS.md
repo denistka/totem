@@ -52,6 +52,10 @@ Epic: **E15**.
 | S17-T3 live smoke | **SUPERSEDED** by S18-T0 |
 | S17-TQ quality | **SUPERSEDED** by S18-TQ |
 
+## Pointer (S19)
+
+Amended by [`S19-INVARIANTS.md`](S19-INVARIANTS.md). Scan shows advertise telemetry whenever manufacturer data is present; the autoConnect display gate no longer hides it. S18 stays CLOSED. S18-T0 live BLE smoke stays deferred.
+
 ## Adapter / test split (unchanged)
 
 | Runtime | Adapter |

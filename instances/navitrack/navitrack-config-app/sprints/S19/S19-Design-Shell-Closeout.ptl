@@ -1,0 +1,101 @@
+gate: CLOSED
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S19
+title: Design Shell Closeout
+epic: E16
+priority: P1
+dep: S18
+requires: [FRONTEND_DEV, BUN, QA, ARCHITECT, MOBILE_TAURI]
+invariants: ../S16-INVARIANTS.md
+s18_invariants: ../S18-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "Freeze the unplanned visual pass already in navitrack-config-app"
+  - "Close rename, empty/error, and ScreenHeader rhythm gaps — Web + FakeBle"
+  - "Design nits: screen name in the header, version once, honest welcome button, About"
+  - "Sensor-profile template for more products; one live fuel profile now"
+  - "First ship apps are iOS and Android; macOS build stays for real-sensor testing"
+  - "Field safety: confirm DUT writes, hide opcodes from installers, keep the focused field"
+  - "Prove Vitest + Playwright; re-check Tauri BLE factory without a DUT"
+  - "TQ before the sprint can close"
+open_for_append: false
+planning_status: drafted
+planned: 2026-09-30
+
+objective: |
+  E16 closeout of the design shell. Do not redesign. Do not reopen S18.
+  S18-T0 live BLE smoke stays deferred until a DUT is present.
+  Shell stays Welcome → Home → Catalog → sensor session.
+  Settings stay in the AppHeader sheet. Brand stays NaviTrack.
+  Amend, on explicit intake: Home is the primary bottom tab; saved-sensor rules;
+  scan shows advertise telemetry whenever manufacturer data is present
+  (S18 autoConnect display gate no longer hides it).
+  Header text is the current screen, not the word NaviTrack. Version once, on About.
+  Welcome enters Home and is not labeled Scan (amends the S16 scan-CTA label).
+  Catalog stays data-driven; session binds to a sensor profile. One live fuel profile.
+  First ship binaries: iOS and Android. macOS compile stays for DUT testing.
+  A write to the sensor asks first. Installer screens hide opcode numbers.
+  A focused session field stays on screen. Leaving unwritten edits asks.
+  Sequence A → B → F → G → C → D → E. Sprint stays open until E (TQ) is done.
+  OUT: new protocol commands, FCS changes, App Store / Play upload, live radio,
+  a second live sensor, RS-485, GPS tile, cloud account, full report wizard,
+  thermocompensation, desktop COM, reverting Welcome → Home → Catalog.
+
+tracks:
+  - id: A
+    title: Freeze invariants
+    tasks:
+      - S19-T0-freeze-design-shell-invariants.pd
+    requires: [ARCHITECT, FRONTEND_DEV, BUN]
+    gate: CLOSED
+
+  - id: B
+    title: Visual gaps (Web + FakeBle)
+    tasks:
+      - S19-T1-rename-saved-sensor.pd
+      - S19-T2-empty-error-and-screen-rhythm.pd
+      - S19-T6-header-screen-title-and-single-version.pd
+      - S19-T7-welcome-entry-not-scan.pd
+      - S19-T8-about-screen-pass.pd
+    requires: [FRONTEND_DEV, BUN]
+    gate: CLOSED
+
+  - id: F
+    title: Sensor profiles
+    tasks:
+      - S19-T9-sensor-profile-template.pd
+    requires: [ARCHITECT, FRONTEND_DEV, BUN]
+    gate: CLOSED
+
+  - id: G
+    title: Field safety
+    tasks:
+      - S19-T11-confirm-before-dut-write.pd
+      - S19-T12-installer-copy-hides-opcodes.pd
+      - S19-T13-focus-and-unsaved-edits.pd
+    requires: [FRONTEND_DEV, BUN]
+    gate: CLOSED
+
+  - id: C
+    title: Tests
+    tasks:
+      - S19-T3-vitest-landed-shell.pd
+      - S19-T4-playwright-journeys.pd
+    requires: [FRONTEND_DEV, BUN, QA]
+    gate: CLOSED
+
+  - id: D
+    title: Tauri boundary (no DUT)
+    tasks:
+      - S19-T5-tauri-ble-factory-boundary.pd
+      - S19-T10-ios-android-first-macos-test-build.pd
+    requires: [MOBILE_TAURI, ARCHITECT, QA, BUN]
+    gate: CLOSED
+
+  - id: E
+    title: Post-sprint quality
+    tasks:
+      - S19-TQ-post-sprint-code-quality-review-refactor.pd
+    requires: [FRONTEND_DEV, ARCHITECT, BUN, QA]
+    gate: CLOSED

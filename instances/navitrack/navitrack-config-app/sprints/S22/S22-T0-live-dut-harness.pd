@@ -1,0 +1,6 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S22
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+task: S22 T0 — Live DUT harness (tools/dut-bridge Swift CoreBluetooth + tools/dut-probe Bun) running the app protocol/session code headless; record ground truth in LIVE-DUT-NOTES.md.

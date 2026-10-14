@@ -25,7 +25,7 @@ S01 §17 sensor-session tabs unchanged.
 
 - **Sheet-primary:** DUT app settings (theme, language, scan period, thresholds, cal rows, auto-connect, save) live in AppHeader expand sheet (T1/T4).
 - **Hub tab:** `settings` **removed** from bottom tab bar target (`hubTabIdsTarget`).
-- Bottom tabs (sensors / logs / about) are **secondary** until home tiles own primary nav; may remain as shortcuts after T6.
+- Bottom tabs: **Home · Sensors · Logs · About** (`hubTabIdsTarget`). Home is the primary entry; the rest stay as shortcuts. Settings stay sheet-only.
 
 ## Design mix (see also T5 / `DECISION-DESIGN-MIX.md`)
 
@@ -64,3 +64,7 @@ S01 §17 sensor-session tabs unchanged.
 ## Amends
 
 - `S01-INVARIANTS.md` §16 — superseded by this document for primary nav / settings entry.
+
+## Pointer (S19)
+
+Amended by [`S19-INVARIANTS.md`](S19-INVARIANTS.md). Home is a primary bottom tab. Header text is the current screen name. Version is shown once, on About. Welcome enters Home and is not labeled Scan.

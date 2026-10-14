@@ -1,0 +1,36 @@
+gate: CLOSED
+v:4 c:$ m:navitrack-config role:dev x:tauri
+task: S20 T4 — Android init, then android:build
+sprint: S20
+dep: S20-T3-ios-init-and-build.pd
+requires: [MOBILE_TAURI, BUN]
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+invariants: ../S20-INVARIANTS.md
+
+context: |
+  bun run android:build stops because src-tauri/gen/android does not exist.
+  The SDK is at ~/Library/Android/sdk. ANDROID_HOME was unset.
+  The CLI asks for tauri android init.
+  For these commands set ANDROID_HOME to that SDK path.
+  Do not commit a machine env file or secrets.
+  Run bun run tauri android init. Do not commit gen/.
+  Do not run the apk, aab, or open scripts. Do not upload to Play.
+  Do not run live radio. Then bun run android:build with ANDROID_HOME set.
+  If a new host error appears after gen/android exists, stop and record it.
+  Do not guess a second fix. Package manager: bun. No pnpm or npm lockfile.
+
+out:
+  - gitignored Android project via tauri android init
+  - append to sprints/S20/RELEASE-COMPILE.md
+
+cmd:
+  - bun run test
+  - bun run android:build
+
+done:
+  - android:build compiles on this Mac with ANDROID_HOME set
+  - gen/ is not committed
+  - The note records the SDK path used and the result
+  - No store upload and no live radio
+  - `bun run test` passes
