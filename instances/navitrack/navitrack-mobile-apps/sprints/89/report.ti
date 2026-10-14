@@ -1,0 +1,22 @@
+# S89 Device Verification
+
+**Sprint:** S89 client bugs
+**Task:** S89-T9
+**Date:** 2026-10-05
+**Branch:** bug-fix-oct-2026
+**Status:** PENDING — physical iOS/Android device
+
+Static checks on this machine: `tsc --noEmit` passed, eslint on the touched files passed.
+
+| # | Scenario | Result | Notes |
+|---|----------|--------|-------|
+| 1 | Speeding/stop threshold survives Apply and reopen | PENDING | Client sends the edited numbers and compares the next GET |
+| 2 | Failed savevea shows a toast | PENDING | Needs a server that ignores the POST |
+| 3 | Track arrows follow zoom and pan | PENDING | |
+| 4 | History first row is 00:00, last segment stays selected | PENDING | Only if the API start is before that day |
+| 5 | Coincident vehicles separate at max zoom | PENDING | Grouping must be on |
+| 6 | Speeding push is four lines in uk/en | PENDING | Tray text for a killed app is still the server payload |
+| 7 | Push tap opens the map popup | PENDING | tauri-plugin-fcm 0.1.9 emits no click event |
+| 8 | CAN rows in the popup | PENDING | Rows render only when vehicleDatas already has CAN keys |
+
+No application source was changed for this report.

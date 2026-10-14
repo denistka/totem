@@ -1,0 +1,25 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T6 — Object details history and events tests
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  History and the events tab are the S89 screens. Mock getDailyTrack
+  and getvea. Do not mount Leaflet.
+
+steps:
+  1. History tab: first row reads 00:00 when the fixture starts the
+     day before; the last row is the selected one.
+  2. Changing the date tab reloads and again shows 00:00 on the first row.
+  3. Events tab: speeding input is the server value, not the constant
+     130. Changing it and pressing Apply posts that number.
+  4. Apply with a stop duration under 90s shows the existing error toast
+     and does not post.
+
+out:
+  - src/screens/object-details/ObjectDetailsScreen.test.tsx
+
+done:
+  - The four cases above pass.
+  - The test file does not import react-leaflet.

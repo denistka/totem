@@ -1,0 +1,25 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T7 — Settings, notifications, and reports screen tests
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  Remaining non-map screens. Same render harness as T5.
+
+steps:
+  1. SettingsScreen: language switch writes i18nextLng; the trust-device
+     control is present and does not call biometry when untouched.
+  2. NotificationSettingsScreen: toggling an event calls the store; a
+     failed save shows the error toast.
+  3. ReportsScreen: empty result and one mocked table row. Filters
+     submit calls the report function once.
+
+out:
+  - src/screens/settings/SettingsScreen.test.tsx
+  - src/screens/notification-settings/NotificationSettingsScreen.test.tsx
+  - src/screens/reports/ReportsScreen.test.tsx
+
+done:
+  - Each screen file has a passing test.
+  - pnpm test exits 0.

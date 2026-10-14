@@ -24,6 +24,18 @@ paths:
   history: ../prompt-machine
   intel: ./intel
 
+testing:
+  mandatory: true
+  applies_to: every new change in paths.code
+  spec: ./intel/TESTING.ti
+  commands:
+    - pnpm test
+    - pnpm test:e2e
+  rule: >
+    A change is not done until it has an automated test and pnpm test passes.
+    User-journey changes also require pnpm test:e2e. Do not add behavior without
+    a colocated src/**/*.test.ts(x) or an updated existing test.
+
 guardians:
   default:
     - ROOT

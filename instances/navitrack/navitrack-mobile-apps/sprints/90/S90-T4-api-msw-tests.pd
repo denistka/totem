@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T4 — API tests with MSW
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  config-app uses msw/node setupServer in the test file. Mirror that.
+  Handlers live in src/mocks/handlers.ts.
+
+steps:
+  1. Mock the client base URL so requests hit the MSW server.
+  2. Auth login: success token and a 401 body.
+  3. getvea / savevea: posted speedingValue is what the next getvea
+     returns in the success handler; add a handler that ignores the
+     body so the persist check fails.
+  4. Vehicles list and vehicle info: one payload with a CAN key and
+     one without.
+  5. Daily track: first item start before the requested date.
+  6. Reports list: empty and one row.
+
+out:
+  - src/mocks/handlers.ts
+  - src/api/domains/*.test.ts
+
+done:
+  - No test calls a host outside the MSW server.
+  - pnpm test exits 0.

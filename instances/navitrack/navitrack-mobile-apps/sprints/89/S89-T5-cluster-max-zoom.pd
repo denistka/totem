@@ -1,0 +1,26 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T5 — Ungroup coincident vehicles at max zoom
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  ClusterMapVehicleLayer sets spiderfyOnMaxZoom, which spreads a cluster
+  only after a tap. Markers with the same coordinates stay one bubble at
+  maximum zoom. S73 requires clustering for large fleets. Grouping off
+  (groupObjects false) already draws single markers.
+
+steps:
+  1. Keep MarkerClusterGroup while groupObjects is true.
+  2. At the map's maximum zoom, spiderfy clusters whose members sit on
+     the same point (or within a few meters). Do this without a second tap.
+  3. Below max zoom, leave distance clustering as it is.
+  4. Each spiderfied marker still opens its existing popup.
+
+out:
+  - src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx
+
+done:
+  - Two vehicles on one coordinate become separate markers at max zoom.
+  - Zooming back out clusters them again.
+  - A spread-out fleet still clusters below max zoom.

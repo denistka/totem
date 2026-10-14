@@ -1,0 +1,85 @@
+gate: OPEN
+sprint: S90
+title: Automated tests for the mobile app, config-app harness
+priority: P1
+dep: S89
+
+description: |
+  navitrack-mobile-apps has no tests. Copy the navitrack-config-app
+  harness, not its product tests: Vitest + happy-dom + Testing Library
+  colocated as src/**/*.test.ts(x), MSW for HTTP, Playwright in e2e/.
+  Package manager stays pnpm.
+
+  Branch test-coverage-oct-2026 from bug-fix-oct-2026 so S89 behavior
+  is what the tests lock. Do not commit this work to main.
+
+  Three layers, same as config-app:
+  - unit tests beside pure modules and stores
+  - component tests for every screen
+  - e2e smoke of the logged-in journeys
+  Leaflet tiles are not asserted. Map behavior is tested through pure
+  helpers and mocked map components.
+
+ground_truth:
+  - navitrack/navitrack-config-app/vite.config.ts
+  - navitrack/navitrack-config-app/src/test/setup.ts
+  - navitrack/navitrack-config-app/playwright.config.ts
+  - navitrack/navitrack-mobile-apps/vite.config.ts
+  - navitrack/navitrack-mobile-apps/package.json
+
+success_metrics:
+  - pnpm test runs the colocated suite and exits 0.
+  - pnpm test:e2e runs the Playwright journeys and exits 0.
+  - Every screen under src/screens has a component test.
+  - S89 rules are OPEN: threshold save, history 00:00, push lines,
+    coincident-cluster helper, CAN rows when keys exist.
+
+risks:
+  - vite.config.ts throws when VITE_API_BASE is missing. Vitest loads that file.
+  - happy-dom has no real Leaflet map. Do not render live tiles in unit tests.
+  - Playwright must log in against MSW or a seeded session, not a live fleet.
+
+invariants: sprints/73/S73-INVARIANTS.md
+requires: [FRONTEND_DEV, QA]
+estimated: 4–6 days
+
+tracks:
+  - id: T0
+    title: Branch and harness
+    tasks:
+      - S90-T0-branch-and-harness.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T1
+    title: Pure modules and S89 rules
+    tasks:
+      - S90-T1-lib-unit-tests.pd
+      - S90-T2-s89-rule-tests.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T2
+    title: Stores and API
+    tasks:
+      - S90-T3-store-tests.pd
+      - S90-T4-api-msw-tests.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T3
+    title: Screen component tests
+    tasks:
+      - S90-T5-login-objects-screens.pd
+      - S90-T6-object-details-screens.pd
+      - S90-T7-settings-reports-screens.pd
+      - S90-T8-map-tracking-screens.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T4
+    title: End-to-end journeys
+    tasks:
+      - S90-T9-e2e-journeys.pd
+    requires: [FRONTEND_DEV, QA]
+    gate: OPEN

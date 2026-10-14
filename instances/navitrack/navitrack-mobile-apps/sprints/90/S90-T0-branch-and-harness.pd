@@ -1,0 +1,34 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T0 — Test harness copied from config-app
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  config-app: vitest in vite.config.ts, src/test/setup.ts (jest-dom,
+  localStorage, AbortError), scripts test / test:watch / test:e2e,
+  Playwright with webServer. Mobile app uses pnpm and throws in
+  vite.config.ts when VITE_API_BASE is absent.
+
+steps:
+  1. From bug-fix-oct-2026, create test-coverage-oct-2026.
+  2. Add the same devDependencies with pnpm: vitest, happy-dom,
+     @testing-library/react, @testing-library/jest-dom,
+     @testing-library/user-event, msw, @playwright/test.
+  3. Add scripts test, test:watch, test:e2e. Include
+     src/**/*.test.ts(x). Exclude e2e/.
+  4. Add src/test/setup.ts from config-app. When mode is test, do not
+     throw on a missing VITE_API_BASE; use a dummy base.
+  5. Add playwright.config.ts. webServer runs pnpm dev. Seed English
+     the way e2e/helpers.ts seeds i18nextLng.
+  6. Confirm pnpm test exits 0 with one smoke test of a pure helper.
+
+out:
+  - package.json
+  - vite.config.ts
+  - src/test/setup.ts
+  - playwright.config.ts
+
+done:
+  - pnpm test runs in happy-dom without a real API host.
+  - Branch is test-coverage-oct-2026.

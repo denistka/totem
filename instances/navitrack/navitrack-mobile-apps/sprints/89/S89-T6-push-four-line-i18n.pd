@@ -1,0 +1,31 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T6 — Four-line push in the app language
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  displayFromPushPayload titles with eventNameRu and bodies with
+  vehicleName only. value, address, and eventTime are dropped, so a
+  speeding push hides the speed and every push is Russian.
+  Server eventName is the stable key (Speeding, Stop, and the newer
+  keys such as slope). App language is i18n (ru/uk/en).
+
+steps:
+  1. Map eventName through locale strings. Do not prefer eventNameRu.
+  2. Speeding body is four lines: localized event, vehicleName,
+     value with the speed unit, eventTime or address.
+  3. Use that same line layout for other events that carry value
+     (slope and the rest). Events without value omit the value line.
+  4. Add the new keys to ru.json, uk.json, and en.json.
+
+out:
+  - src/features/notifications/lib/tauri-push-adapter.ts
+  - src/locales/ru.json
+  - src/locales/uk.json
+  - src/locales/en.json
+
+done:
+  - Speeding notification shows the numeric exceedance.
+  - uk and en builds do not show eventNameRu.
+  - A slope-style payload uses the same layout.

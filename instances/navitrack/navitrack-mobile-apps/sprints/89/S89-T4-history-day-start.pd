@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T4 — History first segment starts at 00:00
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  useHistoryTimeline prints item.start as clock time. An overnight stop
+  that began the previous day shows that earlier time as the first row.
+  S87 selects the last segment on open and on date change. Keep that
+  selection. This task only changes the first row's clock and duration.
+
+steps:
+  1. Pass the selected history date into useHistoryTimeline.
+  2. For the first item only, if start is before local 00:00 of that date,
+     show 00:00 and duration from 00:00 to item.end.
+  3. Leave later rows on their own start times.
+  4. Do not change the selectedEventIndex fallback (last item).
+
+out:
+  - src/screens/object-details/hooks/useHistoryTimeline.ts
+  - src/screens/object-details/history/components/HistoryTabContainer.tsx
+
+done:
+  - Opening History and switching dates shows the first row at 00:00
+    when the API start is earlier than that day.
+  - The highlighted segment is still the last one.
+  - A first segment that already starts after 00:00 is unchanged.

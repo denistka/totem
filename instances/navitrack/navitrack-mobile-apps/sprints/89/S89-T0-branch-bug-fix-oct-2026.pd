@@ -1,0 +1,23 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T0 — Work on branch bug-fix-oct-2026
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  All application commits for S89 belong in navitrack/navitrack-mobile-apps
+  on branch bug-fix-oct-2026, cut from main. Sprint files stay in the
+  Totem repo. Do not commit this work to main.
+
+steps:
+  1. In navitrack-mobile-apps, confirm a clean status on main.
+  2. Create or check out bug-fix-oct-2026 from main.
+  3. Every later S89 code commit happens on that branch.
+  4. Do not push unless the user asks.
+
+out:
+  - branch bug-fix-oct-2026 in navitrack-mobile-apps
+
+done:
+  - git branch --show-current prints bug-fix-oct-2026.
+  - main has no S89 commits.

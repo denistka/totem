@@ -1,0 +1,40 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T10 — List work outside the mobile app
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  Write this after T9. Record only gaps the mobile sprint cannot close.
+  Seed, drop a line if the device check shows it is already fixed:
+
+  Backend:
+  - savevea ignores a full client body, or the event engine ignores speedingValue.
+  - track/daily omits the overnight segment, so the app cannot show 00:00.
+  - Push tray text is the server title/body. A killed app cannot rebuild
+    four lines or translate eventNameRu. Server must send a data payload
+    (eventName, value, lat, lng, vehicleId, address, eventTime) and
+    localized text, or data-only so the app composes the tray.
+  - Token register sends timezone and no language. uk/en tray text needs
+    a language field or server templates.
+  - Vehicle ВН 0394 МР Краснощек has no CAN keys in vehicleDatas.
+    Ingest, vehicledatatypes, or the CAN parser for that tracker.
+
+  Not the mobile repo:
+  - Web Cloud screen for full vehicle data and CAN.
+  - Native notification click, if tauri-plugin-fcm has no click event.
+  - Slope and other pushes whose rich text is composed on the server.
+
+steps:
+  1. Read T8 notes and the T9 report. Keep a seed line only if it failed
+     or was out of repo.
+  2. Write sprints/89/S89-OUTSIDE-MOBILE.md with owner (backend, Cloud,
+     native plugin) and the evidence (request, payload, or missing key).
+  3. Do not change application source in this task.
+
+out:
+  - sprints/89/S89-OUTSIDE-MOBILE.md
+
+done:
+  - The file lists each remaining item, who owns it, and why the app cannot close it.
+  - Items the device check passed are absent from the list.

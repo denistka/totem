@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T3 — Store tests
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  config-app resets zustand with setState in beforeEach and asserts
+  getState() after an action. Do that here. Mock network at the
+  function boundary, not with a live host.
+
+steps:
+  1. useNavigationStore: tab and screen transitions used by the shell.
+  2. useAuthStore: logged out, logged in, logout clears the session.
+  3. useAppStore: vehicle list replace and the selector the map reads.
+  4. useNotificationStore: updateVehicleConfig restores the previous
+     config when the follow-up GET does not match.
+  5. usePushMapEventStore: show stores lines and coordinates; clear
+     drops them. A payload with 0,0 is not stored by the shell helper
+     if that check lives outside the store — test the store only.
+
+out:
+  - src/store/*.test.ts
+  - src/features/notifications/store/usePushMapEventStore.test.ts
+
+done:
+  - Each store test resets state in beforeEach.
+  - pnpm test exits 0.

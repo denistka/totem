@@ -1,0 +1,33 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T2 — Event settings persist on the server
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  Events tab and Notification settings both POST /ws/savevea, then GET
+  /ws/getvea. A save the server ignores looks like a snap-back. Notification
+  settings revert state and set error with no toast. The POST must keep
+  every field GET returned (including ones the UI does not edit) and overlay
+  only toggles plus T1 thresholds.
+
+steps:
+  1. Build the POST from the last GET object. Overlay UI booleans and the
+     T1 numbers. Do not rebuild a partial object that drops server fields.
+  2. After POST, GET again. If speedingEvent, speedingValue, or a toggled
+     flag differs from what was sent, treat the save as failed.
+  3. Events tab already toasts eventSettingsSaveFailed. Notification
+     settings must toast the same failure and keep the reverted config.
+  4. Do not copy the old Android geofence-to-satellite mapping.
+     enterEvent and leaveEvent stay the geofence flags.
+
+out:
+  - src/screens/object-details/lib/vehicle-event-config-ui.ts
+  - src/screens/object-details/hooks/useObjectDetailsHistory.ts
+  - src/store/useNotificationStore.ts
+  - src/screens/notification-settings/hooks/useNotificationSettingsScreen.ts
+
+done:
+  - A toggle and a speeding value survive leaving the screen and reopening.
+  - Failed save shows an error toast on both screens.
+  - Fields the UI does not show are unchanged on the server.

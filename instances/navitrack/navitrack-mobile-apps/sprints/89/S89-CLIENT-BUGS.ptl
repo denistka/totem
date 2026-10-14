@@ -1,0 +1,117 @@
+gate: OPEN
+sprint: S89
+title: Client bugs — events, track arrows, history day start, cluster, push
+priority: P1
+dep: S88
+
+description: |
+  Client list 2026-10-05. Code target: navitrack/navitrack-mobile-apps.
+  All code commits for this sprint go to branch bug-fix-oct-2026.
+  Do not commit sprint work to main.
+
+  Web Cloud is out of this repo. CAN (ВН 0394 МР Краснощек) is T8 only
+  when vehicleDatas already contains CAN keys in the mobile popup.
+  Anything the app cannot fix is written by T10 after verification.
+
+  Keep S87: History still selects the last segment. T4 only makes the first
+  segment clock read 00:00 of the selected day.
+  Keep S73: clustering stays on for the fleet. T5 ungroups only coincident
+  markers at maximum zoom.
+
+ground_truth:
+  - src/screens/object-details/components/EventsTab.tsx
+  - src/screens/object-details/lib/vehicle-event-config-ui.ts
+  - src/screens/object-details/hooks/useObjectDetailsHistory.ts
+  - src/store/useNotificationStore.ts
+  - src/features/map/components/PolylineDecorator.tsx
+  - src/screens/object-details/hooks/useHistoryTimeline.ts
+  - src/features/map/components/cluster-map/ClusterMapVehicleLayer.tsx
+  - src/features/notifications/lib/tauri-push-adapter.ts
+  - src/shell/hooks/useMobileShell.ts
+  - src/features/map/lib/popup-rows/build-vehicle-popup-rows.tsx
+
+success_metrics:
+  - Speeding km/h and stop seconds are editable and survive savevea + reload.
+  - Visible track shows direction arrows after zoom and after pan.
+  - First history row of a date is 00:00; last segment stays selected.
+  - Coincident vehicles separate at max zoom; other zooms still cluster.
+  - Speeding push is four lines in the app language (ru/uk/en).
+  - Push tap opens the map popup on that event.
+  - Mobile popup shows CAN rows present in vehicleDatas, or T8 stops with a report.
+  - Every code commit is on bug-fix-oct-2026.
+  - T10 lists backend and non-mobile follow-ups that this repo cannot close.
+
+risks:
+  - savevea may ignore a body that drops server fields.
+  - System-notification click is not the push-notification arrival event.
+  - Named vehicle may have no CAN keys in the mobile API.
+
+invariants: sprints/73/S73-INVARIANTS.md
+requires: [FRONTEND_DEV, MOBILE_TAURI]
+estimated: 3–4 days
+
+tracks:
+  - id: T0
+    title: Branch bug-fix-oct-2026
+    tasks:
+      - S89-T0-branch-bug-fix-oct-2026.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T1
+    title: Event thresholds and server save
+    tasks:
+      - S89-T1-speeding-stop-threshold.pd
+      - S89-T2-event-config-save.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T2
+    title: Track arrows on the visible segment
+    tasks:
+      - S89-T3-track-arrows-visible.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T3
+    title: History first segment is start of day
+    tasks:
+      - S89-T4-history-day-start.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T4
+    title: Ungroup coincident vehicles at max zoom
+    tasks:
+      - S89-T5-cluster-max-zoom.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T5
+    title: Localized four-line push and map popup on tap
+    tasks:
+      - S89-T6-push-four-line-i18n.pd
+      - S89-T7-push-tap-map-popup.pd
+    requires: [FRONTEND_DEV, MOBILE_TAURI]
+    gate: OPEN
+
+  - id: T6
+    title: CAN rows in the mobile popup
+    tasks:
+      - S89-T8-popup-can-rows.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T7
+    title: Device verification
+    tasks:
+      - S89-T9-device-verification.pd
+    requires: [QA, FRONTEND_DEV]
+    gate: OPEN
+
+  - id: T8
+    title: Handoff outside the mobile app
+    tasks:
+      - S89-T10-backend-and-other-handoff.pd
+    requires: [FRONTEND_DEV]
+    gate: OPEN

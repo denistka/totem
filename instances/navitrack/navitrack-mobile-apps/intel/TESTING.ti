@@ -1,0 +1,33 @@
+role: Instance Test Gate
+focus: mandatory-tests, regression-lock
+extends: none
+
+instance: navitrack-mobile-apps
+code: navitrack/navitrack-mobile-apps
+branch-baseline: bug-fix-oct-2026
+
+rule: |
+  Tests are mandatory for every new change in this instance.
+  The app started with zero tests. That gap is closed only by keeping
+  the suite in lockstep with the code.
+
+  A task is not done when:
+  - behavior changed and no test asserts the new behavior
+  - pnpm test fails
+  - a user journey changed (login, objects, history, events, settings,
+    language) and pnpm test:e2e was not updated
+
+where:
+  unit: src/**/*.test.ts next to the module (vitest, happy-dom)
+  api: msw/node, never a live fleet host
+  screen: Testing Library + userEvent, I18nextProvider
+  journey: e2e/*.spec.ts via playwright on port 5199
+
+do-not:
+  - Assert live map tiles.
+  - Skip the test because the change "is small".
+  - Commit to main. Sprint work stays on its branch.
+
+commands:
+  - pnpm test
+  - pnpm test:e2e

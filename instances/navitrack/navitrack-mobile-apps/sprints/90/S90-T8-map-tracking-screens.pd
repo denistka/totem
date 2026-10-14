@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T8 — Map and tracking tests without live tiles
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  MapScreen and TrackingScreen mount Leaflet. happy-dom cannot load
+  tiles. Mock MapShell / ClusterMap and assert the screen passes
+  vehicles, grouping, and the push-event marker props.
+
+steps:
+  1. MapScreen: groupObjects true reaches the cluster layer prop.
+     A stored push event renders the popup lines.
+  2. TrackingScreen: a two-point track requests arrow positions from
+     the decorator input. Assert the positions array, not pixels.
+  3. TrackingActionScreen: the primary action calls its handler once.
+  4. Keep the Leaflet mock in src/test so other screen tests stay quiet.
+
+out:
+  - src/screens/map/MapScreen.test.tsx
+  - src/screens/tracking/TrackingScreen.test.tsx
+  - src/screens/tracking/TrackingActionScreen.test.tsx
+  - src/test/leaflet-mock.ts
+
+done:
+  - All three screen tests pass without network tile requests.
+  - pnpm test exits 0.

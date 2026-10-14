@@ -1,0 +1,31 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T7 — Push tap opens the event popup on the map
+requires: [FRONTEND_DEV, MOBILE_TAURI]
+sprint: S89
+
+context: |
+  handleNotificationTap only calls navigate('map') and ignores
+  vehicleId coordinates. The handler is bound to the arrival event
+  push-notification, not to a notification click. deep_link.rs is unused.
+  Old iOS opened the map and drew a callout from the push payload.
+
+steps:
+  1. Find the FCM click event in tauri-plugin-fcm. Subscribe to that,
+     not to push arrival. Cover cold start if the tap launched the app.
+  2. On tap, open the map, select payload.vehicleId, center on
+     latitude/longitude, and open the vehicle popup.
+  3. Popup shows localized event name, value, time, and address
+     from the payload (same fields as T6).
+  4. Ignore a payload with no coordinates. Do not navigate then.
+
+out:
+  - src/features/notifications/lib/tauri-push-adapter.ts
+  - src/features/notifications/lib/notification-service.ts
+  - src/shell/hooks/useMobileShell.ts
+  - src/features/map/components/VehicleInfoPopup.tsx
+
+done:
+  - Tap on a speeding push opens the map on that vehicle with the popup.
+  - Arrival of a push while the app is open does not steal the screen.
+  - Payload without coordinates does not move the map.

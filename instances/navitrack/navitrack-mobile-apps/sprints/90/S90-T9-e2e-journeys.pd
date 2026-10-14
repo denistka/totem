@@ -1,0 +1,30 @@
+gate: OPEN
+v:4 role:qa x:frontend
+task: S90 T9 — Playwright journeys
+requires: [FRONTEND_DEV, QA]
+sprint: S90
+
+context: |
+  config-app e2e is a few user journeys, not a copy of every unit test.
+  Seed English. Drive the Vite app. Stub the API the same way the app
+  already proxies /api, or intercept with page.route.
+
+steps:
+  1. e2e/helpers.ts: set i18nextLng to en before navigation.
+  2. Smoke: login form is visible, then a mocked session opens the
+     objects list.
+  3. Open a vehicle history. First timeline time is 00:00 for the
+     overnight fixture. Last row is selected.
+  4. Events tab: change speeding and apply. The intercepted savevea
+     body contains that number.
+  5. Settings: switch language and see the translated objects title.
+  6. Do not assert map tiles or a real push from Firebase.
+
+out:
+  - e2e/helpers.ts
+  - e2e/smoke.spec.ts
+  - e2e/history-and-events.spec.ts
+
+done:
+  - pnpm test:e2e exits 0 against the local dev server.
+  - Journeys do not call a production host.

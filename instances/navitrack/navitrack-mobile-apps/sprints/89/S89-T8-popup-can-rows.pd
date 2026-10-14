@@ -1,0 +1,32 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T8 — Show CAN fields already present in the mobile popup
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  Client: Cloud has no CAN data for ВН 0394 МР Краснощек. The web Cloud
+  is not in this repo. The mobile popup whitelist is time, ignition, fuel,
+  satellites, speed, odometer, temperature, address. Old Android rendered
+  ODOMETER_CAN from vehicleDatas. Do not invent values.
+
+steps:
+  1. Read vehicleDatas keys from getVehicleInfo / vehicledetails for a
+     vehicle that exposes CAN. List keys ending in CAN or containing CAN.
+  2. If those keys exist, append one popup row per present CAN value
+     (odometer CAN, fuel CAN, engine hours CAN, and any other non-empty key).
+  3. If the payload has no CAN keys, stop. Write the key list into the
+     sprint report and do not change the web Cloud.
+  4. Hide empty and "none" values. Keep the existing fuel and odometer rows.
+
+out:
+  - src/features/map/lib/popup-rows/popup-row-appenders.tsx
+  - src/features/map/lib/popup-rows/build-vehicle-popup-rows.tsx
+  - src/locales/ru.json
+  - src/locales/uk.json
+  - src/locales/en.json
+
+done:
+  - A vehicle whose API payload includes CAN keys shows those rows.
+  - A vehicle without CAN keys is unchanged, and the task records that
+    the gap is outside the mobile popup.

@@ -1,0 +1,33 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T1 — Editable speeding and stop thresholds
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  EventsTab prints EVENTS_CONFIG.value (130 / 90) and the row is only a
+  toggle. mergeVehicleConfigFromEventChecks writes those constants into
+  speedingValue and minStopTime, ignoring the server value and any edit.
+  Old Android exposed an input: speeding 0–360 km/h, stop in seconds.
+
+steps:
+  1. Load speedingKmh and stopSec via thresholdsFromVehicleConfig.
+  2. In EventsTab, replace the static value span with a numeric input
+     for events that have hasValue. Stop the row click from toggling
+     when the input is focused.
+  3. Pass the edited numbers into mergeVehicleConfigFromEventChecks.
+     Delete the read of EVENTS_CONFIG.value on save.
+  4. Clamp speeding to 1–360. Keep the existing stop rule: stop events
+     on require minStopTime >= 90_000 ms.
+  5. Show the server value, not 130, after getvea.
+
+out:
+  - src/screens/object-details/components/EventsTab.tsx
+  - src/screens/object-details/lib/vehicle-event-config-ui.ts
+  - src/screens/object-details/hooks/useObjectDetailsHistory.ts
+
+done:
+  - User can set a speeding threshold other than 130 and a stop duration
+    other than 90, within the clamps.
+  - Apply sends those numbers as speedingValue and minStopTime.
+  - Checkbox-only events stay checkbox-only.

@@ -11,6 +11,10 @@ Fleet tracking PWA (React 19, optional Tauri 2). Source and stack details: **`pr
 | Intel & machine index | `intel/` (`TOTEM_SPRINTS.ti`, reports, JSON baselines) |
 | Application code | `paths.code` in `project.config.yml` (relative to this instance folder; typically the monorepo’s `navitrack-apps` package) |
 
+## Tests
+
+Mandatory for every new change. Spec: `intel/TESTING.ti`. Commands in the app repo: `pnpm test`, and `pnpm test:e2e` when a user journey changes.
+
 ## Default guardians (from config)
 
 `ROOT`, `PM`, `QA`, **`CODEMAP_QUALITY_ADVISOR`**, `DEVOPS`, `ARCHITECT` — plus stack adapters such as `FRONTEND_DEV` on tasks via `requires:`.

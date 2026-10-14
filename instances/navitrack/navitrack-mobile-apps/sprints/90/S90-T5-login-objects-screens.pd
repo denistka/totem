@@ -1,0 +1,25 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T5 — Login and objects screen tests
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  config-app renders a screen in I18nextProvider and clicks with
+  userEvent. Add data-testid only where the query needs it.
+
+steps:
+  1. LoginScreen: empty submit shows validation; a successful mocked
+     login leaves the login screen.
+  2. ObjectsScreen: renders one vehicle name from the store; empty
+     store shows the empty state.
+  3. Object row click calls the navigation setter with that vehicle id.
+  4. Mock tauri and biometry modules so the screen mounts in happy-dom.
+
+out:
+  - src/screens/login/LoginScreen.test.tsx
+  - src/screens/objects/ObjectsScreen.test.tsx
+
+done:
+  - Both files pass under pnpm test.
+  - Tests do not open a map.

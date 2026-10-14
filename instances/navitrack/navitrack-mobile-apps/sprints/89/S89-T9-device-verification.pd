@@ -1,0 +1,32 @@
+gate: OPEN
+v:4 role:qa x:mobile
+task: S89 T9 — Device check of the client bug list
+requires: [QA, FRONTEND_DEV]
+sprint: S89
+
+context: |
+  Confirm the client list on a Tauri device build after T1–T8.
+  History selection stays on the last segment (S87). Clustering stays
+  on below max zoom (S73).
+
+steps:
+  1. Events: set speeding to a non-130 value, Apply, reopen. Value matches.
+     Turn a toggle off, reopen. Server state matches. Force a failed save
+     and confirm the toast.
+  2. Build a track, zoom in, pan. Arrows follow the visible direction.
+  3. Open History and switch dates. First row is 00:00 when the API start
+     is before that day. Highlight stays on the last segment.
+  4. Enable grouping, zoom to max on two vehicles at one point. Markers
+     separate. Zoom out. They cluster again.
+  5. Speeding push in uk or en shows four lines and the speed number.
+     Tap opens the map popup on that event. A push arriving in foreground
+     does not navigate.
+  6. Open a vehicle popup that has CAN keys. Rows are visible. Record
+     the T8 stop report if the sample vehicle has none.
+
+out:
+  - sprints/89/report.ti
+
+done:
+  - Each step above is marked pass or fail in report.ti.
+  - No application source is changed in this task.

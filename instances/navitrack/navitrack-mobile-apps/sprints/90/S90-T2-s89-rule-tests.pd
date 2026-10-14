@@ -1,0 +1,33 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T2 — Lock the S89 client-bug rules
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  These functions are the bugfix contract. Test them without the map.
+
+steps:
+  1. vehicle-event-config-ui: edited speeding 1–360 and stop seconds
+     land on the merged config; stop under 90s is not saveable.
+  2. vehicleEventConfigPersisted: matching GET passes; a reverted
+     speedingValue fails.
+  3. useHistoryTimeline: first row is 00:00 when start is before the
+     selected day; later rows keep their clock; selection stays last.
+  4. push-display: speeding in en/uk/ru is four lines and does not use
+     eventNameRu; missing coordinates are not this test.
+  5. appendCanRows: a CAN key is shown; empty and "none" are omitted.
+  6. Spiderfy helper: two markers within 25m at max zoom are the
+     coincident set; a spread pair is not. Extract the predicate if
+     the leaflet call cannot run in happy-dom.
+
+out:
+  - src/screens/object-details/lib/vehicle-event-config-ui.test.ts
+  - src/api/domains/events.test.ts
+  - src/screens/object-details/hooks/useHistoryTimeline.test.tsx
+  - src/features/notifications/lib/push-display.test.ts
+  - src/features/map/lib/popup-rows/popup-row-appenders.test.tsx
+
+done:
+  - Each rule above has a failing case and a passing case.
+  - pnpm test exits 0.

@@ -1,0 +1,29 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S90 T1 — Unit tests for pure lib modules
+requires: [FRONTEND_DEV]
+sprint: S90
+
+context: |
+  Colocate *.test.ts next to the module, as config-app does for
+  src/lib. No React render. No network.
+
+steps:
+  1. Cover src/lib modules that return data: datetime, utils, sorting,
+     vehicle-telemetry, vehicle-name, track-ew-filter, map-bearing,
+     format-header-date-span, screen-date-range-init, settings-sound-map,
+     api-throttler.
+  2. Cover features that are pure: report-column-keys,
+     report-table-model, humanize-report-column-key, popup-telemetry,
+     popup-fuel parsers and formatters, popup-ignition, popup-address,
+     date-range-picker/lib/utils.
+  3. Each test names the input and the returned value. Skip modules that
+     only re-export.
+
+out:
+  - src/lib/*.test.ts
+  - src/features/**/*.test.ts for the pure files above
+
+done:
+  - pnpm test includes these files and exits 0.
+  - No test starts a dev server or reads a live vehicle.

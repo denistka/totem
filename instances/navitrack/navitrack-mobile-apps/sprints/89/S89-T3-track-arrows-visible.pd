@@ -1,0 +1,28 @@
+gate: OPEN
+v:4 role:dev x:frontend
+task: S89 T3 — Track arrows follow the visible segment
+requires: [FRONTEND_DEV]
+sprint: S89
+
+context: |
+  PolylineDecorator walks the whole line from the first point and stops at
+  500 arrows. Redraw runs on zoomend only. On a long track the visible
+  part can have no arrows, or arrows aimed along an off-screen chord.
+  S87 viewport spacing stays. Bearing stays screen atan2 + 90 on the
+  north-up icon.
+
+steps:
+  1. Place arrows only on segments that intersect the padded viewport.
+     Spend the 500 cap inside that viewport, not from the track start.
+  2. Redraw on moveend and zoomend. Remove markers in cleanup.
+  3. Keep TARGET_SPACING_PX as the density. Do not let full-track pixel
+     length widen the gap when zoomed in.
+  4. Check history segment arrows and the tracking polyline. Same component.
+
+out:
+  - src/features/map/components/PolylineDecorator.tsx
+
+done:
+  - Zoomed-in and panned track shows arrows along the visible direction.
+  - Arrow count stays within 500.
+  - Pan and zoom do not leave detached arrow markers.
