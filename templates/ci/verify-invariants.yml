@@ -1,0 +1,37 @@
+# Verify Totem invariants against the project code repo
+#
+# Wire into a project repository (paths.code), not only the totem clone.
+# Adjust TOTEM_ROOT / INSTANCE to match your layout.
+#
+# Required secrets/permissions: contents:read (default for GITHUB_TOKEN).
+
+name: Verify Invariants
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code repo
+        uses: actions/checkout@v4
+
+      - name: Checkout Totem (protocol + verifier)
+        uses: actions/checkout@v4
+        with:
+          repository: denistka/totem
+          path: totem
+          # pin a ref in real projects if desired:
+          # ref: main
+
+      - name: Verify invariants
+        run: |
+          node totem/scripts/verify-invariants \
+            --instance totem/instances/{{PROJECT}} \
+            --code .
+        # Or install hooks locally instead of CI:
+        #   node totem/scripts/install-invariant-hooks --code .

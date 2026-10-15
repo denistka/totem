@@ -28,7 +28,7 @@ optimization-sprint-flow:
   trigger: "When user says 'optimize totem' or 'extract lessons from X'."
   phase-1-audit: 
     - Read the last N sprints from `instances/{project}/sprints/`.
-    - Look for recurring architectural patterns, new UI components, or logic frozen in `INVARIANTS.md`.
+    - Look for recurring architectural patterns, new UI components, or logic frozen in `S*-INVARIANTS.md` / ```inv``` blocks.
   phase-2-global-backfill: 
     - Abstract the learned patterns into global "world best practices" and "anti-patterns".
     - Append these learnings directly into the relevant `stacks/` (e.g., `VUE.ti`) or `templates/` (e.g., `VUE3_VITE_TAILWIND.ti`).
@@ -36,11 +36,20 @@ optimization-sprint-flow:
     - Summarize the analyzed sprints into a dense historical digest (e.g. `instances/{project}/sprints/H1-S35_S45-Summary.md`).
   phase-4-prune: 
     - Delete intermediate chat logs, old `.po` files, and outdated `.md` files in the instance.
-    - Leave ONLY the essential `.ptl`, `.pd`, `.pa`, `INVARIANTS.md`, and the newly created historical digest.
+    - Leave ONLY the essential `.ptl`, `.pd`, `.pa`, `S*-INVARIANTS.md` / CURRENT-INVARIANTS.md, `INVARIANTS-LOG.md`, and the newly created historical digest.
+
+invariants-compaction:
+  trigger: "When INVARIANTS-LOG.md grows noisy or freeform S*-INVARIANTS need migration."
+  rules:
+    - Never rewrite or delete past log entries; append a COMPACT digest section or move old entries into `INVARIANTS-LOG-ARCHIVE-*.md`.
+    - Preserve ID chronology: every INV-<project>-NNN that ever existed remains discoverable.
+    - May regenerate CURRENT-INVARIANTS.md from active ```inv``` blocks only.
+    - Migration: assign INV-IDs + severity + assertion to freeform bullets; append ADD entries; keep original S*-INVARIANTS.md prose as narrative.
+    - Deprecations stay in the log; verifier skips status≠active.
 
 planning-lessons (from instance sprints):
   - **Scope by flow, not by widget:** Plan tasks in context of the full user flow and source-of-truth (e.g. reference app). One "small" task (e.g. copy component X) can pull types, styles, and multiple screens; scope at scenario/screen level, split into atomic .pd by dependency order.
-  - **Invariants before next sprint:** After each sprint, create or extend INVARIANTS.md with frozen decisions; link it in the next .ptl so the chain is explicit.
+  - **Invariants before next sprint:** After each sprint, create or extend S*-INVARIANTS.md (```inv``` + log); link it in the next .ptl so the chain is explicit.
   - **Delivery is a user flow:** The reviewer runs `git clone → install → start`. If ANY step fails, shows errors, or contradicts README — the project fails BEFORE code review begins. Treat delivery as the first test case.
 
 anti-patterns:
