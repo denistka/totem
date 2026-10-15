@@ -13,11 +13,10 @@ project:
   context:
     instance_hub: ./INSTANCE.ti           # load immediately after this file — all roles
     brief: ./BRIEF.md              # read this before planning any sprint
-    # STALE POINTER, left in place for history: S12 has not been the active sprint since June.
-    # The ACTIVE invariants live in-repo since S36 —
-    #   <paths.code>/apps/work-control/planning/S36-INVARIANTS.md
-    #   <paths.code>/apps/work-control/planning/S41-INVARIANTS.md  (2 claims falsified; see TOTEM_INDEX.ti)
-    invariants: ./S12-INVARIANTS.md   # historical only
+    # ACTIVE invariants: S43 (supersedes S36/S41). Same path as TOTEM_INDEX load-order #5.
+    # NOTE 2026-10-01: S43-INVARIANTS.md currently exists only locally / untracked in the
+    # project repo (DAWWWB-app-agent-dev planning tree) — not pushed to the remote.
+    invariants: ../../../../app-agent-io/DAWWWB-app-agent-dev/apps/work-control/planning/S43-INVARIANTS.md
     sprint_roadmap: ./intel/SPRINT-ROADMAP.md
     # PLANNING HOME IS IN-REPO since S36: <paths.code>/apps/work-control/planning/ (+ /sprints, /evidence).
     # Do NOT author .ptl/.pd in this external instance; ./sprints/ here is history only.
