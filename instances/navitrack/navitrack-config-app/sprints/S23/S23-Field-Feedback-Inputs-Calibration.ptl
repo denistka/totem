@@ -1,4 +1,4 @@
-gate: OPEN
+gate: CLOSED
 v:4 c:$$ m:navitrack-config role:planner
 sprint: S23
 title: Field Feedback — inputs, calibration, scan
@@ -19,7 +19,7 @@ intake:
   - "Calibration should read: current level, min level, max level (= today's 'type')"
   - "Graduation: start with one row; litres + button takes the current frequency → next row opens"
 open_for_append: true
-planning_status: executing
+planning_status: complete
 planned: 2026-10-14
 
 tasks:
@@ -30,7 +30,6 @@ tasks:
   - S23-T5-calibration-fields.pd
   - S23-T6-graduation-point-by-point.pd
 
-open_question: |
-  Full tank mode: the client listed current / min / max(=range) only. The calibration write
-  still needs the full-tank frequency (legacy "Частота повного бака"); kept as its own row.
-  Confirm with the client whether it stays or the current level replaces it at write time.
+resolved_2026-10-15: |
+  Full tank mode keeps the "Частота повного бака" row (user decision). Layout final:
+  current level, min level, full tank frequency (full mode), max level 1024/2048/4096.

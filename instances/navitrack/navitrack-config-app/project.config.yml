@@ -95,9 +95,9 @@ active_planning:
   post_rc: ./intel/POST-RC.md
   invariants: ./S01-INVARIANTS.md
   sprints: ./sprints/
-  completed_sprints: S01-S22
-  next_sprint: S23
-  s23_gate: OPEN
+  completed_sprints: S01-S23
+  next_sprint: none
+  s23_gate: CLOSED
   s23_planning_file: sprints/S23/S23-Field-Feedback-Inputs-Calibration.ptl
   s23_invariants: ./S23-INVARIANTS.md
   s22_gate: CLOSED
@@ -128,7 +128,7 @@ active_planning:
   s20_planning: complete
   s20_planning_file: sprints/S20/S20-Host-Compile.ptl
   s20_invariants: ./S20-INVARIANTS.md
-  open_intake: S23 client feedback 2026-10-14 (full-tank calibration layout to confirm)
+  open_intake: none
   dut_product: ./intel/NAVITRACK-BLE-DUT.md
   client_field: ./intel/CLIENT-FIELD-INTEL.md
   functionality_guide: ./intel/DUT-FUNCTIONALITY.md
