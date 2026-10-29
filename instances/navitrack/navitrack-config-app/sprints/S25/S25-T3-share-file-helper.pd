@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S25
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S25 T3 — src/lib/share.ts: shareFile({filename, text}) → new File([text], filename, {type:'text/plain'}); navigator.canShare({files}) ? navigator.share({files, title}) : existing shareText fallback. AbortError = silent. Keep setShareImpl injection.
+requires: [typescript, vitest]
+invariants: ../S24-INVARIANTS.md
+out: [src/lib/share.ts, src/lib/share.test.ts]
+cmd: [bun run test, bun run lint]
+done: [files path used when canShare true, fallback to text otherwise, cancel silent, tests for 3 paths, commit "S25-T3: shareFile helper"]

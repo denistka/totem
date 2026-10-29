@@ -1,0 +1,9 @@
+gate: LOCKED
+v:4 c:$ m:navitrack-config role:devops x:tauri
+sprint: S26
+task: S26 T6 — Release manager builds signed AAB: bun run android:build:aab with JAVA_HOME/ANDROID_HOME/NDK_HOME set; check versionCode (0.1.x → 1000x, monotonic with iOS build), versionName, signing (apksigner/jarsigner verify), size. Also an APK for side-load testing.
+requires: [DEVOPS, tauri, android]
+invariants: ../S25-INVARIANTS.md
+out: [src-tauri/gen/android/app/build/outputs/bundle/universalRelease/*.aab]
+cmd: [bun run android:build:aab, bun run android:build:apk]
+done: [signed AAB + APK built, versionCode reported, no version bump by dev (Release manager owns versions)]

@@ -1,0 +1,11 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:react
+sprint: S25
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+decision_2026-10-16: "Denis: 'Только текстом, Go' — both share buttons send TEXT via shareText; no files; shareFile removed."
+task: S25 T7 — Settings share text = Denis sample (Час … Частота повного бака; blank; Калібрувальна таблиця; "Об'єм, л: Частота, Гц"; 1:{min}; {calType}:{max}). Graduation share text = Час, Назва датчика, Серійний номер, Компанія, ТС; blank; Тарувальна таблиця; "Об'єм, л: Частота, Гц"; л:Гц per captured point. Labels in UI language. Empty table error stays.
+requires: [react, i18next, vitest]
+invariants: ../S24-INVARIANTS.md
+out: [src/lib/settings-export.ts, src/lib/settings-export.test.ts, src/lib/graduation-draft.ts, src/lib/share.ts, src/lib/share.test.ts, src/screens/sensor-session/share-settings.ts, src/screens/sensor-session/share-graduation.ts, src/locales/*.json]
+cmd: [bun run test, bun run lint, bun run build]
+done: [golden test = Denis sample byte for byte, shareFile gone, test+build green, no new src lint, commit "S25-T7: share settings and graduation as text"]

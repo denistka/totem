@@ -1,0 +1,36 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S24
+title: Landscape safe area — notch left / right
+objective: In landscape, no content, chrome or overlay sits under the notch / camera island, for both rotations (90° and 270°); backgrounds stay full-bleed.
+priority: P1
+dep: S23
+requires: [FRONTEND_DEV, MOBILE_TAURI, TAILWIND, QA]
+invariants: ../S23-INVARIANTS.md
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+stack_ref: @stacks/pwa/PWA.ti (horizontal safe area only on chrome/tappables, never on background)
+intake:
+  - "Denis 2026-10-15: phones with a notch in landscape — part of the content is under it; add an inset for both left and right rotation"
+findings:
+  - "index.html already has viewport-fit=cover; top/bottom insets already used (header, tab bar, BottomModal, body)"
+  - "Template: src/styles/screen-layout.css @media (orientation: landscape) — --pwa-spacing-x/-r = max(env(safe-area-inset-left/right),16px) on .content-wrapper (ported from S59-TF1). DEAD: ScreenContainer / screens add Tailwind px-4, utilities beat @layer components, so the inset never applies. Header + tab bar get no left/right inset at all."
+  - "navitrack-apps/draft/PWA-template is an empty folder; totem stacks/pwa (data-notch-side + RAF ticker) is overkill: CSS env() already reports the correct side per rotation in WKWebView"
+decision: keep the template idea (max(env(),16px) tokens), fix how it is applied; CSS only, no JS notch detection.
+open_for_append: true
+planning_status: complete
+planned: 2026-10-15
+
+tasks:
+  - S24-T1-safe-x-tokens.pd
+  - S24-T2-chrome-insets.pd
+  - S24-T3-overlay-insets.pd
+  - S24-T4-device-verify.pd
+
+questions:
+  - "Android: is the Tauri Android build edge-to-edge (insets non-zero)? If not, T4 checks iOS only."
+  - "Tab bar in landscape: inset the whole bar or only its buttons (background full-bleed is the default plan)?"
+
+resolved_2026-10-15: |
+  Denis Go. Platform: iOS only (Android out of scope for S24).
+  Tab bar landscape: inset the buttons row only; background full width.

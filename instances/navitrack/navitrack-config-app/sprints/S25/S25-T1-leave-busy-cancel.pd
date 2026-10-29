@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:react
+sprint: S25
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S25 T1 — leave sheet while busy: Save shows a progress label (connecting / writing, from status) instead of a grey dead button, plus a Cancel action → cancelConnect(); discard renamed 'Вийти без збереження' / 'Leave without saving' / 'Выйти без сохранения' and stays enabled always.
+requires: [react, zustand, i18next, vitest]
+invariants: ../S24-INVARIANTS.md
+out: [src/screens/sensor-session/SensorSessionScreen.tsx (or extracted UnsavedLeaveSheet.tsx if >150 lines), src/screens/sensor-session/UnsavedLeaveSheet.test.tsx, src/locales/en.json, src/locales/ru.json, src/locales/uk.json]
+cmd: [bun run test, bun run lint]
+done: [busy → label + Cancel visible, Cancel clears busy, discard enabled while busy, i18n en/ru/uk, test 'connection lost (busy reconnect) → can exit', test green, no new lint issues, commit "S25-T1: leave sheet usable while busy"]

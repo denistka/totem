@@ -1,0 +1,11 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:zustand
+sprint: S27
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+decision_2026-10-29: "Denis: leave sheet includes graduation edits incl. row deletion."
+task: S27 T2b — graduation rows count as unsaved: session store keeps graduationDirty (rows ≠ last written/read table); requestLeave/openDeviceLogs prompt when dirty; saveAndLeave writes the graduation table (writeGraduationTable) when dirty; discardAndLeave drops the dirty flag (draft keeps rows). GraduationTab reports dirty on edit/capture/delete; cleared on gradWriteOk / readback.
+requires: [react, zustand, vitest]
+invariants: ../S26-INVARIANTS.md
+out: [src/store/useSensorSessionStore.ts, src/store/useGraduationChromeStore.ts, src/screens/sensor-session/GraduationTab.tsx, co-located tests]
+cmd: [bun run test, bun run lint, bun run build]
+done: [delete row → back → sheet shows; save writes table; discard exits; test green, commit "S27-T2b: leave guard covers graduation"]

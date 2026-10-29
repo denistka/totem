@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:qa x:tauri
+sprint: S25
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S25 T6 — iPhone check (run FIRST as a spike after T3): share sheet opens with a .txt attachment in Telegram and Viber; if WKWebView rejects files → stop, ask Denis: tauri-plugin-sharesheet vs text-only. Then leave-guard with BT off / sensor out of range. Draft S25-INVARIANTS.md.
+requires: [QA, MOBILE_TAURI]
+invariants: ../S24-INVARIANTS.md
+out: [../S25-INVARIANTS.md]
+cmd: [bun run test, bun run lint, bun run build]
+done: [files arrive as .txt in Telegram + Viber, leave works offline, invariants drafted for Denis]

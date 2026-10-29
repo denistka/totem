@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:qa x:tauri
+sprint: S27
+task: S27 T7 — iPhone + Android (emulator Pixel_9 ok for UI): delete middle/last row, confirm/cancel/undo, write table to sensor and read back; switch to Polski — header, tabs, sheets, long Polish strings fit (no overflow in 5-button action grids), share texts in pl. Draft S27-INVARIANTS.md; native Polish review checklist.
+requires: [QA]
+invariants: ../S26-INVARIANTS.md
+out: [../S27-INVARIANTS.md]
+cmd: [bun run test, bun run lint, bun run build]
+done: [checks passed by Denis, invariants drafted]

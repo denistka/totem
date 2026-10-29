@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:tailwind
+sprint: S24
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S24 T2 — fixed chrome respects the notch: AppHeaderCollapsedRow (px-2 → inner padding from --safe-left/right minus 8px or calc equivalent), AppHeaderExpandedMenu content, MobileShellTabBar buttons row. Glass background stays edge-to-edge; only inner content is inset. Centered title max-width accounts for both insets.
+requires: [react, tailwind, vitest]
+invariants: ../S23-INVARIANTS.md
+out: [src/shell/components/app-header/AppHeaderCollapsedRow.tsx, src/shell/components/app-header/AppHeaderExpandedMenu.tsx, src/shell/components/MobileShellTabBar.tsx, co-located *.test.tsx]
+cmd: [bun run test, bun run lint]
+done: [header/tab bar content inset left+right, backgrounds full-bleed, touch targets ≥44px kept, tests assert inset classes on inner row not on fixed container, test+lint green, commit "S24-T2: header/tab bar safe-area insets"]

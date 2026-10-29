@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:android
+sprint: S26
+task: S26 T3 — AndroidManifest: drop template AndroidTV (leanback uses-feature + LEANBACK_LAUNCHER); uses-feature bluetooth_le required=true; cap ACCESS_FINE/COARSE_LOCATION and BLUETOOTH_ADMIN at maxSdkVersion 30 (tools:replace over blec merge); keep BLUETOOTH_SCAN neverForLocation + BLUETOOTH_CONNECT; portrait+landscape allowed. Check runtime permission prompt path in blec on 12+ and ≤11.
+requires: [android, tauri-plugin-blec]
+invariants: ../S25-INVARIANTS.md
+out: [src-tauri/gen/android/app/src/main/AndroidManifest.xml]
+cmd: ["./gradlew :app:processReleaseMainManifest (merged manifest review)"]
+done: [merged manifest lists only needed perms, no TV launcher, commit "S26-T3: Android manifest for BLE + Play"]

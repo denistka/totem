@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:devops x:android
+sprint: S26
+task: S26 T2 — release signing reused from navitrack-mobile-apps. Denis copies navitrack-release.jks (+ upload_certificate.pem, fingerprints.txt) to ~/.navitrack/keys/ (chmod 600). app/keystore.properties (gitignored, never committed) = same 4 keys as mobile-apps, storeFile absolute to ~/.navitrack/keys/navitrack-release.jks, alias navitrack_upload. Copy the keystoreProperties loader + signingConfigs.release + release minify/proguard block from mobile-apps app/build.gradle.kts; fail clearly if the file is missing. Env: JAVA_HOME=Android Studio JBR, ANDROID_HOME, NDK_HOME=ndk/29.0.13846066 (scripts/android-env.sh, no secrets).
+requires: [android, gradle]
+invariants: ../S25-INVARIANTS.md
+out: [src-tauri/gen/android/app/build.gradle.kts, src-tauri/gen/android/.gitignore, scripts/android-env.sh]
+cmd: ["git ls-files | grep -iE 'jks|keystore|\\.pem' (must be empty)", "keytool -list (alias + SHA-1 only, matches fingerprints.txt)"]
+done: [release signed with navitrack_upload, SHA-1 matches, no key material or passwords in git, commit "S26-T2: release signing (reused upload key)"]

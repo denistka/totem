@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:i18n
+sprint: S27
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S27 T5 — i18next plural forms for every {{count}} string: en _one/_other; uk/ru/pl _one/_few/_many/_other (Intl.PluralRules). Start with sensorSession.graduation.rows; grep all {{count}} usages.
+requires: [i18next, vitest]
+invariants: ../S26-INVARIANTS.md
+out: [src/locales/*.json, src/locales/plurals.test.ts]
+cmd: [bun run test, bun run build]
+done: [test 1/2/5/21 rows correct in uk/ru/pl/en, commit "S27-T5: plural forms"]

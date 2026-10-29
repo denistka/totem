@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:react
+sprint: S25
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S25 T5 — Settings (standard) tab Share button, visible only when unlocked. Filename via field-ux.ts (navitrack-dut-settings-{name}.txt). Legacy body (SensorSettingsHelper.cs:42-75): "Label: value" lines — Time (dd.MM.yyyy HH:mm:ss), Sensor name, Serial, Company, Vehicle, Network address, Sensor length, Firmware, Period, Averaging, Calibration type, Min level, Max level; blank line; calibration title; "{Fuel}: {Frequency}"; pairs "{a}:{b}" in legacy order. New lib src/lib/settings-export.ts.
+requires: [react, i18next, vitest]
+invariants: ../S24-INVARIANTS.md
+out: [src/lib/settings-export.ts, src/lib/settings-export.test.ts, src/screens/sensor-session/StandardModeTab.tsx (or its actions component), src/locales/*.json]
+cmd: [bun run test, bun run lint]
+done: [test compares with sample navitrack-dut-settings-Navi_7885.txt structure, hidden when locked, commit "S25-T5: share sensor settings"]

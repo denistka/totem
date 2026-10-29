@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:qa x:i18n
+sprint: S27
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S27 T6 — locale guards: locale-copy.test.ts covers pl; new parity test — every locale has exactly en's key set (plural suffixes normalised), same {{placeholders}} per key; fails CI on drift.
+requires: [vitest]
+invariants: ../S26-INVARIANTS.md
+out: [src/locales/locale-copy.test.ts, src/locales/locale-parity.test.ts]
+cmd: [bun run test]
+done: [parity green for en/uk/ru/pl, commit "S27-T6: locale parity guard"]

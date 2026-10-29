@@ -1,0 +1,74 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S26
+title: Android release — Google Play (internal testing)
+objective: Signed AAB of navitrack-config-app (com.navitrack.configurator) on the Play internal testing track; BLE, notch/system-bar insets and share work on Android.
+epic: E21
+priority: P0
+dep: S25
+base: main @ 2be0191 (0.1.9)
+requires: [MOBILE_TAURI, ANDROID, FRONTEND_DEV, DEVOPS, QA]
+invariants: ../S25-INVARIANTS.md (draft; S24-INVARIANTS.md otherwise)
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "Denis 2026-10-17: Давай андроид готовить"
+audit_2026-10-17:
+  ready:
+    - "SDK ~/Library/Android/sdk: platforms 29/34/36, build-tools 34/35/36.1, NDK 29.0.13846066, emulator"
+    - "rustup targets: aarch64/armv7/i686/x86_64-linux-android"
+    - "Java: Android Studio JBR 21 present (no system java)"
+    - "package.json: android:dev, android:build, android:build:apk, android:build:aab"
+    - "tauri.conf: identifier com.navitrack.configurator, bundle.android.minSdkVersion 28; gradle compile/targetSdk 36"
+    - "versionCode derived by Tauri from version (0.1.3 → 1003; 0.1.9 → 1009) via gen/android/app/tauri.properties"
+    - "BLE permissions come from tauri-plugin-blec 0.12 manifest merge: BLUETOOTH(max30), BLUETOOTH_ADMIN, FINE/COARSE_LOCATION, BLUETOOTH_CONNECT, BLUETOOTH_SCAN neverForLocation"
+    - "MainActivity calls enableEdgeToEdge()"
+  gaps:
+    - "src-tauri/gen is gitignored — gen/android (manifest, gradle, MainActivity) not versioned"
+    - "JAVA_HOME / ANDROID_HOME / NDK_HOME unset in shell"
+    - "No release signing: no keystore, no keystore.properties, no signingConfigs in app/build.gradle.kts"
+    - "Manifest keeps template AndroidTV leanback feature + LEANBACK_LAUNCHER; location not capped at SDK 30; no uses-feature bluetooth_le"
+    - "Web Share API is not available in Android WebView → shareText silently copies to clipboard"
+    - "S24 safe-area is iOS-only; env(safe-area-inset-*) in Android WebView with edge-to-edge is unverified"
+  reuse: "navitrack-mobile-apps (see reuse_2026-10-17)"
+reuse_2026-10-17:
+  source: navitrack-mobile-apps (bug-fix-oct-2026 == main for gen/android, Cargo, tauri.conf)
+  copy:
+    - "Upload key keystores/navitrack-release.jks (alias navitrack_upload, SHA-1 92:34:CC:…:9A:7D) → copied by Denis to ~/.navitrack/keys/ (outside any repo)"
+    - "app/build.gradle.kts: keystoreProperties loader + signingConfigs.release + release isMinifyEnabled/proguard block"
+    - "keystore.properties key names (storeFile, storePassword, keyAlias, keyPassword) — file gitignored, absolute storeFile"
+    - "Policy: gen/android tracked in git (mobile-apps README §structure)"
+    - "Play screenshots layout screens/play-market/*.jpg (structure only; new screenshots for config-app)"
+    - "keystores/upload_certificate.pem + fingerprints.txt (public parts) for Play Console upload-key registration — kept with the key, not in repo"
+  not_available_there:
+    - "No native share, no WindowInsets/cutout bridge (MainActivity = enableEdgeToEdge only), no BLE (GPS app), no fastlane/CI, no service account, no Data safety / privacy docs (only planned in mobile-apps S27 T4)"
+  skip:
+    - "google-services.json / FCM, biometric, keystore plugins — not used by config-app"
+    - "Committed keystore + keystore.properties pattern — NEVER (secrets)"
+decisions_2026-10-17: "Denis (no Go yet): reuse max from mobile-apps incl. upload key; native share sheet on Android; track gen/android; minSdk 28."
+play_upload_key_note: "One upload key may sign several apps. com.navitrack.configurator is a NEW Play app: enable Play App Signing (Google-generated app signing key) and register the reused upload key (first AAB signed with it, or upload_certificate.pem). No sign in docs that com.navitrack.configurator already exists in Play — Denis to confirm in Console."
+open_for_append: true
+planning_status: complete
+planned: 2026-10-17
+
+track-setup:
+  tasks: [S26-T1-track-gen-android.pd, S26-T2-release-signing.pd, S26-T3-manifest-permissions.pd]
+track-ux:
+  tasks: [S26-T4-android-insets.pd, S26-T5-android-share.pd]
+track-release:
+  tasks: [S26-T6-build-aab.pd, S26-T7-device-check.pd, S26-T8-play-console.pd]
+
+risks:
+  - "SECURITY: navitrack-mobile-apps (private GitHub) tracks keystores/navitrack-release.jks, keystores/keystore.properties AND gen/android/app/keystore.properties with passwords. Reusing that key for a 2nd app widens the blast radius; recommend removing them from that repo history and keeping the key only in ~/.navitrack/keys + password manager."
+  - "Same upload key for both apps: if it leaks, both apps need an upload-key reset via Play support."
+  - "Upload key loss = Play support reset; keep keystore + passwords in a password manager, outside git."
+  - "Android WebView may report 0 for env(safe-area-inset-*) → content under status/nav bar or cutout; needs native WindowInsets bridge (T4)."
+  - "Location permission on SDK ≤30 is required by BLE scan on old phones; Play Data safety must declare it (not collected/shared)."
+  - "First Play upload must be manual in Console (API upload works only after the app exists)."
+
+questions:
+  - "Same Play developer account as com.navitrack.navitrack? Does com.navitrack.configurator already exist there (draft)?"
+  - "Privacy policy URL (none in mobile-apps) — host where?"
+  - "Clean keystore + passwords out of navitrack-mobile-apps git (separate task in that instance)?"
+
+resolved_2026-10-17: "Denis Go for S26. OPEN: ptl, T1-T5, T7. LOCKED: T6 (Release manager build), T8 (Denis, Play Console)."

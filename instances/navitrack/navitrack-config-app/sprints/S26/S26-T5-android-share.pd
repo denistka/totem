@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:tauri
+sprint: S26
+task: S26 T5 — share on Android (Web Share API missing in WebView). Denis 2026-10-17: native system share sheet (Telegram/Viber). Nothing to reuse in mobile-apps. Add a share plugin (e.g. tauri-plugin-sharesheet, Android ACTION_SEND text/plain) wired via setShareImpl on Android only, text only (S25 invariant 3); iOS keeps navigator.share. Logs share (app-log.ts) same path.
+requires: [tauri, react, vitest]
+invariants: ../S25-INVARIANTS.md
+out: [src/lib/share.ts, src/lib/share.test.ts, src/main.tsx or platform init, src-tauri/Cargo.toml, src-tauri/capabilities/*.json, package.json]
+cmd: [bun run test, bun run lint, bun run build]
+done: [settings + graduation + logs reach Telegram/Viber via the Android share sheet, iOS path unchanged, commit "S26-T5: Android share"]

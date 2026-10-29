@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:react
+sprint: S25
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S25 T2 — saveAndLeave failure (writeFail / calFail / calError_*) shows the reason inside the sheet (existing status strings) and keeps 'Вийти без збереження' as the clear way out; retry Save allowed.
+requires: [react, zustand, i18next, vitest]
+invariants: ../S24-INVARIANTS.md
+out: [src/screens/sensor-session/UnsavedLeaveSheet.tsx, src/screens/sensor-session/UnsavedLeaveSheet.test.tsx, src/store/useSensorSessionStore.ts (only if a status reset is needed)]
+cmd: [bun run test, bun run lint]
+done: [write error text visible in sheet, leave works after failure, test 'save fails → reason shown → leave exits', test green, commit "S25-T2: leave sheet shows write error"]

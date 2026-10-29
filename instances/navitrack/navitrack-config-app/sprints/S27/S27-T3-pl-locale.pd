@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:i18n
+sprint: S27
+task: S27 T3 — src/locales/pl.json: full key set of en.json (387 keys incl. legacyExport.* share labels and the 9 advanced.* keys), machine-translated from uk/en with sensor terms glossary (tarowanie, częstotliwość pełnego zbiornika, …); top-level "_meta": { "review": "machine — needs native review" } (ignored by UI). Also fill the 9 missing advanced.* keys in uk/ru.
+requires: [i18next]
+invariants: ../S26-INVARIANTS.md
+out: [src/locales/pl.json, src/locales/uk.json, src/locales/ru.json]
+cmd: [bun run test, bun run build]
+done: [pl.json key-for-key with en, uk/ru gaps closed, no 'DUT' / '111', commit "S27-T3: Polish locale (machine, needs review)"]

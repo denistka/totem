@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:react
+sprint: S27
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S27 T2 — delete any captured graduation row (UX per .ptl ux_proposal_delete): trash IconButton 44×44 at row end (not on the empty capture row), confirm BottomModal with point values + note "зміни запишуться в датчик після «Записати»", then removeAt(index) → openRows() → autosave; renumber; Undo toast 5 s ('Повернути'). Remove the footer 'Видалити останню' button + its i18n key (Denis 2026-10-29). Extract GraduationRowItem.tsx so GraduationTab shrinks toward ≤150 lines. i18n keys en/uk/ru (deleteRow, deleteConfirm, deleted, undo).
+requires: [react, i18next, vitest]
+invariants: ../S26-INVARIANTS.md
+out: [src/screens/sensor-session/GraduationRowItem.tsx, src/screens/sensor-session/GraduationRowItem.test.tsx, src/screens/sensor-session/GraduationTab.tsx, src/screens/sensor-session/GraduationTab.test.tsx, src/lib/graduation-draft.ts (removeRowAt), src/lib/graduation-draft.test.ts, src/locales/*.json]
+cmd: [bun run test, bun run lint, bun run build]
+done: [tests — delete middle row keeps others' values, no icon on empty tail, cancel keeps row, undo restores, numbering 1..n, draft saved, share text (S25) reflects deletion; touch target ≥44px; commit "S27-T2: delete graduation rows"]

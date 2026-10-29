@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:qa x:tauri
+sprint: S24
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S24 T4 — verify on device and close: iPhone with notch/island in portrait, landscape 90° and 270° (Catalog, Sensors, Sensor session, expanded menu, BottomModal); Android if edge-to-edge. Write S24-INVARIANTS.md (horizontal insets only via --safe-left/--safe-right; inset content, not backgrounds). Bump version per release rules.
+requires: [QA, MOBILE_TAURI]
+invariants: ../S23-INVARIANTS.md
+out: [../S24-INVARIANTS.md, package.json, src-tauri/tauri.conf.json, src-tauri/Cargo.toml]
+cmd: [bun run test, bun run lint, bun run build]
+done: [screenshots both rotations reviewed by Denis, invariants drafted for Denis approval, build green]

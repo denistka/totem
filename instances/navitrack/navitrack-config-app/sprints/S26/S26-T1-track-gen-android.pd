@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:devops x:tauri
+sprint: S26
+task: S26 T1 — version the Android project: .gitignore ignores src-tauri/gen/apple and build outputs, not gen/android; gen/android/.gitignore keeps build/, .gradle/, local.properties, keystore.properties, *.jks, *.keystore ignored. Commit current gen/android as-is (no edits). Same policy as mobile-apps (README), minus its committed keystore.properties.
+requires: [tauri, git]
+invariants: ../S25-INVARIANTS.md
+out: [.gitignore, src-tauri/gen/android/**]
+cmd: [git status --short, "git check-ignore -v src-tauri/gen/android/local.properties"]
+done: [gen/android tracked, no secrets/local paths tracked, commit "S26-T1: track gen/android"]

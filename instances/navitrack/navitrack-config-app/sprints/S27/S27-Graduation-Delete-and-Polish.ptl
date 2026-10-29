@@ -1,0 +1,60 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S27
+title: Field requests — delete graduation rows, Polish language
+objective: Installer can delete any captured graduation row; the app speaks Polish (pl) next to en/uk/ru, including share texts.
+epic: E20
+priority: P1
+dep: S26
+base: main @ 7814b45 (0.1.9, S24–S26 merged)
+requires: [FRONTEND_DEV, I18N, QA]
+invariants: ../S26-INVARIANTS.md (draft; chain S25 → S24 → S23)
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+intake:
+  - "Client 2026-10-29: Градуировка — ability to delete rows"
+  - "Client 2026-10-29: add Polish language"
+findings:
+  - "GraduationTab.tsx (286 lines, >150): rows <li key={index}>; № | fuel NumericInput | frequency NumericInput or 'Зняти поточну частоту' capture button (h-11); footer has only 'removeLast' (drops the last captured row). openRows() keeps one trailing empty row; capturedRows() = frequency > 0."
+  - "Graduation edits are autosaved as a draft (remember/saveGraduationDraft), not part of sessionEditsUnsaved → the leave sheet does not guard graduation rows today."
+  - "i18n: i18next, resources en/uk/ru, supportedLngs [en, uk, ru]; LanguageSelector.tsx list; language-sync.ts maps uk↔ua (AppLanguage 'en'|'ua'|'ru' in useAppSettingsStore)."
+  - "Keys: en 387, uk 378, ru 378 — uk/ru miss 9 advanced.* keys (advanced.disabled*, advanced.params.p1..p3Fuel/Freq)."
+  - "No plural forms anywhere (0 *_one/_few/_many keys); e.g. graduation.rows '{{count}} рядків' is wrong for 1/2–4 in uk/ru — pl needs one/few/many too."
+  - "Dates: share texts use fixed dd.MM.yyyy HH:mm:ss (keep); LogsFilterSheet / StandardLiveTelemetry use toLocale*(locale) → pl-PL works once locale maps."
+  - "locale-copy.test.ts checks every dict (no 'DUT', no '111') — pl must be added there."
+open_for_append: true
+planning_status: complete
+planned: 2026-10-29
+
+track-graduation:
+  tasks: [S27-T1-graduation-row-ids.pd, S27-T2-graduation-delete-row.pd, S27-T2b-graduation-leave-guard.pd]
+track-i18n:
+  tasks: [S27-T3-pl-locale.pd, S27-T4-pl-picker-sync.pd, S27-T5-plurals.pd, S27-T6-locale-parity-test.pd]
+track-verify:
+  tasks: [S27-T7-device-verify.pd]
+
+ux_proposal_delete: |
+  Each captured row gets a trash icon button at the row end (44×44 px hit area, icon 18 px, muted; destructive colour on press).
+  No icon on the trailing empty row (the capture row). Tap → small BottomModal confirm "Видалити точку N (X л : Y Гц)?" [Скасувати] [Видалити].
+  After delete: rows renumber (№ = index + 1), openRows() keeps the single empty tail, draft autosaves, toast "Точку видалено" with Undo (5 s).
+  Swipe-to-delete rejected: conflicts with vertical scroll + NumericInput focus, poor discoverability for installers.
+  'removeLast' footer button stays (fast path) or is removed — Denis decides.
+
+risks:
+  - "key={index} with deletion in the middle → React reuses inputs and shows stale values; needs stable row ids first (T1)."
+  - "Deleting a row changes the sensor table only on next 'Записати' — user may think it is deleted on the sensor; confirm text says so."
+  - "Machine-translated Polish may be wrong for technical terms (тарування, частота повного бака) — needs native review before release."
+  - "Adding plurals touches uk/ru strings already in use; tests that assert exact copy may need updates."
+  - "Store AppLanguage union ('en'|'ua'|'ru') is persisted; adding 'pl' must keep old saved values valid."
+
+questions:
+  - "Delete: confirm sheet + Undo, or Undo only (faster)? Keep 'Видалити останню' footer button?"
+  - "Should graduation edits (incl. deletes) trigger the leave sheet like settings do, or stay autosaved drafts?"
+  - "Polish: machine translation now and native review later (flag in file) — ok? Who reviews?"
+  - "Auto-detect: Polish phones (navigator pl-*) open in pl by default — ok?"
+
+resolved_2026-10-29: |
+  Denis Go (t41u 14:05). (1) per-row trash + confirm sheet + 5 s 'Повернути' undo; REMOVE 'Видалити останню'.
+  (2) Leave sheet 'Зберегти зміни?' includes graduation edits incl. row deletion (save = write table to sensor).
+  (3) pl auto-detect from system pl-*; machine translation flagged for native review.
+  Version bump 0.1.10 prepared on the branch (Release manager releases).

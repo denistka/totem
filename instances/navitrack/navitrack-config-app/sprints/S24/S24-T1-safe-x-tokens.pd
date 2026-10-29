@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:tailwind
+sprint: S24
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S24 T1 — horizontal safe-area tokens that actually apply. theme.css :root: --safe-left: max(env(safe-area-inset-left,0px),16px), --safe-right: max(env(safe-area-inset-right,0px),16px) (portrait = 16px = old px-4). Replace the dead landscape block in screen-layout.css (--pwa-spacing-*) with the tokens; ScreenContainer and raw content-wrapper screens (Catalog, InstallationReportIntro) use pl-[var(--safe-left)] pr-[var(--safe-right)] instead of px-4. No vertical padding utilities on .content-wrapper (S23 invariants chain).
+requires: [react, tailwind, vitest]
+invariants: ../S23-INVARIANTS.md
+out: [src/styles/theme.css, src/styles/screen-layout.css, src/ui/ScreenContainer.tsx, src/ui/ScreenContainer.test.tsx, src/screens/catalog/CatalogScreen.tsx, src/screens/installation-report/InstallationReportIntroScreen.tsx]
+cmd: [bun run test, bun run lint]
+done: [no px-4 next to content-wrapper, --pwa-spacing-* removed (no dead code), ScreenContainer.test asserts safe-left/right classes and no py-/pt-/pb-, test+lint green, commit "S24-T1: horizontal safe-area tokens"]

@@ -1,0 +1,9 @@
+gate: LOCKED
+v:4 c:$ m:navitrack-config role:pm x:play-console
+sprint: S26
+task: S26 T8 — Denis manual in Play Console: create app (NaviTrack Config, free, package com.navitrack.configurator); Play App Signing on (Google-generated app signing key), register the reused upload key navitrack_upload (first AAB signed with it / upload_certificate.pem); store listing (uk/ru/en, icon 512 from src-tauri/icons, feature graphic 1024x500, screenshots in the mobile-apps screens/play-market layout); Data safety (location for BLE scan on ≤11 — not collected/shared; no account); content rating; target audience; privacy policy URL; upload first AAB manually to Internal testing + testers list. Then Google Cloud service account (JSON) with Release manager access in Play Console → Users and permissions, for API uploads by Релиз-менеджер.
+requires: [PM]
+invariants: ../S25-INVARIANTS.md
+out: []
+cmd: []
+done: [internal testing release live for testers, service account JSON handed to Release manager (stored outside git)]

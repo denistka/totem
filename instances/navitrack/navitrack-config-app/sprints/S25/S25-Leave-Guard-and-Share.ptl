@@ -1,0 +1,43 @@
+gate: OPEN
+v:4 c:$$ m:navitrack-config role:planner
+sprint: S25
+title: Field feedback — leave guard, share graduation & settings
+objective: Installer can always leave a sensor with unsaved edits; graduation table and settings can be sent as .txt (legacy format) via the iOS share sheet (Telegram, Viber).
+epic: E20
+priority: P0
+dep: S24
+requires: [FRONTEND_DEV, MOBILE_TAURI, QA]
+invariants: ../S24-INVARIANTS.md (draft; falls back to ../S23-INVARIANTS.md until approved)
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+quality_mandate: ../intel/CODE-QUALITY-MANDATE.md
+platform: iOS only
+intake:
+  - "Client 2026-10-16: leave sheet 'Зберегти зміни?' — 'Зберегти' inactive, cannot exit the sensor"
+  - "Graduation tab: save to file and send via messenger (Telegram, Viber)"
+  - "Settings tab: send settings via messenger (client already sends navitrack-dut-settings-Navi_7885.txt from the legacy app)"
+findings:
+  - "Save is disabled only by `busy` (SensorSessionScreen.tsx:254-275); busy stays true while ensureSession retries up to connectWaitSec after a link loss; writeFail keeps the sheet open with no reason. Discard always exits but reads as 'reject', not 'leave'."
+  - "Legacy: ShareCalibrationData_btn (SensorPage_CalibrationTab.cs:131) + CalibrationDataHelper.cs:44-62; ShareSettings_btn after unlock (SensorPage_StandardModeTab.cs:184, :554) + SensorSettingsHelper.cs:42-75. Share.RequestAsync(ShareFile)."
+  - "New app: src/lib/share.ts shares text only; formatGraduationTxt (graduation-draft.ts:67) is unused and not legacy format; field-ux.ts:19-21 has the legacy settings filename helper, unused."
+open_for_append: true
+planning_status: complete
+planned: 2026-10-16
+
+track-leave:
+  tasks: [S25-T1-leave-busy-cancel.pd, S25-T2-leave-error-exit.pd]
+track-share:
+  tasks: [S25-T3-share-file-helper.pd, S25-T4-graduation-share.pd, S25-T5-settings-share.pd, S25-T6-device-verify.pd, S25-T7-share-as-text.pd]
+
+risks:
+  - "navigator.share({files}) in Tauri iOS WKWebView: supported on iOS 15+ in Safari, unverified in WKWebView — T6 verifies first on device; fallback text share loses the file."
+  - "Legacy calibration filename carries 'dd.MM.yyyy HH:mm:ss' (':' and space) — legal on iOS but some messengers rename; keep exact unless Denis decides otherwise."
+  - "Legacy settings file writes calibration pairs swapped (data[i+1]:data[i]) vs graduation file (data[i]:data[i+1]) — reproduce as-is to match what the office already parses."
+
+questions:
+  - "Base branch: s24-landscape-safe-area (not merged) or main? Default plan: branch from S24 after Denis merges it."
+  - "If WKWebView cannot share files: add tauri-plugin-sharesheet (native) or accept text-only share?"
+  - "Localized labels in the files (legacy used UI language): keep current UI language, or always Ukrainian?"
+
+resolved_2026-10-16: |
+  Denis Go (defaults, questions unanswered): branch s25-leave-guard-share from s24-landscape-safe-area;
+  share fallback = text only (no native plugin); file labels in UI language like the legacy app.

@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:android
+sprint: S26
+task: S26 T4 — Android system-bar / cutout insets (mobile-apps has only enableEdgeToEdge — nothing more to reuse). First verify env(safe-area-inset-*) on device (edge-to-edge). If 0: MainActivity WindowInsetsCompat (systemBars|displayCutout) → evaluateJavascript sets --android-inset-top/right/bottom/left on html; CSS tokens become max(env(...), var(--android-inset-*, 0px)) in theme.css / screen-layout.css (S24 tokens, no new paddings). layoutInDisplayCutoutMode shortEdges; status bar icon contrast per theme.
+requires: [android, kotlin, tailwind, vitest]
+invariants: ../S24-INVARIANTS.md
+out: [src-tauri/gen/android/app/src/main/java/com/navitrack/configurator/MainActivity.kt, src/styles/theme.css, src/styles/screen-layout.css, co-located test for token CSS]
+cmd: [bun run test, bun run lint, bun run build]
+done: [header/tab bar/content clear of status bar, nav bar and cutout in portrait + both landscapes, S24 invariants hold, commit "S26-T4: Android insets"]

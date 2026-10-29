@@ -1,0 +1,10 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:dev x:react
+sprint: S27
+test_mandate: ../intel/TEST-COVERAGE-MANDATE.md
+task: S27 T4 — wire pl: i18n.ts resources + supportedLngs [en, uk, ru, pl]; LanguageSelector adds { code: 'pl', name: 'Polski' }; AppLanguage += 'pl' with language-sync mapping (old persisted 'ua'/'ru'/'en' stay valid); detector maps pl-* → pl; toLocale* callers get 'pl-PL'. Share texts (S25) use legacyExport.* in pl; dd.MM.yyyy HH:mm:ss stays fixed.
+requires: [react, i18next, zustand, vitest]
+invariants: ../S26-INVARIANTS.md
+out: [src/config/lib/i18n.ts, src/ui/LanguageSelector.tsx, src/lib/language-sync.ts, src/lib/language-sync.test.ts, src/store/useAppSettingsStore.ts, src/screens/sensor-session/share-settings.test.ts]
+cmd: [bun run test, bun run lint, bun run build]
+done: [pl selectable and persisted, settings share text in pl test, old saved languages migrate untouched, commit "S27-T4: Polish in language picker"]

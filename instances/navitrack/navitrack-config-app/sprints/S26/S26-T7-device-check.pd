@@ -1,0 +1,9 @@
+gate: OPEN
+v:4 c:$ m:navitrack-config role:qa x:android
+sprint: S26
+task: S26 T7 — device checklist (Android 12+ and one ≤11 if available): first-run BLE + location prompts; scan, unlock, read/write settings, graduation write; leave sheet offline (S25); portrait + landscape both ways — no content under status bar/nav bar/cutout; share settings/graduation/logs; dark/light; back button leaves session via leave sheet; app resume keeps session.
+requires: [QA]
+invariants: ../S25-INVARIANTS.md
+out: [../S26-INVARIANTS.md (draft)]
+cmd: []
+done: [checklist passed by Denis, S26-INVARIANTS.md drafted]
