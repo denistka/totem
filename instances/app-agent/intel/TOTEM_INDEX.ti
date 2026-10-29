@@ -12,6 +12,8 @@ project:
   code: ../../../../app-agent-io/DAWWWB-app-agent-dev   # LIVE target (branch write-docs-in-auto) — see agent-rules mismatch warning
   stack: [Nuxt 4, Vue 3, TypeScript, Bun, Turborepo, MCP, Supabase]
   status: S44 CLOSED 2026-08-25 — upstream PR built on real develop; see upstream_pr below.
+  # POST-S44 STATE 2026-10-01 — see post_s44_state below. Loop still closed; PR still unpushed;
+  #   live checkout carries large uncommitted / unpushed work not recorded at S44 close.
   #   S43 CLOSED 2026-08-24 — THE LOOP CLOSED. chat -> Accept -> HUMAN gate -> daemon -> claude-cli
   #   build -> boot-verify -> app serving, observed end to end on 2026-08-24 (apps/app2 on :3007).
   #   This answers S41-F08, outstanding since July. The output is model-authored, not mock: the
@@ -36,7 +38,7 @@ upstream_pr:
   commits: [235f1acc layer, ccbdf85b DEV_FACING, 66aecea9 F09 guard test, 880f16f3 §9 alternatives]
   companion: chore/disable-turbo-telemetry @ 3e040aa5
   body: <planning-home>/evidence/S44/PR-BODY.md
-  pushed: false             # the push and the merge remain a human act
+  pushed: false             # STILL false as of 2026-10-01 — the push and the merge remain a human act
   ci: all gates exit 0 on a fresh clone; vitest exit 1 = 2 admin:nuxt toaster-a11y tests that
   #   FAIL IDENTICALLY on pristine upstream develop — pre-existing, not ours.
 
@@ -50,8 +52,11 @@ upstream_pr:
   # ── UPSTREAM FACTS THAT KEEP GETTING READ WRONG ───────────────────────────────────────────
   # ALWAYS `git fetch` /Projects/app-agent-io/core before quoting any upstream number. Every
   # upstream fact S44 was planned on was false because that mirror had never been fetched.
-  develop_vs_main: "5 317"   # main...develop — develop is 317 AHEAD. It is the ACTIVE branch.
-  #   NEVER ask the maintainer to fast-forward develop to main: it would destroy 317 commits.
+  # UPDATED 2026-10-01: mirror re-fetched 2026-09-02. develop is now 643 AHEAD of main (was 317
+  # at S44 close). Base bd1d8199 is therefore STALE relative to current upstream develop.
+  develop_vs_main: "643 ahead"   # main...develop after 2026-09-02 fetch — develop is the ACTIVE branch.
+  #   Prior S44 figure was 317 ahead (fetched 2026-08-25). Do not quote 317 anymore.
+  #   NEVER ask the maintainer to fast-forward develop to main: it would destroy hundreds of commits.
   #   `9a9309d "Initial commit"` is the FORK's develop, not upstream's.
   ci_typecheck: unfiltered (`bunx turbo run typecheck`) — new workspaces ARE reached
   ci_steps: 11, not 6 — adds wiki-drift, baseline-growth, i18n parity, component-manifest
@@ -62,6 +67,53 @@ upstream_pr:
   #   are scaffolded into apps/ by the launcher on first run. RESERVED_PORTS must reflect that.
   decisions: <planning-home>/decisions/S44-R{1,2,3}-*.md
   summary: <planning-home>/S44-SUMMARY.md
+
+###############################################################################
+# POST-S44 STATE (2026-10-01) — facts from Denis's Mac; not all visible on GitHub
+###############################################################################
+
+post_s44_state:
+  dated: 2026-10-01
+  source: local Mac analysis of /Users/denistka/Projects/app-agent-io/ (read-only)
+  # S44 itself is unchanged in intent — CLOSED 2026-08-25 — but the world around it moved.
+
+  upstream_pr_drift:
+    pushed: false                    # unchanged since S44 close
+    branch: feat/work-control-base-app
+    head: 880f16f3                   # local only — no remote branch carries it
+    base_at_close: bd1d8199          # develop tip when fetched 2026-08-25
+    develop_ahead_at_close: 317
+    develop_ahead_now: 643           # after upstream fetch 2026-09-02
+    note: PR base is stale; rebase/refresh against current upstream develop before any push
+
+  worktrees:
+    DAWWWB-app-agent-dev:
+      branch: write-docs-in-auto
+      last_commit: c459a01c          # 2026-08-24
+      uncommitted_changes: 184       # 78 modified, 20 deleted, 86 untracked
+      unpushed_commits: 7
+    work-control-pr:
+      head: 880f16f3                 # = local feat/work-control-base-app (2026-08-25)
+      remote_branch: none            # unpushed
+    DAWWWB-app-agent:
+      branch: vercel-demo            # parked (2026-06-23)
+    core_mirror:
+      checkout: main @ 974e43b       # 2026-06-11
+      origin_develop_fetched: 2026-09-02
+
+  new_since_s44:
+    - apps/todo-app created 2026-09-23
+    - S43 UI deletions (FleetGrid, BrickHouse, dashboard) present on disk, NOT committed
+    - README still references a non-existent packages/ folder (upstream develop already fixed it)
+
+  # OPEN ITEMS FOR THE NEXT SPRINT (do not invent scope beyond these facts)
+  open_items_next_sprint:
+    - Rebase/refresh S44 Perfect Upstream PR — pushed:false; base stale (develop 643 ahead, was 317)
+    - Push or park local branch feat/work-control-base-app (880f16f3) — no remote counterpart
+    - Triage 184 uncommitted changes + 7 unpushed commits on write-docs-in-auto
+    - Commit or discard S43 UI deletions (FleetGrid, BrickHouse, dashboard)
+    - Account for apps/todo-app (2026-09-23) in planning / dogfood story
+    - Align fork README with disk — drop packages/ reference (upstream develop already fixed)
 
 brand:
   domain: app-agent.io
@@ -219,30 +271,28 @@ planning-home:
   legacy-env: WORK_CONTROL_TOTEM_PATH   # deprecated; the suite still logs a deprecation line
 
 sprints:
-  # RE-SYNCED 2026-08-24 by S43-T12. This block read `current: S41` for four days after S43 opened
-  # and two days after S43 closed — a stale pointer here sends every fresh session into the wrong
-  # invariants, the wrong docket and a blocker that no longer exists.
-  current: S43
-  current-ptl: <planning-home>/sprints/S43-ClaudeCliOverlay.ptl
-  current-invariants: <planning-home>/S43-INVARIANTS.md
-  current-summary: <planning-home>/sprints/S43-SUMMARY.md
-  current-status: CLOSED 2026-08-24. THE LIVE RUN HAPPENED (S43-T02) — daemon built, verified and
-    booted apps/app2 after a human opened the gate. ONE outstanding item, S43-T02's residue: the
-    captured evidence pack, the S41-F08/S41-T03 closure + S36's two [~] flips, one captured
-    stream-json fixture, and S43-F08 (explain the run's record shape before citing it). Eight
-    findings S43-F01..F08 filed LOCKED, none fixed in-sprint (acceptance-first).
-  # CHAIN: S36 -> S41 -> S43. S42 exists on disk as a work-control-GENERATED artifact and is NOT a
-  # link in the hand-authored chain (hence the S41 -> S43 numbering jump).
-  previous: S41
-  last-closed: S43
-  last-ptl: <planning-home>/sprints/S43-ClaudeCliOverlay.ptl
+  # RE-SYNCED 2026-10-01 (post-S44). S44 closed 2026-08-25; no S45 opened yet. Live risks are
+  # listed under post_s44_state.open_items_next_sprint, not under a numbered active sprint.
+  current: none                       # post-S44; next meta sprint not opened
+  # current-ptl: (none — no open meta .ptl)
+  current-invariants: <planning-home>/S43-INVARIANTS.md   # still the ACTIVE invariants set
+  current-summary: <planning-home>/S44-SUMMARY.md
+  current-status: S44 CLOSED 2026-08-25 (pushed:false). S43 CLOSED 2026-08-24 — THE LIVE RUN
+    HAPPENED (S43-T02). See post_s44_state for 2026-10-01 drift (stale PR base, dirty checkout).
+  # CHAIN: S36 -> S41 -> S43 -> S44. S42 was a work-control-GENERATED artifact (deleted S43-T11)
+  # and was NEVER a link in the hand-authored chain.
+  previous: S43
+  last-closed: S44
+  last-ptl: <planning-home>/sprints/   # S44 among the five remaining .ptl (S15, S36, S41, S43, S44)
   history: <planning-home>/sprints/
   smoke-artifact: ../sprints/S05-SMOKE-FirstEat.ptl     # external, historical
-  # In-repo sprints dir holds 42 .ptl. THREE are hand-authored: S15, S36, S41.
+  # CORPUS ON DISK 2026-10-01: FIVE .ptl remain — S15, S36, S41, S43, S44 (all hand-authored).
+  # The mock-generated dogfood corpus was DELETED 2026-08-24 by S43-T11 (ruling R4, commit 8d8996c).
+  # Older rows below that still say "42 .ptl" / "39 generated" describe the PRE-deletion state;
+  # do not re-list deleted plan numbers. Fingerprint evidence: <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md.
   # CORRECTED 2026-08-20 — S15 (NickDemoPolish) is hand-authored: six bespoke tasks, a
   # target_branch field no generator emits, protocol: ../APP-AGENT-PROTOCOL.md, no generated_by.
-  # So 39 are work-control-GENERATED, not 40. S35-S42 band: S37-S40 + S42 generated.
-  # AND SEE S41-F11: all 39 generated decompositions carry planner.mock.ts's verbatim strings —
+  # AND SEE S41-F11: all 39 generated decompositions carried planner.mock.ts's verbatim strings —
   # the PLANNER half of the dogfood corpus was a template, not a model.
   closed-chain:
     # external instance (historical meta chain)
@@ -259,14 +309,18 @@ sprints:
                                                   #   — which S43-T02 has now performed. Flips owed.
     S43: <planning-home>/sprints/S43-SUMMARY.md   # CLOSED 2026-08-24; proof ledger in §2
                                                   #   (LIVE-PROVEN / GREEN-TESTS-ONLY / NEVER-RUN)
-  generated-sprints: S01-S14, S16-S35, S37-S40, S42   # 39 total (S15/S36/S41/S43 are HAND-authored)
-  # 2026-08-22 (S43-T11): the count 39 is CORRECT, the naive method is not. Grepping for the
-  # ABSENCE of `generated_by` misclassifies S36 — it mentions the token in prose. The reliable
-  # discriminator is the `authored_by: ... hand-authored ...` header line. Full fingerprint
-  # evidence (39-for-39 plannerMock strings) preserved at
-  # <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md — captured BEFORE the R4 cleanup deletes the corpus.
-  # "do not touch, do not renumber" is SUPERSEDED for deletion purposes by ruling R4 (S43-T11);
-  # it still holds for editing or renumbering anything that survives.
+    S44: <planning-home>/S44-SUMMARY.md           # CLOSED 2026-08-25; pushed:false — see upstream_pr
+                                                  #   + post_s44_state (base now stale)
+  remaining-ptl: [S15, S36, S41, S43, S44]        # on disk 2026-10-01 — do not invent others
+  generated-sprints: DELETED-by-S43-T11            # was S01-S14, S16-S35, S37-S40, S42 (39) before R4
+  # 2026-08-22 (S43-T11): pre-deletion count 39 is CORRECT historically. Grepping for the ABSENCE
+  # of `generated_by` misclassified S36 — it mentions the token in prose. The reliable discriminator
+  # is the `authored_by: ... hand-authored ...` header line. Full fingerprint evidence (39-for-39
+  # plannerMock strings) preserved at <planning-home>/CORPUS-PROVENANCE-EVIDENCE.md — captured
+  # BEFORE the R4 cleanup deleted the corpus.
+  # Standing rule UPDATED 2026-10-01: deletion of the mock corpus already happened under R4;
+  # surviving plans must not be edited, renumbered, or re-dated without explicit human instruction.
+  # Do not recreate deleted generated plans from memory.
   demo-sprints:
     SDEMO: ../sprints/SDEMO-QuickDeploy.ptl           # aborted — Railway path abandoned
     SDEMO-B: ../sprints/SDEMO-B-VercelDemo.ptl        # PARKED — superseded by the S36/S41 in-repo chain
@@ -334,27 +388,28 @@ open-findings:
   # S41-F10 on disk is the datasource-probe finding. F12's 19 citations are correct.
 
 next-suggested:
-  # REWRITTEN 2026-08-24 (S43-T12). The previous list was built for a world where the loop had never
-  # run and the provider was out of credit. Both premises are dead: the run happened, and the CLI
-  # authenticates by subscription OAuth out of $HOME (no HTTP provider, no credit, no :8787 shim —
-  # the whole shim lineage was rejected outright by ruling R3 and DELETED).
-  - COMMIT S43. Most of the sprint's code is UNCOMMITTED on write-docs-in-auto (97 modified/deleted
-      tracked files + 59 untracked at close). Only T11's two commits and the T13 branch are in
-      history. This is the largest structural risk carried out of the sprint.
-  - S43-T02 RESIDUE — the one outstanding sprint item. The run happened; its bookkeeping did not:
-      capture the evidence pack in <planning-home>/evidence/S43/, close S41-F08 + S41-T03 with
-      links, flip S36's two [~], and capture ONE real stream-json transcript (all 8 fixtures in
-      core/tests/fixtures/claude-stream/ are authored, not captured — every reducer test currently
-      tests an assumption about the CLI's output).
-  - S43-F08 BEFORE ANY DEMO CLAIM. Explain the run's record shape (8 task lifecycles for 5 tasks;
-      2 build.fail rows on an all-done board) from the payloads. Do not cite the run further until
-      the record it rests on is explained.
-  - S43-F01. The guardian plane is dark in the running product; T07's editor and T06's guardian
-      prompt do not exist there. Likely a one-line remedy (re-run scripts/apply-schema.ts) plus the
-      durable half: a preflight row, so an absent table is never again discoverable only by a 500.
-  - THE ROLLBACK BEAT. The only Sprint DoD item still fully unmet: slide back one tick, watch the
-      app restart and serve older code. The substrate is proven (tagged per-app ticks, shas in the
-      activity payloads); the restore itself has never run outside tests.
+  # REWRITTEN 2026-10-01 (post-S44 state sync). S43-T12 list below is PRESERVED as history after
+  # this block — the loop did run; CLI auth is subscription OAuth; shim lineage stays dead.
+  # NEW HEADLINE risks are the unpushed PR, the stale develop base, and the dirty live checkout.
+  - S44 UPSTREAM PR — still pushed:false. Rebase/refresh against current upstream develop
+      (643 ahead of main after 2026-09-02 fetch; was 317 at S44 close). Base bd1d8199 is stale.
+  - feat/work-control-base-app @ 880f16f3 — local only; no remote branch. Push or explicitly park.
+  - write-docs-in-auto hygiene — 184 uncommitted changes (78 modified, 20 deleted, 86 untracked)
+      + 7 unpushed commits on DAWWWB-app-agent-dev (last commit c459a01c, 2026-08-24).
+  - Commit or discard S43 UI deletions still on disk: FleetGrid, BrickHouse, dashboard.
+  - Record apps/todo-app (created 2026-09-23) in planning / dogfood story.
+  - README still references non-existent packages/ — upstream develop already fixed; align the fork.
+  # ── still owed from S43 close (S43-T12 list, preserved) ──
+  - COMMIT S43 residue. At S43 close most sprint code was UNCOMMITTED on write-docs-in-auto
+      (97 modified/deleted tracked + 59 untracked). The 2026-10-01 count is now 184 uncommitted —
+      triage includes that older residue.
+  - S43-T02 RESIDUE — the run happened; its bookkeeping did not: evidence pack in
+      <planning-home>/evidence/S43/, close S41-F08 + S41-T03 with links, flip S36's two [~],
+      capture ONE real stream-json transcript (fixtures in core/tests/fixtures/claude-stream/
+      are authored, not captured).
+  - S43-F08 BEFORE ANY DEMO CLAIM. Explain the run's record shape from the payloads.
+  - S43-F01. Guardian plane dark in the running product — schema apply + durable preflight row.
+  - THE ROLLBACK BEAT. Substrate proven; restore itself never run outside tests.
   - S41-F10 / S41-F15 / S43-F02..F07: filed, LOCKED, unfixed.
 
 decisions-of-record:
@@ -556,10 +611,12 @@ agent-rules:
   - Vite SSR externalization bug fixed: inline chatRoom/boardRoom in client composables
   - vercel.json at monorepo root pointing to apps/work-control/.vercel/output
 
-updated: 2026-08-24-S43-closed-loop-proven-live
+updated: 2026-10-01-post-S44-state-sync
 # S43 CLOSED (S43-T12, QA/ROOT). THE LOOP RAN END TO END: human gate -> daemon -> claude-cli build ->
 # boot-verify -> apps/app2 serving :3007, 2026-08-24. AI planning and AI building are no longer
 # UNPROVEN — the first non-mock decomposition-and-build in this repository is on disk. What is still
 # owed is the RECORD of it (S43-T02 residue), not the act. Active invariants: S43-INVARIANTS.md.
-# Docket: S41-F10/F15 + S43-F01..F08, all LOCKED and unfixed. Verified at stamp time: 98 files /
-# 1731 tests green, typecheck 0, MCP :3000 up, preflight canRunBuild:true with zero warnings.
+# S44 CLOSED 2026-08-25 — Perfect Upstream PR prepared; pushed:false. POST-S44 (2026-10-01): develop
+# is 643 ahead (was 317); feat/work-control-base-app still local-only; write-docs-in-auto has 184
+# uncommitted + 7 unpushed; apps/todo-app exists (2026-09-23); S43 UI deletions uncommitted; README
+# still cites missing packages/. See post_s44_state + open_items_next_sprint.
