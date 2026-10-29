@@ -8,6 +8,8 @@ verification-gates:
   - Layers: No UI imports from data layer.
   - Dead Code: Zero unused variables, imports, or declarations. `tsc --noUnusedLocals` or ESLint `no-unused-vars` must pass.
   - Console Clean: Zero unhandled errors/warnings in browser DevTools during primary flow.
+  - Invariants Hard: `scripts/verify-invariants` hard failures ⇒ VERIFY gate FAIL.
+  - Invariants Soft: Soft WARN lines MUST be listed in QA notes / `.pqa`; they do not alone fail VERIFY.
 
 delivery-gates:
   - E2E Smoke: Primary user flow (register → login → core action) must complete without errors.
@@ -34,3 +36,4 @@ anti-patterns:
   - ❌ Dead Declarations: Unused variables, timeouts, or imports left in code.
   - ❌ Broken Happy Path: Delivering without verifying the primary user flow end-to-end.
   - ❌ Console Noise: Unhandled WebSocket errors, React warnings, or TypeScript runtime errors visible in console.
+  - ❌ Soft Warn Silence: Omitting soft invariant WARNs from QA notes.

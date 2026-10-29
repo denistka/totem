@@ -156,12 +156,14 @@ Audits recent work and may update global stacks and digests; path to `OPTIMIZER.
 
 _The shared intelligence across ALL your projects._
 
-- **`/core`**: Protocol rules (MRPP 3.0), iteration flow, design sprint guide, invariant management. How the agents talk and protect prior decisions.
+- **`/core`**: Protocol rules (MRPP 3.0), iteration flow, design sprint guide, versioned invariant management (`INVARIANTS.ti`). How the agents talk and protect prior decisions.
 - **`/guardians`**: Universal roles (ROOT, PM, PLANNER, ARCHITECT, QA, CODEMAP_QUALITY_ADVISOR, DEVOPS). How the agents think—planning, architecture, quality, codemap verdict + refactor roadmap (ADVISOR, optional per instance), DevOps. Stack-specific behavior is layered from `/stacks` via `requires:` on tasks.
 - **`/stacks`**: Tech-specific adapters (React+TS, Vue+Tauri, Rust+WGPU). What the agents know about specific technologies. These extend universal guardians with stack-specific rules.
-- **`/templates`**: Blueprints for new projects.
+- **`/templates`**: Blueprints for new projects (including `templates/invariants/` + CI snippet).
+- **`/scripts`**: `verify-invariants` (machine-check ```inv``` blocks) and `install-invariant-hooks` (optional git hooks). See [docs/INVARIANTS_VERIFICATION.md](docs/INVARIANTS_VERIFICATION.md).
 - **`/instances`**: **Registry of active projects.** (One folder per project).
   - _Note: Projects in this folder range from minimal draft configs to large, active production apps._
+  - Demo: `instances/invariants-demo/` — fixture for `node scripts/verify-invariants --self-test`.
 - **`STACK_INDEX.ti`**: Global registry of all available Totem stacks and templates.
 - **`KNOWLEDGE_SOURCES.ti`**: Global index of the external sources of truth (conferences, deep-dive docs) that power the stacks.
 

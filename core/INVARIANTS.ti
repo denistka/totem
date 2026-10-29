@@ -1,0 +1,121 @@
+role: Versioned Invariants Protocol
+focus: invariant-schema, severity, verification, history-log
+extends: none
+
+description: |
+  Structured, versioned invariants with machine-checkable assertions.
+  Complements freeform S*-INVARIANTS.md (backward compatible).
+  Verification: scripts/verify-invariants
+
+# ── IDENTITY ──────────────────────────────────────────────────────────────────
+id-format: "INV-<project>-NNN"
+  examples: [INV-kvit-001, INV-reda-012, INV-demo-001]
+  rules:
+    - project = instance folder slug (lowercase, hyphens)
+    - NNN = zero-padded sequential integer, never reused
+    - IDs are stable forever; deprecation does not free the number
+
+# ── STRUCTURED RECORD (embed in S*-INVARIANTS.md or CURRENT-INVARIANTS.md) ────
+# Machine block: fenced ```inv ... ``` (YAML-ish key: value). Human prose may
+# surround blocks. verify-invariants parses ONLY ```inv``` fences.
+required-fields:
+  - id: "INV-<project>-NNN"
+  - date: "YYYY-MM-DD (date confirmed / last ratified)"
+  - severity: "hard | soft"
+  - status: "active | deprecated | superseded"
+  - confirmed_by: "git commit SHA (full or short) that confirmed the invariant"
+  - assertion: "assertion type (see assertion-types)"
+  - why: "one-line rationale"
+  - added_by: "PLANNER | ARCHITECT | PM | QA | human:<name>"
+
+optional-fields:
+  - path: "relative path (file_exists, path_absent, config_value)"
+  - glob: "glob pattern (glob_absent, glob_exists)"
+  - cmd: "shell command (command); cwd = paths.code"
+  - key: "config key name (config_value)"
+  - expect: "expected value (config_value, port)"
+  - port: "port number (port)"
+  - supersedes: "INV-... id this replaces"
+  - superseded_by: "INV-... id that replaces this (when status=superseded)"
+  - deprecated_on: "YYYY-MM-DD"
+  - deprecated_why: "reason"
+  - sprint: "SNN where frozen"
+
+severity-rules:
+  hard: |
+    Violation BLOCKS the task / sprint close. PM MUST refuse CLOSE on hard fail.
+    verify-invariants exits non-zero.
+  soft: |
+    Violation is a WARNING only. QA reports it; CLOSE may proceed.
+    verify-invariants prints WARN and exits 0 if no hard failures.
+
+assertion-types:
+  file_exists: "path must exist under code root"
+  path_absent: "path must NOT exist under code root"
+  glob_exists: "at least one match for glob under code root"
+  glob_absent: "zero matches for glob under code root"
+  port: "file at path contains the port number (digit boundary)"
+  config_value: "file at path contains key/expect (JSON \"key\": \"expect\" or YAML key: expect)"
+  command: "cmd runs in code root and exits 0"
+
+# ── CURRENT SET vs HISTORY ────────────────────────────────────────────────────
+current-set:
+  files:
+    - "S*-INVARIANTS.md (sprint-scoped freeze; still the default link from .ptl)"
+    - "CURRENT-INVARIANTS.md (optional generated/maintained rollup of active ```inv```)"
+  rule: |
+    S*-INVARIANTS.md remains the human-readable sprint freeze and .ptl link target.
+    Prefer embedding ```inv``` blocks inside it (or in CURRENT-INVARIANTS.md).
+    Freeform bullets without ```inv``` stay valid prose — not machine-checked.
+
+history-log:
+  file: "INVARIANTS-LOG.md (append-only, per instance root)"
+  rule: |
+    EVERY add / deprecate / supersede appends a dated entry. Never rewrite past
+    entries. OPTIMIZER may compact into digests but must preserve ID chronology
+    (see OPTIMIZER.ti invariants-compaction).
+  entry-fields:
+    - when: "YYYY-MM-DD"
+    - id: "INV-..."
+    - action: "added | deprecated | superseded"
+    - by: "role or human:<name>"
+    - why: "rationale"
+    - confirmed_by: "commit SHA (for added/superseded)"
+    - supersedes / superseded_by: "when applicable"
+
+# ── BACKWARD COMPATIBILITY / MIGRATION ────────────────────────────────────────
+migration:
+  - Existing freeform S*-INVARIANTS.md files remain valid and linked from .ptl.
+  - New invariants SHOULD use ```inv``` blocks + log entry.
+  - Migration (OPTIMIZER or human): assign INV-IDs to frozen bullets, add
+    severity + assertion where checkable, append ADD entries to INVARIANTS-LOG.md.
+  - Do not delete historical S*-INVARIANTS.md; mark superseded items in-place
+    and log the change.
+
+# ── VERIFICATION ──────────────────────────────────────────────────────────────
+verification:
+  script: "scripts/verify-invariants"
+  inputs:
+    - instance dir (default: discover via --instance)
+    - code root from project.config.yml paths.code (override: --code)
+    - invariant sources: S*-INVARIANTS.md, CURRENT-INVARIANTS.md, INVARIANTS.md
+  exit-codes:
+    0: "all hard assertions pass (soft failures → WARN only)"
+    1: "one or more hard assertion failures"
+    2: "usage / config / parse error"
+  hooks: "scripts/install-invariant-hooks → post-commit + pre-push"
+  ci: "templates/ci/verify-invariants.yml"
+
+# ── ROLE DUTIES (enforced in guardians/) ──────────────────────────────────────
+role-duties:
+  PLANNER: "Assign severity when planning new invariants; link current set in .ptl."
+  ARCHITECT: "Assign severity + assertion when freezing design decisions."
+  PM: "Run verify-invariants before CLOSE; refuse CLOSE on hard failures."
+  QA: "Report soft warnings in QA notes; hard failures = VERIFY gate fail."
+
+anti-patterns:
+  - ❌ Snapshot-only memory: replacing history instead of appending to the log.
+  - ❌ Soft-as-hard: marking preference/style as hard without a checkable assertion.
+  - ❌ Orphan IDs: adding ```inv``` without an INVARIANTS-LOG.md entry.
+  - ❌ Silent supersede: changing an invariant without deprecated/superseded status + log.
+  - ❌ Reusing INV numbers after deprecate.

@@ -1,0 +1,6 @@
+{
+  "name": "invariants-demo-fixture",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Tiny fixture for scripts/verify-invariants --self-test"
+}
